@@ -1,0 +1,100 @@
+{
+  "image": "062-klass-i-14-dygn-slapfordon-forbud.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:50:27+00:00",
+  "usage": {
+    "completion_tokens": 554,
+    "prompt_tokens": 4800,
+    "total_tokens": 5354
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "vehicle_class": "car_only",
+          "pictogram": "car"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "14 dygn"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "duration_limit": {
+            "amount": 336,
+            "unit": "hours"
+          }
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "Uppställning",
+          "av släpfordon",
+          "förbjuden",
+          "Tanums kommun"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "uninterpreted": [
+            "Uppställning av släpfordon förbjuden",
+            "Tanums kommun"
+          ]
+        }
+      },
+      {
+        "index": 4,
+        "kind": "sign_plate",
+        "lines": [
+          "Camping förbjuden",
+          "Camping verboten",
+          "No camping"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "uninterpreted": [
+            "Camping förbjuden",
+            "Camping verboten",
+            "No camping"
+          ]
+        }
+      }
+    ],
+    "panel_count": 4,
+    "boundaries": {
+      "certain": true
+    },
+    "model_confidence": 0.95
+  }
+}

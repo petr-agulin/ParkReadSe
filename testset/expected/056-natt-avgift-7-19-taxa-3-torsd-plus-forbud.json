@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Avgift",
+        "7-19",
+        "(11-17)",
+        "Taxa 3"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "fee": true,
+        "tariff_code": "Taxa 3",
+        "time_windows": [
+          {
+            "from": "07:00",
+            "to": "19:00",
+            "day_class": "weekday"
+          },
+          {
+            "from": "11:00",
+            "to": "17:00",
+            "day_class": "eve"
+          }
+        ]
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Torsd",
+        "0-6"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "prohibition": true,
+        "time_windows": [
+          {
+            "from": "00:00",
+            "to": "06:00",
+            "day_class": "named_weekday",
+            "named_weekday": "thursday"
+          }
+        ]
+      },
+      "index": 2
+    }
+  ],
+  "panel_count": 2,
+  "boundaries": {
+    "certain": false
+  }
+}

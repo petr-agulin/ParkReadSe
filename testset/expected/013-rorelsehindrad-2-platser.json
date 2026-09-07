@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "eligibility": "disabled_permit",
+        "pictogram": "wheelchair"
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "2 platser"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "place_count": 2
+      },
+      "index": 2
+    },
+    {
+      "kind": "operator_plate",
+      "lines": [
+        "Mölndals Parkerings AB",
+        "031-87 54 79"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "operator": {
+          "name": "Mölndals Parkerings AB",
+          "phone": "031-87 54 79"
+        }
+      },
+      "index": 3
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "white",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "arrow": "left",
+        "pictogram": "arrow"
+      },
+      "index": 4
+    }
+  ],
+  "panel_count": 4,
+  "boundaries": {
+    "certain": true
+  }
+}

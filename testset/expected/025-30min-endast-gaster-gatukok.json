@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "0-30 m"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "stretch_metres": {
+          "from": 0,
+          "to": 30
+        }
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "30 min",
+        "Endast gäster till Franks Gatukök"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "duration_limit": {
+          "amount": 30,
+          "unit": "minutes"
+        },
+        "eligibility": "visitors"
+      },
+      "index": 2
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "white",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "arrow": "left",
+        "pictogram": "arrow"
+      },
+      "index": 3
+    }
+  ],
+  "panel_count": 3,
+  "boundaries": {
+    "certain": true
+  }
+}

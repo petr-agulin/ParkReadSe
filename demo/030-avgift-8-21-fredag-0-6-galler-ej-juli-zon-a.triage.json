@@ -1,0 +1,18 @@
+{
+  "image": "030-avgift-8-21-fredag-0-6-galler-ej-juli-zon-a.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:47:27+00:00",
+  "usage": {
+    "completion_tokens": 120,
+    "prompt_tokens": 1517,
+    "total_tokens": 1637
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish blue parking sign 'P' at the top, followed by a fee/hours sign 'Avgift 8-21 (10-17)', a yellow/red no-parking sign plate for Fridays with an exception, a white plate 'Zon A', and a bottom pa",
+    "model_confidence": 0.99,
+    "panels_below_main_sign": 3
+  }
+}

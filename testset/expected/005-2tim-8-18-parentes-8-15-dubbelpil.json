@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "2 tim",
+        "8-18",
+        "(8-15)"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "duration_limit": {
+          "amount": 2,
+          "unit": "hours"
+        },
+        "time_windows": [
+          {
+            "from": "08:00",
+            "to": "18:00",
+            "day_class": "weekday"
+          },
+          {
+            "from": "08:00",
+            "to": "15:00",
+            "day_class": "eve"
+          }
+        ]
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "white",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "arrow": "both_horizontal",
+        "pictogram": "arrow"
+      },
+      "index": 2
+    }
+  ],
+  "panel_count": 2,
+  "boundaries": {
+    "certain": true
+  }
+}

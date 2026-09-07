@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "placement": "as_shown"
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Avgift",
+        "Taxa A"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "fee": true,
+        "tariff_code": "Taxa A"
+      },
+      "index": 2
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Torsdag",
+        "10-14",
+        "Jämna veckor",
+        "Augusti-Juni"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "prohibition": true,
+        "time_windows": [
+          {
+            "from": "10:00",
+            "to": "14:00",
+            "day_class": "named_weekday",
+            "named_weekday": "thursday",
+            "week_parity": "even",
+            "dates": {
+              "mode": "except",
+              "ranges": [
+                {
+                  "from": "07-01",
+                  "to": "07-31"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "index": 3
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Boende",
+        "Solna"
+      ],
+      "background_color": "white",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "eligibility": "residents"
+      },
+      "index": 4
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "white",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "arrow": "both_horizontal",
+        "pictogram": "arrow"
+      },
+      "index": 5
+    },
+    {
+      "kind": "info_board",
+      "lines": [
+        "Områdeskod 8010"
+      ],
+      "background_color": "white",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "area_code": "8010"
+      },
+      "index": 6
+    }
+  ],
+  "panel_count": 6,
+  "boundaries": {
+    "certain": true
+  }
+}

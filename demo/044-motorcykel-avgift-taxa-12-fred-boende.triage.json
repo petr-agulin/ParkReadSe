@@ -1,0 +1,18 @@
+{
+  "image": "044-motorcykel-avgift-taxa-12-fred-boende.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:48:55+00:00",
+  "usage": {
+    "completion_tokens": 119,
+    "prompt_tokens": 1547,
+    "total_tokens": 1666
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish blue parking sign with a P, followed by several rectangular plates underneath: a motorcycle symbol, distance '0-5 m', fee 'Avgift Taxa 12', a yellow no-parking restriction plate for Fridays ",
+    "model_confidence": 0.99,
+    "panels_below_main_sign": 5
+  }
+}

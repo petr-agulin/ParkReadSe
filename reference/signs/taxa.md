@@ -1,0 +1,14 @@
+---
+key: taxa
+tokens: Taxa 3, Taxa 13
+category: not_interpreted
+label: Fee
+code: T16
+schema: parsed.tariff_code
+en: The sign states a municipal tariff number
+short: Municipal tariff number
+source: разбор разработчика на собственных снимках
+---
+
+Номер тарифа. Задаётся муниципалитетом и в разных городах означает разное, поэтому
+продукт его **не интерпретирует**: показывает дословно и уверенность не снижает.

@@ -1,0 +1,86 @@
+{
+  "image": "057-p-skiva-2tim-eller-gratis-biljett.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:49:47+00:00",
+  "usage": {
+    "completion_tokens": 461,
+    "prompt_tokens": 4824,
+    "total_tokens": 5285
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Avgift"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "fee": true
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "2tim",
+          "eller",
+          "gratis",
+          "biljett",
+          "alla dagar",
+          "07-23"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "duration_limit": {
+            "amount": 2,
+            "unit": "hours"
+          },
+          "time_windows": [
+            {
+              "from": "07:00",
+              "to": "23:00",
+              "day_class": "all_days"
+            }
+          ],
+          "payment_method": "ticket",
+          "pictogram": "parking_disc"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "arrow": "right"
+        }
+      }
+    ],
+    "panel_count": 3,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

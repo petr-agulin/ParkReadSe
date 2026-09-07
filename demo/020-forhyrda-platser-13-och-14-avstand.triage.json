@@ -1,0 +1,18 @@
+{
+  "image": "020-forhyrda-platser-13-och-14-avstand.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:45:36+00:00",
+  "usage": {
+    "completion_tokens": 102,
+    "prompt_tokens": 1533,
+    "total_tokens": 1635
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish blue parking sign with a white 'P' and two additional plates below it specifying reserved parking (Förhyrda platser, Gäller plats 13 och 14) and an arrow.",
+    "model_confidence": 0.98,
+    "panels_below_main_sign": 2
+  }
+}

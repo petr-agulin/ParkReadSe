@@ -1,0 +1,17 @@
+{
+  "image": "064-motorcykel-tisd-9-17-beskuren.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:50:39+00:00",
+  "usage": {
+    "completion_tokens": 77,
+    "prompt_tokens": 1535,
+    "total_tokens": 1612
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign post showing a blue main parking sign with several plates below it: a motorcycle symbol plate, a parking prohibition time plate, a date range plate, and a distance plate at the ",
+    "panels_below_main_sign": 4
+  }
+}

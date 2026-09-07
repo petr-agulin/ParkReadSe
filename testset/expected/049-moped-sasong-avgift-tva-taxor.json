@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "vehicle_class": "motorcycle",
+        "pictogram": "motorcycle"
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "1/4-30/9",
+        "Avgift",
+        "Taxa 12"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "fee": true,
+        "tariff_code": "Taxa 12",
+        "time_windows": [
+          {
+            "from": "00:00",
+            "to": "24:00",
+            "day_class": "all_days",
+            "dates": {
+              "mode": "only",
+              "ranges": [
+                {
+                  "from": "04-01",
+                  "to": "09-30"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "index": 2
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Övrig tid",
+        "Avgift",
+        "Taxa 2"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "fee": true,
+        "tariff_code": "Taxa 2",
+        "scope_shift": "remaining_time"
+      },
+      "index": 3
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "0-5  m"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "stretch_metres": {
+          "from": 0,
+          "to": 5
+        }
+      },
+      "index": 4
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Fred",
+        "0-6"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "prohibition": true,
+        "time_windows": [
+          {
+            "from": "00:00",
+            "to": "06:00",
+            "day_class": "named_weekday",
+            "named_weekday": "friday"
+          }
+        ]
+      },
+      "index": 5
+    }
+  ],
+  "panel_count": 5,
+  "boundaries": {
+    "certain": true
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "image": "035-zon-c-pa-avstand.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:48:07+00:00",
+  "usage": {
+    "completion_tokens": 70,
+    "prompt_tokens": 1547,
+    "total_tokens": 1617
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign post showing a green and white P sign with several panels below it, including fee information, time limits, zone designation, and a resident parking specification.",
+    "panels_below_main_sign": 4
+  }
+}

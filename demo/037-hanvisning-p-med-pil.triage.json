@@ -1,0 +1,17 @@
+{
+  "image": "037-hanvisning-p-med-pil.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:48:23+00:00",
+  "usage": {
+    "completion_tokens": 66,
+    "prompt_tokens": 1515,
+    "total_tokens": 1581
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign with a blue P and a roof symbol indicating indoor parking, with one panel below containing a right-turn arrow stating a rule.",
+    "panels_below_main_sign": 1
+  }
+}

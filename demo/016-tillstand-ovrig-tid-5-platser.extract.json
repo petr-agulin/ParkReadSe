@@ -1,0 +1,97 @@
+{
+  "image": "016-tillstand-ovrig-tid-5-platser.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:45:08+00:00",
+  "usage": {
+    "completion_tokens": 538,
+    "prompt_tokens": 4798,
+    "total_tokens": 5336
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Särskilt",
+          "P-tillstånd",
+          "erfordras",
+          "7-17"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "07:00",
+              "to": "17:00",
+              "day_class": "weekday"
+            }
+          ],
+          "permit_required": true,
+          "eligibility": "permit_holders"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Övrig tid",
+          "avgift"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "fee": true,
+          "scope_shift": "remaining_time"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "5 platser"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "place_count": 5
+        }
+      },
+      {
+        "index": 4,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "arrow": "both_horizontal",
+          "pictogram": "arrow"
+        }
+      }
+    ],
+    "panel_count": 4,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

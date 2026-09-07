@@ -1,0 +1,18 @@
+{
+  "image": "026-gul-zon-avgift-plus-hastighetsskylt.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:46:24+00:00",
+  "usage": {
+    "completion_tokens": 127,
+    "prompt_tokens": 1533,
+    "total_tokens": 1660
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign assembly showing a main blue P sign with 'Avgift' (fee), followed below by a yellow supplementary plate stating 'Utanför markerad plats' (no parking outside marked spaces), and ",
+    "model_confidence": 0.95,
+    "panels_below_main_sign": 1
+  }
+}

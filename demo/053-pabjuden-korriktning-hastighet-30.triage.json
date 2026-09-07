@@ -1,0 +1,17 @@
+{
+  "image": "053-pabjuden-korriktning-hastighet-30.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-04T16:42:27+00:00",
+  "usage": {
+    "completion_tokens": 64,
+    "prompt_tokens": 1535,
+    "total_tokens": 1599
+  },
+  "response": {
+    "category": "other_road_sign",
+    "what_i_see": "A mandatory direction sign (turn right) with a speed limit sign below it, located near a pedestrian crossing on a city street.",
+    "panels_below_main_sign": 0
+  }
+}

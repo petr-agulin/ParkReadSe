@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Endast",
+        "för",
+        "besökande",
+        "till",
+        "Pingstkyrkan"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "eligibility": "visitors"
+      },
+      "index": 1
+    },
+    {
+      "kind": "operator_plate",
+      "lines": [
+        "Västia Parkering",
+        "0771-501550"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "operator": {
+          "name": "Västia Parkering",
+          "phone": "0771-501550"
+        }
+      },
+      "index": 2
+    }
+  ],
+  "panel_count": 2,
+  "boundaries": {
+    "certain": true
+  }
+}

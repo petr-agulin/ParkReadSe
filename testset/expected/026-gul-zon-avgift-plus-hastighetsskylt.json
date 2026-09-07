@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "yellow",
+    "form": "zone",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Avgift"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "fee": true
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Utanför",
+        "markerad",
+        "plats"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "prohibition": true,
+        "placement": "marked_bay_only",
+        "pictogram": "prohibition"
+      },
+      "index": 2
+    },
+    {
+      "kind": "operator_plate",
+      "lines": [
+        "Mölndals Parkerings AB",
+        "031-87 54 79"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "operator": {
+          "name": "Mölndals Parkerings AB",
+          "phone": "031-87 54 79"
+        }
+      },
+      "index": 3
+    }
+  ],
+  "panel_count": 3,
+  "boundaries": {
+    "certain": true
+  },
+  "notes": "Ниже на том же столбе — знак ограничения скорости 30. К парковочной стопке он НЕ относится и в panels входить не должен."
+}

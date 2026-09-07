@@ -1,0 +1,143 @@
+{
+  "image": "058-natt-klass-i-22-06-roda-siffror-utanfor-markerad.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:49:56+00:00",
+  "usage": {
+    "completion_tokens": 855,
+    "prompt_tokens": 4812,
+    "total_tokens": 5667
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Avgift"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "fee": true
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Klass I",
+          "22-06",
+          "(22-06)",
+          "22-06"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "22:00",
+              "to": "06:00",
+              "day_class": "weekday"
+            },
+            {
+              "from": "22:00",
+              "to": "06:00",
+              "day_class": "eve"
+            },
+            {
+              "from": "22:00",
+              "to": "06:00",
+              "day_class": "red"
+            }
+          ],
+          "vehicle_class": "car_only",
+          "pictogram": "car"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "Utanför",
+          "markerad",
+          "plats"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "placement": "marked_bay_only",
+          "prohibition": true,
+          "pictogram": "prohibition"
+        }
+      },
+      {
+        "index": 4,
+        "kind": "operator_plate",
+        "lines": [
+          "SECURITAS",
+          "0771-767000"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "operator": {
+            "name": "SECURITAS",
+            "phone": "0771-767000"
+          }
+        }
+      },
+      {
+        "index": 5,
+        "kind": "info_board",
+        "lines": [
+          "MOBILL",
+          "801"
+        ],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "area_code": "801"
+        }
+      },
+      {
+        "index": 6,
+        "kind": "info_board",
+        "lines": [
+          "801"
+        ],
+        "background_color": "other",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "area_code": "801"
+        }
+      }
+    ],
+    "panel_count": 6,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

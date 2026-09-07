@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "unknown",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": false,
+      "obstructions": [
+        "cropped"
+      ]
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Avgift"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "fee": true
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "2tim",
+        "eller",
+        "gratis",
+        "biljett",
+        "alla dagar",
+        "07-23"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "payment_method": "parking_disc",
+        "duration_limit": {
+          "amount": 2,
+          "unit": "hours"
+        },
+        "time_windows": [
+          {
+            "from": "07:00",
+            "to": "23:00",
+            "day_class": "all_days"
+          }
+        ]
+      },
+      "index": 2
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "white",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "arrow": "right",
+        "pictogram": "arrow"
+      },
+      "index": 3
+    }
+  ],
+  "panel_count": 3,
+  "boundaries": {
+    "certain": false
+  }
+}

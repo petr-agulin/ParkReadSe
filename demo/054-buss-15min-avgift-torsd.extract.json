@@ -1,0 +1,100 @@
+{
+  "image": "054-buss-15min-avgift-torsd.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:49:32+00:00",
+  "usage": {
+    "completion_tokens": 558,
+    "prompt_tokens": 4809,
+    "total_tokens": 5367
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "vehicle_class": "bus",
+          "pictogram": "bus"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "15 min",
+          "Avgift",
+          "Taxa 2"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "duration_limit": {
+            "amount": 15,
+            "unit": "minutes"
+          },
+          "fee": true
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "Torsd",
+          "0-6"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "00:00",
+              "to": "06:00",
+              "day_class": "named_weekday",
+              "named_weekday": "thursday"
+            }
+          ],
+          "prohibition": true,
+          "pictogram": "other"
+        }
+      },
+      {
+        "index": 4,
+        "kind": "info_board",
+        "lines": [
+          "Betala via",
+          "Betala P eller",
+          "i p-automat"
+        ],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {}
+      }
+    ],
+    "panel_count": 4,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

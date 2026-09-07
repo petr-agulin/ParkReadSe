@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "prohibition_stopping",
+    "background_color": "yellow",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "7-17"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "time_windows": [
+          {
+            "from": "07:00",
+            "to": "17:00",
+            "day_class": "weekday"
+          }
+        ]
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "0-15  m"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "stretch_metres": {
+          "from": 0,
+          "to": 15
+        }
+      },
+      "index": 2
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Fred",
+        "0-6"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "prohibition": true,
+        "time_windows": [
+          {
+            "from": "00:00",
+            "to": "06:00",
+            "day_class": "named_weekday",
+            "named_weekday": "friday"
+          }
+        ]
+      },
+      "index": 3
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Övrig tid",
+        "Avgift",
+        "Taxa 2"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "permits_parking": true,
+        "fee": true,
+        "tariff_code": "Taxa 2",
+        "scope_shift": "remaining_time",
+        "pictogram": "parking"
+      },
+      "index": 4
+    }
+  ],
+  "panel_count": 4,
+  "boundaries": {
+    "certain": true
+  }
+}

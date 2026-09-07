@@ -1,0 +1,17 @@
+{
+  "image": "029-beskickningsfordon-0-12m.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:47:19+00:00",
+  "usage": {
+    "completion_tokens": 71,
+    "prompt_tokens": 1535,
+    "total_tokens": 1606
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign with two plates below it, one stating who may park (Beskickningsfordon) and one stating a distance (0-12 m).",
+    "panels_below_main_sign": 2
+  }
+}

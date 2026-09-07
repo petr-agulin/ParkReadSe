@@ -1,0 +1,18 @@
+{
+  "image": "019-forbud-7-18-avgift-ovrig-tid.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:45:28+00:00",
+  "usage": {
+    "completion_tokens": 87,
+    "prompt_tokens": 1533,
+    "total_tokens": 1620
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A round no-parking sign with a yellow time restriction plate (7-18), a blue parking fee information plate, a company/zone plate, and payment app boards below it.",
+    "model_confidence": 0.95,
+    "panels_below_main_sign": 2
+  }
+}

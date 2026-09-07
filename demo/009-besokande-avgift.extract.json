@@ -1,0 +1,92 @@
+{
+  "image": "009-besokande-avgift.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:44:12+00:00",
+  "usage": {
+    "completion_tokens": 493,
+    "prompt_tokens": 4798,
+    "total_tokens": 5291
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Besökande"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "visitors"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Avgift"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "fee": true
+        }
+      },
+      {
+        "index": 3,
+        "kind": "operator_plate",
+        "lines": [
+          "P-tjänst"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "operator": {
+            "name": "P-tjänst"
+          },
+          "area_code": "17813"
+        }
+      },
+      {
+        "index": 4,
+        "kind": "info_board",
+        "lines": [
+          "EASYPARK",
+          "PARKERA",
+          "MED OSS!",
+          "SMS-PARKERA",
+          "Parkster",
+          "App-parkering",
+          "utan serviceavgift."
+        ],
+        "background_color": "other",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {}
+      }
+    ],
+    "panel_count": 4,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

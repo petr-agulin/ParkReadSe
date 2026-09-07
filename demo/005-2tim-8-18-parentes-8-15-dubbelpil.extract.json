@@ -1,0 +1,74 @@
+{
+  "image": "005-2tim-8-18-parentes-8-15-dubbelpil.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:43:40+00:00",
+  "usage": {
+    "completion_tokens": 404,
+    "prompt_tokens": 4798,
+    "total_tokens": 5202
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "2 tim",
+          "8-18",
+          "(8-15)"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "duration_limit": {
+            "amount": 2,
+            "unit": "hours"
+          },
+          "time_windows": [
+            {
+              "from": "08:00",
+              "to": "18:00",
+              "day_class": "weekday"
+            },
+            {
+              "from": "08:00",
+              "to": "15:00",
+              "day_class": "eve"
+            }
+          ]
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "arrow": "both_horizontal",
+          "pictogram": "arrow"
+        }
+      }
+    ],
+    "panel_count": 2,
+    "boundaries": {
+      "certain": true
+    },
+    "model_confidence": 0.98
+  }
+}

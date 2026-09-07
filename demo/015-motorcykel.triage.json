@@ -1,0 +1,17 @@
+{
+  "image": "015-motorcykel.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:44:56+00:00",
+  "usage": {
+    "completion_tokens": 48,
+    "prompt_tokens": 1533,
+    "total_tokens": 1581
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign with a motorcycle symbol plate below it.",
+    "panels_below_main_sign": 1
+  }
+}

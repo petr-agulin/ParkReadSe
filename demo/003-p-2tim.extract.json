@@ -1,0 +1,47 @@
+{
+  "image": "003-p-2tim.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:43:24+00:00",
+  "usage": {
+    "completion_tokens": 213,
+    "prompt_tokens": 4798,
+    "total_tokens": 5011
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "2 tim"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "duration_limit": {
+            "amount": 2,
+            "unit": "hours"
+          }
+        }
+      }
+    ],
+    "panel_count": 1,
+    "boundaries": {
+      "certain": true
+    },
+    "model_confidence": 0.99
+  }
+}

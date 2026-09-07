@@ -1,0 +1,120 @@
+{
+  "image": "022-avgift-4tim-laddande-elbilar-2-platser.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:45:57+00:00",
+  "usage": {
+    "completion_tokens": 663,
+    "prompt_tokens": 4800,
+    "total_tokens": 5463
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Avgift"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "fee": true
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "4 tim"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "duration_limit": {
+            "amount": 4,
+            "unit": "hours"
+          }
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "Endast",
+          "laddande",
+          "elbilar"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "vehicle_class": "electric"
+        }
+      },
+      {
+        "index": 4,
+        "kind": "sign_plate",
+        "lines": [
+          "2 platser"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "place_count": 2
+        }
+      },
+      {
+        "index": 5,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "arrow": "right",
+          "pictogram": "arrow"
+        }
+      },
+      {
+        "index": 6,
+        "kind": "info_board",
+        "lines": [
+          "Områdeskod 31308"
+        ],
+        "background_color": "other",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "area_code": "31308",
+          "operator": {
+            "name": "Mölndals Parkerings AB"
+          }
+        }
+      }
+    ],
+    "panel_count": 6,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

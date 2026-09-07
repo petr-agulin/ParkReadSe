@@ -1,0 +1,123 @@
+{
+  "image": "049-moped-sasong-avgift-tva-taxor.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:49:08+00:00",
+  "usage": {
+    "completion_tokens": 726,
+    "prompt_tokens": 4800,
+    "total_tokens": 5526
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "1/4-30/9",
+          "Avgift",
+          "Taxa 12"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "00:00",
+              "to": "23:59",
+              "day_class": "all_days",
+              "dates": {
+                "mode": "only",
+                "ranges": [
+                  {
+                    "from": "04-01",
+                    "to": "09-30"
+                  }
+                ]
+              }
+            }
+          ],
+          "fee": true,
+          "vehicle_class": "motorcycle",
+          "pictogram": "motorcycle",
+          "tariff_code": "12"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Övrig tid",
+          "Avgift",
+          "Taxa 2"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "fee": true,
+          "scope_shift": "remaining_time",
+          "tariff_code": "2"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "0-5 m"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "stretch_metres": {
+            "from": 0,
+            "to": 5
+          }
+        }
+      },
+      {
+        "index": 4,
+        "kind": "sign_plate",
+        "lines": [
+          "Fred",
+          "0-6"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "00:00",
+              "to": "06:00",
+              "day_class": "named_weekday",
+              "named_weekday": "friday"
+            }
+          ],
+          "prohibition": true,
+          "pictogram": "prohibition"
+        }
+      }
+    ],
+    "panel_count": 4,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "image": "058-natt-klass-i-22-06-roda-siffror-utanfor-markerad.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:49:51+00:00",
+  "usage": {
+    "completion_tokens": 79,
+    "prompt_tokens": 1547,
+    "total_tokens": 1626
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish blue parking sign with several plates underneath, including 'Avgift', a vehicle class and hours plate, a yellow no-parking outside marked spaces plate, a Securitas company plate, and payment",
+    "panels_below_main_sign": 3
+  }
+}

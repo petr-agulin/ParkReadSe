@@ -1,0 +1,93 @@
+{
+  "image": "063-natt-p-tillstand-06-16-p-skiva-3tim.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:50:36+00:00",
+  "usage": {
+    "completion_tokens": 552,
+    "prompt_tokens": 4800,
+    "total_tokens": 5352
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Giltigt",
+          "P-tillstånd",
+          "erfordras",
+          "06-16"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "06:00",
+              "to": "16:00",
+              "day_class": "weekday"
+            }
+          ],
+          "permit_required": true,
+          "eligibility": "permit_holders"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "3 tim",
+          "16-06",
+          "(00-24)",
+          "00-24"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "duration_limit": {
+            "amount": 3,
+            "unit": "hours"
+          },
+          "time_windows": [
+            {
+              "from": "16:00",
+              "to": "06:00",
+              "day_class": "weekday"
+            },
+            {
+              "from": "00:00",
+              "to": "24:00",
+              "day_class": "eve"
+            },
+            {
+              "from": "00:00",
+              "to": "24:00",
+              "day_class": "red"
+            }
+          ],
+          "payment_method": "parking_disc",
+          "pictogram": "parking_disc"
+        }
+      }
+    ],
+    "panel_count": 2,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

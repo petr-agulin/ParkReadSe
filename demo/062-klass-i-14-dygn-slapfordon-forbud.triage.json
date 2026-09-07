@@ -1,0 +1,18 @@
+{
+  "image": "062-klass-i-14-dygn-slapfordon-forbud.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:50:23+00:00",
+  "usage": {
+    "completion_tokens": 107,
+    "prompt_tokens": 1535,
+    "total_tokens": 1642
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign with multiple supplementary plates below it: a car symbol plate, a '14 dygn' duration plate, a yellow prohibition plate stating 'Uppställning av släpfordon förbjuden Tanums komm",
+    "model_confidence": 0.99,
+    "panels_below_main_sign": 4
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "vehicle_class": "motorcycle",
+        "pictogram": "motorcycle"
+      },
+      "index": 1
+    }
+  ],
+  "panel_count": 1,
+  "boundaries": {
+    "certain": true
+  }
+}

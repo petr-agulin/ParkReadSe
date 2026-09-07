@@ -1,0 +1,18 @@
+{
+  "image": "018-tillstand-utan-tidsangivelse.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:45:20+00:00",
+  "usage": {
+    "completion_tokens": 91,
+    "prompt_tokens": 1517,
+    "total_tokens": 1608
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A blue Swedish parking sign with two additional plates below: one stating 'Särskilt P-tillstånd erfordras' and another showing a right arrow.",
+    "model_confidence": 0.98,
+    "panels_below_main_sign": 2
+  }
+}

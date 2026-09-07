@@ -1,0 +1,17 @@
+{
+  "image": "028-avgift-taxa-2-fred-0-6-boende-ci.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:47:11+00:00",
+  "usage": {
+    "completion_tokens": 87,
+    "prompt_tokens": 1530,
+    "total_tokens": 1617
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A blue parking sign with four plates below it: a fee plate (Avgift Taxa 2), a no-parking rule plate (Fred 0-6), a resident parking permission plate (Boende Ci), and a digital payment information plate",
+    "panels_below_main_sign": 3
+  }
+}

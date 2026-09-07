@@ -1,0 +1,17 @@
+{
+  "image": "001-p-30min.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:43:04+00:00",
+  "usage": {
+    "completion_tokens": 63,
+    "prompt_tokens": 1533,
+    "total_tokens": 1596
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign with a blue 'P' and a white auxiliary panel below it specifying a duration limit of 30 minutes.",
+    "panels_below_main_sign": 1
+  }
+}

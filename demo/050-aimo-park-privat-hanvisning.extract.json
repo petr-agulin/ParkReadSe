@@ -1,0 +1,30 @@
+{
+  "image": "050-aimo-park-privat-hanvisning.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:49:15+00:00",
+  "usage": {
+    "completion_tokens": 147,
+    "prompt_tokens": 4805,
+    "total_tokens": 4952
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "wayfinding_parking_house",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [],
+    "panel_count": 0,
+    "boundaries": {
+      "certain": true
+    },
+    "notes": "Wayfinding sign pointing to a parking house (aimo park, Torsgatan 12), with no panels beneath it.",
+    "model_confidence": 0.99
+  }
+}

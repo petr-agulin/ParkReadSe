@@ -1,0 +1,55 @@
+{
+  "image": "014-motorcykel-pil-skymning.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "e4a19b5f21c5",
+  "saved_at": "2026-09-04T21:07:39+00:00",
+  "usage": {
+    "completion_tokens": 268,
+    "prompt_tokens": 4750,
+    "total_tokens": 5018
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "vehicle_class": "motorcycle",
+          "pictogram": "motorcycle"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "arrow": "left",
+          "pictogram": "arrow"
+        }
+      }
+    ],
+    "panel_count": 2,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

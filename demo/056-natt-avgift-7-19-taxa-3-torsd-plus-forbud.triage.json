@@ -1,0 +1,17 @@
+{
+  "image": "056-natt-avgift-7-19-taxa-3-torsd-plus-forbud.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:49:35+00:00",
+  "usage": {
+    "completion_tokens": 69,
+    "prompt_tokens": 1519,
+    "total_tokens": 1588
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign assembly consisting of a main blue parking sign with supplemental fee and time plates, followed by a yellow parking restriction plate and a stopping prohibition sign below.",
+    "panels_below_main_sign": 2
+  }
+}

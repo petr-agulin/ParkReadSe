@@ -1,0 +1,127 @@
+{
+  "image": "033-avgift-8-21-uppstallning-zon-e-boende-storskogen.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:47:56+00:00",
+  "usage": {
+    "completion_tokens": 712,
+    "prompt_tokens": 4812,
+    "total_tokens": 5524
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "distance"
+        ]
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Avgift",
+          "8-21"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true,
+          "obstructions": [
+            "distance"
+          ]
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "08:00",
+              "to": "21:00",
+              "day_class": "weekday"
+            }
+          ],
+          "fee": true
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true,
+          "obstructions": [
+            "distance"
+          ]
+        },
+        "parsed": {
+          "placement": "marked_bay_only",
+          "pictogram": "other"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "white",
+        "legibility": {
+          "readable": true,
+          "obstructions": [
+            "distance"
+          ]
+        },
+        "parsed": {
+          "arrow": "left",
+          "pictogram": "arrow"
+        }
+      },
+      {
+        "index": 4,
+        "kind": "sign_plate",
+        "lines": [
+          "Zon E",
+          "Boende",
+          "Storskogen"
+        ],
+        "background_color": "white",
+        "legibility": {
+          "readable": true,
+          "obstructions": [
+            "distance"
+          ]
+        },
+        "parsed": {
+          "eligibility": "residents"
+        }
+      },
+      {
+        "index": 5,
+        "kind": "info_board",
+        "lines": [
+          "Kod: 8415",
+          "Betala digitalt"
+        ],
+        "background_color": "white",
+        "legibility": {
+          "readable": true,
+          "obstructions": [
+            "distance"
+          ]
+        },
+        "parsed": {
+          "area_code": "8415"
+        }
+      }
+    ],
+    "panel_count": 5,
+    "boundaries": {
+      "certain": true
+    },
+    "model_confidence": 0.95
+  }
+}

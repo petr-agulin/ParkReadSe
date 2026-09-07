@@ -1,0 +1,114 @@
+{
+  "image": "044-motorcykel-avgift-taxa-12-fred-boende.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:49:00+00:00",
+  "usage": {
+    "completion_tokens": 652,
+    "prompt_tokens": 4812,
+    "total_tokens": 5464
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "vehicle_class": "motorcycle",
+          "pictogram": "motorcycle"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "0-5 m"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "stretch_metres": {
+            "from": 0,
+            "to": 5
+          }
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "Avgift",
+          "Taxa 12"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "fee": true,
+          "tariff_code": "12"
+        }
+      },
+      {
+        "index": 4,
+        "kind": "sign_plate",
+        "lines": [
+          "Fred 0-6"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "00:00",
+              "to": "06:00",
+              "day_class": "named_weekday",
+              "named_weekday": "friday"
+            }
+          ],
+          "prohibition": true,
+          "pictogram": "prohibition"
+        }
+      },
+      {
+        "index": 5,
+        "kind": "sign_plate",
+        "lines": [
+          "Boende"
+        ],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "residents",
+          "vehicle_class": "motorcycle",
+          "pictogram": "motorcycle"
+        }
+      }
+    ],
+    "panel_count": 5,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

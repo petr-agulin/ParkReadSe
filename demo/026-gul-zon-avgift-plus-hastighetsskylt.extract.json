@@ -1,0 +1,82 @@
+{
+  "image": "026-gul-zon-avgift-plus-hastighetsskylt.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:46:28+00:00",
+  "usage": {
+    "completion_tokens": 479,
+    "prompt_tokens": 4798,
+    "total_tokens": 5277
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "yellow",
+      "form": "zone",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Avgift"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "fee": true,
+          "pictogram": "parking"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Utanför",
+          "markerad",
+          "plats"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "placement": "marked_bay_only",
+          "prohibition": true,
+          "pictogram": "prohibition"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "operator_plate",
+        "lines": [
+          "Mölndals",
+          "Parkerings AB",
+          "031-87 54 79"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "operator": {
+            "name": "Mölndals Parkerings AB",
+            "phone": "031-87 54 79"
+          }
+        }
+      }
+    ],
+    "panel_count": 3,
+    "boundaries": {
+      "certain": true
+    },
+    "notes": "A speed limit sign 30 is mounted below the parking sign assembly on the same pole, which is a separate traffic regulation."
+  }
+}

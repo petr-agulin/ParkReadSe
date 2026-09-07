@@ -1,0 +1,17 @@
+{
+  "image": "003-p-2tim.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:43:20+00:00",
+  "usage": {
+    "completion_tokens": 54,
+    "prompt_tokens": 1533,
+    "total_tokens": 1587
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish blue parking sign with one plate below it indicating a 2-hour limit.",
+    "panels_below_main_sign": 1
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "image": "021-privat-parkering-brf.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:45:48+00:00",
+  "usage": {
+    "completion_tokens": 364,
+    "prompt_tokens": 4798,
+    "total_tokens": 5162
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "angle"
+        ]
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "operator_plate",
+        "lines": [
+          "Privat",
+          "parkering",
+          "Brf Ängslyckan"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "operator": {
+            "name": "Brf Ängslyckan"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "arrow": "right",
+          "pictogram": "arrow",
+          "uninterpreted": [
+            "KOMMANDO BRYGGAN"
+          ]
+        }
+      }
+    ],
+    "panel_count": 2,
+    "boundaries": {
+      "certain": true
+    },
+    "notes": "Bottom panel includes an arrow pointing right and a small logo/text reading 'KOMMANDO BRYGGAN'."
+  }
+}

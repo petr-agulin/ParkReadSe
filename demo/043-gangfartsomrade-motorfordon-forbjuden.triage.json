@@ -1,0 +1,18 @@
+{
+  "image": "043-gangfartsomrade-motorfordon-forbjuden.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-04T17:19:47+00:00",
+  "usage": {
+    "completion_tokens": 75,
+    "prompt_tokens": 1562,
+    "total_tokens": 1637
+  },
+  "response": {
+    "category": "other_road_sign",
+    "what_i_see": "A Swedish pedestrian street sign (blue sign with walking figures) mounted on a pole with two supplemental rule plates below it.",
+    "model_confidence": 0.95,
+    "panels_below_main_sign": 0
+  }
+}

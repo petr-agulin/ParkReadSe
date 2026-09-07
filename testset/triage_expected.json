@@ -1,0 +1,12 @@
+{
+  "_": "Ожидаемый ответ стадии отсева для снимков, которые парковочными знаками НЕ являются. У них нет и не может быть эталона разбора: разбирать нечего. Файл нужен, чтобы отличить «эталон ещё не написан» от «эталона не будет», и чтобы замер мог посчитать долю ложных пропусков — до этих снимков отсев отвечал `parking_sign` сорок раз из сорока, и его способность отказывать не была измерена ни разу.",
+  "photos": {
+    "043-gangfartsomrade-motorfordon-forbjuden": "other_road_sign",
+    "045-hotellskylt-inte-vagmarke": "not_a_sign",
+    "046-overgangsstalle-pabjuden-korriktning": "other_road_sign",
+    "047-varning-motesplats": "other_road_sign",
+    "048-forbud-infart-galler-ej-cykel": "other_road_sign",
+    "051-hastighet-40": "other_road_sign",
+    "053-pabjuden-korriktning-hastighet-30": "other_road_sign"
+  }
+}

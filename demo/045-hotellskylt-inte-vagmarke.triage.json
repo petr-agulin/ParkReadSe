@@ -1,0 +1,17 @@
+{
+  "image": "045-hotellskylt-inte-vagmarke.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-04T17:23:38+00:00",
+  "usage": {
+    "completion_tokens": 52,
+    "prompt_tokens": 1555,
+    "total_tokens": 1607
+  },
+  "response": {
+    "category": "not_a_sign",
+    "what_i_see": "A building facade with a hanging flag for GRAD Hotel & Hostel.",
+    "panels_below_main_sign": 0
+  }
+}

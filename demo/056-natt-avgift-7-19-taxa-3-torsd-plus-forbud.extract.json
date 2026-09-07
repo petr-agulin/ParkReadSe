@@ -1,0 +1,96 @@
+{
+  "image": "056-natt-avgift-7-19-taxa-3-torsd-plus-forbud.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:49:40+00:00",
+  "usage": {
+    "completion_tokens": 554,
+    "prompt_tokens": 4784,
+    "total_tokens": 5338
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Avgift",
+          "7-19",
+          "(11-17)",
+          "Taxa 3"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "07:00",
+              "to": "19:00",
+              "day_class": "weekday"
+            },
+            {
+              "from": "11:00",
+              "to": "17:00",
+              "day_class": "eve"
+            }
+          ],
+          "fee": true,
+          "tariff_code": "3"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Torsd",
+          "0-6"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "00:00",
+              "to": "06:00",
+              "day_class": "named_weekday",
+              "named_weekday": "thursday"
+            }
+          ],
+          "prohibition": true,
+          "pictogram": "prohibition"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "other",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "prohibition": true,
+          "pictogram": "prohibition"
+        }
+      }
+    ],
+    "panel_count": 3,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

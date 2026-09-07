@@ -1,0 +1,88 @@
+{
+  "image": "013-rorelsehindrad-2-platser.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:44:45+00:00",
+  "usage": {
+    "completion_tokens": 493,
+    "prompt_tokens": 4780,
+    "total_tokens": 5273
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "disabled_permit",
+          "pictogram": "wheelchair"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "2 platser"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "place_count": 2
+        }
+      },
+      {
+        "index": 3,
+        "kind": "operator_plate",
+        "lines": [
+          "Mölndals",
+          "Parkerings AB",
+          "031-87 54 79"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "operator": {
+            "name": "Mölndals Parkerings AB",
+            "phone": "031-87 54 79"
+          }
+        }
+      },
+      {
+        "index": 4,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "arrow": "left",
+          "pictogram": "arrow"
+        }
+      }
+    ],
+    "panel_count": 4,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

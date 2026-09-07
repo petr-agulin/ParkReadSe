@@ -1,0 +1,18 @@
+{
+  "image": "046-overgangsstalle-pabjuden-korriktning.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-04T16:36:37+00:00",
+  "usage": {
+    "completion_tokens": 71,
+    "prompt_tokens": 1521,
+    "total_tokens": 1592
+  },
+  "response": {
+    "category": "other_road_sign",
+    "what_i_see": "A pedestrian crossing sign and a keep-right sign on a pole in the middle of a street.",
+    "model_confidence": 0.99,
+    "panels_below_main_sign": 0
+  }
+}

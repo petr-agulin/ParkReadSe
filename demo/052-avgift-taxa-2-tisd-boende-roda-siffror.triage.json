@@ -1,0 +1,17 @@
+{
+  "image": "052-avgift-taxa-2-tisd-boende-roda-siffror.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:49:19+00:00",
+  "usage": {
+    "completion_tokens": 57,
+    "prompt_tokens": 1509,
+    "total_tokens": 1566
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign with three plates below it stating fees, parking prohibition hours, and resident parking rules.",
+    "panels_below_main_sign": 3
+  }
+}

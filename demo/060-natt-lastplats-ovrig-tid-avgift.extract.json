@@ -1,0 +1,133 @@
+{
+  "image": "060-natt-lastplats-ovrig-tid-avgift.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:50:12+00:00",
+  "usage": {
+    "completion_tokens": 788,
+    "prompt_tokens": 4822,
+    "total_tokens": 5610
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "prohibition_stopping",
+      "background_color": "yellow",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Last-",
+          "plats"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "pictogram": "prohibition"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "7-19"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "07:00",
+              "to": "19:00",
+              "day_class": "weekday"
+            }
+          ]
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "0-15 m"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "stretch_metres": {
+            "from": 0,
+            "to": 15
+          }
+        }
+      },
+      {
+        "index": 4,
+        "kind": "sign_plate",
+        "lines": [
+          "Torsd.",
+          "0-6"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "00:00",
+              "to": "06:00",
+              "day_class": "named_weekday",
+              "named_weekday": "thursday"
+            }
+          ],
+          "prohibition": true,
+          "pictogram": "prohibition"
+        }
+      },
+      {
+        "index": 5,
+        "kind": "sign_plate",
+        "lines": [
+          "Övrig tid",
+          "Avgift",
+          "(10-17)",
+          "Taxe 3"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "10:00",
+              "to": "17:00",
+              "day_class": "eve"
+            }
+          ],
+          "fee": true,
+          "scope_shift": "remaining_time",
+          "tariff_code": "Taxe 3",
+          "pictogram": "parking",
+          "permits_parking": true
+        }
+      }
+    ],
+    "panel_count": 5,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

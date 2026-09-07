@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "yellow",
+    "form": "zone",
+    "legibility": {
+      "readable": true,
+      "obstructions": [
+        "sticker",
+        "damage"
+      ]
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Avgift"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "sticker"
+        ]
+      },
+      "parsed": {
+        "fee": true
+      },
+      "index": 1
+    }
+  ],
+  "panel_count": 1,
+  "boundaries": {
+    "certain": true
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "image": "024-avgift-erlaggs-med-mobil.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:46:08+00:00",
+  "usage": {
+    "completion_tokens": 80,
+    "prompt_tokens": 1533,
+    "total_tokens": 1613
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish blue parking sign with a white 'P', followed below by three rule plates (fee/payment method indication, bidirectional arrows, and a company contact plate), plus an EasyPark payment board at ",
+    "panels_below_main_sign": 2
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "image": "004-endast-besokande-pingstkyrkan.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:43:32+00:00",
+  "usage": {
+    "completion_tokens": 340,
+    "prompt_tokens": 4822,
+    "total_tokens": 5162
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Endast",
+          "för",
+          "besökande",
+          "till",
+          "Pingstkyrkan"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "visitors"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "operator_plate",
+        "lines": [
+          "Västia Parkering",
+          "0771-501550"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "operator": {
+            "name": "Västia Parkering",
+            "phone": "0771-501550"
+          }
+        }
+      }
+    ],
+    "panel_count": 2,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

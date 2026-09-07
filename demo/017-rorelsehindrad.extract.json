@@ -1,0 +1,42 @@
+{
+  "image": "017-rorelsehindrad.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:45:16+00:00",
+  "usage": {
+    "completion_tokens": 186,
+    "prompt_tokens": 4798,
+    "total_tokens": 4984
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "disabled_permit",
+          "pictogram": "wheelchair"
+        }
+      }
+    ],
+    "panel_count": 1,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

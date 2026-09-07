@@ -1,0 +1,44 @@
+{
+  "image": "015-motorcykel.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:45:00+00:00",
+  "usage": {
+    "completion_tokens": 218,
+    "prompt_tokens": 4798,
+    "total_tokens": 5016
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "vehicle_class": "motorcycle",
+          "pictogram": "motorcycle"
+        }
+      }
+    ],
+    "panel_count": 1,
+    "boundaries": {
+      "certain": true
+    },
+    "notes": "Swedish parking sign allowing parking, with a plate restricting parking to motorcycles.",
+    "model_confidence": 0.99
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "wayfinding_parking_house",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [],
+  "panel_count": 0,
+  "boundaries": {
+    "certain": true
+  }
+}

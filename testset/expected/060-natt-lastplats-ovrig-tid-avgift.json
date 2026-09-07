@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "prohibition_stopping",
+    "background_color": "yellow",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "7-19"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "distance",
+          "shadow"
+        ]
+      },
+      "parsed": {
+        "time_windows": [
+          {
+            "from": "07:00",
+            "to": "19:00",
+            "day_class": "weekday"
+          }
+        ]
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": false,
+        "obstructions": [
+          "distance",
+          "shadow"
+        ]
+      },
+      "parsed": {},
+      "index": 2
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": false,
+        "obstructions": [
+          "distance",
+          "shadow"
+        ]
+      },
+      "parsed": {},
+      "index": 3
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Övrig tid",
+        "avgift"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "distance"
+        ]
+      },
+      "parsed": {
+        "permits_parking": true,
+        "fee": true,
+        "scope_shift": "remaining_time",
+        "pictogram": "parking"
+      },
+      "index": 4
+    }
+  ],
+  "panel_count": 4,
+  "boundaries": {
+    "certain": false
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Avgift"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "blur",
+          "distance"
+        ]
+      },
+      "parsed": {
+        "fee": true
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Zon C"
+      ],
+      "background_color": "white",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "blur",
+          "distance"
+        ]
+      },
+      "parsed": {
+        "tariff_code": "Zon C"
+      },
+      "index": 2
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "white",
+      "legibility": {
+        "readable": false,
+        "obstructions": [
+          "blur",
+          "distance"
+        ]
+      },
+      "parsed": {},
+      "index": 3
+    }
+  ],
+  "panel_count": 3,
+  "boundaries": {
+    "certain": false
+  }
+}

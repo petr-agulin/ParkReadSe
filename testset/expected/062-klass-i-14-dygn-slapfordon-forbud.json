@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "vehicle_class": "car_only",
+        "pictogram": "car"
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "14 dygn"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "duration_limit": {
+          "amount": 336,
+          "unit": "hours"
+        }
+      },
+      "index": 2
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Uppställning",
+        "av släpfordon",
+        "förbjuden",
+        "Tanums kommun"
+      ],
+      "background_color": "other",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {},
+      "index": 3
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Camping förbjuden",
+        "Camping verboten",
+        "No camping"
+      ],
+      "background_color": "other",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {},
+      "index": 4
+    }
+  ],
+  "panel_count": 4,
+  "boundaries": {
+    "certain": true
+  }
+}

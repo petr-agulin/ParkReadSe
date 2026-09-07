@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Avgift"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "fee": true
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "4 tim"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "duration_limit": {
+          "amount": 4,
+          "unit": "hours"
+        }
+      },
+      "index": 2
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Endast laddande elbilar"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "vehicle_class": "electric"
+      },
+      "index": 3
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "2 platser"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "place_count": 2
+      },
+      "index": 4
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "white",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "arrow": "right",
+        "pictogram": "arrow"
+      },
+      "index": 5
+    },
+    {
+      "kind": "info_board",
+      "lines": [
+        "Områdeskod 31308"
+      ],
+      "background_color": "other",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "area_code": "31308",
+        "pictogram": "payment"
+      },
+      "index": 6
+    }
+  ],
+  "panel_count": 6,
+  "boundaries": {
+    "certain": true
+  }
+}

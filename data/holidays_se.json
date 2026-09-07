@@ -1,0 +1,85 @@
+{
+  "_": "Календарь классов дня для шведских парковочных знаков. Файл хранит ТОЛЬКО красные дни. Воскресенья, субботы и кануны выводятся кодом — см. data/README.md.",
+  "covered_from": "2026-01-01",
+  "covered_to": "2026-12-31",
+  "day_classes": {
+    "red": "sön- och helgdag — красные цифры на табличке",
+    "eve": "vardag före sön- och helgdag — цифры в скобках",
+    "weekday": "vardag — цифры без скобок"
+  },
+  "public_holidays": [
+    {
+      "date": "2026-01-01",
+      "name_sv": "Nyårsdagen",
+      "name_en": "New Year's Day"
+    },
+    {
+      "date": "2026-01-06",
+      "name_sv": "Trettondedag jul",
+      "name_en": "Epiphany"
+    },
+    {
+      "date": "2026-04-03",
+      "name_sv": "Långfredagen",
+      "name_en": "Good Friday"
+    },
+    {
+      "date": "2026-04-05",
+      "name_sv": "Påskdagen",
+      "name_en": "Easter Sunday"
+    },
+    {
+      "date": "2026-04-06",
+      "name_sv": "Annandag påsk",
+      "name_en": "Easter Monday"
+    },
+    {
+      "date": "2026-05-01",
+      "name_sv": "Första maj",
+      "name_en": "May Day"
+    },
+    {
+      "date": "2026-05-14",
+      "name_sv": "Kristi himmelsfärdsdag",
+      "name_en": "Ascension Day"
+    },
+    {
+      "date": "2026-05-24",
+      "name_sv": "Pingstdagen",
+      "name_en": "Whit Sunday"
+    },
+    {
+      "date": "2026-06-06",
+      "name_sv": "Sveriges nationaldag",
+      "name_en": "National Day of Sweden"
+    },
+    {
+      "date": "2026-06-20",
+      "name_sv": "Midsommardagen",
+      "name_en": "Midsummer Day"
+    },
+    {
+      "date": "2026-10-31",
+      "name_sv": "Alla helgons dag",
+      "name_en": "All Saints' Day"
+    },
+    {
+      "date": "2026-12-25",
+      "name_sv": "Juldagen",
+      "name_en": "Christmas Day"
+    },
+    {
+      "date": "2026-12-26",
+      "name_sv": "Annandag jul",
+      "name_en": "Boxing Day"
+    }
+  ],
+  "boundary_holidays": [
+    {
+      "date": "2027-01-01",
+      "name_sv": "Nyårsdagen",
+      "name_en": "New Year's Day",
+      "_": "Вне покрытого периода. Нужен только для того, чтобы 31 декабря 2026 года получило класс «канун». Ответов на даты 2027 года файл не даёт."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "image": "021-privat-parkering-brf.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:45:44+00:00",
+  "usage": {
+    "completion_tokens": 61,
+    "prompt_tokens": 1533,
+    "total_tokens": 1594
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A blue Swedish parking sign indicating private parking for Brf Ängslyckan, with an arrow plate below it.",
+    "panels_below_main_sign": 1
+  }
+}

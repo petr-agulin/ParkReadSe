@@ -1,0 +1,18 @@
+{
+  "image": "038-scandic-buss-besokande-pil.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:48:31+00:00",
+  "usage": {
+    "completion_tokens": 97,
+    "prompt_tokens": 1535,
+    "total_tokens": 1632
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A blue Swedish parking sign with four plates below it: one naming Scandic, one indicating bus parking, one stating 'Besökande' (visitors), and one with a right arrow.",
+    "model_confidence": 0.95,
+    "panels_below_main_sign": 3
+  }
+}

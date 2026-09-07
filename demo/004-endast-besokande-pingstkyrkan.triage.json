@@ -1,0 +1,17 @@
+{
+  "image": "004-endast-besokande-pingstkyrkan.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:43:28+00:00",
+  "usage": {
+    "completion_tokens": 112,
+    "prompt_tokens": 1557,
+    "total_tokens": 1669
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish blue parking sign with a white 'P' at the top. Below it, there is a plate specifying who may park ('Endast för besökande till Pingstkyrkan'). At the very bottom, there is a plate with a comp",
+    "panels_below_main_sign": 1
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "image": "027-rorelsehindrad-0-6m-avgift-taxa-2.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:47:03+00:00",
+  "usage": {
+    "completion_tokens": 82,
+    "prompt_tokens": 1536,
+    "total_tokens": 1618
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign for reserved parking with multiple plates below: a wheelchair symbol plate, a distance plate (0-6 m), a fee plate (Avgift Taxa 2), and a payment information plate at the bottom.",
+    "panels_below_main_sign": 3
+  }
+}

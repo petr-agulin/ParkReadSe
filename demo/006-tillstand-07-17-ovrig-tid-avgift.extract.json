@@ -1,0 +1,102 @@
+{
+  "image": "006-tillstand-07-17-ovrig-tid-avgift.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:43:49+00:00",
+  "usage": {
+    "completion_tokens": 592,
+    "prompt_tokens": 4798,
+    "total_tokens": 5390
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Särskilt",
+          "P-tillstånd",
+          "erfordras",
+          "07-17"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "07:00",
+              "to": "17:00",
+              "day_class": "weekday"
+            }
+          ],
+          "permit_required": true,
+          "eligibility": "permit_holders"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Övrig tid",
+          "avgift"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "fee": true,
+          "scope_shift": "remaining_time"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "arrow": "both_horizontal",
+          "pictogram": "arrow"
+        }
+      },
+      {
+        "index": 4,
+        "kind": "operator_plate",
+        "lines": [
+          "Mölndals",
+          "Parkerings AB",
+          "031-875479"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "operator": {
+            "name": "Mölndals Parkerings AB",
+            "phone": "031-875479"
+          }
+        }
+      }
+    ],
+    "panel_count": 4,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

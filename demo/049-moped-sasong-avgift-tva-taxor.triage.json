@@ -1,0 +1,17 @@
+{
+  "image": "049-moped-sasong-avgift-tva-taxor.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:49:03+00:00",
+  "usage": {
+    "completion_tokens": 80,
+    "prompt_tokens": 1535,
+    "total_tokens": 1615
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A main blue parking sign with five rule-stating plates below it: a motorcycle symbol with dates and fee information, another fee period, a distance rule, and a yellow no-parking restriction plate at t",
+    "panels_below_main_sign": 5
+  }
+}

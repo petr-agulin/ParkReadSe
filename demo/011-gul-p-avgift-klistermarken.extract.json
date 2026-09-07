@@ -1,0 +1,50 @@
+{
+  "image": "011-gul-p-avgift-klistermarken.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:44:28+00:00",
+  "usage": {
+    "completion_tokens": 217,
+    "prompt_tokens": 4798,
+    "total_tokens": 5015
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "yellow",
+      "form": "zone",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "sticker",
+          "damage"
+        ]
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Avgift"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true,
+          "obstructions": [
+            "sticker"
+          ]
+        },
+        "parsed": {
+          "fee": true
+        }
+      }
+    ],
+    "panel_count": 1,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

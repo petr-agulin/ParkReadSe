@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "2 tim"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "sticker"
+        ]
+      },
+      "parsed": {
+        "duration_limit": {
+          "amount": 2,
+          "unit": "hours"
+        }
+      },
+      "index": 1
+    }
+  ],
+  "panel_count": 1,
+  "boundaries": {
+    "certain": true
+  }
+}

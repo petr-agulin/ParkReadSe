@@ -1,0 +1,122 @@
+{
+  "image": "030-avgift-8-21-fredag-0-6-galler-ej-juli-zon-a.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "6f17821fa578",
+  "saved_at": "2026-09-07T10:47:32+00:00",
+  "usage": {
+    "completion_tokens": 727,
+    "prompt_tokens": 4782,
+    "total_tokens": 5509
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Avgift",
+          "8-21",
+          "(10-17)"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "08:00",
+              "to": "21:00",
+              "day_class": "weekday"
+            },
+            {
+              "from": "10:00",
+              "to": "17:00",
+              "day_class": "eve"
+            }
+          ],
+          "fee": true
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Fredag",
+          "0-6",
+          "Gäller ej",
+          "1 juli - 31 juli"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "00:00",
+              "to": "06:00",
+              "day_class": "named_weekday",
+              "named_weekday": "friday",
+              "dates": {
+                "mode": "except",
+                "ranges": [
+                  {
+                    "from": "07-01",
+                    "to": "07-31"
+                  }
+                ]
+              }
+            }
+          ],
+          "prohibition": true,
+          "pictogram": "prohibition"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "Zon A"
+        ],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "tariff_code": "Zon A"
+        }
+      },
+      {
+        "index": 4,
+        "kind": "info_board",
+        "lines": [
+          "Kod: 8411",
+          "Betala digitalt",
+          "sundbyberg.se/betalaparkering"
+        ],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "area_code": "8411"
+        }
+      }
+    ],
+    "panel_count": 4,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

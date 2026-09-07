@@ -1,0 +1,17 @@
+{
+  "image": "041-lastplats-forbud-7-17-ovrig-tid-avgift.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:48:39+00:00",
+  "usage": {
+    "completion_tokens": 66,
+    "prompt_tokens": 1547,
+    "total_tokens": 1613
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign assembly for a loading zone (Lastplats) with several yellow and blue supplementary plates below specifying hours, distances, and parking rules.",
+    "panels_below_main_sign": 4
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "unknown",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": false,
+      "obstructions": [
+        "distance",
+        "blur"
+      ]
+    }
+  },
+  "panels": [],
+  "panel_count": 0,
+  "boundaries": {
+    "certain": false
+  }
+}

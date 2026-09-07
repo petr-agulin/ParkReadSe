@@ -1,0 +1,17 @@
+{
+  "image": "031-snedstallning-torsdag-jamna-veckor-boende-solna.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:47:35+00:00",
+  "usage": {
+    "completion_tokens": 117,
+    "prompt_tokens": 1533,
+    "total_tokens": 1650
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A blue parking sign with a white P at the top, followed by a blue auxiliary plate showing diagonal parking, an 'Avgift Taxa A' fee plate, a yellow parking restriction plate for Thursdays 10-14 on even",
+    "panels_below_main_sign": 5
+  }
+}

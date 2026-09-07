@@ -1,0 +1,17 @@
+{
+  "image": "025-30min-endast-gaster-gatukok.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:46:16+00:00",
+  "usage": {
+    "completion_tokens": 76,
+    "prompt_tokens": 1533,
+    "total_tokens": 1609
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign with a blue 'P' at the top, followed by three plates below stating distance, 30 min duration for guests of Franks Gatukök, and a left arrow.",
+    "panels_below_main_sign": 3
+  }
+}

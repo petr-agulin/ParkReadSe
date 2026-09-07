@@ -1,0 +1,17 @@
+{
+  "image": "033-avgift-8-21-uppstallning-zon-e-boende-storskogen.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-07T10:47:51+00:00",
+  "usage": {
+    "completion_tokens": 62,
+    "prompt_tokens": 1547,
+    "total_tokens": 1609
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign with multiple supplementary plates below it indicating fees, parking layout, direction arrow, zone E, and resident parking.",
+    "panels_below_main_sign": 5
+  }
+}

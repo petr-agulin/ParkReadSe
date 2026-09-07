@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true,
+      "obstructions": [
+        "sticker"
+      ]
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "30 min"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "duration_limit": {
+          "amount": 30,
+          "unit": "minutes"
+        }
+      },
+      "index": 1
+    }
+  ],
+  "panel_count": 1,
+  "boundaries": {
+    "certain": true
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "image": "055-forbud-stannande-snotackt-pil.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "e4a19b5f21c5",
+  "saved_at": "2026-09-06T12:09:37+00:00",
+  "usage": {
+    "completion_tokens": 442,
+    "prompt_tokens": 4736,
+    "total_tokens": 5178
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "prohibition_stopping",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "snow"
+        ]
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Parkeringen",
+          "skall vara",
+          "utrymd",
+          "fr.o.m.",
+          "226-01/07"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true,
+          "obstructions": [
+            "snow"
+          ]
+        },
+        "parsed": {
+          "prohibition": true,
+          "uninterpreted": [
+            "Parkeringen",
+            "skall vara",
+            "utrymd",
+            "fr.o.m.",
+            "226-01/07"
+          ]
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "arrow": "right",
+          "pictogram": "arrow"
+        }
+      }
+    ],
+    "panel_count": 2,
+    "boundaries": {
+      "certain": true
+    },
+    "notes": "Top sign has two crossed red bars (stopping prohibition C39), partially covered by snow. First panel is a yellow text warning plate, second is a yellow right-pointing arrow.",
+    "model_confidence": 0.95
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "image": "048-forbud-infart-galler-ej-cykel.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-04T17:24:46+00:00",
+  "usage": {
+    "completion_tokens": 70,
+    "prompt_tokens": 1559,
+    "total_tokens": 1629
+  },
+  "response": {
+    "category": "other_road_sign",
+    "what_i_see": "A red and yellow 'no entry' road sign mounted on a building wall with one exception plate below it stating 'Gäller ej' with a bicycle symbol.",
+    "panels_below_main_sign": 0
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "image": "051-hastighet-40.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-04T17:26:51+00:00",
+  "usage": {
+    "completion_tokens": 48,
+    "prompt_tokens": 1515,
+    "total_tokens": 1563
+  },
+  "response": {
+    "category": "other_road_sign",
+    "what_i_see": "A speed limit road sign showing 40",
+    "panels_below_main_sign": 0
+  }
+}
