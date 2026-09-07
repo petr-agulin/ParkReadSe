@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { analyze, generalRules } from "./api";
 import type { Analysis, GeneralRule } from "./types";
 import PhotoInput from "./components/PhotoInput";
+import SignPicker from "./components/SignPicker";
 import WhatWeSaw from "./components/WhatWeSaw";
 import WhoCanPark from "./components/WhoCanPark";
 import PeriodTimeline from "./components/PeriodTimeline";
@@ -20,6 +21,7 @@ export default function App() {
   const [data, setData] = useState<Analysis | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [moment, setMoment] = useState("");
+  const [picked, setPicked] = useState<File | null>(null);
   const [rules, setRules] = useState<GeneralRule[]>([]);
 
   useEffect(() => {
@@ -30,18 +32,36 @@ export default function App() {
   // не сохраняется — ни на диск сервера, ни в память страницы дольше нужного.
   useEffect(() => () => { if (preview) URL.revokeObjectURL(preview); }, [preview]);
 
-  async function onPick(file: File) {
+  // Выбор файла ничего не отправляет: снимок идёт на экран выбора знака.
+  function onPick(file: File) {
+    setError(null);
+    setData(null);
+    setPicked(file);
+  }
+
+  // Наружу уходит только вырезанное, и в разборе показывается оно же — иначе
+  // человек сверял бы ответ с картинкой, которой модель не видела.
+  async function onSend(cropped: File) {
     setBusy(true);
     setError(null);
     setData(null);
-    setPreview((old) => { if (old) URL.revokeObjectURL(old); return URL.createObjectURL(file); });
+    setPreview((old) => { if (old) URL.revokeObjectURL(old); return URL.createObjectURL(cropped); });
     try {
-      setData(await analyze(file, moment || undefined));
+      setData(await analyze(cropped, moment || undefined));
+      setPicked(null);
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     } finally {
       setBusy(false);
     }
+  }
+
+  // Отмена возвращает на начало и не оставляет за собой ничего.
+  function reset() {
+    setPicked(null);
+    setError(null);
+    setData(null);
+    setPreview((old) => { if (old) URL.revokeObjectURL(old); return null; });
   }
 
   return (
@@ -54,7 +74,19 @@ export default function App() {
           </p>
         </header>
 
-        <PhotoInput busy={busy} onPick={onPick} moment={moment} onMoment={setMoment} />
+        {picked ? (
+          <SignPicker
+            file={picked}
+            busy={busy}
+            onSend={onSend}
+            onReplace={onPick}
+            onCancel={reset}
+          />
+        ) : (
+          <PhotoInput busy={busy} onPick={onPick} moment={moment} onMoment={setMoment} />
+        )}
+
+        {busy && <p className="text-[13px] text-ink-2">Reading the sign…</p>}
 
         {error && (
           <p className="rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-900">

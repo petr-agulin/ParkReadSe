@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+/* Токены из design.md. Значения живут здесь одним списком: цвет меняется в одном
+   месте, а не в каждом компоненте. */
+@theme {
+  --color-ink: #16181c;
+  --color-ink-2: #5b636d;
+  --color-ink-3: #9aa4b1;
+  --color-ground: #ffffff;
+  --color-ground-2: #f6f7f9;
+  --color-line: #e3e6ea;
+
+  /* Синий шведского знака: продукт про знаки, и цвет взят оттуда. */
+  --color-accent: #0057a8;
+
+  /* Цвета смысла — только для состояний разбора, нигде больше. */
+  --color-fee: #8a5a00;
+  --color-free: #0f7b45;
+  --color-deny: #b3261e;
+  --color-unsure: #6b4ebf;
+}
