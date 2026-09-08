@@ -11,6 +11,7 @@ import {
   moveBy, resizeCorner, shareOfFrame, toImagePoint, visibleRect, zoomAt, zoomLevel,
 } from "../lib/crop";
 import { cut, load, release, type Loaded } from "../lib/image";
+import { suggestFrame } from "../lib/anchor";
 import { roomBelow } from "../lib/layout";
 
 type Props = {
@@ -74,8 +75,9 @@ export default function SignPicker({
         mine = l;
         setLoaded(l);
         // Рамка есть всегда: отправить можно и без касания. Из видоискателя
-        // приходит уже наведённая — переставлять её по центру было бы обидно.
-        const start = initialBox ?? defaultBox(l.size);
+        // приходит уже наведённая; для снимка из галереи её предлагает поиск
+        // основного знака на устройстве, а не нашёл — встаёт по центру, как раньше.
+        const start = initialBox ?? suggestFrame(l.image, l.size) ?? defaultBox(l.size);
         setBox(start);
         frac.current = fractionIn(start, { x: 0, y: 0, ...l.size });
       })
