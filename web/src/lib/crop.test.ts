@@ -9,13 +9,22 @@ import {
   MAX_SIDE,
   MIN_SIDE,
   boxAt,
+  MAX_ZOOM,
   clamp,
+  clampPan,
   defaultBox,
+  fit,
   moveBy,
   plan,
   resizeCorner,
   shareOfFrame,
+  fractionIn,
+  frameForView,
+  toImagePoint,
+  visibleRect,
   withMargin,
+  zoomAt,
+  zoomLevel,
 } from "./crop";
 
 const phone = { w: 3000, h: 4000 };
@@ -175,6 +184,188 @@ describe("план отправки", () => {
     const share = shareOfFrame(p.crop, phone);
     expect(share).toBeGreaterThan(0);
     expect(share).toBeLessThan(1);
+  });
+});
+
+describe("вписывание картинки в сцену", () => {
+  it("сохраняет пропорции", () => {
+    const r = fit(phone, { w: 800, h: 600 });
+    expect(r.w / r.h).toBeCloseTo(phone.w / phone.h);
+  });
+
+  it("вытянутый вверх снимок упирается в высоту, поля остаются по бокам", () => {
+    const r = fit(phone, { w: 800, h: 600 });
+    expect(r.h).toBeCloseTo(600);
+    expect(r.w).toBeLessThan(800);
+    expect(r.x).toBeGreaterThan(0);
+    expect(r.y).toBeCloseTo(0);
+  });
+
+  it("вытянутый вширь упирается в ширину, поля сверху и снизу", () => {
+    // Сцена нарочно другой формы: при совпадающих пропорциях полей нет вовсе,
+    // и проверять было бы нечего.
+    const r = fit(wide, { w: 800, h: 900 });
+    expect(r.w).toBeCloseTo(800);
+    expect(r.x).toBeCloseTo(0);
+    expect(r.y).toBeGreaterThan(0);
+  });
+
+  it("картинка ровно в размер сцены обходится без полей", () => {
+    const r = fit({ w: 400, h: 300 }, { w: 800, h: 600 });
+    expect(r).toEqual({ x: 0, y: 0, w: 800, h: 600 });
+  });
+
+  it("всегда помещается в сцену целиком", () => {
+    for (const into of [{ w: 300, h: 900 }, { w: 900, h: 300 }, { w: 500, h: 500 }]) {
+      const r = fit(phone, into);
+      expect(r.x).toBeGreaterThanOrEqual(0);
+      expect(r.y).toBeGreaterThanOrEqual(0);
+      expect(r.x + r.w).toBeLessThanOrEqual(into.w + 1e-9);
+      expect(r.y + r.h).toBeLessThanOrEqual(into.h + 1e-9);
+    }
+  });
+});
+
+describe("приближение снимка на экране", () => {
+  const stage = { w: 400, h: 700 };
+  const base = fit(phone, stage);
+
+  it("оставляет точку под пальцами на месте", () => {
+    const anchor = { x: 180, y: 300 };
+    const before = toImagePoint(anchor, base, phone);
+    const after = toImagePoint(anchor, zoomAt(base, 2.5, anchor, base), phone);
+    expect(after.x).toBeCloseTo(before.x, 6);
+    expect(after.y).toBeCloseTo(before.y, 6);
+  });
+
+  it("не уменьшает мельче, чем весь снимок на экране", () => {
+    const small = zoomAt(base, 0.2, { x: 200, y: 350 }, base);
+    expect(zoomLevel(small, base)).toBeCloseTo(1);
+  });
+
+  it("не увеличивает дальше предела", () => {
+    let p = base;
+    for (let i = 0; i < 20; i++) p = zoomAt(p, 2, { x: 200, y: 350 }, base);
+    expect(zoomLevel(p, base)).toBeCloseTo(MAX_ZOOM);
+  });
+
+  it("сохраняет пропорции снимка на любом приближении", () => {
+    const p = zoomAt(base, 3, { x: 100, y: 200 }, base);
+    expect(p.w / p.h).toBeCloseTo(phone.w / phone.h);
+  });
+
+  it("что уходит наружу, от приближения не зависит", () => {
+    // Одна и та же точка экрана при разном приближении — разные пиксели снимка,
+    // но рамка живёт в пикселях снимка, и план по ней один и тот же.
+    const box = { x: 900, y: 1200, w: 300, h: 700 };
+    const near = plan(box, phone);
+    const far = plan(box, phone);
+    expect(near).toEqual(far);
+    // И обратно: та же точка ИСХОДНИКА остаётся собой после приближения.
+    const anchor = { x: 210, y: 410 };
+    const zoomed = clampPan(zoomAt(base, 4, anchor, base), stage);
+    const p1 = toImagePoint(anchor, base, phone);
+    const p2 = toImagePoint(anchor, zoomed, phone);
+    expect(Math.abs(p1.x - p2.x)).toBeLessThan(phone.w * 0.02);
+  });
+});
+
+describe("сдвиг приближённого снимка", () => {
+  const stage = { w: 400, h: 700 };
+  const base = fit(phone, stage);
+
+  it("снимок мельче сцены стоит по центру", () => {
+    const p = clampPan({ ...base, x: -999, y: 999 }, stage);
+    expect(p.x).toBeCloseTo((stage.w - base.w) / 2);
+    expect(p.y).toBeCloseTo((stage.h - base.h) / 2);
+  });
+
+  it("приближённый снимок не утаскивается за край", () => {
+    const big = zoomAt(base, 4, { x: 200, y: 350 }, base);
+    for (const [dx, dy] of [[9999, 9999], [-9999, -9999]] as const) {
+      const p = clampPan({ ...big, x: big.x + dx, y: big.y + dy }, stage);
+      expect(p.x).toBeLessThanOrEqual(0);
+      expect(p.y).toBeLessThanOrEqual(0);
+      expect(p.x + p.w).toBeGreaterThanOrEqual(stage.w - 1e-9);
+      expect(p.y + p.h).toBeGreaterThanOrEqual(stage.h - 1e-9);
+    }
+  });
+});
+
+describe("рамка держит вид на экране", () => {
+  const stage = { w: 400, h: 700 };
+  const base = fit(phone, stage);
+  const frac = { w: 0.315, h: 0.7 };
+
+  const viewAt = (factor: number, anchor = { x: 200, y: 350 }) =>
+    visibleRect(clampPan(zoomAt(base, factor, anchor, base), stage), phone, stage);
+
+  it("стоит по середине видимого", () => {
+    for (const factor of [1, 2, 4, 8]) {
+      const v = viewAt(factor);
+      const box = frameForView(frac, v, phone);
+      expect(box.x + box.w / 2).toBeCloseTo(v.x + v.w / 2, 3);
+      expect(box.y + box.h / 2).toBeCloseTo(v.y + v.h / 2, 3);
+    }
+  });
+
+  it("занимает одну и ту же долю экрана на любом приближении", () => {
+    for (const factor of [1, 2, 4, 8]) {
+      const v = viewAt(factor);
+      const box = frameForView(frac, v, phone);
+      expect(box.w / v.w).toBeCloseTo(frac.w, 6);
+      expect(box.h / v.h).toBeCloseTo(frac.h, 6);
+    }
+  });
+
+  it("в пикселях снимка сужается при приближении — это и есть выделение дальнего знака", () => {
+    const wide = frameForView(frac, viewAt(1), phone);
+    const near = frameForView(frac, viewAt(8), phone);
+    expect(near.w).toBeLessThan(wide.w / 4);
+  });
+
+  it("целиком внутри видимого, значит все углы под рукой", () => {
+    for (const factor of [1, 2, 4, 8]) {
+      const v = viewAt(factor);
+      const box = frameForView(frac, v, phone);
+      expect(box.x).toBeGreaterThanOrEqual(v.x - 1e-6);
+      expect(box.y).toBeGreaterThanOrEqual(v.y - 1e-6);
+      expect(box.x + box.w).toBeLessThanOrEqual(v.x + v.w + 1e-6);
+      expect(box.y + box.h).toBeLessThanOrEqual(v.y + v.h + 1e-6);
+    }
+  });
+
+  it("не вылезает за снимок у самого края", () => {
+    const v = viewAt(8, { x: 399, y: 699 });
+    expect(inside(frameForView(frac, v, phone), phone)).toBe(true);
+  });
+
+  it("доля считается из рамки и видимого и возвращается обратно", () => {
+    const v = viewAt(3);
+    const box = frameForView(frac, v, phone);
+    const back = fractionIn(box, v);
+    expect(back.w).toBeCloseTo(frac.w, 6);
+    expect(back.h).toBeCloseTo(frac.h, 6);
+  });
+
+  it("свою долю человек задаёт углами, и она переживает приближение", () => {
+    const v1 = viewAt(2);
+    const resized = { ...frameForView(frac, v1, phone), w: 200, h: 500 };
+    const mine = fractionIn(resized, v1);
+    const v2 = viewAt(6);
+    const box = frameForView(mine, v2, phone);
+    expect(box.w / v2.w).toBeCloseTo(mine.w, 6);
+    expect(box.h / v2.h).toBeCloseTo(mine.h, 6);
+  });
+});
+
+describe("экранная точка в пиксели снимка", () => {
+  it("углы картинки — углы снимка", () => {
+    const placed = { x: 50, y: 20, w: 300, h: 400 };
+    expect(toImagePoint({ x: 50, y: 20 }, placed, phone)).toEqual({ x: 0, y: 0 });
+    const far = toImagePoint({ x: 350, y: 420 }, placed, phone);
+    expect(far.x).toBeCloseTo(phone.w);
+    expect(far.y).toBeCloseTo(phone.h);
   });
 });
 

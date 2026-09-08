@@ -3,24 +3,49 @@
 // Отсюда снимок НЕ уходит наружу: выбранный файл идёт на экран выбора знака,
 // где человек указывает знак и видит, что именно будет отправлено.
 
+import { cameraSupported } from "../lib/camera";
+
 type Props = {
   busy: boolean;
   onPick: (file: File) => void;
+  onCamera: () => void;
   moment: string;
   onMoment: (value: string) => void;
 };
 
-export default function PhotoInput({ busy, onPick, moment, onMoment }: Props) {
+export default function PhotoInput({ busy, onPick, onCamera, moment, onMoment }: Props) {
+  // Кнопку съёмки показываем, только если браузер отдаст камеру. По незащищённому
+  // адресу её нет вовсе, и предлагать было бы обещанием, которого не сдержать.
+  const canShoot = cameraSupported(
+    typeof navigator === "undefined" ? undefined : navigator.mediaDevices,
+    typeof window !== "undefined" && window.isSecureContext,
+  );
+
   return (
     <section className="rounded-xl border border-line bg-ground p-4">
+      {canShoot && (
+        <button
+          type="button"
+          onClick={onCamera}
+          disabled={busy}
+          className="mb-4 h-12 w-full rounded-lg bg-accent px-5 text-[15px] font-semibold
+                     text-white disabled:opacity-50"
+        >
+          Take a photo of the sign
+        </button>
+      )}
+
       <label className="block">
         <span className="mb-2 block text-[15px] font-semibold text-ink">
-          Photograph of the sign
+          {canShoot ? "Or choose a photo" : "Photograph of the sign"}
         </span>
         <input
           type="file"
           accept="image/*"
-          capture="environment"
+          // Системную камеру предлагаем, только когда своей нет: иначе «выбрать
+          // снимок» открывало бы камеру вместо галереи, и человек не мог бы взять
+          // уже снятое.
+          capture={canShoot ? undefined : "environment"}
           disabled={busy}
           onChange={(e) => {
             const file = e.target.files?.[0];

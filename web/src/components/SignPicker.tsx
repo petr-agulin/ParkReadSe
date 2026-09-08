@@ -1,43 +1,69 @@
-// Экран выбора знака: снимок, рамка, и ясная развилка — отправить, взять другой
-// снимок или уйти.
+// Экран выбора знака: снимок, рамка, и ясная развилка — отправить, снять ещё раз
+// или уйти.
 //
-// Наружу отсюда уходит только вырезанное. Всё остальное остаётся в браузере.
+// Наружу отсюда уходит только вырезанное. Приближение — про то, чем целятся:
+// рамка живёт в пикселях исходника и от увеличения не зависит вовсе.
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Box, Point, Size } from "../lib/crop";
-import { boxAt, defaultBox, moveBy, resizeCorner, shareOfFrame } from "../lib/crop";
+import {
+  BOX_ASPECT, DEFAULT_HEIGHT, clampPan, defaultBox, fit, fractionIn, frameForView,
+  moveBy, resizeCorner, shareOfFrame, toImagePoint, visibleRect, zoomAt, zoomLevel,
+} from "../lib/crop";
 import { cut, load, release, type Loaded } from "../lib/image";
+import { roomBelow } from "../lib/layout";
 
 type Props = {
   file: File;
+  /** Рамка, уже наведённая человеком в видоискателе. Пусто — ставим по центру. */
+  initialBox?: Box;
+  /** Откуда снимок: от этого зависит, что делает «ещё раз». */
+  source: "camera" | "file";
   busy: boolean;
   onSend: (cropped: File) => void;
-  /** Другой снимок вместо этого — остаёмся здесь же, с новой картинкой. */
+  /** Другой снимок из галереи — остаёмся здесь же, с новой картинкой. */
   onReplace: (file: File) => void;
+  /** Снять заново — возврат в наш видоискатель, а не в системную камеру. */
+  onRetake: () => void;
   /** Отмена — уйти на начало и ничего за собой не оставить. */
   onCancel: () => void;
 };
 
 type Drag =
   | { kind: "move"; from: Point; box: Box }
-  | { kind: "corner"; corner: "nw" | "ne" | "sw" | "se" };
+  | { kind: "corner"; corner: "nw" | "ne" | "sw" | "se" }
+  | { kind: "pan"; from: Point; placed: Box };
+
+type Pinch = { dist: number; mid: Point; placed: Box };
 
 const CORNERS = ["nw", "ne", "sw", "se"] as const;
 
-export default function SignPicker({ file, busy, onSend, onReplace, onCancel }: Props) {
+export default function SignPicker({
+  file, initialBox, source, busy, onSend, onReplace, onRetake, onCancel,
+}: Props) {
   const [loaded, setLoaded] = useState<Loaded | null>(null);
   const [failed, setFailed] = useState<string | null>(null);
   const [box, setBox] = useState<Box | null>(null);
-  const [touched, setTouched] = useState(false);
-  const [drag, setDrag] = useState<Drag | null>(null);
+  // Доля экрана, которую занимает рамка. Человек меняет её углами, приближение —
+  // никогда: в этом и смысл, рамка всегда выглядит одинаково и вся на виду.
+  const frac = useRef<Size>({ w: DEFAULT_HEIGHT * BOX_ASPECT, h: DEFAULT_HEIGHT });
   const [sending, setSending] = useState(false);
+  const room = useRef<HTMLDivElement>(null);
+  const footer = useRef<HTMLDivElement>(null);
   const stage = useRef<HTMLDivElement>(null);
-  const frame = useRef<HTMLDivElement>(null);
   const another = useRef<HTMLInputElement>(null);
-  // Куда именно легла картинка внутри отведённого места. Высота сцены ограничена
-  // экраном, поэтому вписанный снимок почти никогда не совпадает с ней по форме,
-  // и рамку надо считать по картинке, а не по контейнеру — иначе она уедет.
-  const [view, setView] = useState<{ x: number; y: number; w: number; h: number } | null>(null);
+
+  // `base` — снимок целиком на экране, `placed` — где он лежит сейчас, уже
+  // с приближением. Обе величины в пикселях сцены.
+  const [base, setBase] = useState<Box | null>(null);
+  const [placed, setPlaced] = useState<Box | null>(null);
+  const [stageDims, setStageDims] = useState<Size | null>(null);
+
+  // Жесты держим в ref, а не в состоянии: они меняются на каждое движение пальца,
+  // и перерисовка на каждый шаг ни к чему.
+  const drag = useRef<Drag | null>(null);
+  const pinch = useRef<Pinch | null>(null);
+  const pointers = useRef(new Map<number, Point>());
 
   useEffect(() => {
     let dead = false;
@@ -47,23 +73,38 @@ export default function SignPicker({ file, busy, onSend, onReplace, onCancel }: 
         if (dead) { release(l); return; }
         mine = l;
         setLoaded(l);
-        setBox(defaultBox(l.size));   // рамка есть всегда: отправить можно и без касания
+        // Рамка есть всегда: отправить можно и без касания. Из видоискателя
+        // приходит уже наведённая — переставлять её по центру было бы обидно.
+        const start = initialBox ?? defaultBox(l.size);
+        setBox(start);
+        frac.current = fractionIn(start, { x: 0, y: 0, ...l.size });
       })
       .catch((e) => !dead && setFailed(e.message));
     return () => { dead = true; release(mine); };
-  }, [file]);
+  }, [file, initialBox]);
 
-  // Снимок вписывается в сцену целиком (object-contain), и вокруг остаются поля.
-  // Считаем, где он оказался: от этого зависит и рамка, и перевод касаний.
+  // Снимок вписывается в сцену целиком, вокруг остаются поля. При смене размера
+  // окна или повороте телефона приближение сбрасывается: пересчитывать сдвиг
+  // под новую сцену — больше путаницы, чем пользы.
   useEffect(() => {
-    if (!loaded || !stage.current) return;
-    const el = stage.current;
+    if (!loaded || !room.current) return;
+    const el = room.current;
     const measure = () => {
       const r = el.getBoundingClientRect();
-      const scale = Math.min(r.width / loaded.size.w, r.height / loaded.size.h);
-      const w = loaded.size.w * scale;
-      const h = loaded.size.h * scale;
-      setView({ x: (r.width - w) / 2, y: (r.height - h) / 2, w, h });
+      // Ширину снимок берёт всю, высоты — сколько осталось под ним, чтобы кнопки
+      // не ушли за край. Считаем от верха СТРАНИЦЫ, а не окна: иначе размер
+      // зависел бы от того, куда прокручено в момент замера, и один и тот же
+      // экран мерился бы по-разному (на проверке: 103 против 159).
+      const pageTop = r.top + window.scrollY;
+      const room = {
+        w: r.width,
+        h: roomBelow(pageTop, footer.current?.getBoundingClientRect().height ?? 0, window.innerHeight),
+      };
+      const fitted = fit(loaded.size, room);
+      const next = { x: 0, y: 0, w: fitted.w, h: fitted.h };
+      setStageDims({ w: fitted.w, h: fitted.h });
+      setBase(next);
+      setPlaced(next);
     };
     measure();
     const ro = new ResizeObserver(measure);
@@ -71,48 +112,128 @@ export default function SignPicker({ file, busy, onSend, onReplace, onCancel }: 
     return () => ro.disconnect();
   }, [loaded]);
 
-  // Экранные координаты события → пиксели исходного снимка.
-  function toImage(e: { clientX: number; clientY: number }, size: Size): Point {
-    const r = frame.current!.getBoundingClientRect();
-    return {
-      x: ((e.clientX - r.left) / r.width) * size.w,
-      y: ((e.clientY - r.top) / r.height) * size.h,
-    };
+  const stageSize = (): Size => {
+    const r = stage.current!.getBoundingClientRect();
+    return { w: r.width, h: r.height };
+  };
+
+  const toStage = (e: { clientX: number; clientY: number }): Point => {
+    const r = stage.current!.getBoundingClientRect();
+    return { x: e.clientX - r.left, y: e.clientY - r.top };
+  };
+
+  const toImage = (e: { clientX: number; clientY: number }, size: Size): Point =>
+    toImagePoint(toStage(e), placed!, size);
+
+  // Замысел человека и показанная рамка — разные вещи. Показанная всегда вписана
+  // в то, что сейчас на экране: приближаешься — ужимается и остаётся на виду,
+  // отдаляешься — возвращается к заданному.
+  const visible = useMemo(
+    () => (loaded && placed && stageDims ? visibleRect(placed, loaded.size, stageDims) : null),
+    [loaded, placed, stageDims],
+  );
+  /** Приближение изменилось — рамка снова по середине и той же доли экрана. */
+  function reframe(next: Box) {
+    if (!loaded || !stageDims) return;
+    setBox(frameForView(frac.current, visibleRect(next, loaded.size, stageDims), loaded.size));
   }
 
   function onPointerDown(e: React.PointerEvent) {
-    if (!loaded || !box || busy) return;
-    const el = e.target as HTMLElement;
-    el.setPointerCapture?.(e.pointerId);
-    const corner = CORNERS.find((c) => c === el.dataset.corner);
-    if (corner) {
-      setDrag({ kind: "corner", corner });
+    if (!loaded || !box || !placed || busy) return;
+    (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+    pointers.current.set(e.pointerId, toStage(e));
+
+    // Два пальца — это про картинку, а не про рамку: щипок начинается,
+    // а начатое одним пальцем перетаскивание отменяется.
+    if (pointers.current.size === 2) {
+      const [a, b] = [...pointers.current.values()];
+      drag.current = null;
+      pinch.current = {
+        dist: Math.hypot(a.x - b.x, a.y - b.y),
+        mid: { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 },
+        placed,
+      };
       return;
     }
+    if (pointers.current.size > 2) return;
+
+    const el = e.target as HTMLElement;
+    const corner = CORNERS.find((c) => c === el.dataset.corner);
+    if (corner) { drag.current = { kind: "corner", corner }; return; }
+
     const p = toImage(e, loaded.size);
     const insideBox =
       p.x >= box.x && p.x <= box.x + box.w && p.y >= box.y && p.y <= box.y + box.h;
-    if (insideBox) setDrag({ kind: "move", from: p, box });
-    else {
-      // Касание мимо рамки — это указание на знак, а не начало перетаскивания.
-      setBox(boxAt(p, loaded.size, { w: box.w, h: box.h }));
-      setTouched(true);
-    }
+    // Внутри рамки палец её двигает, снаружи — двигает СНИМОК. Раньше касание
+    // снаружи мгновенно переставляло рамку, и первый палец щипка утаскивал её
+    // на каждом шаге приближения. Ставит рамку теперь только явная кнопка.
+    if (insideBox) drag.current = { kind: "move", from: p, box };
+    else drag.current = { kind: "pan", from: toStage(e), placed };
   }
 
   function onPointerMove(e: React.PointerEvent) {
-    if (!drag || !loaded || !box) return;
-    e.preventDefault();
-    const p = toImage(e, loaded.size);
-    if (drag.kind === "move") {
-      setBox(moveBy(drag.box, p.x - drag.from.x, p.y - drag.from.y, loaded.size));
-    } else {
-      setBox(resizeCorner(box, drag.corner, p, loaded.size));
+    if (!loaded || !placed) return;
+    if (pointers.current.has(e.pointerId)) pointers.current.set(e.pointerId, toStage(e));
+
+    if (pinch.current && pointers.current.size >= 2 && base) {
+      const [a, b] = [...pointers.current.values()];
+      const dist = Math.hypot(a.x - b.x, a.y - b.y);
+      const mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+      const start = pinch.current;
+      const zoomed = zoomAt(start.placed, dist / start.dist, start.mid, base);
+      // Щипок и приближает, и тащит: середина между пальцами ведёт картинку.
+      const moved = {
+        ...zoomed,
+        x: zoomed.x + (mid.x - start.mid.x),
+        y: zoomed.y + (mid.y - start.mid.y),
+      };
+      const settled = clampPan(moved, stageSize());
+      setPlaced(settled);
+      reframe(settled);
+      return;
     }
-    setTouched(true);
+
+    if (!drag.current || !box) return;
+    e.preventDefault();
+
+    if (drag.current.kind === "pan") {
+      const d = drag.current;
+      const now = toStage(e);
+      // Рамка при этом не двигается: сдвигая снимок, человек разглядывает его,
+      // а не переставляет выделение.
+      setPlaced(clampPan(
+        { ...d.placed, x: d.placed.x + (now.x - d.from.x), y: d.placed.y + (now.y - d.from.y) },
+        stageSize(),
+      ));
+      return;
+    }
+
+    const p = toImage(e, loaded.size);
+    if (drag.current.kind === "move") {
+      const d = drag.current;
+      setBox(moveBy(d.box, p.x - d.from.x, p.y - d.from.y, loaded.size));
+    } else {
+      const next = resizeCorner(box, drag.current.corner, p, loaded.size);
+      setBox(next);
+      // Человек задал новый вид рамки — его и держим при следующем приближении.
+      if (visible) frac.current = fractionIn(next, visible);
+    }
   }
 
-  const stopDrag = () => setDrag(null);
+  function endPointer(e: React.PointerEvent) {
+    pointers.current.delete(e.pointerId);
+    if (pointers.current.size < 2) pinch.current = null;
+    if (pointers.current.size === 0) drag.current = null;
+  }
+
+  // На ноутбуке пальцев нет, а проверять приближение надо: колесо делает то же самое.
+  function onWheel(e: React.WheelEvent) {
+    if (!base || !placed) return;
+    const factor = e.deltaY < 0 ? 1.15 : 1 / 1.15;
+    const next = clampPan(zoomAt(placed, factor, toStage(e), base), stageSize());
+    setPlaced(next);
+    reframe(next);
+  }
 
   async function send() {
     if (!loaded || !box) return;
@@ -131,20 +252,18 @@ export default function SignPicker({ file, busy, onSend, onReplace, onCancel }: 
     () => (loaded && box ? shareOfFrame(box, loaded.size) : 0),
     [loaded, box],
   );
+  const zoom = base && placed ? zoomLevel(placed, base) : 1;
 
   if (failed) {
     return (
-      <section className="rounded-xl border border-line bg-white p-4">
+      <section className="rounded-xl border border-line bg-ground p-4">
         <p className="text-[15px] text-ink">{failed}</p>
         <div className="mt-4 flex gap-2">
           <button type="button" onClick={() => another.current?.click()} className={PRIMARY}>
             Choose another photo
           </button>
           <input
-            ref={another}
-            type="file"
-            accept="image/*"
-            className="hidden"
+            ref={another} type="file" accept="image/*" className="hidden"
             onChange={(e) => {
               const next = e.target.files?.[0];
               e.target.value = "";
@@ -158,58 +277,66 @@ export default function SignPicker({ file, busy, onSend, onReplace, onCancel }: 
   }
 
   const pct = (n: number) => `${n * 100}%`;
+  const size = loaded?.size;
 
   return (
     <section className="flex flex-col gap-3">
       <p className="text-[13px] text-ink-2">
-        {touched
-          ? "Drag the frame or its corners. Only what is inside will be sent."
-          : "Tap the sign. Only what is inside the frame will be sent."}
+        {zoom > 1.01
+          ? "Zoom in, then fine-tune with the corners."
+          : "Pinch to zoom · drag the frame onto the sign · only the frame is sent."}
       </p>
 
-      {/* Сцена ограничена высотой экрана: снимок с телефона вытянут вверх, и без
-          предела он на ноутбуке уезжает за край, заставляя листать. */}
+      {/* Высота ограничена экраном — иначе снимок с телефона уезжает за край.
+          Сама сцена при этом ровно по вписанному снимку: чёрных полей по бокам
+          не остаётся, а приближённая картинка обрезается её краями. */}
+      <div
+        ref={room}
+        className="flex w-full items-center justify-center"
+      >
       <div
         ref={stage}
-        className="relative h-[62vh] max-h-[720px] min-h-[280px] w-full select-none
-                   overflow-hidden rounded-xl border border-line bg-black"
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endPointer}
+        onPointerCancel={endPointer}
+        onWheel={onWheel}
+        className="relative touch-none select-none overflow-hidden rounded-xl
+                   border border-line bg-black"
+        style={base ? { width: base.w, height: base.h } : { width: "100%", height: "100%" }}
       >
-        {loaded && (
+        {loaded && placed && (
           <img
             src={loaded.url}
             alt="The photo you chose"
             draggable={false}
-            className="pointer-events-none absolute inset-0 h-full w-full object-contain"
+            className="pointer-events-none absolute max-w-none"
+            style={{ left: placed.x, top: placed.y, width: placed.w, height: placed.h }}
           />
         )}
 
-        {loaded && box && view && (
+        {loaded && size && box && placed && (
           <div
-            ref={frame}
-            onPointerDown={onPointerDown}
-            onPointerMove={onPointerMove}
-            onPointerUp={stopDrag}
-            onPointerCancel={stopDrag}
-            className="absolute touch-none"
-            style={{ left: view.x, top: view.y, width: view.w, height: view.h }}
+            className="pointer-events-none absolute"
+            style={{ left: placed.x, top: placed.y, width: placed.w, height: placed.h }}
           >
             {/* Затемнение снаружи рамки: видно, что уйдёт, а что нет. */}
-            <div className="pointer-events-none absolute inset-0 bg-black/50"
+            <div className="absolute inset-0 bg-black/50"
                  style={{
                    clipPath: `polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0,
-                     ${pct(box.x / loaded.size.w)} ${pct(box.y / loaded.size.h)},
-                     ${pct(box.x / loaded.size.w)} ${pct((box.y + box.h) / loaded.size.h)},
-                     ${pct((box.x + box.w) / loaded.size.w)} ${pct((box.y + box.h) / loaded.size.h)},
-                     ${pct((box.x + box.w) / loaded.size.w)} ${pct(box.y / loaded.size.h)},
-                     ${pct(box.x / loaded.size.w)} ${pct(box.y / loaded.size.h)})`,
+                     ${pct(box.x / size.w)} ${pct(box.y / size.h)},
+                     ${pct(box.x / size.w)} ${pct((box.y + box.h) / size.h)},
+                     ${pct((box.x + box.w) / size.w)} ${pct((box.y + box.h) / size.h)},
+                     ${pct((box.x + box.w) / size.w)} ${pct(box.y / size.h)},
+                     ${pct(box.x / size.w)} ${pct(box.y / size.h)})`,
                  }} />
             <div
               className="absolute border-2 border-white shadow-[0_0_0_1px_rgba(0,0,0,.35)]"
               style={{
-                left: pct(box.x / loaded.size.w),
-                top: pct(box.y / loaded.size.h),
-                width: pct(box.w / loaded.size.w),
-                height: pct(box.h / loaded.size.h),
+                left: pct(box.x / size.w),
+                top: pct(box.y / size.h),
+                width: pct(box.w / size.w),
+                height: pct(box.h / size.h),
               }}
             >
               {CORNERS.map((c) => (
@@ -217,7 +344,7 @@ export default function SignPicker({ file, busy, onSend, onReplace, onCancel }: 
                   key={c}
                   data-corner={c}
                   aria-label={`Resize ${c}`}
-                  className={`absolute h-11 w-11 ${cornerClass(c)}`}
+                  className={`pointer-events-auto absolute h-11 w-11 ${cornerClass(c)}`}
                 >
                   {/* Точка не ловит касание сама: иначе нажатие приходит на неё,
                       `data-corner` не находится, и тяга за угол превращается
@@ -231,8 +358,20 @@ export default function SignPicker({ file, busy, onSend, onReplace, onCancel }: 
             </div>
           </div>
         )}
+
+        {zoom > 1.01 && (
+          <button
+            type="button"
+            onClick={() => base && setPlaced(base)}
+            className={CHIP + " absolute left-3 top-3"}
+          >
+            Fit · {zoom.toFixed(1)}×
+          </button>
+        )}
+      </div>
       </div>
 
+      <div ref={footer}>
       <p className="text-[12px] text-ink-3">
         {loaded
           ? `Sending about ${Math.round(share * 100)}% of the photo · ${loaded.size.w}×${loaded.size.h} original`
@@ -244,22 +383,18 @@ export default function SignPicker({ file, busy, onSend, onReplace, onCancel }: 
           {busy || sending ? "Sending…" : "Send this to be read"}
         </button>
 
-        {/* «Другой снимок» открывает выбор файла сразу и оставляет на этом же
-            экране: иначе он неотличим от отмены. */}
+        {/* Повтор делает ровно то, что человек делал минуту назад: снимал —
+            вернёт видоискатель с подсказкой, выбирал файл — откроет выбор файла. */}
         <button
           type="button"
-          onClick={() => another.current?.click()}
+          onClick={() => (source === "camera" ? onRetake() : another.current?.click())}
           disabled={busy || sending}
           className={QUIET}
         >
-          Another photo
+          {source === "camera" ? "Take another" : "Another photo"}
         </button>
         <input
-          ref={another}
-          type="file"
-          accept="image/*"
-          capture="environment"
-          className="hidden"
+          ref={another} type="file" accept="image/*" className="hidden"
           onChange={(e) => {
             const next = e.target.files?.[0];
             e.target.value = "";
@@ -271,17 +406,17 @@ export default function SignPicker({ file, busy, onSend, onReplace, onCancel }: 
           Cancel
         </button>
       </div>
+      </div>
     </section>
   );
 }
 
 const PRIMARY =
-  "h-12 flex-1 rounded-lg bg-accent px-5 text-[15px] font-semibold text-white " +
-  "disabled:opacity-50";
+  "h-12 flex-1 rounded-lg bg-accent px-5 text-[15px] font-semibold text-white disabled:opacity-50";
 const QUIET =
-  "h-12 rounded-lg border border-line bg-white px-4 text-[15px] font-semibold text-ink " +
-  "disabled:opacity-50";
+  "h-12 rounded-lg border border-line bg-white px-4 text-[15px] font-semibold text-ink disabled:opacity-50";
 const PLAIN = "h-12 rounded-lg px-3 text-[15px] font-medium text-ink-2 disabled:opacity-50";
+const CHIP = "rounded-full bg-black/55 px-4 py-2 text-[13px] font-semibold text-white";
 
 const cornerClass = (c: string) =>
   ({

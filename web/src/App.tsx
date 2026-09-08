@@ -5,6 +5,8 @@ import { analyze, generalRules } from "./api";
 import type { Analysis, GeneralRule } from "./types";
 import PhotoInput from "./components/PhotoInput";
 import SignPicker from "./components/SignPicker";
+import CameraCapture from "./components/CameraCapture";
+import type { Box } from "./lib/crop";
 import WhatWeSaw from "./components/WhatWeSaw";
 import WhoCanPark from "./components/WhoCanPark";
 import PeriodTimeline from "./components/PeriodTimeline";
@@ -22,6 +24,10 @@ export default function App() {
   const [preview, setPreview] = useState<string | null>(null);
   const [moment, setMoment] = useState("");
   const [picked, setPicked] = useState<File | null>(null);
+  // Рамка, наведённая в видоискателе: экран выбора начинает с неё, а не с центра.
+  const [aimed, setAimed] = useState<Box | undefined>(undefined);
+  const [camera, setCamera] = useState(false);
+  const [source, setSource] = useState<"camera" | "file">("file");
   const [rules, setRules] = useState<GeneralRule[]>([]);
 
   useEffect(() => {
@@ -36,6 +42,8 @@ export default function App() {
   function onPick(file: File) {
     setError(null);
     setData(null);
+    setAimed(undefined);
+    setSource("file");
     setPicked(file);
   }
 
@@ -59,6 +67,8 @@ export default function App() {
   // Отмена возвращает на начало и не оставляет за собой ничего.
   function reset() {
     setPicked(null);
+    setAimed(undefined);
+    setCamera(false);
     setError(null);
     setData(null);
     setPreview((old) => { if (old) URL.revokeObjectURL(old); return null; });
@@ -67,23 +77,49 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-100 py-6">
       <main className="mx-auto flex max-w-2xl flex-col gap-4 px-4">
+        {/* Подпись под названием уходит, пока открыт снимок или камера: эти
+            строки стоят высоты, а высота — ширины снимка. На начальном экране
+            она возвращается. */}
         <header>
           <h1 className="text-xl font-semibold text-slate-900">ParkRead</h1>
-          <p className="text-sm text-slate-600">
-            What a Swedish parking sign states — read plate by plate.
-          </p>
+          {!picked && !camera && (
+            <p className="text-sm text-slate-600">
+              What a Swedish parking sign states — read plate by plate.
+            </p>
+          )}
         </header>
 
         {picked ? (
           <SignPicker
             file={picked}
+            initialBox={aimed}
+            source={source}
             busy={busy}
             onSend={onSend}
             onReplace={onPick}
+            onRetake={() => { setPicked(null); setAimed(undefined); setCamera(true); }}
             onCancel={reset}
           />
+        ) : camera ? (
+          <CameraCapture
+            onCaptured={(file, box) => {
+              setError(null);
+              setData(null);
+              setAimed(box);
+              setSource("camera");
+              setPicked(file);
+              setCamera(false);
+            }}
+            onCancel={() => setCamera(false)}
+          />
         ) : (
-          <PhotoInput busy={busy} onPick={onPick} moment={moment} onMoment={setMoment} />
+          <PhotoInput
+            busy={busy}
+            onPick={onPick}
+            onCamera={() => { setError(null); setData(null); setCamera(true); }}
+            moment={moment}
+            onMoment={setMoment}
+          />
         )}
 
         {busy && <p className="text-[13px] text-ink-2">Reading the sign…</p>}
