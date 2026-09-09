@@ -8,7 +8,7 @@
 from datetime import date, datetime, timedelta
 
 from parkread.calendar_se import EVE, RED, UNKNOWN, WEEKDAY, Calendar
-from parkread.engine import (ALLOWED, PROHIBITED, UNCERTAIN,
+from parkread.engine import (ALLOWED, NOT_STATED, PROHIBITED, UNCERTAIN,
                              evaluate_parking_rules, twenty_four_hour_expiry)
 
 CAL = Calendar(__import__("pathlib").Path("data/holidays_se.json"))
@@ -244,6 +244,162 @@ def test_prohibition_overrides_permission():
     r = evaluate_parking_rules(s, datetime(2026, 3, 2, 12), CAL).regimes[0]
     assert at(r, thu) == (PROHIBITED, [])
     assert at(r, datetime(2026, 3, 5, 8))[0] == ALLOWED
+
+
+def test_a_window_under_a_prohibiting_sign_limits_the_prohibition():
+    """Табличка со временем под запрещающим знаком **очерчивает** запрет.
+
+    Найдено на снимке зонального знака E20 с табличкой `Onsdag 9-12, jämna veckor,
+    1 okt - 30 april`: приложение отвечало «No parking» в сентябрьскую среду
+    нечётной недели, то есть когда ни одно условие таблички не выполнено. Причина
+    была в модели: базовый режим запрещающего знака держался вне окна, а табличка
+    считалась добавкой к вечному запрету. На деле она его и ограничивает — иначе
+    табличка не значила бы ничего.
+    """
+    w = win("09:00", "12:00", "named_weekday", "wednesday")
+    w["week_parity"] = "even"
+    w["dates"] = {"mode": "only", "ranges": [{"from": "10-01", "to": "04-30"}]}
+    s = sign(plate({"time_windows": [w]}, ["Onsdag 9-12", "jämna veckor"]),
+             main="prohibition_parking")
+
+    # Шкала строится на восемь суток вперёд, поэтому каждый момент проверяется
+    # своим разбором: заглянуть из сентября в октябрь нельзя.
+    def state(moment, from_moment):
+        return at(evaluate_parking_rules(s, from_moment, CAL).regimes[0], moment)[0]
+
+    # тот самый случай со снимка: сентябрьская среда, нечётная неделя, вне дат
+    assert state(datetime(2026, 9, 9, 12, 33), datetime(2026, 9, 9, 12, 33)) == NOT_STATED
+
+    # среда 14 октября — чётная неделя 42, внутри диапазона дат
+    oct_start = datetime(2026, 10, 13, 12)
+    assert state(datetime(2026, 10, 14, 10), oct_start) == PROHIBITED
+    assert state(datetime(2026, 10, 14, 13), oct_start) == NOT_STATED   # после 12:00
+    assert state(datetime(2026, 10, 15, 10), oct_start) == NOT_STATED   # четверг
+
+    # соседняя среда 21 октября — неделя 43, нечётная: запрета нет
+    assert state(datetime(2026, 10, 21, 10), datetime(2026, 10, 20, 12)) == NOT_STATED
+
+
+def test_a_sign_that_states_nothing_shows_no_window_at_all():
+    """Шкала обещала окно, которого знак не давал.
+
+    На проверке в браузере запрет с окном вне сезона рисовал «Window starts —
+    Nothing stated on the sign — Window ends». Читается как окно стоянки, хотя
+    знак о стоянке молчит: шкалу в таком случае заменяет фраза.
+    """
+    from parkread import present
+
+    w = win("09:00", "12:00", "named_weekday", "wednesday")
+    w["week_parity"] = "even"
+    w["dates"] = {"mode": "only", "ranges": [{"from": "10-01", "to": "04-30"}]}
+    silent = evaluate_parking_rules(
+        sign(plate({"time_windows": [w]}, ["Onsdag 9-12"]), main="prohibition_parking"),
+        datetime(2026, 9, 9, 16, 27), CAL).regimes[0]
+    assert {p.state for p in silent.periods} == {NOT_STATED}
+    assert present._no_window(silent, []) == present.NO_WINDOW_NOTHING_STATED
+
+    # А там, где знаку есть что сказать, шкала остаётся.
+    speaking = evaluate_parking_rules(sign(plate({"fee": True}, ["Avgift"])),
+                                      datetime(2026, 9, 9, 16, 27), CAL).regimes[0]
+    assert present._no_window(speaking, []) is None
+
+
+def test_the_scale_shows_only_what_the_sign_states():
+    """Шкала — про то, что знак говорит о ВЫБРАННОМ моменте.
+
+    Правило названо разработчиком после проверки зонального знака: момент внутри
+    запрета — красная пунктирная линия «No parking»; любой момент вне запрета —
+    фраза, и никакого окна вовсе. Прежде экран строил окно от молчания к запрету
+    («Window starts — Nothing stated on the sign — No parking — Window ends»),
+    то есть обещал окно стоянки там, где знак не разрешает ничего.
+    """
+    from parkread import present
+
+    w = win("09:00", "12:00", "named_weekday", "wednesday")
+    w["week_parity"] = "even"
+    w["dates"] = {"mode": "only", "ranges": [{"from": "10-01", "to": "04-30"}]}
+    s = sign(plate({"time_windows": [w]}, ["Onsdag 9-12", "jämna veckor"]),
+             main="prohibition_parking")
+
+    # Понедельник: знак об этом времени молчит — шкалы нет, есть фраза.
+    quiet = evaluate_parking_rules(s, datetime(2026, 10, 12, 10), CAL).regimes[0]
+    assert present._visible(quiet) == []
+    assert present._no_window(quiet, []) == present.NO_WINDOW_NOTHING_STATED
+
+    # Среда внутри окна: только запрет, и ничего после него.
+    ban = evaluate_parking_rules(s, datetime(2026, 10, 14, 10), CAL).regimes[0]
+    shown = present._visible(ban)
+    assert [p.state for p in shown] == [PROHIBITED]
+    assert shown[0].end == datetime(2026, 10, 14, 12)
+    assert present._no_window(ban, []) is None
+
+    # Знак, которому есть что сказать, окно по-прежнему показывает целиком.
+    paid = evaluate_parking_rules(
+        sign(plate({"fee": True, "time_windows": [win("08:00", "18:00")]},
+                   ["Avgift 8-18"])),
+        datetime(2026, 3, 2, 9), CAL).regimes[0]
+    assert len(present._visible(paid)) >= 1
+    assert present._no_window(paid, []) is None
+
+
+def test_a_silent_period_carries_no_stay_limit():
+    """Молчание знака — не позволение простоять до ближайшего запрета.
+
+    На проверке в браузере понедельник у того же зонального знака показывал
+    «Nothing stated on the sign • 47 h max»: число бралось от начала среды,
+    а читалось как срок, который знак разрешает простоять. Знак стоянки здесь
+    не даёт вовсе — ограничивать нечего, и конца стоянки у такого момента нет.
+    """
+    w = win("09:00", "12:00", "named_weekday", "wednesday")
+    w["week_parity"] = "even"
+    w["dates"] = {"mode": "only", "ranges": [{"from": "10-01", "to": "04-30"}]}
+    s = sign(plate({"time_windows": [w]}, ["Onsdag 9-12", "jämna veckor"]),
+             main="prohibition_parking")
+    monday = datetime(2026, 10, 12, 10)          # понедельник перед средой 14-го
+    r = evaluate_parking_rules(s, monday, CAL).regimes[0]
+    assert at(r, monday)[0] == NOT_STATED
+    assert any(p.state == PROHIBITED for p in r.periods)   # запрет впереди есть
+    assert r.duration_expires_at is None
+    assert r.duration_source is None
+
+    # А там, где знак стоянку даёт, запрет её по-прежнему обрывает.
+    speaking = evaluate_parking_rules(
+        sign(plate({"prohibition": True,
+                    "time_windows": [win("10:00", "14:00", "named_weekday", "thursday")]},
+                   ["Torsd 10-14"], color="yellow")),
+        datetime(2026, 3, 4, 12), CAL).regimes[0]
+    assert speaking.duration_source == "prohibition"
+    assert speaking.duration_expires_at == datetime(2026, 3, 5, 10)
+
+
+def test_a_prohibiting_sign_without_plates_prohibits_always():
+    """Очерчивать нечем — запрет остаётся вечным. Проверка обратной стороны."""
+    s = sign(main="prohibition_parking")
+    r = evaluate_parking_rules(s, datetime(2026, 9, 9, 12), CAL).regimes[0]
+    assert at(r, datetime(2026, 9, 9, 12))[0] == PROHIBITED
+    assert at(r, datetime(2026, 9, 12, 3))[0] == PROHIBITED
+
+
+def test_a_window_under_a_permitting_sign_still_returns_to_permission():
+    """Под разрешающим знаком правило обратное, и менять его было нельзя:
+    вне окна возвращается разрешение, а не молчание (снимок 005)."""
+    s = sign(plate({"fee": True, "time_windows": [win("08:00", "18:00")]},
+                   ["Avgift 8-18"]))
+    r = evaluate_parking_rules(s, datetime(2026, 3, 2, 7), CAL).regimes[0]
+    assert at(r, datetime(2026, 3, 2, 12)) == (ALLOWED, ["avgift"])
+    assert at(r, datetime(2026, 3, 2, 20)) == (ALLOWED, [])
+
+
+def test_ovrig_tid_still_beats_silence_under_a_prohibiting_sign():
+    """Снимок 019: запрет 7-18 и «P Avgift övrig tid». Вне окна знак не молчит —
+    табличка прямо говорит, что там платная стоянка."""
+    s = sign(plate({"time_windows": [win("07:00", "18:00")]}, ["7-18"]),
+             plate({"scope_shift": "remaining_time", "permits_parking": True,
+                    "fee": True}, ["P Avgift övrig tid"]),
+             main="prohibition_parking")
+    r = evaluate_parking_rules(s, datetime(2026, 3, 2, 6), CAL).regimes[0]
+    assert at(r, datetime(2026, 3, 2, 12))[0] == PROHIBITED
+    assert at(r, datetime(2026, 3, 2, 20)) == (ALLOWED, ["avgift"])
 
 
 def test_named_weekday_ignores_holiday_calendar():

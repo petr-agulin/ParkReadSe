@@ -29,7 +29,10 @@ export type Period = {
   aside: Term[];
   stay_end_text: string;
   stay_end_reason: string;
-  tone: "paid" | "free" | "prohibited" | "uncertain";
+  // `not_stated` — знак об этом времени не говорит вовсе: его запрет ограничен
+  // окном, а разрешения он не даёт. Не то же, что `uncertain`: там прочитать
+  // не удалось, здесь прочитано и сказать нечего.
+  tone: "paid" | "free" | "prohibited" | "uncertain" | "not_stated";
   headline: string;
   minutes: number;
   notes: Term[];

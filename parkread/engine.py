@@ -34,6 +34,11 @@ DAY = timedelta(days=1)
 ALLOWED = "allowed"
 PROHIBITED = "prohibited"
 UNCERTAIN = "uncertain"
+# Знак ничего не говорит об этом времени. Не «можно» и не «нельзя»: запрещающий
+# знак с табличкой времени запрещает ТОЛЬКО в своё окно, а вне его не разрешает
+# ничего — он просто молчит, и действуют общие правила. Смешивать это с UNCERTAIN
+# нельзя: там мы не смогли прочесть, здесь прочли и знаем, что сказать нечего.
+NOT_STATED = "not_stated"
 
 # участки
 HERE = "here"
@@ -315,15 +320,26 @@ def _build_regime(extent: str, panels: list[dict], base_state: str,
         elif _conditions_of(parsed) or parsed.get("duration_limit"):
             always.append(parsed)
 
+    # Табличка со временем под ЗАПРЕЩАЮЩИМ знаком не добавляет условий к вечному
+    # запрету, а очерчивает его: «Onsdag 9-12» означает, что в остальное время
+    # знак не запрещает. Под разрешающим знаком всё наоборот — там вне окна
+    # возвращается разрешение, и трогать это нельзя.
+    scoping = [p for p in windowed + prohibitions if not p.get("permits_parking")]
+    scoped = base_state == PROHIBITED and any(p.get("time_windows") for p in scoping)
+
     periods = _timeline(now, cal, base_state, windowed, always, shifted,
-                        prohibitions, uncertainties)
+                        prohibitions, uncertainties, scoped=scoped)
 
     # Длительность: табличка перекрывает умолчание в 24 часа — но только там,
     # где она действует. Поэтому берётся из периода, в котором находится «сейчас»,
     # а не из стопки целиком: вне окна возвращается умолчание.
     expires, source = None, None
     current = next((p for p in periods if p.start <= now < p.end), None)
-    minutes = current.max_duration_minutes if current else None
+    # Знак, который сейчас молчит, стоянки не даёт — значит, и ограничивать нечего.
+    # Иначе рядом с «Nothing stated on the sign» появлялось «47 h max»: число,
+    # взятое из времени до начала запрета, читалось как разрешение столько простоять.
+    silent = current is not None and current.state == NOT_STATED
+    minutes = None if silent else (current.max_duration_minutes if current else None)
     if minutes:
         expires, source = now + timedelta(minutes=minutes), "plate"
     elif base_state == ALLOWED:
@@ -364,7 +380,7 @@ def _build_regime(extent: str, panels: list[dict], base_state: str,
     # дня: с этого момента стоянка кончилась, и всё, что дальше, — уже другая.
     stop = next((p.start for p in periods
                  if p.start > now and p.state == PROHIBITED), None)
-    if stop and (expires is None or stop < expires):
+    if stop and not silent and (expires is None or stop < expires):
         expires, source = stop, "prohibition"
 
     return Regime(extent=extent, eligibility=eligibility,
@@ -374,7 +390,8 @@ def _build_regime(extent: str, panels: list[dict], base_state: str,
 
 def _timeline(now: datetime, cal: Calendar, base_state: str,
               windowed: list[dict], always: list[dict], shifted: list[dict],
-              prohibitions: list[dict], uncertainties: list[str]) -> list[Period]:
+              prohibitions: list[dict], uncertainties: list[str],
+              scoped: bool = False) -> list[Period]:
     base_conditions = sorted({c for p in always for c in _conditions_of(p)})
     marks = _boundaries(now, windowed + shifted + prohibitions + always)
     raw: list[Period] = []
@@ -385,6 +402,10 @@ def _timeline(now: datetime, cal: Calendar, base_state: str,
     for t0, t1 in zip(marks, marks[1:]):
         state, conds, unknown = base_state, list(base_conditions), False
         duration = base_duration
+        # Запрет очерчен окном: вне окна знак молчит, пока что-нибудь не скажет
+        # обратного — попадание в окно ниже или табличка «в остальное время».
+        if scoped:
+            state = NOT_STATED
 
         # шаг 6: окна поверх базы
         inside = False
@@ -399,6 +420,9 @@ def _timeline(now: datetime, cal: Calendar, base_state: str,
                 conds += _conditions_of(parsed)
                 # Ограничение длительности с окном действует ТОЛЬКО в окне.
                 duration = _duration_minutes(parsed) or duration
+                # Под запрещающим знаком попадание в окно и есть запрет.
+                if scoped and not parsed.get("permits_parking"):
+                    state = PROHIBITED
 
         # дополнение: база либо то, что назвал токен сдвига
         if not inside:

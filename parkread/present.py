@@ -16,7 +16,7 @@ from __future__ import annotations
 from dataclasses import replace
 from datetime import datetime
 
-from .engine import (ALLOWED, PROHIBITED, Evaluation, Period, Regime,
+from .engine import (ALLOWED, NOT_STATED, PROHIBITED, Evaluation, Period, Regime,
                      horizon_end)
 from .completeness import FULL, PARTIAL, Assessment
 from .pipeline import Analysis
@@ -32,12 +32,17 @@ from .reference import Reference
 # о смысле знака, поэтому запрещённая формулировка проверяется одним статическим
 # тестом на бэкенде и не может просочиться через вёрстку.
 
-CONTRACT = 2
+CONTRACT = 4
 
 STATE_TEXT = {
     "allowed": "The sign permits parking during this period",
     "prohibited": "The sign is a no-parking sign for this period",
     "uncertain": "The sign's conditions for this period could not be read in full",
+    # Прочитали всё и знаем, что знак об этом времени не говорит: его запрет
+    # ограничен окном, а разрешения он не даёт. Обещать «можно» здесь нельзя —
+    # действуют общие правила, которых на знаке нет.
+    "not_stated": "The sign's restriction does not cover this period, and the sign "
+                  "states nothing else about it",
 }
 
 # Участок из `engine._ARROW_EXTENT` — внутренний токен, и показывать его человеку
@@ -89,6 +94,7 @@ PERIOD_HEADLINE = {
     "free_with_conditions": "No fee stated for this period",
     "prohibited": "No parking",
     "uncertain": "Conditions could not be read in full",
+    "not_stated": "Nothing stated on the sign",
 }
 
 STAY_END_REASON = {
@@ -299,6 +305,8 @@ def _visible(r: Regime) -> list[Period]:
 
     Предела нет — например, знак сейчас запрещает — доводим до первой смены
     состояния включительно: дальше начинается уже другая стоянка.
+
+    Молчание знака шкалой не рисуется вовсе (`_stated`).
     """
     periods = r.periods
     if not periods:
@@ -311,18 +319,41 @@ def _visible(r: Regime) -> list[Period]:
                 break
             out.append(p if p.end <= r.duration_expires_at
                        else replace(p, end=r.duration_expires_at))
-        return _join_alike(out or periods[:1])
+        return _stated(_join_alike(out or periods[:1]))
 
     first = periods[0].state
     for i, p in enumerate(periods):
         if p.state != first:
-            return _join_alike(periods[:i + 1])
-    return _join_alike(periods)
+            return _stated(_join_alike(periods[:i + 1]))
+    return _stated(_join_alike(periods))
+
+
+def _stated(periods: list[Period]) -> list[Period]:
+    """Шкала — про то, что знак о моменте ГОВОРИТ. Молчание на ней не рисуется.
+
+    Указано разработчиком после проверки зонального знака: момент внутри запрета
+    показывается красной пунктирной линией «No parking», а любой момент вне его —
+    фразой, и никакого окна при этом нет.
+
+    Отсюда два правила, и оба — про молчание:
+
+    - спрошено про момент, о котором знак молчит, — шкалы нет вовсе, вместо неё
+      встаёт фраза (`_no_window`);
+    - молчание в ХВОСТЕ — «Window ends» после запрета обещало окно, которого знак
+      не даёт: конец запрета не начало разрешения.
+    """
+    if periods and periods[0].state == NOT_STATED:
+        return []
+    while periods and periods[-1].state == NOT_STATED:
+        periods = periods[:-1]
+    return periods
 
 
 def _period_tone(p: Period) -> str:
     if p.state == "prohibited":
         return "prohibited"
+    if p.state == "not_stated":
+        return "not_stated"
     if p.state == "uncertain":
         return "uncertain"
     return "paid" if "avgift" in p.conditions else "free"
@@ -419,6 +450,15 @@ NO_WINDOW_RENTED = (
     "long a rented space may be used follows from its rental, not from this sign."
 )
 
+# Запрещающий знак, чьё окно сейчас не идёт, не оставляет после себя окна стоянки:
+# он не запрещает — но и не разрешает. Шкала здесь показывала «Window starts /
+# Window ends» и обещала окно, которого знак не давал.
+NO_WINDOW_NOTHING_STATED = (
+    "The sign restricts parking only at the times written on its plate. About "
+    "parking here at other times the sign states nothing: the general rules of "
+    "the road apply, and they are not on this sign."
+)
+
 
 def _no_window(r: Regime, circle: list[dict]) -> str | None:
     """Есть ли смысл рисовать шкалу — или её содержание вводит в заблуждение.
@@ -434,6 +474,13 @@ def _no_window(r: Regime, circle: list[dict]) -> str | None:
     по пятницам, — шкала несёт настоящее указание и остаётся: оно нужно
     и самому арендатору.
     """
+    # Знак молчит о СПРОШЕННОМ моменте — этого довольно. Дальше по шкале запрет
+    # может и начаться, но окна стоянки он не образует: между «сейчас» и запретом
+    # знак не разрешает ничего, и рисовать там окно значит обещать своё.
+    # Шкала начинается с выбранного момента, поэтому спрошенное — первый отрезок.
+    if r.periods and r.periods[0].state == NOT_STATED:
+        return NO_WINDOW_NOTHING_STATED
+
     if not any(t["key"] == RENTED for t in circle):
         return None
     if any(p.state != ALLOWED for p in r.periods):

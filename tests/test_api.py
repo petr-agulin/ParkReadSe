@@ -751,10 +751,17 @@ def test_a_ban_at_the_selected_time_is_shown_before_the_window():
     начинается в 06:00, а первый его отрезок шёл с 02:15: подпись и содержимое
     противоречили друг другу, а стык повторял 06:00 второй раз."""
     page = (ROOT / "web/src/components/PeriodTimeline.tsx").read_text(encoding="utf-8")
+    rule = (ROOT / "web/src/lib/period.ts").read_text(encoding="utf-8")
     assert 'title="Your selected start time"' in page
-    assert "leadIn" in page and "const window = periods.slice(i)" in page
-    # «max» относится к стоянке; у запрета длительность точная
-    assert 'p.tone !== "prohibited" && " max"' in page
+    # Само деление переехало в `lib/period` — там оно и проверяется тестом,
+    # а не сверкой строк исходника.
+    assert "splitWindow(periods)" in page
+    assert 'periods[i].tone === "prohibited"' in rule
+    # Окна может не быть вовсе: тогда нет и узла его конца.
+    assert "{last && <Node kind=\"end\" title=\"Window ends\"" in page
+    # «max» относится к стоянке; там, где знак её не даёт, длительность точная
+    assert "isStayLimit(p.tone)" in page
+    assert 'tone !== "prohibited" && tone !== "not_stated"' in rule
 
 
 def test_the_ban_period_itself_is_still_computed():

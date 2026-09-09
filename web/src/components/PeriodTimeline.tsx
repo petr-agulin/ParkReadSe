@@ -12,6 +12,7 @@
 // в оба значка вплотную и одинаково сверху и снизу. Стоит добавить отступ с одной
 // стороны, и шкала перестаёт читаться как непрерывная.
 
+import { isStayLimit, lasting, splitWindow } from "../lib/period";
 import type { Period, Regime, Term } from "../types";
 import SignIcon from "./SignIcon";
 
@@ -24,6 +25,7 @@ const LINE: Record<string, string> = {
   paid: "bg-amber-700",
   free: "bg-emerald-700",
   uncertain: "bg-amber-700",
+  not_stated: "",                   // знак молчит — линии нет, только пунктир
   prohibited: "",                   // запрет — пунктир, а не сплошная заливка
 };
 
@@ -35,12 +37,14 @@ const DASH: Record<string, string> = {
   paid: "border-amber-700",
   free: "border-emerald-700",
   uncertain: "border-amber-700",
+  not_stated: "border-slate-400",
 };
 
 const HEADLINE: Record<string, string> = {
   paid: "text-amber-700",
   free: "text-emerald-700",
   uncertain: "text-amber-700",
+  not_stated: "text-slate-600",
   prohibited: "text-red-700",
 };
 
@@ -49,13 +53,6 @@ function when(iso: string): string {
     weekday: "long", day: "numeric", month: "long",
     hour: "2-digit", minute: "2-digit",
   });
-}
-
-function lasting(minutes: number): string {
-  const h = Math.floor(minutes / 60);
-  const m = minutes % 60;
-  if (!h) return `${m} min`;
-  return m ? `${h} h ${m} min` : `${h} h`;
 }
 
 function Node({
@@ -95,7 +92,9 @@ function Connector({ at }: { at: string }) {
 
 
 function Segment({ p, extra }: { p: Period; extra: Term[] }) {
-  const dashed = p.tone === "prohibited" || p.certain === false;
+  // Пунктир значит «на это время знак не отвечает»: запрет — своим окном,
+  // молчание — тем, что сказать нечего.
+  const dashed = p.tone === "prohibited" || p.tone === "not_stated" || p.certain === false;
   return (
     <div className="flex items-stretch gap-3">
       <div className={`${COLUMN} flex justify-center`}>
@@ -122,9 +121,9 @@ function Segment({ p, extra }: { p: Period; extra: Term[] }) {
               <span className="px-1.5" aria-hidden>&#9679;</span>
               <span className="font-normal">
                 {lasting(p.minutes)}
-                {/* «max» относится к стоянке: столько можно простоять. У запрета
-                    длительность точная — он длится ровно столько, и «max» здесь врал бы. */}
-                {p.tone !== "prohibited" && " max"}
+                {/* «max» относится к стоянке: столько можно простоять. Там, где
+                    знак стоянки не даёт, длительность точная (`lib/period`). */}
+                {isStayLimit(p.tone) && " max"}
               </span>
             </>
           )}
@@ -141,19 +140,14 @@ export default function PeriodTimeline(
   { regime, showExtent = false }: { regime: Regime; showExtent?: boolean },
 ) {
   const periods = regime.periods ?? [];
-  if (periods.length === 0) return null;
+  // Шкалы может не быть, а сказать при этом есть что: знак, который о выбранном
+  // моменте молчит, окна не даёт, и вместо шкалы встаёт фраза. Поэтому пусто
+  // здесь только тогда, когда пусто и то и другое.
+  if (periods.length === 0 && !regime.no_window_text) return null;
 
-  // Запрет в начале — это ДО окна, а не часть его. Раньше он рисовался внутри,
-  // и получалось, что окно начинается в 06:00, а первый его отрезок идёт с 02:15.
-  // Теперь у выбранного момента свой узел, запрет ведёт от него к началу окна.
-  const leadIn = [];
-  let i = 0;
-  while (i < periods.length && periods[i].tone === "prohibited") {
-    leadIn.push(periods[i]);
-    i += 1;
-  }
-  const window = periods.slice(i);
-  const last = window.length ? window[window.length - 1] : periods[periods.length - 1];
+  // Запрет перед окном — это ещё не окно, и делит их `lib/period`.
+  const { leadIn, window } = splitWindow(periods);
+  const last = window.length ? window[window.length - 1] : undefined;
 
   // Строка под отрезком: кому годится это окно — или какое исключение из запрета
   // называет знак. Ставится ОДИН раз, у отрезка того рода, к которому относится.
@@ -191,10 +185,16 @@ export default function PeriodTimeline(
           «от выбранного времени» — момент может быть и загрузкой снимка, и выбранным
           вперёд, и обе формулировки должны оставаться верными;
           «знак действует и дальше» — конец окна не конец возможности стоять. */}
-      <p className="mb-4 text-sm text-slate-500">
-        The first window from your selected start time; the sign carries on
-        beyond it, with more windows to follow
-      </p>
+      {/* Подпись — про окно, поэтому и стоит она только там, где окно есть.
+          Знак, который сейчас запрещает и ничего не обещает дальше, окна не
+          образует: обещать «более окон впереди» под одной красной линией
+          значит говорить за знак. */}
+      {window.length > 0 && (
+        <p className="mb-4 text-sm text-slate-500">
+          The first window from your selected start time; the sign carries on
+          beyond it, with more windows to follow
+        </p>
+      )}
 
       {leadIn.length > 0 && (
         <>
@@ -223,7 +223,7 @@ export default function PeriodTimeline(
               <Segment p={p} extra={p.aside ?? []} />
             </div>
           ))}
-          <Node kind="end" title="Window ends" at={when(last.end)} />
+          {last && <Node kind="end" title="Window ends" at={when(last.end)} />}
         </>
       )}
       </>
