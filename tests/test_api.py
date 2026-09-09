@@ -657,12 +657,21 @@ def test_identical_neighbouring_segments_are_joined():
     """Две одинаковые полосы подряд читаются как ошибка. На `2 tim 8-18` граница
     в 18:00 настоящая — за ней перестаёт действовать лимит с таблички, — но на шкале
     оба отрезка выглядят одинаково, и различие между ними и так сказано концом
-    стоянки."""
+    стоянки.
+
+    Число здесь изменилось вместе с правилом предела (решение 118): машина
+    поставлена в 17:11, к 18:00 набегает 49 минут, и двух часов не выходит —
+    предел не нарушен. Знак дальше молчит, стоянка продолжается, а отсчёт
+    начинается заново утром, когда окно откроется: конец — в 10:00.
+    Склейка от этого не изменилась: отрезки по-прежнему сливаются в один."""
     with tempfile.TemporaryDirectory() as t:
         r = _post(_client(Path(t)), PHOTO,
                   moment="2026-09-02T17:11").get_json()["regimes"][0]
         assert len(r["periods"]) == 1, r["periods"]
-        assert r["periods"][0]["minutes"] == 120
+        assert r["duration_expires_at"] == "2026-09-03T10:00"
+        assert r["duration_source"] == "plate"
+        assert r["periods"][0]["start"] == "2026-09-02T17:11"
+        assert r["periods"][0]["end"] == r["duration_expires_at"]
 
 
 def test_joining_never_hides_a_change_of_rule():

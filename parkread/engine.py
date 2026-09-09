@@ -341,10 +341,30 @@ def _build_regime(extent: str, panels: list[dict], base_state: str,
     # взятое из времени до начала запрета, читалось как разрешение столько простоять.
     silent = current is not None and current.state == NOT_STATED
     minutes = None if silent else (current.max_duration_minutes if current else None)
+    # Настоящее время, а не деления циферблата: `2 tim` в ночь перевода
+    # кончаются на час раньше или позже, чем показывают часы (решение 116).
+    edge = clock.add(now, timedelta(minutes=minutes)) if minutes else None
+
+    # Предел кусается не всегда — и в ТЕКУЩЕМ окне тоже. Правило то же, что ниже
+    # для будущих окон: граница берётся, только когда она попадает ВНУТРЬ окна.
+    # Найдено разработчиком на снимке `005` (`2 tim / 8-18 / (8-15)`), пятница
+    # 30 октября — канун Alla helgons dag: окно в скобках закрывается в 15:00,
+    # а продукт отвечал «до 16:00», продлевая предел за пределы часов, в которые
+    # табличка вообще действует. После 15:00 она молчит, и предел не истекает —
+    # он перестаёт применяться.
+    #
+    # Конец окна берётся не по одному отрезку: полночь и смена условий режут окно
+    # на несколько, и предел у них один и тот же. Иначе `2 tim` в окне 20:00-02:00
+    # обрывался бы полуночью на ровном месте.
     if minutes:
-        # Настоящее время, а не деления циферблата: `2 tim` в ночь перевода
-        # кончаются на час раньше или позже, чем показывают часы (решение 116).
-        expires, source = clock.add(now, timedelta(minutes=minutes)), "plate"
+        window_end = current.end
+        for p in periods:
+            if (p.start == window_end and p.state == current.state
+                    and p.max_duration_minutes == minutes):
+                window_end = p.end
+
+    if minutes and edge < window_end:
+        expires, source = edge, "plate"
     elif base_state == ALLOWED:
         expires = twenty_four_hour_expiry(now, cal)
         source = "24h_default" if expires else None
