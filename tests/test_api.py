@@ -674,6 +674,60 @@ def test_identical_neighbouring_segments_are_joined():
         assert r["periods"][0]["end"] == r["duration_expires_at"]
 
 
+def test_the_day_class_stands_under_the_date_on_the_scale():
+    """Почему на знаке действуют именно эти часы, по одной дате не видно.
+
+    Найдено разработчиком на снимке `005`: пятница 30 октября 2026 — канун
+    Alla helgons dag, и работают часы В СКОБКАХ. Чтобы проверить ответ, человеку
+    пришлось бы держать в голове шведский календарь праздников; теперь класс дня
+    стоит строкой под датой.
+    """
+    with tempfile.TemporaryDirectory() as t:
+        client = _client(Path(t))
+
+        r = _post(client, PHOTO, moment="2026-10-30T14:00").get_json()["regimes"][0]
+        note = r["periods"][0]["start_day"]
+        # «Eve of», а не «день перед красным: имя»: после двоеточия имя читалось
+        # как название сегодняшнего дня, хотя праздник — завтра.
+        assert note == {"text": "Eve of Alla helgons dag (All Saints' Day)",
+                        "kind": "eve"}, note
+        # Стоянка кончается в понедельник — обычный будний день, и подписи там нет.
+        assert r["periods"][-1]["end_day"] is None
+
+        # Красный день называется своим именем, а воскресенье — днём недели:
+        # имени у него нет, а класс есть.
+        r = _post(client, PHOTO, moment="2026-12-25T10:00").get_json()["regimes"][0]
+        assert r["periods"][0]["start_day"] == {
+            "text": "Red day: Juldagen (Christmas Day)", "kind": "red"}
+        # Обычные воскресенье и суббота подписи НЕ получают: «Red day: Sunday»
+        # под строкой «Sunday, 13 September» повторяет уже написанное (решение 119).
+        r = _post(client, PHOTO, moment="2026-09-13T10:00").get_json()["regimes"][0]
+        assert r["periods"][0]["start_day"] is None
+        r = _post(client, PHOTO, moment="2026-09-12T10:00").get_json()["regimes"][0]
+        assert r["periods"][0]["start_day"] is None
+
+        # А суббота перед Пасхой — получает: там завтрашний день именован.
+        r = _post(client, PHOTO, moment="2026-04-04T10:00").get_json()["regimes"][0]
+        assert r["periods"][0]["start_day"] == {
+            "text": "Eve of Påskdagen (Easter Sunday)", "kind": "eve"}
+
+
+def test_the_scale_stays_continuous_when_a_node_grows():
+    """Третья строка в узле делает его выше значка, и линия соседнего отрезка
+    до значка не достаёт — шкала перестаёт читаться как непрерывная. Поэтому
+    в колонке значка есть куски линии, а узел тянется во всю высоту строки."""
+    page = (ROOT / "web/src/components/PeriodTimeline.tsx").read_text(encoding="utf-8")
+    assert "function Rail(" in page
+    assert page.count("<Rail p=") >= 4
+    assert 'className="flex items-stretch gap-3"' in page
+    # Подпись класса дня — серым и полужирным, одинаково у красных дней и канунов:
+    # красный на этой шкале уже значит «стоять нельзя» (решение 119).
+    day_note = page.split("const DAY_NOTE =")[1].split(";")[0]
+    assert "font-semibold" in day_note and "text-slate-600" in day_note
+    assert "red" not in day_note and "amber" not in day_note
+    assert "note.text" in page
+
+
 def test_joining_never_hides_a_change_of_rule():
     """Склеиваются только отрезки с одинаковым состоянием и условиями. Переход
     «платно → запрещено» обязан остаться видимым: это и есть то, ради чего шкала."""
@@ -785,7 +839,7 @@ def test_a_ban_at_the_selected_time_is_shown_before_the_window():
     assert "splitWindow(periods)" in page
     assert 'periods[i].tone === "prohibited"' in rule
     # Окна может не быть вовсе: тогда нет и узла его конца.
-    assert "{last && <Node kind=\"end\" title=\"Window ends\"" in page
+    assert "{last && (" in page and 'title="Window ends"' in page
     # «max» относится к стоянке; там, где знак её не даёт, длительность точная
     assert "isStayLimit(p.tone)" in page
     assert 'tone !== "prohibited" && tone !== "not_stated"' in rule
@@ -1073,7 +1127,7 @@ def test_no_line_under_a_window_is_printed_twice():
             continue
         d = present.to_json(
             pipeline.analyze(Photo.from_path(photo), cfg, val, ref, cal, moment),
-            ref, moment, "weekday")
+            ref, moment, cal)
         for r in d["regimes"]:
             круг = [t["key"] for t in r["window_for"]] + [t["key"] for t in r["notes"]]
             for p in r["periods"]:
@@ -1133,7 +1187,7 @@ def test_the_circle_never_names_what_the_timeline_states_by_the_hour():
             continue
         d = present.to_json(
             pipeline.analyze(Photo.from_path(photo), cfg, val, ref, cal, moment),
-            ref, moment, "weekday")
+            ref, moment, cal)
         for r in d["regimes"]:
             круг = {t["key"] for t in r["window_for"]}
             по_часам = {n["key"] for p in r["periods"] for n in p["notes"]}
@@ -1334,7 +1388,7 @@ def test_certainty_follows_completeness_across_the_whole_set():
         if not (cfg.demo_fixtures_path / f"{photo.stem}.extract.json").exists():
             continue
         a = pipeline.analyze(Photo.from_path(photo), cfg, val, ref, cal, moment)
-        d = present.to_json(a, ref, moment, "weekday")
+        d = present.to_json(a, ref, moment, cal)
         полный = a.assessment.category == "full"
         частная = any("Private land" in t["text"]
                       for r in d["regimes"] for t in r["window_for"])

@@ -16,6 +16,10 @@ export type Field = { name: string; value: string };
 export type Meaning = { key: string; label: string; code: string;
                        text: string; short: string; continues: boolean };
 
+// Класс дня под датой на шкале: красный день или канун. Текст готовит бэкенд,
+// вёрстка выбирает по `kind` только цвет.
+export type DayNote = { text: string; kind: "red" | "eve" };
+
 export type Period = {
   start: string;
   end: string;
@@ -33,6 +37,9 @@ export type Period = {
   // окном, а разрешения он не даёт. Не то же, что `uncertain`: там прочитать
   // не удалось, здесь прочитано и сказать нечего.
   tone: "paid" | "free" | "prohibited" | "uncertain" | "not_stated";
+  /** Класс дня у концов отрезка — под датой в узле шкалы. Пусто у обычных будней. */
+  start_day: DayNote | null;
+  end_day: DayNote | null;
   headline: string;
   minutes: number;
   notes: Term[];

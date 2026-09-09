@@ -100,6 +100,26 @@ def holidays(year: int) -> dict[date, str]:
     }
 
 
+# Английские названия — для экрана: продукт говорит по-английски, а шведское имя
+# остаётся рядом, потому что именно оно стоит в календаре, который человек откроет
+# для проверки. Перенесены из `data/holidays_se.json`, который этот модуль заменил.
+NAME_EN = {
+    "Nyårsdagen": "New Year's Day",
+    "Trettondedag jul": "Epiphany",
+    "Långfredagen": "Good Friday",
+    "Påskdagen": "Easter Sunday",
+    "Annandag påsk": "Easter Monday",
+    "Första maj": "May Day",
+    "Kristi himmelsfärdsdag": "Ascension Day",
+    "Pingstdagen": "Whit Sunday",
+    "Sveriges nationaldag": "National Day of Sweden",
+    "Midsommardagen": "Midsummer Day",
+    "Alla helgons dag": "All Saints' Day",
+    "Juldagen": "Christmas Day",
+    "Annandag jul": "Boxing Day",
+}
+
+
 def selectable(d: date) -> bool:
     """Можно ли спрашивать про этот день. Граница продукта, а не календаря:
     считать календарь умеет и шире, но отвечать за годы, которых никто не сверял,
@@ -124,6 +144,9 @@ class Calendar:
 
     def holiday_name(self, d: date) -> str | None:
         return self._red.get(d)
+
+    def holiday_name_en(self, d: date) -> str | None:
+        return NAME_EN.get(self._red.get(d, ""))
 
     def _is_red(self, d: date) -> bool:
         return d in self._red or d.weekday() == 6      # праздник или воскресенье

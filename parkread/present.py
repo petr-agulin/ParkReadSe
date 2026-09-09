@@ -14,9 +14,10 @@
 from __future__ import annotations
 
 from dataclasses import replace
-from datetime import datetime
+from datetime import date, datetime, timedelta
 
 from . import clock_se as clock
+from .calendar_se import EVE, RED, Calendar
 from .engine import (ALLOWED, NOT_STATED, PROHIBITED, Evaluation, Period, Regime,
                      horizon_end)
 from .completeness import FULL, PARTIAL, Assessment
@@ -33,7 +34,7 @@ from .reference import Reference
 # о смысле знака, поэтому запрещённая формулировка проверяется одним статическим
 # тестом на бэкенде и не может просочиться через вёрстку.
 
-CONTRACT = 5
+CONTRACT = 6
 
 STATE_TEXT = {
     "allowed": "The sign permits parking during this period",
@@ -350,6 +351,46 @@ def _stated(periods: list[Period]) -> list[Period]:
     return periods
 
 
+# Класс дня строкой под датой на шкале.
+#
+# Найдено разработчиком на снимке `005`: пятница 30 октября 2026 — канун Alla
+# helgons dag, и на знаке действуют часы В СКОБКАХ, а не обычные. По самой дате
+# этого не видно: чтобы проверить ответ продукта, человеку пришлось бы держать
+# в голове шведский календарь праздников.
+#
+# Подпись появляется там, где день чем-то ИМЕНОВАН: у праздника и у кануна перед
+# праздником. Обычные воскресенья и субботы её не получают — «Red day: Sunday»
+# под строкой «Sunday, 13 September» повторяет то, что уже написано, и выглядит
+# искусственно (замечено разработчиком). Класс дня всё равно виден: воскресенье
+# названо воскресеньем в самой дате.
+#
+# Имена праздников шведские: так они стоят в календаре, который человек может
+# открыть рядом. Английское — рядом, в скобках.
+def _holiday_label(cal: Calendar, d: date) -> str | None:
+    """Как называется праздник, если он есть. Шведское имя — то, что человек найдёт
+    в календаре; английское рядом, в скобках, потому что продукт говорит
+    по-английски. У обычного воскресенья имени нет, и подписи тоже не будет."""
+    sv = cal.holiday_name(d)
+    if not sv:
+        return None
+    en = cal.holiday_name_en(d)
+    return f"{sv} ({en})" if en else sv
+
+
+def _day_note(cal: Calendar, d: date) -> dict | None:
+    day = cal.day_class(d)
+    if day == RED:
+        name = _holiday_label(cal, d)
+        return {"text": f"Red day: {name}", "kind": "red"} if name else None
+    if day == EVE:
+        # «Eve of», а не «день перед красным: имя»: после двоеточия имя читалось
+        # как название СЕГОДНЯШНЕГО дня, хотя праздник — завтра (замечено
+        # разработчиком). Канун и называют по тому дню, перед которым он стоит.
+        name = _holiday_label(cal, d + timedelta(days=1))
+        return {"text": f"Eve of {name}", "kind": "eve"} if name else None
+    return None
+
+
 def _period_tone(p: Period) -> str:
     if p.state == "prohibited":
         return "prohibited"
@@ -367,13 +408,17 @@ def _headline(p: Period, tone: str) -> str:
     return PERIOD_HEADLINE[tone]
 
 
-def _period(ref: Reference, p: Period, horizon: datetime,
+def _period(ref: Reference, p: Period, horizon: datetime, cal: Calendar,
             stay_end: str = "", reason: str = "", certain: bool = True,
             aside: list[dict] | None = None) -> dict:
     tone = _period_tone(p)
     return {
         "start": p.start.isoformat(timespec="minutes"),
         "end": p.end.isoformat(timespec="minutes"),
+        # Класс дня у обоих концов отрезка: узлы шкалы показывают именно их.
+        # Считает бэкенд — вёрстка о шведском календаре ничего не знает.
+        "start_day": _day_note(cal, p.start.date()),
+        "end_day": _day_note(cal, p.end.date()),
         "state": p.state,
         "state_text": STATE_TEXT.get(p.state, p.state),
         # Тон отрезка решает бэкенд: платность — свойство правила, а не оформления.
@@ -606,7 +651,7 @@ def _who_can_park(ref: Reference, r: Regime, main_key: str | None,
 PRIVATE_LAND = "privat-parkering"
 
 
-def _regime(ref: Reference, r: Regime, horizon: datetime,
+def _regime(ref: Reference, r: Regime, horizon: datetime, cal: Calendar,
             main_key: str | None = None, unknown_plates: bool = False,
             private_land: bool = False, certain: bool = True) -> dict:
     # Под синим `P` табличка сужает разрешение; под запретом — вводит исключение.
@@ -700,7 +745,7 @@ def _regime(ref: Reference, r: Regime, horizon: datetime,
                                 if r.duration_expires_at else None),
         "duration_source": r.duration_source,
         "periods": [
-            _period(ref, p, horizon,
+            _period(ref, p, horizon, cal,
                     # последний период кончается там же, где кончается стоянка
                     STAY_END_TEXT.get(r.duration_source or "", "")
                     if r.duration_expires_at and p.end == r.duration_expires_at else "",
@@ -1063,7 +1108,7 @@ def _completeness(a: Assessment) -> dict:
 
 
 def to_json(analysis: Analysis, ref: Reference, moment: datetime,
-            day_class: str) -> dict:
+            cal: Calendar) -> dict:
     """Полный ответ по снимку. Форма одна и та же во всех исходах: сначала полнота,
     потом то, что удалось прочитать. Отказ — не другая форма ответа, а тот же ответ
     без вывода."""
@@ -1074,7 +1119,7 @@ def to_json(analysis: Analysis, ref: Reference, moment: datetime,
         # человеку, что сервер старее её, вместо пустых блоков без объяснения.
         "contract": CONTRACT,
         "moment": moment.isoformat(timespec="minutes"),
-        "day_class": day_class,
+        "day_class": cal.day_class(moment.date()),
         "completeness": _completeness(a),
         "has_answer": analysis.has_answer,
         "what_we_saw": _what_we_saw(analysis, ref),
@@ -1103,7 +1148,7 @@ def to_json(analysis: Analysis, ref: Reference, moment: datetime,
         # ни за один отрезок: чего именно недостаёт, знает блок полноты, а линия
         # лишь не даёт принять неполный ответ за полный.
         certain = a.category == FULL
-        body["regimes"] = [_regime(ref, r, horizon_end(moment), main_key,
+        body["regimes"] = [_regime(ref, r, horizon_end(moment), cal, main_key,
                                    unknown_plates, private_land, certain)
                            for r in ev.regimes]
         body["uncertainties"] = [_explain(u, UNCERTAINTY_TEXT) for u in ev.uncertainties]

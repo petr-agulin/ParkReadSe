@@ -107,7 +107,7 @@ def _regime_view(moment: datetime):
     from parkread.reference import Reference
     from parkread.engine import horizon_end
     r = evaluate_parking_rules(sign(plate({"fee": True})), moment, CAL).regimes[0]
-    return present._regime(Reference(Path("reference/signs")), r, horizon_end(moment))
+    return present._regime(Reference(Path("reference/signs")), r, horizon_end(moment), CAL)
 
 
 def test_a_plate_limit_across_the_switch():

@@ -135,7 +135,7 @@ def create_app(cfg: Config, *, history: History | None = None) -> Flask:
         except VisionCallFailed as e:
             return jsonify({"error": "vision_failed", "message": str(e)}), 502
 
-        body = present.to_json(result, ref, moment, cal.day_class(moment.date()))
+        body = present.to_json(result, ref, moment, cal)
         body["id"] = hist.record(
             demo_mode=cfg.demo_mode,
             category=result.assessment.category,

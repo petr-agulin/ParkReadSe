@@ -15,7 +15,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 // Растёт вместе с CONTRACT в parkread/present.py. Сборка и сервер расходятся легко:
 // страница обновляется из dist сразу, а процесс server.py живёт с прежним кодом,
 // пока его не перезапустят. Молчать об этом нельзя — блоки просто окажутся пустыми.
-const EXPECTED_CONTRACT = 5;
+const EXPECTED_CONTRACT = 6;
 
 export default function App() {
   const [busy, setBusy] = useState(false);

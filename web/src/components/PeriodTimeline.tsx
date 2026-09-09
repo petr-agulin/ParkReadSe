@@ -13,7 +13,7 @@
 // стороны, и шкала перестаёт читаться как непрерывная.
 
 import { isStayLimit, lasting, splitWindow } from "../lib/period";
-import type { Period, Regime, Term } from "../types";
+import type { DayNote, Period, Regime, Term } from "../types";
 import SignIcon from "./SignIcon";
 
 const COLUMN = "w-9 shrink-0";      // ширина значка: линия идёт ровно под ним
@@ -48,6 +48,26 @@ const HEADLINE: Record<string, string> = {
   prohibited: "text-red-700",
 };
 
+// Подпись класса дня — серым и полужирным, одинаково для красных дней и канунов.
+// Цветом её пробовали различать, и разработчик это отверг: красный на этой шкале
+// уже значит «стоять нельзя», а подпись под датой — не правило, а пояснение.
+// Выделяет её начертание, а не цвет.
+const DAY_NOTE = "text-xs font-semibold leading-tight text-slate-600";
+
+// Кусок линии в колонке значка. Узел бывает выше значка — под датой стоит ещё
+// и класс дня, — и без этих кусков линия соседнего отрезка не доставала бы
+// до значка, а шкала переставала бы читаться как непрерывная.
+function Rail({ p }: { p?: Period }) {
+  if (!p) return <span className="flex-1" />;
+  const dashed = p.tone === "prohibited" || p.tone === "not_stated" || p.certain === false;
+  return dashed ? (
+    <span className={`w-0 flex-1 border-l-[3px] border-dashed ${DASH[p.tone] ?? "border-red-700"}`} />
+  ) : (
+    <span className={`w-[3px] flex-1 ${LINE[p.tone] ?? "bg-slate-400"}`} />
+  );
+}
+
+
 function when(iso: string): string {
   return new Date(iso).toLocaleString(undefined, {
     weekday: "long", day: "numeric", month: "long",
@@ -56,36 +76,49 @@ function when(iso: string): string {
 }
 
 function Node({
-  kind, title, at,
-}: { kind: "start" | "end"; title: string; at: string }) {
+  kind, title, at, note, above, below,
+}: {
+  kind: "start" | "end"; title: string; at: string;
+  note?: DayNote | null; above?: Period; below?: Period;
+}) {
   return (
-    // items-center + ровно две строки текста: высота строки задаётся значком,
-    // поэтому линия соседнего отрезка упирается в него без зазора. Третья строка
-    // здесь делала строку выше значка, и линия не доходила — так и было
-    // с причиной конца стоянки.
-    <div className="flex items-center gap-3">
-      <div className={`${COLUMN} flex justify-center`}>
+    // Значок центрируется, а остаток высоты занимают куски линии: узел с третьей
+    // строкой выше значка, и без них между линией и значком открывался зазор.
+    <div className="flex items-stretch gap-3">
+      <div className={`${COLUMN} flex flex-col items-center`}>
+        <Rail p={above} />
         <SignIcon kind={kind} />
+        <Rail p={below} />
       </div>
-      <div className="min-w-0">
+      <div className="min-w-0 self-center">
         <p className="font-medium leading-tight text-slate-900">{title}</p>
         <p className="text-xs leading-tight text-slate-500">{at}</p>
+        {/* Класс дня — почему на знаке действуют именно эти часы. Текст с бэкенда:
+            какой день красный, вёрстка не знает и знать не должна. */}
+        {note && <p className={DAY_NOTE}>{note.text}</p>}
       </div>
     </div>
   );
 }
 
 
-function Connector({ at }: { at: string }) {
+function Connector({ at, note, above, below }: {
+  at: string; note?: DayNote | null; above?: Period; below?: Period;
+}) {
   // Стык двух отрезков — момент, когда правило меняется. Значок отмечает его
   // на линии, а время рядом объясняет, чем именно этот стык является: без него
   // значок был бы украшением, а на этой шкале украшений нет.
   return (
-    <div className="flex items-center gap-3">
-      <div className={`${COLUMN} flex justify-center`}>
+    <div className="flex items-stretch gap-3">
+      <div className={`${COLUMN} flex flex-col items-center`}>
+        <Rail p={above} />
         <SignIcon kind="start" size="small" />
+        <Rail p={below} />
       </div>
-      <p className="text-xs text-slate-500">{when(at)}</p>
+      <div className="min-w-0 self-center">
+        <p className="text-xs leading-tight text-slate-500">{when(at)}</p>
+        {note && <p className={DAY_NOTE}>{note.text}</p>}
+      </div>
     </div>
   );
 }
@@ -202,6 +235,8 @@ export default function PeriodTimeline(
             kind="end"
             title="Your selected start time"
             at={when(leadIn[0].start)}
+            note={leadIn[0].start_day}
+            below={leadIn[0]}
           />
           {leadIn.map((p, n) => (
             <Segment key={`lead-${n}`} p={p} extra={p.aside ?? []} />
@@ -211,19 +246,32 @@ export default function PeriodTimeline(
 
       {window.length > 0 && (
         <>
-          <Node kind="start" title="Window starts" at={when(window[0].start)} />
+          <Node
+            kind="start"
+            title="Window starts"
+            at={when(window[0].start)}
+            note={window[0].start_day}
+            above={leadIn.length ? leadIn[leadIn.length - 1] : undefined}
+            below={window[0]}
+          />
           {window.map((p, n) => (
             <div key={n}>
               {/* Стык рисуется перед каждым отрезком, кроме первого: первый начинается
                   от узла «Window starts», и второй значок там был бы лишним. */}
-              {n > 0 && <Connector at={p.start} />}
+              {n > 0 && (
+                <Connector at={p.start} note={p.start_day}
+                           above={window[n - 1]} below={p} />
+              )}
               {/* Что писать под отрезком, решает бэкенд: круг стоящих идёт
                   под отрезками своего рода, примечания участка (`Boende`) —
                   под всеми, а сказанное условием этого же отрезка не повторяется. */}
               <Segment p={p} extra={p.aside ?? []} />
             </div>
           ))}
-          {last && <Node kind="end" title="Window ends" at={when(last.end)} />}
+          {last && (
+            <Node kind="end" title="Window ends" at={when(last.end)}
+                  note={last.end_day} above={last} />
+          )}
         </>
       )}
 
