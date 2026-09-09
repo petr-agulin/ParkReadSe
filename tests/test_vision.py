@@ -30,7 +30,7 @@ def _конфиг():
                   vision_model="м", triage_model="м", triage_enforce=True,
                   max_rpm=0, api_base_url="https://пример/v1",
                   schema_path=Path("schema"), reference_path=Path("reference"),
-                  general_rules_path=Path("reference"), holidays_path=Path("reference"),
+                  general_rules_path=Path("reference"),
                   db_path=Path("нет.db"), log_level="INFO", _api_key="ключ")
 
 

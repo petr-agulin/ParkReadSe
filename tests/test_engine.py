@@ -11,7 +11,7 @@ from parkread.calendar_se import EVE, RED, UNKNOWN, WEEKDAY, Calendar
 from parkread.engine import (ALLOWED, NOT_STATED, PROHIBITED, UNCERTAIN,
                              evaluate_parking_rules, twenty_four_hour_expiry)
 
-CAL = Calendar(__import__("pathlib").Path("data/holidays_se.json"))
+CAL = Calendar()
 
 
 # --- конструкторы знаков ---------------------------------------------------
@@ -69,7 +69,11 @@ def test_red_beats_eve():
 
 
 def test_date_outside_calendar_is_unknown():
-    assert CAL.day_class(date(2027, 3, 1)) == UNKNOWN
+    """Календарь считается кодом, но отвечает не за любой год: окно продукта —
+    2026-2030, и с запасом в год по краям. Дальше — «неизвестно», а не выдумка:
+    набор праздников со временем меняется, и сверял его человек только внутри окна."""
+    assert CAL.day_class(date(2035, 3, 1)) == UNKNOWN
+    assert CAL.day_class(date(2019, 3, 1)) == UNKNOWN
 
 
 # --- правило 24 часов ------------------------------------------------------
@@ -540,7 +544,7 @@ def test_prohibition_main_sign_inverts_base():
 def test_date_outside_calendar_is_uncertain_not_error():
     ev = evaluate_parking_rules(
         sign(plate({"fee": True, "time_windows": [win("08:00", "18:00", WEEKDAY)]})),
-        datetime(2027, 5, 3, 10), CAL)
+        datetime(2035, 5, 3, 10), CAL)
     assert "date_outside_calendar" in ev.uncertainties
     assert any(p.state == UNCERTAIN for p in ev.regimes[0].periods)
 

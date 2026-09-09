@@ -559,7 +559,7 @@ def test_the_threshold_still_earns_its_value():
     # Читать фикстуры с диска ключа не требует.
     cfg = replace(config.load(), demo_mode=True)
     val, ref = Validator(cfg.schema_path), Reference(cfg.reference_path)
-    cal = Calendar(cfg.holidays_path)
+    cal = Calendar()
     moment = datetime(2026, 3, 2, 0, 0)
 
     сбежали = []

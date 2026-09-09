@@ -13,6 +13,9 @@ type Props = {
   onMoment: (value: string) => void;
 };
 
+const MOMENT_FROM = "2026-01-01T00:00";
+const MOMENT_TO = "2030-12-31T23:59";
+
 export default function PhotoInput({ busy, onPick, onCamera, moment, onMoment }: Props) {
   // Кнопку съёмки показываем, только если браузер отдаст камеру. По незащищённому
   // адресу её нет вовсе, и предлагать было бы обещанием, которого не сдержать.
@@ -72,6 +75,11 @@ export default function PhotoInput({ busy, onPick, onCamera, moment, onMoment }:
           type="datetime-local"
           value={moment}
           disabled={busy}
+          // Края окна продукта. Те же числа стоят в `parkread/calendar_se.py`,
+          // и расхождение ловит тест на бэкенде: календарь считается кодом,
+          // но за годы, которых никто не сверял, продукт не отвечает.
+          min={MOMENT_FROM}
+          max={MOMENT_TO}
           onChange={(e) => onMoment(e.target.value)}
           className="rounded-lg border border-line px-2 py-1 text-[13px] disabled:opacity-50"
         />

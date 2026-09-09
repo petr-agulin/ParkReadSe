@@ -24,6 +24,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from datetime import date, datetime, time, timedelta
 
+from . import clock_se as clock
 from .calendar_se import RED, UNKNOWN, WEEKDAY, Calendar
 from .reference import ELIGIBILITY_KEYS, VEHICLE_KEYS
 
@@ -341,7 +342,9 @@ def _build_regime(extent: str, panels: list[dict], base_state: str,
     silent = current is not None and current.state == NOT_STATED
     minutes = None if silent else (current.max_duration_minutes if current else None)
     if minutes:
-        expires, source = now + timedelta(minutes=minutes), "plate"
+        # Настоящее время, а не деления циферблата: `2 tim` в ночь перевода
+        # кончаются на час раньше или позже, чем показывают часы (решение 116).
+        expires, source = clock.add(now, timedelta(minutes=minutes)), "plate"
     elif base_state == ALLOWED:
         expires = twenty_four_hour_expiry(now, cal)
         source = "24h_default" if expires else None
@@ -370,7 +373,7 @@ def _build_regime(extent: str, panels: list[dict], base_state: str,
         limit = later.max_duration_minutes
         if not limit:
             continue
-        edge = later.start + timedelta(minutes=limit)
+        edge = clock.add(later.start, timedelta(minutes=limit))
         if edge < later.end and (expires is None or edge < expires):
             expires, source = edge, "plate"
             break
@@ -499,9 +502,10 @@ def twenty_four_hour_expiry(start: datetime, cal: Calendar) -> datetime | None:
 
     if not cal.is_working_day(start.date()):
         nxt = cal.next_working_day(start.date())
-        return None if nxt is None else datetime.combine(nxt, time(0, 0)) + DAY
+        return None if nxt is None else clock.add(datetime.combine(nxt, time(0, 0)), DAY)
 
-    end = start + DAY
+    # Сутки — настоящие: в ночь перевода их конец на часах сдвигается на час.
+    end = clock.add(start, DAY)
     day = start.date()
     while day <= end.date():
         if not cal.covers(day):
@@ -510,7 +514,7 @@ def twenty_four_hour_expiry(start: datetime, cal: Calendar) -> datetime | None:
         # значит они положены заново с ближайшего рабочего дня.
         if not cal.is_working_day(day) and datetime.combine(day, time(0, 0)) < end:
             nxt = cal.next_working_day(day)
-            return None if nxt is None else datetime.combine(nxt, time(0, 0)) + DAY
+            return None if nxt is None else clock.add(datetime.combine(nxt, time(0, 0)), DAY)
         day += timedelta(days=1)
     return end
 

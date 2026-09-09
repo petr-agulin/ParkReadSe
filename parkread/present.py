@@ -16,6 +16,7 @@ from __future__ import annotations
 from dataclasses import replace
 from datetime import datetime
 
+from . import clock_se as clock
 from .engine import (ALLOWED, NOT_STATED, PROHIBITED, Evaluation, Period, Regime,
                      horizon_end)
 from .completeness import FULL, PARTIAL, Assessment
@@ -32,7 +33,7 @@ from .reference import Reference
 # о смысле знака, поэтому запрещённая формулировка проверяется одним статическим
 # тестом на бэкенде и не может просочиться через вёрстку.
 
-CONTRACT = 4
+CONTRACT = 5
 
 STATE_TEXT = {
     "allowed": "The sign permits parking during this period",
@@ -378,7 +379,9 @@ def _period(ref: Reference, p: Period, horizon: datetime,
         # Тон отрезка решает бэкенд: платность — свойство правила, а не оформления.
         "tone": tone,
         "headline": _headline(p, tone),
-        "minutes": int((p.end - p.start).total_seconds() // 60),
+        # Длительность настоящая, а не по циферблату: ночь перевода часов
+        # длится 23 или 25 часов, и отрезок, накрывший её, — столько же.
+        "minutes": clock.real_minutes(p.start, p.end),
         # Плата уже названа заголовком отрезка; ниже — то, что к ней добавляется.
         "notes": [_term(ref, c) for c in p.conditions if c != "avgift"],
         # Период, упирающийся в конец горизонта, ничем не кончается: знак в этот
@@ -458,6 +461,34 @@ NO_WINDOW_NOTHING_STATED = (
     "parking here at other times the sign states nothing: the general rules of "
     "the road apply, and they are not on this sign."
 )
+
+
+# Заметка о переводе часов. Показывается тогда, когда показанный отрезок перевод
+# ПЕРЕСЕКАЕТ, — там, где она меняет чтение экрана. Сканирование днём того же
+# воскресенья, когда перевод уже позади, ничего не меняет, и заметка была бы шумом
+# (решение 117).
+#
+# Даты в тексте нет намеренно: перевод может прийтись и на ближайшую ночь,
+# и на следующее воскресенье в пределах горизонта, а «показанная здесь ночь»
+# верна в обоих случаях — шкала эту ночь и так показывает.
+#
+# Часы, наоборот, постоянные: переход в ЕС идёт в 01:00 UTC, Швеция зимой `+1`,
+# летом `+2`, поэтому весной это ровно 02:00, осенью — ровно 03:00.
+CLOCK_CHANGE_TEXT = {
+    "back": "The clocks go back on the night shown here: at 03:00 they return to "
+            "02:00, so that night is an hour longer. The times shown already allow "
+            "for it.",
+    "forward": "The clocks go forward on the night shown here: at 02:00 they jump to "
+               "03:00, so that night is an hour shorter. The times shown already "
+               "allow for it.",
+}
+
+
+def _clock_change(periods: list[Period]) -> str | None:
+    if not periods:
+        return None
+    return CLOCK_CHANGE_TEXT.get(
+        clock.switch_between(periods[0].start, periods[-1].end) or "")
 
 
 def _no_window(r: Regime, circle: list[dict]) -> str | None:
@@ -605,6 +636,7 @@ def _regime(ref: Reference, r: Regime, horizon: datetime,
     #
     # Сверяется по КЛЮЧУ, а не по тексту: у длинной и короткой формы тексты разные,
     # и по ним ни повтор, ни этот случай не видны.
+    показанные = _visible(r)
     по_часам = {k for p in r.periods for k in p.conditions}
     круг = [_short_term(ref, k, exception=запрет)
             for k in _narrowing(ref, r) if k not in по_часам]
@@ -655,6 +687,10 @@ def _regime(ref: Reference, r: Regime, horizon: datetime,
         "window_for": круг,
         # Заполнено — шкалы нет, вместо неё эта строка.
         "no_window_text": _no_window(r, круг + примечания),
+        # Заметка о переводе часов — про ПОКАЗАННЫЙ отрезок, поэтому и стоит она
+        # у режима: у знака с двумя стрелками окон два, и пересекать перевод
+        # может одно из них.
+        "clock_change_text": _clock_change(показанные),
         # Куда эту строку ставить, решает её СМЫСЛ, а не место в списке.
         # Исключение из запрета принадлежит запрещающему отрезку; круг окна —
         # разрешающему. Поставь «Visitors only» под «No parking», и выйдет
@@ -676,7 +712,7 @@ def _regime(ref: Reference, r: Regime, horizon: datetime,
                     # Примечания (`Boende`) относятся ко всему окну и идут под всеми.
                     aside=[t for t in (круг if p.state == нужное else []) + примечания
                            if t["key"] not in set(p.conditions)])
-            for p in _visible(r)
+            for p in показанные
         ],
     }
 

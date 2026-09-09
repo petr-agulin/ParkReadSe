@@ -20,7 +20,8 @@ from pathlib import Path
 from flask import Flask, jsonify, request, send_from_directory
 
 from . import pipeline, present
-from .calendar_se import Calendar
+from .calendar_se import (SELECTABLE_FROM, SELECTABLE_TO, Calendar,
+                          selectable)
 from .config import Config
 from .history import History
 from .photo import Photo
@@ -55,7 +56,7 @@ def create_app(cfg: Config, *, history: History | None = None) -> Flask:
     # (`PROJECT_BRIEF.md`). Не путешествуя вместе с ответом, они и не могут случайно
     # оказаться его частью — обещание держится устройством, а не дисциплиной.
     general = Reference(cfg.general_rules_path)
-    cal = Calendar(cfg.holidays_path)
+    cal = Calendar()
     hist = history if history is not None else History(cfg.db_path)
 
     @app.get("/api/health")
@@ -109,6 +110,18 @@ def create_app(cfg: Config, *, history: History | None = None) -> Flask:
         except ValueError:
             return jsonify({"error": "bad_moment",
                             "message": "момент указывается как 2026-03-07T12:00"}), 400
+
+        # Окно продукта. Календарь считается кодом и умеет шире, но отвечать
+        # за годы, которых никто не сверял, он не должен: набор праздников
+        # со временем меняется. Поле на экране ограничено теми же краями —
+        # эта проверка стоит на случай запроса мимо экрана.
+        if not selectable(moment.date()):
+            return jsonify({
+                "error": "moment_out_of_range",
+                "message": (f"The app reads signs for moments from "
+                            f"{SELECTABLE_FROM.isoformat()} to "
+                            f"{SELECTABLE_TO.isoformat()}"),
+            }), 400
 
         # remember опущен намеренно: снимок пользователя в фикстуры не попадает.
         photo = Photo(name=file.filename, data=raw)

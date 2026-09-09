@@ -31,7 +31,6 @@ def _cfg(tmp: Path, demo: bool = True) -> Config:
         schema_path=ROOT / "schema",
         reference_path=ROOT / "reference/signs",
         general_rules_path=ROOT / "reference/general_rules",
-        holidays_path=ROOT / "data/holidays_se.json",
         db_path=tmp / "history.sqlite3",
         log_level="INFO",
     )
@@ -123,6 +122,25 @@ def test_bad_moment_is_rejected_before_any_model_call():
     with tempfile.TemporaryDirectory() as t:
         r = _post(_client(Path(t)), PHOTO, moment="позавчера")
         assert r.status_code == 400 and r.get_json()["error"] == "bad_moment"
+
+
+def test_a_moment_outside_the_window_is_refused():
+    """Календарь считается кодом и умеет шире окна, но отвечать за годы, которых
+    никто не сверял, продукт не должен: набор праздников со временем меняется.
+    Поле на экране ограничено теми же краями — эта проверка стоит на случай
+    запроса мимо экрана."""
+    with tempfile.TemporaryDirectory() as t:
+        client = _client(Path(t))
+        for moment in ("2031-01-05T10:00", "2025-12-31T23:00"):
+            r = _post(client, PHOTO, moment=moment)
+            assert r.status_code == 400, moment
+            body = r.get_json()
+            assert body["error"] == "moment_out_of_range"
+            # Сообщение уходит на экран, поэтому оно по-английски и называет края.
+            assert "2026-01-01" in body["message"] and "2030-12-31" in body["message"]
+
+        # Край окна — внутри окна.
+        assert _post(client, PHOTO, moment="2030-12-31T23:59").status_code == 200
 
 
 def test_unknown_photo_in_demo_mode_is_explained_not_crashed():
@@ -563,7 +581,7 @@ def test_a_complementary_plate_does_not_replace_the_general_rule():
     from parkread.reference import Reference
 
     ref = Reference(ROOT / "reference/signs")
-    cal = Calendar(ROOT / "data/holidays_se.json")
+    cal = Calendar()
     doc = {"schema_version": 1,
            "main_sign": {"type": "parking", "background_color": "blue",
                          "form": "regular", "legibility": {"readable": True}},
@@ -771,7 +789,7 @@ def test_the_ban_period_itself_is_still_computed():
     from parkread.calendar_se import Calendar
     from parkread.engine import evaluate_parking_rules
 
-    cal = Calendar(ROOT / "data/holidays_se.json")
+    cal = Calendar()
     friday = {"from": "00:00", "to": "06:00", "day_class": "named_weekday",
               "named_weekday": "friday"}
     doc = {"schema_version": 1,
@@ -1035,7 +1053,7 @@ def test_no_line_under_a_window_is_printed_twice():
 
     cfg = replace(config.load(), demo_mode=True)
     val, ref = Validator(cfg.schema_path), Reference(cfg.reference_path)
-    cal = Calendar(cfg.holidays_path)
+    cal = Calendar()
     moment = datetime(2026, 3, 2, 12)
 
     беда = []
@@ -1095,7 +1113,7 @@ def test_the_circle_never_names_what_the_timeline_states_by_the_hour():
 
     cfg = replace(config.load(), demo_mode=True)
     val, ref = Validator(cfg.schema_path), Reference(cfg.reference_path)
-    cal = Calendar(cfg.holidays_path)
+    cal = Calendar()
     moment = datetime(2026, 3, 2, 12)
 
     беда = []
@@ -1297,7 +1315,7 @@ def test_certainty_follows_completeness_across_the_whole_set():
 
     cfg = replace(config.load(), demo_mode=True)
     val, ref = Validator(cfg.schema_path), Reference(cfg.reference_path)
-    cal = Calendar(cfg.holidays_path)
+    cal = Calendar()
     moment = datetime(2026, 3, 2, 12)
 
     беда = []

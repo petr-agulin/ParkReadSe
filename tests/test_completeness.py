@@ -14,7 +14,7 @@ from parkread.completeness import (FULL, INSUFFICIENT, MAY_BE_INCOMPLETE,
                                    apply_asymmetry, grade)
 from parkread.engine import ALLOWED, UNCERTAIN, evaluate_parking_rules
 
-CAL = Calendar(Path("data/holidays_se.json"))
+CAL = Calendar()
 NOW = datetime(2026, 3, 2, 12)   # обычный понедельник
 
 

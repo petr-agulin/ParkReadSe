@@ -149,7 +149,7 @@ def cmd_explain(args: list[str]) -> int:
     cfg, val, ref = _load()
     img = Path(args[0])
     moment = datetime.fromisoformat(args[1]) if len(args) > 1 else datetime.now()
-    cal = Calendar(cfg.holidays_path)
+    cal = Calendar()
 
     res = pipeline.analyze(Photo.from_path(img, remember=True),
                            cfg, val, ref, cal, moment)
@@ -278,7 +278,7 @@ def cmd_calibrate() -> int:
     существенна — на наборе из 47 снимков поля разошлись у 19, а ответ у 6.
     """
     cfg, val, ref = _load()
-    cal = Calendar(cfg.holidays_path)
+    cal = Calendar()
     moment = datetime(2026, 3, 2, 0, 0)   # обычный понедельник, вне праздников
 
     rows, seen = [], {}

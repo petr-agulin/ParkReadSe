@@ -40,7 +40,6 @@ class Config:
     schema_path: Path
     reference_path: Path
     general_rules_path: Path
-    holidays_path: Path
     db_path: Path
     log_level: str
     _api_key: str = ""
@@ -96,7 +95,6 @@ def load(env_file: str | os.PathLike | None = None) -> Config:
         schema_path=_path("SCHEMA_PATH", "schema/"),
         reference_path=_path("REFERENCE_PATH", "reference/signs/"),
         general_rules_path=_path("GENERAL_RULES_PATH", "reference/general_rules/"),
-        holidays_path=_path("HOLIDAYS_PATH", "data/holidays_se.json"),
         db_path=_path("DB_PATH", "data/parkread.sqlite3"),
         log_level=(os.getenv("LOG_LEVEL") or "INFO").strip().upper(),
         _api_key=(os.getenv("VISION_API_KEY") or "").strip(),

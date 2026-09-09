@@ -1,35 +1,121 @@
-"""Классы дня по шведскому календарю.
+"""Классы дня по шведскому календарю. **Считается кодом, файла нет.**
 
-Файл `data/holidays_se.json` хранит только красные дни. Воскресенья, субботы и кануны
-**выводятся здесь**: хранить вычислимое значит однажды получить расхождение между
-хранимым и вычисляемым.
+Праздники задаёт `Lag (1989:253) om allmänna helgdagar`: § 1 перечисляет красные дни,
+§ 2 называет их даты. Правил там три — постоянная дата, смещение от Пасхи и «суббота,
+попавшая в такие-то числа», — и все три вычислимы. Поэтому список не хранится: файл
+с ним покрывал один год и однажды перестал бы отвечать (решение 108).
+
+Воскресенья, субботы и кануны выводятся здесь же: хранить вычислимое значит однажды
+получить расхождение между хранимым и вычисляемым.
 
 Порядок проверок важен, и красное побеждает скобки **по определению**, а не
 по договорённости: канун — это *vardag före sön- och helgdag*, то есть **рабочий**
 день перед красным. Праздник рабочим днём не является и канунoм быть не может.
 При обратном порядке в 2026 году портятся шесть дней.
+
+**Окно продукта — 2026-2030** (решение 115). Раньше него отвечать незачем, дальше —
+нельзя без проверки: набор праздников со временем меняется (до 2005 года вместо
+`nationaldagen` красным был `annandag pingst`), и «любой год» тихо врал бы.
+Продлевается окно одной константой ниже.
 """
 from __future__ import annotations
 
-import json
 from datetime import date, timedelta
-from pathlib import Path
 
 WEEKDAY = "weekday"   # vardag
 EVE = "eve"           # vardag före sön- och helgdag
 RED = "red"           # sön- och helgdag
 UNKNOWN = "unknown"   # дата вне покрытого периода
 
+# Окно, в котором продукт отвечает. Момент вне него выбрать нельзя: поле на экране
+# ограничено этими краями, и бэкенд такой запрос отклоняет.
+SELECTABLE_FROM = date(2026, 1, 1)
+SELECTABLE_TO = date(2030, 12, 31)
+
+# Считается на год шире с каждой стороны. Шкала строится на восемь суток вперёд,
+# и разбор, сделанный 28 декабря 2030-го, спрашивает про январь 2031-го: без запаса
+# он получил бы «класс дня неизвестен» на ровном месте. Тот же приём был и в файле —
+# там ради 31 декабря лежал отдельной записью 1 января следующего года.
+MARGIN = 1
+
+
+def easter(year: int) -> date:
+    """Пасхальное воскресенье по григорианскому компутусу (Meeus/Jones/Butcher).
+
+    Закон говорит «söndagen närmast efter den fullmåne som infaller på eller närmast
+    efter den 21 mars», и полнолуние здесь **церковное, табличное**, а не наблюдаемое:
+    церковь наблюдений не ведёт, а считает по эпакте и золотому числу. Эта функция
+    ту же таблицу и воспроизводит, поэтому Пасха — чистая функция года.
+
+    Астрономическое полнолуние с табличным иногда расходится на день-другой.
+    В такие годы права **таблица**: считать по небу значило бы получить неверную Пасху.
+    """
+    a = year % 19
+    b, c = divmod(year, 100)
+    d, e = divmod(b, 4)
+    f = (b + 8) // 25
+    g = (b - f + 1) // 3
+    h = (19 * a + b - d - g + 15) % 30
+    i, k = divmod(c, 4)
+    lunar = (32 + 2 * e + 2 * i - h - k) % 7
+    m = (a + 11 * h + 22 * lunar) // 451
+    month, day = divmod(h + lunar - 7 * m + 114, 31)
+    return date(year, month, day + 1)
+
+
+def _saturday_between(year: int, month: int, first: int, days: int) -> date:
+    """Суббота, попавшая в окно из `days` дней подряд начиная с `first` числа.
+
+    Окно всегда семидневное, поэтому суббота в нём ровно одна — так закон и задаёт
+    `midsommardagen` (20-26 июня) и `alla helgons dag` (31 октября - 6 ноября).
+    """
+    start = date(year, month, first)
+    return start + timedelta(days=(5 - start.weekday()) % 7)
+
+
+def holidays(year: int) -> dict[date, str]:
+    """Тринадцать красных дней года. Ввода-вывода здесь нет и быть не должно:
+    эта функция переезжает в браузер как есть (шаг 6).
+
+    Воскресенья сюда не входят — они красные сами по себе, и по той же § 1.
+    """
+    e = easter(year)
+    return {
+        date(year, 1, 1): "Nyårsdagen",
+        date(year, 1, 6): "Trettondedag jul",
+        e - timedelta(days=2): "Långfredagen",
+        e: "Påskdagen",
+        e + timedelta(days=1): "Annandag påsk",
+        date(year, 5, 1): "Första maj",
+        # «Sjätte torsdagen efter påskdagen» — это +39 дней: первый четверг после
+        # Пасхи отстоит на четыре дня, дальше пять недель.
+        e + timedelta(days=39): "Kristi himmelsfärdsdag",
+        # «Sjunde söndagen efter påskdagen» — семь недель ровно.
+        e + timedelta(days=49): "Pingstdagen",
+        date(year, 6, 6): "Sveriges nationaldag",
+        _saturday_between(year, 6, 20, 7): "Midsommardagen",
+        _saturday_between(year, 10, 31, 7): "Alla helgons dag",
+        date(year, 12, 25): "Juldagen",
+        date(year, 12, 26): "Annandag jul",
+    }
+
+
+def selectable(d: date) -> bool:
+    """Можно ли спрашивать про этот день. Граница продукта, а не календаря:
+    считать календарь умеет и шире, но отвечать за годы, которых никто не сверял,
+    он не должен."""
+    return SELECTABLE_FROM <= d <= SELECTABLE_TO
+
 
 class Calendar:
-    def __init__(self, path: Path):
-        doc = json.loads(path.read_text(encoding="utf-8"))
-        self.covered_from = date.fromisoformat(doc["covered_from"])
-        self.covered_to = date.fromisoformat(doc["covered_to"])
-        self._red = {
-            date.fromisoformat(h["date"]): h
-            for h in doc["public_holidays"] + doc.get("boundary_holidays", [])
-        }
+    """Календарь классов дня. Строится без аргументов: брать больше неоткуда."""
+
+    def __init__(self) -> None:
+        self.covered_from = date(SELECTABLE_FROM.year - MARGIN, 1, 1)
+        self.covered_to = date(SELECTABLE_TO.year + MARGIN, 12, 31)
+        self._red: dict[date, str] = {}
+        for year in range(self.covered_from.year, self.covered_to.year + 1):
+            self._red.update(holidays(year))
 
     # --- базовые предикаты ---
 
@@ -37,8 +123,7 @@ class Calendar:
         return d in self._red
 
     def holiday_name(self, d: date) -> str | None:
-        h = self._red.get(d)
-        return h["name_sv"] if h else None
+        return self._red.get(d)
 
     def _is_red(self, d: date) -> bool:
         return d in self._red or d.weekday() == 6      # праздник или воскресенье

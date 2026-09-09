@@ -226,6 +226,15 @@ export default function PeriodTimeline(
           {last && <Node kind="end" title="Window ends" at={when(last.end)} />}
         </>
       )}
+
+      {/* Перевод часов. Стоит под шкалой, потому что относится к ней целиком:
+          это оговорка о показанных временах, а не свойство отдельного отрезка.
+          Появляется, только когда показанный отрезок перевод пересекает. */}
+      {regime.clock_change_text && (
+        <p className="mt-4 rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-600">
+          {regime.clock_change_text}
+        </p>
+      )}
       </>
       )}
     </section>
