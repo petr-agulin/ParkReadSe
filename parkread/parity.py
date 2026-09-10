@@ -1,0 +1,303 @@
+"""Двойной прогон: одна и та же задача — двум реализациям, ответ сравнивается.
+
+Порт на TypeScript идёт слоями, и главная его опасность — **молчаливое расхождение**:
+правило поправили в питоне, забыли в браузере, и обе реализации живут дальше, каждая
+по-своему. Поэтому сверка строится ПЕРВОЙ, до самого порта (решение 123).
+
+**Как устроено.** Питон считает ответы и кладёт их файлами в `parity/`; TypeScript
+считает свои и сравнивает с файлами. Ни одна сторона не вызывает другую: обе бегут
+в своём привычном прогоне.
+
+    .venv/Scripts/python.exe cli.py parity --write   # переписать эталоны
+    .venv/Scripts/python.exe tests/run.py            # эталоны не устарели
+    npm test --prefix web                            # TypeScript с ними сходится
+
+Переписывание — **отдельная команда**, а не побочный эффект прогона: изменился ответ
+продукта — это видно строкой в `git diff`, а не угадывается. Иначе эталоны однажды
+перезапишут, чтобы «стало зелено», и вместе с красным исчезнет расхождение.
+
+**Снимков здесь нет и быть не должно** — только разборы (JSON). Фотографии с номерами
+машин в репозиторий не попадают (`AGENTS.md`, §14).
+"""
+from __future__ import annotations
+
+import json
+from dataclasses import replace
+from datetime import date, datetime, timedelta
+from pathlib import Path
+
+from . import completeness, engine, present
+from .calendar_se import SELECTABLE_FROM, SELECTABLE_TO, Calendar, holidays
+from . import clock_se as clock
+from .pipeline import Analysis, Outcome
+from .reference import Reference, recognise
+from .validation import Result
+from .vision import ExtractOutcome
+
+ROOT = Path(__file__).resolve().parent.parent
+DIR = ROOT / "parity"
+CASES = DIR / "cases.json"
+PORTED = DIR / "PORTED.json"
+
+# Слои порта, снизу вверх. Порядок здесь — тот же, в котором они переезжают.
+LAYERS = ["calendar", "clock", "engine", "completeness", "present"]
+
+# Общий момент — тот же понедельник, на котором стоит замер: обычный будний день
+# вне праздников, где ничто не наложилось на ничто.
+BASE_MOMENT = datetime(2026, 3, 2, 0, 0)
+
+# Особые моменты. Каждый выбран потому, что на нём уже ломалось что-нибудь живое,
+# и каждый назван — иначе список превращается в набор чисел без причины.
+SPECIAL = [
+    {"label": "eve", "moment": "2026-10-30T14:00",
+     "why": "канун Alla helgons dag: действуют часы в скобках"},
+    {"label": "red", "moment": "2026-12-25T10:00",
+     "why": "Juldagen: красный день, и следующий тоже красный"},
+    {"label": "dst-back", "moment": "2026-10-24T20:00",
+     "why": "ночь перевода назад: сутки длятся 25 часов"},
+    {"label": "dst-forward", "moment": "2027-03-27T20:00",
+     "why": "ночь перевода вперёд: сутки длятся 23 часа"},
+    {"label": "season-edge", "moment": "2026-09-30T23:30",
+     "why": "последние полчаса сезона 1/4-30/9"},
+    {"label": "midnight", "moment": "2026-06-10T00:00",
+     "why": "полночь: край суток, на котором резались отрезки"},
+]
+
+# Снимки, на которых особые моменты что-то меняют. Весь набор на каждый момент
+# гонять незачем: эталон разбухнет, а нового не скажет.
+SPECIAL_DOCS = [
+    "005-2tim-8-18-parentes-8-15-dubbelpil",      # окна будней и канунов
+    "019-forbud-7-18-avgift-ovrig-tid",           # запрет с окном и «övrig tid»
+    "026-zon-e-boende",                           # зональный знак
+    "038-scandic-buss-besokande-pil",             # пиктограмма отдельной табличкой
+    "049-moped-sasong-avgift-tva-taxor",          # адресат, сезон, «övrig tid»
+    "064-motorcykel-tisd-9-17-beskuren",          # адресат и день недели
+]
+
+
+# --- разборы, на которых идёт сверка ---------------------------------------
+
+def documents() -> dict[str, dict]:
+    """Все разборы набора: ответы модели из `demo/` и эталоны разработчика.
+
+    Двух родов намеренно: у модели встречаются склейки панелей и странные поля,
+    каких в аккуратном эталоне не бывает, и порт обязан вести себя одинаково
+    и на тех, и на других.
+    """
+    out: dict[str, dict] = {}
+    for path in sorted((ROOT / "demo").glob("*.extract.json")):
+        doc = json.loads(path.read_text(encoding="utf-8")).get("response")
+        if isinstance(doc, dict) and doc.get("main_sign"):
+            out[f"demo/{path.stem.removesuffix('.extract')}"] = doc
+    for path in sorted((ROOT / "testset/expected").glob("*.json")):
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        if isinstance(doc, dict) and doc.get("main_sign"):
+            out[f"expected/{path.stem}"] = doc
+    return out
+
+
+def build_cases() -> list[dict]:
+    """Список случаев: каждый разбор на общий момент плюс особые моменты
+    на тех снимках, где они что-то меняют."""
+    docs = documents()
+    cases = [{"id": f"{name}@base", "doc": name,
+              "moment": BASE_MOMENT.isoformat(timespec="minutes")}
+             for name in docs]
+    for special in SPECIAL:
+        for stem in SPECIAL_DOCS:
+            for name in (f"demo/{stem}", f"expected/{stem}"):
+                if name in docs:
+                    cases.append({"id": f"{name}@{special['label']}", "doc": name,
+                                  "moment": special["moment"]})
+    return sorted(cases, key=lambda c: c["id"])
+
+
+# --- пробы по слоям --------------------------------------------------------
+
+def probe_calendar(cal: Calendar) -> dict:
+    """Класс дня на каждый день окна и имена праздников.
+
+    Классы пишутся строкой из букв, по дню на букву: полторы тысячи отдельных
+    записей читать невозможно, а строку — видно целиком, и любой сдвиг в ней
+    бросается в глаза.
+    """
+    out: dict[str, dict] = {}
+    for year in range(SELECTABLE_FROM.year, SELECTABLE_TO.year + 1):
+        d, letters = date(year, 1, 1), []
+        while d.year == year:
+            letters.append(cal.day_class(d)[0])       # w | e | r
+            d += timedelta(days=1)
+        out[str(year)] = {
+            "classes": "".join(letters),
+            "holidays": {k.isoformat(): v for k, v in sorted(holidays(year).items())},
+        }
+    return out
+
+
+def probe_clock() -> dict:
+    """Смещение, сложение настоящего времени и длина суток вокруг переводов."""
+    out = {"switches": {}, "moments": []}
+    for year in range(SELECTABLE_FROM.year, SELECTABLE_TO.year + 1):
+        out["switches"][str(year)] = {
+            "forward": clock.spring_forward(year).isoformat(timespec="minutes"),
+            "back": clock.autumn_back(year).isoformat(timespec="minutes"),
+        }
+    moments = [datetime(2026, 1, 15, 12), datetime(2026, 7, 15, 12),
+               datetime(2026, 3, 29, 1, 30), datetime(2026, 3, 29, 2, 30),
+               datetime(2026, 3, 29, 3, 30), datetime(2026, 10, 25, 2, 30),
+               datetime(2026, 10, 25, 3, 30), datetime(2026, 10, 24, 20, 0),
+               datetime(2027, 3, 27, 20, 0)]
+    for m in moments:
+        out["moments"].append({
+            "moment": m.isoformat(timespec="minutes"),
+            "offset": clock.offset(m),
+            "plus_2h": clock.add(m, timedelta(hours=2)).isoformat(timespec="minutes"),
+            "plus_24h": clock.add(m, timedelta(days=1)).isoformat(timespec="minutes"),
+            "minutes_to_next_day": clock.real_minutes(m, m + timedelta(days=1)),
+            "switch_within_8_days": clock.switch_between(m, m + timedelta(days=8)),
+        })
+    return out
+
+
+def _period(p: engine.Period) -> dict:
+    return {
+        "start": p.start.isoformat(timespec="minutes"),
+        "end": p.end.isoformat(timespec="minutes"),
+        "state": p.state,
+        "conditions": list(p.conditions),
+        "max_duration_minutes": p.max_duration_minutes,
+        "note": p.note,
+    }
+
+
+def probe_engine(cases: list[dict], docs: dict[str, dict], cal: Calendar) -> dict:
+    """Что насчитал движок: режимы и отрезки.
+
+    Сравниваются отрезки, а не состояние на каждый час: отрезок и есть то,
+    что движок выдаёт, — так и строже, и файл меньше в разы.
+    """
+    out = {}
+    for case in cases:
+        ev = engine.evaluate_parking_rules(
+            docs[case["doc"]], datetime.fromisoformat(case["moment"]), cal)
+        out[case["id"]] = {
+            "permits_parking": ev.permits_parking,
+            "uncertainties": list(ev.uncertainties),
+            "note": ev.note,
+            "regimes": [{
+                "extent": r.extent,
+                "audience": r.audience,
+                "audience_excluded": list(r.audience_excluded),
+                "eligibility": list(r.eligibility),
+                "place_notes": list(r.place_notes),
+                "duration_expires_at": (r.duration_expires_at.isoformat(timespec="minutes")
+                                        if r.duration_expires_at else None),
+                "duration_source": r.duration_source,
+                "periods": [_period(p) for p in r.periods],
+            } for r in ev.regimes],
+        }
+    return out
+
+
+def _assess(doc: dict, moment: datetime, cal: Calendar):
+    ev = engine.evaluate_parking_rules(doc, moment, cal)
+    assessment = completeness.grade(doc, evaluation=ev)
+    return ev, assessment
+
+
+def probe_completeness(cases: list[dict], docs: dict[str, dict], cal: Calendar) -> dict:
+    """Оценка полноты: категория, уверенность и сигналы, из которых она сложена."""
+    out = {}
+    for case in cases:
+        _, a = _assess(docs[case["doc"]], datetime.fromisoformat(case["moment"]), cal)
+        out[case["id"]] = {
+            "category": a.category,
+            "confidence": round(a.confidence, 6),
+            "signals": {k: round(v, 6) for k, v in sorted(a.signals.items())},
+            "reasons": list(a.reasons),
+            "unread_panels": list(a.unread_panels),
+            "may_hide_prohibition": a.may_hide_prohibition,
+            "uninterpreted_plates": list(a.uninterpreted_plates),
+        }
+    return out
+
+
+def _analysis(doc: dict, moment: datetime, cal: Calendar, ref: Reference) -> Analysis:
+    """Разбор, собранный из документа: стадии модели здесь не нужны — сверяется
+    то, что считает КОД, а снимок и вызовы модели к делу не относятся."""
+    ev, assessment = _assess(doc, moment, cal)
+    outcome = Outcome(
+        image="parity", stopped_at=None, reason=None,
+        extraction=ExtractOutcome(data=doc, validation=Result(data=doc), from_demo=True),
+        recognised=recognise(doc, ref), flags=[])
+    return Analysis(outcome, assessment, completeness.apply_asymmetry(ev, assessment))
+
+
+def probe_present(cases: list[dict], docs: dict[str, dict], cal: Calendar,
+                  ref: Reference) -> dict:
+    """Готовый ответ целиком — то, что человек прочтёт на экране."""
+    out = {}
+    for case in cases:
+        moment = datetime.fromisoformat(case["moment"])
+        out[case["id"]] = present.to_json(
+            _analysis(docs[case["doc"]], moment, cal, ref), ref, moment, cal)
+    return out
+
+
+# --- запись и сверка -------------------------------------------------------
+
+def golden() -> dict[str, object]:
+    """Все эталоны разом. Считается из репозитория и ничего никуда не пишет."""
+    cal, ref = Calendar(), Reference(ROOT / "reference/signs")
+    docs = documents()
+    cases = build_cases()
+    return {
+        "cases": cases,
+        "calendar": probe_calendar(cal),
+        "clock": probe_clock(),
+        "engine": probe_engine(cases, docs, cal),
+        "completeness": probe_completeness(cases, docs, cal),
+        "present": probe_present(cases, docs, cal, ref),
+    }
+
+
+def _dump(value: object) -> str:
+    return json.dumps(value, ensure_ascii=False, indent=1, sort_keys=False) + "\n"
+
+
+def write() -> list[str]:
+    """Переписать эталоны. Возвращает список изменившихся файлов."""
+    DIR.mkdir(exist_ok=True)
+    fresh = golden()
+    changed = []
+    for name in ["cases"] + LAYERS:
+        path = DIR / f"{name}.json"
+        text = _dump(fresh[name])
+        if not path.exists() or path.read_text(encoding="utf-8") != text:
+            path.write_text(text, encoding="utf-8", newline="")
+            changed.append(path.name)
+    if not PORTED.exists():
+        PORTED.write_text(_dump({"layers": []}), encoding="utf-8", newline="")
+        changed.append(PORTED.name)
+    return changed
+
+
+def stale() -> list[str]:
+    """Какие эталоны разошлись с тем, что считает код сейчас. Пусто — всё свежее."""
+    fresh = golden()
+    out = []
+    for name in ["cases"] + LAYERS:
+        path = DIR / f"{name}.json"
+        if not path.exists():
+            out.append(f"{path.name}: файла нет")
+        elif path.read_text(encoding="utf-8") != _dump(fresh[name]):
+            out.append(f"{path.name}: ответ продукта изменился")
+    return out
+
+
+def ported() -> list[str]:
+    """Слои, у которых есть половина на TypeScript. Пока список не пуст,
+    сверять есть что; пока не полон — порт не закончен."""
+    if not PORTED.exists():
+        return []
+    return list(json.loads(PORTED.read_text(encoding="utf-8")).get("layers", []))

@@ -1,0 +1,98 @@
+{
+ "switches": {
+  "2026": {
+   "forward": "2026-03-29T02:00",
+   "back": "2026-10-25T03:00"
+  },
+  "2027": {
+   "forward": "2027-03-28T02:00",
+   "back": "2027-10-31T03:00"
+  },
+  "2028": {
+   "forward": "2028-03-26T02:00",
+   "back": "2028-10-29T03:00"
+  },
+  "2029": {
+   "forward": "2029-03-25T02:00",
+   "back": "2029-10-28T03:00"
+  },
+  "2030": {
+   "forward": "2030-03-31T02:00",
+   "back": "2030-10-27T03:00"
+  }
+ },
+ "moments": [
+  {
+   "moment": "2026-01-15T12:00",
+   "offset": 1,
+   "plus_2h": "2026-01-15T14:00",
+   "plus_24h": "2026-01-16T12:00",
+   "minutes_to_next_day": 1440,
+   "switch_within_8_days": null
+  },
+  {
+   "moment": "2026-07-15T12:00",
+   "offset": 2,
+   "plus_2h": "2026-07-15T14:00",
+   "plus_24h": "2026-07-16T12:00",
+   "minutes_to_next_day": 1440,
+   "switch_within_8_days": null
+  },
+  {
+   "moment": "2026-03-29T01:30",
+   "offset": 1,
+   "plus_2h": "2026-03-29T04:30",
+   "plus_24h": "2026-03-30T02:30",
+   "minutes_to_next_day": 1380,
+   "switch_within_8_days": "forward"
+  },
+  {
+   "moment": "2026-03-29T02:30",
+   "offset": 2,
+   "plus_2h": "2026-03-29T05:30",
+   "plus_24h": "2026-03-30T03:30",
+   "minutes_to_next_day": 1380,
+   "switch_within_8_days": null
+  },
+  {
+   "moment": "2026-03-29T03:30",
+   "offset": 2,
+   "plus_2h": "2026-03-29T05:30",
+   "plus_24h": "2026-03-30T03:30",
+   "minutes_to_next_day": 1440,
+   "switch_within_8_days": null
+  },
+  {
+   "moment": "2026-10-25T02:30",
+   "offset": 2,
+   "plus_2h": "2026-10-25T03:30",
+   "plus_24h": "2026-10-26T01:30",
+   "minutes_to_next_day": 1500,
+   "switch_within_8_days": "back"
+  },
+  {
+   "moment": "2026-10-25T03:30",
+   "offset": 1,
+   "plus_2h": "2026-10-25T05:30",
+   "plus_24h": "2026-10-26T03:30",
+   "minutes_to_next_day": 1440,
+   "switch_within_8_days": null
+  },
+  {
+   "moment": "2026-10-24T20:00",
+   "offset": 2,
+   "plus_2h": "2026-10-24T22:00",
+   "plus_24h": "2026-10-25T19:00",
+   "minutes_to_next_day": 1500,
+   "switch_within_8_days": "back"
+  },
+  {
+   "moment": "2027-03-27T20:00",
+   "offset": 1,
+   "plus_2h": "2027-03-27T22:00",
+   "plus_24h": "2027-03-28T21:00",
+   "minutes_to_next_day": 1380,
+   "switch_within_8_days": "forward"
+  }
+ ]
+}

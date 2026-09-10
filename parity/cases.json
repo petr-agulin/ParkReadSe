@@ -1,0 +1,872 @@
+[
+ {
+  "id": "demo/001-p-30min@base",
+  "doc": "demo/001-p-30min",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/002-avgift-forbud-utanfor-markerad-plats@base",
+  "doc": "demo/002-avgift-forbud-utanfor-markerad-plats",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/003-p-2tim@base",
+  "doc": "demo/003-p-2tim",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/004-endast-besokande-pingstkyrkan@base",
+  "doc": "demo/004-endast-besokande-pingstkyrkan",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/005-2tim-8-18-parentes-8-15-dubbelpil@base",
+  "doc": "demo/005-2tim-8-18-parentes-8-15-dubbelpil",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/005-2tim-8-18-parentes-8-15-dubbelpil@dst-back",
+  "doc": "demo/005-2tim-8-18-parentes-8-15-dubbelpil",
+  "moment": "2026-10-24T20:00"
+ },
+ {
+  "id": "demo/005-2tim-8-18-parentes-8-15-dubbelpil@dst-forward",
+  "doc": "demo/005-2tim-8-18-parentes-8-15-dubbelpil",
+  "moment": "2027-03-27T20:00"
+ },
+ {
+  "id": "demo/005-2tim-8-18-parentes-8-15-dubbelpil@eve",
+  "doc": "demo/005-2tim-8-18-parentes-8-15-dubbelpil",
+  "moment": "2026-10-30T14:00"
+ },
+ {
+  "id": "demo/005-2tim-8-18-parentes-8-15-dubbelpil@midnight",
+  "doc": "demo/005-2tim-8-18-parentes-8-15-dubbelpil",
+  "moment": "2026-06-10T00:00"
+ },
+ {
+  "id": "demo/005-2tim-8-18-parentes-8-15-dubbelpil@red",
+  "doc": "demo/005-2tim-8-18-parentes-8-15-dubbelpil",
+  "moment": "2026-12-25T10:00"
+ },
+ {
+  "id": "demo/005-2tim-8-18-parentes-8-15-dubbelpil@season-edge",
+  "doc": "demo/005-2tim-8-18-parentes-8-15-dubbelpil",
+  "moment": "2026-09-30T23:30"
+ },
+ {
+  "id": "demo/006-tillstand-07-17-ovrig-tid-avgift@base",
+  "doc": "demo/006-tillstand-07-17-ovrig-tid-avgift",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/007-gul-forbud-forhyrda-platser@base",
+  "doc": "demo/007-gul-forbud-forhyrda-platser",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/008-rorelsehindrad-avgift@base",
+  "doc": "demo/008-rorelsehindrad-avgift",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/009-besokande-avgift@base",
+  "doc": "demo/009-besokande-avgift",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/010-forhyrda-platser-tva-pilar@base",
+  "doc": "demo/010-forhyrda-platser-tva-pilar",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/011-gul-p-avgift-klistermarken@base",
+  "doc": "demo/011-gul-p-avgift-klistermarken",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/012-tillstand-7-17-ovrig-tid-avgift@base",
+  "doc": "demo/012-tillstand-7-17-ovrig-tid-avgift",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/013-rorelsehindrad-2-platser@base",
+  "doc": "demo/013-rorelsehindrad-2-platser",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/014-motorcykel-pil-skymning@base",
+  "doc": "demo/014-motorcykel-pil-skymning",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/015-motorcykel@base",
+  "doc": "demo/015-motorcykel",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/016-tillstand-ovrig-tid-5-platser@base",
+  "doc": "demo/016-tillstand-ovrig-tid-5-platser",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/017-rorelsehindrad@base",
+  "doc": "demo/017-rorelsehindrad",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/018-tillstand-utan-tidsangivelse@base",
+  "doc": "demo/018-tillstand-utan-tidsangivelse",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/019-forbud-7-18-avgift-ovrig-tid@base",
+  "doc": "demo/019-forbud-7-18-avgift-ovrig-tid",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/019-forbud-7-18-avgift-ovrig-tid@dst-back",
+  "doc": "demo/019-forbud-7-18-avgift-ovrig-tid",
+  "moment": "2026-10-24T20:00"
+ },
+ {
+  "id": "demo/019-forbud-7-18-avgift-ovrig-tid@dst-forward",
+  "doc": "demo/019-forbud-7-18-avgift-ovrig-tid",
+  "moment": "2027-03-27T20:00"
+ },
+ {
+  "id": "demo/019-forbud-7-18-avgift-ovrig-tid@eve",
+  "doc": "demo/019-forbud-7-18-avgift-ovrig-tid",
+  "moment": "2026-10-30T14:00"
+ },
+ {
+  "id": "demo/019-forbud-7-18-avgift-ovrig-tid@midnight",
+  "doc": "demo/019-forbud-7-18-avgift-ovrig-tid",
+  "moment": "2026-06-10T00:00"
+ },
+ {
+  "id": "demo/019-forbud-7-18-avgift-ovrig-tid@red",
+  "doc": "demo/019-forbud-7-18-avgift-ovrig-tid",
+  "moment": "2026-12-25T10:00"
+ },
+ {
+  "id": "demo/019-forbud-7-18-avgift-ovrig-tid@season-edge",
+  "doc": "demo/019-forbud-7-18-avgift-ovrig-tid",
+  "moment": "2026-09-30T23:30"
+ },
+ {
+  "id": "demo/020-forhyrda-platser-13-och-14-avstand@base",
+  "doc": "demo/020-forhyrda-platser-13-och-14-avstand",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/021-privat-parkering-brf@base",
+  "doc": "demo/021-privat-parkering-brf",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/022-avgift-4tim-laddande-elbilar-2-platser@base",
+  "doc": "demo/022-avgift-4tim-laddande-elbilar-2-platser",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/023-avgift-4tim-laddande-elbilar@base",
+  "doc": "demo/023-avgift-4tim-laddande-elbilar",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/024-avgift-erlaggs-med-mobil@base",
+  "doc": "demo/024-avgift-erlaggs-med-mobil",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/025-30min-endast-gaster-gatukok@base",
+  "doc": "demo/025-30min-endast-gaster-gatukok",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/026-gul-zon-avgift-plus-hastighetsskylt@base",
+  "doc": "demo/026-gul-zon-avgift-plus-hastighetsskylt",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/027-rorelsehindrad-0-6m-avgift-taxa-2@base",
+  "doc": "demo/027-rorelsehindrad-0-6m-avgift-taxa-2",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/028-avgift-taxa-2-fred-0-6-boende-ci@base",
+  "doc": "demo/028-avgift-taxa-2-fred-0-6-boende-ci",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/029-beskickningsfordon-0-12m@base",
+  "doc": "demo/029-beskickningsfordon-0-12m",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/030-avgift-8-21-fredag-0-6-galler-ej-juli-zon-a@base",
+  "doc": "demo/030-avgift-8-21-fredag-0-6-galler-ej-juli-zon-a",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/031-snedstallning-torsdag-jamna-veckor-boende-solna@base",
+  "doc": "demo/031-snedstallning-torsdag-jamna-veckor-boende-solna",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/032-rorelsehindrad-pil-hoger@base",
+  "doc": "demo/032-rorelsehindrad-pil-hoger",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/033-avgift-8-21-uppstallning-zon-e-boende-storskogen@base",
+  "doc": "demo/033-avgift-8-21-uppstallning-zon-e-boende-storskogen",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/034-avgift-tisdag-12-15-nov-maj-zon-c-boende@base",
+  "doc": "demo/034-avgift-tisdag-12-15-nov-maj-zon-c-boende",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/035-zon-c-pa-avstand@base",
+  "doc": "demo/035-zon-c-pa-avstand",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so@base",
+  "doc": "demo/036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/037-hanvisning-p-med-pil@base",
+  "doc": "demo/037-hanvisning-p-med-pil",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/038-scandic-buss-besokande-pil@base",
+  "doc": "demo/038-scandic-buss-besokande-pil",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/038-scandic-buss-besokande-pil@dst-back",
+  "doc": "demo/038-scandic-buss-besokande-pil",
+  "moment": "2026-10-24T20:00"
+ },
+ {
+  "id": "demo/038-scandic-buss-besokande-pil@dst-forward",
+  "doc": "demo/038-scandic-buss-besokande-pil",
+  "moment": "2027-03-27T20:00"
+ },
+ {
+  "id": "demo/038-scandic-buss-besokande-pil@eve",
+  "doc": "demo/038-scandic-buss-besokande-pil",
+  "moment": "2026-10-30T14:00"
+ },
+ {
+  "id": "demo/038-scandic-buss-besokande-pil@midnight",
+  "doc": "demo/038-scandic-buss-besokande-pil",
+  "moment": "2026-06-10T00:00"
+ },
+ {
+  "id": "demo/038-scandic-buss-besokande-pil@red",
+  "doc": "demo/038-scandic-buss-besokande-pil",
+  "moment": "2026-12-25T10:00"
+ },
+ {
+  "id": "demo/038-scandic-buss-besokande-pil@season-edge",
+  "doc": "demo/038-scandic-buss-besokande-pil",
+  "moment": "2026-09-30T23:30"
+ },
+ {
+  "id": "demo/039-laddning-avgift-4-platser-pil@base",
+  "doc": "demo/039-laddning-avgift-4-platser-pil",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/040-servicefordon-vardagar-7-17-ovrig-tid-avgift@base",
+  "doc": "demo/040-servicefordon-vardagar-7-17-ovrig-tid-avgift",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/041-lastplats-forbud-7-17-ovrig-tid-avgift@base",
+  "doc": "demo/041-lastplats-forbud-7-17-ovrig-tid-avgift",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/042-cykel-moped-parkering@base",
+  "doc": "demo/042-cykel-moped-parkering",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/044-motorcykel-avgift-taxa-12-fred-boende@base",
+  "doc": "demo/044-motorcykel-avgift-taxa-12-fred-boende",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/049-moped-sasong-avgift-tva-taxor@base",
+  "doc": "demo/049-moped-sasong-avgift-tva-taxor",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/049-moped-sasong-avgift-tva-taxor@dst-back",
+  "doc": "demo/049-moped-sasong-avgift-tva-taxor",
+  "moment": "2026-10-24T20:00"
+ },
+ {
+  "id": "demo/049-moped-sasong-avgift-tva-taxor@dst-forward",
+  "doc": "demo/049-moped-sasong-avgift-tva-taxor",
+  "moment": "2027-03-27T20:00"
+ },
+ {
+  "id": "demo/049-moped-sasong-avgift-tva-taxor@eve",
+  "doc": "demo/049-moped-sasong-avgift-tva-taxor",
+  "moment": "2026-10-30T14:00"
+ },
+ {
+  "id": "demo/049-moped-sasong-avgift-tva-taxor@midnight",
+  "doc": "demo/049-moped-sasong-avgift-tva-taxor",
+  "moment": "2026-06-10T00:00"
+ },
+ {
+  "id": "demo/049-moped-sasong-avgift-tva-taxor@red",
+  "doc": "demo/049-moped-sasong-avgift-tva-taxor",
+  "moment": "2026-12-25T10:00"
+ },
+ {
+  "id": "demo/049-moped-sasong-avgift-tva-taxor@season-edge",
+  "doc": "demo/049-moped-sasong-avgift-tva-taxor",
+  "moment": "2026-09-30T23:30"
+ },
+ {
+  "id": "demo/050-aimo-park-privat-hanvisning@base",
+  "doc": "demo/050-aimo-park-privat-hanvisning",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/052-avgift-taxa-2-tisd-boende-roda-siffror@base",
+  "doc": "demo/052-avgift-taxa-2-tisd-boende-roda-siffror",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/054-buss-15min-avgift-torsd@base",
+  "doc": "demo/054-buss-15min-avgift-torsd",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/055-forbud-stannande-snotackt-pil@base",
+  "doc": "demo/055-forbud-stannande-snotackt-pil",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/056-natt-avgift-7-19-taxa-3-torsd-plus-forbud@base",
+  "doc": "demo/056-natt-avgift-7-19-taxa-3-torsd-plus-forbud",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/057-p-skiva-2tim-eller-gratis-biljett@base",
+  "doc": "demo/057-p-skiva-2tim-eller-gratis-biljett",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/058-natt-klass-i-22-06-roda-siffror-utanfor-markerad@base",
+  "doc": "demo/058-natt-klass-i-22-06-roda-siffror-utanfor-markerad",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/059-avstand-p-skiva-2tim-darefter-avgift@base",
+  "doc": "demo/059-avstand-p-skiva-2tim-darefter-avgift",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/060-natt-lastplats-ovrig-tid-avgift@base",
+  "doc": "demo/060-natt-lastplats-ovrig-tid-avgift",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/061-lastplats-langt-avstand@base",
+  "doc": "demo/061-lastplats-langt-avstand",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/062-klass-i-14-dygn-slapfordon-forbud@base",
+  "doc": "demo/062-klass-i-14-dygn-slapfordon-forbud",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/063-natt-p-tillstand-06-16-p-skiva-3tim@base",
+  "doc": "demo/063-natt-p-tillstand-06-16-p-skiva-3tim",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/064-motorcykel-tisd-9-17-beskuren@base",
+  "doc": "demo/064-motorcykel-tisd-9-17-beskuren",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "demo/064-motorcykel-tisd-9-17-beskuren@dst-back",
+  "doc": "demo/064-motorcykel-tisd-9-17-beskuren",
+  "moment": "2026-10-24T20:00"
+ },
+ {
+  "id": "demo/064-motorcykel-tisd-9-17-beskuren@dst-forward",
+  "doc": "demo/064-motorcykel-tisd-9-17-beskuren",
+  "moment": "2027-03-27T20:00"
+ },
+ {
+  "id": "demo/064-motorcykel-tisd-9-17-beskuren@eve",
+  "doc": "demo/064-motorcykel-tisd-9-17-beskuren",
+  "moment": "2026-10-30T14:00"
+ },
+ {
+  "id": "demo/064-motorcykel-tisd-9-17-beskuren@midnight",
+  "doc": "demo/064-motorcykel-tisd-9-17-beskuren",
+  "moment": "2026-06-10T00:00"
+ },
+ {
+  "id": "demo/064-motorcykel-tisd-9-17-beskuren@red",
+  "doc": "demo/064-motorcykel-tisd-9-17-beskuren",
+  "moment": "2026-12-25T10:00"
+ },
+ {
+  "id": "demo/064-motorcykel-tisd-9-17-beskuren@season-edge",
+  "doc": "demo/064-motorcykel-tisd-9-17-beskuren",
+  "moment": "2026-09-30T23:30"
+ },
+ {
+  "id": "expected/001-p-30min@base",
+  "doc": "expected/001-p-30min",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/002-avgift-forbud-utanfor-markerad-plats@base",
+  "doc": "expected/002-avgift-forbud-utanfor-markerad-plats",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/003-p-2tim@base",
+  "doc": "expected/003-p-2tim",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/004-endast-besokande-pingstkyrkan@base",
+  "doc": "expected/004-endast-besokande-pingstkyrkan",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/005-2tim-8-18-parentes-8-15-dubbelpil@base",
+  "doc": "expected/005-2tim-8-18-parentes-8-15-dubbelpil",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/005-2tim-8-18-parentes-8-15-dubbelpil@dst-back",
+  "doc": "expected/005-2tim-8-18-parentes-8-15-dubbelpil",
+  "moment": "2026-10-24T20:00"
+ },
+ {
+  "id": "expected/005-2tim-8-18-parentes-8-15-dubbelpil@dst-forward",
+  "doc": "expected/005-2tim-8-18-parentes-8-15-dubbelpil",
+  "moment": "2027-03-27T20:00"
+ },
+ {
+  "id": "expected/005-2tim-8-18-parentes-8-15-dubbelpil@eve",
+  "doc": "expected/005-2tim-8-18-parentes-8-15-dubbelpil",
+  "moment": "2026-10-30T14:00"
+ },
+ {
+  "id": "expected/005-2tim-8-18-parentes-8-15-dubbelpil@midnight",
+  "doc": "expected/005-2tim-8-18-parentes-8-15-dubbelpil",
+  "moment": "2026-06-10T00:00"
+ },
+ {
+  "id": "expected/005-2tim-8-18-parentes-8-15-dubbelpil@red",
+  "doc": "expected/005-2tim-8-18-parentes-8-15-dubbelpil",
+  "moment": "2026-12-25T10:00"
+ },
+ {
+  "id": "expected/005-2tim-8-18-parentes-8-15-dubbelpil@season-edge",
+  "doc": "expected/005-2tim-8-18-parentes-8-15-dubbelpil",
+  "moment": "2026-09-30T23:30"
+ },
+ {
+  "id": "expected/006-tillstand-07-17-ovrig-tid-avgift@base",
+  "doc": "expected/006-tillstand-07-17-ovrig-tid-avgift",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/007-gul-forbud-forhyrda-platser@base",
+  "doc": "expected/007-gul-forbud-forhyrda-platser",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/008-rorelsehindrad-avgift@base",
+  "doc": "expected/008-rorelsehindrad-avgift",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/009-besokande-avgift@base",
+  "doc": "expected/009-besokande-avgift",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/010-forhyrda-platser-tva-pilar@base",
+  "doc": "expected/010-forhyrda-platser-tva-pilar",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/011-gul-p-avgift-klistermarken@base",
+  "doc": "expected/011-gul-p-avgift-klistermarken",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/012-tillstand-7-17-ovrig-tid-avgift@base",
+  "doc": "expected/012-tillstand-7-17-ovrig-tid-avgift",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/013-rorelsehindrad-2-platser@base",
+  "doc": "expected/013-rorelsehindrad-2-platser",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/014-motorcykel-pil-skymning@base",
+  "doc": "expected/014-motorcykel-pil-skymning",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/015-motorcykel@base",
+  "doc": "expected/015-motorcykel",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/016-tillstand-ovrig-tid-5-platser@base",
+  "doc": "expected/016-tillstand-ovrig-tid-5-platser",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/017-rorelsehindrad@base",
+  "doc": "expected/017-rorelsehindrad",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/018-tillstand-utan-tidsangivelse@base",
+  "doc": "expected/018-tillstand-utan-tidsangivelse",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/019-forbud-7-18-avgift-ovrig-tid@base",
+  "doc": "expected/019-forbud-7-18-avgift-ovrig-tid",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/019-forbud-7-18-avgift-ovrig-tid@dst-back",
+  "doc": "expected/019-forbud-7-18-avgift-ovrig-tid",
+  "moment": "2026-10-24T20:00"
+ },
+ {
+  "id": "expected/019-forbud-7-18-avgift-ovrig-tid@dst-forward",
+  "doc": "expected/019-forbud-7-18-avgift-ovrig-tid",
+  "moment": "2027-03-27T20:00"
+ },
+ {
+  "id": "expected/019-forbud-7-18-avgift-ovrig-tid@eve",
+  "doc": "expected/019-forbud-7-18-avgift-ovrig-tid",
+  "moment": "2026-10-30T14:00"
+ },
+ {
+  "id": "expected/019-forbud-7-18-avgift-ovrig-tid@midnight",
+  "doc": "expected/019-forbud-7-18-avgift-ovrig-tid",
+  "moment": "2026-06-10T00:00"
+ },
+ {
+  "id": "expected/019-forbud-7-18-avgift-ovrig-tid@red",
+  "doc": "expected/019-forbud-7-18-avgift-ovrig-tid",
+  "moment": "2026-12-25T10:00"
+ },
+ {
+  "id": "expected/019-forbud-7-18-avgift-ovrig-tid@season-edge",
+  "doc": "expected/019-forbud-7-18-avgift-ovrig-tid",
+  "moment": "2026-09-30T23:30"
+ },
+ {
+  "id": "expected/020-forhyrda-platser-13-och-14-avstand@base",
+  "doc": "expected/020-forhyrda-platser-13-och-14-avstand",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/021-privat-parkering-brf@base",
+  "doc": "expected/021-privat-parkering-brf",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/022-avgift-4tim-laddande-elbilar-2-platser@base",
+  "doc": "expected/022-avgift-4tim-laddande-elbilar-2-platser",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/023-avgift-4tim-laddande-elbilar@base",
+  "doc": "expected/023-avgift-4tim-laddande-elbilar",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/024-avgift-erlaggs-med-mobil@base",
+  "doc": "expected/024-avgift-erlaggs-med-mobil",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/025-30min-endast-gaster-gatukok@base",
+  "doc": "expected/025-30min-endast-gaster-gatukok",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/026-gul-zon-avgift-plus-hastighetsskylt@base",
+  "doc": "expected/026-gul-zon-avgift-plus-hastighetsskylt",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/027-rorelsehindrad-0-6m-avgift-taxa-2@base",
+  "doc": "expected/027-rorelsehindrad-0-6m-avgift-taxa-2",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/028-avgift-taxa-2-fred-0-6-boende-ci@base",
+  "doc": "expected/028-avgift-taxa-2-fred-0-6-boende-ci",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/029-beskickningsfordon-0-12m@base",
+  "doc": "expected/029-beskickningsfordon-0-12m",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/030-avgift-8-21-fredag-0-6-galler-ej-juli-zon-a@base",
+  "doc": "expected/030-avgift-8-21-fredag-0-6-galler-ej-juli-zon-a",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/031-snedstallning-torsdag-jamna-veckor-boende-solna@base",
+  "doc": "expected/031-snedstallning-torsdag-jamna-veckor-boende-solna",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/032-rorelsehindrad-pil-hoger@base",
+  "doc": "expected/032-rorelsehindrad-pil-hoger",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/033-avgift-8-21-uppstallning-zon-e-boende-storskogen@base",
+  "doc": "expected/033-avgift-8-21-uppstallning-zon-e-boende-storskogen",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/034-avgift-tisdag-12-15-nov-maj-zon-c-boende@base",
+  "doc": "expected/034-avgift-tisdag-12-15-nov-maj-zon-c-boende",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/035-zon-c-pa-avstand@base",
+  "doc": "expected/035-zon-c-pa-avstand",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so@base",
+  "doc": "expected/036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/037-hanvisning-p-med-pil@base",
+  "doc": "expected/037-hanvisning-p-med-pil",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/038-scandic-buss-besokande-pil@base",
+  "doc": "expected/038-scandic-buss-besokande-pil",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/038-scandic-buss-besokande-pil@dst-back",
+  "doc": "expected/038-scandic-buss-besokande-pil",
+  "moment": "2026-10-24T20:00"
+ },
+ {
+  "id": "expected/038-scandic-buss-besokande-pil@dst-forward",
+  "doc": "expected/038-scandic-buss-besokande-pil",
+  "moment": "2027-03-27T20:00"
+ },
+ {
+  "id": "expected/038-scandic-buss-besokande-pil@eve",
+  "doc": "expected/038-scandic-buss-besokande-pil",
+  "moment": "2026-10-30T14:00"
+ },
+ {
+  "id": "expected/038-scandic-buss-besokande-pil@midnight",
+  "doc": "expected/038-scandic-buss-besokande-pil",
+  "moment": "2026-06-10T00:00"
+ },
+ {
+  "id": "expected/038-scandic-buss-besokande-pil@red",
+  "doc": "expected/038-scandic-buss-besokande-pil",
+  "moment": "2026-12-25T10:00"
+ },
+ {
+  "id": "expected/038-scandic-buss-besokande-pil@season-edge",
+  "doc": "expected/038-scandic-buss-besokande-pil",
+  "moment": "2026-09-30T23:30"
+ },
+ {
+  "id": "expected/039-laddning-avgift-4-platser-pil@base",
+  "doc": "expected/039-laddning-avgift-4-platser-pil",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/040-servicefordon-vardagar-7-17-ovrig-tid-avgift@base",
+  "doc": "expected/040-servicefordon-vardagar-7-17-ovrig-tid-avgift",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/041-lastplats-forbud-7-17-ovrig-tid-avgift@base",
+  "doc": "expected/041-lastplats-forbud-7-17-ovrig-tid-avgift",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/042-cykel-moped-parkering@base",
+  "doc": "expected/042-cykel-moped-parkering",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/044-motorcykel-avgift-taxa-12-fred-boende@base",
+  "doc": "expected/044-motorcykel-avgift-taxa-12-fred-boende",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/049-moped-sasong-avgift-tva-taxor@base",
+  "doc": "expected/049-moped-sasong-avgift-tva-taxor",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/049-moped-sasong-avgift-tva-taxor@dst-back",
+  "doc": "expected/049-moped-sasong-avgift-tva-taxor",
+  "moment": "2026-10-24T20:00"
+ },
+ {
+  "id": "expected/049-moped-sasong-avgift-tva-taxor@dst-forward",
+  "doc": "expected/049-moped-sasong-avgift-tva-taxor",
+  "moment": "2027-03-27T20:00"
+ },
+ {
+  "id": "expected/049-moped-sasong-avgift-tva-taxor@eve",
+  "doc": "expected/049-moped-sasong-avgift-tva-taxor",
+  "moment": "2026-10-30T14:00"
+ },
+ {
+  "id": "expected/049-moped-sasong-avgift-tva-taxor@midnight",
+  "doc": "expected/049-moped-sasong-avgift-tva-taxor",
+  "moment": "2026-06-10T00:00"
+ },
+ {
+  "id": "expected/049-moped-sasong-avgift-tva-taxor@red",
+  "doc": "expected/049-moped-sasong-avgift-tva-taxor",
+  "moment": "2026-12-25T10:00"
+ },
+ {
+  "id": "expected/049-moped-sasong-avgift-tva-taxor@season-edge",
+  "doc": "expected/049-moped-sasong-avgift-tva-taxor",
+  "moment": "2026-09-30T23:30"
+ },
+ {
+  "id": "expected/050-aimo-park-privat-hanvisning@base",
+  "doc": "expected/050-aimo-park-privat-hanvisning",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/052-avgift-taxa-2-tisd-boende-roda-siffror@base",
+  "doc": "expected/052-avgift-taxa-2-tisd-boende-roda-siffror",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/054-buss-15min-avgift-torsd@base",
+  "doc": "expected/054-buss-15min-avgift-torsd",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/055-forbud-stannande-snotackt-pil@base",
+  "doc": "expected/055-forbud-stannande-snotackt-pil",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/056-natt-avgift-7-19-taxa-3-torsd-plus-forbud@base",
+  "doc": "expected/056-natt-avgift-7-19-taxa-3-torsd-plus-forbud",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/057-p-skiva-2tim-eller-gratis-biljett@base",
+  "doc": "expected/057-p-skiva-2tim-eller-gratis-biljett",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/058-natt-klass-i-22-06-roda-siffror-utanfor-markerad@base",
+  "doc": "expected/058-natt-klass-i-22-06-roda-siffror-utanfor-markerad",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/059-avstand-p-skiva-2tim-darefter-avgift@base",
+  "doc": "expected/059-avstand-p-skiva-2tim-darefter-avgift",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/060-natt-lastplats-ovrig-tid-avgift@base",
+  "doc": "expected/060-natt-lastplats-ovrig-tid-avgift",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/061-lastplats-langt-avstand@base",
+  "doc": "expected/061-lastplats-langt-avstand",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/062-klass-i-14-dygn-slapfordon-forbud@base",
+  "doc": "expected/062-klass-i-14-dygn-slapfordon-forbud",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/063-natt-p-tillstand-06-16-p-skiva-3tim@base",
+  "doc": "expected/063-natt-p-tillstand-06-16-p-skiva-3tim",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/064-motorcykel-tisd-9-17-beskuren@base",
+  "doc": "expected/064-motorcykel-tisd-9-17-beskuren",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/064-motorcykel-tisd-9-17-beskuren@dst-back",
+  "doc": "expected/064-motorcykel-tisd-9-17-beskuren",
+  "moment": "2026-10-24T20:00"
+ },
+ {
+  "id": "expected/064-motorcykel-tisd-9-17-beskuren@dst-forward",
+  "doc": "expected/064-motorcykel-tisd-9-17-beskuren",
+  "moment": "2027-03-27T20:00"
+ },
+ {
+  "id": "expected/064-motorcykel-tisd-9-17-beskuren@eve",
+  "doc": "expected/064-motorcykel-tisd-9-17-beskuren",
+  "moment": "2026-10-30T14:00"
+ },
+ {
+  "id": "expected/064-motorcykel-tisd-9-17-beskuren@midnight",
+  "doc": "expected/064-motorcykel-tisd-9-17-beskuren",
+  "moment": "2026-06-10T00:00"
+ },
+ {
+  "id": "expected/064-motorcykel-tisd-9-17-beskuren@red",
+  "doc": "expected/064-motorcykel-tisd-9-17-beskuren",
+  "moment": "2026-12-25T10:00"
+ },
+ {
+  "id": "expected/064-motorcykel-tisd-9-17-beskuren@season-edge",
+  "doc": "expected/064-motorcykel-tisd-9-17-beskuren",
+  "moment": "2026-09-30T23:30"
+ }
+]

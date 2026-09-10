@@ -11,6 +11,8 @@ r"""Командная строка проекта.
     PY cli.py explain <снимок> [дата]  — что действует, по движку правил
     PY cli.py accuracy                 — точность извлечения против эталонов
     PY cli.py calibrate                — порог уверенности по расхождениям ОТВЕТА
+    PY cli.py parity                   — свежи ли эталоны двойного прогона
+        --write                        — переписать их (правка видна в git diff)
 
 При `DEMO_MODE=true` (по умолчанию) ключ не нужен: ответы читаются из фикстур.
 Живой вызов делает разработчик — команде нужен секрет (`AGENTS.md`, §12).
@@ -24,7 +26,7 @@ from pathlib import Path
 from datetime import datetime
 
 from parkread import (accuracy, completeness, config, economics, fixtures,
-                      pipeline, present, prompts)
+                      parity, pipeline, present, prompts)
 from parkread.engine import evaluate_parking_rules
 from parkread.photo import Photo
 from parkread.calendar_se import Calendar
@@ -370,6 +372,37 @@ def cmd_economics() -> int:
     return 0
 
 
+def cmd_parity(write: bool) -> int:
+    """Эталоны двойного прогона: показать расхождение или переписать.
+
+    Переписывание — отдельная команда намеренно: изменился ответ продукта, и это
+    должно быть видно строкой в `git diff`, а не случиться само во время прогона.
+    """
+    if write:
+        changed = parity.write()
+        print("переписано:", ", ".join(changed) if changed else "нечего — всё совпало")
+        print(f"случаев: {len(parity.build_cases())}")
+        return 0
+
+    остальные = parity.stale()
+    if остальные:
+        print("Эталоны устарели:")
+        for line in остальные:
+            print("  ", line)
+        print()
+        print(r"Переписать: .venv\Scripts\python.exe cli.py parity --write")
+        return 1
+
+    переехало = parity.ported()
+    print(f"Эталоны свежие. Случаев: {len(parity.build_cases())}.")
+    print("Слои на TypeScript:",
+          ", ".join(переехало) if переехало else "ни одного — сверять пока нечего")
+    осталось = [n for n in parity.LAYERS if n not in переехало]
+    if осталось:
+        print("Ждут порта:", ", ".join(осталось))
+    return 0
+
+
 def main(argv: list[str]) -> int:
     if len(argv) < 2:
         print(__doc__)
@@ -395,6 +428,8 @@ def main(argv: list[str]) -> int:
         return cmd_calibrate()
     if cmd == "economics":
         return cmd_economics()
+    if cmd == "parity":
+        return cmd_parity("--write" in rest)
     print(f"неизвестная команда: {cmd}")
     return 2
 
