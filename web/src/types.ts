@@ -53,6 +53,10 @@ export type Regime = {
   extent_text: string;
   /** Участок короткой строкой — заголовком окна. */
   extent_short: string;
+  /** Кому это окно: пиктограмма на табличке с условием адресует условие своему
+   *  виду транспорта, а не сужает круг стоящих. Пусто, когда знак не делится. */
+  audience: string | null;
+  audience_short: string | null;
   eligibility: Term[];
   who_can_park: Term[];
   notes: Term[];

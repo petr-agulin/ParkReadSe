@@ -712,6 +712,129 @@ def test_the_day_class_stands_under_the_date_on_the_scale():
             "text": "Eve of Påskdagen (Easter Sunday)", "kind": "eve"}
 
 
+def _frihamnen_windows(moment):
+    """Знак из Frihamnen через показ: `30 min 00-24 (00-14)` для всех и
+    `[автобус] Avgift (14-24) 00-24` для автобусов."""
+    from datetime import datetime
+    from parkread import present
+    from parkread.calendar_se import Calendar
+    from parkread.engine import evaluate_parking_rules, horizon_end
+    from parkread.reference import Reference
+
+    cal, ref = Calendar(), Reference(ROOT / "reference/signs")
+    doc = {"schema_version": 1,
+           "main_sign": {"type": "parking", "background_color": "blue",
+                         "form": "regular", "legibility": {"readable": True}},
+           "panel_count": 2, "boundaries": {"certain": True},
+           "panels": [
+               {"index": 1, "kind": "sign_plate", "lines": ["30 min", "00-24", "(00-14)"],
+                "background_color": "blue", "legibility": {"readable": True},
+                "parsed": {"duration_limit": {"amount": 30, "unit": "minutes"},
+                           "time_windows": [
+                               {"from": "00:00", "to": "24:00", "day_class": "weekday"},
+                               {"from": "00:00", "to": "14:00", "day_class": "eve"}]}},
+               {"index": 2, "kind": "sign_plate", "lines": ["Avgift", "(14-24)", "00-24"],
+                "background_color": "blue", "legibility": {"readable": True},
+                "parsed": {"fee": True, "vehicle_class": "bus",
+                           "time_windows": [
+                               {"from": "14:00", "to": "24:00", "day_class": "eve"},
+                               {"from": "00:00", "to": "24:00", "day_class": "red"}]}},
+           ]}
+    ev = evaluate_parking_rules(doc, moment, cal)
+    return present._windows([
+        present._regime(ref, r, horizon_end(moment), cal, main_key="parking")
+        for r in ev.regimes])
+
+
+def test_a_condition_addressed_to_one_vehicle_class_gets_its_own_window():
+    """Найдено разработчиком: продукт отвечал «места отведены автобусам» и ставил
+    «Buses only» под отрезком чужой таблички. Теперь адресат делит ответ на два
+    окна, и каждое отвечает за своих."""
+    from datetime import datetime
+
+    окна = _frihamnen_windows(datetime(2026, 9, 13, 10))      # воскресенье
+    assert [w["audience_short"] for w in окна] == ["All vehicles except buses", "Buses"]
+
+    всем, автобусам = окна
+    # Круг стоящих больше не сужен: места отведены не автобусам.
+    assert not any("buses" in t["text"] for t in всем["who_can_park"])
+    # Плата стоит только в автобусном окне.
+    assert not any(c for p in всем["periods"] for c in p["conditions"])
+    assert автобусам["periods"][0]["headline"] == "Parking fee"
+    assert всем["periods"][0]["headline"] == "Free parking"
+    # У каждого окна свой конец стоянки.
+    assert всем["duration_expires_at"] and автобусам["duration_expires_at"]
+
+
+def test_silence_about_a_fee_is_not_called_free():
+    """Снимок `049`: плата названа только «в остальное время», а границу этого
+    времени задаёт табличка мопедов. Про машину в сезон знак не говорит ничего —
+    и продукт не говорит «бесплатно», а называет дырку в стопке.
+
+    Разбор разработчика: «либо стопка составлена плохо, либо вторая табличка
+    отсылает к первой за сезоном». Оба чтения дают одно и то же: платы для машины
+    в сезон не названо.
+    """
+    from datetime import datetime
+    import json as _json
+    from parkread import present
+    from parkread.calendar_se import Calendar
+    from parkread.engine import evaluate_parking_rules, horizon_end
+    from parkread.reference import Reference
+
+    cal, ref = Calendar(), Reference(ROOT / "reference/signs")
+    doc = _json.loads((ROOT / "testset/expected/049-moped-sasong-avgift-tva-taxor.json")
+                      .read_text(encoding="utf-8"))
+
+    moment = datetime(2026, 7, 15, 12)          # внутри сезона 1/4-30/9
+    ev = evaluate_parking_rules(doc, moment, cal)
+    окна = present._windows([present._regime(ref, r, horizon_end(moment), cal,
+                                             main_key="parking")
+                             for r in ev.regimes])
+    всем, мопедам = окна
+    отрезок = всем["periods"][0]
+    assert отрезок["headline"] == "No fee stated for this period"
+    assert отрезок["tone"] == "free"
+    пояснение = [t["text"] for t in отрезок["aside"]]
+    assert any("other times" in t and "motorcycles" in t for t in пояснение), пояснение
+    assert мопедам["periods"][0]["headline"] == "Parking fee"
+
+    # Вне сезона платят все, и оговорке взяться неоткуда.
+    moment = datetime(2026, 11, 16, 12)
+    ev = evaluate_parking_rules(doc, moment, cal)
+    окна = present._windows([present._regime(ref, r, horizon_end(moment), cal,
+                                             main_key="parking")
+                             for r in ev.regimes])
+    assert len(окна) == 1
+    assert окна[0]["periods"][0]["headline"] == "Parking fee"
+    assert окна[0]["periods"][0]["aside"] == []
+
+
+def test_the_second_window_is_hidden_when_it_says_the_same():
+    """Четверг вечером автобусной платы не достаёт: два одинаковых окна подряд
+    ничего не сообщают, а подпись над первым заставляет искать разницу, которой нет."""
+    from datetime import datetime
+
+    окна = _frihamnen_windows(datetime(2026, 9, 10, 21, 15))
+    assert len(окна) == 1
+    assert окна[0]["audience_short"] is None
+    assert окна[0]["periods"][0]["headline"] == "Free parking"
+    assert окна[0]["periods"][0]["minutes"] == 30
+
+
+def test_the_circle_is_not_repeated_once_per_window():
+    """Круг стоящих — свойство знака, а не окна. Окон бывает несколько (стрелка,
+    адресат), и один и тот же круг повторялся столько же раз: на снимке `049`
+    «The sign permits parking for all vehicles» стояло дважды подряд.
+
+    Проверяется и обратное: два РАЗНЫХ круга обязаны остаться раздельными —
+    на снимке `010` стрелки задают арендованные места и арендованные с разрешением."""
+    page = (ROOT / "web/src/components/WhoCanPark.tsx").read_text(encoding="utf-8")
+    assert "distinctCircles(" in page
+    rule = (ROOT / "web/src/lib/circles.ts").read_text(encoding="utf-8")
+    assert "seen.has(id)" in rule and 'map((t) => t.key).join("|")' in rule
+
+
 def test_the_scale_stays_continuous_when_a_node_grows():
     """Третья строка в узле делает его выше значка, и линия соседнего отрезка
     до значка не достаёт — шкала перестаёт читаться как непрерывная. Поэтому

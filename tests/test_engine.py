@@ -346,6 +346,154 @@ def test_the_scale_shows_only_what_the_sign_states():
     assert present._no_window(paid, []) is None
 
 
+def _frihamnen():
+    """Снимок `IMG_20260906_180816`: `30 min 00-24 (00-14)` для всех и
+    `[автобус] Avgift (14-24) 00-24` — для автобусов."""
+    return sign(plate({"duration_limit": {"amount": 30, "unit": "minutes"},
+                       "time_windows": [win("00:00", "24:00", WEEKDAY),
+                                        win("00:00", "14:00", EVE)]},
+                      ["30 min", "00-24", "(00-14)"]),
+                plate({"fee": True, "vehicle_class": "bus",
+                       "time_windows": [win("14:00", "24:00", EVE),
+                                        win("00:00", "24:00", RED)]},
+                      ["Avgift", "(14-24)", "00-24"]))
+
+
+def test_a_pictogram_on_a_plate_with_a_rule_addresses_that_rule():
+    """Пиктограмма рядом с условием говорит, КОМУ это условие, а не кому отведены места.
+
+    Найдено разработчиком на снимке из Frihamnen: продукт отвечал «места отведены
+    автобусам» и ставил «Buses only» под отрезком ПЕРВОЙ таблички. Знак говорит
+    другое: полчаса для всех, а автобусам вдобавок платно в свои часы.
+    """
+    ev = evaluate_parking_rules(_frihamnen(), datetime(2026, 9, 13, 10), CAL)
+    assert [r.audience for r in ev.regimes] == [None, "pictogram-bus"]
+    # Круг стоящих больше не сужен: места отведены не автобусам.
+    assert all(r.eligibility == [] for r in ev.regimes)
+    assert ev.regimes[0].audience_excluded == ["pictogram-bus"]
+
+    # Воскресенье: всем бесплатно, автобусам платно.
+    everyone, buses = ev.regimes
+    assert at(everyone, datetime(2026, 9, 13, 10)) == (ALLOWED, [])
+    assert at(buses, datetime(2026, 9, 13, 10)) == (ALLOWED, ["avgift"])
+
+    # Будни: обеим половинам одно и то же — предел получаса с первой таблички.
+    ev = evaluate_parking_rules(_frihamnen(), datetime(2026, 9, 10, 21, 15), CAL)
+    for r in ev.regimes:
+        p = next(p for p in r.periods if p.start <= datetime(2026, 9, 10, 21, 15) < p.end)
+        assert (p.state, p.conditions, p.max_duration_minutes) == (ALLOWED, [], 30)
+
+
+def test_a_pictogram_alone_still_narrows_the_whole_sign():
+    """Снимок `038`: пиктограмма висит отдельной табличкой и ничего не обусловливает.
+    Там она и есть круг стоящих — места отведены автобусам."""
+    s = sign(plate({"vehicle_class": "bus", "pictogram": "bus"}),
+             plate({"eligibility": "visitors"}, ["Besökande"]))
+    ev = evaluate_parking_rules(s, datetime(2026, 3, 2, 12), CAL)
+    assert len(ev.regimes) == 1
+    assert ev.regimes[0].audience is None
+    assert "pictogram-bus" in ev.regimes[0].eligibility
+
+
+def test_only_a_pictogram_standing_alone_narrows_the_sign():
+    """Правило разработчика: «только для автобусов» знак говорит лишь тогда,
+    когда пиктограмма на табличке одна. Рядом с ней что угодно ещё — часы, плата,
+    тариф — и табличка уже не отводит места, а ставит условие своему транспорту.
+
+    Проверяется обе стороны на одной и той же паре: пиктограмма отдельной
+    табличкой и та же пиктограмма вместе с платой."""
+    одна = evaluate_parking_rules(
+        sign(plate({"vehicle_class": "bus", "pictogram": "bus"})),
+        datetime(2026, 3, 2, 12), CAL)
+    assert len(одна.regimes) == 1
+    assert одна.regimes[0].eligibility == ["pictogram-bus"]
+    assert одна.regimes[0].audience is None
+
+    с_условием = evaluate_parking_rules(
+        sign(plate({"vehicle_class": "bus", "fee": True}, ["Avgift"])),
+        datetime(2026, 3, 2, 12), CAL)
+    assert [r.audience for r in с_условием.regimes] == [None, "pictogram-bus"]
+    assert all(r.eligibility == [] for r in с_условием.regimes)
+
+
+def test_ovrig_tid_counts_the_whole_sign_not_half_of_it():
+    """«Остальное время» считается по ВСЕМУ знаку, а не по табличкам, доставшимся
+    одной половине.
+
+    Снимок `049`: `[мопед] 1/4-30/9 Avgift Taxa 12` и `Övrig tid Avgift Taxa 2`.
+    Сезон занят табличкой мопедов — значит, для прочих машин он «остальным
+    временем» НЕ является: знак о них в сезон молчит, и платы с них не берут.
+    Разбор разработчика: «no fee at all for non-motorcycle vehicles in the period
+    from plate 1».
+    """
+    s = sign(plate({"fee": True, "tariff_code": "Taxa 12", "vehicle_class": "motorcycle",
+                    "time_windows": [dict(win("00:00", "24:00", "all_days"),
+                                          dates={"mode": "only",
+                                                 "ranges": [{"from": "04-01", "to": "09-30"}]})]},
+                   ["1/4-30/9", "Avgift", "Taxa 12"]),
+             plate({"fee": True, "tariff_code": "Taxa 2", "scope_shift": "remaining_time"},
+                   ["Övrig tid", "Avgift", "Taxa 2"]))
+
+    лето = evaluate_parking_rules(s, datetime(2026, 7, 15, 12), CAL)
+    всем, мопедам = лето.regimes
+    assert at(всем, datetime(2026, 7, 15, 12)) == (ALLOWED, [])          # знак молчит
+    assert at(мопедам, datetime(2026, 7, 15, 12)) == (ALLOWED, ["avgift"])
+
+    # Молчание не выдаётся за бесплатность: отрезок помечен, и показ скажет
+    # «No fee stated for this period», а не «Free parking».
+    from parkread.engine import FEE_PERIOD_ELSEWHERE
+    сейчас = next(p for p in всем.periods
+                  if p.start <= datetime(2026, 7, 15, 12) < p.end)
+    assert сейчас.note == FEE_PERIOD_ELSEWHERE
+    assert all(p.note is None for p in мопедам.periods)
+
+    # Вне сезона платят все, и половины сходятся — окно останется одно.
+    зима = evaluate_parking_rules(s, datetime(2026, 11, 16, 12), CAL)
+    for r in зима.regimes:
+        assert at(r, datetime(2026, 11, 16, 12)) == (ALLOWED, ["avgift"])
+
+
+def test_arrows_and_audience_divide_the_sign_independently():
+    """Стрелка делит участок, пиктограмма — адресата, и делят они по очереди:
+    сначала стрелка отрезает свои таблички, потом внутри участка ищется адресат.
+
+    Поэтому автобусная табличка, висящая НАД стрелкой влево, делит только левый
+    участок: правый о ней ничего не знает — там свои таблички."""
+    s = sign(plate({"duration_limit": {"amount": 30, "unit": "minutes"}}, ["30 min"]),
+             plate({"fee": True, "vehicle_class": "bus"}, ["Avgift"]),
+             plate({"arrow": "left"}),
+             plate({"duration_limit": {"amount": 2, "unit": "hours"}}, ["2 tim"]),
+             plate({"arrow": "right"}))
+    ev = evaluate_parking_rules(s, datetime(2026, 3, 2, 12), CAL)
+    assert [(r.extent, r.audience) for r in ev.regimes] == [
+        ("left", None), ("left", "pictogram-bus"), ("right", None)]
+    assert at(ev.regimes[0], datetime(2026, 3, 2, 12)) == (ALLOWED, [])
+    assert at(ev.regimes[1], datetime(2026, 3, 2, 12)) == (ALLOWED, ["avgift"])
+
+
+def test_a_window_to_24_00_runs_to_the_end_of_the_day():
+    """`24:00` — конец суток, а не 23:59. Раньше последняя минута суток выпадала
+    из окна, и посреди платного отрезка автобусной таблички `00-24` появлялась
+    минута «бесплатно»."""
+    s = sign(plate({"fee": True, "time_windows": [win("00:00", "24:00")]},
+                   ["Avgift 00-24"]))
+    r = evaluate_parking_rules(s, datetime(2026, 3, 2, 12), CAL).regimes[0]
+    assert at(r, datetime(2026, 3, 2, 23, 59)) == (ALLOWED, ["avgift"])
+    assert at(r, datetime(2026, 3, 2, 12)) == (ALLOWED, ["avgift"])
+
+    # `23:59` — те же сутки целиком. На знаках так не пишут, а модель пишет: на
+    # снимке `049` `00-24` приехало как `00:00-23:59`, и в последнюю минуту дня
+    # табличка мопедов переставала действовать. В зелёном отрезке появлялась
+    # минута платной стоянки — «в остальное время» успевало вклиниться.
+    почти = sign(plate({"fee": True, "time_windows": [win("00:00", "23:59")]},
+                       ["Avgift 00-24"]))
+    r = evaluate_parking_rules(почти, datetime(2026, 3, 2, 12), CAL).regimes[0]
+    assert at(r, datetime(2026, 3, 2, 23, 59)) == (ALLOWED, ["avgift"])
+    # Сутки не режутся на куски: границы отрезков на 23:59 не приходятся вовсе.
+    края = [t for p in r.periods for t in (p.start, p.end)]
+    assert not [t for t in края if (t.hour, t.minute) == (23, 59)], края
+
+
 def test_a_limit_does_not_outlive_the_window_that_set_it():
     """Предел с таблички действует, пока действует окно, которое его ввело.
 
@@ -502,14 +650,37 @@ def _sign_b():
 
 
 def test_sign_b_developer_reading():
-    r = evaluate_parking_rules(_sign_b(), datetime(2026, 3, 2, 12), CAL).regimes[0]
-    assert r.eligibility == ["pictogram-motorcycle"]        # места отведены мотоциклам
-    assert "stretch-metres" in r.place_notes
-    assert at(r, datetime(2026, 3, 2, 12)) == (ALLOWED, ["avgift"])      # будни 7-19
-    assert at(r, datetime(2026, 3, 7, 12)) == (ALLOWED, ["avgift"])      # суббота 11-17
-    assert at(r, datetime(2026, 3, 7, 9)) == (ALLOWED, [])               # суббота до 11
-    assert at(r, datetime(2026, 3, 2, 20)) == (ALLOWED, [])              # вне окна — обычный P
-    assert at(r, datetime(2026, 3, 5, 3)) == (PROHIBITED, [])            # любой четверг 0-6
+    """Знак `Б` — левая стопка с `images/ParkingSignExample.png`.
+
+    **Разбор перечитан разработчиком 2026-09-10.** Прежде здесь стояло «место
+    для мотоциклов; кто не мотоцикл — места здесь не имеет». Это неверно:
+    пиктограмма на табличке не одна, рядом с ней `Avgift 7-19 (11-17) Taxa 13`.
+    Значит, табличка мест не отводит, а ставит условие мотоциклам.
+
+    Верное чтение: мотоциклам платно в будни 7-19 и в дни со скобками 11-17
+    по `Taxa 13`; в остальное время мотоциклам свободно; прочим свободно всегда.
+    Запрет в четверг 0-6 — для всех. Ставить в пределах пяти метров от знака.
+    """
+    ev = evaluate_parking_rules(_sign_b(), datetime(2026, 3, 2, 12), CAL)
+    всем, мотоциклам = ev.regimes
+    assert (всем.audience, мотоциклам.audience) == (None, "pictogram-motorcycle")
+    # Места никому не отведены: круг стоящих пуст у обоих окон.
+    assert всем.eligibility == [] and мотоциклам.eligibility == []
+    assert "stretch-metres" in всем.place_notes
+
+    # Мотоциклам платно в свои часы, в остальное время — нет.
+    assert at(мотоциклам, datetime(2026, 3, 2, 12)) == (ALLOWED, ["avgift"])   # будни 7-19
+    assert at(мотоциклам, datetime(2026, 3, 7, 12)) == (ALLOWED, ["avgift"])   # суббота 11-17
+    assert at(мотоциклам, datetime(2026, 3, 7, 9)) == (ALLOWED, [])            # суббота до 11
+    assert at(мотоциклам, datetime(2026, 3, 2, 20)) == (ALLOWED, [])           # вне окна
+
+    # Прочим свободно в те же часы: плата их не касается.
+    assert at(всем, datetime(2026, 3, 2, 12)) == (ALLOWED, [])
+    assert at(всем, datetime(2026, 3, 7, 12)) == (ALLOWED, [])
+
+    # Запрет в четверг 0-6 действует на всех.
+    assert at(всем, datetime(2026, 3, 5, 3)) == (PROHIBITED, [])
+    assert at(мотоциклам, datetime(2026, 3, 5, 3)) == (PROHIBITED, [])
 
 
 def test_sign_v_no_vehicle_plate_does_not_narrow():

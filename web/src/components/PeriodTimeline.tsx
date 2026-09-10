@@ -204,6 +204,14 @@ export default function PeriodTimeline(
             {regime.extent_short}
           </span>
         )}
+        {/* Кому окно. Стоит после участка: сначала где, потом для кого —
+            в таком порядке их и читают. Подпись приходит с бэкенда. */}
+        {regime.audience_short && (
+          <span className="font-normal text-slate-500">
+            {" · "}
+            {regime.audience_short}
+          </span>
+        )}
       </h2>
       {/* Шкалы может не быть вовсе. На знаке арендованных мест «Free parking,
           28 h max» — число не со знака, а из правила 24 часов: чьё это место,

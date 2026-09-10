@@ -41,6 +41,12 @@ UNCERTAIN = "uncertain"
 # нельзя: там мы не смогли прочесть, здесь прочли и знаем, что сказать нечего.
 NOT_STATED = "not_stated"
 
+# Заметка отрезка: плата названа только «в остальное время», а какое время
+# «остальное» — написано на табличке, обращённой к другому виду транспорта.
+# Знак о плате для прочих в этот час не говорит ничего, и обещать им «бесплатно»
+# продукт не должен (снимок `049`, разбор разработчика).
+FEE_PERIOD_ELSEWHERE = "fee_period_belongs_to_another_audience"
+
 # участки
 HERE = "here"
 _ARROW_EXTENT = {
@@ -74,6 +80,12 @@ class Regime:
     periods: list[Period]
     duration_expires_at: datetime | None = None
     duration_source: str | None = None  # "plate" | "24h_default"
+    # Кому адресовано ЭТО окно. Не то же, что `eligibility`: там сказано, кому
+    # отведены места, а здесь — для кого посчитан вот этот отсчёт времени.
+    # Заполняется, когда пиктограмма стоит на табличке с условием: условие
+    # адресовано её виду транспорта, остальным — то, что на других табличках.
+    audience: str | None = None        # ключ справочника, или None
+    audience_excluded: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -185,14 +197,29 @@ def _in_clock_window(win: dict, moment: datetime) -> bool:
     start = _clock(win["from"])
     end = _clock(win["to"])
     t = moment.time()
+    # `24:00` — конец суток, а не время 00:00 того же дня. Раньше он читался
+    # как 23:59, и последняя минута суток выпадала из окна: на знаке `00-24`
+    # у автобусной таблички посреди платного отрезка появлялась минута
+    # «бесплатно» (найдено на снимке из Frihamnen).
+    if end == time(0, 0):
+        return t >= start
     if start <= end:
         return start <= t < end
     return t >= start or t < end          # окно через полночь
 
 
 def _clock(s: str) -> time:
+    """Время с таблички. Полночь как КОНЕЦ суток обозначается нулём.
+
+    `23:59` считается тем же концом суток. На знаках такого времени не пишут —
+    там `00-24`, — но модель сплошь и рядом записывает эти сутки как `00:00-23:59`,
+    и последняя минута дня выпадала из окна. На снимке `049` из-за этого посреди
+    зелёного отрезка возникала минута платной стоянки: в 23:59 табличка мопедов
+    переставала действовать, и «в остальное время» успевало вклиниться
+    (найдено разработчиком на проверке).
+    """
     h, m = s.split(":")
-    return time(23, 59) if h == "24" else time(int(h), int(m))
+    return time(0, 0) if h == "24" or (h, m) == ("23", "59") else time(int(h), int(m))
 
 
 def _md(value: str) -> tuple[int, int]:
@@ -258,6 +285,58 @@ def _duration_minutes(parsed: dict) -> int | None:
     return int(d["amount"] * (60 if d["unit"] == "hours" else 1))
 
 
+def _addresses_a_condition(parsed: dict) -> bool:
+    """Несёт ли табличка собственное правило — плату, предел, разрешение, запрет
+    или свои часы. Пиктограмма рядом с таким правилом адресует ЕГО, а не знак."""
+    return bool(_conditions_of(parsed) or parsed.get("duration_limit")
+                or parsed.get("prohibition") or parsed.get("time_windows"))
+
+
+def _addressed_class(parsed: dict) -> str | None:
+    """Ключ справочника, если табличка адресует своё условие виду транспорта.
+
+    **Правило разработчика (2026-09-10).** «Только для автобусов» знак говорит
+    лишь тогда, когда пиктограмма на табличке ОДНА — или одно слово `Buss`.
+    Стоит рядом с ней что-нибудь ещё — часы, плата, тариф, — и табличка мест
+    уже не отводит, а ставит условие своему виду транспорта:
+
+    - `[автобус] Avgift (14-24) 00-24` — автобусам платно в эти часы;
+    - `[мопед] 1/4-30/9 Avgift Taxa 12` — мопедам платно по `Taxa 12` в сезон;
+    - `[мотоцикл] Avgift 7-19 (11-17) Taxa 13` (знак `Б`) — мотоциклам платно
+      в эти часы, а остальным свободно.
+
+    Пиктограмма БЕЗ условия (снимок `038`) сюда не попадает: она и есть круг
+    стоящих, и его по-прежнему собирает `_build_regime`.
+    """
+    key = VEHICLE_KEYS.get((parsed or {}).get("vehicle_class"))
+    return key if key and _addresses_a_condition(parsed) else None
+
+
+def _split_by_vehicle(panels: list[dict]) -> list[tuple[str | None, list[str], list[dict]]]:
+    """Один знак — несколько окон, если условие адресовано виду транспорта.
+
+    Найдено на снимке из Frihamnen: `30 min 00-24 (00-14)` для всех и
+    `[автобус] Avgift (14-24) 00-24` для автобусов. Продукт отвечал «места
+    отведены автобусам» и ставил «Buses only» под отрезком первой таблички.
+
+    Делится так же, как стрелками делится участок: у каждого адресата свой набор
+    табличек — общие плюс свои, — и дальше режим строится обычным порядком.
+    """
+    addressed = [(_addressed_class(p.get("parsed") or {}), p) for p in panels]
+    keys: list[str] = []
+    for key, _ in addressed:
+        if key and key not in keys:
+            keys.append(key)
+    if not keys:
+        return [(None, [], panels)]
+
+    common = [p for key, p in addressed if not key]
+    out: list[tuple[str | None, list[str], list[dict]]] = [(None, keys, common)]
+    for key in keys:
+        out.append((key, [], [p for k, p in addressed if not k or k == key]))
+    return out
+
+
 def _conditions_of(parsed: dict) -> list[str]:
     """Ключи справочника, которые указание добавляет к периоду."""
     out = []
@@ -275,7 +354,9 @@ def _conditions_of(parsed: dict) -> list[str]:
 
 def _build_regime(extent: str, panels: list[dict], base_state: str,
                   now: datetime, cal: Calendar,
-                  uncertainties: list[str]) -> Regime:
+                  uncertainties: list[str], audience: str | None = None,
+                  audience_excluded: list[str] | None = None,
+                  others: list[dict] | None = None) -> Regime:
     plates = [p for p in panels if p.get("kind") == "sign_plate"]
 
     # шаг 4: условие допуска — подпись к режиму
@@ -285,8 +366,10 @@ def _build_regime(extent: str, panels: list[dict], base_state: str,
     eligibility: list[str] = []
     for p in plates:
         parsed = p.get("parsed") or {}
-        for key in (VEHICLE.get(parsed.get("vehicle_class")),
-                    WHO.get(parsed.get("eligibility"))):
+        # Пиктограмма, адресующая условие, круг стоящих не сужает: она говорит,
+        # КОМУ это условие, а не кому отведены места (решение 120).
+        vehicle = None if _addressed_class(parsed) else VEHICLE.get(parsed.get("vehicle_class"))
+        for key in (vehicle, WHO.get(parsed.get("eligibility"))):
             if key and key not in eligibility:
                 eligibility.append(key)
         # «Арендованное место, где вдобавок нужно разрешение» — два условия сразу,
@@ -328,8 +411,19 @@ def _build_regime(extent: str, panels: list[dict], base_state: str,
     scoping = [p for p in windowed + prohibitions if not p.get("permits_parking")]
     scoped = base_state == PROHIBITED and any(p.get("time_windows") for p in scoping)
 
+    # Часы, занятые табличками ЧУЖОГО адресата. Условий они этому окну не дают,
+    # но «Övrig tid» через них не переступает: остальное время считается по всему
+    # знаку, а не по тем табличкам, что достались этой половине.
+    #
+    # Найдено на снимке `049`: `[мопед] 1/4-30/9 Avgift Taxa 12` и `Övrig tid
+    # Avgift Taxa 2`. Без этого у прочих машин «остальное время» разрасталось
+    # на сезон, и продукт брал с них плату там, где знак о них молчит.
+    occupied = [q for q in ((p.get("parsed") or {}) for p in (others or []))
+                if q.get("time_windows")]
+
     periods = _timeline(now, cal, base_state, windowed, always, shifted,
-                        prohibitions, uncertainties, scoped=scoped)
+                        prohibitions, uncertainties, scoped=scoped,
+                        occupied=occupied)
 
     # Длительность: табличка перекрывает умолчание в 24 часа — но только там,
     # где она действует. Поэтому берётся из периода, в котором находится «сейчас»,
@@ -408,15 +502,18 @@ def _build_regime(extent: str, panels: list[dict], base_state: str,
 
     return Regime(extent=extent, eligibility=eligibility,
                   place_notes=sorted(set(place_notes)), periods=periods,
-                  duration_expires_at=expires, duration_source=source)
+                  duration_expires_at=expires, duration_source=source,
+                  audience=audience, audience_excluded=list(audience_excluded or []))
 
 
 def _timeline(now: datetime, cal: Calendar, base_state: str,
               windowed: list[dict], always: list[dict], shifted: list[dict],
               prohibitions: list[dict], uncertainties: list[str],
-              scoped: bool = False) -> list[Period]:
+              scoped: bool = False,
+              occupied: list[dict] | None = None) -> list[Period]:
     base_conditions = sorted({c for p in always for c in _conditions_of(p)})
-    marks = _boundaries(now, windowed + shifted + prohibitions + always)
+    marks = _boundaries(now, windowed + shifted + prohibitions + always
+                        + list(occupied or []))
     raw: list[Period] = []
 
     base_duration = next((_duration_minutes(p) for p in always
@@ -446,6 +543,20 @@ def _timeline(now: datetime, cal: Calendar, base_state: str,
                 # Под запрещающим знаком попадание в окно и есть запрет.
                 if scoped and not parsed.get("permits_parking"):
                     state = PROHIBITED
+
+        # Время, занятое табличкой чужого адресата, «остальным» не является:
+        # условий она этому окну не даёт, но и молчание не превращает в своё.
+        note = None
+        if not inside:
+            for parsed in occupied or []:
+                if any(_window_applies(w, t0, cal)
+                       for w in parsed.get("time_windows") or []):
+                    inside = True
+                    # Плата названа только «в остальное время» — значит, про этот
+                    # час знак прочим ничего не сказал. Это не «бесплатно».
+                    if shifted:
+                        note = FEE_PERIOD_ELSEWHERE
+                    break
 
         # дополнение: база либо то, что назвал токен сдвига
         if not inside:
@@ -479,7 +590,7 @@ def _timeline(now: datetime, cal: Calendar, base_state: str,
                 uncertainties.append("day_class_unknown")
 
         raw.append(Period(t0, t1, state, sorted(set(conds)),
-                          max_duration_minutes=duration))
+                          max_duration_minutes=duration, note=note))
 
     # склеить соседние одинаковые
     merged: list[Period] = []
@@ -556,8 +667,15 @@ def evaluate_parking_rules(sign: dict, moment: datetime, cal: Calendar) -> Evalu
     if not cal.covers(moment.date()):
         uncertainties.append("date_outside_calendar")
 
+    # Делят знак две вещи и делят независимо: стрелка — участок, пиктограмма
+    # с условием — адресата. Два участка и автобусная табличка дают четыре окна.
     regimes = [
-        _build_regime(extent, panels, base_state, moment, cal, uncertainties)
+        _build_regime(extent, group, base_state, moment, cal, uncertainties,
+                      audience=audience, audience_excluded=excluded, others=others)
         for extent, panels in _split_by_arrows(sign.get("panels", []))
+        for audience, excluded, group in _split_by_vehicle(panels)
+        for others in [[p for p in panels if not any(p is g for g in group)]]
     ]
-    return Evaluation(regimes=regimes, uncertainties=uncertainties)
+    # Режимы строятся по одним и тем же табличкам, поэтому оговорки повторяются.
+    # Порядок сохраняется: он осмыслен — сначала то, что мешало сильнее.
+    return Evaluation(regimes=regimes, uncertainties=list(dict.fromkeys(uncertainties)))

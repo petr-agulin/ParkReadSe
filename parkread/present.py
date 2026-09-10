@@ -18,8 +18,8 @@ from datetime import date, datetime, timedelta
 
 from . import clock_se as clock
 from .calendar_se import EVE, RED, Calendar
-from .engine import (ALLOWED, NOT_STATED, PROHIBITED, Evaluation, Period, Regime,
-                     horizon_end)
+from .engine import (ALLOWED, FEE_PERIOD_ELSEWHERE, NOT_STATED, PROHIBITED,
+                     Evaluation, Period, Regime, horizon_end)
 from .completeness import FULL, PARTIAL, Assessment
 from .pipeline import Analysis
 from .reference import Reference
@@ -34,7 +34,7 @@ from .reference import Reference
 # о смысле знака, поэтому запрещённая формулировка проверяется одним статическим
 # тестом на бэкенде и не может просочиться через вёрстку.
 
-CONTRACT = 6
+CONTRACT = 7
 
 STATE_TEXT = {
     "allowed": "The sign permits parking during this period",
@@ -98,6 +98,35 @@ PERIOD_HEADLINE = {
     "uncertain": "Conditions could not be read in full",
     "not_stated": "Nothing stated on the sign",
 }
+
+# Кому адресовано окно. Появляется, когда пиктограмма стоит на табличке
+# с условием, а другая табличка говорит со всеми: условие тогда адресовано
+# своему виду транспорта, а не сужает круг стоящих (решение 120).
+#
+# Существительное берётся отсюда, а не из справочника: там у записи стоит
+# «Buses only» — утверждение о знаке, а здесь нужно название адресата.
+AUDIENCE_NOUN = {
+    "pictogram-bus": "buses",
+    "pictogram-truck": "lorries",
+    "pictogram-motorcycle": "motorcycles",
+    "pictogram-electric-car": "electric cars",
+    "pictogram-bicycle": "bicycles and class II mopeds",
+    "bil-personbil": "cars",
+}
+
+
+def _audience_short(r: Regime) -> str | None:
+    """Подпись окна: кому оно. Пусто, когда знак ни на кого не делится."""
+    if r.audience:
+        noun = AUDIENCE_NOUN.get(r.audience)
+        return noun[:1].upper() + noun[1:] if noun else None
+    if r.audience_excluded:
+        nouns = [AUDIENCE_NOUN.get(k) for k in r.audience_excluded]
+        nouns = [n for n in nouns if n]
+        if nouns:
+            return "All vehicles except " + ", ".join(nouns)
+    return None
+
 
 STAY_END_REASON = {
     "plate": "the limit stated on the sign",
@@ -402,8 +431,14 @@ def _period_tone(p: Period) -> str:
 
 
 def _headline(p: Period, tone: str) -> str:
-    """«Free parking» — только когда условий нет вовсе (см. комментарий выше)."""
-    if tone == "free" and p.conditions:
+    """«Free parking» — только когда условий нет вовсе (см. комментарий выше).
+
+    И только когда знак об этом времени высказался. Если плата названа лишь
+    «в остальное время», а какое время «остальное» — написано на табличке для
+    другого транспорта, то про этот час знак прочим не сказал ничего: обещать
+    им бесплатность продукт не вправе (снимок `049`).
+    """
+    if tone == "free" and (p.conditions or p.note == FEE_PERIOD_ELSEWHERE):
         return PERIOD_HEADLINE["free_with_conditions"]
     return PERIOD_HEADLINE[tone]
 
@@ -455,6 +490,21 @@ def _period(ref: Reference, p: Period, horizon: datetime, cal: Calendar,
         # под первым отрезком, и читающий средний — платный — его не видел.
         # Оговорка относится ко всему окну, значит и к каждой его части.
         "aside": aside or [],
+    }
+
+
+# Пояснение к дырке в стопке: плата названа «в остальное время», а границу этого
+# времени задаёт табличка, обращённая к другому транспорту. Разработчик назвал это
+# вероятной небрежностью муниципалитета — и попросил сказать об этом прямо, а не
+# прятать за словом «бесплатно».
+def _fee_elsewhere_term(excluded: list[str]) -> dict:
+    nouns = [AUDIENCE_NOUN.get(k) for k in excluded]
+    кому = ", ".join(n for n in nouns if n) or "another kind of vehicle"
+    return {
+        "key": "fee-period-elsewhere",
+        "known": True,
+        "text": f"The fee plate applies to “other times”; the period it refers "
+                f"to is written on a plate addressed to {кому}",
     }
 
 
@@ -700,6 +750,10 @@ def _regime(ref: Reference, r: Regime, horizon: datetime, cal: Calendar,
         # ничем не подписанных. Со стороны они выглядели повтором, хотя правила
         # разные. Участок продукт вычислял и на экран не выводил вовсе.
         "extent_short": EXTENT_SHORT.get(r.extent, r.extent),
+        # Кому это окно. Ключ остаётся рядом с подписью: по нему решают,
+        # показывать ли второе окно вообще, и его же видно в разборе полётов.
+        "audience": r.audience,
+        "audience_short": _audience_short(r),
         "eligibility": [_term(ref, k) for k in r.eligibility],
         # Кому отведены места. Условие допуска — ПОДПИСЬ к режиму, а не проверка
         # пользователя: продукт называет круг и останавливается, потому что
@@ -756,7 +810,9 @@ def _regime(ref: Reference, r: Regime, horizon: datetime, cal: Calendar,
                     # из запрета — под запрещающими, круг окна — под разрешающими.
                     # Примечания (`Boende`) относятся ко всему окну и идут под всеми.
                     aside=[t for t in (круг if p.state == нужное else []) + примечания
-                           if t["key"] not in set(p.conditions)])
+                           if t["key"] not in set(p.conditions)]
+                          + ([_fee_elsewhere_term(r.audience_excluded)]
+                             if p.note == FEE_PERIOD_ELSEWHERE else []))
             for p in показанные
         ],
     }
@@ -1107,6 +1163,33 @@ def _completeness(a: Assessment) -> dict:
     }
 
 
+def _same_window(a: dict, b: dict) -> bool:
+    """Одинаковы ли два окна внутри ПОКАЗАННОГО отрезка."""
+    return (a["periods"] == b["periods"]
+            and a["duration_expires_at"] == b["duration_expires_at"]
+            and a["no_window_text"] == b["no_window_text"])
+
+
+def _windows(views: list[dict]) -> list[dict]:
+    """Окно адресата показывается, только когда оно ОТЛИЧАЕТСЯ от общего.
+
+    Автобусная плата в четверг вечером до показанного отрезка не достаёт: два
+    одинаковых окна подряд ничего не сообщают, а подпись «All vehicles except
+    buses» над первым из них заставляет искать разницу, которой нет.
+    """
+    общее = {v["extent"]: v for v in views if not v["audience"]}
+    kept = [v for v in views
+            if not (v["audience"] and v["extent"] in общее
+                    and _same_window(общее[v["extent"]], v))]
+
+    # Не осталось ни одного адресата на участке — общему окну подпись не нужна.
+    with_audience = {v["extent"] for v in kept if v["audience"]}
+    for v in kept:
+        if not v["audience"] and v["extent"] not in with_audience:
+            v["audience_short"] = None
+    return kept
+
+
 def to_json(analysis: Analysis, ref: Reference, moment: datetime,
             cal: Calendar) -> dict:
     """Полный ответ по снимку. Форма одна и та же во всех исходах: сначала полнота,
@@ -1148,9 +1231,10 @@ def to_json(analysis: Analysis, ref: Reference, moment: datetime,
         # ни за один отрезок: чего именно недостаёт, знает блок полноты, а линия
         # лишь не даёт принять неполный ответ за полный.
         certain = a.category == FULL
-        body["regimes"] = [_regime(ref, r, horizon_end(moment), cal, main_key,
-                                   unknown_plates, private_land, certain)
-                           for r in ev.regimes]
+        body["regimes"] = _windows(
+            [_regime(ref, r, horizon_end(moment), cal, main_key,
+                     unknown_plates, private_land, certain)
+             for r in ev.regimes])
         body["uncertainties"] = [_explain(u, UNCERTAINTY_TEXT) for u in ev.uncertainties]
         body["permits_parking"] = ev.permits_parking
         if ev.note:

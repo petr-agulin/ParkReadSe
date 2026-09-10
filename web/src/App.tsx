@@ -15,7 +15,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 // Растёт вместе с CONTRACT в parkread/present.py. Сборка и сервер расходятся легко:
 // страница обновляется из dist сразу, а процесс server.py живёт с прежним кодом,
 // пока его не перезапустят. Молчать об этом нельзя — блоки просто окажутся пустыми.
-const EXPECTED_CONTRACT = 6;
+const EXPECTED_CONTRACT = 7;
 
 export default function App() {
   const [busy, setBusy] = useState(false);
@@ -155,8 +155,17 @@ export default function App() {
 
             <WhoCanPark regimes={data.regimes} />
 
+            {/* Участок подписывается там, где он различает: окон на знаке несколько
+                И участки у них разные, или стрелка увела стоянку от самого знака.
+                Раньше здесь стояло «окон больше одного», и знак, поделённый
+                не стрелкой, а адресатом, получал два одинаковых «Here at the sign». */}
             {data.regimes.map((r, i) => (
-              <PeriodTimeline key={i} regime={r} showExtent={data.regimes.length > 1 || r.extent !== "here"} />
+              <PeriodTimeline
+                key={i}
+                regime={r}
+                showExtent={new Set(data.regimes.map((x) => x.extent)).size > 1
+                            || r.extent !== "here"}
+              />
             ))}
           </ErrorBoundary>
         )}
