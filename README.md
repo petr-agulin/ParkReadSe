@@ -223,17 +223,31 @@ Commands are shown with the interpreter spelled out on purpose: `.venv\Scripts\a
 silently does nothing under a restrictive PowerShell execution policy, and the symptom is
 a confusing `ModuleNotFoundError: No module named 'dotenv'` from the system Python.
 
-The frontend is built separately; the same process serves both the page and the API, so
-the frontend has no backend address in it — `/api/...` is always its own:
+The frontend is built separately, and **the built page needs no server at all**: it reads
+the sign in the browser, with the reader's own key, and talks only to the model provider.
 
 ```powershell
 cd web
 npm ci
 npm run build                               # output in web/dist
+npm run preview                             # the built page, as a host would serve it
 ```
 
-For frontend work, `npm run dev` alongside a running `server.py`: Vite proxies `/api`
-to the backend, so the frontend code is identical in both modes.
+The output is self-contained and uses relative paths, so it works from the root of a
+domain or from a subfolder — copy `web/dist` to any static host. It installs as an app
+(manifest plus a hand-written service worker) and opens offline; reading a sign does not,
+and the page says so rather than failing quietly.
+
+For frontend work, `npm run dev` alongside a running `server.py`: Vite proxies `/api` to
+the backend, and a development-only switch lets you compare the browser's answer with the
+Python one. Neither the switch nor the `/api` path exists in the built page.
+
+| Command | What it checks |
+|---|---|
+| `.venv\Scripts\python.exe tests\run.py` | the Python suite |
+| `npm test` (in `web`) | the browser suite, including the parity run against Python |
+| `npm run test:build` | builds the page and checks what ended up in it |
+| `npm run measure` | extraction accuracy and the confidence threshold |
 
 ### Two modes
 
@@ -285,11 +299,14 @@ sometimes locations, and are of no use here.
 
 Named rather than hidden — each is a real boundary of the current build.
 
-- **The holiday calendar ends 2026-12-31.** From January 2027 the day class is unknown on
-  every request, and the service says so instead of guessing. It degrades honestly, but it
-  does degrade.
-- **Local only.** No deployment, no public URL, no HTTPS. You cannot open it from the
-  street on your phone yet.
+- **The calendar runs 2026 to 2030.** Easter and the holidays that hang off it are
+  computed from the law rather than listed, but the window is bounded on purpose: a
+  moment outside it cannot be chosen, and nothing is guessed beyond it.
+- **Not published anywhere yet.** The page builds, installs and runs entirely in the
+  browser — but where it will be hosted is undecided, so there is no address to open from
+  the street.
+- **iOS is untested.** There was no iPhone to test on. Installing and the camera should
+  work in Safari; nothing here is a claim that they do.
 - **Sweden only, and it does not detect otherwise.** A foreign parking sign passes triage
   — it *is* a parking sign — and is then read by Swedish rules. Distinguishing the country
   is a new field, a new prompt line and a full re-run.
@@ -357,3 +374,232 @@ interface are in English.
 
 Between them they answer the question this repository exists to answer: not "what does
 the code do" but "why is the answer trustworthy, and where does it stop".
+
+---
+
+# Using it: what this is, and what it asks of you
+
+Everything below is for the person who wants to *use* ParkRead rather than read its code.
+It is deliberately long. Most of it answers questions that only sound technical — what am
+I installing, who checked it, where does my photo go, what happens if I clear my browser —
+and every one of those has a short, honest answer worth having in writing.
+
+If you send one paragraph along with the link, send this one:
+
+> ParkRead is a web page, not an app from a store. Open the link; your browser can put an
+> icon on your home screen so it opens like an app, but nothing is installed beyond that,
+> and it has the same access as any website: the camera while it is open, if you allow it.
+> Nobody reviewed it — Google and Apple never saw it. There is no account and no server of
+> ours: you paste in your own key to an AI provider, your photo goes from your phone
+> straight to them, and nobody else sees it. It reads the sign and tells you what it says.
+> Check the sign yourself before you trust it.
+
+## It is a website, not an app from a store
+
+Adding it to a home screen does not change what it is. It changes how it looks: an icon
+instead of a bookmark, no address bar, opens instantly. Underneath it is the same page
+with the same rules as any page. The industry name for this is "progressive web app", a
+phrase built to blur exactly the distinction worth keeping.
+
+Three things get conflated when people ask "is it an app or a website", and they do not
+move together:
+
+| | App from a store | ParkRead | An ordinary website |
+|---|---|---|---|
+| **How it arrives** | Downloaded from a store | Opened from a link, optionally pinned to the home screen | Opened from a link |
+| **Who vouched for it** | The store reviewed it; the phone checks its signature | Nobody. The author, and whoever sent you the link | Nobody |
+| **What it can reach on the phone** | Whatever it asks for: contacts, location, files, background activity | Only what a web page can: the camera, while it is open, with permission | The same |
+| **Where the work happens** | On the phone, and on the company's servers | On the phone | On the company's servers |
+| **Who holds your data** | They do | Nobody. Your phone | They do, usually behind an account |
+| **How it updates** | Through the store, in versions you can see | The next time you open it | The next time you open it |
+
+So it is unlike a store app in that **nobody checked it**. There is no review and no
+signature that means anything. And it is unlike an ordinary website in the opposite
+direction: **there is no account and no server of ours**, and nothing about you is held
+anywhere. Less vouched-for than a store app and less data-hungry than a website, at once.
+
+The reassuring half is real, and it is not a promise — it is what browsers enforce. A web
+page cannot read your contacts or messages, cannot see your other apps, cannot run in the
+background, cannot touch files you did not hand it, and can use the camera only while it
+is open and only after you allow it.
+
+## What happens when you open it
+
+A handful of files travel to your phone: the page, one file of instructions, one of
+styling, the icons. About 120 KB over the network, once. After that they live on your
+phone, and opening the app costs nothing but a quick check for a newer version.
+
+From then on, the browser runs those instructions on your phone. **Everything ParkRead
+decides, it decides there** — the rules engine, the Swedish holiday calendar, the
+daylight-saving arithmetic, the reference of plate meanings, the wording of every sentence
+it says. None of that is a request to anyone.
+
+One thing is not local: reading the photograph. The cropped picture of the sign goes to
+the AI provider whose key you entered, and their model returns what it saw written on the
+plates. Judging what that means is done on your phone; recognising the letters is not.
+
+So there are two parties in normal use: **your phone, and the provider you already pay.**
+Nothing passes through the author, and there is nothing for it to pass through.
+
+## What you need to bring
+
+Your own key to an AI provider, the provider's address, and the names of the two models it
+should use. The Your key panel on the first screen takes all four. Without them the app
+opens, explains itself and shows the reference — but cannot read a sign, and says so
+rather than failing quietly.
+
+The cost of reading a sign is yours and goes to your provider — about two model calls per
+photograph. The author pays nothing, sees nothing, and cannot revoke anything: the key is
+yours, and yours to rotate whenever you like.
+
+The key lives in the tab's memory and is forgotten when you close it, unless you tick
+**Remember on this device** — then it is kept in your browser's storage for this address,
+and nowhere else. **Forget the key** erases it from both, immediately. The provider address
+and model names are remembered always: they are not secret, and retyping them at a sign in
+the rain is its own kind of cruelty.
+
+## Putting it on your home screen
+
+This is your browser's doing, not the app's — there is no button inside ParkRead asking to
+be installed. Any time the page is open:
+
+- **Android, Chrome:** the menu offers *Install app*, and sometimes prompts by itself.
+- **iPhone, Safari:** Share, then *Add to Home Screen*. (Untested — see Known limits.)
+
+On Android there are two possible outcomes, and the wording tells them apart. *Install app*
+creates a small package that Android installs properly: it appears in the app drawer and
+in Settings, and is uninstalled like any app. *Add to Home screen* makes a plain shortcut
+— an icon and an address, nothing more. Chrome offers the first only when the page comes
+from a proper address with a valid certificate.
+
+Either way, **no program is installed outside the browser.** There is no background
+process, no new permission, and nothing that runs when you are not looking. What you gain
+is an icon, a window without an address bar, and the offline behaviour described below.
+
+One consequence worth knowing: **the icon is a pin stuck into an address.** If the app
+ever moves, the old icon quietly stops working and has to be replaced.
+
+## Without a signal
+
+The app opens, the reference and the general rules are there, the camera works, the frame
+works. **Reading a sign does not** — that is the call to the model, and it needs the
+network. The app says so on screen instead of failing quietly.
+
+This works because a small piece of the app, called a service worker, is kept by the
+browser alongside the page and decides where each thing comes from. It keeps the shell on
+your phone. It never keeps a sign reading: a cached answer would be yesterday's answer
+handed to you as today's, and at a sign you could not tell the difference.
+
+## Updates
+
+When the author publishes a change, you get it **the next time you open the app** with a
+signal. The page itself is always fetched fresh when the network allows, so there is no
+version to get stuck on; the heavy parts come off your phone unless they actually changed.
+Nothing to accept, no reinstall, your key untouched. With no signal you keep using what
+you have until there is one.
+
+## What is stored on your phone, and how much
+
+The whole app is about 355 KB of files. The saved key, provider address and model names
+add well under a kilobyte. **Nothing else is ever stored: not a photograph, not a reading,
+no history.** Under half a megabyte in total — smaller than one photo from your camera.
+
+It lives inside the browser's storage for the app's address. It is not in Downloads, not
+visible to a file manager, and cannot be opened by anything but the browser. You can see
+that it exists in Settings, under the app's storage, or in the browser's site settings.
+
+What never reaches your phone at all: the project's tests, the harness that proves the
+browser and the original Python agree, the accuracy measurement, the Python itself, and
+the sources behind the reference. The published app is eight files — the page, one script,
+one stylesheet, three icons, the manifest, and the service worker.
+
+## Clearing data, and uninstalling properly
+
+Nothing you delete can harm you. The worst case is retyping your key and needing a signal
+once.
+
+| You clear | What happens |
+|---|---|
+| Cookies | Nothing. The app does not use any |
+| Browser cache | The offline copy may go. Still works online, and fetches itself again |
+| **Site data for the app's address** | The saved key, provider address and model names go, and the offline copy with them. The app still opens, and asks again |
+| All browser data, or the browser itself | The installed app goes too |
+
+The trap is the wording on Android: **"Clear cookies and site data"** sounds harmless but
+is the third row. If the app suddenly asks for your key again, that is why, and nothing is
+broken.
+
+To remove it properly, do both halves — taking away the icon does not take away what is
+stored:
+
+- **Android, installed:** long-press the icon, App info, Uninstall. Then, to be thorough,
+  the browser's site settings for the address, Delete data.
+- **Android, shortcut only:** long-press the icon, Remove. The stored data stays under the
+  browser until you delete it in site settings.
+- **iPhone:** long-press the icon, Remove App, Delete App — that takes its data with it.
+
+If you only want the key gone, nothing needs uninstalling: **Forget the key** in the Your
+key panel does exactly that.
+
+**Cleaner and antivirus apps.** Nothing here trips the warnings phones give to sideloaded
+software: on Android the installed package is generated and signed by Google's own
+servers, and registered as installed by the browser. The realistic annoyance is the
+opposite kind of tool — a cleaner that clears browser storage takes the offline copy and
+the saved key with it.
+
+## Why it has to live at an address
+
+The obvious idea — send the files to a friend over a messenger — does not work, and the
+reason is worth understanding, because it is the same reason the app is safe to open.
+
+**Browsers decide what code may do by where it came from.** Code that arrived from an
+address on the internet is treated as a site. The same code sitting in a downloads folder
+is treated as a file someone sent you, and a file gets almost nothing: no camera, no home
+screen icon, no memory of your key, no offline copy. That is deliberate. If a file arriving
+in a messenger could open your camera and keep secrets on your phone, messengers would be
+a marvellous way to attack people.
+
+So the files have to sit at an address. **That is all "hosting" means here: a place that
+hands out the same few files to whoever asks for them.** It does not read signs, does not
+see photographs, does not hold keys, and does not know what anyone did with the app. It is
+a shelf, not a service. Every visitor receives an identical copy, and the work happens
+afterwards, on their phone.
+
+Which shelf is still an open question for this project.
+
+## Trust, and what could go wrong
+
+Taking the real risks one at a time, since the honest answers are short:
+
+- **Someone on the same wifi** cannot read your key and cannot alter the app. The
+  connection is encrypted both when the app is delivered and when it calls your provider.
+  That is what the padlock is actually for.
+- **Another website** cannot touch it. A saved key can be read only by the app's own
+  address.
+- **A third-party script inside the app.** There is none: no analytics, no advertising, no
+  code loaded from anyone else's server. Every file is the project's own. This is the most
+  common way web apps are compromised, and the door is simply absent.
+- **Whoever can publish to the address** can change what you run. This is the real one, and
+  it is not a code problem but an account problem: it rests on the author's hosting account
+  being properly protected.
+- **A malicious browser extension, or a compromised phone,** can read anything on any page,
+  this one included. True of your bank as well; outside anyone's control but yours.
+
+Two structural things reduce the exposure. The provider address is a field **you** fill in,
+so the app has no hidden destination that could be quietly repointed. And there are no
+accounts, no logs and no stored photographs anywhere, so there is no pile of anyone's data
+to lose.
+
+What the author cannot do, and will not pretend otherwise: see how you used it, recover
+anything for you, or revoke a key. The keys are yours.
+
+## Who is responsible for the parking decision
+
+You are. ParkRead reads a sign and tells you what it states; it is a reading, not a
+permission and not advice. It can be wrong — the photograph can be poor, the model can
+misread a plate, and a sign can say something the project has not met before. The app is
+built to say "the sign does not state this" rather than to guess, and to show how complete
+its reading is rather than hide it, but none of that makes it an authority.
+
+Check the sign yourself before you rely on it. A parking fine is not an argument you can
+have with a web page.
