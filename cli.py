@@ -13,6 +13,8 @@ r"""Командная строка проекта.
     PY cli.py calibrate                — порог уверенности по расхождениям ОТВЕТА
     PY cli.py reference --emit         — пересобрать справочник для браузера
     PY cli.py schema --emit            — пересобрать схемы для браузера
+    PY cli.py prompts --emit           — пересобрать тексты промптов для браузера
+    PY cli.py rules --emit             — пересобрать общие правила для браузера
     PY cli.py parity                   — свежи ли эталоны двойного прогона
         --write                        — переписать их (правка видна в git diff)
 
@@ -408,6 +410,53 @@ def cmd_reference(write: bool) -> int:
 SCHEMA_TS = Path("web/src/lib/schema.data.ts")
 
 
+PROMPTS_TS = Path("web/src/lib/prompts.data.ts")
+
+
+RULES_TS = Path("web/src/lib/rules.data.ts")
+
+
+def cmd_rules(write: bool) -> int:
+    """Общие правила для браузера: собрать из markdown или проверить свежесть."""
+    from parkread.reference import emit_rules_ts
+
+    cfg, _, _ = _load()
+    text = emit_rules_ts(cfg.general_rules_path)
+    current = RULES_TS.read_text(encoding="utf-8") if RULES_TS.exists() else None
+    if write:
+        if text == current:
+            print("нечего пересобирать: правила совпадают")
+            return 0
+        RULES_TS.write_text(text, encoding="utf-8", newline="")
+        print(f"пересобрано: {RULES_TS}")
+        return 0
+    if current != text:
+        print(f"{RULES_TS} устарел или не собран")
+        return 1
+    print("Общие правила свежие.")
+    return 0
+
+
+def cmd_prompts(write: bool) -> int:
+    """Тексты промптов для браузера: скопировать или проверить свежесть."""
+    from parkread.reference import emit_prompts_ts
+
+    text = emit_prompts_ts()
+    current = PROMPTS_TS.read_text(encoding="utf-8") if PROMPTS_TS.exists() else None
+    if write:
+        if text == current:
+            print("нечего пересобирать: промпты совпадают")
+            return 0
+        PROMPTS_TS.write_text(text, encoding="utf-8", newline="")
+        print(f"пересобрано: {PROMPTS_TS}")
+        return 0
+    if current != text:
+        print(f"{PROMPTS_TS} устарел или не собран")
+        return 1
+    print("Промпты свежие.")
+    return 0
+
+
 def cmd_schema(write: bool) -> int:
     """Схемы для браузера: скопировать или проверить свежесть."""
     from parkread.reference import emit_schema_ts
@@ -491,6 +540,10 @@ def main(argv: list[str]) -> int:
         return cmd_reference("--emit" in rest)
     if cmd == "schema":
         return cmd_schema("--emit" in rest)
+    if cmd == "prompts":
+        return cmd_prompts("--emit" in rest)
+    if cmd == "rules":
+        return cmd_rules("--emit" in rest)
     print(f"неизвестная команда: {cmd}")
     return 2
 

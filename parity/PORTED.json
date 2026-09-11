@@ -6,6 +6,8 @@
   "reference",
   "completeness",
   "present",
-  "schema"
+  "schema",
+  "validation",
+  "prompts"
  ]
 }

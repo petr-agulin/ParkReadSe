@@ -1,7 +1,14 @@
 // Экран целиком. Плоская архитектура: по компоненту на блок, состояние здесь.
 
 import { useEffect, useState } from "react";
-import { analyze, generalRules } from "./api";
+import { analyze } from "./api";
+import { Calendar } from "./lib/calendar";
+import { parseNaive } from "./lib/civil";
+import { analyze as readHere, answer } from "./lib/pipeline";
+import { browserStore, canAnswerHere, forget, load, save,
+         type Settings } from "./lib/settings";
+import KeyPanel from "./components/KeyPanel";
+import { GENERAL_RULES } from "./lib/rules.data";
 import type { Analysis, GeneralRule } from "./types";
 import PhotoInput from "./components/PhotoInput";
 import SignPicker from "./components/SignPicker";
@@ -17,6 +24,15 @@ import ErrorBoundary from "./components/ErrorBoundary";
 // пока его не перезапустят. Молчать об этом нельзя — блоки просто окажутся пустыми.
 const EXPECTED_CONTRACT = 7;
 
+/** Сейчас по часам устройства, в том же виде, что даёт поле выбора момента. */
+function nowLocal(): string {
+  const t = new Date();
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${t.getFullYear()}-${pad(t.getMonth() + 1)}-${pad(t.getDate())}`
+       + `T${pad(t.getHours())}:${pad(t.getMinutes())}`;
+}
+
+
 export default function App() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -28,11 +44,14 @@ export default function App() {
   const [aimed, setAimed] = useState<Box | undefined>(undefined);
   const [camera, setCamera] = useState(false);
   const [source, setSource] = useState<"camera" | "file">("file");
-  const [rules, setRules] = useState<GeneralRule[]>([]);
-
-  useEffect(() => {
-    generalRules().then(setRules).catch(() => setRules([]));
-  }, []);
+  // Общие правила едут вместе со страницей (шаг 6d): раньше они приходили
+  // с сервера, и без него блок исчезал МОЛЧА — ни строки о том, что он был.
+  const rules: GeneralRule[] = GENERAL_RULES;
+  // Ключ и провайдер. Вспоминается то, что человек разрешил вспомнить.
+  const [settings, setSettings] = useState<Settings>(() => load(browserStore()));
+  // Кто отвечает. Браузер — когда есть чем; питон остаётся доступен, пока
+  // не переехал замер (шаг 7), и на нём же работает демо-режим без ключа.
+  const [here, setHere] = useState(true);
 
   // Превью живёт в браузере как blob и снимается при замене: снимок никуда
   // не сохраняется — ни на диск сервера, ни в память страницы дольше нужного.
@@ -47,6 +66,11 @@ export default function App() {
     setPicked(file);
   }
 
+  function changeSettings(next: Settings) {
+    setSettings(next);
+    save(browserStore(), next);
+  }
+
   // Наружу уходит только вырезанное, и в разборе показывается оно же — иначе
   // человек сверял бы ответ с картинкой, которой модель не видела.
   async function onSend(cropped: File) {
@@ -55,7 +79,20 @@ export default function App() {
     setData(null);
     setPreview((old) => { if (old) URL.revokeObjectURL(old); return URL.createObjectURL(cropped); });
     try {
-      setData(await analyze(cropped, moment || undefined));
+      const browser = here && canAnswerHere(settings);
+      if (browser) {
+        // Снимок не покидает устройство иначе как к провайдеру: своего сервера
+        // у приложения нет, и разбор считается здесь же.
+        const cal = new Calendar();
+        const at = parseNaive(moment || nowLocal());
+        const analysis = await readHere(
+          { name: cropped.name, data: cropped },
+          { ...settings.provider, apiKey: settings.apiKey },
+          at, cal);
+        setData(answer(analysis, at, cal) as unknown as Analysis);
+      } else {
+        setData(await analyze(cropped, moment || undefined));
+      }
       setPicked(null);
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
@@ -120,6 +157,26 @@ export default function App() {
             moment={moment}
             onMoment={setMoment}
           />
+        )}
+
+        {/* Ключ показывается на начальном экране, а не поверх разбора: он нужен
+            до отправки, а после ответа только мешал бы читать. */}
+        {!camera && !picked && !data && (
+          <KeyPanel
+            settings={settings}
+            onChange={changeSettings}
+            onForget={() => setSettings(forget(browserStore()))}
+          />
+        )}
+
+        {/* Переключатель — для проверки, а не для человека у знака: питон остаётся
+            доступен, пока не переехал замер (шаг 7), и на нём работает демо-режим
+            без ключа. Показывается только там, где выбор вообще есть. */}
+        {!camera && !picked && !data && canAnswerHere(settings) && (
+          <label className="flex items-center gap-2 text-[12px] text-ink-3">
+            <input type="checkbox" checked={here} onChange={(e) => setHere(e.target.checked)} />
+            Read on this device (uncheck to use the local server instead)
+          </label>
         )}
 
         {busy && <p className="text-[13px] text-ink-2">Reading the sign…</p>}

@@ -250,3 +250,39 @@ def test_the_browser_schemas_are_current():
     emitted = ROOT / "web/src/lib/schema.data.ts"
     assert emitted.exists(), "схемы для браузера не собраны"
     assert emitted.read_text(encoding="utf-8") == emit_schema_ts(ROOT / "schema")
+
+def test_the_general_rules_travel_with_the_page():
+    """Справка «общие правила» приходила с сервера, и отказ был МОЛЧАЛИВЫМ:
+    нет сервера — блок исчезал без единого слова. Сломалось бы это в день вывода
+    питона, когда искать причину уже некому (шаг 6d).
+
+        .venv/Scripts/python.exe cli.py rules --emit
+    """
+    from parkread.reference import emit_rules_ts
+
+    emitted = ROOT / "web/src/lib/rules.data.ts"
+    assert emitted.exists(), "правила для браузера не собраны"
+    assert emitted.read_text(encoding="utf-8") == emit_rules_ts(ROOT / "reference/general_rules")
+
+    # Страница берёт их локально и в сеть за справкой не ходит.
+    app = (ROOT / "web/src/App.tsx").read_text(encoding="utf-8")
+    assert "GENERAL_RULES" in app
+    assert "generalRules()" not in app, "остался сетевой вызов за справкой"
+
+    # Переезжают поля, которые показывает экран.
+    text = emitted.read_text(encoding="utf-8")
+    for field in ("key", "text", "source", "body"):
+        assert f'"{field}"' in text, field
+
+    # И пометка остаётся: продукт не вправе подать общее правило как прочитанное
+    # со столба. Она живёт в вёрстке блока и обязана там остаться.
+    block = (ROOT / "web/src/components/WhatWeSaw.tsx").read_text(encoding="utf-8")
+    assert "These are general parking rules applied by law in Sweden." in block
+
+
+def test_the_server_still_serves_the_rules_for_the_python_path():
+    """Ответ `/api/general-rules` остаётся: питон-путь ещё жив, и ломать его
+    заодно незачем."""
+    source = (ROOT / "parkread/api.py").read_text(encoding="utf-8")
+    assert '@app.get("/api/general-rules")' in source
+    assert '"advisory": True' in source

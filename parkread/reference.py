@@ -151,6 +151,68 @@ def emit_schema_ts(schema_dir) -> str:
     return chr(10).join(head + body)
 
 
+def emit_rules_ts(rules_dir) -> str:
+    """Общие правила как модуль TypeScript.
+
+    Справка о том, чего на знаке НЕТ, и в расчёт она не идёт никогда. До сих пор
+    она приходила с сервера, и отказ был молчаливым: нет сервера — блок просто
+    исчезал. Теперь она едет вместе со страницей.
+    """
+    import json
+
+    ref = Reference(rules_dir)
+    rows = [
+        "  {},".format(json.dumps(
+            {"key": e.key, "text": e.en, "source": e.source, "body": e.body},
+            ensure_ascii=False))
+        for e in ref.all()
+    ]
+    head = [
+        "// Общие правила: то, чего на знаке нет, и что продукт НЕ считает.",
+        "//",
+        "// СГЕНЕРИРОВАНО `cli.py rules --emit`. Руками не правится:",
+        "// источник — markdown в `reference/general_rules/`.",
+        "//",
+        "// Едут вместе со страницей намеренно: раньше справка приходила с сервера,",
+        "// и без него блок исчезал молча — ни строки о том, что он был.",
+        "",
+        "export type GeneralRule = { key: string; text: string; source: string; body: string };",
+        "",
+        "export const GENERAL_RULES: GeneralRule[] = [",
+    ]
+    return chr(10).join(head + rows + ["];", ""])
+
+
+def emit_prompts_ts() -> str:
+    """Тексты промптов как модуль TypeScript.
+
+    Копируются, а не переписываются: промпт — это САМ ВОПРОС к модели, его отпечаток
+    держит все сохранённые ответы, и опечатка при переносе стоила бы полного прогона
+    набора. Скелет ответа здесь не копируется: он порождается из схемы и на той
+    стороне порождается тоже — сверка следит, чтобы одинаково.
+    """
+    import json
+    from . import prompts
+
+    head = [
+        "// Тексты промптов. СГЕНЕРИРОВАНО `cli.py prompts --emit`.",
+        "// Руками не правится: источник — `parkread/prompts.py`.",
+        "//",
+        "// Это САМ ВОПРОС к модели: правка меняет отпечаток промпта, и все",
+        "// сохранённые ответы разом перестают на него отвечать.",
+        "",
+    ]
+    body = [
+        "export const TRIAGE_INSTRUCTIONS = " + json.dumps(prompts.TRIAGE_INSTRUCTIONS, ensure_ascii=False) + ";",
+        "",
+        "export const EXTRACT_INSTRUCTIONS = " + json.dumps(prompts.EXTRACT_INSTRUCTIONS, ensure_ascii=False) + ";",
+        "",
+        "export const SHAPE_HEADER = " + json.dumps(prompts._SHAPE_HEADER, ensure_ascii=False) + ";",
+        "",
+    ]
+    return chr(10).join(head + body)
+
+
 # --- сопоставление извлечённой панели со справочником ----------------------
 #
 # Ключи берутся из полей схемы, а не из текста: текст муниципальный и разный,

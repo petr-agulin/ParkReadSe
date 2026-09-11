@@ -31,7 +31,7 @@ from .calendar_se import SELECTABLE_FROM, SELECTABLE_TO, Calendar, holidays
 from . import clock_se as clock
 from .pipeline import Analysis, Outcome
 from .reference import Reference, recognise
-from .validation import Result
+from .validation import Result, Validator
 from .vision import ExtractOutcome
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -41,7 +41,7 @@ PORTED = DIR / "PORTED.json"
 
 # Слои порта, снизу вверх. Порядок здесь — тот же, в котором они переезжают.
 LAYERS = ["calendar", "clock", "engine", "reference", "completeness", "present",
-          "schema"]
+          "schema", "validation", "prompts"]
 
 # Общий момент — тот же понедельник, на котором стоит замер: обычный будний день
 # вне праздников, где ничто не наложилось на ничто.
@@ -244,8 +244,65 @@ def apply_mutation(doc: dict, mutation: dict) -> dict:
             del node[key]
         else:
             node.pop(key, None)
+    elif mutation["op"] == "append":
+        node[key].append(mutation["value"])
     else:
         node[key] = mutation["value"]
+    return out
+
+
+# Порча, будящая починку. Фикстуры лежат УЖЕ починенными — их сохранил конвейер,
+# — поэтому на чистом наборе починка не срабатывает ни разу и сверять было бы
+# нечего. Каждый рецепт ниже соответствует одной правке из `validation.py`.
+DAMAGE = [
+    {"label": "как есть", "op": "keep", "path": []},
+    {"label": "дубль основного знака", "op": "append", "path": ["panels"],
+     "value": {"index": 99, "kind": "sign_plate", "lines": [],
+               "background_color": "blue", "legibility": {"readable": True},
+               "parsed": {"pictogram": "parking"}}},
+    {"label": "пустая строка в панели", "op": "append",
+     "path": ["panels", "0", "lines"], "value": "  "},
+    {"label": "сбитый индекс панели", "op": "set",
+     "path": ["panels", "0", "index"], "value": 7},
+    {"label": "panel_count не сходится", "op": "set", "path": ["panel_count"], "value": 99},
+    {"label": "значение вне перечисления", "op": "set",
+     "path": ["panels", "0", "parsed", "payment_method"], "value": "mobile"},
+]
+
+
+def probe_prompts() -> dict:
+    """Промпты целиком, оба. Сверяется СТРОКА, а не её куски: отпечаток промпта
+    держит все сохранённые ответы, и расхождение в одном пробеле означало бы,
+    что браузер задаёт модели другой вопрос."""
+    from . import prompts
+    from json import loads
+
+    sign = loads((ROOT / "schema/sign.schema.json").read_text(encoding="utf-8"))
+    triage = loads((ROOT / "schema/triage.schema.json").read_text(encoding="utf-8"))
+    return {"triage": prompts.triage(triage), "extract": prompts.extract(sign)}
+
+
+def probe_validation(docs: dict[str, dict], validator) -> dict:
+    """Починка ответа модели: что поправлено, что замечено, прошёл ли схему.
+
+    Сверяются РЕЗУЛЬТАТЫ починки, включая сами записи о ней: правка, о которой
+    не сказано, — второй источник ошибок, и списки этих записей обязаны совпасть
+    слово в слово. Число панелей от отсева здесь не передаётся: оно приходит
+    от модели, а сверка должна быть воспроизводимой.
+    """
+    out = {}
+    for name in sorted(docs)[:20]:
+        for damage in DAMAGE:
+            res = validator.sign(apply_mutation(docs[name], damage))
+            out[f"{name}::{damage['label']}"] = {
+                # Тексты ошибок схемы не сравниваются: на экран они не выходят,
+                # а формулировки у `jsonschema` и у своей проверки разные. Сравнивается
+                # ПОСЛЕДСТВИЕ: годен документ или нет, и что с ним сделали.
+                "ok": res.ok,
+                "repairs": res.repairs,
+                "flags": res.flags,
+                "data": res.data,
+            }
     return out
 
 
@@ -349,6 +406,8 @@ def golden() -> dict[str, object]:
         "engine": probe_engine(cases, docs, cal),
         "reference": probe_reference(cases, docs, ref),
         "schema": probe_schema(docs, _schema_validator()),
+        "validation": probe_validation(docs, Validator(ROOT / "schema")),
+        "prompts": probe_prompts(),
         "completeness": probe_completeness(cases, docs, cal),
         "present": probe_present(cases, docs, cal, ref),
     }

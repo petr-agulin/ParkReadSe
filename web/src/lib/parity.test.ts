@@ -11,6 +11,8 @@ import { toJson } from "./present";
 import { recognise } from "./reference";
 import { SIGN_SCHEMA } from "./schema.data";
 import { valid } from "./schema";
+import { extractPrompt, triagePrompt } from "./prompts";
+import { ok as resultOk, sign as validateSign } from "./validation";
 import { evaluateParkingRules, type Period, type Regime } from "./engine";
 import { differences, report } from "./parity";
 import type { SignDoc } from "./sign";
@@ -45,6 +47,21 @@ const MUTATIONS: Mutation[] = [
     path: ["panels", "0", "странное"], value: true },
 ];
 
+// Порча, будящая починку, — те же рецепты, что у питона.
+const DAMAGE: Mutation[] = [
+  { label: "как есть", op: "keep", path: [] },
+  { label: "дубль основного знака", op: "append", path: ["panels"],
+    value: { index: 99, kind: "sign_plate", lines: [], background_color: "blue",
+             legibility: { readable: true }, parsed: { pictogram: "parking" } } },
+  { label: "пустая строка в панели", op: "append",
+    path: ["panels", "0", "lines"], value: "  " },
+  { label: "сбитый индекс панели", op: "set",
+    path: ["panels", "0", "index"], value: 7 },
+  { label: "panel_count не сходится", op: "set", path: ["panel_count"], value: 99 },
+  { label: "значение вне перечисления", op: "set",
+    path: ["panels", "0", "parsed", "payment_method"], value: "mobile" },
+];
+
 function applyMutation(doc: unknown, mutation: Mutation): unknown {
   const out = JSON.parse(JSON.stringify(doc));
   if (mutation.op === "keep") return out;
@@ -59,6 +76,8 @@ function applyMutation(doc: unknown, mutation: Mutation): unknown {
   if (mutation.op === "delete") {
     if (Array.isArray(node)) node.splice(key, 1);
     else delete node[key];
+  } else if (mutation.op === "append") {
+    node[key].push(mutation.value);
   } else {
     node[key] = mutation.value;
   }
@@ -81,7 +100,7 @@ function documents(): Record<string, SignDoc> {
 }
 
 const LAYERS = ["calendar", "clock", "engine", "reference", "completeness", "present",
-                "schema"];
+                "schema", "validation", "prompts"];
 
 type Golden = Record<string, any>;
 type Probe = (golden: Golden) => Record<string, unknown>;
@@ -162,6 +181,30 @@ const PROBES: Record<string, Probe | undefined> = {
   // применяют их к одному разбору, и сравнивается ВЕРДИКТ — годен или нет
   // (решение 124). Тексты ошибок разные и сравнению не подлежат: на экран
   // они не выходят.
+  // Починка ответа модели. Фикстуры лежат уже починенными, поэтому сверка идёт
+  // на нарочно испорченных: каждый рецепт будит свою правку.
+  // Промпт сверяется целиком: расхождение в пробеле означает другой вопрос
+  // к модели и, значит, недействительность всех сохранённых ответов.
+  prompts: () => ({ triage: triagePrompt(), extract: extractPrompt() }),
+
+  validation: (golden) => {
+    const docs = documents();
+    const out: Record<string, unknown> = {};
+    for (const id of Object.keys(golden)) {
+      const [name, label] = id.split("::");
+      const damage = DAMAGE.find((d) => d.label === label);
+      if (!damage) throw new Error(`рецепт «${label}» не найден`);
+      const res = validateSign(applyMutation(docs[name], damage) as any);
+      out[id] = {
+        ok: resultOk(res),
+        repairs: res.repairs,
+        flags: res.flags,
+        data: res.data,
+      };
+    }
+    return out;
+  },
+
   schema: (golden) => {
     const docs = documents();
     const out: Record<string, unknown> = {};
