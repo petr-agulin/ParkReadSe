@@ -14,6 +14,7 @@
 
 import { isStayLimit, lasting, splitWindow } from "../lib/period";
 import type { DayNote, Period, Regime, Term } from "../types";
+import { when } from "../lib/when";
 import SignIcon from "./SignIcon";
 
 const COLUMN = "w-9 shrink-0";      // ширина значка: линия идёт ровно под ним
@@ -67,13 +68,6 @@ function Rail({ p }: { p?: Period }) {
   );
 }
 
-
-function when(iso: string): string {
-  return new Date(iso).toLocaleString(undefined, {
-    weekday: "long", day: "numeric", month: "long",
-    hour: "2-digit", minute: "2-digit",
-  });
-}
 
 function Node({
   kind, title, at, note, above, below,

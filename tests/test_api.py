@@ -835,6 +835,24 @@ def test_the_circle_is_not_repeated_once_per_window():
     assert "seen.has(id)" in rule and 'map((t) => t.key).join("|")' in rule
 
 
+def test_the_clock_on_screen_is_the_clock_on_the_sign():
+    """Знак написан в двадцатичетырёхчасовой записи: `8-18`, `(8-15)`, `00-24`.
+
+    Найдено разработчиком: на телефоне ответ показывался как «2:00 pm», а на
+    ноутбуке — как «14:00», потому что формат брался у устройства. Читателю
+    у столба пришлось бы переводить одну запись в другую, а ошибка перевода
+    стоит штрафа."""
+    fmt = (ROOT / "web/src/lib/when.ts").read_text(encoding="utf-8")
+    assert "hour12: false" in fmt and 'hourCycle: "h23"' in fmt
+    # Формат не берётся у устройства: локаль закреплена.
+    assert "toLocaleString(LOCALE" in fmt
+    assert "undefined" not in fmt
+
+    page = (ROOT / "web/src/components/PeriodTimeline.tsx").read_text(encoding="utf-8")
+    assert 'from "../lib/when"' in page
+    assert "toLocaleString" not in page, "формат обязан жить в одном месте"
+
+
 def test_the_scale_stays_continuous_when_a_node_grows():
     """Третья строка в узле делает его выше значка, и линия соседнего отрезка
     до значка не достаёт — шкала перестаёт читаться как непрерывная. Поэтому
