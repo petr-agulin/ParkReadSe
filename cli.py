@@ -11,6 +11,8 @@ r"""Командная строка проекта.
     PY cli.py explain <снимок> [дата]  — что действует, по движку правил
     PY cli.py accuracy                 — точность извлечения против эталонов
     PY cli.py calibrate                — порог уверенности по расхождениям ОТВЕТА
+    PY cli.py reference --emit         — пересобрать справочник для браузера
+    PY cli.py schema --emit            — пересобрать схемы для браузера
     PY cli.py parity                   — свежи ли эталоны двойного прогона
         --write                        — переписать их (правка видна в git diff)
 
@@ -372,6 +374,61 @@ def cmd_economics() -> int:
     return 0
 
 
+REFERENCE_TS = Path("web/src/lib/reference.data.ts")
+
+
+def cmd_reference(write: bool) -> int:
+    """Справочник для браузера: собрать из markdown или проверить свежесть."""
+    from parkread.reference import Reference, emit_ts
+
+    cfg, _, _ = _load()
+    text = emit_ts(Reference(cfg.reference_path))
+    current = REFERENCE_TS.read_text(encoding="utf-8") if REFERENCE_TS.exists() else None
+
+    if write:
+        if text == current:
+            print("нечего пересобирать: справочник совпадает")
+            return 0
+        REFERENCE_TS.parent.mkdir(parents=True, exist_ok=True)
+        REFERENCE_TS.write_text(text, encoding="utf-8", newline="")
+        print(f"пересобрано: {REFERENCE_TS}")
+        return 0
+
+    if current is None:
+        print(f"{REFERENCE_TS} не собран")
+        return 1
+    if current != text:
+        print(f"{REFERENCE_TS} устарел: markdown правили, а его не пересобрали")
+        print(r"Пересобрать: .venv\Scripts\python.exe cli.py reference --emit")
+        return 1
+    print(f"Справочник свежий: записей {len(Reference(cfg.reference_path))}.")
+    return 0
+
+
+SCHEMA_TS = Path("web/src/lib/schema.data.ts")
+
+
+def cmd_schema(write: bool) -> int:
+    """Схемы для браузера: скопировать или проверить свежесть."""
+    from parkread.reference import emit_schema_ts
+
+    cfg, _, _ = _load()
+    text = emit_schema_ts(cfg.schema_path)
+    current = SCHEMA_TS.read_text(encoding="utf-8") if SCHEMA_TS.exists() else None
+    if write:
+        if text == current:
+            print("нечего пересобирать: схемы совпадают")
+            return 0
+        SCHEMA_TS.write_text(text, encoding="utf-8", newline="")
+        print(f"пересобрано: {SCHEMA_TS}")
+        return 0
+    if current != text:
+        print(f"{SCHEMA_TS} устарел или не собран")
+        return 1
+    print("Схемы свежие.")
+    return 0
+
+
 def cmd_parity(write: bool) -> int:
     """Эталоны двойного прогона: показать расхождение или переписать.
 
@@ -430,6 +487,10 @@ def main(argv: list[str]) -> int:
         return cmd_economics()
     if cmd == "parity":
         return cmd_parity("--write" in rest)
+    if cmd == "reference":
+        return cmd_reference("--emit" in rest)
+    if cmd == "schema":
+        return cmd_schema("--emit" in rest)
     print(f"неизвестная команда: {cmd}")
     return 2
 

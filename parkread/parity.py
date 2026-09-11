@@ -40,7 +40,8 @@ CASES = DIR / "cases.json"
 PORTED = DIR / "PORTED.json"
 
 # Слои порта, снизу вверх. Порядок здесь — тот же, в котором они переезжают.
-LAYERS = ["calendar", "clock", "engine", "completeness", "present"]
+LAYERS = ["calendar", "clock", "engine", "reference", "completeness", "present",
+          "schema"]
 
 # Общий момент — тот же понедельник, на котором стоит замер: обычный будний день
 # вне праздников, где ничто не наложилось на ничто.
@@ -199,6 +200,88 @@ def probe_engine(cases: list[dict], docs: dict[str, dict], cal: Calendar) -> dic
     return out
 
 
+# Поломки для мутационной проверки схемы. Каждая бьёт по своему ключевому слову,
+# и каждая записана РЕЦЕПТОМ, а не готовым документом: обе стороны применяют один
+# и тот же рецепт к одному и тому же разбору, поэтому сравнивают именно проверку,
+# а не своё умение ломать (решение 124).
+MUTATIONS = [
+    {"label": "как есть", "op": "keep", "path": []},
+    {"label": "нет main_sign", "op": "delete", "path": ["main_sign"]},
+    {"label": "тип знака вне перечисления", "op": "set",
+     "path": ["main_sign", "type"], "value": "не-такого-знака"},
+    {"label": "panel_count строкой", "op": "set", "path": ["panel_count"], "value": "три"},
+    {"label": "лишнее поле в корне", "op": "set", "path": ["новое_поле"], "value": 1},
+    {"label": "отрицательный panel_count", "op": "set", "path": ["panel_count"], "value": -1},
+    {"label": "другая версия схемы", "op": "set", "path": ["schema_version"], "value": 2},
+    {"label": "у панели нет kind", "op": "delete", "path": ["panels", "0", "kind"]},
+    {"label": "время не по образцу", "op": "set",
+     "path": ["panels", "0", "parsed", "time_windows"],
+     "value": [{"from": "восемь", "to": "18:00"}]},
+    {"label": "лишнее поле в панели", "op": "set",
+     "path": ["panels", "0", "странное"], "value": True},
+]
+
+
+def apply_mutation(doc: dict, mutation: dict) -> dict:
+    """Рецепт поломки — к копии разбора. Путь по ключам; число в пути — индекс.
+
+    Та же функция написана на другой стороне: она в четыре строки, и сравнивать
+    надо ПРОВЕРКУ, а не умение ломать.
+    """
+    out = json.loads(json.dumps(doc))
+    if mutation["op"] == "keep":
+        return out
+    node = out
+    path = mutation["path"]
+    for part in path[:-1]:
+        node = node[int(part)] if isinstance(node, list) else node[part]
+        if node is None:
+            return out
+    last = path[-1]
+    key = int(last) if isinstance(node, list) else last
+    if mutation["op"] == "delete":
+        if isinstance(node, list):
+            del node[key]
+        else:
+            node.pop(key, None)
+    else:
+        node[key] = mutation["value"]
+    return out
+
+
+def probe_schema(docs: dict[str, dict], validator) -> dict:
+    """Годен ли разбор по мнению `jsonschema` — на каждом рецепте поломки.
+
+    Это и есть условие, на котором стоит решение 124: пока питон жив, своей
+    проверке в браузере есть с чем сверяться. Тексты ошибок не сравниваются —
+    на экран они не выходят, а решение принимается одно: годен или нет.
+    """
+    out = {}
+    for name in sorted(docs)[:20]:
+        for mutation in MUTATIONS:
+            broken = apply_mutation(docs[name], mutation)
+            out[f"{name}::{mutation['label']}"] = validator.is_valid(broken)
+    return out
+
+
+def probe_reference(cases: list[dict], docs: dict[str, dict], ref: Reference) -> dict:
+    """Сопоставление разбора со справочником: какие ключи вышли у каждой панели.
+
+    Момент здесь ни при чём — справочник времени не знает, — поэтому случаи
+    сводятся к разборам: по одному на документ.
+    """
+    out = {}
+    for name in sorted({c["doc"] for c in cases}):
+        rec = recognise(docs[name], ref)
+        out[name] = {
+            "main_sign_key": rec.main_sign_key,
+            "panel_keys": {str(k): v for k, v in sorted(rec.panel_keys.items())},
+            "uninterpreted": {str(k): v for k, v in sorted(rec.uninterpreted.items())},
+            "missing_keys": rec.missing_keys,
+        }
+    return out
+
+
 def _assess(doc: dict, moment: datetime, cal: Calendar):
     ev = engine.evaluate_parking_rules(doc, moment, cal)
     assessment = completeness.grade(doc, evaluation=ev)
@@ -246,6 +329,14 @@ def probe_present(cases: list[dict], docs: dict[str, dict], cal: Calendar,
 
 # --- запись и сверка -------------------------------------------------------
 
+def _schema_validator():
+    """Тот же `jsonschema`, которым проверяет продукт: сверять надо с ним,
+    а не с отдельной трактовкой схемы."""
+    from jsonschema import Draft202012Validator
+    return Draft202012Validator(
+        json.loads((ROOT / "schema/sign.schema.json").read_text(encoding="utf-8")))
+
+
 def golden() -> dict[str, object]:
     """Все эталоны разом. Считается из репозитория и ничего никуда не пишет."""
     cal, ref = Calendar(), Reference(ROOT / "reference/signs")
@@ -256,6 +347,8 @@ def golden() -> dict[str, object]:
         "calendar": probe_calendar(cal),
         "clock": probe_clock(),
         "engine": probe_engine(cases, docs, cal),
+        "reference": probe_reference(cases, docs, ref),
+        "schema": probe_schema(docs, _schema_validator()),
         "completeness": probe_completeness(cases, docs, cal),
         "present": probe_present(cases, docs, cal, ref),
     }

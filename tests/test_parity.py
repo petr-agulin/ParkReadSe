@@ -130,3 +130,123 @@ def test_rewriting_is_a_separate_command():
         if path.name == Path(__file__).name:
             continue
         assert "parity.write(" not in path.read_text(encoding="utf-8"), path.name
+
+
+# --- порт: что должно оставаться верным на той стороне ---------------------
+
+def test_the_types_match_the_schema():
+    """Типы разбора в браузере выведены из схемы, а не угаданы.
+
+    Схема — граница между моделью и кодом. Второй её экземпляр, написанный
+    по памяти, однажды разойдётся с первым, и первым пострадает поле, которое
+    модель вернула, а браузер не прочёл."""
+    schema = json.loads((ROOT / "schema/sign.schema.json").read_text(encoding="utf-8"))
+    types = (ROOT / "web/src/lib/sign.ts").read_text(encoding="utf-8")
+
+    parsed = schema["$defs"]["parsed"]["properties"]
+    for field in parsed:
+        assert field in types, f"поля {field} нет в типах"
+
+    panel = schema["$defs"]["panel"]["properties"]
+    for field in panel:
+        assert field in types, f"поля панели {field} нет в типах"
+
+    # Перечисления тоже: значение, которого нет в типах, приедет и не прочтётся.
+    for field in ("vehicle_class", "eligibility", "arrow", "scope_shift",
+                  "payment_method", "placement"):
+        for value in parsed[field].get("enum", []):
+            assert f'"{value}"' in types, f"{field}: {value} не назван в типах"
+
+    for value in schema["properties"]["main_sign"]["properties"]["type"]["enum"]:
+        assert f'"{value}"' in types, f"тип знака {value} не назван"
+
+
+def test_the_ported_engine_touches_no_clock_of_its_own():
+    """`Date` в расчётах не участвует: знак говорит о календаре, а `Date` —
+    о мгновении, и вместе с ним в расчёт входят часовой пояс машины, летнее время
+    и месяцы, считающиеся с нуля (риск 5 порта). Время идёт через `civil`/`clock`."""
+    for name in ("engine.ts", "calendar.ts", "clock.ts", "civil.ts"):
+        source = (ROOT / "web/src/lib" / name).read_text(encoding="utf-8")
+        for forbidden in ("new Date", "Date.now", "toLocale", "getTimezoneOffset",
+                          "Intl.", "zoneinfo", "tzdata"):
+            assert forbidden not in source, f"{name}: {forbidden}"
+
+
+def test_the_rulings_moved_with_the_engine():
+    """Сверка доказывает, что две реализации согласны; эти тесты говорят, ПОЧЕМУ
+    ответ такой. Механику сверка покрывает сама, поэтому переехали только правила,
+    за которыми стоит решение разработчика или находка на живом снимке."""
+    ported = (ROOT / "web/src/lib/engine.test.ts").read_text(encoding="utf-8")
+    for mark in ("решение 82", "решение 113", "решение 118", "решение 120",
+                 "решение 121", "`005`", "`033`", "`038`", "`049`",
+                 "знак Б", "Frihamnen"):
+        assert mark in ported, mark
+
+def test_the_browser_reference_is_current():
+    """Справочник для браузера порождается из markdown. Правили записи
+    и не пересобрали — падает здесь, а не у пользователя, которому показали
+    вчерашнюю формулировку.
+
+        .venv/Scripts/python.exe cli.py reference --emit
+    """
+    from parkread.reference import Reference, emit_ts
+
+    emitted = ROOT / "web/src/lib/reference.data.ts"
+    assert emitted.exists(), "справочник для браузера не собран"
+    fresh = emit_ts(Reference(ROOT / "reference/signs"))
+    assert emitted.read_text(encoding="utf-8") == fresh, "справочник устарел"
+
+
+def test_the_emitted_reference_carries_what_the_screen_shows():
+    """Переезжают поля, которые показ берёт у записи, и не переезжает `body`:
+    многоабзацный markdown справки на экране разбора не участвует."""
+    from parkread.reference import EMITTED_FIELDS
+
+    assert set(EMITTED_FIELDS) >= {"en", "short", "label", "code", "category"}
+    assert "body" not in EMITTED_FIELDS and "tokens" not in EMITTED_FIELDS
+    text = (ROOT / "web/src/lib/reference.data.ts").read_text(encoding="utf-8")
+    assert "Руками не правится" in text
+
+def test_the_forbidden_wording_guard_moved_with_the_words():
+    """Словарь формулировок сторожит тест НА ТОЙ ЖЕ стороне, где живут слова.
+
+    Оставить его только в питоне значит потерять страховку в тот день, когда
+    питон уйдёт, — а формулировки ради этой страховки и держат в одном месте
+    (риск 6 порта)."""
+    guard = (ROOT / "web/src/lib/present.test.ts").read_text(encoding="utf-8")
+    for bad in ("parking allowed", "you may park", "you can park here"):
+        assert bad in guard, bad
+    # Проверяется весь набор, а не один удобный снимок.
+    assert "parity/cases.json" in guard
+
+def test_the_schema_check_has_something_to_be_checked_against():
+    """Условие решения 124: своя проверка схемы в браузере сверяется
+    с `jsonschema` на поломанных нарочно разборах — пока питон жив.
+
+    Проверка проверки: рецепты обязаны ЛОМАТЬ документ. Не ломали бы —
+    сверка сравнивала бы две единицы и всегда была зелёной."""
+    golden = json.loads((ROOT / "parity/schema.json").read_text(encoding="utf-8"))
+    assert len(golden) >= 100, len(golden)
+    целые = {k: v for k, v in golden.items() if k.endswith("::как есть")}
+    поломанные = {k: v for k, v in golden.items() if not k.endswith("::как есть")}
+    assert len(целые) >= 10, len(целые)
+    assert all(целые.values()), "исходные разборы обязаны проходить схему"
+    # Девять рецептов из десяти ломают документ, и ломать они обязаны: иначе
+    # сверка сравнивала бы две единицы и всегда была зелёной.
+    assert not any(поломанные.values()), [k for k, v in поломанные.items() if v]
+    assert len(поломанные) >= 8 * len(целые), (len(поломанные), len(целые))
+
+    # Рецепты — те же с обеих сторон, иначе сравнивались бы разные документы.
+    ts = (ROOT / "web/src/lib/parity.test.ts").read_text(encoding="utf-8")
+    for mutation in parity.MUTATIONS:
+        assert mutation["label"] in ts, mutation["label"]
+
+
+def test_the_browser_schemas_are_current():
+    """Схемы в браузере — копия `schema/*.json`. Правили схему и не пересобрали —
+    падает здесь: .venv/Scripts/python.exe cli.py schema --emit"""
+    from parkread.reference import emit_schema_ts
+
+    emitted = ROOT / "web/src/lib/schema.data.ts"
+    assert emitted.exists(), "схемы для браузера не собраны"
+    assert emitted.read_text(encoding="utf-8") == emit_schema_ts(ROOT / "schema")

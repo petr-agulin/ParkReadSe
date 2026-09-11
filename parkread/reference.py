@@ -81,6 +81,76 @@ class Reference:
         return [self._e[k] for k in sorted(self._e)]
 
 
+# --- справочник для браузера ------------------------------------------------
+
+# Поля, которые показ берёт у записи. `body` и `tokens` не переезжают: первое —
+# многоабзацный markdown для справки, второе — подсказка модели; на экране разбора
+# не участвует ни то, ни другое. Понадобятся — эмиттер дорастёт.
+EMITTED_FIELDS = ("key", "category", "en", "short", "label", "code", "source")
+
+
+def emit_ts(ref: "Reference") -> str:
+    """Справочник как модуль TypeScript.
+
+    Записи — markdown с преамбулой, и парсить их на устройстве нечем. Поэтому
+    данные ПОРОЖДАЮТСЯ отсюда, как порождаются эталоны сверки, а источником
+    остаётся markdown: правится он, сгенерированное — следствие. Свежесть
+    стережёт тест.
+    """
+    import json
+
+    rows = [
+        "  {}: {},".format(
+            json.dumps(e.key, ensure_ascii=False),
+            json.dumps({name: getattr(e, name) for name in EMITTED_FIELDS},
+                       ensure_ascii=False))
+        for e in ref.all()
+    ]
+    head = [
+        "// Справочник продукта: белый список того, что он берётся толковать.",
+        "//",
+        "// СГЕНЕРИРОВАНО `cli.py reference --emit`. Руками не правится:",
+        "// источник — markdown в `reference/signs/`, здесь его следствие.",
+        "// Разойдутся — упадёт питон-тест, а не пользователь.",
+        "",
+        "export type RefEntry = {",
+        "  key: string; category: string; en: string;",
+        "  short: string; label: string; code: string; source: string;",
+        "};",
+        "",
+        "export const ENTRIES: Record<string, RefEntry> = {",
+    ]
+    return chr(10).join(head + rows + ["};", ""])
+
+def emit_schema_ts(schema_dir) -> str:
+    """Схемы как модуль TypeScript. Проверять их в браузере нечем, кроме своей
+    проверки (решение 124), а сами схемы должны приехать целиком: это граница
+    между моделью и кодом, и второй её экземпляр писать нельзя — только копировать."""
+    import json
+    from pathlib import Path
+
+    d = Path(schema_dir)
+    sign = json.loads((d / "sign.schema.json").read_text(encoding="utf-8"))
+    triage = json.loads((d / "triage.schema.json").read_text(encoding="utf-8"))
+    head = [
+        "// Схемы ответа модели. СГЕНЕРИРОВАНО `cli.py schema --emit`.",
+        "// Руками не правится: источник — `schema/*.json`, здесь его копия.",
+        "//",
+        "// Проверяет их своя проверка (`schema.ts`), а не библиотека: схема",
+        "// использует десять ключевых слов и ни одного комбинатора (решение 124).",
+        "",
+        "import type { Schema } from \"./schema\";",
+        "",
+    ]
+    body = [
+        "export const SIGN_SCHEMA: Schema = " + json.dumps(sign, ensure_ascii=False, indent=1) + ";",
+        "",
+        "export const TRIAGE_SCHEMA: Schema = " + json.dumps(triage, ensure_ascii=False, indent=1) + ";",
+        "",
+    ]
+    return chr(10).join(head + body)
+
+
 # --- сопоставление извлечённой панели со справочником ----------------------
 #
 # Ключи берутся из полей схемы, а не из текста: текст муниципальный и разный,

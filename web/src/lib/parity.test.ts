@@ -5,13 +5,83 @@ import { describe, expect, it } from "vitest";
 import { Calendar, holidays } from "./calendar";
 import { addDays, addMinutes, isoNaive, parseNaive } from "./civil";
 import { add, autumnBack, offset, realMinutes, springForward, switchBetween } from "./clock";
+import { grade } from "./completeness";
+import { applyAsymmetry } from "./completeness";
+import { toJson } from "./present";
+import { recognise } from "./reference";
+import { SIGN_SCHEMA } from "./schema.data";
+import { valid } from "./schema";
+import { evaluateParkingRules, type Period, type Regime } from "./engine";
 import { differences, report } from "./parity";
+import type { SignDoc } from "./sign";
 
 // Эталоны лежат вне `web/`: их пишет питон, а не сборка фронтенда.
 const DIR = fileURLToPath(new URL("../../../parity/", import.meta.url));
+const ROOT = fileURLToPath(new URL("../../../", import.meta.url));
 const read = (name: string) => JSON.parse(readFileSync(`${DIR}${name}.json`, "utf-8"));
 
-const LAYERS = ["calendar", "clock", "engine", "completeness", "present"];
+type Case = { id: string; doc: string; moment: string };
+
+const round6 = (v: number) => Number(v.toFixed(6));
+
+// Рецепты поломок — те же, что у питона (`parkread/parity.py`). Применяются
+// к копии разбора: сравнивать надо проверку схемы, а не умение ломать.
+type Mutation = { label: string; op: string; path: string[]; value?: unknown };
+
+const MUTATIONS: Mutation[] = [
+  { label: "как есть", op: "keep", path: [] },
+  { label: "нет main_sign", op: "delete", path: ["main_sign"] },
+  { label: "тип знака вне перечисления", op: "set",
+    path: ["main_sign", "type"], value: "не-такого-знака" },
+  { label: "panel_count строкой", op: "set", path: ["panel_count"], value: "три" },
+  { label: "лишнее поле в корне", op: "set", path: ["новое_поле"], value: 1 },
+  { label: "отрицательный panel_count", op: "set", path: ["panel_count"], value: -1 },
+  { label: "другая версия схемы", op: "set", path: ["schema_version"], value: 2 },
+  { label: "у панели нет kind", op: "delete", path: ["panels", "0", "kind"] },
+  { label: "время не по образцу", op: "set",
+    path: ["panels", "0", "parsed", "time_windows"],
+    value: [{ from: "восемь", to: "18:00" }] },
+  { label: "лишнее поле в панели", op: "set",
+    path: ["panels", "0", "странное"], value: true },
+];
+
+function applyMutation(doc: unknown, mutation: Mutation): unknown {
+  const out = JSON.parse(JSON.stringify(doc));
+  if (mutation.op === "keep") return out;
+  let node: any = out;
+  const path = mutation.path;
+  for (const part of path.slice(0, -1)) {
+    node = Array.isArray(node) ? node[Number(part)] : node[part];
+    if (node === undefined || node === null) return out;
+  }
+  const last = path[path.length - 1];
+  const key: any = Array.isArray(node) ? Number(last) : last;
+  if (mutation.op === "delete") {
+    if (Array.isArray(node)) node.splice(key, 1);
+    else delete node[key];
+  } else {
+    node[key] = mutation.value;
+  }
+  return out;
+}
+
+/** Разборы, на которых идёт сверка: те же файлы, что читает питон. */
+function documents(): Record<string, SignDoc> {
+  const out: Record<string, SignDoc> = {};
+  for (const c of read("cases") as Case[]) {
+    if (out[c.doc]) continue;
+    const [where, stem] = c.doc.split("/");
+    const path = where === "demo"
+      ? `${ROOT}demo/${stem}.extract.json`
+      : `${ROOT}testset/expected/${stem}.json`;
+    const raw = JSON.parse(readFileSync(path, "utf-8"));
+    out[c.doc] = where === "demo" ? raw.response : raw;
+  }
+  return out;
+}
+
+const LAYERS = ["calendar", "clock", "engine", "reference", "completeness", "present",
+                "schema"];
 
 type Golden = Record<string, any>;
 type Probe = (golden: Golden) => Record<string, unknown>;
@@ -33,6 +103,116 @@ const PROBES: Record<string, Probe | undefined> = {
         classes += cal.dayClass(d)[0];              // w | e | r
       }
       out[year] = { classes, holidays: Object.fromEntries([...holidays(y)].sort()) };
+    }
+    return out;
+  },
+
+  engine: () => {
+    const cal = new Calendar();
+    const docs = documents();
+    const out: Record<string, unknown> = {};
+    for (const c of read("cases") as Case[]) {
+      const ev = evaluateParkingRules(docs[c.doc], parseNaive(c.moment), cal);
+      out[c.id] = {
+        permits_parking: ev.permitsParking,
+        uncertainties: ev.uncertainties,
+        note: ev.note,
+        regimes: ev.regimes.map((r: Regime) => ({
+          extent: r.extent,
+          audience: r.audience,
+          audience_excluded: r.audienceExcluded,
+          eligibility: r.eligibility,
+          place_notes: r.placeNotes,
+          duration_expires_at: r.durationExpiresAt ? isoNaive(r.durationExpiresAt) : null,
+          duration_source: r.durationSource,
+          periods: r.periods.map((p: Period) => ({
+            start: isoNaive(p.start),
+            end: isoNaive(p.end),
+            state: p.state,
+            conditions: p.conditions,
+            max_duration_minutes: p.maxDurationMinutes,
+            note: p.note,
+          })),
+        })),
+      };
+    }
+    return out;
+  },
+
+  present: () => {
+    const cal = new Calendar();
+    const docs = documents();
+    const out: Record<string, unknown> = {};
+    for (const c of read("cases") as Case[]) {
+      const doc = docs[c.doc];
+      const moment = parseNaive(c.moment);
+      const ev = evaluateParkingRules(doc, moment, cal);
+      const a = grade(doc, { evaluation: ev });
+      out[c.id] = toJson({
+        doc,
+        recognised: recognise(doc),
+        assessment: a,
+        evaluation: applyAsymmetry(ev, a),
+      }, moment, cal);
+    }
+    return out;
+  },
+
+  // Мутационная проверка схемы: рецепты поломок приезжают в эталоне, обе стороны
+  // применяют их к одному разбору, и сравнивается ВЕРДИКТ — годен или нет
+  // (решение 124). Тексты ошибок разные и сравнению не подлежат: на экран
+  // они не выходят.
+  schema: (golden) => {
+    const docs = documents();
+    const out: Record<string, unknown> = {};
+    for (const id of Object.keys(golden)) {
+      const [name, label] = id.split("::");
+      const mutation = MUTATIONS.find((m) => m.label === label);
+      if (!mutation) throw new Error(`рецепт «${label}» не найден`);
+      out[id] = valid(applyMutation(docs[name], mutation), SIGN_SCHEMA);
+    }
+    return out;
+  },
+
+  reference: () => {
+    const docs = documents();
+    const out: Record<string, unknown> = {};
+    for (const name of Object.keys(docs).sort()) {
+      const rec = recognise(docs[name]);
+      // Ключи объектов питон кладёт строками и по возрастанию индекса.
+      const byIndex = (o: Record<number, string[]>) => Object.fromEntries(
+        Object.entries(o).sort((a, b) => Number(a[0]) - Number(b[0])));
+      out[name] = {
+        main_sign_key: rec.mainSignKey,
+        panel_keys: byIndex(rec.panelKeys),
+        uninterpreted: byIndex(rec.uninterpreted),
+        missing_keys: rec.missingKeys,
+      };
+    }
+    return out;
+  },
+
+  completeness: () => {
+    const cal = new Calendar();
+    const docs = documents();
+    const out: Record<string, unknown> = {};
+    for (const c of read("cases") as Case[]) {
+      const doc = docs[c.doc];
+      const ev = evaluateParkingRules(doc, parseNaive(c.moment), cal);
+      const a = grade(doc, { evaluation: ev });
+      out[c.id] = {
+        category: a.category,
+        confidence: round6(a.confidence),
+        // Питон кладёт сигналы округлёнными до шести знаков и по алфавиту.
+        // Доля прочитанных панелей — это 2/3, и без округления стороны
+        // расходятся на пятнадцатом знаке, ничего при этом не означающем.
+        signals: Object.fromEntries(
+          Object.entries(a.signals).sort().map(([k, v]) => [k, round6(v)])),
+        reasons: a.reasons,
+        unread_panels: a.unreadPanels,
+        may_hide_prohibition: a.mayHideProhibition,
+        uninterpreted_plates: a.uninterpretedPlates,
+      };
     }
     return out;
   },
