@@ -11,6 +11,7 @@ import { Calendar } from "./calendar";
 import { parseNaive } from "./civil";
 import { applyAsymmetry, grade } from "./completeness";
 import { evaluateParkingRules } from "./engine";
+import { OFFLINE_NOTE } from "./offline";
 import { CLOCK_CHANGE_TEXT, PERIOD_HEADLINE, REASON_TEXT, STATE_TEXT,
          UNCERTAINTY_TEXT, toJson } from "./present";
 import { recognise } from "./reference";
@@ -60,8 +61,10 @@ describe("словарь формулировок", () => {
   });
 
   it("готовые подписи тоже держатся словаря", () => {
+    // Слова об офлайне — тоже слова продукта, и словарь на них распространяется:
+    // они живут в другом файле только потому, что их читает служебный работник.
     const tables = [STATE_TEXT, PERIOD_HEADLINE, REASON_TEXT, UNCERTAINTY_TEXT,
-                    CLOCK_CHANGE_TEXT];
+                    CLOCK_CHANGE_TEXT, { offline: OFFLINE_NOTE }];
     for (const table of tables) {
       for (const [key, text] of Object.entries(table)) {
         for (const bad of FORBIDDEN) {

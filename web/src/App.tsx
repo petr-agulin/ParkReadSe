@@ -1,11 +1,11 @@
 // Экран целиком. Плоская архитектура: по компоненту на блок, состояние здесь.
 
 import { useEffect, useState } from "react";
-import { analyze } from "./api";
 import { Calendar } from "./lib/calendar";
 import { parseNaive } from "./lib/civil";
+import { OFFLINE_NOTE } from "./lib/offline";
 import { analyze as readHere, answer } from "./lib/pipeline";
-import { browserStore, canAnswerHere, forget, load, save,
+import { browserStore, canAnswerHere, forget, load, missing, save,
          type Settings } from "./lib/settings";
 import KeyPanel from "./components/KeyPanel";
 import { GENERAL_RULES } from "./lib/rules.data";
@@ -49,13 +49,27 @@ export default function App() {
   const rules: GeneralRule[] = GENERAL_RULES;
   // Ключ и провайдер. Вспоминается то, что человек разрешил вспомнить.
   const [settings, setSettings] = useState<Settings>(() => load(browserStore()));
-  // Кто отвечает. Браузер — когда есть чем; питон остаётся доступен, пока
-  // не переехал замер (шаг 7), и на нём же работает демо-режим без ключа.
+  // Кто отвечает. В собранной странице выбора нет вовсе — сервера нет; питон
+  // остаётся доступен только в разработке, ради сверки ответов.
   const [here, setHere] = useState(true);
+  // Есть ли сеть. Открыть приложение и посмотреть справочник можно без неё,
+  // прочитать знак — нет, и сказать об этом надо до отправки, а не после.
+  const [online, setOnline] = useState(
+    typeof navigator === "undefined" || navigator.onLine);
 
   // Превью живёт в браузере как blob и снимается при замене: снимок никуда
   // не сохраняется — ни на диск сервера, ни в память страницы дольше нужного.
   useEffect(() => () => { if (preview) URL.revokeObjectURL(preview); }, [preview]);
+
+  useEffect(() => {
+    const change = () => setOnline(navigator.onLine);
+    window.addEventListener("online", change);
+    window.addEventListener("offline", change);
+    return () => {
+      window.removeEventListener("online", change);
+      window.removeEventListener("offline", change);
+    };
+  }, []);
 
   // Выбор файла ничего не отправляет: снимок идёт на экран выбора знака.
   function onPick(file: File) {
@@ -90,8 +104,16 @@ export default function App() {
           { ...settings.provider, apiKey: settings.apiKey },
           at, cal);
         setData(answer(analysis, at, cal) as unknown as Analysis);
-      } else {
+      } else if (import.meta.env.DEV) {
+        // Половина с питоном существует только в разработке. Импорт внутри ветки,
+        // а не наверху файла: так в собранную страницу не попадает ни строки
+        // про сервер, которого у неё нет.
+        const { analyze } = await import("./api");
         setData(await analyze(cropped, moment || undefined));
+      } else {
+        // Сказать, чего не хватает, теми же словами, что и панель ключа: молчаливая
+        // неудача здесь однажды уже выглядела как «приложение работает без ключа».
+        throw new Error(`To read a sign the app needs ${missing(settings).join(", ")}.`);
       }
       setPicked(null);
     } catch (e) {
@@ -169,10 +191,18 @@ export default function App() {
           />
         )}
 
-        {/* Переключатель — для проверки, а не для человека у знака: питон остаётся
-            доступен, пока не переехал замер (шаг 7), и на нём работает демо-режим
-            без ключа. Показывается только там, где выбор вообще есть. */}
-        {!camera && !picked && !data && canAnswerHere(settings) && (
+        {/* Сеть нужна ровно одному действию — чтению знака. Сказано до отправки:
+            узнать об этом из ошибки после выбора кадра — значит узнать поздно. */}
+        {!online && (
+          <p className="rounded-xl border border-slate-300 bg-white p-4 text-sm text-slate-700">
+            {OFFLINE_NOTE}
+          </p>
+        )}
+
+        {/* Переключатель — только для разработки: в собранной странице сервера нет
+            вовсе, и предлагать выбор, одна половина которого заведомо не работает,
+            нельзя. Показывается только там, где выбор вообще есть. */}
+        {import.meta.env.DEV && !camera && !picked && !data && canAnswerHere(settings) && (
           <label className="flex items-center gap-2 text-[12px] text-ink-3">
             <input type="checkbox" checked={here} onChange={(e) => setHere(e.target.checked)} />
             Read on this device (uncheck to use the local server instead)
@@ -187,7 +217,9 @@ export default function App() {
           </p>
         )}
 
-        {data && data.contract !== EXPECTED_CONTRACT && (
+        {/* Только в разработке: чужой ответ приходит лишь от питона, а в собранной
+            странице его нет — там некому отстать. */}
+        {import.meta.env.DEV && data && data.contract !== EXPECTED_CONTRACT && (
           <p className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
             The server is running older code than this page
             (contract {String(data.contract ?? "unknown")}, expected {EXPECTED_CONTRACT}).

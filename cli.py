@@ -15,6 +15,7 @@ r"""Командная строка проекта.
     PY cli.py schema --emit            — пересобрать схемы для браузера
     PY cli.py prompts --emit           — пересобрать тексты промптов для браузера
     PY cli.py rules --emit             — пересобрать общие правила для браузера
+    PY cli.py icons --emit             — перерисовать иконки приложения
     PY cli.py parity                   — свежи ли эталоны двойного прогона
         --write                        — переписать их (правка видна в git diff)
 
@@ -415,6 +416,8 @@ PROMPTS_TS = Path("web/src/lib/prompts.data.ts")
 
 RULES_TS = Path("web/src/lib/rules.data.ts")
 
+ICONS_DIR = Path("web/public")
+
 
 def cmd_rules(write: bool) -> int:
     """Общие правила для браузера: собрать из markdown или проверить свежесть."""
@@ -434,6 +437,26 @@ def cmd_rules(write: bool) -> int:
         print(f"{RULES_TS} устарел или не собран")
         return 1
     print("Общие правила свежие.")
+    return 0
+
+
+def cmd_icons(write: bool) -> int:
+    """Иконки приложения: перерисовать или проверить, что файлы сошлись с кодом."""
+    from parkread import icons
+
+    stale = [file for file, size, maskable in icons.ICONS
+             if not (ICONS_DIR / file).exists()
+             or (ICONS_DIR / file).read_bytes() != icons.render(file)]
+    if write:
+        changed = icons.write(ICONS_DIR)
+        print(f"перерисовано: {', '.join(changed)}" if changed
+              else "нечего перерисовывать: иконки совпадают")
+        return 0
+    if stale:
+        print(f"иконки разошлись с кодом: {', '.join(stale)}")
+        print(r"Перерисовать: .venv\Scripts\python.exe cli.py icons --emit")
+        return 1
+    print("Иконки свежие.")
     return 0
 
 
@@ -544,6 +567,8 @@ def main(argv: list[str]) -> int:
         return cmd_prompts("--emit" in rest)
     if cmd == "rules":
         return cmd_rules("--emit" in rest)
+    if cmd == "icons":
+        return cmd_icons("--emit" in rest)
     print(f"неизвестная команда: {cmd}")
     return 2
 

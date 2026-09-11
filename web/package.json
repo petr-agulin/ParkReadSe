@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && vite build --config vite.sw.config.ts",
     "preview": "vite preview",
     "dev:lan": "vite --host",
-    "test": "vitest run --exclude \"measure/**\"",
+    "test": "vitest run --exclude \"measure/**\" --exclude \"build/**\"",
     "test:watch": "vitest",
-    "measure": "vitest run --dir measure --reporter=verbose"
+    "measure": "vitest run --dir measure --reporter=verbose",
+    "test:build": "vitest run --dir build --reporter=verbose"
   },
   "dependencies": {
     "react": "^19.2.0",
