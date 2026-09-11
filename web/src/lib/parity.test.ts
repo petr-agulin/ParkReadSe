@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
@@ -11,6 +11,9 @@ import { toJson } from "./present";
 import { recognise } from "./reference";
 import { SIGN_SCHEMA } from "./schema.data";
 import { valid } from "./schema";
+import { compare, emptyReport, fingerprint, thresholdTable, verdictDifferences,
+         verdictSlice, type ThresholdRow } from "./measure";
+import { pixels } from "./photo";
 import { extractPrompt, triagePrompt } from "./prompts";
 import { ok as resultOk, sign as validateSign } from "./validation";
 import { evaluateParkingRules, type Period, type Regime } from "./engine";
@@ -100,10 +103,10 @@ function documents(): Record<string, SignDoc> {
 }
 
 const LAYERS = ["calendar", "clock", "engine", "reference", "completeness", "present",
-                "schema", "validation", "prompts"];
+                "schema", "validation", "prompts", "measure"];
 
 type Golden = Record<string, any>;
-type Probe = (golden: Golden) => Record<string, unknown>;
+type Probe = (golden: Golden) => Record<string, unknown> | Promise<Record<string, unknown>>;
 
 // Половина порта на TypeScript. Пока слоя здесь нет, сверять нечего — но молчать
 // об этом нельзя: непортированный слой должен быть НАЗВАН, а не забыт.
@@ -185,6 +188,93 @@ const PROBES: Record<string, Probe | undefined> = {
   // на нарочно испорченных: каждый рецепт будит свою правку.
   // Промпт сверяется целиком: расхождение в пробеле означает другой вопрос
   // к модели и, значит, недействительность всех сохранённых ответов.
+  // Замер: сверяются сами ЧИСЛА. Переедет «почти так же» — и сравнивать станет
+  // не с чем, а заметить это будет нечем.
+  // Замер: сверяются сами ЧИСЛА. Переедет «почти так же» — и сравнивать станет
+  // не с чем, а заметить это будет нечем. Повторяется то же, что делает
+  // `cli.py calibrate`, и на тех же входных данных.
+  measure: async () => {
+    const cal = new Calendar();
+    const moment = parseNaive("2026-03-02T00:00");
+    const mark = await fingerprint(extractPrompt());
+
+    // Пары «эталон — ответ модели». Ответ, полученный ДРУГИМ промптом,
+    // в замер не входит: иначе в одном числе смешаются две версии вопроса.
+    const pairs: { label: string; expected: SignDoc; actual: SignDoc;
+                   fixture: any }[] = [];
+    const excluded: string[] = [];
+    for (const file of readdirSync(`${ROOT}testset/expected`).sort()) {
+      if (!file.endsWith(".json")) continue;
+      const label = file.slice(0, -".json".length);
+      const fx = `${ROOT}demo/${label}.extract.json`;
+      if (!existsSync(fx)) continue;
+      const fixture = JSON.parse(readFileSync(fx, "utf-8"));
+      if ((fixture.origin ?? "model") !== "model") continue;
+      if (fixture.prompt_fingerprint !== mark) {
+        excluded.push(label);
+        continue;
+      }
+      pairs.push({ label,
+                   expected: JSON.parse(readFileSync(`${ROOT}testset/expected/${file}`, "utf-8")),
+                   actual: fixture.response, fixture });
+    }
+
+    const rep = emptyReport();
+    const diverged: Record<string, string[]> = {};
+    for (const { label, expected, actual } of pairs) {
+      compare(expected, actual, label, rep);
+      const diff = verdictDifferences(verdictSlice(expected, moment, cal),
+                                      verdictSlice(actual, moment, cal));
+      if (diff.length) diverged[label] = diff;
+    }
+
+    // Уверенность считается так же, как её считает конвейер: с флагами
+    // извлечения, починкой валидатора, пробелами справочника и площадью кадра.
+    const rows: ThresholdRow[] = [];
+    const seenPixels: Record<string, number | null> = {};
+    for (const { label, actual } of pairs) {
+      const triageFile = `${ROOT}demo/${label}.triage.json`;
+      let panelsSeen: number | null = null;
+      if (existsSync(triageFile)) {
+        const seen = JSON.parse(readFileSync(triageFile, "utf-8"))?.response?.panels_below_main_sign;
+        panelsSeen = typeof seen === "number" ? seen : null;
+      }
+
+      const res = validateSign(JSON.parse(JSON.stringify(actual)), panelsSeen);
+      const doc = resultOk(res) && res.data ? res.data : actual;
+      const rec = recognise(doc);
+      const flags = [...res.flags];
+      if (rec.missingKeys.length) flags.push("reference_gap:" + rec.missingKeys.join(","));
+      const uninterpreted = Object.keys(rec.uninterpreted).map(Number).sort((a, b) => a - b);
+      if (uninterpreted.length) flags.push("uninterpreted_panels:" + uninterpreted.join(","));
+
+      const photo = readdirSync(`${ROOT}testset/photos`)
+        .find((f) => f.startsWith(`${label}.`) && /\.(jpg|png)$/i.test(f));
+      const imagePixels = photo
+        ? pixels(new Uint8Array(readFileSync(`${ROOT}testset/photos/${photo}`)))
+        : null;
+      seenPixels[label] = imagePixels;
+
+      const ev = evaluateParkingRules(doc, moment, cal);
+      const a = grade(doc, { flags, repairs: res.repairs, evaluation: ev, imagePixels });
+      rows.push({ confidence: Number(a.confidence.toFixed(6)), category: a.category,
+                  diverged: label in diverged, label });
+    }
+    rows.sort((x, y) => (x.confidence - y.confidence) || x.label.localeCompare(y.label));
+
+    return {
+      photos: rep.photos,
+      fields: Object.fromEntries([...rep.fields.keys()].sort()
+        .map((k) => [k, [rep.fields.get(k)!.hits, rep.fields.get(k)!.total]])),
+      mistakes: [...rep.mistakes].sort(),
+      diverged,
+      pixels: seenPixels,
+      fingerprint: mark,
+      excluded: excluded.sort(),
+      rows: rows.map((r) => [r.confidence, r.category, r.diverged, r.label]),
+      threshold_table: thresholdTable(rows),
+    };
+  },
   prompts: () => ({ triage: triagePrompt(), extract: extractPrompt() }),
 
   validation: (golden) => {
@@ -293,7 +383,7 @@ describe("двойной прогон", () => {
     for (const layer of ported) expect(LAYERS).toContain(layer);
   });
 
-  it("портированный слой сходится с питоном, непортированный назван вслух", () => {
+  it("портированный слой сходится с питоном, непортированный назван вслух", async () => {
     const ported: string[] = read("PORTED").layers;
     const pending = LAYERS.filter((l) => !ported.includes(l));
     // Не украшение: строка в выводе — единственное, что не даёт забыть,
@@ -305,7 +395,7 @@ describe("двойной прогон", () => {
       // Слой объявлен портированным, а считать его нечем — это ошибка списка.
       expect(probe, `слой ${layer} объявлен портированным, но пробы нет`).toBeTruthy();
       const golden = read(layer);
-      const lines = report(layer, golden, probe!(golden));
+      const lines = report(layer, golden, await probe!(golden));
       expect(lines, lines.join("\n")).toEqual([]);
     }
   });

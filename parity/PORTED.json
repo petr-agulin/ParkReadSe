@@ -8,6 +8,7 @@
   "present",
   "schema",
   "validation",
-  "prompts"
+  "prompts",
+  "measure"
  ]
 }

@@ -1,0 +1,593 @@
+{
+ "photos": 55,
+ "fields": {
+  "main_sign.background_color": [
+   54,
+   55
+  ],
+  "main_sign.form": [
+   53,
+   55
+  ],
+  "main_sign.type": [
+   53,
+   55
+  ],
+  "panel.background_color": [
+   138,
+   144
+  ],
+  "panel.lines": [
+   129,
+   144
+  ],
+  "panel.rule_bearing": [
+   153,
+   153
+  ],
+  "panel_count": [
+   49,
+   55
+  ],
+  "panels.content": [
+   43,
+   55
+  ],
+  "panels.order": [
+   43,
+   55
+  ],
+  "parsed.arrow": [
+   21,
+   22
+  ],
+  "parsed.duration_limit": [
+   11,
+   11
+  ],
+  "parsed.eligibility": [
+   26,
+   28
+  ],
+  "parsed.fee": [
+   31,
+   34
+  ],
+  "parsed.payment_method": [
+   1,
+   3
+  ],
+  "parsed.permit_required": [
+   6,
+   6
+  ],
+  "parsed.permits_parking": [
+   2,
+   4
+  ],
+  "parsed.place_count": [
+   4,
+   4
+  ],
+  "parsed.placement": [
+   5,
+   6
+  ],
+  "parsed.prohibition": [
+   14,
+   18
+  ],
+  "parsed.scope_shift": [
+   6,
+   8
+  ],
+  "parsed.stretch_metres": [
+   6,
+   10
+  ],
+  "parsed.time_windows": [
+   26,
+   38
+  ],
+  "parsed.vehicle_class": [
+   12,
+   13
+  ]
+ },
+ "mistakes": [
+  "019-forbud-7-18-avgift-ovrig-tid: панель 1 поле prohibition = True вместо None",
+  "019-forbud-7-18-avgift-ovrig-tid: панель 2 поле time_windows = [{'from': '18:00', 'to': '07:00', 'day_class': 'weekday'}] вместо None",
+  "028-avgift-taxa-2-fred-0-6-boende-ci: панель 3 прочитана как ['Boende', 'C1'] вместо ['Boende', 'Ci']",
+  "028-avgift-taxa-2-fred-0-6-boende-ci: порядок табличек ['avgift taxa 2', 'fred 0-6', 'boende c1'] вместо ['avgift taxa 2', 'fred 0-6', 'boende ci']",
+  "028-avgift-taxa-2-fred-0-6-boende-ci: содержание табличек разошлось",
+  "033-avgift-8-21-uppstallning-zon-e-boende-storskogen: панель 2 поле placement = 'marked_bay_only' вместо 'as_shown'",
+  "033-avgift-8-21-uppstallning-zon-e-boende-storskogen: панель 4 поле eligibility = 'residents' вместо None",
+  "033-avgift-8-21-uppstallning-zon-e-boende-storskogen: панель 4 прочитана как ['Zon E', 'Boende', 'Storskogen'] вместо ['Zon E']",
+  "033-avgift-8-21-uppstallning-zon-e-boende-storskogen: порядок табличек ['avgift 8-21', 'other', 'left', 'zon e boende storskogen'] вместо ['avgift 8-21', '?', 'left', 'zon e', 'boende storskogen']",
+  "033-avgift-8-21-uppstallning-zon-e-boende-storskogen: содержание табличек разошлось",
+  "033-avgift-8-21-uppstallning-zon-e-boende-storskogen: табличек 4 вместо 5",
+  "035-zon-c-pa-avstand: панель 2 поле fee = True вместо None",
+  "035-zon-c-pa-avstand: панель 2 поле time_windows = [{'from': '09:00', 'to': '18:00', 'day_class': 'weekday'}, {'from': '09:00', 'to': '15:00', 'day_class': 'eve'}] вместо None",
+  "035-zon-c-pa-avstand: панель 2 прочитана как ['9-18', '(9-15)'] вместо ['Zon C']",
+  "035-zon-c-pa-avstand: панель 3 прочитана как ['Zon C'] вместо []",
+  "035-zon-c-pa-avstand: порядок табличек ['avgift', '9-18 (9-15)', 'zon c'] вместо ['avgift', 'zon c', '?']",
+  "035-zon-c-pa-avstand: содержание табличек разошлось",
+  "036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so: порядок табличек ['avgift 7-19 (11-17) taxa 3', 'other', 'fred 0-6 gäller ej 15/6 15/8', 'right', 'boende sö'] вместо ['avgift 7-19 (11-17) taxa 3', '?', 'fred 0-6 gäller ej 15/6 15/8', 'right', 'boende sö']",
+  "036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so: содержание табличек разошлось",
+  "037-hanvisning-p-med-pil: порядок табличек ['right'] вместо []",
+  "037-hanvisning-p-med-pil: содержание табличек разошлось",
+  "037-hanvisning-p-med-pil: табличек 1 вместо 0",
+  "038-scandic-buss-besokande-pil: панель 1 поле eligibility = 'visitors' вместо None",
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift: вид знака zone вместо regular",
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift: панель 1 поле time_windows = None вместо [{'from': '07:00', 'to': '17:00', 'day_class': 'weekday'}]",
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift: панель 1 прочитана как ['Last-', 'plats'] вместо ['7-17']",
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift: панель 2 поле stretch_metres = None вместо {'from': 0, 'to': 15}",
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift: панель 2 поле time_windows = [{'from': '07:00', 'to': '17:00', 'day_class': 'weekday'}] вместо None",
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift: панель 2 прочитана как ['7-17'] вместо ['0-15  m']",
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift: панель 3 поле prohibition = None вместо True",
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift: панель 3 поле stretch_metres = {'from': 0, 'to': 15} вместо None",
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift: панель 3 поле time_windows = None вместо [{'from': '00:00', 'to': '06:00', 'day_class': 'named_weekday', 'named_weekday': 'friday'}]",
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift: панель 3 прочитана как ['0-15 m'] вместо ['Fred', '0-6']",
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift: панель 4 поле fee = None вместо True",
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift: панель 4 поле permits_parking = None вместо True",
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift: панель 4 поле prohibition = True вместо None",
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift: панель 4 поле scope_shift = None вместо 'remaining_time'",
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift: панель 4 поле time_windows = [{'from': '00:00', 'to': '06:00', 'day_class': 'named_weekday', 'named_weekday': 'friday'}] вместо None",
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift: панель 4 прочитана как ['Fred', '0-6'] вместо ['Övrig tid', 'Avgift', 'Taxa 2']",
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift: порядок табличек ['last- plats', '7-17', '0-15 m', 'fred 0-6', 'övrig tid avgift taxa 2'] вместо ['7-17', '0-15 m', 'fred 0-6', 'övrig tid avgift taxa 2']",
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift: содержание табличек разошлось",
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift: табличек 5 вместо 4",
+  "042-cykel-moped-parkering: панель 2 поле arrow = 'both_horizontal' вместо None",
+  "042-cykel-moped-parkering: панель 2 поле stretch_metres = {'from': 0, 'to': 0} вместо None",
+  "042-cykel-moped-parkering: панель 2 прочитана как ['0 m'] вместо []",
+  "042-cykel-moped-parkering: порядок табличек ['bicycle', '0 m'] вместо ['bicycle', 'other']",
+  "042-cykel-moped-parkering: содержание табличек разошлось",
+  "044-motorcykel-avgift-taxa-12-fred-boende: панель 5 поле vehicle_class = 'motorcycle' вместо None",
+  "049-moped-sasong-avgift-tva-taxor: панель 1 поле time_windows = [{'from': '00:00', 'to': '23:59', 'day_class': 'all_days', 'dates': {'mode': 'only', 'ranges': [{'from': '04-01', 'to': '09-30'}]}}] вместо [{'from': '00:00', 'to': '24:00', 'day_class': 'all_days', 'dates': {'mode': 'only', 'ranges': [{'from': '04-01', 'to': '09-30'}]}}]",
+  "052-avgift-taxa-2-tisd-boende-roda-siffror: панель 3 поле time_windows = [{'from': '22:00', 'to': '07:00', 'day_class': 'weekday'}, {'from': '22:00', 'to': '10:00', 'day_class': 'eve'}, {'from': '22:00', 'to': '10:00', 'day_class': 'red'}] вместо None",
+  "052-avgift-taxa-2-tisd-boende-roda-siffror: панель 3 прочитана как ['Boende', 'C', '22-7', '(22-10)', '22-10'] вместо ['Boende', 'Ci', '22-7', '(22-10)', '22-10']",
+  "052-avgift-taxa-2-tisd-boende-roda-siffror: порядок табличек ['avgift taxa 2', 'tisd 0-6', 'boende c 22-7 (22-10) 22-10'] вместо ['avgift taxa 2', 'tisd 0-6', 'boende ci 22-7 (22-10) 22-10']",
+  "052-avgift-taxa-2-tisd-boende-roda-siffror: содержание табличек разошлось",
+  "056-natt-avgift-7-19-taxa-3-torsd-plus-forbud: порядок табличек ['avgift 7-19 (11-17) taxa 3', 'torsd 0-6', 'prohibition'] вместо ['avgift 7-19 (11-17) taxa 3', 'torsd 0-6']",
+  "056-natt-avgift-7-19-taxa-3-torsd-plus-forbud: содержание табличек разошлось",
+  "056-natt-avgift-7-19-taxa-3-torsd-plus-forbud: табличек 3 вместо 2",
+  "057-p-skiva-2tim-eller-gratis-biljett: основной знак parking вместо unknown",
+  "057-p-skiva-2tim-eller-gratis-biljett: панель 2 поле payment_method = 'ticket' вместо 'parking_disc'",
+  "059-avstand-p-skiva-2tim-darefter-avgift: панель 1 поле payment_method = 'ticket' вместо 'parking_disc'",
+  "059-avstand-p-skiva-2tim-darefter-avgift: панель 1 прочитана как ['07-20', '(08-17)', '9-16', '2 tim', 'därefter', 'avgift'] вместо ['07-20', '(08-17)', '09-16', '2 tim', 'därefter', 'avgift']",
+  "059-avstand-p-skiva-2tim-darefter-avgift: порядок табличек ['07-20 (08-17) 9-16 2 tim därefter avgift'] вместо ['07-20 (08-17) 09-16 2 tim därefter avgift']",
+  "059-avstand-p-skiva-2tim-darefter-avgift: содержание табличек разошлось",
+  "060-natt-lastplats-ovrig-tid-avgift: панель 1 поле time_windows = None вместо [{'from': '07:00', 'to': '19:00', 'day_class': 'weekday'}]",
+  "060-natt-lastplats-ovrig-tid-avgift: панель 1 прочитана как ['Last-', 'plats'] вместо ['7-19']",
+  "060-natt-lastplats-ovrig-tid-avgift: панель 2 поле time_windows = [{'from': '07:00', 'to': '19:00', 'day_class': 'weekday'}] вместо None",
+  "060-natt-lastplats-ovrig-tid-avgift: панель 2 прочитана как ['7-19'] вместо []",
+  "060-natt-lastplats-ovrig-tid-avgift: панель 3 поле stretch_metres = {'from': 0, 'to': 15} вместо None",
+  "060-natt-lastplats-ovrig-tid-avgift: панель 3 прочитана как ['0-15 m'] вместо []",
+  "060-natt-lastplats-ovrig-tid-avgift: панель 4 поле fee = None вместо True",
+  "060-natt-lastplats-ovrig-tid-avgift: панель 4 поле permits_parking = None вместо True",
+  "060-natt-lastplats-ovrig-tid-avgift: панель 4 поле prohibition = True вместо None",
+  "060-natt-lastplats-ovrig-tid-avgift: панель 4 поле scope_shift = None вместо 'remaining_time'",
+  "060-natt-lastplats-ovrig-tid-avgift: панель 4 поле time_windows = [{'from': '00:00', 'to': '06:00', 'day_class': 'named_weekday', 'named_weekday': 'thursday'}] вместо None",
+  "060-natt-lastplats-ovrig-tid-avgift: панель 4 прочитана как ['Torsd.', '0-6'] вместо ['Övrig tid', 'avgift']",
+  "060-natt-lastplats-ovrig-tid-avgift: порядок табличек ['last- plats', '7-19', '0-15 m', 'torsd. 0-6', 'övrig tid avgift (10-17) taxe 3'] вместо ['7-19', '?', '?', 'övrig tid avgift']",
+  "060-natt-lastplats-ovrig-tid-avgift: содержание табличек разошлось",
+  "060-natt-lastplats-ovrig-tid-avgift: табличек 5 вместо 4",
+  "061-lastplats-langt-avstand: вид знака zone вместо regular",
+  "061-lastplats-langt-avstand: основной знак prohibition_stopping вместо unknown",
+  "061-lastplats-langt-avstand: порядок табличек ['last-', '7-17', '0-40 m', 'fred 0-6 lörd 0-6', 'övrig tid 3 tim p-skiva 30 min'] вместо []",
+  "061-lastplats-langt-avstand: содержание табличек разошлось",
+  "061-lastplats-langt-avstand: табличек 5 вместо 0",
+  "061-lastplats-langt-avstand: цвет знака yellow вместо blue",
+  "064-motorcykel-tisd-9-17-beskuren: панель 3 поле time_windows = [{'from': '00:00', 'to': '23:59', 'day_class': 'all_days', 'dates': {'mode': 'only', 'ranges': [{'from': '04-01', 'to': '11-30'}]}}] вместо [{'from': '00:00', 'to': '24:00', 'day_class': 'all_days', 'dates': {'mode': 'only', 'ranges': [{'from': '04-01', 'to': '11-30'}]}}]"
+ ],
+ "diverged": {
+  "057-p-skiva-2tim-eller-gratis-biljett": [
+   "часов расходится по условиям 112/168: avgift, p-biljett вместо avgift, p-skiva"
+  ],
+  "059-avstand-p-skiva-2tim-darefter-avgift": [
+   "часов расходится по условиям 81/168: avgift, p-biljett вместо avgift, p-skiva"
+  ],
+  "060-natt-lastplats-ovrig-tid-avgift": [
+   "часов расходится по состоянию 6/168, из них шире 0"
+  ],
+  "061-lastplats-langt-avstand": [
+   "часов расходится по состоянию 62/168, из них шире 0",
+   "часов расходится по условиям 106/168: p-skiva вместо —"
+  ]
+ },
+ "pixels": {
+  "001-p-30min": 737280,
+  "002-avgift-forbud-utanfor-markerad-plats": 737280,
+  "003-p-2tim": 737280,
+  "004-endast-besokande-pingstkyrkan": 536320,
+  "005-2tim-8-18-parentes-8-15-dubbelpil": 737280,
+  "006-tillstand-07-17-ovrig-tid-avgift": 737280,
+  "007-gul-forbud-forhyrda-platser": 737280,
+  "008-rorelsehindrad-avgift": 737280,
+  "009-besokande-avgift": 737280,
+  "010-forhyrda-platser-tva-pilar": 737280,
+  "011-gul-p-avgift-klistermarken": 737280,
+  "012-tillstand-7-17-ovrig-tid-avgift": 737280,
+  "013-rorelsehindrad-2-platser": 634880,
+  "015-motorcykel": 737280,
+  "016-tillstand-ovrig-tid-5-platser": 737280,
+  "017-rorelsehindrad": 737280,
+  "018-tillstand-utan-tidsangivelse": 515840,
+  "019-forbud-7-18-avgift-ovrig-tid": 737280,
+  "020-forhyrda-platser-13-och-14-avstand": 737280,
+  "021-privat-parkering-brf": 737280,
+  "022-avgift-4tim-laddande-elbilar-2-platser": 616960,
+  "023-avgift-4tim-laddande-elbilar": 737280,
+  "024-avgift-erlaggs-med-mobil": 737280,
+  "025-30min-endast-gaster-gatukok": 737280,
+  "026-gul-zon-avgift-plus-hastighetsskylt": 737280,
+  "027-rorelsehindrad-0-6m-avgift-taxa-2": 196877,
+  "028-avgift-taxa-2-fred-0-6-boende-ci": 118104,
+  "029-beskickningsfordon-0-12m": 151916,
+  "030-avgift-8-21-fredag-0-6-galler-ej-juli-zon-a": 257304,
+  "031-snedstallning-torsdag-jamna-veckor-boende-solna": 218295,
+  "032-rorelsehindrad-pil-hoger": 19364,
+  "033-avgift-8-21-uppstallning-zon-e-boende-storskogen": 398970,
+  "034-avgift-tisdag-12-15-nov-maj-zon-c-boende": 269844,
+  "035-zon-c-pa-avstand": 120336,
+  "036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so": 209064,
+  "037-hanvisning-p-med-pil": 211470,
+  "038-scandic-buss-besokande-pil": 187600,
+  "039-laddning-avgift-4-platser-pil": 66605,
+  "040-servicefordon-vardagar-7-17-ovrig-tid-avgift": 171250,
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift": 291641,
+  "042-cykel-moped-parkering": 192738,
+  "044-motorcykel-avgift-taxa-12-fred-boende": 284850,
+  "049-moped-sasong-avgift-tva-taxor": 265031,
+  "050-aimo-park-privat-hanvisning": 277656,
+  "052-avgift-taxa-2-tisd-boende-roda-siffror": 427700,
+  "054-buss-15min-avgift-torsd": 496264,
+  "056-natt-avgift-7-19-taxa-3-torsd-plus-forbud": 205800,
+  "057-p-skiva-2tim-eller-gratis-biljett": 136704,
+  "058-natt-klass-i-22-06-roda-siffror-utanfor-markerad": 251236,
+  "059-avstand-p-skiva-2tim-darefter-avgift": 40000,
+  "060-natt-lastplats-ovrig-tid-avgift": 24030,
+  "061-lastplats-langt-avstand": 14678,
+  "062-klass-i-14-dygn-slapfordon-forbud": 107387,
+  "063-natt-p-tillstand-06-16-p-skiva-3tim": 150360,
+  "064-motorcykel-tisd-9-17-beskuren": 69540
+ },
+ "fingerprint": "6f17821fa578",
+ "excluded": [
+  "014-motorcykel-pil-skymning",
+  "055-forbud-stannande-snotackt-pil"
+ ],
+ "rows": [
+  [
+   0.7,
+   "partial",
+   true,
+   "061-lastplats-langt-avstand"
+  ],
+  [
+   0.717,
+   "partial",
+   true,
+   "060-natt-lastplats-ovrig-tid-avgift"
+  ],
+  [
+   0.775,
+   "partial",
+   false,
+   "021-privat-parkering-brf"
+  ],
+  [
+   0.775,
+   "partial",
+   false,
+   "041-lastplats-forbud-7-17-ovrig-tid-avgift"
+  ],
+  [
+   0.875,
+   "full",
+   false,
+   "011-gul-p-avgift-klistermarken"
+  ],
+  [
+   0.875,
+   "full",
+   false,
+   "026-gul-zon-avgift-plus-hastighetsskylt"
+  ],
+  [
+   0.875,
+   "full",
+   false,
+   "035-zon-c-pa-avstand"
+  ],
+  [
+   0.875,
+   "partial",
+   false,
+   "037-hanvisning-p-med-pil"
+  ],
+  [
+   0.875,
+   "full",
+   false,
+   "038-scandic-buss-besokande-pil"
+  ],
+  [
+   0.875,
+   "full",
+   false,
+   "049-moped-sasong-avgift-tva-taxor"
+  ],
+  [
+   0.875,
+   "full",
+   false,
+   "054-buss-15min-avgift-torsd"
+  ],
+  [
+   0.875,
+   "full",
+   false,
+   "056-natt-avgift-7-19-taxa-3-torsd-plus-forbud"
+  ],
+  [
+   0.875,
+   "full",
+   true,
+   "057-p-skiva-2tim-eller-gratis-biljett"
+  ],
+  [
+   0.898,
+   "partial",
+   false,
+   "029-beskickningsfordon-0-12m"
+  ],
+  [
+   0.898,
+   "full",
+   false,
+   "033-avgift-8-21-uppstallning-zon-e-boende-storskogen"
+  ],
+  [
+   0.898,
+   "partial",
+   false,
+   "042-cykel-moped-parkering"
+  ],
+  [
+   0.898,
+   "partial",
+   false,
+   "062-klass-i-14-dygn-slapfordon-forbud"
+  ],
+  [
+   0.899,
+   "partial",
+   false,
+   "040-servicefordon-vardagar-7-17-ovrig-tid-avgift"
+  ],
+  [
+   0.9,
+   "partial",
+   false,
+   "050-aimo-park-privat-hanvisning"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "001-p-30min"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "002-avgift-forbud-utanfor-markerad-plats"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "004-endast-besokande-pingstkyrkan"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "006-tillstand-07-17-ovrig-tid-avgift"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "008-rorelsehindrad-avgift"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "009-besokande-avgift"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "010-forhyrda-platser-tva-pilar"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "012-tillstand-7-17-ovrig-tid-avgift"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "013-rorelsehindrad-2-platser"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "016-tillstand-ovrig-tid-5-platser"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "017-rorelsehindrad"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "018-tillstand-utan-tidsangivelse"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "019-forbud-7-18-avgift-ovrig-tid"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "020-forhyrda-platser-13-och-14-avstand"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "022-avgift-4tim-laddande-elbilar-2-platser"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "023-avgift-4tim-laddande-elbilar"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "024-avgift-erlaggs-med-mobil"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "025-30min-endast-gaster-gatukok"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "027-rorelsehindrad-0-6m-avgift-taxa-2"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "028-avgift-taxa-2-fred-0-6-boende-ci"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "030-avgift-8-21-fredag-0-6-galler-ej-juli-zon-a"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "031-snedstallning-torsdag-jamna-veckor-boende-solna"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "032-rorelsehindrad-pil-hoger"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "039-laddning-avgift-4-platser-pil"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "044-motorcykel-avgift-taxa-12-fred-boende"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "052-avgift-taxa-2-tisd-boende-roda-siffror"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "058-natt-klass-i-22-06-roda-siffror-utanfor-markerad"
+  ],
+  [
+   0.975,
+   "full",
+   true,
+   "059-avstand-p-skiva-2tim-darefter-avgift"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "063-natt-p-tillstand-06-16-p-skiva-3tim"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "064-motorcykel-tisd-9-17-beskuren"
+  ],
+  [
+   0.998,
+   "full",
+   false,
+   "034-avgift-tisdag-12-15-nov-maj-zon-c-boende"
+  ],
+  [
+   0.999,
+   "full",
+   false,
+   "005-2tim-8-18-parentes-8-15-dubbelpil"
+  ],
+  [
+   0.999,
+   "full",
+   false,
+   "007-gul-forbud-forhyrda-platser"
+  ],
+  [
+   1.0,
+   "full",
+   false,
+   "003-p-2tim"
+  ],
+  [
+   1.0,
+   "full",
+   false,
+   "015-motorcykel"
+  ]
+ ],
+ "threshold_table": "| Порог | Помечено | Из них разошлись | Пропущено как «полный» | Из них разошлись |\n|---|---|---|---|---|\n| 0.850 | 10 | 2 | 45 | 2 |\n| 0.875 | 10 | 2 | 45 | 2 |\n| 0.900 | 19 | 3 | 36 | 1 |\n| 0.920 | 19 | 3 | 36 | 1 |\n| 0.950 | 19 | 3 | 36 | 1 |"
+}

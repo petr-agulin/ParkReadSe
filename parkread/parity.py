@@ -41,7 +41,7 @@ PORTED = DIR / "PORTED.json"
 
 # Слои порта, снизу вверх. Порядок здесь — тот же, в котором они переезжают.
 LAYERS = ["calendar", "clock", "engine", "reference", "completeness", "present",
-          "schema", "validation", "prompts"]
+          "schema", "validation", "prompts", "measure"]
 
 # Общий момент — тот же понедельник, на котором стоит замер: обычный будний день
 # вне праздников, где ничто не наложилось на ничто.
@@ -270,6 +270,100 @@ DAMAGE = [
 ]
 
 
+def probe_measure(cal: Calendar) -> dict:
+    """Числа замера: точность извлечения, расхождения ответов, таблица порогов.
+
+    Замер — единственное место, где числа важнее кода: переедет «почти так же» —
+    и сравнивать станет не с чем. Поэтому сверяются сами ЧИСЛА, пока питон жив.
+
+    Отпечаток промпта здесь не применяется намеренно: он зависит от того, каким
+    промптом получены фикстуры на диске, и на другой машине список исключённых
+    был бы другим. Проверку отпечатка держит отдельный тест.
+    """
+    from . import accuracy
+    from .engine import evaluate_parking_rules
+
+    # Отбор пар — тот же, что у `cli.py calibrate`: ответы, полученные ДРУГИМ
+    # промптом, в замер не входят, иначе в одном числе смешаются две версии
+    # вопроса. Отпечаток — sha256 текста промпта, а промпты сверены посимвольно.
+    from . import fixtures, prompts
+    sign_schema = json.loads(
+        (ROOT / "schema/sign.schema.json").read_text(encoding="utf-8"))
+    mark = fixtures.fingerprint(prompts.extract(sign_schema))
+
+    pairs = accuracy.load_pairs(ROOT / "testset/expected", ROOT / "demo",
+                                prompt_fingerprint=mark)
+    moment = BASE_MOMENT
+
+    rep = accuracy.Report()
+    diverged = {}
+    for label, expected, actual in pairs:
+        accuracy.compare(expected, actual, label, rep)
+        a = accuracy.verdict_slice(expected, moment, cal, evaluate_parking_rules)
+        b = accuracy.verdict_slice(actual, moment, cal, evaluate_parking_rules)
+        diff = accuracy.verdict_differences(a, b)
+        if diff:
+            diverged[label] = diff
+
+    # Площадь кадра входит в уверенность, а значит и в таблицу порогов: снимки
+    # читаются с диска обеими сторонами, и заголовок разбирается одинаково.
+    from .photo import Photo
+
+    # Уверенность считается ТАК ЖЕ, как её считает `cli.py calibrate`: с флагами
+    # извлечения и починкой от валидатора и с пробелами справочника от `recognise`.
+    # Без них число выходит выше, и таблица порогов описывала бы не тот продукт.
+    validator = Validator(ROOT / "schema")
+    ref_obj = Reference(ROOT / "reference/signs")
+
+    rows = []
+    for label, expected, actual in pairs:
+        photo = next((p for p in (ROOT / "testset/photos").glob(f"{label}.*")
+                      if p.suffix.lower() in (".jpg", ".png")), None)
+        # Число панелей приходит со стадии отсева: независимый взгляд на ту же
+        # фотографию, и расхождение роняет уверенность. Без него таблица порогов
+        # описывала бы продукт, у которого этой проверки нет.
+        triage_file = ROOT / "demo" / f"{label}.triage.json"
+        panels_seen = None
+        if triage_file.exists():
+            answer = json.loads(triage_file.read_text(encoding="utf-8")).get("response") or {}
+            seen = answer.get("panels_below_main_sign")
+            panels_seen = seen if isinstance(seen, int) else None
+
+        res = validator.sign(json.loads(json.dumps(actual)), panels_seen=panels_seen)
+        doc = res.data if res.ok else actual
+        rec = recognise(doc, ref_obj)
+        flags = list(res.flags)
+        if rec.missing_keys:
+            flags.append("reference_gap:" + ",".join(rec.missing_keys))
+        if rec.uninterpreted:
+            flags.append("uninterpreted_panels:"
+                         + ",".join(str(i) for i in sorted(rec.uninterpreted)))
+        ev = evaluate_parking_rules(doc, moment, cal)
+        a = completeness.grade(
+            doc, flags=flags, repairs=res.repairs, evaluation=ev,
+            image_pixels=Photo.from_path(photo).pixels if photo else None)
+        rows.append([round(a.confidence, 6), a.category, label in diverged, label])
+
+    return {
+        "photos": rep.photos,
+        "fields": {name: [f.hits, f.total]
+                   for name, f in sorted(rep.fields.items())},
+        "mistakes": sorted(rep.mistakes),
+        "diverged": diverged,
+        "pixels": {label: (Photo.from_path(photo).pixels if photo else None)
+                   for label, photo in (
+                       (l, next((p for p in (ROOT / "testset/photos").glob(f"{l}.*")
+                                 if p.suffix.lower() in (".jpg", ".png")), None))
+                       for l, _, _ in pairs)},
+        "fingerprint": mark,
+        "excluded": accuracy.answers_from_another_prompt(
+            ROOT / "testset/expected", ROOT / "demo", mark),
+        "rows": sorted(rows, key=lambda r: (r[0], r[3])),
+        "threshold_table": accuracy.threshold_table(
+            [tuple(r) for r in sorted(rows, key=lambda r: (r[0], r[3]))]),
+    }
+
+
 def probe_prompts() -> dict:
     """Промпты целиком, оба. Сверяется СТРОКА, а не её куски: отпечаток промпта
     держит все сохранённые ответы, и расхождение в одном пробеле означало бы,
@@ -408,6 +502,7 @@ def golden() -> dict[str, object]:
         "schema": probe_schema(docs, _schema_validator()),
         "validation": probe_validation(docs, Validator(ROOT / "schema")),
         "prompts": probe_prompts(),
+        "measure": probe_measure(cal),
         "completeness": probe_completeness(cases, docs, cal),
         "present": probe_present(cases, docs, cal, ref),
     }

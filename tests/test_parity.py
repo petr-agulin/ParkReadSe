@@ -286,3 +286,55 @@ def test_the_server_still_serves_the_rules_for_the_python_path():
     source = (ROOT / "parkread/api.py").read_text(encoding="utf-8")
     assert '@app.get("/api/general-rules")' in source
     assert '"advisory": True' in source
+
+# --- замер (шаг 7) ---------------------------------------------------------
+
+def test_the_measurement_is_a_tool_and_not_part_of_the_product():
+    """Замер — инструмент разработчика. В страницу он попасть не должен:
+    ни одна часть приложения его не импортирует, и в обычный прогон он не входит
+    (печатать таблицы на каждый прогон незачем)."""
+    import json as _json
+
+    src = ROOT / "web/src"
+    для_приложения = [p for p in src.rglob("*.ts*")
+                      if not p.name.endswith(".test.ts")
+                      and p.name not in ("measure.ts",)]
+    for path in для_приложения:
+        text = path.read_text(encoding="utf-8")
+        assert 'from "./measure"' not in text, path.name
+        assert 'from "../lib/measure"' not in text, path.name
+
+    package = _json.loads((ROOT / "web/package.json").read_text(encoding="utf-8"))
+    assert "measure" in package["scripts"], "нет команды npm run measure"
+    assert "--dir measure" in package["scripts"]["measure"]
+    assert "--exclude" in package["scripts"]["test"], "замер попадёт в обычный прогон"
+
+
+def test_the_measurement_reads_the_same_set_from_disk():
+    """Тот же набор, что у питона: эталоны разработчика, ответы модели и снимки
+    (площадь кадра входит в уверенность)."""
+    report = (ROOT / "web/measure/report.test.ts").read_text(encoding="utf-8")
+    for path in ("testset/expected", "demo/", "testset/photos"):
+        assert path in report, path
+    # Считает TypeScript-реализация, а не питон.
+    assert "../src/lib/engine" in report and "../src/lib/measure" in report
+
+
+def test_the_stale_answers_are_named_and_not_counted():
+    """Ответ, полученный другим промптом, в замер не входит — и назван вслух.
+    Молчаливый пропуск выглядел бы как «такого снимка нет», а снимок есть."""
+    golden = json.loads((ROOT / "parity/measure.json").read_text(encoding="utf-8"))
+    assert golden["excluded"], "на наборе есть устаревшие ответы — их и проверяем"
+    assert golden["photos"] + len(golden["excluded"]) >= 57
+    # Отпечаток — тот же, что у промпта, которым спрашивают сейчас.
+    assert len(golden["fingerprint"]) == 12
+
+
+def test_the_threshold_table_is_the_one_the_threshold_stands_on():
+    """Порог 0.9 калиброван по расхождению ОТВЕТА, а не по полям: поля расходятся
+    у девятнадцати снимков, ответ — у трёх. Таблица обязана это показывать."""
+    golden = json.loads((ROOT / "parity/measure.json").read_text(encoding="utf-8"))
+    assert "| 0.900 |" in golden["threshold_table"]
+    assert len(golden["diverged"]) < 10, "расхождений ответа мало — так и должно быть"
+    полей = sum(1 for name, (hits, total) in golden["fields"].items() if hits < total)
+    assert полей > len(golden["diverged"]), "поля обязаны расходиться чаще ответа"
