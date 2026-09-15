@@ -17,7 +17,6 @@ const moment = parseNaive("2026-03-02T12:00");
 const provider: Provider = {
   baseUrl: "https://example.invalid/v1",
   apiKey: "ключ",
-  triageModel: "отсев",
   visionModel: "чтение",
 };
 

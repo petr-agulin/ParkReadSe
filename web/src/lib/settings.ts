@@ -11,13 +11,14 @@
 const KEY = "parkread.key";
 const PROVIDER = "parkread.provider";
 
+// Модель одна: отсев и разбор идут в неё (решение 134). Они и прежде шли в одну
+// и ту же, а второе поле спрашивало у человека то, чего он не знает.
 export type Provider = {
   baseUrl: string;
-  triageModel: string;
   visionModel: string;
 };
 
-export const EMPTY_PROVIDER: Provider = { baseUrl: "", triageModel: "", visionModel: "" };
+export const EMPTY_PROVIDER: Provider = { baseUrl: "", visionModel: "" };
 
 /** Хранилище, которое может отсутствовать: приватная вкладка, запрет сайту,
  *  старый телефон. Продукт от этого не ломается — он просто не помнит. */
@@ -68,7 +69,7 @@ export function save(store: Store | null, settings: Settings): void {
   if (!store) return;
   if (settings.remember && settings.apiKey) store.setItem(KEY, settings.apiKey);
   else store.removeItem(KEY);
-  // Адрес провайдера и названия моделей — не секрет, и помнить их полезно
+  // Адрес провайдера и название модели — не секрет, и помнить их полезно
   // всегда: без них ключ бесполезен, а вводить их заново у знака мучительно.
   store.setItem(PROVIDER, JSON.stringify(settings.provider));
 }
@@ -79,10 +80,9 @@ export function forget(store: Store | null): Settings {
   return { ...EMPTY_SETTINGS, provider: load(store).provider };
 }
 
-/** Готов ли браузер отвечать сам: есть ключ, адрес и обе модели. */
+/** Готов ли браузер отвечать сам: есть ключ, адрес и модель. */
 export function canAnswerHere(s: Settings): boolean {
-  return Boolean(s.apiKey && s.provider.baseUrl
-                 && s.provider.triageModel && s.provider.visionModel);
+  return Boolean(s.apiKey && s.provider.baseUrl && s.provider.visionModel);
 }
 
 /** Чего не хватает — списком, чтобы экран сказал это словами, а не «ошибка». */
@@ -90,6 +90,6 @@ export function missing(s: Settings): string[] {
   const out: string[] = [];
   if (!s.apiKey) out.push("your API key");
   if (!s.provider.baseUrl) out.push("the provider address");
-  if (!s.provider.triageModel || !s.provider.visionModel) out.push("the model names");
+  if (!s.provider.visionModel) out.push("the model name");
   return out;
 }

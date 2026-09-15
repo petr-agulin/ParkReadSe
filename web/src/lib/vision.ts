@@ -35,10 +35,11 @@ export const RETRY_PAUSE_MS = [20_000, 45_000, 90_000];
 
 export class VisionCallFailed extends Error {}
 
+/** Модель одна на обе стадии (решение 134). Отсев от этого не перестаёт быть
+ *  независимым взглядом: другой вызов, другой промпт, общего контекста нет. */
 export type Provider = {
   baseUrl: string;
   apiKey: string;
-  triageModel: string;
   visionModel: string;
 };
 
@@ -145,7 +146,7 @@ export async function classifyImage(image: Photo, provider: Provider,
                                     deps: Partial<{ pause: (ms: number) => Promise<unknown>;
                                                     fetchImpl: typeof fetch }> = {},
                                    ): Promise<TriageOutcome> {
-  const { text, usage } = await call(provider, provider.triageModel, triagePrompt(),
+  const { text, usage } = await call(provider, provider.visionModel, triagePrompt(),
                                      image, deps.pause, deps.fetchImpl);
   const doc = parseJson(text);
   const res = validateTriage(doc);

@@ -443,8 +443,8 @@ Nothing passes through the author, and there is nothing for it to pass through.
 
 ## What you need to bring
 
-Your own key to an AI provider, the provider's address, and the names of the two models it
-should use. The Your key panel on the first screen takes all four. Without them the app
+Your own key to an AI provider, the provider's address, and the name of the model it should
+use. The Your key panel on the first screen takes all three. Without them the app
 opens, explains itself and shows the reference — but cannot read a sign, and says so
 rather than failing quietly.
 
@@ -455,7 +455,7 @@ yours, and yours to rotate whenever you like.
 The key lives in the tab's memory and is forgotten when you close it, unless you tick
 **Remember on this device** — then it is kept in your browser's storage for this address,
 and nowhere else. **Forget the key** erases it from both, immediately. The provider address
-and model names are remembered always: they are not secret, and retyping them at a sign in
+and model name are remembered always: they are not secret, and retyping them at a sign in
 the rain is its own kind of cruelty.
 
 ## Putting it on your home screen
@@ -500,7 +500,7 @@ you have until there is one.
 
 ## What is stored on your phone, and how much
 
-The whole app is about 355 KB of files. The saved key, provider address and model names
+The whole app is about 355 KB of files. The saved key, provider address and model name
 add well under a kilobyte. **Nothing else is ever stored: not a photograph, not a reading,
 no history.** Under half a megabyte in total — smaller than one photo from your camera.
 
@@ -522,7 +522,7 @@ once.
 |---|---|
 | Cookies | Nothing. The app does not use any |
 | Browser cache | The offline copy may go. Still works online, and fetches itself again |
-| **Site data for the app's address** | The saved key, provider address and model names go, and the offline copy with them. The app still opens, and asks again |
+| **Site data for the app's address** | The saved key, provider address and model name go, and the offline copy with them. The app still opens, and asks again |
 | All browser data, or the browser itself | The installed app goes too |
 
 The trap is the wording on Android: **"Clear cookies and site data"** sounds harmless but

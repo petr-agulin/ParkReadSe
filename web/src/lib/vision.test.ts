@@ -5,13 +5,12 @@
 
 import { describe, expect, it } from "vitest";
 
-import { RETRY_PAUSE_MS, VisionCallFailed, call, classifyImage,
+import { RETRY_PAUSE_MS, VisionCallFailed, call, classifyImage, extractSignData,
          type Photo, type Provider } from "./vision";
 
 const provider: Provider = {
   baseUrl: "https://example.invalid/v1/",
   apiKey: "ключ-пользователя",
-  triageModel: "модель-отсева",
   visionModel: "модель-чтения",
 };
 
@@ -112,5 +111,17 @@ describe("вызов провайдера", () => {
     expect(out.category).toBe("parking_sign");
     expect(out.panelsBelowMainSign).toBe(2);       // строка «2» починена в число
     expect(out.validation?.repairs.length).toBeGreaterThan(0);
+  });
+
+  it("отсев и разбор идут в одну и ту же модель — ту, что ввёл человек", async () => {
+    // Решение 134: поле модели одно. Второй модели нет даже в типе, и оба вызова
+    // обязаны уйти туда, куда человек их направил.
+    const f = fake(good());
+    const deps = { pause: async () => {}, fetchImpl: f.fetchImpl };
+    await classifyImage(photo, provider, deps);
+    // Ответ здесь отсевный, разбору он не годится — но проверяется не разбор, а адрес.
+    await extractSignData(photo, provider, null, deps).catch(() => null);
+    const models = f.seen.map((s) => JSON.parse(String(s.init.body)).model);
+    expect(models).toEqual(["модель-чтения", "модель-чтения"]);
   });
 });

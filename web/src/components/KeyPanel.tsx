@@ -69,7 +69,7 @@ export default function KeyPanel({ settings, onChange, onForget }: Props) {
             Remember on this device
           </label>
 
-          {/* Адрес и модели — не секрет, и помнятся всегда: без них ключ
+          {/* Адрес и модель — не секрет, и помнятся всегда: без них ключ
               бесполезен, а вводить их заново у знака мучительно. */}
           <label className="block">
             <span className="mb-1 block text-[12px] text-ink-3">Provider address</span>
@@ -84,30 +84,18 @@ export default function KeyPanel({ settings, onChange, onForget }: Props) {
             />
           </label>
 
-          <div className="grid grid-cols-2 gap-2">
-            <label className="block">
-              <span className="mb-1 block text-[12px] text-ink-3">Triage model</span>
-              <input
-                type="text"
-                value={набор.triageModel}
-                spellCheck={false}
-                onChange={(e) => onChange({ ...settings,
-                                            provider: { ...набор, triageModel: e.target.value } })}
-                className={FIELD}
-              />
-            </label>
-            <label className="block">
-              <span className="mb-1 block text-[12px] text-ink-3">Reading model</span>
-              <input
-                type="text"
-                value={набор.visionModel}
-                spellCheck={false}
-                onChange={(e) => onChange({ ...settings,
-                                            provider: { ...набор, visionModel: e.target.value } })}
-                className={FIELD}
-              />
-            </label>
-          </div>
+          {/* Одно поле: отсев и разбор идут в одну модель (решение 134). */}
+          <label className="block">
+            <span className="mb-1 block text-[12px] text-ink-3">Vision model</span>
+            <input
+              type="text"
+              value={набор.visionModel}
+              spellCheck={false}
+              onChange={(e) => onChange({ ...settings,
+                                          provider: { ...набор, visionModel: e.target.value } })}
+              className={FIELD}
+            />
+          </label>
 
           <p className="text-[12px] leading-snug text-ink-3">
             The key is sent from this device to the provider you name above, and

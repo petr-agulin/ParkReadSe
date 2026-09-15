@@ -14,8 +14,7 @@ function store(): Store & { seen: Map<string, string> } {
   };
 }
 
-const provider = { baseUrl: "https://provider.invalid/v1",
-                   triageModel: "быстрая", visionModel: "зоркая" };
+const provider = { baseUrl: "https://provider.invalid/v1", visionModel: "зоркая" };
 
 describe("ключ пользователя", () => {
   it("без галочки не сохраняется нигде", () => {
@@ -64,8 +63,9 @@ describe("ключ пользователя", () => {
 });
 
 describe("готовность отвечать в браузере", () => {
-  it("нужны ключ, адрес и обе модели", () => {
+  it("нужны ключ, адрес и одна модель — второй не спрашивается", () => {
     expect(canAnswerHere({ apiKey: "к", remember: false, provider })).toBe(true);
+    expect(Object.keys(provider).sort()).toEqual(["baseUrl", "visionModel"]);
     expect(canAnswerHere({ apiKey: "", remember: false, provider })).toBe(false);
     expect(canAnswerHere({ apiKey: "к", remember: false,
                            provider: { ...provider, visionModel: "" } })).toBe(false);
@@ -73,7 +73,7 @@ describe("готовность отвечать в браузере", () => {
 
   it("чего не хватает — говорится словами, а не «ошибка»", () => {
     expect(missing(EMPTY_SETTINGS))
-      .toEqual(["your API key", "the provider address", "the model names"]);
+      .toEqual(["your API key", "the provider address", "the model name"]);
     expect(missing({ apiKey: "к", remember: false, provider })).toEqual([]);
   });
 });
