@@ -11,12 +11,16 @@ import { roomBelow } from "../lib/layout";
 type Props = {
   onCaptured: (file: File, box: Box) => void;
   onCancel: () => void;
+  /** Плитка галереи рядом со спуском: отсюда можно уйти в другую полосу —
+   *  к уже снятому кадру, — не возвращаясь на главный экран. */
+  onPick: (file: File) => void;
 };
 
-export default function CameraCapture({ onCaptured, onCancel }: Props) {
+export default function CameraCapture({ onCaptured, onCancel, onPick }: Props) {
   const video = useRef<HTMLVideoElement>(null);
   const room = useRef<HTMLDivElement>(null);
   const footer = useRef<HTMLDivElement>(null);
+  const gallery = useRef<HTMLInputElement>(null);
   const stream = useRef<MediaStream | null>(null);
   const [failed, setFailed] = useState<string | null>(null);
   const [size, setSize] = useState<Size | null>(null);
@@ -113,91 +117,143 @@ export default function CameraCapture({ onCaptured, onCancel }: Props) {
     );
   }
 
+  /** Вход в галерею. `capture` не ставим: он открыл бы камеру вместо галереи,
+   *  и уже снятый кадр стал бы недоступен. */
+  const galleryInput = (
+    <input
+      ref={gallery}
+      type="file"
+      accept="image/*"
+      className="hidden"
+      onChange={(e) => {
+        const picked = e.target.files?.[0];
+        e.target.value = "";          // иначе тот же файл второй раз не даёт события
+        if (picked) onPick(picked);
+      }}
+    />
+  );
+
+  const nav = (
+    <div className="flex items-center gap-3.5">
+      <button type="button" onClick={onCancel} aria-label="Back"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-chip
+                         text-lg font-semibold text-ink-2">
+        ‹
+      </button>
+      <span className="flex-1 text-nav font-bold text-ink-strong">Scan a sign</span>
+      {/* Вспышка — в шапке, чтобы не лежать на кадре. Её нет вовсе там, где
+          камера её не умеет: на iOS Safari фонарика нет, и мёртвой таблетке
+          там взяться неоткуда. */}
+      {hasTorch && (
+        <button type="button" onClick={toggleTorch} aria-pressed={torch}
+                className="rounded-full bg-chip px-4 py-2 text-label font-semibold text-ink-2">
+          {torch ? "Flash on" : "Flash off"}
+        </button>
+      )}
+    </div>
+  );
+
+  // Отказ занимает место видоискателя: шапка остаётся, а выходом служит та же
+  // плитка галереи. Причин четыре, и они разные по сути — запретили, нет камеры,
+  // занята другим приложением, не завелась.
   if (failed) {
     return (
-      <section className="rounded-xl border border-line bg-ground p-4">
-        <p className="text-[15px] text-ink">{failed}</p>
-        <button type="button" onClick={onCancel} className={QUIET + " mt-4"}>
-          Back
-        </button>
+      <section className="flex flex-col gap-4">
+        {nav}
+        <div className="rounded-card bg-ground p-6 shadow-card">
+          <p className="text-body text-ink">{failed}</p>
+          <button
+            type="button"
+            onClick={() => gallery.current?.click()}
+            className="mt-5 w-full rounded-button-sm bg-accent py-4 text-body font-bold
+                       text-on-dark"
+          >
+            Pick a photo instead
+          </button>
+        </div>
+        {galleryInput}
       </section>
     );
   }
 
   return (
-    <section className="flex flex-col gap-3">
-      <p className="text-[13px] text-ink-2">
-        Fit the whole sign — every plate under it — inside the frame.
-      </p>
+    <section className="flex flex-col gap-4">
+      {nav}
 
-      <div
-        ref={room}
-        className="flex w-full items-center justify-center"
-      >
+      <div ref={room} className="flex w-full items-center justify-center">
         {/* Сцена по размеру потока, а не наоборот: иначе по бокам остаются
-            чёрные поля, и видоискатель выглядит рамкой в рамке. */}
+            тёмные поля, и видоискатель выглядит рамкой в рамке. Полный обрез
+            показывал бы не то, что снимается (решение 148). */}
         <div
-          className="relative overflow-hidden rounded-xl border border-line bg-stage"
+          className="relative overflow-hidden rounded-card bg-stage"
           style={view ? { width: view.w, height: view.h } : { width: "100%", height: "100%" }}
         >
-        <video
-          ref={video}
-          playsInline
-          muted
-          onLoadedMetadata={(e) => {
-            const v = e.currentTarget;
-            if (v.videoWidth) setSize({ w: v.videoWidth, h: v.videoHeight });
-          }}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
+          <video
+            ref={video}
+            playsInline
+            muted
+            onLoadedMetadata={(e) => {
+              const v = e.currentTarget;
+              if (v.videoWidth) setSize({ w: v.videoWidth, h: v.videoHeight });
+            }}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
 
-        {/* Подсказка — ровно та рамка, что встанет на следующем экране: считается
-            той же функцией от размера потока, а не подобранной на глаз долей. */}
-        {size && view && (() => {
-          const guide = defaultBox(size);
-          const k = view.w / size.w;
-          return (
-            <div
-              className="pointer-events-none absolute rounded-sm border-2 border-on-dark
-                         shadow-mask"
-              style={{
-                left: guide.x * k,
-                top: guide.y * k,
-                width: guide.w * k,
-                height: guide.h * k,
-              }}
-            />
-          );
-        })()}
+          <span className="absolute inset-x-0 top-4 flex justify-center">
+            <span className="rounded-full bg-stage/70 px-4 py-2 text-caption font-semibold
+                             text-on-dark">
+              Whole sign, every plate under it
+            </span>
+          </span>
 
-        {hasTorch && (
-          <button
-            type="button"
-            onClick={toggleTorch}
-            aria-pressed={torch}
-            className="absolute right-3 top-3 rounded-full bg-stage/55 px-4 py-2 text-[13px]
-                       font-semibold text-on-dark"
-          >
-            {torch ? "Light on" : "Light off"}
-          </button>
-        )}
+          {/* Подсказка — ровно та рамка, что встанет на следующем экране: считается
+              той же функцией от размера потока, а не подобранной на глаз долей. */}
+          {size && view && (() => {
+            const guide = defaultBox(size);
+            const k = view.w / size.w;
+            return (
+              <div
+                className="pointer-events-none absolute rounded-sm border-2 border-on-dark
+                           shadow-mask"
+                style={{
+                  left: guide.x * k,
+                  top: guide.y * k,
+                  width: guide.w * k,
+                  height: guide.h * k,
+                }}
+              />
+            );
+          })()}
+
+          {/* Спуск по центру, галерея слева, справа пустое место той же ширины:
+              оно и держит спуск посередине. */}
+          <div ref={footer}
+               className="absolute inset-x-0 bottom-0 flex items-center justify-between
+                          px-6 pb-6">
+            <button
+              type="button"
+              onClick={() => gallery.current?.click()}
+              className="flex h-14 w-14 items-center justify-center rounded-field
+                         bg-ground/90 text-caption font-bold text-ink-2"
+            >
+              Photo
+            </button>
+            <button
+              type="button"
+              onClick={take}
+              disabled={!size || taking}
+              aria-label="Take the photo"
+              className="flex h-23 w-23 items-center justify-center rounded-full bg-ground
+                         shadow-raised disabled:opacity-50"
+            >
+              <span className="block h-[70px] w-[70px] rounded-full bg-accent" />
+            </button>
+            <span className="h-14 w-14" aria-hidden />
+          </div>
         </div>
       </div>
 
-      <div ref={footer} className="flex flex-wrap gap-2">
-        <button type="button" onClick={take} disabled={!size || taking} className={PRIMARY}>
-          {taking ? "Taking…" : "Take the photo"}
-        </button>
-        <button type="button" onClick={onCancel} className={PLAIN}>
-          Cancel
-        </button>
-      </div>
+      {galleryInput}
     </section>
   );
 }
-
-const PRIMARY =
-  "h-12 flex-1 rounded-lg bg-accent px-5 text-[15px] font-semibold text-on-dark disabled:opacity-50";
-const QUIET =
-  "h-12 rounded-lg border border-line bg-ground px-4 text-[15px] font-semibold text-ink";
-const PLAIN = "h-12 rounded-lg px-3 text-[15px] font-medium text-ink-2";

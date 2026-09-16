@@ -49,7 +49,6 @@ export default function App() {
   const [picked, setPicked] = useState<File | null>(null);
   // Рамка, наведённая в видоискателе: экран кадрирования начинает с неё.
   const [aimed, setAimed] = useState<Box | undefined>(undefined);
-  const [source, setSource] = useState<"camera" | "file">("file");
   // Общие правила едут вместе со страницей (шаг 6d): раньше они приходили
   // с сервера, и без него блок исчезал МОЛЧА — ни строки о том, что он был.
   const rules: GeneralRule[] = GENERAL_RULES;
@@ -94,7 +93,6 @@ export default function App() {
     setError(null);
     setData(null);
     setAimed(undefined);
-    setSource("file");
     setPicked(file);
     move("pick");
   }
@@ -164,17 +162,16 @@ export default function App() {
               setError(null);
               setData(null);
               setAimed(box);
-              setSource("camera");
               setPicked(file);
               move("captured");
             }}
             onCancel={() => { reset(); move("back"); }}
+            onPick={onPickFile}
           />
         ) : screen === "frame" && picked ? (
           <SignPicker
             file={picked}
             initialBox={aimed}
-            source={source}
             busy={busy}
             onSend={onSend}
             onReplace={(file) => { setPicked(file); setAimed(undefined); }}

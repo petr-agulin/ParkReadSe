@@ -18,8 +18,6 @@ type Props = {
   file: File;
   /** Рамка, уже наведённая человеком в видоискателе. Пусто — ставим по центру. */
   initialBox?: Box;
-  /** Откуда снимок: от этого зависит, что делает «ещё раз». */
-  source: "camera" | "file";
   busy: boolean;
   onSend: (cropped: File) => void;
   /** Другой снимок из галереи — остаёмся здесь же, с новой картинкой. */
@@ -40,7 +38,7 @@ type Pinch = { dist: number; mid: Point; placed: Box };
 const CORNERS = ["nw", "ne", "sw", "se"] as const;
 
 export default function SignPicker({
-  file, initialBox, source, busy, onSend, onReplace, onRetake, onCancel,
+  file, initialBox, busy, onSend, onReplace, onRetake, onCancel,
 }: Props) {
   const [loaded, setLoaded] = useState<Loaded | null>(null);
   const [failed, setFailed] = useState<string | null>(null);
@@ -256,24 +254,48 @@ export default function SignPicker({
   );
   const zoom = base && placed ? zoomLevel(placed, base) : 1;
 
+  const another_ = (
+    <input
+      ref={another} type="file" accept="image/*" className="hidden"
+      onChange={(e) => {
+        const next = e.target.files?.[0];
+        e.target.value = "";
+        if (next) onReplace(next);
+      }}
+    />
+  );
+
+  const nav = (
+    <div className="flex items-center gap-3.5">
+      <button type="button" onClick={onCancel} aria-label="Back"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-chip
+                         text-lg font-semibold text-ink-2">
+        ‹
+      </button>
+      <span className="flex-1 text-nav font-bold text-ink-strong">Frame the sign</span>
+      {/* Один контрол вместо пары «снять ещё раз / другой снимок»: он ведёт
+          на экран камеры, а там есть и спуск, и плитка галереи — оба источника
+          в одном тапе. */}
+      <button type="button" onClick={onRetake} disabled={busy || sending}
+              className="text-label font-semibold text-link disabled:opacity-50">
+        Replace
+      </button>
+    </div>
+  );
+
   if (failed) {
     return (
-      <section className="rounded-xl border border-line bg-ground p-4">
-        <p className="text-[15px] text-ink">{failed}</p>
-        <div className="mt-4 flex gap-2">
-          <button type="button" onClick={() => another.current?.click()} className={PRIMARY}>
+      <section className="flex flex-col gap-4">
+        {nav}
+        <div className="rounded-card bg-ground p-6 shadow-card">
+          <p className="text-body text-ink">{failed}</p>
+          <button type="button" onClick={() => another.current?.click()}
+                  className="mt-5 w-full rounded-button-sm bg-accent py-4 text-body
+                             font-bold text-on-dark">
             Choose another photo
           </button>
-          <input
-            ref={another} type="file" accept="image/*" className="hidden"
-            onChange={(e) => {
-              const next = e.target.files?.[0];
-              e.target.value = "";
-              if (next) onReplace(next);
-            }}
-          />
-          <button type="button" onClick={onCancel} className={QUIET}>Cancel</button>
         </div>
+        {another_}
       </section>
     );
   }
@@ -282,19 +304,16 @@ export default function SignPicker({
   const size = loaded?.size;
 
   return (
-    <section className="flex flex-col gap-3">
-      <p className="text-[13px] text-ink-2">
-        {zoom > 1.01
-          ? "Zoom in, then fine-tune with the corners."
-          : "Pinch to zoom · drag the frame onto the sign · only the frame is sent."}
-      </p>
+    <section className="flex flex-col gap-4">
+      {nav}
 
-      {/* Высота ограничена экраном — иначе снимок с телефона уезжает за край.
-          Сама сцена при этом ровно по вписанному снимку: чёрных полей по бокам
-          не остаётся, а приближённая картинка обрезается её краями. */}
+      {/* Снимок лежит на тёмном поле во всю ширину экрана — карточки внутри
+          карточки больше нет. Сам он при этом не растянут и не обрезан: что
+          видно, то и уходит (решение 148). */}
       <div
         ref={room}
-        className="flex w-full items-center justify-center"
+        className="flex w-full items-center justify-center overflow-hidden
+                   rounded-card bg-stage"
       >
       <div
         ref={stage}
@@ -303,8 +322,7 @@ export default function SignPicker({
         onPointerUp={endPointer}
         onPointerCancel={endPointer}
         onWheel={onWheel}
-        className="relative touch-none select-none overflow-hidden rounded-xl
-                   border border-line bg-stage"
+        className="relative touch-none select-none overflow-hidden"
         style={base ? { width: base.w, height: base.h } : { width: "100%", height: "100%" }}
       >
         {loaded && placed && (
@@ -352,7 +370,7 @@ export default function SignPicker({
                       `data-corner` не находится, и тяга за угол превращается
                       в перестановку рамки. */}
                   <span
-                    className={`pointer-events-none absolute h-4 w-4 rounded-[3px] bg-ground
+                    className={`pointer-events-none absolute h-6 w-6 rounded-[7px] bg-ground
                                 shadow-handle ${dotClass(c)}`}
                   />
                 </span>
@@ -370,55 +388,45 @@ export default function SignPicker({
             Fit · {zoom.toFixed(1)}×
           </button>
         )}
-      </div>
-      </div>
 
-      <div ref={footer}>
-      <p className="text-[12px] text-ink-3">
-        {loaded
-          ? `Sending about ${Math.round(share * 100)}% of the photo · ${loaded.size.w}×${loaded.size.h} original`
-          : "Opening the photo…"}
-      </p>
+        {/* Подсказка меняется с приближением: иначе про угловые ручки узнать
+            неоткуда. Статичная строка макета этого не говорит. */}
+        <span className="pointer-events-none absolute inset-x-0 top-4 flex justify-center">
+          <span className="rounded-full bg-stage/70 px-4 py-2 text-caption font-semibold
+                           text-on-dark">
+            {zoom > 1.01
+              ? "Zoom in, then fine-tune with the corners"
+              : "Drag the frame onto the sign"}
+          </span>
+        </span>
 
-      <div className="flex flex-wrap gap-2">
-        <button type="button" onClick={send} disabled={!loaded || busy || sending} className={PRIMARY}>
-          {busy || sending ? "Sending…" : "Send this to be read"}
-        </button>
-
-        {/* Повтор делает ровно то, что человек делал минуту назад: снимал —
-            вернёт видоискатель с подсказкой, выбирал файл — откроет выбор файла. */}
-        <button
-          type="button"
-          onClick={() => (source === "camera" ? onRetake() : another.current?.click())}
-          disabled={busy || sending}
-          className={QUIET}
+        {/* Затемнение под нижним слоем — единственный градиент в продукте.
+            Без него подпись 11 px белым моноширинным лежит прямо на снимке
+            и на светлом знаке не читается вовсе. */}
+        <div
+          ref={footer}
+          className="scrim absolute inset-x-0 bottom-0 flex flex-col gap-3 px-5 pb-5 pt-10"
         >
-          {source === "camera" ? "Take another" : "Another photo"}
-        </button>
-        <input
-          ref={another} type="file" accept="image/*" className="hidden"
-          onChange={(e) => {
-            const next = e.target.files?.[0];
-            e.target.value = "";
-            if (next) onReplace(next);
-          }}
-        />
+          <span className="text-center font-mono text-mono text-on-dark">
+            {loaded
+              ? `sending about ${Math.round(share * 100)}% of ${loaded.size.w}×${loaded.size.h}`
+              : "opening the photo…"}
+          </span>
+          <button type="button" onClick={send} disabled={!loaded || busy || sending}
+                  className="rounded-button-sm bg-accent py-5 text-row font-bold
+                             text-on-dark disabled:opacity-50">
+            {busy || sending ? "Sending…" : "Send this to be read"}
+          </button>
+        </div>
+      </div>
+      </div>
 
-        <button type="button" onClick={onCancel} disabled={busy || sending} className={PLAIN}>
-          Cancel
-        </button>
-      </div>
-      </div>
+      {another_}
     </section>
   );
 }
 
-const PRIMARY =
-  "h-12 flex-1 rounded-lg bg-accent px-5 text-[15px] font-semibold text-on-dark disabled:opacity-50";
-const QUIET =
-  "h-12 rounded-lg border border-line bg-ground px-4 text-[15px] font-semibold text-ink disabled:opacity-50";
-const PLAIN = "h-12 rounded-lg px-3 text-[15px] font-medium text-ink-2 disabled:opacity-50";
-const CHIP = "rounded-full bg-stage/55 px-4 py-2 text-[13px] font-semibold text-on-dark";
+const CHIP = "rounded-full bg-stage/70 px-4 py-2 text-caption font-semibold text-on-dark";
 
 const cornerClass = (c: string) =>
   ({
