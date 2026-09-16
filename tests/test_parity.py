@@ -108,7 +108,9 @@ def test_no_photograph_ever_reaches_the_reference_answers():
     """В эталонах только разборы. Снимки с номерами машин в репозиторий не попадают
     (`AGENTS.md`, §14), и этот путь для них тоже закрыт."""
     files = sorted(p.name for p in (ROOT / "parity").iterdir())
-    assert all(f.endswith(".json") for f in files), files
+    # `python-report.txt` — захваченный вывод замера питона: тоже текст, тоже
+    # без снимков. Проверка стоит не на расширении, а на содержимом ниже.
+    assert all(f.endswith((".json", ".txt")) for f in files), files
     for name in files:
         text = (ROOT / "parity" / name).read_text(encoding="utf-8")
         assert "data:image" not in text
@@ -313,11 +315,15 @@ def test_the_measurement_is_a_tool_and_not_part_of_the_product():
 def test_the_measurement_reads_the_same_set_from_disk():
     """Тот же набор, что у питона: эталоны разработчика, ответы модели и снимки
     (площадь кадра входит в уверенность)."""
-    report = (ROOT / "web/measure/report.test.ts").read_text(encoding="utf-8")
-    for path in ("testset/expected", "demo/", "testset/photos"):
-        assert path in report, path
+    # Каталоги набора переехали в `web/tools/testset.ts`: замер берёт их оттуда,
+    # а не называет сам. Проверка идёт туда же, куда переехало правило.
+    набор = (ROOT / "web/tools/testset.ts").read_text(encoding="utf-8")
+    for path in ("testset", "expected", "demo", "photos"):
+        assert path in набор, path
     # Считает TypeScript-реализация, а не питон.
-    assert "../src/lib/engine" in report and "../src/lib/measure" in report
+    report = (ROOT / "web/measure/report.test.ts").read_text(encoding="utf-8")
+    assert "../src/lib/measure" in report
+    assert "../tools/testset" in report
 
 
 def test_the_stale_answers_are_named_and_not_counted():
