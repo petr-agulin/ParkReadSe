@@ -64,7 +64,13 @@ export type Chip = { label: string; canReset: boolean };
  */
 export function momentChip(moment: string): Chip {
   const chosen = moment.trim().length > 0;
-  return { label: chosen ? when(moment) : "Now", canReset: chosen };
+  // Выбранный момент — строка длинная («Thursday 17 September at 02:01»), и на
+  // узком экране она переносится. Перенос отдаётся на откуп браузеру ровно один
+  // раз — перед «at»: пробел после «at» неразрывный, поэтому время не отрывается
+  // от предлога и не остаётся на строке в одиночестве. Ломается строка там, где
+  // её сломал бы человек: дата, а под ней время.
+  const label = chosen ? when(moment).replace(/\bat (?=\d)/, "at ") : "Now";
+  return { label, canReset: chosen };
 }
 
 export type Entry = {

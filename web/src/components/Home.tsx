@@ -14,7 +14,7 @@ import { useRef } from "react";
 import {
   HOME_HEADLINE, HOME_LINES, MOMENT_FROM, MOMENT_TO, entryActions, momentChip,
 } from "../lib/home";
-import { Camera, Close, Sliders } from "./Icon";
+import { Camera, Sliders } from "./Icon";
 import SignPlate from "./SignPlate";
 
 type Props = {
@@ -90,25 +90,18 @@ export default function Home({
           Поле выбора лежит прозрачным слоем поверх ЗНАЧЕНИЯ, а не всей строки:
           нажимают на «Now» или на выбранное время, а подпись слева ничего
           не обещает и ничего не открывает. */}
-      <div className="flex items-center justify-between border-b border-line py-4">
-        <span className="text-body text-ink-2">Reading for</span>
+      <div className="flex items-center justify-between gap-4 border-b border-line py-4">
+        {/* Подпись не переносится никогда: «Reading for» в две строки читается
+            не как строка списка, а как обрывок. */}
+        <span className="shrink-0 whitespace-nowrap text-body text-ink-2">Reading for</span>
         <span className="relative flex items-center gap-2 text-row font-bold text-ink">
-          {chip.label}
-          {/* Сброс показывается, только когда момент выбран. Понадеяться на «Clear»
-              в системном диалоге нельзя: на Android он обычно есть, в Safari на iOS
-              часто нет, и выбранный момент стал бы дверью в одну сторону. Кнопка
-              поднята над прозрачным полем, иначе нажатие уходило бы в календарь. */}
-          {chip.canReset && (
-            <button
-              type="button"
-              onClick={() => onMoment("")}
-              aria-label="Read for now instead"
-              className="relative z-10 flex h-8 w-8 items-center justify-center
-                         rounded-full bg-chip text-ink-2"
-            >
-              <Close className="h-3.5 w-3.5" />
-            </button>
-          )}
+          {/* Значение прижато вправо и при нужде переносится — но не где попало:
+              время держится за «at» неразрывным пробелом (`momentChip`).
+
+              Отдельной кнопки сброса здесь нет: очистить момент даёт сам системный
+              диалог, а лишний кружок в строке стоил дороже, чем экономил. Решение
+              разработчика; на Android «Clear» в диалоге есть. */}
+          <span className="text-right">{chip.label}</span>
           <span className="text-ink-3">›</span>
           {/* По вертикали поле растянуто за строку текста: сама она около 24 px,
               а цель нажатия меньше 44 px не бывает. Раскладку это не двигает —
