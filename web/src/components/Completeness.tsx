@@ -36,12 +36,9 @@ export default function Completeness({ data }: { data: Analysis }) {
         {(c.confidence * 100).toFixed(0)}%
       </p>
 
-      {c.may_hide_prohibition && (
-        <p className="mt-1 text-sm font-medium text-deny">
-          An unread panel may carry a prohibition, so no period below is presented
-          as permitted.
-        </p>
-      )}
+      {/* Оговорка о непрочитанной панели живёт НЕ здесь, а на экране разбора,
+          над карточкой окна: она оговаривает шкалу, и ниже шкалы от неё не было
+          бы толку. Здесь остаётся полнота — причины и неопределённости. */}
 
       {c.reasons.length > 0 && (
         <ul className="mt-1 space-y-0.5 text-xs text-ink-2">

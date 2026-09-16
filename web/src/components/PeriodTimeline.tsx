@@ -185,28 +185,26 @@ export default function PeriodTimeline(
 
 
   return (
-    <section className="rounded-xl border border-line bg-ground p-4 shadow-sm">
-      <h2 className="font-medium text-ink">
-        Your parking window
-        {/* Участок — рядом с заголовком, а не строкой ниже: на знаке с двумя
-            стрелками окон два, и без подписи они выглядят повтором, хотя
-            задают разные правила. Показывается там, где различает: когда окно
+    <section className="rounded-card bg-ground p-6 shadow-raised">
+      <div className="mb-4 flex flex-wrap items-center gap-2.5">
+        <h2 className="text-card font-extrabold text-ink-strong">Your parking window</h2>
+        {/* Участок — чипом рядом с заголовком, а не строкой ниже: на знаке
+            с двумя стрелками окон два, и без подписи они выглядят повтором,
+            хотя задают разные правила. Чип виден там, где различает: когда окно
             не одно или когда стрелка увела участок от самого знака. */}
         {showExtent && (
-          <span className="font-normal text-ink-3">
-            {" · "}
+          <span className="rounded-full bg-tint px-3 py-1.5 text-caption font-bold text-tint-ink">
             {regime.extent_short}
           </span>
         )}
         {/* Кому окно. Стоит после участка: сначала где, потом для кого —
             в таком порядке их и читают. Подпись приходит с бэкенда. */}
         {regime.audience_short && (
-          <span className="font-normal text-ink-3">
-            {" · "}
+          <span className="rounded-full bg-chip px-3 py-1.5 text-caption font-bold text-ink-2">
             {regime.audience_short}
           </span>
         )}
-      </h2>
+      </div>
       {/* Шкалы может не быть вовсе. На знаке арендованных мест «Free parking,
           28 h max» — число не со знака, а из правила 24 часов: чьё это место,
           тот знает срок из договора, а всем прочим стоять нельзя вовсе.

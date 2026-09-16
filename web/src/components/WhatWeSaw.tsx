@@ -6,26 +6,56 @@
 // означает, что кода не существует — табло оператора не дорожный знак.
 
 import { useState } from "react";
-import type { Analysis, GeneralRule, Meaning } from "../types";
+import { confidenceLabel, plateRow } from "../lib/reading";
+import type { Analysis, GeneralRule, Panel } from "../types";
 import Completeness from "./Completeness";
 
-function meaningLine(m: Meaning): string {
-  const head = m.code ? `${m.label} (${m.code})` : m.label;
-  if (!m.short) return head;
-  // `continues` — подпись продолжает заголовок одним предложением:
-  // «No parking (C35) on Thursdays between 10:00 and 14:00».
-  return m.continues ? `${head} ${m.short}` : `${head}. ${m.short}`;
-}
+// Цвет решает бэкенд (`tone`), вёрстка только красит.
+const TONE: Record<string, string> = {
+  good: "text-free", caution: "text-fee", bad: "text-deny",
+};
 
-function Block({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="rounded-md border border-ground-2 bg-inset p-2.5">
-      {/* Название прижато вправо и выровнено по ПЕРВОЙ строке содержимого:
-          иначе первая строка карточки пустует, и текст начинается со второй. */}
-      <div className="flex items-baseline gap-3">
-        <div className="min-w-0 flex-1">{children}</div>
-        <p className="shrink-0 text-xs text-ink-3">{title}</p>
+/**
+ * Табличка строкой «подпись → значение».
+ *
+ * Форму строки решает `lib/reading`: пока смысл один — строка, дальше подпись
+ * уходит на свою, а значения идут списком. Три смысла, втиснутые в одну ячейку,
+ * читаются как один длинный.
+ */
+function Plate({ panel }: { panel: Panel }) {
+  const row = plateRow(panel);
+  const values = (
+    <div className="flex min-w-0 flex-1 flex-col gap-1">
+      {row.values.map((v, i) => (
+        <span
+          key={i}
+          className={row.stacked
+            ? "border-l-2 border-line pl-3 text-row text-ink"
+            : "text-row text-ink"}
+        >
+          {v}
+        </span>
+      ))}
+      {/* Пометку «это не правило» нельзя подавать как значение таблички:
+          табло оператора дорожным знаком не является. */}
+      {!panel.carries_rule && (
+        <span className="text-label text-ink-3">Not a parking rule</span>
+      )}
+    </div>
+  );
+
+  if (row.stacked) {
+    return (
+      <div className="flex flex-col gap-1.5">
+        <span className="text-label text-ink-3">{row.label}</span>
+        {values}
       </div>
+    );
+  }
+  return (
+    <div className="flex items-baseline gap-3.5">
+      <span className="w-26 shrink-0 text-label text-ink-3">{row.label}</span>
+      {values}
     </div>
   );
 }
@@ -58,8 +88,15 @@ export default function WhatWeSaw({
   );
 
   return (
-    <section className="rounded-xl border border-line bg-ground p-4 shadow-sm">
-      <h2 className="mb-2 font-medium text-ink">What we read</h2>
+    <section className="rounded-card bg-ground p-6 shadow-raised">
+      {/* Уверенность — в шапке карточки, рядом с названием: это оговорка
+          к прочитанному, а не отдельный вывод. */}
+      <div className="mb-3 flex items-baseline gap-2.5">
+        <h2 className="flex-1 text-card-sm font-bold text-ink-strong">What we read</h2>
+        <span className={`text-label font-semibold ${TONE[data.completeness.tone] ?? ""}`}>
+          {confidenceLabel(data.completeness).text}
+        </span>
+      </div>
       <Completeness data={data} />
 
       {wide && photo}
@@ -67,54 +104,17 @@ export default function WhatWeSaw({
       <div className="flex flex-col gap-4 sm:flex-row">
         {!wide && photo}
 
-        <div className="min-w-0 flex-1 space-y-2">
-          <Block title="Primary sign">
-            <p className="text-sm text-ink">
-              {primary ? meaningLine(primary) : "Not identified"}
-            </p>
-          </Block>
+        <div className="min-w-0 flex-1 space-y-3">
+          {primary && (
+            <Plate panel={{
+              index: 0, kind: "main_sign", lines: [], background_color: null,
+              carries_rule: true, reference_keys: [], uninterpreted: [],
+              not_interpreted_text: null, fields: [], title: "", text: "",
+              meanings: [primary],
+            }} />
+          )}
 
-          {panels.map((p) => (
-            <Block key={p.index} title="Panel">
-              {!p.carries_rule && (
-                <span className="mb-0.5 inline-block rounded bg-line px-1.5 py-0.5 text-xs text-ink-2">
-                  Not a parking rule
-                </span>
-              )}
-
-              {/* У правилообразующей панели сначала её текст, потом смысл.
-                  У табло наоборот: сперва чем она оказалась, текст второстепенен. */}
-              {p.carries_rule ? (
-                <>
-                  {p.text && (
-                    <p className="text-sm font-medium text-ink">{p.text}</p>
-                  )}
-                  {(p.meanings ?? []).map((m, i) => (
-                    <p key={`${m.key}-${i}`} className="text-sm text-ink-2">
-                      {meaningLine(m)}
-                    </p>
-                  ))}
-                </>
-              ) : (
-                <>
-                  {(p.meanings ?? []).map((m, i) => (
-                    <p key={`${m.key}-${i}`} className="text-sm text-ink">
-                      {m.label}
-                    </p>
-                  ))}
-                  {p.text && <p className="text-sm text-ink-3">{p.text}</p>}
-                </>
-              )}
-
-              {/* Подпись приходит готовой: видов у неё три — текст напечатан выше,
-                  текста нет вовсе (рисунок), остаток при понятой табличке, —
-                  и различает их тот, кто знает, что именно не понято. Пустая
-                  панель без подписи однажды оставила на экране голую рамку. */}
-              {p.not_interpreted_text && (
-                <p className="text-sm text-ink-3">{p.not_interpreted_text}</p>
-              )}
-            </Block>
-          ))}
+          {panels.map((p) => <Plate key={p.index} panel={p} />)}
 
           {rules.length > 0 && (
             <div className="rounded-md border border-dashed border-line bg-inset p-2.5">

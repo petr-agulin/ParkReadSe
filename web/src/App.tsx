@@ -26,10 +26,7 @@ import type { Analysis, GeneralRule } from "./types";
 import SignPicker from "./components/SignPicker";
 import CameraCapture from "./components/CameraCapture";
 import type { Box } from "./lib/crop";
-import WhatWeSaw from "./components/WhatWeSaw";
-import WhoCanPark from "./components/WhoCanPark";
-import PeriodTimeline from "./components/PeriodTimeline";
-import ErrorBoundary from "./components/ErrorBoundary";
+import Reading from "./components/Reading";
 
 /** Сейчас по часам устройства, в том же виде, что даёт поле выбора момента. */
 function nowLocal(): string {
@@ -179,38 +176,12 @@ export default function App() {
             onCancel={() => { reset(); move("back"); }}
           />
         ) : screen === "reading" && data ? (
-          <ErrorBoundary>
-            <WhatWeSaw data={data} preview={preview} rules={rules} />
-
-            {/* Формулировка приходит из ответа, а не живёт в вёрстке: место для
-                слов о знаке — рядом с остальными, в `present`. */}
-            {data.has_answer && data.note && (
-              <p className="rounded-card-sm bg-ground p-4 text-label text-ink-2 shadow-card">
-                {data.note.text}
-              </p>
-            )}
-
-            <WhoCanPark regimes={data.regimes} />
-
-            {/* Участок подписывается там, где он различает: окон на знаке несколько
-                И участки у них разные, или стрелка увела стоянку от самого знака. */}
-            {data.regimes.map((r, i) => (
-              <PeriodTimeline
-                key={i}
-                regime={r}
-                showExtent={new Set(data.regimes.map((x) => x.extent)).size > 1
-                            || r.extent !== "here"}
-              />
-            ))}
-
-            <button
-              type="button"
-              onClick={() => { reset(); move("read-another"); }}
-              className="rounded-button-sm bg-accent py-4 text-body font-bold text-on-dark"
-            >
-              Read another sign
-            </button>
-          </ErrorBoundary>
+          <Reading
+            data={data}
+            preview={preview}
+            rules={rules}
+            onAnother={() => { reset(); move("read-another"); }}
+          />
         ) : (
           <Home
             moment={moment}
