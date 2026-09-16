@@ -1,12 +1,20 @@
 // Экран 3a — главный, когда ключ есть.
 //
+// Второе состояние того же экрана, что и `2f`, и выглядеть они обязаны одним
+// приложением: тот же знак, тот же вход в настройки значком, те же три обещания.
+// Разница только в ранге — здесь одно из них поднято в заголовок, потому что
+// экран уже не просит ключ, а предлагает снять знак (`lib/home`).
+//
 // Одно основное действие внизу, редкий путь — тихой ссылкой под ним. Что именно
 // стоит основным, решает `lib/home`: без камеры это выбор снимка, и причина
 // названа вслух.
 
 import { useRef } from "react";
 
-import { MOMENT_FROM, MOMENT_TO, PROMISE, entryActions, momentChip } from "../lib/home";
+import {
+  HOME_HEADLINE, HOME_LINES, MOMENT_FROM, MOMENT_TO, entryActions, momentChip,
+} from "../lib/home";
+import { Close, Sliders } from "./Icon";
 import SignPlate from "./SignPlate";
 
 type Props = {
@@ -29,23 +37,38 @@ export default function Home({
 
   const primary = () => (entry.primary === "scan" ? onScan() : file.current?.click());
 
+  // Высота считается от видимой части окна: адресная строка мобильного браузера
+  // то появляется, то исчезает, и `vh` про неё не знает.
   return (
-    <section className="flex min-h-[70vh] flex-col gap-6">
+    <section className="flex min-h-[calc(100dvh-3rem)] flex-col gap-6">
       <header className="flex items-center gap-2.5">
         <span className="flex h-7 w-7 items-center justify-center rounded-tile bg-accent
                          text-nav font-extrabold text-on-dark">
           P
         </span>
         <span className="flex-1 text-nav font-bold text-ink-strong">ParkRead</span>
-        <button type="button" onClick={onSettings}
-                className="rounded-full bg-chip px-4 py-2 text-label font-semibold text-ink-2">
-          Settings
+        {/* Значком, а не словом: тот же вход в тот же экран, что и на первом
+            запуске, и выглядеть он обязан так же. */}
+        <button
+          type="button"
+          onClick={onSettings}
+          aria-label="Settings"
+          className="flex h-10 w-10 items-center justify-center rounded-full text-ink-2"
+        >
+          <Sliders className="h-6 w-6" />
         </button>
       </header>
 
       <div className="flex items-center gap-5 rounded-card bg-hero p-6">
         <SignPlate lines={["Servicefordon", "Vardagar 7–17", "Övrig tid avgift"]} />
-        <p className="text-card font-extrabold text-on-dark">{PROMISE}</p>
+        <div>
+          {/* Кегль подобран под карточку: на первом запуске заголовок один
+              на экране, здесь он делит место со знаком. */}
+          <h1 className="text-card font-extrabold text-on-dark">{HOME_HEADLINE}</h1>
+          <div className="mt-1.5 flex flex-col text-caption text-on-dark-2">
+            {HOME_LINES.map((line) => <span key={line}>{line}</span>)}
+          </div>
+        </div>
       </div>
 
       {/* Момент: пусто значит «сейчас», и время берётся в минуту отправки.
@@ -69,8 +92,9 @@ export default function Home({
         {chip.canReset && (
           <button type="button" onClick={() => onMoment("")}
                   aria-label="Read for now instead"
-                  className="rounded-full bg-chip px-3 py-2 text-label font-semibold text-ink-2">
-            ✕
+                  className="flex h-10 w-10 items-center justify-center rounded-full
+                             bg-chip text-ink-2">
+            <Close className="h-4 w-4" />
           </button>
         )}
       </div>

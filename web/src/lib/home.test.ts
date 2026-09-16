@@ -2,7 +2,9 @@
 
 import { describe, expect, it } from "vitest";
 
-import { MOMENT_FROM, MOMENT_TO, entryActions, momentChip } from "./home";
+import {
+  BENEFITS, HOME_HEADLINE, HOME_LINES, MOMENT_FROM, MOMENT_TO, entryActions, momentChip,
+} from "./home";
 import { when } from "./when";
 
 describe("чип момента", () => {
@@ -60,5 +62,24 @@ describe("чем начинается путь к разбору", () => {
   it("ни в одном случае не обещано того, чего экран не делает", () => {
     // «Scan a sign» предлагается только там, где камера действительно есть.
     expect(entryActions(false).primaryLabel).not.toMatch(/Scan/);
+  });
+});
+
+describe("два состояния одного экрана говорят одно и то же", () => {
+  it("строки главного экрана — ровно те же, что и на первом запуске", () => {
+    // Первое замечание разработчика с телефона было именно об этом: два
+    // состояния говорили об одном разными словами и читались как разные
+    // приложения. Ранг у строк разный — одна поднята в заголовок, — но набор
+    // обязан остаться тем же, иначе экраны разойдутся снова.
+    expect([HOME_HEADLINE, ...HOME_LINES].sort()).toEqual([...BENEFITS].sort());
+  });
+
+  it("заголовок не повторяет глагол кнопки под ним", () => {
+    // Дословный `Snap a sign.` с первого запуска взять было нельзя: кнопка
+    // внизу ЭТОГО экрана говорит `Scan a sign`, и два почти одинаковых слова
+    // в пяди друг от друга читаются как заикание. Проверяется и то, и другое:
+    // условие держится на обоих концах, а не на одном.
+    expect(HOME_HEADLINE).not.toMatch(/\b(?:scan|snap)\b/i);
+    expect(entryActions(true).primaryLabel).toMatch(/Scan/);
   });
 });
