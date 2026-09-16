@@ -151,7 +151,7 @@ export default function App() {
         ) : screen === "first-launch" ? (
           <FirstLaunch
             onAddKey={() => move("open-settings")}
-            onHelp={() => move("open-help")}
+            onSettings={() => move("open-settings")}
           />
         ) : screen === "camera" ? (
           <CameraCapture

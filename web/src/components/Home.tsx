@@ -6,7 +6,7 @@
 
 import { useRef } from "react";
 
-import { MOMENT_FROM, MOMENT_TO, entryActions, momentChip } from "../lib/home";
+import { MOMENT_FROM, MOMENT_TO, PROMISE, entryActions, momentChip } from "../lib/home";
 import SignPlate from "./SignPlate";
 
 type Props = {
@@ -45,9 +45,7 @@ export default function Home({
 
       <div className="flex items-center gap-5 rounded-card bg-hero p-6">
         <SignPlate lines={["Servicefordon", "Vardagar 7–17", "Övrig tid avgift"]} />
-        <p className="text-card font-extrabold text-on-dark">
-          Photograph a sign, read it plate by plate.
-        </p>
+        <p className="text-card font-extrabold text-on-dark">{PROMISE}</p>
       </div>
 
       {/* Момент: пусто значит «сейчас», и время берётся в минуту отправки.

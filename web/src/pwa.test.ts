@@ -133,6 +133,28 @@ describe("чего нет в собранной странице", () => {
     }
   });
 
+  it("имя кегля не занято цветом, и наоборот", () => {
+    // Утилиты `text-*` общие для размера и для цвета текста. Токен размера,
+    // названный как токен цвета, МОЛЧА становится краской: заголовок уезжает
+    // и в кегле, и в цвете, а сборка не жалуется ни словом.
+    //
+    // Поймано на `--text-hero`: цвет `--color-hero` уже был занят тёмной плашкой,
+    // и `text-hero` начал красить. Нашлось случайно, при взгляде в собранный CSS,
+    // — потому и сторож.
+    const css = read("src/index.css");
+    const names = (prefix: string) =>
+      [...css.matchAll(new RegExp(`--${prefix}-([a-z0-9-]+):`, "g"))]
+        .map((m) => m[1])
+        // `--text-display--line-height` — не отдельное имя, а свойство размера.
+        .filter((n) => !n.includes("--"));
+
+    const sizes = new Set(names("text"));
+    const clash = names("color").filter((n) => sizes.has(n));
+    expect(clash, "имя занято и кеглем, и цветом").toEqual([]);
+    // Проверка проверки: если имена перестали находиться, молчание не считается.
+    expect(sizes.size).toBeGreaterThan(5);
+  });
+
   it("служебный работник регистрируется только в собранной странице", () => {
     const main = read("src/main.tsx");
     expect(main).toContain("import.meta.env.PROD");

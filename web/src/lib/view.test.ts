@@ -66,13 +66,13 @@ describe("настройки и помощь возвращают туда, от
     expect(go(open, "back", READY)).toEqual({ screen: "home" });
   });
 
-  it("помощь открывается и из настроек, и с первого запуска", () => {
+  it("помощь открывается из настроек и туда же возвращает", () => {
+    // Вход в помощь один — из настроек: с первого запуска ссылку убрали, чтобы
+    // первый экран просил одно и только одно. Сам переход модель по-прежнему
+    // допускает откуда угодно, но предлагать его больше некому.
     const fromSettings = go(at("settings", "home"), "open-help", READY);
     expect(fromSettings).toEqual({ screen: "help", from: "settings" });
     expect(go(fromSettings, "back", READY)).toEqual({ screen: "settings" });
-
-    const fromLaunch = go(at("first-launch"), "open-help", EMPTY);
-    expect(go(fromLaunch, "back", EMPTY)).toEqual({ screen: "first-launch" });
   });
 
   it("дорога, ставшая недостижимой, не возвращает в тупик", () => {
