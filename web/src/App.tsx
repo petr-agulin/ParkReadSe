@@ -1,4 +1,8 @@
 // Экран целиком. Плоская архитектура: по компоненту на блок, состояние здесь.
+//
+// Какой экран показывать и куда ведут действия, решает `lib/view`: здесь только
+// состояние и краска. Экраны первого запуска, главного, камеры, кадра и разбора
+// перерисовываются этапами 4-6; пока на их месте прежняя одностраничная вёрстка.
 
 import { useEffect, useState } from "react";
 import { Calendar } from "./lib/calendar";
@@ -7,7 +11,9 @@ import { OFFLINE_NOTE } from "./lib/offline";
 import { analyze as readHere, answer } from "./lib/pipeline";
 import { browserStore, canAnswerHere, forget, load, missing, save,
          type Settings } from "./lib/settings";
-import KeyPanel from "./components/KeyPanel";
+import { go, start, type Action, type View } from "./lib/view";
+import SettingsScreen from "./components/SettingsScreen";
+import KeyHelp from "./components/KeyHelp";
 import { GENERAL_RULES } from "./lib/rules.data";
 import type { Analysis, GeneralRule } from "./types";
 import PhotoInput from "./components/PhotoInput";
@@ -44,10 +50,15 @@ export default function App() {
   const rules: GeneralRule[] = GENERAL_RULES;
   // Ключ и провайдер. Вспоминается то, что человек разрешил вспомнить.
   const [settings, setSettings] = useState<Settings>(() => load(browserStore()));
-  // Есть ли сеть. Открыть приложение и посмотреть справочник можно без неё,
-  // прочитать знак — нет, и сказать об этом надо до отправки, а не после.
+  // Какой экран открыт. Начальный выбирается по настройкам: без ключа человеку
+  // показывать нечего, кроме приглашения его завести.
+  const [view, setView] = useState<View>(() => ({ screen: start(settings) }));
+  // Есть ли сеть. Открыть приложение можно без неё, прочитать знак — нет,
+  // и сказать об этом надо до отправки, а не после.
   const [online, setOnline] = useState(
     typeof navigator === "undefined" || navigator.onLine);
+
+  const move = (action: Action) => setView((v) => go(v, action, settings));
 
   // Превью живёт в браузере как blob и снимается при замене: снимок никуда
   // не сохраняется — ни на диск сервера, ни в память страницы дольше нужного.
@@ -96,7 +107,7 @@ export default function App() {
           at, cal);
         setData(answer(analysis, at, cal) as unknown as Analysis);
       } else {
-        // Сказать, чего не хватает, теми же словами, что и панель ключа: молчаливая
+        // Сказать, чего не хватает, теми же словами, что и настройки: молчаливая
         // неудача здесь однажды уже выглядела как «приложение работает без ключа».
         throw new Error(`To read a sign the app needs ${missing(settings).join(", ")}.`);
       }
@@ -118,109 +129,142 @@ export default function App() {
     setPreview((old) => { if (old) URL.revokeObjectURL(old); return null; });
   }
 
+  const ready = canAnswerHere(settings);
+
   return (
     <div className="min-h-screen bg-ground-2 py-6">
       <main className="mx-auto flex max-w-2xl flex-col gap-4 px-4">
-        {/* Подпись под названием уходит, пока открыт снимок или камера: эти
-            строки стоят высоты, а высота — ширины снимка. На начальном экране
-            она возвращается. */}
-        <header>
-          <h1 className="text-xl font-semibold text-ink">ParkRead</h1>
-          {!picked && !camera && (
-            <p className="text-sm text-ink-2">
-              What a Swedish parking sign states — read plate by plate.
-            </p>
-          )}
-        </header>
-
-        {picked ? (
-          <SignPicker
-            file={picked}
-            initialBox={aimed}
-            source={source}
-            busy={busy}
-            onSend={onSend}
-            onReplace={onPick}
-            onRetake={() => { setPicked(null); setAimed(undefined); setCamera(true); }}
-            onCancel={reset}
-          />
-        ) : camera ? (
-          <CameraCapture
-            onCaptured={(file, box) => {
-              setError(null);
-              setData(null);
-              setAimed(box);
-              setSource("camera");
-              setPicked(file);
-              setCamera(false);
-            }}
-            onCancel={() => setCamera(false)}
-          />
-        ) : (
-          <PhotoInput
-            busy={busy}
-            onPick={onPick}
-            onCamera={() => { setError(null); setData(null); setCamera(true); }}
-            moment={moment}
-            onMoment={setMoment}
-          />
-        )}
-
-        {/* Ключ показывается на начальном экране, а не поверх разбора: он нужен
-            до отправки, а после ответа только мешал бы читать. */}
-        {!camera && !picked && !data && (
-          <KeyPanel
+        {view.screen === "settings" ? (
+          <SettingsScreen
             settings={settings}
             onChange={changeSettings}
             onForget={() => setSettings(forget(browserStore()))}
+            onBack={() => move("back")}
+            onHelp={() => move("open-help")}
           />
-        )}
+        ) : view.screen === "help" ? (
+          <KeyHelp onBack={() => move("back")} />
+        ) : (
+          <>
+            {/* Подпись под названием уходит, пока открыт снимок или камера: эти
+                строки стоят высоты, а высота — ширины снимка. */}
+            <header className="flex items-start gap-3">
+              <div className="flex-1">
+                <h1 className="text-nav font-bold text-ink-strong">ParkRead</h1>
+                {!picked && !camera && (
+                  <p className="text-label text-ink-2">
+                    What a Swedish parking sign states — read plate by plate.
+                  </p>
+                )}
+              </div>
+              <button
+                type="button"
+                onClick={() => move("open-settings")}
+                className="rounded-full bg-chip px-4 py-2 text-label font-semibold text-ink-2"
+              >
+                Settings
+              </button>
+            </header>
 
-        {/* Сеть нужна ровно одному действию — чтению знака. Сказано до отправки:
-            узнать об этом из ошибки после выбора кадра — значит узнать поздно. */}
-        {!online && (
-          <p className="rounded-xl border border-line bg-ground p-4 text-sm text-ink-2">
-            {OFFLINE_NOTE}
-          </p>
-        )}
+            {/* Без ключа снимать и выбирать снимок нельзя (решение 147): кадр
+                кончился бы сообщением «нужен ключ», а путь в тупик хуже честной
+                просьбы в начале. Настоящий экран первого запуска — этап 4. */}
+            {!ready ? (
+              <section className="rounded-card bg-ground p-6 shadow-raised">
+                <h2 className="text-card font-extrabold text-ink-strong">
+                  Add a key to start.
+                </h2>
+                <p className="mt-3 text-body text-ink-2">
+                  ParkRead reads with a vision model you choose and pay for. Until you
+                  add a key, there is nothing to read signs with.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => move("open-settings")}
+                  className="mt-5 w-full rounded-button bg-accent px-6 py-5 text-left
+                             text-on-dark shadow-primary"
+                >
+                  <span className="block text-row font-bold">Add your key</span>
+                  <span className="block text-label opacity-80">Opens Settings</span>
+                </button>
+              </section>
+            ) : picked ? (
+              <SignPicker
+                file={picked}
+                initialBox={aimed}
+                source={source}
+                busy={busy}
+                onSend={onSend}
+                onReplace={onPick}
+                onRetake={() => { setPicked(null); setAimed(undefined); setCamera(true); }}
+                onCancel={reset}
+              />
+            ) : camera ? (
+              <CameraCapture
+                onCaptured={(file, box) => {
+                  setError(null);
+                  setData(null);
+                  setAimed(box);
+                  setSource("camera");
+                  setPicked(file);
+                  setCamera(false);
+                }}
+                onCancel={() => setCamera(false)}
+              />
+            ) : (
+              <PhotoInput
+                busy={busy}
+                onPick={onPick}
+                onCamera={() => { setError(null); setData(null); setCamera(true); }}
+                moment={moment}
+                onMoment={setMoment}
+              />
+            )}
 
-        {busy && <p className="text-[13px] text-ink-2">Reading the sign…</p>}
-
-        {error && (
-          <p className="rounded-xl border border-danger-line bg-danger-bg p-4 text-sm text-deny">
-            {error}
-          </p>
-        )}
-
-        {data && (
-          <ErrorBoundary>
-            <WhatWeSaw data={data} preview={preview} rules={rules} />
-
-            {/* Формулировка приходит из ответа, а не живёт в вёрстке: место
-                для слов о знаке — рядом с остальными, в `present.py`. Здесь
-                же она однажды разошлась бы со справочником и никто бы
-                не заметил. */}
-            {data.has_answer && data.note && (
-              <p className="rounded-xl border border-line bg-ground p-4 text-sm text-ink-2">
-                {data.note.text}
+            {/* Сеть нужна ровно одному действию — чтению знака. Сказано до отправки:
+                узнать об этом из ошибки после выбора кадра — значит узнать поздно. */}
+            {!online && (
+              <p className="rounded-card-sm bg-ground p-4 text-label text-ink-2 shadow-card">
+                {OFFLINE_NOTE}
               </p>
             )}
 
-            <WhoCanPark regimes={data.regimes} />
+            {busy && <p className="text-label text-ink-2">Reading the sign…</p>}
 
-            {/* Участок подписывается там, где он различает: окон на знаке несколько
-                И участки у них разные, или стрелка увела стоянку от самого знака.
-                Раньше здесь стояло «окон больше одного», и знак, поделённый
-                не стрелкой, а адресатом, получал два одинаковых «Here at the sign». */}
-            {data.regimes.map((r, i) => (
-              <PeriodTimeline
-                key={i}
-                regime={r}
-                showExtent={new Set(data.regimes.map((x) => x.extent)).size > 1
-                            || r.extent !== "here"}
-              />
-            ))}
-          </ErrorBoundary>
+            {error && (
+              <p className="rounded-card-sm bg-danger-bg p-4 text-label text-deny">
+                {error}
+              </p>
+            )}
+
+            {data && (
+              <ErrorBoundary>
+                <WhatWeSaw data={data} preview={preview} rules={rules} />
+
+                {/* Формулировка приходит из ответа, а не живёт в вёрстке: место
+                    для слов о знаке — рядом с остальными, в `present`. Здесь она
+                    однажды разошлась бы со справочником и никто бы не заметил. */}
+                {data.has_answer && data.note && (
+                  <p className="rounded-card-sm bg-ground p-4 text-label text-ink-2 shadow-card">
+                    {data.note.text}
+                  </p>
+                )}
+
+                <WhoCanPark regimes={data.regimes} />
+
+                {/* Участок подписывается там, где он различает: окон на знаке несколько
+                    И участки у них разные, или стрелка увела стоянку от самого знака. */}
+                {data.regimes.map((r, i) => (
+                  <PeriodTimeline
+                    key={i}
+                    regime={r}
+                    showExtent={new Set(data.regimes.map((x) => x.extent)).size > 1
+                                || r.extent !== "here"}
+                  />
+                ))}
+              </ErrorBoundary>
+            )}
+          </>
         )}
       </main>
     </div>
