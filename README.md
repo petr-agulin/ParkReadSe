@@ -176,8 +176,7 @@ use the camera while open and with permission, and can reach nothing else on the
 Nobody reviewed it — no store saw it.
 
 **You bring your own key.** The provider's address, the model name and your key go in the
-"Your key" panel. Without them the app opens, explains itself and shows the reference, but
-cannot read a sign. Each reading costs two model calls, billed to you by your provider. The
+"Your key" panel. Without them the app opens and explains itself, but cannot read a sign. Each reading costs two model calls, billed to you by your provider. The
 key is held in the tab and forgotten when you close it, unless you tick **Remember on this
 device**; **Forget the key** erases it immediately.
 
@@ -185,8 +184,8 @@ device**; **Forget the key** erases it immediately.
 ours and no history: nothing is stored beyond the app's own files and your saved key —
 under half a megabyte in total, inside the browser's storage for the app's address.
 
-**Offline:** the app, the reference and the general rules open; reading a sign does not, and
-it says so rather than failing quietly. Updates arrive the next time you open it with a
+**Offline:** the app opens; reading a sign does not, and it says so rather than failing
+quietly. Updates arrive the next time you open it with a
 signal.
 
 **Uninstalling:** remove the icon *and* clear the site data for the address — on Android via

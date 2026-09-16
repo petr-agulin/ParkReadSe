@@ -39,9 +39,8 @@ export const SHELL = [
 /** Что сказано человеку, когда сети нет. Обещать офлайн-разбор нельзя, а молчать
  *  о причине — тем более: снимок читает модель, и без сети до неё не дойти. */
 export const OFFLINE_NOTE =
-  "No connection. The app, the reference and the general rules are here, "
-  + "but reading a sign is not: the photo goes to the model that reads it, "
-  + "and that needs the network.";
+  "No connection. Reading a sign needs the network: the photo goes to the model "
+  + "that reads it.";
 
 /** Страница на случай, когда нет ни сети, ни оболочки в кэше. Без стилей и скриптов:
  *  это последний экран, и он обязан показаться сам по себе. */
