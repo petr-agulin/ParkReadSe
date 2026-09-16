@@ -96,7 +96,7 @@ export const STAY_END_TEXT: Record<string, string> = {
 // Порог откалиброван замером на наборе снимков, а не выбран.
 export const GOOD_ENOUGH = 0.9;
 
-function toneOf(category: string, confidence: number): string {
+export function toneOf(category: string, confidence: number): string {
   if (category === "insufficient" || category === "not_a_parking_sign") return "bad";
   if (category === "full" && confidence >= GOOD_ENOUGH) return "good";
   return "caution";
@@ -149,7 +149,7 @@ export const UNCERTAINTY_TEXT: Record<string, string> = {
 export type Explained = { token: string; text: string };
 
 /** Токен → пара «токен и текст». Токен нужен замеру, текст — человеку. */
-function explain(token: string, table: Record<string, string>): Explained {
+export function explain(token: string, table: Record<string, string>): Explained {
   if (token.startsWith("uninterpreted_plates:")) {
     const which = token.slice("uninterpreted_plates:".length);
     const many = which.includes(",");
@@ -173,7 +173,7 @@ const NOT_INTERPRETED: Record<string, string> = {
         + "who these spaces are for",
 };
 
-function notInterpreted(keys: string[], leftovers: string[] | null): string | null {
+export function notInterpreted(keys: string[], leftovers: string[] | null): string | null {
   if (leftovers === null) return null;
   if (leftovers.length) {
     return keys.length ? "Not interpreted: " + leftovers.join("; ")
@@ -281,7 +281,7 @@ function dayNote(cal: Calendar, d: Civil): DayNote | null {
   return null;
 }
 
-function periodTone(p: Period): string {
+export function periodTone(p: Period): string {
   if (p.state === "prohibited") return "prohibited";
   if (p.state === "not_stated") return "not_stated";
   if (p.state === "uncertain") return "uncertain";
@@ -290,7 +290,7 @@ function periodTone(p: Period): string {
 
 /** «Free parking» — только когда условий нет вовсе, и только когда знак об этом
  *  времени высказался (снимок `049`). */
-function headline(p: Period, tone: string): string {
+export function headline(p: Period, tone: string): string {
   if (tone === "free" && (p.conditions.length || p.note === FEE_PERIOD_ELSEWHERE)) {
     return PERIOD_HEADLINE.free_with_conditions;
   }
@@ -348,7 +348,7 @@ const UNKNOWN_PLATE_TERM: Term = {
 
 // Запрет С ЧАСАМИ — не то же самое, что запрет всегда (снимок `019`).
 // «Не запрещает» не равно «разрешает»: вне названных часов знак просто молчит.
-const TIMED_PROHIBITION_TEXT: Record<string, string> = {
+export const TIMED_PROHIBITION_TEXT: Record<string, string> = {
   "main-prohibition-parking":
     "The sign prohibits parking only during the hours it names — outside "
     + "them the general parking rules apply",
@@ -367,7 +367,7 @@ const NO_WINDOW_RENTED =
   "The sign sets no parking window here: these spaces are rented, and how "
   + "long a rented space may be used follows from its rental, not from this sign.";
 
-const NO_WINDOW_NOTHING_STATED =
+export const NO_WINDOW_NOTHING_STATED =
   "The sign restricts parking only at the times written on its plate. About "
   + "parking here at other times the sign states nothing: the general rules of "
   + "the road apply, and they are not on this sign.";
@@ -435,7 +435,7 @@ function audienceShort(r: Regime): string | null {
  *
  *  Непонятая табличка обязана быть названа здесь — правило асимметрии: при неполном
  *  разборе можно сузить, но не расширить. */
-function whoCanPark(r: Regime, mainKey: string | null, unknownPlates: boolean,
+export function whoCanPark(r: Regime, mainKey: string | null, unknownPlates: boolean,
                     privateLand: boolean): Term[] {
   const narrow = narrowing(r);
   const extra = r.eligibility.filter((k) => !narrow.includes(k));
@@ -548,7 +548,7 @@ function mainSignFields(main: Record<string, unknown>): Field[] {
     .map((k) => row(k, main[k])).filter((r): r is Field => r !== null);
 }
 
-function panelFields(panel: Panel, referenceKeys: string[]): Field[] {
+export function panelFields(panel: Panel, referenceKeys: string[]): Field[] {
   const raw = panel as unknown as Record<string, unknown>;
   const rows: (Field | null)[] = PANEL_ORDER.map((k) => row(k, raw[k]));
   // `lines` показывается всегда: пустой список здесь — факт о панели.
@@ -583,7 +583,7 @@ const DAY_PHRASE: Record<string, string> = {
 };
 
 // Ключи справочника, которые описывают ВРЕМЯ: они уходят в общую фразу.
-const TIME_KEYS = new Set(["window-weekday", "window-eve", "window-red", "alla-dagar",
+export const TIME_KEYS = new Set(["window-weekday", "window-eve", "window-red", "alla-dagar",
                            "named-weekday", "jamna-veckor", "udda-veckor", "datumintervall"]);
 
 const MONTH_LEN: Record<number, number> = { 1: 31, 2: 29, 3: 31, 4: 30, 5: 31, 6: 30,
@@ -595,7 +595,7 @@ const md = (value: string): [number, number] => {
 };
 
 /** Промежуток дат по-человечески: целый месяц — месяцем, один день — днём. */
-function rangeName(rng: { from: string; to: string }): string {
+export function rangeName(rng: { from: string; to: string }): string {
   const [am, ad] = md(rng.from);
   const [bm, bd] = md(rng.to);
   if (am === bm && ad === bd) return `${ad} ${MONTHS[am]}`;
@@ -643,7 +643,7 @@ function windowPhrase(w: TimeWindow, dates: string): string {
 }
 
 /** Окна, отличающиеся только датами, сливаются в одно предложение. */
-function timePhrase(parsed: Parsed): string {
+export function timePhrase(parsed: Parsed): string {
   const windows = (parsed.time_windows ?? []).filter((w) => w.from);
   const groups = new Map<string, TimeWindow[]>();
   for (const w of windows) {
@@ -670,7 +670,7 @@ function meaning(key: string): Meaning {
 
 /** Две записи с одним названием и кодом — одна строка на экране (`Avgift` и `Taxa 2`
  *  обе несут код T16). Смысл разный, поэтому короткие подписи склеиваются. */
-function merge(items: Meaning[]): Meaning[] {
+export function merge(items: Meaning[]): Meaning[] {
   const out: Meaning[] = [];
   for (const item of items) {
     const same = out.find((o) => o.label === item.label && o.code === item.code);
@@ -689,7 +689,7 @@ function merge(items: Meaning[]): Meaning[] {
 
 /** Строки таблички в одну фразу. Шведские таблички переносят слово с дефисом:
  *  `Beskicknings-` / `fordon` — одно слово, а не два. */
-function joinLines(lines: string[]): string {
+export function joinLines(lines: string[]): string {
   let out = "";
   for (const raw of lines) {
     const part = raw.trim();
@@ -701,7 +701,7 @@ function joinLines(lines: string[]): string {
   return out;
 }
 
-function panelView(panel: Panel, keys: string[]): Record<string, unknown> {
+export function panelView(panel: Panel, keys: string[]): Record<string, unknown> {
   const kind = panel.kind;
   const text = joinLines(panel.lines ?? []);
   const carriesRule = kind === "sign_plate";

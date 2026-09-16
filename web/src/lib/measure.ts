@@ -70,7 +70,7 @@ for (let m = 1; m <= 12; m += 1) {
  *  `Augusti-Juni` записывается двумя способами — «только с 1 августа по 30 июня»
  *  и «кроме июля», — и это ОДНО И ТО ЖЕ правило. Сравнивать записи буквально
  *  значит мерить форму записи, а не прочитанное. */
-function coveredDays(dates: NonNullable<TimeWindow["dates"]>): number[] {
+export function coveredDays(dates: NonNullable<TimeWindow["dates"]>): number[] {
   const hit = new Set<number>();
   for (const rng of dates.ranges ?? []) {
     const [sm, sd] = rng.from.split("-").map(Number);
@@ -212,6 +212,37 @@ export function table(rep: Report): string {
     rows.push(`| \`${name}\` | ${f.hits} | ${f.total} | ${share}% |`);
   }
   return `Снимков в замере: ${rep.photos}\n\n` + rows.join("\n");
+}
+
+// --- отсев -----------------------------------------------------------------
+
+export type TriageReport = {
+  realSigns: number;
+  falseRejects: number;
+  falseRejectShare: number;
+  junkFrames: number;
+  junkLetThrough: number;
+  junkLetThroughShare: number;
+};
+
+/** Доля ложных отсевов — самая дорогая ошибка стадии 0: человек стоит перед знаком
+ *  и не получает ничего. Мусор, пропущенный дальше, считается отдельно: он стоит
+ *  лишнего вызова, а не ответа. */
+export function triageReport(expectedIsParking: Record<string, boolean>,
+                             triage: Record<string, string>): TriageReport {
+  const names = Object.keys(expectedIsParking).filter((k) => k in triage);
+  const real = names.filter((k) => expectedIsParking[k]);
+  const junk = names.filter((k) => !expectedIsParking[k]);
+  const falseRejects = real.filter((k) => triage[k] !== "parking_sign").length;
+  const letThrough = junk.filter((k) => triage[k] === "parking_sign").length;
+  return {
+    realSigns: real.length,
+    falseRejects,
+    falseRejectShare: real.length ? falseRejects / real.length : 0,
+    junkFrames: junk.length,
+    junkLetThrough: letThrough,
+    junkLetThroughShare: junk.length ? letThrough / junk.length : 0,
+  };
 }
 
 // --- калибровка порога -----------------------------------------------------

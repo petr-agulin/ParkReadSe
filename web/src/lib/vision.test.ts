@@ -58,6 +58,7 @@ describe("вызов провайдера", () => {
     expect(url).toBe("https://example.invalid/v1/chat/completions");
   });
 
+  // py: test_vision::test_a_busy_provider_is_retried_not_reported_as_failure
   it("занятый провайдер повторяется, а неверный запрос — нет", async () => {
     const busy = fake(answer({}, 503), answer({}, 503), good());
     const paused: number[] = [];
@@ -78,6 +79,29 @@ describe("вызов провайдера", () => {
     expect(res.text).toContain("parking_sign");
   });
 
+  // py: test_vision::test_a_timeout_is_retried_too
+  it("истёкшее ожидание — тоже повод повторить: ответа нет, а не отказ", async () => {
+    // Таймаут приходит обрывом по сигналу, и выглядит он иначе, чем упавшая сеть.
+    // Путь у обоих должен быть один — повтор.
+    const timeout = Object.assign(new Error("ожидание истекло"), { name: "AbortError" });
+    const slow = fake(() => timeout, good());
+    await call(provider, "м", "в", photo, async () => {}, slow.fetchImpl);
+    expect(slow.calls()).toBe(2);
+  });
+
+  // py: test_vision::test_a_rejected_request_is_not_retried
+  it("отклонённый запрос не повторяется: 400, 401, 403, 404", async () => {
+    // Перегрузки там нет — есть неверный запрос или ключ, и второй такой же запрос
+    // лишь потратит квоту второй раз. Держит список повторяемых кодов узким.
+    for (const code of [400, 401, 403, 404]) {
+      const rejected = fake(answer({ error: "нет" }, code), good());
+      await expect(call(provider, "м", "в", photo, async () => {}, rejected.fetchImpl))
+        .rejects.toThrow(String(code));
+      expect(rejected.calls(), `${code} повторять нельзя`).toBe(1);
+    }
+  });
+
+  // py: test_vision::test_giving_up_says_why_and_how_many_tries
   it("сдавшись, говорит почему и сколько раз пробовал", async () => {
     const dead = fake(answer({ error: "busy" }, 503));
     await expect(call(provider, "м", "в", photo, async () => {}, dead.fetchImpl))

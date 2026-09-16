@@ -4,793 +4,806 @@
  "count": 301,
  "tests": {
   "test_accuracy::test_identical_gives_full_marks": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_detects_merged_panels": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_detects_wrong_order_even_when_content_is_right": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_detects_misread_text": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_detects_non_rule_panel_taken_for_a_plate": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_detects_rule_plate_taken_for_an_operator_plate": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_confusion_inside_the_non_rule_pair_is_not_an_error": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_line_wrapping_inside_one_plate_is_not_an_error": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_but_moving_words_between_plates_is_an_error": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_detects_wrong_parsed_field": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_case_and_spacing_do_not_count_as_errors": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_false_reject_is_counted": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_junk_let_through_is_counted_separately": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_hand_marked_fixtures_are_excluded_from_measurement": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_every_photo_is_marked_pending_or_declared_not_a_sign": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_a_photo_is_never_in_two_states_at_once": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_pending_list_does_not_rot": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_every_saved_answer_pairs_with_its_ground_truth": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_measurement_coverage_is_visible": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_every_photo_has_a_transcript_section": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_changed_prompt_makes_a_saved_answer_stale": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_a_stale_triage_answer_alone_makes_the_photo_stale": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_hand_marked_and_unfingerprinted_answers_are_stale": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_a_refused_photo_is_not_asked_again_forever": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_a_parking_photo_still_needs_its_extraction": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_a_changed_triage_prompt_reopens_a_refusal": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_extra_field_does_not_destroy_a_triage_answer": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_long_what_i_see_and_numeric_string_are_repaired": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_bad_category_still_rejects_the_whole_triage": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_unknown_enum_value_does_not_destroy_the_parse": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_two_encodings_of_the_same_dates_are_equal": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_identical_verdicts_have_no_differences": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_a_pointer_read_as_a_parking_sign_is_the_whole_verdict": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_widening_is_counted_apart_from_narrowing": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_a_condition_on_the_wrong_days_is_a_difference_too": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_a_narrowed_circle_of_users_is_a_difference_too": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_dead_signals_are_the_ones_that_never_moved": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_accuracy::test_the_threshold_still_earns_its_value": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_health_reports_configuration": {
-   "status": "pending"
+   "status": "dropped",
+   "reason": "ручка /api/health уходит вместе с сервером; что настроено, человек видит в панели ключа (settings.test.ts)"
   },
   "test_api::test_health_never_leaks_the_key": {
-   "status": "pending"
+   "status": "dropped",
+   "reason": "ручки нет; гарантию «ключ уходит только в заголовок провайдеру и больше никуда» стережёт vision.test.ts"
   },
   "test_api::test_analyze_returns_the_four_blocks": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_wording_comes_from_the_reference_not_from_the_api": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_forbidden_wording_never_appears": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_missing_photo_is_a_clear_error": {
-   "status": "pending"
+   "status": "dropped",
+   "reason": "формы запроса нет: снимок выбирается на экране, и это стерегут crop/camera-тесты"
   },
   "test_api::test_bad_moment_is_rejected_before_any_model_call": {
-   "status": "pending"
+   "status": "dropped",
+   "reason": "разбора строки момента нет: поле выбора на экране даёт готовое значение, а его границы стережёт calendar.test.ts"
   },
   "test_api::test_a_moment_outside_the_window_is_refused": {
-   "status": "pending"
+   "status": "dropped",
+   "reason": "отказ жил в HTTP-слое; поле ограничено тем же окном (calendar.test.ts), а вне окна календарь отвечает «неизвестно» (engine.test.ts)"
   },
   "test_api::test_unknown_photo_in_demo_mode_is_explained_not_crashed": {
-   "status": "pending"
+   "status": "dropped",
+   "reason": "демо-режима нет (решение 136)"
   },
   "test_api::test_uploaded_photo_is_never_written_to_disk": {
-   "status": "pending"
+   "status": "dropped",
+   "reason": "сервера и его диска нет; в браузере снимок не сохраняется — ответ знака не кэшируется (offline.test.ts), в хранилище только настройки (settings.test.ts)"
   },
   "test_api::test_history_records_the_verdict_and_no_image": {
-   "status": "pending"
+   "status": "dropped",
+   "reason": "истории разборов нет (решение 137)"
   },
   "test_api::test_reference_entry_is_served_for_explanations": {
-   "status": "pending"
+   "status": "dropped",
+   "reason": "ручки нет: справочник едет со страницей (reference.test.ts)"
   },
   "test_api::test_unknown_reference_key_is_404_not_invented": {
-   "status": "pending"
+   "status": "dropped",
+   "reason": "ручки нет; неизвестный ключ не выдумывается — get() возвращает null (reference.test.ts)"
   },
   "test_api::test_index_serves_the_built_page_or_explains_how_to_build_it": {
-   "status": "pending"
+   "status": "dropped",
+   "reason": "страницу отдаёт статический хостинг; что попало в сборку, проверяет npm run test:build"
   },
   "test_api::test_general_rules_are_served_separately_and_marked_advisory": {
-   "status": "pending"
+   "status": "dropped",
+   "reason": "ручки нет: общие правила едут со страницей (rules.test.ts)"
   },
   "test_api::test_general_rules_never_ride_inside_an_analysis": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_state_wording_is_authored_by_the_backend": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_no_internal_token_is_shown_without_words": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_every_reason_and_uncertainty_token_has_wording": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_every_shown_value_carries_its_field_name": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_parsed_fields_are_named_with_their_schema_path": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_no_parsed_field_is_silently_dropped_from_the_screen": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_every_reference_entry_has_a_human_label": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_official_codes_look_like_official_codes": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_panels_are_titled_panel_without_a_number": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_primary_sign_is_named_and_coded": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_info_board_says_what_it_is_and_shows_its_text": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_every_entry_has_a_short_caption_too": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_two_plates_with_the_same_code_merge_into_one_line": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_response_states_its_contract_version": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_user_facing_text_never_explains_the_machinery": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_confidence_caveats_do_not_contradict_the_headline": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_the_timeline_ends_where_the_stay_ends": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_the_stay_end_is_stated_under_its_own_period": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_without_a_limit_the_timeline_stops_at_the_first_change": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_completeness_tone_is_decided_by_the_backend": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_tone_travels_with_the_answer": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_who_can_park_never_addresses_the_reader": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_sign_that_narrows_nobody_still_names_the_circle": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_time_plate_reads_as_one_sentence": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_complementary_plate_does_not_replace_the_general_rule": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_narrowing_plate_does_replace_the_general_rule": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_period_tone_and_headline_come_from_the_rule": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_period_carries_its_duration_and_notes": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_identical_neighbouring_segments_are_joined": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_the_day_class_stands_under_the_date_on_the_scale": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_condition_addressed_to_one_vehicle_class_gets_its_own_window": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_silence_about_a_fee_is_not_called_free": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_the_second_window_is_hidden_when_it_says_the_same": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_the_circle_is_not_repeated_once_per_window": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_the_clock_on_screen_is_the_clock_on_the_sign": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_the_scale_stays_continuous_when_a_node_grows": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_joining_never_hides_a_change_of_rule": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_stay_end_reason_says_why_without_repeating_when": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_every_duration_source_has_a_reason": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_dates_are_stated_as_the_plate_states_them": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_single_excluded_days_are_named_as_days": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_season_keeps_its_day_precision": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_whole_month_is_named_by_its_month": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_the_window_never_claims_to_be_the_driver_s_plan": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_ban_at_the_selected_time_is_shown_before_the_window": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_the_ban_period_itself_is_still_computed": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_hyphenated_word_is_joined_back_into_one_word": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_an_uninterpreted_panel_does_not_repeat_its_own_text": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_an_unknown_plate_is_named_in_who_can_park": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_no_time_key_is_left_out_of_the_composed_phrase": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_every_schema_value_reaches_the_reference": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_the_vehicle_table_exists_in_one_place_only": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_an_endless_prohibition_is_marked_as_reaching_the_horizon": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_the_window_says_who_it_is_for_when_it_is_not_for_everyone": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_sign_for_everyone_says_nothing_extra_under_the_window": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_complementary_plate_is_not_mistaken_for_the_circle": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_under_a_prohibition_the_circle_is_named_as_an_exception": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_under_a_permission_the_circle_is_not_called_an_exception": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_each_window_says_which_stretch_it_covers": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_every_extent_the_engine_can_produce_has_a_short_caption": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_no_line_under_a_window_is_printed_twice": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_plate_bound_to_hours_is_not_printed_as_the_circle_of_the_window": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_the_circle_never_names_what_the_timeline_states_by_the_hour": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_prohibition_with_hours_is_not_stated_as_a_prohibition_always": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_prohibition_without_hours_keeps_its_plain_wording": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_every_prohibiting_main_sign_has_a_wording_for_the_timed_case": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_rented_space_gets_no_parking_window": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_rented_sign_that_states_its_own_hours_keeps_the_timeline": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_only_rented_spaces_lose_the_timeline": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_private_land_is_named_in_both_places_and_keeps_its_timeline": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_an_ordinary_sign_says_nothing_about_private_land": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_the_phrase_matched_in_code_is_the_one_the_article_declares": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_an_incomplete_parse_marks_its_periods_as_not_vouched_for": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_complete_parse_keeps_a_solid_line": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_certainty_follows_completeness_across_the_whole_set": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_residents_note_is_repeated_under_every_stretch_of_the_window": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_boende_alone_never_makes_the_answer_incomplete": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_the_engine_note_reaches_the_screen_as_a_sentence_not_a_token": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_every_note_the_engine_can_produce_has_a_caption": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_plate_with_an_unknown_symbol_narrows_instead_of_widening": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_plate_the_reference_knows_is_not_called_uninterpreted": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_the_bicycle_symbol_is_a_class_of_its_own": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_every_reason_the_code_can_produce_has_a_caption": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_an_unknown_token_never_reaches_the_screen_as_itself": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_reading_that_says_too_little_is_asked_once_more": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_the_retry_happens_once_and_not_in_a_loop": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_a_good_reading_is_never_asked_twice": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_api::test_demo_mode_never_asks_again": {
-   "status": "pending"
+   "status": "dropped",
+   "reason": "демо-режима нет (решение 136)"
   },
   "test_calendar::test_easter_matches_the_published_dates": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_calendar::test_the_offsets_are_the_ones_the_law_names": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_calendar::test_the_saturdays_fall_inside_the_windows_the_law_gives": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_calendar::test_thirteen_red_days_every_year": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_calendar::test_2026_matches_the_file_it_replaced": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_calendar::test_every_day_of_2026_keeps_its_class": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_calendar::test_the_2026_counts_are_unchanged": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_calendar::test_a_red_day_is_never_an_eve": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_calendar::test_the_eves_on_weekdays_are_the_nine_known_dates": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_calendar::test_christmas_eve_midsummer_eve_and_new_years_eve_stay_eves": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_calendar::test_the_window_is_2026_to_2030": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_calendar::test_the_horizon_from_the_end_of_the_window_still_has_a_calendar": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_calendar::test_outside_the_computed_range_the_class_is_unknown": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_calendar::test_the_calendar_needs_no_file_at_all": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_calendar::test_the_picker_on_screen_carries_the_same_window": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_clock::test_the_switches_stand_where_the_eu_rule_puts_them": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_clock::test_the_offset_is_plus_one_in_winter_and_plus_two_in_summer": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_clock::test_the_hour_that_does_not_exist_and_the_hour_that_happens_twice": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_clock::test_a_night_of_a_switch_is_23_or_25_hours_long": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_clock::test_adding_real_time_lands_on_the_right_clock_face": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_clock::test_the_module_carries_no_time_zone_database": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_clock::test_a_plate_limit_across_the_switch": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_clock::test_the_24_hour_rule_across_the_switch": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_clock::test_the_length_of_a_segment_counts_real_hours": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_clock::test_the_note_appears_when_the_shown_stretch_crosses_the_switch": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_clock::test_there_is_no_note_when_nothing_crosses_the_switch": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_clock::test_the_note_says_no_date_and_names_the_fixed_hours": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_full_parse": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_not_a_parking_sign_comes_from_triage": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_schema_invalid_is_insufficient": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_one_of_three_unread_is_partial": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_most_panels_unread_is_insufficient": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_panel_count_disagreement_lowers_confidence_but_keeps_the_answer": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_unknown_main_sign_is_insufficient": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_same_photo_different_categories": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_yellow_unread_panel_may_prohibit": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_blue_unread_panel_does_not_imply_prohibition": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_unreadable_colour_is_treated_as_worst_case": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_full_parse_is_not_narrowed": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_yellow_unread_forbids_presenting_any_period_as_allowed": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_blue_unread_keeps_answer_but_marks_empty_periods": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_asymmetry_never_widens": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_confidence_falls_as_data_is_lost": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_confidence_is_a_number_inside_the_category_not_instead_of_it": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_an_uninterpreted_plate_is_not_a_full_reading": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_only_rule_bearing_plates_count_as_uninterpreted": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_a_sign_without_a_single_rule_plate_is_not_a_full_parse": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_no_plates_at_all_still_gets_an_answer": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_one_rule_plate_is_enough_to_corroborate": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_placement_fields_alone_never_corroborate": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_every_rule_key_is_a_field_the_schema_knows": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_the_caption_does_not_claim_a_plate_went_unread": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_more_text_than_the_pixels_can_carry_is_not_a_full_parse": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_a_large_photo_is_not_punished_for_its_text": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_a_small_photo_without_text_is_not_punished": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_an_unknown_image_size_never_punishes_the_parse": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_the_signal_is_graded_not_a_cliff": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_completeness::test_the_photo_reads_its_own_size_from_both_formats": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_day_classes_match_fixture": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_red_beats_eve": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_date_outside_calendar_is_unknown": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_24h_guaranteed_continuity": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_24h_all_weekend_starts_give_the_same_answer": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_24h_friday_afternoon_is_not_cut_short_by_saturday": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_duration_plate_overrides_24h": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_official_pair_two_plates": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_official_pair_one_plate": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_a_limit_that_starts_later_ends_the_stay_when_it_starts": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_a_limit_wider_than_its_window_never_bites": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_conclusion_differs_from_any_single_plate": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_unspecified_days_means_weekdays_only": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_all_days_token_covers_weekend": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_prohibition_overrides_permission": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_a_window_under_a_prohibiting_sign_limits_the_prohibition": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_a_sign_that_states_nothing_shows_no_window_at_all": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_the_scale_shows_only_what_the_sign_states": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_a_pictogram_on_a_plate_with_a_rule_addresses_that_rule": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_a_pictogram_alone_still_narrows_the_whole_sign": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_only_a_pictogram_standing_alone_narrows_the_sign": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_ovrig_tid_counts_the_whole_sign_not_half_of_it": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_arrows_and_audience_divide_the_sign_independently": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_a_window_to_24_00_runs_to_the_end_of_the_day": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_a_limit_does_not_outlive_the_window_that_set_it": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_a_window_cut_by_midnight_is_still_one_window": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_a_silent_period_carries_no_stay_limit": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_a_prohibiting_sign_without_plates_prohibits_always": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_a_window_under_a_permitting_sign_still_returns_to_permission": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_ovrig_tid_still_beats_silence_under_a_prohibiting_sign": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_named_weekday_ignores_holiday_calendar": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_ovrig_tid_fills_the_complement": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_without_scope_shift_base_returns_outside_window": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_sign_b_developer_reading": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_sign_v_no_vehicle_plate_does_not_narrow": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_arrows_split_into_two_regimes": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_no_arrow_means_here": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_info_board_never_enters_rules": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_wayfinding_sign_permits_nothing": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_prohibition_main_sign_inverts_base": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_date_outside_calendar_is_uncertain_not_error": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_sign_022_charging_electric_only": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_sign_023_same_rule_without_count_and_arrow": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_forhyrda_platser_with_numbered_spaces": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_privat_parkering_does_not_restrict": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_sign_024_payment_by_phone_only": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_sign_025_eligibility_and_duration_on_one_plate": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_metres_are_not_minutes": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_sign_026_zone_reads_as_ordinary_sign": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_info_board_below_the_arrow_is_not_a_second_stretch": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_prohibition_ends_the_stay_earlier_than_the_24h_limit": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_without_a_prohibition_the_24h_limit_still_governs": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_even_week_prohibition_applies_every_second_week": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_date_range_may_wrap_the_year_end": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_mid_month_boundary_is_kept_to_the_day": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_single_days_are_ranges_of_one_day": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_parity_and_season_are_named_to_the_reader": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_residents_plate_answers_who_can_park": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_an_arrow_under_a_wayfinding_sign_means_direction_not_extent": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_the_same_arrow_under_a_parking_sign_is_still_the_extent": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_plates_below_the_last_arrow_do_not_make_a_second_stretch": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_the_tail_reaches_every_stretch_not_just_the_last": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_engine::test_a_sign_without_arrows_is_still_one_stretch_here": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_icons::test_the_files_on_disk_are_what_the_code_draws": {
    "status": "pending"
@@ -808,7 +821,7 @@
    "status": "pending"
   },
   "test_parity::test_every_document_of_the_set_is_a_case": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_the_awkward_moments_are_all_covered": {
    "status": "pending"
@@ -817,28 +830,28 @@
    "status": "pending"
   },
   "test_parity::test_the_engine_golden_holds_the_answer_not_the_innards": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_the_present_golden_is_the_finished_answer": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_the_layers_are_declared_and_none_is_ported_yet": {
    "status": "pending"
   },
   "test_parity::test_no_photograph_ever_reaches_the_reference_answers": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_rewriting_is_a_separate_command": {
    "status": "pending"
   },
   "test_parity::test_the_types_match_the_schema": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_the_ported_engine_touches_no_clock_of_its_own": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_the_rulings_moved_with_the_engine": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_the_browser_reference_is_current": {
    "status": "pending"
@@ -847,7 +860,7 @@
    "status": "pending"
   },
   "test_parity::test_the_forbidden_wording_guard_moved_with_the_words": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_the_schema_check_has_something_to_be_checked_against": {
    "status": "pending"
@@ -859,52 +872,53 @@
    "status": "pending"
   },
   "test_parity::test_the_server_still_serves_the_rules_for_the_python_path": {
-   "status": "pending"
+   "status": "dropped",
+   "reason": "ручка /api/general-rules уходит вместе с сервером; что правила едут со страницей, стережёт rules.test.ts"
   },
   "test_parity::test_the_measurement_is_a_tool_and_not_part_of_the_product": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_the_measurement_reads_the_same_set_from_disk": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_the_stale_answers_are_named_and_not_counted": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_the_threshold_table_is_the_one_the_threshold_stands_on": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_prompts::test_every_kind_of_main_sign_is_explained_not_just_listed": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_prompts::test_the_two_prohibition_signs_are_told_apart_by_something_countable": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_prompts::test_brackets_and_red_ink_are_told_apart_by_the_days_they_mean": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_prompts::test_fields_that_changed_the_answer_are_explained_by_name": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_prompts::test_the_prompt_names_the_fields_it_forbids_guessing_into": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_prompts::test_the_triage_prompt_was_not_disturbed": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_prompts::test_scope_shift_may_not_be_inferred_from_position": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_vision::test_a_busy_provider_is_retried_not_reported_as_failure": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_vision::test_a_timeout_is_retried_too": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_vision::test_a_rejected_request_is_not_retried": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_vision::test_giving_up_says_why_and_how_many_tries": {
-   "status": "pending"
+   "status": "ported"
   }
  }
 }

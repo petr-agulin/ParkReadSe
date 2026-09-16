@@ -65,6 +65,7 @@ describe("конвейер", () => {
     expect(out.flags).toContain("triage_said:other_road_sign");
   });
 
+  // py: test_api::test_a_reading_that_says_too_little_is_asked_once_more
   it("прочитано слишком мало — переспрашивает ровно один раз", async () => {
     // Найдено разработчиком в браузере: `049` и `056` с первой попытки давали
     // «слишком мало», со второй разбирались целиком.
@@ -77,8 +78,22 @@ describe("конвейер", () => {
     expect(f.calls(), "отсев + две попытки чтения").toBe(3);
     expect(out.flags).toContain("extraction_retried");
     expect(out.stoppedAt).toBeNull();
+    expect(out.extraction?.data?.main_sign.type, "взят лучший ответ").toBe("parking");
   });
 
+  // py: test_api::test_a_good_reading_is_never_asked_twice
+  it("хороший разбор не переспрашивается", () => {
+    // Переспрос стоит вызова, и тратить его на разбор, которым продукт доволен,
+    // незачем.
+    const f = fakeProvider(reply(TRIAGE_OK), reply(realSign("001-p-30min")),
+                           reply({ совсем: "не то" }));
+    return run(photo, provider, deps(f)).then((out) => {
+      expect(f.calls(), "отсев + одно чтение").toBe(2);
+      expect(out.flags).not.toContain("extraction_retried");
+    });
+  });
+
+  // py: test_api::test_the_retry_happens_once_and_not_in_a_loop
   it("второй ответ не берётся, если он не лучше", async () => {
     const мало = { schema_version: 1,
                    main_sign: { type: "unknown", background_color: "blue",

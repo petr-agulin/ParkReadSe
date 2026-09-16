@@ -46,7 +46,7 @@ export const FEE_PERIOD_ELSEWHERE = "fee_period_belongs_to_another_audience";
 
 // участки
 export const HERE = "here";
-const ARROW_EXTENT: Record<string, string> = {
+export const ARROW_EXTENT: Record<string, string> = {
   left: "left", right: "right",
   up: "ahead", down: "behind",
   both_horizontal: "both_sides", both_vertical: "both_directions",
