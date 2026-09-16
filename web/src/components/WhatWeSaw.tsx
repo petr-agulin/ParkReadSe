@@ -19,12 +19,12 @@ function meaningLine(m: Meaning): string {
 
 function Block({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-md border border-slate-100 bg-slate-50 p-2.5">
+    <div className="rounded-md border border-ground-2 bg-inset p-2.5">
       {/* Название прижато вправо и выровнено по ПЕРВОЙ строке содержимого:
           иначе первая строка карточки пустует, и текст начинается со второй. */}
       <div className="flex items-baseline gap-3">
         <div className="min-w-0 flex-1">{children}</div>
-        <p className="shrink-0 text-xs text-slate-500">{title}</p>
+        <p className="shrink-0 text-xs text-ink-3">{title}</p>
       </div>
     </div>
   );
@@ -58,8 +58,8 @@ export default function WhatWeSaw({
   );
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-      <h2 className="mb-2 font-medium text-slate-800">What we read</h2>
+    <section className="rounded-xl border border-line bg-ground p-4 shadow-sm">
+      <h2 className="mb-2 font-medium text-ink">What we read</h2>
       <Completeness data={data} />
 
       {wide && photo}
@@ -69,7 +69,7 @@ export default function WhatWeSaw({
 
         <div className="min-w-0 flex-1 space-y-2">
           <Block title="Primary sign">
-            <p className="text-sm text-slate-800">
+            <p className="text-sm text-ink">
               {primary ? meaningLine(primary) : "Not identified"}
             </p>
           </Block>
@@ -77,7 +77,7 @@ export default function WhatWeSaw({
           {panels.map((p) => (
             <Block key={p.index} title="Panel">
               {!p.carries_rule && (
-                <span className="mb-0.5 inline-block rounded bg-slate-200 px-1.5 py-0.5 text-xs text-slate-600">
+                <span className="mb-0.5 inline-block rounded bg-line px-1.5 py-0.5 text-xs text-ink-2">
                   Not a parking rule
                 </span>
               )}
@@ -87,10 +87,10 @@ export default function WhatWeSaw({
               {p.carries_rule ? (
                 <>
                   {p.text && (
-                    <p className="text-sm font-medium text-slate-900">{p.text}</p>
+                    <p className="text-sm font-medium text-ink">{p.text}</p>
                   )}
                   {(p.meanings ?? []).map((m, i) => (
-                    <p key={`${m.key}-${i}`} className="text-sm text-slate-600">
+                    <p key={`${m.key}-${i}`} className="text-sm text-ink-2">
                       {meaningLine(m)}
                     </p>
                   ))}
@@ -98,11 +98,11 @@ export default function WhatWeSaw({
               ) : (
                 <>
                   {(p.meanings ?? []).map((m, i) => (
-                    <p key={`${m.key}-${i}`} className="text-sm text-slate-800">
+                    <p key={`${m.key}-${i}`} className="text-sm text-ink">
                       {m.label}
                     </p>
                   ))}
-                  {p.text && <p className="text-sm text-slate-500">{p.text}</p>}
+                  {p.text && <p className="text-sm text-ink-3">{p.text}</p>}
                 </>
               )}
 
@@ -111,13 +111,13 @@ export default function WhatWeSaw({
                   и различает их тот, кто знает, что именно не понято. Пустая
                   панель без подписи однажды оставила на экране голую рамку. */}
               {p.not_interpreted_text && (
-                <p className="text-sm text-slate-500">{p.not_interpreted_text}</p>
+                <p className="text-sm text-ink-3">{p.not_interpreted_text}</p>
               )}
             </Block>
           ))}
 
           {rules.length > 0 && (
-            <div className="rounded-md border border-dashed border-slate-300 bg-slate-50 p-2.5">
+            <div className="rounded-md border border-dashed border-line bg-inset p-2.5">
               {/* Кнопка — только заголовок. Раскрытый текст лежит СНАРУЖИ неё:
                   внутри кнопки клик по самому правилу сворачивал бы список. */}
               <button
@@ -125,20 +125,20 @@ export default function WhatWeSaw({
                 onClick={() => setOpenRules(!openRules)}
                 className="flex w-full items-baseline gap-3 text-left"
               >
-                <span className="min-w-0 flex-1 text-xs text-slate-500">
+                <span className="min-w-0 flex-1 text-xs text-ink-3">
                   General parking rules
                 </span>
-                <span className="shrink-0 text-xs text-slate-500 underline-offset-2 hover:underline">
+                <span className="shrink-0 text-xs text-ink-3 underline-offset-2 hover:underline">
                   {openRules ? "hide" : "show"}
                 </span>
               </button>
 
               {openRules && (
                 <>
-                  <p className="mt-2 text-xs text-slate-500">
+                  <p className="mt-2 text-xs text-ink-3">
                     These are general parking rules applied by law in Sweden.
                   </p>
-                  <ul className="mt-1.5 list-outside list-disc space-y-1 pl-4 text-sm text-slate-600">
+                  <ul className="mt-1.5 list-outside list-disc space-y-1 pl-4 text-sm text-ink-2">
                     {rules.map((r) => (
                       <li key={r.key}>{r.text}</li>
                     ))}

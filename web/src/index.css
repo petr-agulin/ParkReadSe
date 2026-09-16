@@ -1,21 +1,94 @@
 @import "tailwindcss";
 
-/* Токены из design.md. Значения живут здесь одним списком: цвет меняется в одном
-   месте, а не в каждом компоненте. */
+/* Токены оформления. Значения живут здесь одним списком: цвет и размер меняются
+   в одном месте, а не в каждом компоненте. Источник — `design.md`.
+
+   Цвета в `oklch`: там светлота одинакова на глаз при разном тоне, поэтому
+   «на полтона тише» получается сдвигом одного числа, а не подбором. */
 @theme {
-  --color-ink: #16181c;
-  --color-ink-2: #5b636d;
-  --color-ink-3: #9aa4b1;
-  --color-ground: #ffffff;
-  --color-ground-2: #f6f7f9;
-  --color-line: #e3e6ea;
+  /* --- поверхности ------------------------------------------------------- */
+  --color-ground: oklch(0.99 0.002 250);      /* карточка, поднятая плоскость */
+  --color-ground-2: oklch(0.97 0.003 250);    /* фон экрана */
+  --color-inset: oklch(0.965 0.003 250);      /* поле ввода, тихая строка */
+  --color-chip: oklch(0.94 0.004 250);        /* нейтральный чип, круглая кнопка */
+  --color-line: oklch(0.94 0.004 250);        /* волосяной разделитель */
+  --color-field: oklch(0.9 0.005 250);        /* кант поля ввода */
 
-  /* Синий шведского знака: продукт про знаки, и цвет взят оттуда. */
-  --color-accent: #0057a8;
+  /* Тёмные плоскости: герой на главном экране и сцена под снимком. */
+  --color-hero: oklch(0.32 0.03 250);
+  --color-stage: oklch(0.2 0.01 250);         /* фон под кадром и затемнение */
+  --color-on-dark: oklch(0.99 0.002 250);     /* текст на тёмном */
 
-  /* Цвета смысла — только для состояний разбора, нигде больше. */
-  --color-fee: #8a5a00;
-  --color-free: #0f7b45;
-  --color-deny: #b3261e;
-  --color-unsure: #6b4ebf;
+  /* --- текст -------------------------------------------------------------- */
+  --color-ink: oklch(0.24 0.01 250);          /* основной текст */
+  --color-ink-strong: oklch(0.22 0.01 250);   /* крупные заголовки */
+  --color-ink-2: oklch(0.45 0.01 250);        /* второстепенный текст */
+  --color-ink-3: oklch(0.55 0.01 250);        /* подписи, подсказки */
+  --color-ink-off: oklch(0.42 0.01 250);      /* выключенная строка: не прозрачность */
+
+  /* --- действие ----------------------------------------------------------- */
+  --color-accent: oklch(0.52 0.11 250);       /* синий шведского знака */
+  --color-accent-press: oklch(0.46 0.105 250);
+  --color-link: oklch(0.45 0.09 250);
+  --color-tint: oklch(0.94 0.02 250);         /* фон синего чипа */
+  --color-tint-ink: oklch(0.4 0.09 250);
+
+  /* --- цвета смысла ------------------------------------------------------- */
+  /* Только для состояний разбора. Нигде больше. */
+  --color-free: oklch(0.42 0.1 150);          /* условий нет */
+  --color-fee: oklch(0.46 0.11 70);           /* платно */
+  --color-unsure: oklch(0.46 0.11 70);        /* неопределённость — тем же тоном */
+  --color-deny: oklch(0.48 0.16 25);          /* знак запрещает */
+  --color-slash: oklch(0.58 0.2 27);          /* перечёркивание на значке конца */
+  --color-note: oklch(0.96 0.02 70);          /* фон жёлтой заметки */
+  --color-note-ink: oklch(0.38 0.05 70);
+  --color-danger-bg: oklch(0.965 0.02 25);    /* фон опасного действия */
+  --color-danger-line: oklch(0.9 0.03 25);
+
+  /* Табличка знака, нарисованная кодом: это предмет, а не оформление. */
+  --color-plate: oklch(0.45 0.13 255);
+
+  /* --- шрифт -------------------------------------------------------------- */
+  /* Системный: ничего не грузится снаружи. Вид держится на шкале, а не на гарнитуре. */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+               "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* --- шкала размеров ----------------------------------------------------- */
+  --text-screen: 30px;
+  --text-screen--line-height: 1.14;
+  --text-screen--letter-spacing: -0.03em;
+  --text-card: 24px;
+  --text-card--line-height: 1.15;
+  --text-card--letter-spacing: -0.025em;
+  --text-card-sm: 19px;
+  --text-card-sm--letter-spacing: -0.015em;
+  --text-nav: 17px;
+  --text-nav--letter-spacing: -0.015em;
+  --text-row: 17px;
+  --text-row--line-height: 1.45;
+  --text-body: 16px;
+  --text-body--line-height: 1.5;
+  --text-label: 15px;
+  --text-caption: 14px;
+  --text-section: 13px;
+  --text-section--letter-spacing: 0.1em;
+  --text-mono: 11px;
+  --text-mono--letter-spacing: 0.1em;
+
+  /* --- скругления и тени --------------------------------------------------- */
+  --radius-card: 30px;
+  --radius-card-sm: 24px;
+  --radius-button: 26px;
+  --radius-button-sm: 22px;
+  --radius-field: 16px;
+  --radius-tile: 14px;
+  --radius-plate: 3px;
+
+  --shadow-card: 0 2px 10px oklch(0.4 0.02 250 / 0.07);
+  --shadow-raised: 0 4px 18px oklch(0.4 0.02 250 / 0.09);
+  --shadow-primary: 0 12px 28px oklch(0.52 0.11 250 / 0.3);
+  --shadow-chip: 0 1px 6px oklch(0.4 0.02 250 / 0.08);
+  --shadow-handle: 0 2px 6px oklch(0.2 0.01 250 / 0.3);
+  --shadow-mask: 0 0 0 9999px oklch(0.2 0.01 250 / 0.55);
 }

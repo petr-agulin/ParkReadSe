@@ -20,8 +20,8 @@ export default function WhoCanPark({ regimes }: { regimes: Regime[] }) {
   if (shown.length === 0) return null;
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-      <h2 className="mb-2 font-medium text-slate-800">Who can park here</h2>
+    <section className="rounded-xl border border-line bg-ground p-4 shadow-sm">
+      <h2 className="mb-2 font-medium text-ink">Who can park here</h2>
 
       {shown.map((circle, i) => (
         <div key={i} className={i > 0 ? "mt-3" : undefined}>
@@ -38,7 +38,7 @@ export default function WhoCanPark({ regimes }: { regimes: Regime[] }) {
             }
           >
             {circle.map((t) => (
-              <li key={t.key} className="text-sm text-slate-800">
+              <li key={t.key} className="text-sm text-ink">
                 {t.text}
               </li>
             ))}

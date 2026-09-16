@@ -16,12 +16,12 @@ import type { Analysis } from "../types";
 // красный — ответа нет. Оттенки 700 взяты ради читаемости на белом: 500 на светлом
 // фоне уже плохо различим, а строку эту читают мельком.
 const TONE: Record<string, string> = {
-  good: "text-emerald-700",
-  // `amber-700` — коричнево-оранжевый, и рядом с малиновым `rose-700` мелким
-  // кеглем читается как тот же красный. Жёлтый берём золотой (`yellow-600`),
-  // а тревожный — чистый красный: разные тона важнее точного попадания в палитру.
-  caution: "text-yellow-600",
-  bad: "text-red-700",
+  good: "text-free",
+  // Оговорка и тревога обязаны различаться мелким кеглем: прежние оттенки
+  // из палитры сборщика в этом размере сливались в один красный. Теперь оба
+  // цвета — токены смысла, и разводит их тон, а не насыщенность.
+  caution: "text-fee",
+  bad: "text-deny",
 };
 
 export default function Completeness({ data }: { data: Analysis }) {
@@ -37,14 +37,14 @@ export default function Completeness({ data }: { data: Analysis }) {
       </p>
 
       {c.may_hide_prohibition && (
-        <p className="mt-1 text-sm font-medium text-rose-700">
+        <p className="mt-1 text-sm font-medium text-deny">
           An unread panel may carry a prohibition, so no period below is presented
           as permitted.
         </p>
       )}
 
       {c.reasons.length > 0 && (
-        <ul className="mt-1 space-y-0.5 text-xs text-slate-600">
+        <ul className="mt-1 space-y-0.5 text-xs text-ink-2">
           {/* Причина без подписи не показывается: служебному слову на странице
               не место. Что подпись потерялась, ловит проверка на стороне API. */}
           {c.reasons.filter((r) => r.text).map((r) => (
@@ -55,8 +55,8 @@ export default function Completeness({ data }: { data: Analysis }) {
 
       {uncertainties.length > 0 && (
         <>
-          <p className="mt-1 text-xs font-medium text-slate-700">Left undetermined</p>
-          <ul className="space-y-0.5 text-xs text-slate-600">
+          <p className="mt-1 text-xs font-medium text-ink-2">Left undetermined</p>
+          <ul className="space-y-0.5 text-xs text-ink-2">
             {uncertainties.map((u) => (
               <li key={u.token}>{u.text}</li>
             ))}

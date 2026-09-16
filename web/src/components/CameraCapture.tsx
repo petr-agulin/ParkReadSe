@@ -137,7 +137,7 @@ export default function CameraCapture({ onCaptured, onCancel }: Props) {
         {/* Сцена по размеру потока, а не наоборот: иначе по бокам остаются
             чёрные поля, и видоискатель выглядит рамкой в рамке. */}
         <div
-          className="relative overflow-hidden rounded-xl border border-line bg-black"
+          className="relative overflow-hidden rounded-xl border border-line bg-stage"
           style={view ? { width: view.w, height: view.h } : { width: "100%", height: "100%" }}
         >
         <video
@@ -158,8 +158,8 @@ export default function CameraCapture({ onCaptured, onCancel }: Props) {
           const k = view.w / size.w;
           return (
             <div
-              className="pointer-events-none absolute rounded-sm border-2 border-white/90
-                         shadow-[0_0_0_100vmax_rgba(0,0,0,.35)]"
+              className="pointer-events-none absolute rounded-sm border-2 border-on-dark
+                         shadow-mask"
               style={{
                 left: guide.x * k,
                 top: guide.y * k,
@@ -175,8 +175,8 @@ export default function CameraCapture({ onCaptured, onCancel }: Props) {
             type="button"
             onClick={toggleTorch}
             aria-pressed={torch}
-            className="absolute right-3 top-3 rounded-full bg-black/55 px-4 py-2 text-[13px]
-                       font-semibold text-white"
+            className="absolute right-3 top-3 rounded-full bg-stage/55 px-4 py-2 text-[13px]
+                       font-semibold text-on-dark"
           >
             {torch ? "Light on" : "Light off"}
           </button>
@@ -197,7 +197,7 @@ export default function CameraCapture({ onCaptured, onCancel }: Props) {
 }
 
 const PRIMARY =
-  "h-12 flex-1 rounded-lg bg-accent px-5 text-[15px] font-semibold text-white disabled:opacity-50";
+  "h-12 flex-1 rounded-lg bg-accent px-5 text-[15px] font-semibold text-on-dark disabled:opacity-50";
 const QUIET =
-  "h-12 rounded-lg border border-line bg-white px-4 text-[15px] font-semibold text-ink";
+  "h-12 rounded-lg border border-line bg-ground px-4 text-[15px] font-semibold text-ink";
 const PLAIN = "h-12 rounded-lg px-3 text-[15px] font-medium text-ink-2";

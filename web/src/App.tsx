@@ -119,15 +119,15 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100 py-6">
+    <div className="min-h-screen bg-ground-2 py-6">
       <main className="mx-auto flex max-w-2xl flex-col gap-4 px-4">
         {/* Подпись под названием уходит, пока открыт снимок или камера: эти
             строки стоят высоты, а высота — ширины снимка. На начальном экране
             она возвращается. */}
         <header>
-          <h1 className="text-xl font-semibold text-slate-900">ParkRead</h1>
+          <h1 className="text-xl font-semibold text-ink">ParkRead</h1>
           {!picked && !camera && (
-            <p className="text-sm text-slate-600">
+            <p className="text-sm text-ink-2">
               What a Swedish parking sign states — read plate by plate.
             </p>
           )}
@@ -179,7 +179,7 @@ export default function App() {
         {/* Сеть нужна ровно одному действию — чтению знака. Сказано до отправки:
             узнать об этом из ошибки после выбора кадра — значит узнать поздно. */}
         {!online && (
-          <p className="rounded-xl border border-slate-300 bg-white p-4 text-sm text-slate-700">
+          <p className="rounded-xl border border-line bg-ground p-4 text-sm text-ink-2">
             {OFFLINE_NOTE}
           </p>
         )}
@@ -187,7 +187,7 @@ export default function App() {
         {busy && <p className="text-[13px] text-ink-2">Reading the sign…</p>}
 
         {error && (
-          <p className="rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-900">
+          <p className="rounded-xl border border-danger-line bg-danger-bg p-4 text-sm text-deny">
             {error}
           </p>
         )}
@@ -201,7 +201,7 @@ export default function App() {
                 же она однажды разошлась бы со справочником и никто бы
                 не заметил. */}
             {data.has_answer && data.note && (
-              <p className="rounded-xl border border-slate-200 bg-white p-4 text-sm text-slate-700">
+              <p className="rounded-xl border border-line bg-ground p-4 text-sm text-ink-2">
                 {data.note.text}
               </p>
             )}

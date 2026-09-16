@@ -304,7 +304,7 @@ export default function SignPicker({
         onPointerCancel={endPointer}
         onWheel={onWheel}
         className="relative touch-none select-none overflow-hidden rounded-xl
-                   border border-line bg-black"
+                   border border-line bg-stage"
         style={base ? { width: base.w, height: base.h } : { width: "100%", height: "100%" }}
       >
         {loaded && placed && (
@@ -323,7 +323,7 @@ export default function SignPicker({
             style={{ left: placed.x, top: placed.y, width: placed.w, height: placed.h }}
           >
             {/* Затемнение снаружи рамки: видно, что уйдёт, а что нет. */}
-            <div className="absolute inset-0 bg-black/50"
+            <div className="absolute inset-0 bg-stage/50"
                  style={{
                    clipPath: `polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0,
                      ${pct(box.x / size.w)} ${pct(box.y / size.h)},
@@ -333,7 +333,7 @@ export default function SignPicker({
                      ${pct(box.x / size.w)} ${pct(box.y / size.h)})`,
                  }} />
             <div
-              className="absolute border-2 border-white shadow-[0_0_0_1px_rgba(0,0,0,.35)]"
+              className="absolute border-2 border-on-dark shadow-handle"
               style={{
                 left: pct(box.x / size.w),
                 top: pct(box.y / size.h),
@@ -352,8 +352,8 @@ export default function SignPicker({
                       `data-corner` не находится, и тяга за угол превращается
                       в перестановку рамки. */}
                   <span
-                    className={`pointer-events-none absolute h-4 w-4 rounded-[3px] bg-white
-                                shadow-[0_0_0_1px_rgba(0,0,0,.35)] ${dotClass(c)}`}
+                    className={`pointer-events-none absolute h-4 w-4 rounded-[3px] bg-ground
+                                shadow-handle ${dotClass(c)}`}
                   />
                 </span>
               ))}
@@ -414,11 +414,11 @@ export default function SignPicker({
 }
 
 const PRIMARY =
-  "h-12 flex-1 rounded-lg bg-accent px-5 text-[15px] font-semibold text-white disabled:opacity-50";
+  "h-12 flex-1 rounded-lg bg-accent px-5 text-[15px] font-semibold text-on-dark disabled:opacity-50";
 const QUIET =
-  "h-12 rounded-lg border border-line bg-white px-4 text-[15px] font-semibold text-ink disabled:opacity-50";
+  "h-12 rounded-lg border border-line bg-ground px-4 text-[15px] font-semibold text-ink disabled:opacity-50";
 const PLAIN = "h-12 rounded-lg px-3 text-[15px] font-medium text-ink-2 disabled:opacity-50";
-const CHIP = "rounded-full bg-black/55 px-4 py-2 text-[13px] font-semibold text-white";
+const CHIP = "rounded-full bg-stage/55 px-4 py-2 text-[13px] font-semibold text-on-dark";
 
 const cornerClass = (c: string) =>
   ({

@@ -921,9 +921,14 @@ describe("вёрстка не сочиняет слов", () => {
     expect(page).toContain('className="flex items-stretch gap-3"');
     const dayNote = page.split("const DAY_NOTE =")[1].split(";")[0];
     expect(dayNote).toContain("font-semibold");
-    expect(dayNote).toContain("text-slate-600");
-    expect(dayNote).not.toContain("red");
-    expect(dayNote).not.toContain("amber");
+    expect(dayNote).toContain("text-ink-2");
+    // Цвета смысла сюда не идут: красный на этой шкале уже значит «стоять нельзя»,
+    // а класс дня — пояснение, а не правило. Запрет назван именами ТОКЕНОВ: прежние
+    // «red» и «amber» после перехода на токены не встречаются в файле вовсе,
+    // и проверка на них стала бы пустой, не перестав быть зелёной.
+    for (const meaning of ["text-deny", "text-fee", "text-free"]) {
+      expect(dayNote, meaning).not.toContain(meaning);
+    }
     expect(page).toContain("note.text");
   });
 

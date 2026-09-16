@@ -15,7 +15,10 @@ const WEB = fileURLToPath(new URL("../", import.meta.url));
 const read = (path: string) => readFileSync(WEB + path, "utf-8");
 
 const manifest = JSON.parse(read("public/manifest.webmanifest"));
-const BLUE = "#0057a8";                       // синий шведского знака (`design.md`)
+// Хром приложения: цвет системной полосы. Это шестнадцатеричный двойник токена
+// `accent` из `design.md` — манифест и `<meta>` читает система, а не наш CSS,
+// и значения `oklch` там разбирает не всякий телефон. Меняются они вдвоём.
+const BLUE = "#2a6099";
 
 describe("манифест", () => {
   it("назван так, как человек найдёт его на телефоне", () => {
@@ -101,6 +104,28 @@ describe("чего нет в собранной странице", () => {
     // Выбора больше не существует: отвечает браузер, и отвечать больше некому.
     expect(app).not.toContain("Read on this device");
     expect(app).not.toContain("server.py");
+  });
+
+  it("оформление живёт в токенах, а не в разметке", () => {
+    // Требование 1 шага 11. Цвет, вписанный в компонент, расходится с остальными
+    // экранами молча: правят один файл, а про три забывают. Значения живут
+    // в `index.css`, в разметке остаются только имена.
+    const sources = (dir: string): string[] =>
+      readdirSync(`${WEB}src/${dir}`, { withFileTypes: true }).flatMap((e) =>
+        e.isDirectory() ? sources(`${dir}${e.name}/`)
+        : e.name.endsWith(".tsx") ? [`src/${dir}${e.name}`] : []);
+
+    const PALETTE = /\b(?:bg|text|border|fill|stroke|ring|divide)-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\d{2,3}\b/;
+
+    for (const file of sources("")) {
+      const text = read(file);
+      // Отрицательный просмотр назад — ради `&#9679;`: это знак-сущность,
+      // а не цвет, и попадаться он тут не должен.
+      expect(text, `${file}: цвет вписан прямо в разметку`)
+        .not.toMatch(/(?<!&)#[0-9a-fA-F]{3,8}\b/);
+      expect(text, `${file}: rgb/rgba мимо токенов`).not.toMatch(/\brgba?\(/);
+      expect(text, `${file}: палитра сборщика вместо токена`).not.toMatch(PALETTE);
+    }
   });
 
   it("служебный работник регистрируется только в собранной странице", () => {
