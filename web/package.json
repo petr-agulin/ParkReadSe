@@ -14,7 +14,8 @@
     "test:build": "vitest run --dir build --reporter=verbose",
     "emit": "node tools/emit.ts --write",
     "emit:check": "node tools/emit.ts",
-    "icons": "node tools/icons.ts"
+    "icons": "node tools/icons.ts",
+    "ask": "node --env-file-if-exists=../.env --import ./tools/ts-resolve.mjs tools/ask.ts"
   },
   "dependencies": {
     "react": "^19.2.0",

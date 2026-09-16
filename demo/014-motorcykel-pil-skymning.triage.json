@@ -3,16 +3,17 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:44:48+00:00",
+  "saved_at": "2026-09-16T07:08:57+00:00",
   "usage": {
-    "completion_tokens": 95,
+    "completion_tokens": 106,
     "prompt_tokens": 1533,
-    "total_tokens": 1628
+    "total_tokens": 1639
   },
   "response": {
+    "schema_version": 1,
     "category": "parking_sign",
-    "what_i_see": "A Swedish blue parking sign with a white 'P', followed below by a motorcycle symbol plate and a directional arrow plate, and further below by a grey information or rule plate assembly.",
-    "model_confidence": 0.99,
-    "panels_below_main_sign": 3
+    "what_i_see": "A Swedish parking sign with a main blue P sign, followed below by a motorcycle symbol plate and an arrow plate pointing left. Further below, there is a gray structure which appears to be the backs of ",
+    "model_confidence": 0.95,
+    "panels_below_main_sign": 2
   }
 }
