@@ -87,12 +87,12 @@ export default function Home({
       </div>
 
       {/* Момент: пусто значит «сейчас», и время берётся в минуту отправки.
-          Поле выбора лежит поверх всей строки прозрачным слоем, поэтому нажатие
-          в любом её месте открывает системный выбор даты, а подписью остаётся
-          наше слово. */}
-      <div className="relative flex items-center justify-between border-b border-line py-4">
+          Поле выбора лежит прозрачным слоем поверх ЗНАЧЕНИЯ, а не всей строки:
+          нажимают на «Now» или на выбранное время, а подпись слева ничего
+          не обещает и ничего не открывает. */}
+      <div className="flex items-center justify-between border-b border-line py-4">
         <span className="text-body text-ink-2">Reading for</span>
-        <span className="flex items-center gap-2 text-row font-bold text-ink">
+        <span className="relative flex items-center gap-2 text-row font-bold text-ink">
           {chip.label}
           {/* Сброс показывается, только когда момент выбран. Понадеяться на «Clear»
               в системном диалоге нельзя: на Android он обычно есть, в Safari на iOS
@@ -110,16 +110,19 @@ export default function Home({
             </button>
           )}
           <span className="text-ink-3">›</span>
+          {/* По вертикали поле растянуто за строку текста: сама она около 24 px,
+              а цель нажатия меньше 44 px не бывает. Раскладку это не двигает —
+              слой лежит поверх. */}
+          <input
+            type="datetime-local"
+            value={moment}
+            min={MOMENT_FROM}
+            max={MOMENT_TO}
+            aria-label="Moment to read the sign at"
+            onChange={(e) => onMoment(e.target.value)}
+            className="absolute -inset-y-3 inset-x-0 cursor-pointer opacity-0"
+          />
         </span>
-        <input
-          type="datetime-local"
-          value={moment}
-          min={MOMENT_FROM}
-          max={MOMENT_TO}
-          aria-label="Moment to read the sign at"
-          onChange={(e) => onMoment(e.target.value)}
-          className="absolute inset-0 cursor-pointer opacity-0"
-        />
       </div>
 
       <div className="mt-auto flex flex-col gap-3.5">
