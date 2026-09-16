@@ -1,4 +1,4 @@
-// Схемы ответа модели. СГЕНЕРИРОВАНО `cli.py schema --emit`.
+// Схемы ответа модели. СГЕНЕРИРОВАНО `npm run emit`.
 // Руками не правится: источник — `schema/*.json`, здесь его копия.
 //
 // Проверяет их своя проверка (`schema.ts`), а не библиотека: схема
@@ -8,7 +8,7 @@ import type { Schema } from "./schema";
 
 export const SIGN_SCHEMA: Schema = {
  "$schema": "https://json-schema.org/draft/2020-12/schema",
- "$id": "parkread/sign.schema.json",
+ "$id": "sign.schema.json",
  "title": "Извлечённая структура парковочного знака",
  "description": "Контракт между vision-моделью и детерминированным кодом. Модель заполняет ТОЛЬКО эти поля: закрытый список, additionalProperties запрещены везде. Всё, что модель хотела бы сказать помимо схемы, попадает в notes и в вычисления не входит.",
  "type": "object",
@@ -468,7 +468,7 @@ export const SIGN_SCHEMA: Schema = {
 
 export const TRIAGE_SCHEMA: Schema = {
  "$schema": "https://json-schema.org/draft/2020-12/schema",
- "$id": "parkread/triage.schema.json",
+ "$id": "triage.schema.json",
  "title": "Ответ стадии отсева",
  "description": "Стадия 0 конвейера. Один дешёвый вызов модели, отвечающий на единственный вопрос: парковочный ли это знак. Модель возвращает МЕТКУ, а не решение: продолжать конвейер или нет, решает код.",
  "type": "object",

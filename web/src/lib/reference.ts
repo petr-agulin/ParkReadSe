@@ -1,9 +1,9 @@
-// Справочник — он же белый список. Порт `parkread/reference.py`.
+// Справочник — он же белый список.
 //
 // Чего в `reference/signs/` нет, продукт не интерпретирует: показывает дословно
 // и помечает. Сами записи приезжают из `reference.data.ts`, который порождает
-// питон из markdown (`cli.py reference --emit`): парсить преамбулы на устройстве
-// нечем, а источником остаётся markdown.
+// `npm run emit` из markdown: парсить преамбулы на устройстве нечем, а источником
+// остаётся markdown.
 
 import { ENTRIES, type RefEntry } from "./reference.data";
 import type { Parsed, SignDoc } from "./sign";

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "parkread/sign.schema.json",
+  "$id": "sign.schema.json",
   "title": "Извлечённая структура парковочного знака",
   "description": "Контракт между vision-моделью и детерминированным кодом. Модель заполняет ТОЛЬКО эти поля: закрытый список, additionalProperties запрещены везде. Всё, что модель хотела бы сказать помимо схемы, попадает в notes и в вычисления не входит.",
   "type": "object",
