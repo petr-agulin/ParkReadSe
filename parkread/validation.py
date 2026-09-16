@@ -109,6 +109,7 @@ class Validator:
         """`panels_seen` — число панелей, названное стадией отсева. Независимый взгляд
         на ту же фотографию: расхождение означает потерю границы."""
         repairs = self._repair(doc)
+        repairs += self._fix_unknown_colors(doc)
         repairs += self._drop_unknown_enums(doc)
         errs = [self._fmt(e) for e in sorted(self._sign.iter_errors(doc),
                                              key=lambda e: list(e.path))]
@@ -167,6 +168,42 @@ class Validator:
             doc["panel_count"] = len(panels)
         return done
 
+    def _fix_unknown_colors(self, doc: dict) -> list[str]:
+        """Цвет вне перечисления становится `other`, а не уносит с собой весь разбор.
+
+        Найдено живым прогоном на снимке `014`: модель назвала фон панели `grey` —
+        это изнанка другого знака на том же столбе, некрашеный металл. Строгая
+        проверка отбраковала бы верно прочитанный знак целиком из-за оттенка,
+        которого нет в списке.
+
+        Почему это можно чинить молча, хотя поле обязательное: `other` заведено
+        в перечислении ровно как «ни один из перечисленных», то есть ответ модели
+        и означает `other`. И единственное место, где цвет имеет последствие, —
+        `_may_prohibit` в `completeness`: там `other` уже считается возможным
+        запретом. Починка попадает на осторожную сторону и не может превратить
+        запрет в разрешение.
+
+        Чинится только строка. Пропущенное или нестроковое поле — не «оттенок,
+        которого нет в списке», а отсутствие ответа, и его надо видеть.
+        """
+        done: list[str] = []
+        allowed = self._sign.schema["$defs"]["color"]["enum"]
+        main = doc.get("main_sign")
+        if isinstance(main, dict):
+            value = main.get("background_color")
+            if isinstance(value, str) and value not in allowed:
+                done.append(f"цвет знака {value!r} -> 'other' — нет в перечислении схемы")
+                main["background_color"] = "other"
+        for panel in doc.get("panels", []):
+            if not isinstance(panel, dict):
+                continue
+            value = panel.get("background_color")
+            if isinstance(value, str) and value not in allowed:
+                done.append(f"панель {panel.get('index')}: цвет {value!r} -> 'other'"
+                            f" — нет в перечислении схемы")
+                panel["background_color"] = "other"
+        return done
+
     def _drop_unknown_enums(self, doc: dict) -> list[str]:
         """Необязательное поле `parsed` со значением вне перечисления **выбрасывается**,
         а не роняет весь разбор.
@@ -178,7 +215,9 @@ class Validator:
         защита, написанная второпях, ломает рабочий сценарий тише, чем это делает модель.
 
         Обязательные поля так не чинятся: там значение вне перечисления — настоящая
-        поломка ответа, и её надо видеть.
+        поломка ответа, и её надо видеть. Единственное исключение названо рядом,
+        в `_fix_unknown_colors`, и названо вместе с причиной: у цвета в перечислении
+        есть `other` — значение «ни один из перечисленных».
         """
         done: list[str] = []
         for panel in doc.get("panels", []):

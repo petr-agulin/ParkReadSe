@@ -100,8 +100,46 @@ function repairDoc(doc: Record<string, any>): string[] {
   return done;
 }
 
+/** Цвет вне перечисления становится `other`, а не уносит с собой весь разбор.
+ *
+ *  Найдено живым прогоном на снимке `014`: модель назвала фон панели `grey` — это
+ *  изнанка другого знака на том же столбе, некрашеный металл. Строгая проверка
+ *  отбраковала бы верно прочитанный знак целиком из-за оттенка, которого нет в списке.
+ *
+ *  Почему это можно чинить молча, хотя поле обязательное: `other` заведено
+ *  в перечислении ровно как «ни один из перечисленных», то есть ответ модели и
+ *  означает `other`. И единственное место, где цвет имеет последствие, —
+ *  `mayProhibit` в `completeness`: там `other` уже считается возможным запретом.
+ *  Починка попадает на осторожную сторону и не может превратить запрет в разрешение.
+ *
+ *  Чинится только строка. Пропущенное или нестроковое поле — не «оттенок, которого
+ *  нет в списке», а отсутствие ответа, и его надо видеть. */
+function fixUnknownColors(doc: Record<string, any>): string[] {
+  const done: string[] = [];
+  const allowed: string[] = SIGN_SCHEMA.$defs.color.enum;
+  const main = doc.main_sign;
+  if (main && typeof main === "object") {
+    const value = main.background_color;
+    if (typeof value === "string" && !allowed.includes(value)) {
+      done.push(`цвет знака ${pyRepr(value)} -> 'other' — нет в перечислении схемы`);
+      main.background_color = "other";
+    }
+  }
+  for (const panel of doc.panels ?? []) {
+    if (!panel || typeof panel !== "object") continue;
+    const value = panel.background_color;
+    if (typeof value === "string" && !allowed.includes(value)) {
+      done.push(`панель ${panel.index}: цвет ${pyRepr(value)} -> 'other'`
+              + " — нет в перечислении схемы");
+      panel.background_color = "other";
+    }
+  }
+  return done;
+}
+
 /** Необязательное поле `parsed` со значением вне перечисления ВЫБРАСЫВАЕТСЯ,
- *  а не роняет весь разбор.
+ *  а не роняет весь разбор. Обязательные поля так не чинятся: исключение одно —
+ *  цвет выше, и оно названо вместе с причиной.
  *
  *  Найдено замером: на снимке `009` модель вписала `payment_method: mobile`, когда
  *  такого значения в схеме уже не было. Строгая проверка отбраковала бы верно
@@ -206,7 +244,7 @@ export function triage(doc: Record<string, any>): Result {
  *  на ту же фотографию, и расхождение означает потерю границы. */
 export function sign(doc: Record<string, any>,
                      panelsSeen: number | null = null): Result {
-  const repairs = [...repairDoc(doc), ...dropUnknownEnums(doc)];
+  const repairs = [...repairDoc(doc), ...fixUnknownColors(doc), ...dropUnknownEnums(doc)];
   const errs = errorsOf(doc, SIGN_SCHEMA);
   const result: Result = {
     data: errs.length ? null : (doc as SignDoc),

@@ -9,6 +9,10 @@ import { ok, sign as validateSign, triage } from "./validation";
 
 const ROOT = fileURLToPath(new URL("../../../", import.meta.url));
 
+/** Эталон разбора из набора — свежая копия на каждый тест: валидатор чинит на месте. */
+const read = (name: string): Record<string, any> =>
+  JSON.parse(readFileSync(`${ROOT}testset/expected/${name}.json`, "utf-8"));
+
 describe("ответ отсева", () => {
   // py: test_accuracy::test_extra_field_does_not_destroy_a_triage_answer
   it("лишнее поле не губит ответ, а убирается с записью правки", () => {
@@ -50,5 +54,34 @@ describe("разбор знака", () => {
     expect(ok(res), "разбор не отбракован целиком").toBe(true);
     expect(res.data!.panels![1].parsed).not.toHaveProperty("payment_method");
     expect(res.repairs.some((r) => r.includes("payment_method"))).toBe(true);
+  });
+
+  it("цвет вне перечисления становится `other`, и разбор остаётся", () => {
+    // Живой прогон на снимке `014`: модель назвала фон `grey` — изнанка другого
+    // знака на том же столбе. Строгость стоила бы верно прочитанного знака целиком.
+    const doc = read("009-besokande-avgift");
+    doc.panels[0].background_color = "grey";
+    doc.main_sign.background_color = "серо-буро-малиновый";
+
+    const res = validateSign(doc);
+    expect(ok(res), res.schemaErrors.join("; ")).toBe(true);
+    expect(res.data!.main_sign.background_color).toBe("other");
+    expect(res.data!.panels![0].background_color).toBe("other");
+    // Правка записывается дословно: эти строки сверяются с питоновскими.
+    expect(res.repairs).toEqual([
+      "цвет знака 'серо-буро-малиновый' -> 'other' — нет в перечислении схемы",
+      "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы",
+    ]);
+  });
+
+  it("пропущенный цвет не чинится: это не оттенок, а отсутствие ответа", () => {
+    // Граница починки. Без этой проверки «чиним цвет» однажды станет
+    // «дописываем поле, которого модель не дала».
+    const doc = read("009-besokande-avgift");
+    delete doc.panels[0].background_color;
+
+    const res = validateSign(doc);
+    expect(ok(res), "обязательное поле пропало — это видно").toBe(false);
+    expect(res.repairs.some((r) => r.includes("цвет"))).toBe(false);
   });
 });

@@ -243,6 +243,88 @@
    }
   }
  },
+ "demo/001-p-30min::цвет панели вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "30 min"
+     ],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "duration_limit": {
+       "amount": 30,
+       "unit": "minutes"
+      }
+     }
+    }
+   ],
+   "panel_count": 1,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/001-p-30min::цвет знака вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "other",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "30 min"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "duration_limit": {
+       "amount": 30,
+       "unit": "minutes"
+      }
+     }
+    }
+   ],
+   "panel_count": 1,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
  "demo/002-avgift-forbud-utanfor-markerad-plats::как есть": {
   "ok": true,
   "repairs": [],
@@ -823,6 +905,200 @@
    }
   }
  },
+ "demo/002-avgift-forbud-utanfor-markerad-plats::цвет панели вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [
+   "panel_2_obstructed:sticker"
+  ],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Avgift"
+     ],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "fee": true
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "Utanför",
+      "markerad",
+      "plats"
+     ],
+     "background_color": "yellow",
+     "legibility": {
+      "readable": true,
+      "obstructions": [
+       "sticker"
+      ]
+     },
+     "parsed": {
+      "placement": "marked_bay_only",
+      "prohibition": true
+     }
+    },
+    {
+     "index": 3,
+     "kind": "operator_plate",
+     "lines": [
+      "Mölndals",
+      "Parkerings AB",
+      "031-87 54 79"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "operator": {
+       "name": "Mölndals Parkerings AB",
+       "phone": "031-87 54 79"
+      }
+     }
+    },
+    {
+     "index": 4,
+     "kind": "info_board",
+     "lines": [
+      "Områdeskod 31370",
+      "Mölndals Parkerings AB",
+      "easypark",
+      "Parkster",
+      "PARKERING GÖTEBORG"
+     ],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "area_code": "31370"
+     }
+    }
+   ],
+   "panel_count": 4,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/002-avgift-forbud-utanfor-markerad-plats::цвет знака вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [
+   "panel_2_obstructed:sticker"
+  ],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "other",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Avgift"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "fee": true
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "Utanför",
+      "markerad",
+      "plats"
+     ],
+     "background_color": "yellow",
+     "legibility": {
+      "readable": true,
+      "obstructions": [
+       "sticker"
+      ]
+     },
+     "parsed": {
+      "placement": "marked_bay_only",
+      "prohibition": true
+     }
+    },
+    {
+     "index": 3,
+     "kind": "operator_plate",
+     "lines": [
+      "Mölndals",
+      "Parkerings AB",
+      "031-87 54 79"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "operator": {
+       "name": "Mölndals Parkerings AB",
+       "phone": "031-87 54 79"
+      }
+     }
+    },
+    {
+     "index": 4,
+     "kind": "info_board",
+     "lines": [
+      "Områdeskod 31370",
+      "Mölndals Parkerings AB",
+      "easypark",
+      "Parkster",
+      "PARKERING GÖTEBORG"
+     ],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "area_code": "31370"
+     }
+    }
+   ],
+   "panel_count": 4,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
  "demo/003-p-2tim::как есть": {
   "ok": true,
   "repairs": [],
@@ -1042,6 +1318,90 @@
    "main_sign": {
     "type": "parking",
     "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "2 tim"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "duration_limit": {
+       "amount": 2,
+       "unit": "hours"
+      }
+     }
+    }
+   ],
+   "panel_count": 1,
+   "boundaries": {
+    "certain": true
+   },
+   "model_confidence": 0.99
+  }
+ },
+ "demo/003-p-2tim::цвет панели вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "2 tim"
+     ],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "duration_limit": {
+       "amount": 2,
+       "unit": "hours"
+      }
+     }
+    }
+   ],
+   "panel_count": 1,
+   "boundaries": {
+    "certain": true
+   },
+   "model_confidence": 0.99
+  }
+ },
+ "demo/003-p-2tim::цвет знака вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "other",
     "form": "regular",
     "legibility": {
      "readable": true
@@ -1382,6 +1742,126 @@
    "main_sign": {
     "type": "parking",
     "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Endast",
+      "för",
+      "besökande",
+      "till",
+      "Pingstkyrkan"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "eligibility": "visitors"
+     }
+    },
+    {
+     "index": 2,
+     "kind": "operator_plate",
+     "lines": [
+      "Västia Parkering",
+      "0771-501550"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "operator": {
+       "name": "Västia Parkering",
+       "phone": "0771-501550"
+      }
+     }
+    }
+   ],
+   "panel_count": 2,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/004-endast-besokande-pingstkyrkan::цвет панели вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Endast",
+      "för",
+      "besökande",
+      "till",
+      "Pingstkyrkan"
+     ],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "eligibility": "visitors"
+     }
+    },
+    {
+     "index": 2,
+     "kind": "operator_plate",
+     "lines": [
+      "Västia Parkering",
+      "0771-501550"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "operator": {
+       "name": "Västia Parkering",
+       "phone": "0771-501550"
+      }
+     }
+    }
+   ],
+   "panel_count": 2,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/004-endast-besokande-pingstkyrkan::цвет знака вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "other",
     "form": "regular",
     "legibility": {
      "readable": true
@@ -1785,6 +2265,144 @@
    "main_sign": {
     "type": "parking",
     "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "2 tim",
+      "8-18",
+      "(8-15)"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "duration_limit": {
+       "amount": 2,
+       "unit": "hours"
+      },
+      "time_windows": [
+       {
+        "from": "08:00",
+        "to": "18:00",
+        "day_class": "weekday"
+       },
+       {
+        "from": "08:00",
+        "to": "15:00",
+        "day_class": "eve"
+       }
+      ]
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "arrow": "both_horizontal",
+      "pictogram": "arrow"
+     }
+    }
+   ],
+   "panel_count": 2,
+   "boundaries": {
+    "certain": true
+   },
+   "model_confidence": 0.98
+  }
+ },
+ "demo/005-2tim-8-18-parentes-8-15-dubbelpil::цвет панели вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "2 tim",
+      "8-18",
+      "(8-15)"
+     ],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "duration_limit": {
+       "amount": 2,
+       "unit": "hours"
+      },
+      "time_windows": [
+       {
+        "from": "08:00",
+        "to": "18:00",
+        "day_class": "weekday"
+       },
+       {
+        "from": "08:00",
+        "to": "15:00",
+        "day_class": "eve"
+       }
+      ]
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "arrow": "both_horizontal",
+      "pictogram": "arrow"
+     }
+    }
+   ],
+   "panel_count": 2,
+   "boundaries": {
+    "certain": true
+   },
+   "model_confidence": 0.98
+  }
+ },
+ "demo/005-2tim-8-18-parentes-8-15-dubbelpil::цвет знака вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "other",
     "form": "regular",
     "legibility": {
      "readable": true
@@ -2423,6 +3041,200 @@
    }
   }
  },
+ "demo/006-tillstand-07-17-ovrig-tid-avgift::цвет панели вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Särskilt",
+      "P-tillstånd",
+      "erfordras",
+      "07-17"
+     ],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "time_windows": [
+       {
+        "from": "07:00",
+        "to": "17:00",
+        "day_class": "weekday"
+       }
+      ],
+      "permit_required": true,
+      "eligibility": "permit_holders"
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "Övrig tid",
+      "avgift"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "fee": true,
+      "scope_shift": "remaining_time"
+     }
+    },
+    {
+     "index": 3,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "arrow": "both_horizontal",
+      "pictogram": "arrow"
+     }
+    },
+    {
+     "index": 4,
+     "kind": "operator_plate",
+     "lines": [
+      "Mölndals",
+      "Parkerings AB",
+      "031-875479"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "operator": {
+       "name": "Mölndals Parkerings AB",
+       "phone": "031-875479"
+      }
+     }
+    }
+   ],
+   "panel_count": 4,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/006-tillstand-07-17-ovrig-tid-avgift::цвет знака вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "other",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Särskilt",
+      "P-tillstånd",
+      "erfordras",
+      "07-17"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "time_windows": [
+       {
+        "from": "07:00",
+        "to": "17:00",
+        "day_class": "weekday"
+       }
+      ],
+      "permit_required": true,
+      "eligibility": "permit_holders"
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "Övrig tid",
+      "avgift"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "fee": true,
+      "scope_shift": "remaining_time"
+     }
+    },
+    {
+     "index": 3,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "arrow": "both_horizontal",
+      "pictogram": "arrow"
+     }
+    },
+    {
+     "index": 4,
+     "kind": "operator_plate",
+     "lines": [
+      "Mölndals",
+      "Parkerings AB",
+      "031-875479"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "operator": {
+       "name": "Mölndals Parkerings AB",
+       "phone": "031-875479"
+      }
+     }
+    }
+   ],
+   "panel_count": 4,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
  "demo/007-gul-forbud-forhyrda-platser::как есть": {
   "ok": true,
   "repairs": [],
@@ -2732,6 +3544,126 @@
    "main_sign": {
     "type": "prohibition_parking",
     "background_color": "yellow",
+    "form": "zone",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Förhyrda",
+      "platser"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "eligibility": "rented",
+      "pictogram": "parking",
+      "permits_parking": true
+     }
+    },
+    {
+     "index": 2,
+     "kind": "operator_plate",
+     "lines": [
+      "P-tjänst V.",
+      "031-51 88 10"
+     ],
+     "background_color": "yellow",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "operator": {
+       "name": "P-tjänst V.",
+       "phone": "031-51 88 10"
+      }
+     }
+    }
+   ],
+   "panel_count": 2,
+   "boundaries": {
+    "certain": true
+   },
+   "model_confidence": 0.98
+  }
+ },
+ "demo/007-gul-forbud-forhyrda-platser::цвет панели вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "prohibition_parking",
+    "background_color": "yellow",
+    "form": "zone",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Förhyrda",
+      "platser"
+     ],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "eligibility": "rented",
+      "pictogram": "parking",
+      "permits_parking": true
+     }
+    },
+    {
+     "index": 2,
+     "kind": "operator_plate",
+     "lines": [
+      "P-tjänst V.",
+      "031-51 88 10"
+     ],
+     "background_color": "yellow",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "operator": {
+       "name": "P-tjänst V.",
+       "phone": "031-51 88 10"
+      }
+     }
+    }
+   ],
+   "panel_count": 2,
+   "boundaries": {
+    "certain": true
+   },
+   "model_confidence": 0.98
+  }
+ },
+ "demo/007-gul-forbud-forhyrda-platser::цвет знака вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "prohibition_parking",
+    "background_color": "other",
     "form": "zone",
     "legibility": {
      "readable": true
@@ -3220,6 +4152,178 @@
    "main_sign": {
     "type": "parking",
     "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "eligibility": "disabled_permit",
+      "pictogram": "wheelchair"
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "Avgift"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "fee": true
+     }
+    },
+    {
+     "index": 3,
+     "kind": "operator_plate",
+     "lines": [
+      "P-tjänst"
+     ],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "operator": {
+       "name": "P-tjänst"
+      }
+     }
+    },
+    {
+     "index": 4,
+     "kind": "info_board",
+     "lines": [
+      "Parkster",
+      "App-parkering",
+      "utan serviceavgift.",
+      "easypark",
+      "PARKERA",
+      "MED OSS!"
+     ],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "area_code": "17813"
+     }
+    }
+   ],
+   "panel_count": 4,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/008-rorelsehindrad-avgift::цвет панели вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "eligibility": "disabled_permit",
+      "pictogram": "wheelchair"
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "Avgift"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "fee": true
+     }
+    },
+    {
+     "index": 3,
+     "kind": "operator_plate",
+     "lines": [
+      "P-tjänst"
+     ],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "operator": {
+       "name": "P-tjänst"
+      }
+     }
+    },
+    {
+     "index": 4,
+     "kind": "info_board",
+     "lines": [
+      "Parkster",
+      "App-parkering",
+      "utan serviceavgift.",
+      "easypark",
+      "PARKERA",
+      "MED OSS!"
+     ],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "area_code": "17813"
+     }
+    }
+   ],
+   "panel_count": 4,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/008-rorelsehindrad-avgift::цвет знака вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "other",
     "form": "regular",
     "legibility": {
      "readable": true
@@ -3815,6 +4919,180 @@
    }
   }
  },
+ "demo/009-besokande-avgift::цвет панели вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Besökande"
+     ],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "eligibility": "visitors"
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "Avgift"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "fee": true
+     }
+    },
+    {
+     "index": 3,
+     "kind": "operator_plate",
+     "lines": [
+      "P-tjänst"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "operator": {
+       "name": "P-tjänst"
+      },
+      "area_code": "17813"
+     }
+    },
+    {
+     "index": 4,
+     "kind": "info_board",
+     "lines": [
+      "EASYPARK",
+      "PARKERA",
+      "MED OSS!",
+      "SMS-PARKERA",
+      "Parkster",
+      "App-parkering",
+      "utan serviceavgift."
+     ],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {}
+    }
+   ],
+   "panel_count": 4,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/009-besokande-avgift::цвет знака вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "other",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Besökande"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "eligibility": "visitors"
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "Avgift"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "fee": true
+     }
+    },
+    {
+     "index": 3,
+     "kind": "operator_plate",
+     "lines": [
+      "P-tjänst"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "operator": {
+       "name": "P-tjänst"
+      },
+      "area_code": "17813"
+     }
+    },
+    {
+     "index": 4,
+     "kind": "info_board",
+     "lines": [
+      "EASYPARK",
+      "PARKERA",
+      "MED OSS!",
+      "SMS-PARKERA",
+      "Parkster",
+      "App-parkering",
+      "utan serviceavgift."
+     ],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {}
+    }
+   ],
+   "panel_count": 4,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
  "demo/010-forhyrda-platser-tva-pilar::как есть": {
   "ok": true,
   "repairs": [],
@@ -4305,6 +5583,170 @@
    }
   }
  },
+ "demo/010-forhyrda-platser-tva-pilar::цвет панели вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Förhyrda",
+      "platser"
+     ],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "eligibility": "rented"
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "arrow": "left"
+     }
+    },
+    {
+     "index": 3,
+     "kind": "sign_plate",
+     "lines": [
+      "Förhyrd",
+      "plats",
+      "Särskilt",
+      "P-tillstånd",
+      "erfordras"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "eligibility": "rented",
+      "permit_required": true
+     }
+    },
+    {
+     "index": 4,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "arrow": "right"
+     }
+    }
+   ],
+   "panel_count": 4,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/010-forhyrda-platser-tva-pilar::цвет знака вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "other",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Förhyrda",
+      "platser"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "eligibility": "rented"
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "arrow": "left"
+     }
+    },
+    {
+     "index": 3,
+     "kind": "sign_plate",
+     "lines": [
+      "Förhyrd",
+      "plats",
+      "Särskilt",
+      "P-tillstånd",
+      "erfordras"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "eligibility": "rented",
+      "permit_required": true
+     }
+    },
+    {
+     "index": 4,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "arrow": "right"
+     }
+    }
+   ],
+   "panel_count": 4,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
  "demo/011-gul-p-avgift-klistermarken::как есть": {
   "ok": true,
   "repairs": [],
@@ -4551,6 +5993,100 @@
    "main_sign": {
     "type": "parking",
     "background_color": "yellow",
+    "form": "zone",
+    "legibility": {
+     "readable": true,
+     "obstructions": [
+      "sticker",
+      "damage"
+     ]
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Avgift"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true,
+      "obstructions": [
+       "sticker"
+      ]
+     },
+     "parsed": {
+      "fee": true
+     }
+    }
+   ],
+   "panel_count": 1,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/011-gul-p-avgift-klistermarken::цвет панели вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [
+   "panel_1_obstructed:sticker"
+  ],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "yellow",
+    "form": "zone",
+    "legibility": {
+     "readable": true,
+     "obstructions": [
+      "sticker",
+      "damage"
+     ]
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Avgift"
+     ],
+     "background_color": "other",
+     "legibility": {
+      "readable": true,
+      "obstructions": [
+       "sticker"
+      ]
+     },
+     "parsed": {
+      "fee": true
+     }
+    }
+   ],
+   "panel_count": 1,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/011-gul-p-avgift-klistermarken::цвет знака вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [
+   "panel_1_obstructed:sticker"
+  ],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "other",
     "form": "zone",
     "legibility": {
      "readable": true,
@@ -5159,6 +6695,198 @@
    }
   }
  },
+ "demo/012-tillstand-7-17-ovrig-tid-avgift::цвет панели вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Särskilt",
+      "P-tillstånd",
+      "erfordras",
+      "7-17"
+     ],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "time_windows": [
+       {
+        "from": "07:00",
+        "to": "17:00",
+        "day_class": "weekday"
+       }
+      ],
+      "permit_required": true,
+      "eligibility": "permit_holders"
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "Övrig tid",
+      "avgift"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "fee": true,
+      "scope_shift": "remaining_time"
+     }
+    },
+    {
+     "index": 3,
+     "kind": "operator_plate",
+     "lines": [
+      "MPAB",
+      "031-87 54 79"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "operator": {
+       "name": "MPAB",
+       "phone": "031-87 54 79"
+      }
+     }
+    },
+    {
+     "index": 4,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "arrow": "both_horizontal",
+      "pictogram": "arrow"
+     }
+    }
+   ],
+   "panel_count": 4,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/012-tillstand-7-17-ovrig-tid-avgift::цвет знака вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "other",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Särskilt",
+      "P-tillstånd",
+      "erfordras",
+      "7-17"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "time_windows": [
+       {
+        "from": "07:00",
+        "to": "17:00",
+        "day_class": "weekday"
+       }
+      ],
+      "permit_required": true,
+      "eligibility": "permit_holders"
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "Övrig tid",
+      "avgift"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "fee": true,
+      "scope_shift": "remaining_time"
+     }
+    },
+    {
+     "index": 3,
+     "kind": "operator_plate",
+     "lines": [
+      "MPAB",
+      "031-87 54 79"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "operator": {
+       "name": "MPAB",
+       "phone": "031-87 54 79"
+      }
+     }
+    },
+    {
+     "index": 4,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "arrow": "both_horizontal",
+      "pictogram": "arrow"
+     }
+    }
+   ],
+   "panel_count": 4,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
  "demo/013-rorelsehindrad-2-platser::как есть": {
   "ok": true,
   "repairs": [],
@@ -5655,6 +7383,172 @@
    }
   }
  },
+ "demo/013-rorelsehindrad-2-platser::цвет панели вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "eligibility": "disabled_permit",
+      "pictogram": "wheelchair"
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "2 platser"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "place_count": 2
+     }
+    },
+    {
+     "index": 3,
+     "kind": "operator_plate",
+     "lines": [
+      "Mölndals",
+      "Parkerings AB",
+      "031-87 54 79"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "operator": {
+       "name": "Mölndals Parkerings AB",
+       "phone": "031-87 54 79"
+      }
+     }
+    },
+    {
+     "index": 4,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "arrow": "left",
+      "pictogram": "arrow"
+     }
+    }
+   ],
+   "panel_count": 4,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/013-rorelsehindrad-2-platser::цвет знака вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "other",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "eligibility": "disabled_permit",
+      "pictogram": "wheelchair"
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "2 platser"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "place_count": 2
+     }
+    },
+    {
+     "index": 3,
+     "kind": "operator_plate",
+     "lines": [
+      "Mölndals",
+      "Parkerings AB",
+      "031-87 54 79"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "operator": {
+       "name": "Mölndals Parkerings AB",
+       "phone": "031-87 54 79"
+      }
+     }
+    },
+    {
+     "index": 4,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "arrow": "left",
+      "pictogram": "arrow"
+     }
+    }
+   ],
+   "panel_count": 4,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
  "demo/014-motorcykel-pil-skymning::как есть": {
   "ok": true,
   "repairs": [],
@@ -5953,6 +7847,106 @@
    }
   }
  },
+ "demo/014-motorcykel-pil-skymning::цвет панели вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "vehicle_class": "motorcycle",
+      "pictogram": "motorcycle"
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "arrow": "left",
+      "pictogram": "arrow"
+     }
+    }
+   ],
+   "panel_count": 2,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/014-motorcykel-pil-skymning::цвет знака вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "other",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "vehicle_class": "motorcycle",
+      "pictogram": "motorcycle"
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "arrow": "left",
+      "pictogram": "arrow"
+     }
+    }
+   ],
+   "panel_count": 2,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
  "demo/015-motorcykel::как есть": {
   "ok": true,
   "repairs": [],
@@ -6157,6 +8151,84 @@
    "main_sign": {
     "type": "parking",
     "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "vehicle_class": "motorcycle",
+      "pictogram": "motorcycle"
+     }
+    }
+   ],
+   "panel_count": 1,
+   "boundaries": {
+    "certain": true
+   },
+   "notes": "Swedish parking sign allowing parking, with a plate restricting parking to motorcycles.",
+   "model_confidence": 0.99
+  }
+ },
+ "demo/015-motorcykel::цвет панели вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "vehicle_class": "motorcycle",
+      "pictogram": "motorcycle"
+     }
+    }
+   ],
+   "panel_count": 1,
+   "boundaries": {
+    "certain": true
+   },
+   "notes": "Swedish parking sign allowing parking, with a plate restricting parking to motorcycles.",
+   "model_confidence": 0.99
+  }
+ },
+ "demo/015-motorcykel::цвет знака вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "other",
     "form": "regular",
     "legibility": {
      "readable": true
@@ -6735,6 +8807,190 @@
    }
   }
  },
+ "demo/016-tillstand-ovrig-tid-5-platser::цвет панели вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Särskilt",
+      "P-tillstånd",
+      "erfordras",
+      "7-17"
+     ],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "time_windows": [
+       {
+        "from": "07:00",
+        "to": "17:00",
+        "day_class": "weekday"
+       }
+      ],
+      "permit_required": true,
+      "eligibility": "permit_holders"
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "Övrig tid",
+      "avgift"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "fee": true,
+      "scope_shift": "remaining_time"
+     }
+    },
+    {
+     "index": 3,
+     "kind": "sign_plate",
+     "lines": [
+      "5 platser"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "place_count": 5
+     }
+    },
+    {
+     "index": 4,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "arrow": "both_horizontal",
+      "pictogram": "arrow"
+     }
+    }
+   ],
+   "panel_count": 4,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/016-tillstand-ovrig-tid-5-platser::цвет знака вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "other",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Särskilt",
+      "P-tillstånd",
+      "erfordras",
+      "7-17"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "time_windows": [
+       {
+        "from": "07:00",
+        "to": "17:00",
+        "day_class": "weekday"
+       }
+      ],
+      "permit_required": true,
+      "eligibility": "permit_holders"
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "Övrig tid",
+      "avgift"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "fee": true,
+      "scope_shift": "remaining_time"
+     }
+    },
+    {
+     "index": 3,
+     "kind": "sign_plate",
+     "lines": [
+      "5 platser"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "place_count": 5
+     }
+    },
+    {
+     "index": 4,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "arrow": "both_horizontal",
+      "pictogram": "arrow"
+     }
+    }
+   ],
+   "panel_count": 4,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
  "demo/017-rorelsehindrad::как есть": {
   "ok": true,
   "repairs": [],
@@ -6929,6 +9185,80 @@
    "main_sign": {
     "type": "parking",
     "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "eligibility": "disabled_permit",
+      "pictogram": "wheelchair"
+     }
+    }
+   ],
+   "panel_count": 1,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/017-rorelsehindrad::цвет панели вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "eligibility": "disabled_permit",
+      "pictogram": "wheelchair"
+     }
+    }
+   ],
+   "panel_count": 1,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/017-rorelsehindrad::цвет знака вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "other",
     "form": "regular",
     "legibility": {
      "readable": true
@@ -7234,6 +9564,114 @@
    "main_sign": {
     "type": "parking",
     "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Särskilt",
+      "P-tillstånd",
+      "erfordras"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "eligibility": "permit_holders",
+      "permit_required": true
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "arrow": "right",
+      "pictogram": "arrow"
+     }
+    }
+   ],
+   "panel_count": 2,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/018-tillstand-utan-tidsangivelse::цвет панели вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Särskilt",
+      "P-tillstånd",
+      "erfordras"
+     ],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "eligibility": "permit_holders",
+      "permit_required": true
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "arrow": "right",
+      "pictogram": "arrow"
+     }
+    }
+   ],
+   "panel_count": 2,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/018-tillstand-utan-tidsangivelse::цвет знака вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "other",
     "form": "regular",
     "legibility": {
      "readable": true
@@ -7923,6 +10361,222 @@
    }
   }
  },
+ "demo/019-forbud-7-18-avgift-ovrig-tid::цвет панели вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "prohibition_parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "7-18"
+     ],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "time_windows": [
+       {
+        "from": "07:00",
+        "to": "18:00",
+        "day_class": "weekday"
+       }
+      ],
+      "prohibition": true
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "Avgift",
+      "övrig tid"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "time_windows": [
+       {
+        "from": "18:00",
+        "to": "07:00",
+        "day_class": "weekday"
+       }
+      ],
+      "fee": true,
+      "scope_shift": "remaining_time",
+      "pictogram": "parking",
+      "permits_parking": true
+     }
+    },
+    {
+     "index": 3,
+     "kind": "operator_plate",
+     "lines": [
+      "Zone Boka/Köp 31108"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "pictogram": "parking",
+      "operator": {
+       "name": "Mölndals Parkerings AB"
+      },
+      "area_code": "31108"
+     }
+    },
+    {
+     "index": 4,
+     "kind": "info_board",
+     "lines": [
+      "EASYPARK",
+      "PARKSTER",
+      "PARKERING"
+     ],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "uninterpreted": [
+       "EASYPARK",
+       "PARKSTER",
+       "PARKERING"
+      ]
+     }
+    }
+   ],
+   "panel_count": 4,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/019-forbud-7-18-avgift-ovrig-tid::цвет знака вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "prohibition_parking",
+    "background_color": "other",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "7-18"
+     ],
+     "background_color": "yellow",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "time_windows": [
+       {
+        "from": "07:00",
+        "to": "18:00",
+        "day_class": "weekday"
+       }
+      ],
+      "prohibition": true
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "Avgift",
+      "övrig tid"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "time_windows": [
+       {
+        "from": "18:00",
+        "to": "07:00",
+        "day_class": "weekday"
+       }
+      ],
+      "fee": true,
+      "scope_shift": "remaining_time",
+      "pictogram": "parking",
+      "permits_parking": true
+     }
+    },
+    {
+     "index": 3,
+     "kind": "operator_plate",
+     "lines": [
+      "Zone Boka/Köp 31108"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "pictogram": "parking",
+      "operator": {
+       "name": "Mölndals Parkerings AB"
+      },
+      "area_code": "31108"
+     }
+    },
+    {
+     "index": 4,
+     "kind": "info_board",
+     "lines": [
+      "EASYPARK",
+      "PARKSTER",
+      "PARKERING"
+     ],
+     "background_color": "white",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "uninterpreted": [
+       "EASYPARK",
+       "PARKSTER",
+       "PARKERING"
+      ]
+     }
+    }
+   ],
+   "panel_count": 4,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
  "demo/020-forhyrda-platser-13-och-14-avstand::как есть": {
   "ok": true,
   "repairs": [],
@@ -8202,6 +10856,114 @@
    "main_sign": {
     "type": "parking",
     "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Förhyrda",
+      "platser",
+      "Gäller plats",
+      "13 och 14"
+     ],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "eligibility": "rented"
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "arrow": "right",
+      "pictogram": "arrow"
+     }
+    }
+   ],
+   "panel_count": 2,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/020-forhyrda-platser-13-och-14-avstand::цвет панели вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Förhyrda",
+      "platser",
+      "Gäller plats",
+      "13 och 14"
+     ],
+     "background_color": "other",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "eligibility": "rented"
+     }
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "blue",
+     "legibility": {
+      "readable": true
+     },
+     "parsed": {
+      "arrow": "right",
+      "pictogram": "arrow"
+     }
+    }
+   ],
+   "panel_count": 2,
+   "boundaries": {
+    "certain": true
+   }
+  }
+ },
+ "demo/020-forhyrda-platser-13-och-14-avstand::цвет знака вне перечисления": {
+  "ok": true,
+  "repairs": [
+   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+  ],
+  "flags": [],
+  "data": {
+   "schema_version": 1,
+   "main_sign": {
+    "type": "parking",
+    "background_color": "other",
     "form": "regular",
     "legibility": {
      "readable": true

@@ -48,6 +48,8 @@ const MUTATIONS: Mutation[] = [
     value: [{ from: "восемь", to: "18:00" }] },
   { label: "лишнее поле в панели", op: "set",
     path: ["panels", "0", "странное"], value: true },
+  { label: "цвет панели вне перечисления", op: "set",
+    path: ["panels", "0", "background_color"], value: "grey" },
 ];
 
 // Порча, будящая починку, — те же рецепты, что у питона.
@@ -63,6 +65,10 @@ const DAMAGE: Mutation[] = [
   { label: "panel_count не сходится", op: "set", path: ["panel_count"], value: 99 },
   { label: "значение вне перечисления", op: "set",
     path: ["panels", "0", "parsed", "payment_method"], value: "mobile" },
+  { label: "цвет панели вне перечисления", op: "set",
+    path: ["panels", "0", "background_color"], value: "grey" },
+  { label: "цвет знака вне перечисления", op: "set",
+    path: ["main_sign", "background_color"], value: "grey" },
 ];
 
 function applyMutation(doc: unknown, mutation: Mutation): unknown {
