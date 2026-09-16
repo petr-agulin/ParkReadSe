@@ -89,20 +89,18 @@ describe("оболочка и папка public", () => {
 describe("чего нет в собранной странице", () => {
   const app = read("src/App.tsx");
 
-  it("питон подключается только внутри ветки разработки", () => {
-    // Импорт наверху файла попал бы в сборку целиком — вместе с адресом `/api`,
-    // которого у собранной страницы нет.
-    expect(app).not.toMatch(/^import .*from "\.\/api"/m);
-    expect(app).toMatch(/import\.meta\.env\.DEV[\s\S]{0,400}await import\("\.\/api"\)/);
+  it("сервера нет ни строкой: ни импорта, ни адреса, ни ветки разработки", () => {
+    // Питон удалён (шаг 8, этап 6). Пока ветка разработки жива, жива и половина,
+    // которой некуда ходить, — а выглядит это как работающий выбор.
+    expect(app).not.toContain('from "./api"');
+    expect(app).not.toContain("/api/");
+    expect(app).not.toContain("import.meta.env.DEV");
   });
 
-  it("переключатель «браузер/питон» стоит за признаком разработки", () => {
-    const lines = app.split("\n");
-    const at = lines.findIndex((line) => line.includes("Read on this device"));
-    expect(at, "переключатель не найден — правь тест вместе с экраном")
-      .toBeGreaterThan(-1);
-    const before = lines.slice(Math.max(0, at - 8), at).join("\n");
-    expect(before).toContain("import.meta.env.DEV");
+  it("переключателя «браузер/питон» нет вовсе", () => {
+    // Выбора больше не существует: отвечает браузер, и отвечать больше некому.
+    expect(app).not.toContain("Read on this device");
+    expect(app).not.toContain("server.py");
   });
 
   it("служебный работник регистрируется только в собранной странице", () => {

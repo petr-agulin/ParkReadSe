@@ -27,8 +27,8 @@ export default class ErrorBoundary extends Component<Props, State> {
       <div className="rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-900">
         <p className="font-medium">The page could not display this answer.</p>
         <p className="mt-1">
-          Most often this means the browser is running a newer build than the server:
-          restart <code className="rounded bg-rose-100 px-1">server.py</code> and reload.
+          A reload is usually enough: the page may have been opened from a copy
+          saved before the last update.
         </p>
         <pre className="mt-2 overflow-x-auto rounded bg-rose-100 p-2 text-xs">
           {error.message}

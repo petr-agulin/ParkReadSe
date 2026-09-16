@@ -75,11 +75,6 @@ describe("что мимо кэша", () => {
       .toBe("network");
   });
 
-  it("питон времён разработки в кэш не попадает", () => {
-    expect(route(get("https://example.org/api/analyze"), SCOPE)).toBe("network");
-    expect(route(get(`${SCOPE}api/analyze`), SCOPE)).toBe("network");
-  });
-
   it("чужая папка на том же домене — не наше дело", () => {
     expect(route(get("https://example.org/other/index.html"), SCOPE)).toBe("network");
   });

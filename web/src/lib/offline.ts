@@ -82,9 +82,6 @@ export function route(req: Req, scope: string): Route {
   const home = new URL(scope);
   if (url.origin !== home.origin) return "network";
   if (!url.pathname.startsWith(folder(scope))) return "network";
-  // Питон времён разработки. В собранной странице этого пути нет вовсе, но
-  // закэшировать разбор знака нельзя и там, где он ещё есть.
-  if (url.pathname.includes("/api/")) return "network";
 
   return req.navigate ? "page" : "asset";
 }

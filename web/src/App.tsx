@@ -19,11 +19,6 @@ import WhoCanPark from "./components/WhoCanPark";
 import PeriodTimeline from "./components/PeriodTimeline";
 import ErrorBoundary from "./components/ErrorBoundary";
 
-// Растёт вместе с CONTRACT в parkread/present.py. Сборка и сервер расходятся легко:
-// страница обновляется из dist сразу, а процесс server.py живёт с прежним кодом,
-// пока его не перезапустят. Молчать об этом нельзя — блоки просто окажутся пустыми.
-const EXPECTED_CONTRACT = 7;
-
 /** Сейчас по часам устройства, в том же виде, что даёт поле выбора момента. */
 function nowLocal(): string {
   const t = new Date();
@@ -49,9 +44,6 @@ export default function App() {
   const rules: GeneralRule[] = GENERAL_RULES;
   // Ключ и провайдер. Вспоминается то, что человек разрешил вспомнить.
   const [settings, setSettings] = useState<Settings>(() => load(browserStore()));
-  // Кто отвечает. В собранной странице выбора нет вовсе — сервера нет; питон
-  // остаётся доступен только в разработке, ради сверки ответов.
-  const [here, setHere] = useState(true);
   // Есть ли сеть. Открыть приложение и посмотреть справочник можно без неё,
   // прочитать знак — нет, и сказать об этом надо до отправки, а не после.
   const [online, setOnline] = useState(
@@ -93,8 +85,7 @@ export default function App() {
     setData(null);
     setPreview((old) => { if (old) URL.revokeObjectURL(old); return URL.createObjectURL(cropped); });
     try {
-      const browser = here && canAnswerHere(settings);
-      if (browser) {
+      if (canAnswerHere(settings)) {
         // Снимок не покидает устройство иначе как к провайдеру: своего сервера
         // у приложения нет, и разбор считается здесь же.
         const cal = new Calendar();
@@ -104,12 +95,6 @@ export default function App() {
           { ...settings.provider, apiKey: settings.apiKey },
           at, cal);
         setData(answer(analysis, at, cal) as unknown as Analysis);
-      } else if (import.meta.env.DEV) {
-        // Половина с питоном существует только в разработке. Импорт внутри ветки,
-        // а не наверху файла: так в собранную страницу не попадает ни строки
-        // про сервер, которого у неё нет.
-        const { analyze } = await import("./api");
-        setData(await analyze(cropped, moment || undefined));
       } else {
         // Сказать, чего не хватает, теми же словами, что и панель ключа: молчаливая
         // неудача здесь однажды уже выглядела как «приложение работает без ключа».
@@ -199,32 +184,11 @@ export default function App() {
           </p>
         )}
 
-        {/* Переключатель — только для разработки: в собранной странице сервера нет
-            вовсе, и предлагать выбор, одна половина которого заведомо не работает,
-            нельзя. Показывается только там, где выбор вообще есть. */}
-        {import.meta.env.DEV && !camera && !picked && !data && canAnswerHere(settings) && (
-          <label className="flex items-center gap-2 text-[12px] text-ink-3">
-            <input type="checkbox" checked={here} onChange={(e) => setHere(e.target.checked)} />
-            Read on this device (uncheck to use the local server instead)
-          </label>
-        )}
-
         {busy && <p className="text-[13px] text-ink-2">Reading the sign…</p>}
 
         {error && (
           <p className="rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-900">
             {error}
-          </p>
-        )}
-
-        {/* Только в разработке: чужой ответ приходит лишь от питона, а в собранной
-            странице его нет — там некому отстать. */}
-        {import.meta.env.DEV && data && data.contract !== EXPECTED_CONTRACT && (
-          <p className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
-            The server is running older code than this page
-            (contract {String(data.contract ?? "unknown")}, expected {EXPECTED_CONTRACT}).
-            Restart <code className="rounded bg-amber-100 px-1">server.py</code> — parts of
-            the answer below will be missing until you do.
           </p>
         )}
 
