@@ -220,9 +220,16 @@ describe("окно продукта", () => {
   it("поле выбора момента на экране несёт то же окно", () => {
     // Окно записано дважды — в календаре и в поле. Расхождение ловится здесь,
     // а не человеком, которому поле позволит выбрать день вне окна.
-    const page = readFileSync(`${ROOT}web/src/components/PhotoInput.tsx`, "utf-8");
-    expect(page).toContain(`MOMENT_FROM = "${isoDate(SELECTABLE_FROM)}T00:00"`);
-    expect(page).toContain(`MOMENT_TO = "${isoDate(SELECTABLE_TO)}T23:59"`);
+    const bounds = readFileSync(`${ROOT}web/src/lib/home.ts`, "utf-8");
+    expect(bounds).toContain(`MOMENT_FROM = "${isoDate(SELECTABLE_FROM)}T00:00"`);
+    expect(bounds).toContain(`MOMENT_TO = "${isoDate(SELECTABLE_TO)}T23:59"`);
+
+    // Мало объявить края — поле обязано их надеть. Границы и само поле разъехались
+    // по разным файлам (этап 4 шага 11), и проверка одного лишь объявления зеленела
+    // бы и тогда, когда у поля не стоит ни `min`, ни `max`.
+    const home = readFileSync(`${ROOT}web/src/components/Home.tsx`, "utf-8");
+    expect(home).toContain("min={MOMENT_FROM}");
+    expect(home).toContain("max={MOMENT_TO}");
   });
 });
 

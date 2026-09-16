@@ -1,22 +1,28 @@
-// Экран целиком. Плоская архитектура: по компоненту на блок, состояние здесь.
+// Экран целиком. Плоская архитектура: по компоненту на экран, состояние здесь.
 //
-// Какой экран показывать и куда ведут действия, решает `lib/view`: здесь только
-// состояние и краска. Экраны первого запуска, главного, камеры, кадра и разбора
-// перерисовываются этапами 4-6; пока на их месте прежняя одностраничная вёрстка.
+// Какой экран показывать и куда ведут действия, решает `lib/view`; здесь только
+// состояние и краска. Снимок, рамка и разбор — это ДАННЫЕ (`picked`, `aimed`,
+// `data`), а не выбор экрана: экран выбирает вид-модель, и она же держит ворота
+// по ключу (решение 147).
+//
+// Камера, кадр и разбор перерисовываются этапами 5-6; пока на их местах прежние
+// компоненты, уже переведённые на токены.
 
 import { useEffect, useState } from "react";
 import { Calendar } from "./lib/calendar";
+import { cameraSupported } from "./lib/camera";
 import { parseNaive } from "./lib/civil";
 import { OFFLINE_NOTE } from "./lib/offline";
 import { analyze as readHere, answer } from "./lib/pipeline";
 import { browserStore, canAnswerHere, forget, load, missing, save,
          type Settings } from "./lib/settings";
 import { go, start, type Action, type View } from "./lib/view";
+import FirstLaunch from "./components/FirstLaunch";
+import Home from "./components/Home";
 import SettingsScreen from "./components/SettingsScreen";
 import KeyHelp from "./components/KeyHelp";
 import { GENERAL_RULES } from "./lib/rules.data";
 import type { Analysis, GeneralRule } from "./types";
-import PhotoInput from "./components/PhotoInput";
 import SignPicker from "./components/SignPicker";
 import CameraCapture from "./components/CameraCapture";
 import type { Box } from "./lib/crop";
@@ -41,9 +47,8 @@ export default function App() {
   const [preview, setPreview] = useState<string | null>(null);
   const [moment, setMoment] = useState("");
   const [picked, setPicked] = useState<File | null>(null);
-  // Рамка, наведённая в видоискателе: экран выбора начинает с неё, а не с центра.
+  // Рамка, наведённая в видоискателе: экран кадрирования начинает с неё.
   const [aimed, setAimed] = useState<Box | undefined>(undefined);
-  const [camera, setCamera] = useState(false);
   const [source, setSource] = useState<"camera" | "file">("file");
   // Общие правила едут вместе со страницей (шаг 6d): раньше они приходили
   // с сервера, и без него блок исчезал МОЛЧА — ни строки о том, что он был.
@@ -53,15 +58,20 @@ export default function App() {
   // Какой экран открыт. Начальный выбирается по настройкам: без ключа человеку
   // показывать нечего, кроме приглашения его завести.
   const [view, setView] = useState<View>(() => ({ screen: start(settings) }));
-  // Есть ли сеть. Открыть приложение можно без неё, прочитать знак — нет,
-  // и сказать об этом надо до отправки, а не после.
   const [online, setOnline] = useState(
     typeof navigator === "undefined" || navigator.onLine);
 
   const move = (action: Action) => setView((v) => go(v, action, settings));
 
+  // Съёмку предлагаем, только если браузер её отдаст: `getUserMedia` живёт лишь
+  // в защищённом контексте, и по адресу вида `http://192.168.x.x` его нет вовсе.
+  const canShoot = cameraSupported(
+    typeof navigator === "undefined" ? undefined : navigator.mediaDevices,
+    typeof window !== "undefined" && window.isSecureContext,
+  );
+
   // Превью живёт в браузере как blob и снимается при замене: снимок никуда
-  // не сохраняется — ни на диск сервера, ни в память страницы дольше нужного.
+  // не сохраняется — ни на диск, ни в память страницы дольше нужного.
   useEffect(() => () => { if (preview) URL.revokeObjectURL(preview); }, [preview]);
 
   useEffect(() => {
@@ -74,18 +84,19 @@ export default function App() {
     };
   }, []);
 
-  // Выбор файла ничего не отправляет: снимок идёт на экран выбора знака.
-  function onPick(file: File) {
+  function changeSettings(next: Settings) {
+    setSettings(next);
+    save(browserStore(), next);
+  }
+
+  /** Снимок выбран в галерее: ничего не отправляется, идём кадрировать. */
+  function onPickFile(file: File) {
     setError(null);
     setData(null);
     setAimed(undefined);
     setSource("file");
     setPicked(file);
-  }
-
-  function changeSettings(next: Settings) {
-    setSettings(next);
-    save(browserStore(), next);
+    move("pick");
   }
 
   // Наружу уходит только вырезанное, и в разборе показывается оно же — иначе
@@ -97,8 +108,6 @@ export default function App() {
     setPreview((old) => { if (old) URL.revokeObjectURL(old); return URL.createObjectURL(cropped); });
     try {
       if (canAnswerHere(settings)) {
-        // Снимок не покидает устройство иначе как к провайдеру: своего сервера
-        // у приложения нет, и разбор считается здесь же.
         const cal = new Calendar();
         const at = parseNaive(moment || nowLocal());
         const analysis = await readHere(
@@ -106,12 +115,13 @@ export default function App() {
           { ...settings.provider, apiKey: settings.apiKey },
           at, cal);
         setData(answer(analysis, at, cal) as unknown as Analysis);
+        setPicked(null);
+        move("sent");
       } else {
-        // Сказать, чего не хватает, теми же словами, что и настройки: молчаливая
-        // неудача здесь однажды уже выглядела как «приложение работает без ключа».
+        // Сюда попасть нельзя: без ключа ни камеры, ни галереи не предлагают.
+        // Но если попали — сказать теми же словами, что и настройки.
         throw new Error(`To read a sign the app needs ${missing(settings).join(", ")}.`);
       }
-      setPicked(null);
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     } finally {
@@ -119,22 +129,21 @@ export default function App() {
     }
   }
 
-  // Отмена возвращает на начало и не оставляет за собой ничего.
+  /** Уйти с пути и не оставить за собой ничего. */
   function reset() {
     setPicked(null);
     setAimed(undefined);
-    setCamera(false);
     setError(null);
     setData(null);
     setPreview((old) => { if (old) URL.revokeObjectURL(old); return null; });
   }
 
-  const ready = canAnswerHere(settings);
+  const screen = view.screen;
 
   return (
     <div className="min-h-screen bg-ground-2 py-6">
       <main className="mx-auto flex max-w-2xl flex-col gap-4 px-4">
-        {view.screen === "settings" ? (
+        {screen === "settings" ? (
           <SettingsScreen
             settings={settings}
             onChange={changeSettings}
@@ -142,129 +151,86 @@ export default function App() {
             onBack={() => move("back")}
             onHelp={() => move("open-help")}
           />
-        ) : view.screen === "help" ? (
+        ) : screen === "help" ? (
           <KeyHelp onBack={() => move("back")} />
-        ) : (
-          <>
-            {/* Подпись под названием уходит, пока открыт снимок или камера: эти
-                строки стоят высоты, а высота — ширины снимка. */}
-            <header className="flex items-start gap-3">
-              <div className="flex-1">
-                <h1 className="text-nav font-bold text-ink-strong">ParkRead</h1>
-                {!picked && !camera && (
-                  <p className="text-label text-ink-2">
-                    What a Swedish parking sign states — read plate by plate.
-                  </p>
-                )}
-              </div>
-              <button
-                type="button"
-                onClick={() => move("open-settings")}
-                className="rounded-full bg-chip px-4 py-2 text-label font-semibold text-ink-2"
-              >
-                Settings
-              </button>
-            </header>
+        ) : screen === "first-launch" ? (
+          <FirstLaunch
+            onAddKey={() => move("open-settings")}
+            onHelp={() => move("open-help")}
+          />
+        ) : screen === "camera" ? (
+          <CameraCapture
+            onCaptured={(file, box) => {
+              setError(null);
+              setData(null);
+              setAimed(box);
+              setSource("camera");
+              setPicked(file);
+              move("captured");
+            }}
+            onCancel={() => { reset(); move("back"); }}
+          />
+        ) : screen === "frame" && picked ? (
+          <SignPicker
+            file={picked}
+            initialBox={aimed}
+            source={source}
+            busy={busy}
+            onSend={onSend}
+            onReplace={(file) => { setPicked(file); setAimed(undefined); }}
+            onRetake={() => move("replace")}
+            onCancel={() => { reset(); move("back"); }}
+          />
+        ) : screen === "reading" && data ? (
+          <ErrorBoundary>
+            <WhatWeSaw data={data} preview={preview} rules={rules} />
 
-            {/* Без ключа снимать и выбирать снимок нельзя (решение 147): кадр
-                кончился бы сообщением «нужен ключ», а путь в тупик хуже честной
-                просьбы в начале. Настоящий экран первого запуска — этап 4. */}
-            {!ready ? (
-              <section className="rounded-card bg-ground p-6 shadow-raised">
-                <h2 className="text-card font-extrabold text-ink-strong">
-                  Add a key to start.
-                </h2>
-                <p className="mt-3 text-body text-ink-2">
-                  ParkRead reads with a vision model you choose and pay for. Until you
-                  add a key, there is nothing to read signs with.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => move("open-settings")}
-                  className="mt-5 w-full rounded-button bg-accent px-6 py-5 text-left
-                             text-on-dark shadow-primary"
-                >
-                  <span className="block text-row font-bold">Add your key</span>
-                  <span className="block text-label opacity-80">Opens Settings</span>
-                </button>
-              </section>
-            ) : picked ? (
-              <SignPicker
-                file={picked}
-                initialBox={aimed}
-                source={source}
-                busy={busy}
-                onSend={onSend}
-                onReplace={onPick}
-                onRetake={() => { setPicked(null); setAimed(undefined); setCamera(true); }}
-                onCancel={reset}
-              />
-            ) : camera ? (
-              <CameraCapture
-                onCaptured={(file, box) => {
-                  setError(null);
-                  setData(null);
-                  setAimed(box);
-                  setSource("camera");
-                  setPicked(file);
-                  setCamera(false);
-                }}
-                onCancel={() => setCamera(false)}
-              />
-            ) : (
-              <PhotoInput
-                busy={busy}
-                onPick={onPick}
-                onCamera={() => { setError(null); setData(null); setCamera(true); }}
-                moment={moment}
-                onMoment={setMoment}
-              />
-            )}
-
-            {/* Сеть нужна ровно одному действию — чтению знака. Сказано до отправки:
-                узнать об этом из ошибки после выбора кадра — значит узнать поздно. */}
-            {!online && (
+            {/* Формулировка приходит из ответа, а не живёт в вёрстке: место для
+                слов о знаке — рядом с остальными, в `present`. */}
+            {data.has_answer && data.note && (
               <p className="rounded-card-sm bg-ground p-4 text-label text-ink-2 shadow-card">
-                {OFFLINE_NOTE}
+                {data.note.text}
               </p>
             )}
 
-            {busy && <p className="text-label text-ink-2">Reading the sign…</p>}
+            <WhoCanPark regimes={data.regimes} />
 
-            {error && (
-              <p className="rounded-card-sm bg-danger-bg p-4 text-label text-deny">
-                {error}
-              </p>
-            )}
+            {/* Участок подписывается там, где он различает: окон на знаке несколько
+                И участки у них разные, или стрелка увела стоянку от самого знака. */}
+            {data.regimes.map((r, i) => (
+              <PeriodTimeline
+                key={i}
+                regime={r}
+                showExtent={new Set(data.regimes.map((x) => x.extent)).size > 1
+                            || r.extent !== "here"}
+              />
+            ))}
 
-            {data && (
-              <ErrorBoundary>
-                <WhatWeSaw data={data} preview={preview} rules={rules} />
+            <button
+              type="button"
+              onClick={() => { reset(); move("read-another"); }}
+              className="rounded-button-sm bg-accent py-4 text-body font-bold text-on-dark"
+            >
+              Read another sign
+            </button>
+          </ErrorBoundary>
+        ) : (
+          <Home
+            moment={moment}
+            onMoment={setMoment}
+            cameraAvailable={canShoot}
+            offline={!online}
+            offlineNote={OFFLINE_NOTE}
+            onScan={() => { setError(null); setData(null); move("scan"); }}
+            onPick={onPickFile}
+            onSettings={() => move("open-settings")}
+          />
+        )}
 
-                {/* Формулировка приходит из ответа, а не живёт в вёрстке: место
-                    для слов о знаке — рядом с остальными, в `present`. Здесь она
-                    однажды разошлась бы со справочником и никто бы не заметил. */}
-                {data.has_answer && data.note && (
-                  <p className="rounded-card-sm bg-ground p-4 text-label text-ink-2 shadow-card">
-                    {data.note.text}
-                  </p>
-                )}
+        {busy && <p className="text-label text-ink-2">Reading the sign…</p>}
 
-                <WhoCanPark regimes={data.regimes} />
-
-                {/* Участок подписывается там, где он различает: окон на знаке несколько
-                    И участки у них разные, или стрелка увела стоянку от самого знака. */}
-                {data.regimes.map((r, i) => (
-                  <PeriodTimeline
-                    key={i}
-                    regime={r}
-                    showExtent={new Set(data.regimes.map((x) => x.extent)).size > 1
-                                || r.extent !== "here"}
-                  />
-                ))}
-              </ErrorBoundary>
-            )}
-          </>
+        {error && (
+          <p className="rounded-card-sm bg-danger-bg p-4 text-label text-deny">{error}</p>
         )}
       </main>
     </div>
