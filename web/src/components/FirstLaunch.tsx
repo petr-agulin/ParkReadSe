@@ -5,8 +5,8 @@
 // сообщением «нужен ключ», а путь в тупик хуже честной просьбы в самом начале.
 //
 // **Экран обязан помещаться целиком** — до последней строки, без прокрутки.
-// Отсюда `dvh`, а не `vh`: адресная строка мобильного браузера то появляется,
-// то исчезает, и `vh` про неё не знает.
+// Высоту окна задаёт оболочка (`App`) в `svh`, экран занимает её через `flex-1`
+// и сам ничего не меряет.
 //
 // Говорит он не теми словами, что главный экран с ключом: там предлагают снять
 // знак, здесь объясняют, зачем ключ. Расхождение осознанное (см. `lib/home`).
@@ -21,7 +21,7 @@ const MARKS = [Lock, Shield, Frame];
 
 export default function FirstLaunch({ onAddKey, onSettings }: Props) {
   return (
-    <section className="flex min-h-[calc(100dvh-3rem)] flex-col gap-4">
+    <section className="flex flex-1 flex-col gap-4">
       <header className="flex items-center gap-2.5">
         <span className="flex h-7 w-7 items-center justify-center rounded-tile bg-accent
                          text-nav font-extrabold text-on-dark">

@@ -136,8 +136,13 @@ export default function App() {
   const screen = view.screen;
 
   return (
-    <div className="min-h-screen bg-ground-2 py-6">
-      <main className="mx-auto flex max-w-2xl flex-col gap-4 px-4">
+    // Окно меряется здесь и только здесь, в `svh` — это наименьшая его высота,
+    // при показанной адресной строке. `vh` считался бы так, будто строки нет,
+    // и страница вышла бы ровно на неё длиннее окна: всё уместилось, а прокрутка
+    // всё равно есть. `dvh` меняется на ходу и перестаёт помещаться в ту секунду,
+    // когда строка выезжает. Экраны свою высоту не считают — занимают эту.
+    <div className="flex min-h-[100svh] flex-col bg-ground-2 py-6">
+      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-4 px-4">
         {screen === "settings" ? (
           <SettingsScreen
             settings={settings}

@@ -37,10 +37,10 @@ export default function Home({
 
   const primary = () => (entry.primary === "scan" ? onScan() : file.current?.click());
 
-  // Высота считается от видимой части окна: адресная строка мобильного браузера
-  // то появляется, то исчезает, и `vh` про неё не знает.
+  // Высоту держит оболочка (`App`), экран занимает её целиком. Вычитать отступы
+  // оболочки руками значило бы хранить её число в чужом файле.
   return (
-    <section className="flex min-h-[calc(100dvh-3rem)] flex-col gap-6">
+    <section className="flex flex-1 flex-col gap-6">
       <header className="flex items-center gap-2.5">
         <span className="flex h-7 w-7 items-center justify-center rounded-tile bg-accent
                          text-nav font-extrabold text-on-dark">

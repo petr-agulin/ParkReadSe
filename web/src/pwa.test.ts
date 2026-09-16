@@ -14,6 +14,12 @@ import { SHELL } from "./lib/offline";
 const WEB = fileURLToPath(new URL("../", import.meta.url));
 const read = (path: string) => readFileSync(WEB + path, "utf-8");
 
+/** Все компоненты страницы: `.tsx` из `src`, включая вложенные папки. */
+const sources = (dir = ""): string[] =>
+  readdirSync(`${WEB}src/${dir}`, { withFileTypes: true }).flatMap((e) =>
+    e.isDirectory() ? sources(`${dir}${e.name}/`)
+    : e.name.endsWith(".tsx") ? [`src/${dir}${e.name}`] : []);
+
 const manifest = JSON.parse(read("public/manifest.webmanifest"));
 // Хром приложения: цвет системной полосы. Это шестнадцатеричный двойник токена
 // `accent` из `design.md` — манифест и `<meta>` читает система, а не наш CSS,
@@ -110,11 +116,6 @@ describe("чего нет в собранной странице", () => {
     // Требование 1 шага 11. Цвет, вписанный в компонент, расходится с остальными
     // экранами молча: правят один файл, а про три забывают. Значения живут
     // в `index.css`, в разметке остаются только имена.
-    const sources = (dir: string): string[] =>
-      readdirSync(`${WEB}src/${dir}`, { withFileTypes: true }).flatMap((e) =>
-        e.isDirectory() ? sources(`${dir}${e.name}/`)
-        : e.name.endsWith(".tsx") ? [`src/${dir}${e.name}`] : []);
-
     const PALETTE = /\b(?:bg|text|border|fill|stroke|ring|divide)-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\d{2,3}\b/;
 
     for (const file of sources("")) {
@@ -141,5 +142,42 @@ describe("чего нет в собранной странице", () => {
     expect(main).toContain("import.meta.env.PROD");
     // Относительный путь: работник управляет своей папкой, а не корнем домена.
     expect(main).toContain('register("./sw.js")');
+  });
+});
+
+describe("высота окна", () => {
+  it("окно меряет одна оболочка, и меряет в svh", () => {
+    // `vh` на телефоне считается так, будто адресной строки нет: страница выходит
+    // ровно на её высоту длиннее окна — всё уместилось, а прокрутка всё равно есть.
+    // Ровно это и нашёл разработчик на двух телефонах сразу.
+    //
+    // `dvh` не спасает: он меняется на ходу, и экран, смеренный при спрятанной
+    // строке, перестаёт помещаться в ту секунду, когда строка выезжает.
+    // `svh` — наименьшая высота окна: в неё влезает всегда и одинаково.
+    const app = read("src/App.tsx");
+    expect(app).toContain("min-h-[100svh]");
+    // Имя запрещённого класса собрано из кусков НАРОЧНО, и целиком его нельзя
+    // написать даже в комментарии рядом. Сборщик ищет имена классов по всем файлам
+    // проекта, включая тесты: целый литерал — хоть в коде, хоть в тексте — сам
+    // добавляет в собранный CSS мёртвое правило со старым замером окна. Разметка
+    // его не применяет, но проверка «ушёл ли старый замер из сборки» после этого
+    // отвечает «нет» на исправном коде. Проверено: так и было, дважды.
+    expect(app).not.toContain("min-h-" + "screen");
+    expect(app).not.toMatch(/\d+dvh/);
+  });
+
+  it("ни один экран не меряет окно сам", () => {
+    // Экран, вычитавший отступы оболочки, держал её число в чужом файле: поменяли
+    // бы отступ — прокрутка вернулась бы молча. Мерить окно может ровно один файл,
+    // и это оболочка.
+    for (const file of sources().filter((f) => f !== "src/App.tsx")) {
+      expect(read(file), `${file}: экран меряет окно сам`).not.toMatch(/\d+[sdl]?vh/);
+    }
+  });
+
+  it("фон лежит на странице, а не только на оболочке", () => {
+    // С `svh` оболочка при спрятанной адресной строке НИЖЕ окна, и снизу
+    // проглядывало бы белое — там, где его никто не красил.
+    expect(read("src/index.css")).toMatch(/body\s*\{[^}]*--color-ground-2/);
   });
 });
