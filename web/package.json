@@ -11,7 +11,10 @@
     "test": "vitest run --exclude \"measure/**\" --exclude \"build/**\"",
     "test:watch": "vitest",
     "measure": "vitest run --dir measure --reporter=verbose",
-    "test:build": "vitest run --dir build --reporter=verbose"
+    "test:build": "vitest run --dir build --reporter=verbose",
+    "emit": "node tools/emit.ts --write",
+    "emit:check": "node tools/emit.ts",
+    "icons": "node tools/icons.ts"
   },
   "dependencies": {
     "react": "^19.2.0",

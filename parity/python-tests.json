@@ -806,16 +806,16 @@
    "status": "ported"
   },
   "test_icons::test_the_files_on_disk_are_what_the_code_draws": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_icons::test_the_maskable_icon_keeps_everything_inside_the_safe_circle": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_icons::test_the_ordinary_icons_are_transparent_at_the_corners": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_icons::test_the_icon_wears_the_blue_of_the_sign": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_the_golden_answers_are_current": {
    "status": "pending"
@@ -854,10 +854,10 @@
    "status": "ported"
   },
   "test_parity::test_the_browser_reference_is_current": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_the_emitted_reference_carries_what_the_screen_shows": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_the_forbidden_wording_guard_moved_with_the_words": {
    "status": "ported"
@@ -866,10 +866,10 @@
    "status": "pending"
   },
   "test_parity::test_the_browser_schemas_are_current": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_the_general_rules_travel_with_the_page": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_the_server_still_serves_the_rules_for_the_python_path": {
    "status": "dropped",
