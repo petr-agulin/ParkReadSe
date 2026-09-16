@@ -15,6 +15,8 @@ type Props = {
   lines: string[];
   /** `hero` — знак стоит один посреди экрана, и мельче его делать незачем. */
   size?: "hero" | "large" | "small";
+  /** По умолчанию знак стоит по центру; в тёмной полосе главного — по левому краю. */
+  align?: "center" | "start";
 };
 
 const PLATE: Record<string, string> = {
@@ -33,9 +35,13 @@ const LINE: Record<string, string> = {
   small: "w-21 py-[3px] text-[10px]",
 };
 
-export default function SignPlate({ lines, size = "large" }: Props) {
+export default function SignPlate({ lines, size = "large", align = "center" }: Props) {
   return (
-    <div className="flex shrink-0 flex-col items-center gap-[3px]" aria-hidden>
+    <div
+      className={`flex shrink-0 flex-col gap-[3px] ${
+        align === "start" ? "items-start" : "items-center"}`}
+      aria-hidden
+    >
       <span
         className={`flex items-center justify-center bg-plate font-extrabold leading-none
                     text-on-dark ${PLATE[size]}`}

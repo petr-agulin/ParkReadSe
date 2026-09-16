@@ -14,7 +14,7 @@ import { useRef } from "react";
 import {
   HOME_HEADLINE, HOME_LINES, MOMENT_FROM, MOMENT_TO, entryActions, momentChip,
 } from "../lib/home";
-import { Close, Sliders } from "./Icon";
+import { Camera, Close, Sliders } from "./Icon";
 import SignPlate from "./SignPlate";
 
 type Props = {
@@ -59,44 +59,67 @@ export default function Home({
         </button>
       </header>
 
-      <div className="flex items-center gap-5 rounded-card bg-hero p-6">
-        <SignPlate lines={["Servicefordon", "Vardagar 7–17", "Övrig tid avgift"]} />
+      {/* Тёмная полоса во всю ширину колонки: выходит за поля оболочки отрицательным
+          полем — единственное место в приложении, где поля покидают. Скруглений нет:
+          скруглённый угол у самого края экрана читается как недоделка, а не как
+          решение. Тянется она по ширине, а высоту берёт от содержимого — ни
+          соотношений сторон, ни заданных высот, подбирать нечего.
+
+          На коротком экране полоса ужимается отступами и кеглем заголовка, а не
+          пересчётом пропорций: знак остаётся прежним. Само правило — обычный
+          `@media` в `index.css`, класс `tight-on-short`: утилита `[@media(...)]:`
+          в собранный CSS не попадает вовсе, и забота о коротком экране была бы
+          показной. */}
+      <div className="tight-on-short -mx-4 flex flex-col gap-7 bg-hero px-6 py-8">
+        <SignPlate
+          size="large"
+          align="start"
+          lines={["Servicefordon", "Vardagar 7–17", "Övrig tid avgift"]}
+        />
         <div>
-          {/* Кегль подобран под карточку: на первом запуске заголовок один
-              на экране, здесь он делит место со знаком. */}
-          <h1 className="text-card font-extrabold text-on-dark">{HOME_HEADLINE}</h1>
-          <div className="mt-1.5 flex flex-col text-caption text-on-dark-2">
+          <h1 className="text-display font-extrabold text-on-dark">
+            {HOME_HEADLINE}
+          </h1>
+          <div className="mt-3 flex flex-col text-label text-on-dark-2">
             {HOME_LINES.map((line) => <span key={line}>{line}</span>)}
           </div>
         </div>
       </div>
 
       {/* Момент: пусто значит «сейчас», и время берётся в минуту отправки.
-          Поле выбора лежит поверх чипа прозрачным слоем — так нажатие попадает
-          в системный выбор даты, а подписью остаётся наше слово. */}
-      <div className="flex flex-wrap items-center gap-2 px-1">
-        <span className="text-label text-ink-3">Reading for</span>
-        <span className="relative inline-flex items-center rounded-full bg-ground px-3.5
-                         py-2 text-label font-bold text-ink shadow-chip">
+          Поле выбора лежит поверх всей строки прозрачным слоем, поэтому нажатие
+          в любом её месте открывает системный выбор даты, а подписью остаётся
+          наше слово. */}
+      <div className="relative flex items-center justify-between border-b border-line py-4">
+        <span className="text-body text-ink-2">Reading for</span>
+        <span className="flex items-center gap-2 text-row font-bold text-ink">
           {chip.label}
-          <input
-            type="datetime-local"
-            value={moment}
-            min={MOMENT_FROM}
-            max={MOMENT_TO}
-            aria-label="Moment to read the sign at"
-            onChange={(e) => onMoment(e.target.value)}
-            className="absolute inset-0 cursor-pointer opacity-0"
-          />
+          {/* Сброс показывается, только когда момент выбран. Понадеяться на «Clear»
+              в системном диалоге нельзя: на Android он обычно есть, в Safari на iOS
+              часто нет, и выбранный момент стал бы дверью в одну сторону. Кнопка
+              поднята над прозрачным полем, иначе нажатие уходило бы в календарь. */}
+          {chip.canReset && (
+            <button
+              type="button"
+              onClick={() => onMoment("")}
+              aria-label="Read for now instead"
+              className="relative z-10 flex h-8 w-8 items-center justify-center
+                         rounded-full bg-chip text-ink-2"
+            >
+              <Close className="h-3.5 w-3.5" />
+            </button>
+          )}
+          <span className="text-ink-3">›</span>
         </span>
-        {chip.canReset && (
-          <button type="button" onClick={() => onMoment("")}
-                  aria-label="Read for now instead"
-                  className="flex h-10 w-10 items-center justify-center rounded-full
-                             bg-chip text-ink-2">
-            <Close className="h-4 w-4" />
-          </button>
-        )}
+        <input
+          type="datetime-local"
+          value={moment}
+          min={MOMENT_FROM}
+          max={MOMENT_TO}
+          aria-label="Moment to read the sign at"
+          onChange={(e) => onMoment(e.target.value)}
+          className="absolute inset-0 cursor-pointer opacity-0"
+        />
       </div>
 
       <div className="mt-auto flex flex-col gap-3.5">
@@ -119,6 +142,11 @@ export default function Home({
           className="flex w-full items-center gap-4 rounded-button bg-accent px-6 py-6
                      text-left shadow-primary"
         >
+          {/* Значок камеры — только когда предлагается съёмка. Без камеры основным
+              действием становится выбор снимка, и камера на кнопке лгала бы. */}
+          {entry.primary === "scan" && (
+            <Camera className="h-6 w-6 shrink-0 text-on-dark" />
+          )}
           <span className="flex-1">
             <span className="block text-row font-bold text-on-dark">{entry.primaryLabel}</span>
             <span className="block text-label text-on-dark opacity-80">{entry.primaryNote}</span>

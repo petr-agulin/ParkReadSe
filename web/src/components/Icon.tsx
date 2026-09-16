@@ -29,12 +29,24 @@ function Svg({ className, children }: Props & { children: React.ReactNode }) {
   );
 }
 
-/** Настройки: три ползунка. */
+/** Настройки: три ползунка, лёжа. Та же фигура, что стояла вертикально,
+ *  повёрнутая на четверть оборота, — поэтому остаётся в одном ряду с остальными. */
 export function Sliders(p: Props) {
   return (
     <Svg {...p}>
-      <path d="M6 20V14M6 10V4M12 20V12M12 8V4M18 20V16M18 12V4" />
-      <path d="M3 14h6M9 8h6M15 16h6" />
+      <path d="M20 6H14M10 6H4M20 12H12M8 12H4M20 18H16M12 18H4" />
+      <path d="M14 3v6M8 9v6M16 15v6" />
+    </Svg>
+  );
+}
+
+/** Камера: основное действие — снять знак. */
+export function Camera(p: Props) {
+  return (
+    <Svg {...p}>
+      <path d="M3 9.4a1.9 1.9 0 0 1 1.9-1.9h2.4l1.4-2.3h6.6l1.4 2.3h2.4A1.9 1.9 0 0 1 21 9.4
+               v8.3a1.9 1.9 0 0 1-1.9 1.9H4.9A1.9 1.9 0 0 1 3 17.7z" />
+      <circle cx="12" cy="13.4" r="3.3" />
     </Svg>
   );
 }
