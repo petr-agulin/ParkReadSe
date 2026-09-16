@@ -10,6 +10,7 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
 import { CONTRACT } from "../src/lib/present";
+import { LAYERS, PROBES, SPECIAL, buildCases, pyDump, stale } from "./goldens";
 
 const ROOT = fileURLToPath(new URL("../../", import.meta.url));
 const read = (p: string) => readFileSync(join(ROOT, p), "utf-8");
@@ -22,6 +23,16 @@ function appSources(dir = join(ROOT, "web", "src")): string[] {
     const full = join(dir, name);
     if (statSync(full).isDirectory()) return appSources(full);
     return /\.tsx?$/.test(name) && !name.endsWith(".test.ts") ? [full] : [];
+  });
+}
+
+/** Все тестовые файлы фронтенда: и в приложении, и в инструментах. */
+function testFiles(dir = join(ROOT, "web")): string[] {
+  return readdirSync(dir).flatMap((name) => {
+    const full = join(dir, name);
+    if (name === "node_modules" || name === "dist") return [];
+    if (statSync(full).isDirectory()) return testFiles(full);
+    return name.endsWith(".test.ts") ? [full] : [];
   });
 }
 
@@ -191,5 +202,78 @@ describe("замер остаётся инструментом", () => {
     const report = read("web/measure/report.test.ts");
     expect(report).toContain("../src/lib/measure");
     expect(report).toContain("../tools/testset");
+  });
+});
+
+describe("эталоны пишет TypeScript", () => {
+  // py: test_parity::test_the_golden_answers_are_current
+  it("переписанные этой командой, они совпадают с лежащими — до байта", async () => {
+    // Упало — значит, ответ продукта изменился. Это не поломка теста, это его
+    // работа: посмотреть расхождение (`npm test -- parity`) и переписать
+    // сознательно (`npm run goldens:write`).
+    expect(await stale()).toEqual([]);
+  }, 120_000);
+
+  // py: test_parity::test_the_case_file_is_read_by_both_sides
+  it("случаи объявлены файлом, а не собираются на лету каждым по-своему", () => {
+    expect(readJson("parity/cases.json")).toEqual(buildCases());
+    // Тот же файл читает и сверка — иначе стороны проверялись бы на разных задачах.
+    expect(read("web/src/lib/parity.test.ts")).toContain('read("cases")');
+  });
+
+  // py: test_parity::test_the_awkward_moments_are_all_covered
+  it("особые моменты покрыты все и у каждого названа причина", () => {
+    // На каждом из них уже ломалось что-нибудь живое: канун, красный день,
+    // обе ночи перевода, край сезона, полночь.
+    expect(SPECIAL.map((s) => s.label).sort()).toEqual(
+      ["dst-back", "dst-forward", "eve", "midnight", "red", "season-edge"]);
+    const ids = buildCases().map((c) => c.id);
+    for (const { label } of SPECIAL) {
+      expect(ids.some((i) => i.endsWith(`@${label}`)), label).toBe(true);
+    }
+    // Без причины список превращается в набор чисел.
+    expect(SPECIAL.filter((s) => !s.why)).toEqual([]);
+  });
+
+  // py: test_parity::test_the_layers_are_declared_and_none_is_ported_yet
+  it("слои объявлены, и у каждого есть проба", () => {
+    const ported: string[] = readJson("parity/PORTED.json").layers;
+    expect(ported.filter((l) => !LAYERS.includes(l)), "неизвестный слой").toEqual([]);
+    expect(LAYERS.filter((l) => !PROBES[l]), "слой без пробы").toEqual([]);
+  });
+
+  // py: test_parity::test_rewriting_is_a_separate_command
+  it("переписывание — отдельная команда, а не побочный эффект прогона", () => {
+    // Иначе эталоны однажды перезапишут, чтобы «стало зелено», и вместе
+    // с красным исчезнет расхождение.
+    const scripts = readJson("web/package.json").scripts;
+    expect(scripts.goldens, "нет команды проверки").toBeTruthy();
+    expect(scripts.goldens).not.toContain("--write");
+    expect(scripts["goldens:write"]).toContain("--write");
+
+    // Ни один тест не переписывает эталоны сам. Этот файл из проверки исключён:
+    // он же эту строку и называет — иначе тест ловил бы сам себя.
+    for (const file of testFiles()) {
+      if (file.endsWith("goldens.test.ts")) continue;
+      const text = readFileSync(file, "utf-8");
+      expect(text, file).not.toContain("goldens:write");
+      const imported = text.match(/import\s*\{([^}]*)\}\s*from\s*["'][^"']*goldens["']/);
+      if (imported) expect(imported[1], file).not.toMatch(/\bwrite\b/);
+    }
+  });
+
+  it("числа пишутся по-питоновски: дробное остаётся дробным", () => {
+    // Питон отличает `1.0` от `1`, а `JSON.stringify` — нет. В эталонах таких
+    // чисел три с половиной тысячи, и без этого правила первое же переписывание
+    // переставило бы их все.
+    const text = pyDump({ confidence: 1, signals: { a: 0, b: 0.5 },
+                          rows: [[1, "x", false, "y"]], panels: 2 });
+    expect(text).toContain('"confidence": 1.0');
+    expect(text).toContain('"a": 0.0');
+    expect(text).toContain('"b": 0.5');
+    expect(text, "целое обязано остаться целым").toContain('"panels": 2');
+    expect(text.split("\n").some((l) => l.trim() === "1.0,"),
+           "первый столбец строки замера — дробный").toBe(true);
+    expect(text.endsWith("\n")).toBe(true);
   });
 });

@@ -15,7 +15,9 @@
     "emit": "node tools/emit.ts --write",
     "emit:check": "node tools/emit.ts",
     "icons": "node tools/icons.ts",
-    "ask": "node --env-file-if-exists=../.env --import ./tools/ts-resolve.mjs tools/ask.ts"
+    "ask": "node --env-file-if-exists=../.env --import ./tools/ts-resolve.mjs tools/ask.ts",
+    "goldens": "node --import ./tools/ts-resolve.mjs tools/goldens.ts",
+    "goldens:write": "node --import ./tools/ts-resolve.mjs tools/goldens.ts --write"
   },
   "dependencies": {
     "react": "^19.2.0",
@@ -28,6 +30,7 @@
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-basic-ssl": "^2.3.0",
     "@vitejs/plugin-react": "^6.1.0",
+    "ajv": "^8.20.0",
     "tailwindcss": "^4.3.0",
     "typescript": "~5.9.0",
     "vite": "^8.2.0",

@@ -54,6 +54,21 @@ describe("собранная страница", () => {
     }
   });
 
+  it("независимый судья схемы остался в тестах", () => {
+    // `ajv` нужен, чтобы сверять СВОЮ проверку схемы (решение 138), и только там.
+    // Уехал бы в страницу — человек у знака платил бы связью и памятью за то,
+    // что нужно одному тесту.
+    for (const file of built.filter((f) => f.endsWith(".js"))) {
+      const text = readFileSync(file, "utf-8");
+      // Строка самого `ajv`: своя проверка говорит о том же другими словами.
+      expect(text, file).not.toContain("must be equal to one of the allowed values");
+      expect(text, file).not.toContain("ajv/dist");
+    }
+    const pkg = JSON.parse(readFileSync(`${WEB}package.json`, "utf-8"));
+    expect(pkg.devDependencies, "`ajv` обязан быть только в разработческих").toHaveProperty("ajv");
+    expect(pkg.dependencies ?? {}, "`ajv` уехал бы в страницу").not.toHaveProperty("ajv");
+  });
+
   it("переключателя «браузер/питон» в ней нет", () => {
     for (const file of built.filter((f) => f.endsWith(".js"))) {
       expect(readFileSync(file, "utf-8"), file).not.toContain("Read on this device");

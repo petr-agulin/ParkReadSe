@@ -97,10 +97,13 @@ def test_the_layers_are_declared_and_none_is_ported_yet():
     и он же — мера продвижения порта."""
     ported = parity.ported()
     assert set(ported) <= set(parity.LAYERS), ported
-    ts = (ROOT / "web/src/lib/parity.test.ts").read_text(encoding="utf-8")
+    # Слои и пробы переехали в команду, которая пишет эталоны (шаг 8, этап 5):
+    # считать их должен тот же код, что и проверяет, иначе копии разъедутся молча.
+    tool = (ROOT / "web/tools/goldens.ts").read_text(encoding="utf-8")
     for layer in parity.LAYERS:
-        assert f'"{layer}"' in ts, layer
+        assert f'"{layer}"' in tool, layer
     # Слой, объявленный портированным без пробы, роняет фронтенд-тест — так и надо.
+    ts = (ROOT / "web/src/lib/parity.test.ts").read_text(encoding="utf-8")
     assert "объявлен портированным, но пробы нет" in ts
 
 
@@ -239,9 +242,10 @@ def test_the_schema_check_has_something_to_be_checked_against():
     assert len(поломанные) >= 8 * len(целые), (len(поломанные), len(целые))
 
     # Рецепты — те же с обеих сторон, иначе сравнивались бы разные документы.
-    ts = (ROOT / "web/src/lib/parity.test.ts").read_text(encoding="utf-8")
+    # Лежат они там же, где и пробы: в команде, которая пишет эталоны.
+    tool = (ROOT / "web/tools/goldens.ts").read_text(encoding="utf-8")
     for mutation in parity.MUTATIONS:
-        assert mutation["label"] in ts, mutation["label"]
+        assert mutation["label"] in tool, mutation["label"]
 
 
 def test_the_browser_schemas_are_current():

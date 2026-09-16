@@ -818,16 +818,16 @@
    "status": "ported"
   },
   "test_parity::test_the_golden_answers_are_current": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_every_document_of_the_set_is_a_case": {
    "status": "ported"
   },
   "test_parity::test_the_awkward_moments_are_all_covered": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_the_case_file_is_read_by_both_sides": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_the_engine_golden_holds_the_answer_not_the_innards": {
    "status": "ported"
@@ -836,13 +836,13 @@
    "status": "ported"
   },
   "test_parity::test_the_layers_are_declared_and_none_is_ported_yet": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_no_photograph_ever_reaches_the_reference_answers": {
    "status": "ported"
   },
   "test_parity::test_rewriting_is_a_separate_command": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_the_types_match_the_schema": {
    "status": "ported"
@@ -863,7 +863,7 @@
    "status": "ported"
   },
   "test_parity::test_the_schema_check_has_something_to_be_checked_against": {
-   "status": "pending"
+   "status": "ported"
   },
   "test_parity::test_the_browser_schemas_are_current": {
    "status": "ported"
