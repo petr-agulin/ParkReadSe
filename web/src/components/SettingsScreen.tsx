@@ -259,8 +259,8 @@ export default function SettingsScreen(
             <button
               type="button"
               onClick={onForget}
-              className="rounded-tile border border-field bg-ground px-4 py-2.5
-                         text-label font-semibold text-ink-2"
+              className="shrink-0 rounded-button-sm bg-chip px-4 py-3 text-label
+                         font-semibold text-ink-2"
             >
               Forget the key
             </button>
