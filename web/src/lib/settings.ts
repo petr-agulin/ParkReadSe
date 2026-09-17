@@ -145,7 +145,10 @@ export function readiness(s: Settings): Readiness {
   const gaps = missing(s);
   return {
     ready: gaps.length === 0,
-    chip: gaps.length === 0 ? "Ready" : "Not set up",
+    // Не «Ready» / «Not set up»: чип отвечает на вопрос «всё ли готово», и ответ
+    // на него — «всё» либо «осталось настроить». Красным «Set up» не красится:
+    // красный в продукте значит «знак запрещает», и больше ничего.
+    chip: gaps.length === 0 ? "All set" : "Set up",
     missing: gaps,
   };
 }

@@ -3,6 +3,9 @@
 // Что показывать и как называть действия, решает `lib/settings`: `row`,
 // `rememberToggle`, `readiness`, `canForget`. Здесь только краска — и ни одного
 // решения, которое нельзя было бы проверить тестом (решение 151).
+//
+// Вид полей — прежний: подпись, под ней коробка со значением, справа действие.
+// Список строк, который стоял здесь между делом, разработчику не подошёл.
 
 import { useState } from "react";
 
@@ -18,17 +21,21 @@ type Props = {
 
 type Field = "key" | "address" | "model";
 
-const FIELD = "w-full rounded-field bg-inset px-4 py-3 text-body text-ink "
+const FIELD = "min-w-0 flex-1 rounded-field bg-inset px-4 py-3 text-body text-ink "
             + "shadow-[inset_0_0_0_1.5px_var(--color-field)] outline-none";
+
+const QUIET = "rounded-button-sm px-4 py-2.5 text-label font-semibold text-ink-2";
+
+const SECTION = "pl-1.5 text-section font-bold uppercase tracking-[0.1em] text-ink-3";
 
 export default function SettingsScreen(
   { settings, onChange, onForget, onBack, onHelp }: Props,
 ) {
-  // Правка — явная: открытая строка, кнопка Save и Cancel рядом. Молча
-  // сохранять по ходу ввода нельзя — половина ключа так же бесполезна, как его
-  // отсутствие, а выглядела бы как сохранённая настройка.
+  // Правка — явная: открытое поле, Save и Cancel рядом. Молча сохранять по ходу
+  // ввода нельзя — половина ключа так же бесполезна, как его отсутствие,
+  // а выглядела бы как сохранённая настройка.
   const [editing, setEditing] = useState<Field | null>(
-    // Пришли с первого запуска, где нет ничего: строка ключа открыта сразу,
+    // Пришли с первого запуска, где нет ничего: поле ключа открыто сразу,
     // иначе между «Add your key» и клавиатурой стоял бы лишний тап.
     settings.apiKey || settings.provider.baseUrl || settings.provider.visionModel
       ? null : "key",
@@ -38,15 +45,15 @@ export default function SettingsScreen(
   const [remember, setRemember] = useState<boolean | undefined>(undefined);
 
   const state = readiness(settings);
-  const rows: { id: Field; label: string; value: string; secret?: boolean }[] = [
-    { id: "key", label: "API key", value: settings.apiKey, secret: true },
-    { id: "address", label: "Provider address", value: settings.provider.baseUrl },
-    { id: "model", label: "Vision model", value: settings.provider.visionModel },
-  ];
 
-  function open(id: Field, value: string) {
+  const valueOf = (id: Field) =>
+    id === "key" ? settings.apiKey
+    : id === "address" ? settings.provider.baseUrl
+    : settings.provider.visionModel;
+
+  function open(id: Field) {
     setEditing(id);
-    setDraft(value);
+    setDraft(valueOf(id));
     setShown(false);
     setRemember(undefined);
   }
@@ -65,9 +72,121 @@ export default function SettingsScreen(
     setDraft("");
   }
 
+  function field(id: Field, label: string, opts: { secret?: boolean; mono?: boolean } = {}) {
+    const view = row(valueOf(id), { secret: opts.secret });
+    const editing_ = editing === id;
+    const mono = opts.mono ? "font-mono" : "";
+
+    if (!editing_) {
+      return (
+        <div className="flex items-end gap-3">
+          {/* `min-w-0` обязателен: без него длинное значение отказывается ужиматься
+              и выталкивает кнопку за край экрана — ровно это и было найдено
+              на телефоне с длинным ключом. */}
+          <span className="min-w-0 flex-1">
+            <span className="block text-label text-ink-3">{label}</span>
+            <span
+              className={`mt-1.5 block truncate rounded-field bg-inset px-4 py-3
+                          text-body ${mono} ${view.filled ? "text-ink" : "text-ink-3"}
+                          shadow-[inset_0_0_0_1.5px_var(--color-field)]`}
+            >
+              {view.shown}
+            </span>
+          </span>
+          <button
+            type="button"
+            onClick={() => open(id)}
+            className="shrink-0 rounded-button-sm bg-chip px-4 py-3 text-label
+                       font-semibold text-ink-2"
+          >
+            {view.action}
+          </button>
+        </div>
+      );
+    }
+
+    return (
+      <div className="flex flex-col gap-3">
+        <span className="block text-label text-ink-3">{label}</span>
+        <div className="flex items-start gap-2">
+          {opts.secret && shown ? (
+            // Показанный ключ — в переносящемся поле: он виден целиком, и возить
+            // экран вбок не приходится. Скрытый остаётся `password`: там точки,
+            // читать нечего, а замаскировать переносящееся поле нечем — `textarea`
+            // не умеет `password`, а `-webkit-text-security` местами молча не
+            // работает, и ключ оказался бы открыт там, где обещаны точки.
+            <textarea
+              autoFocus
+              rows={3}
+              value={draft}
+              spellCheck={false}
+              onChange={(e) => setDraft(e.target.value)}
+              className={`${FIELD} ${mono} resize-none break-all`}
+            />
+          ) : (
+            <input
+              autoFocus
+              type={opts.secret ? "password" : "text"}
+              value={draft}
+              spellCheck={false}
+              autoComplete="off"
+              onChange={(e) => setDraft(e.target.value)}
+              className={`${FIELD} ${mono}`}
+            />
+          )}
+          {/* Глаз возвращён сознательно: длинный ключ, набранный на телефоне,
+              нечем проверить иначе. */}
+          {opts.secret && (
+            <button
+              type="button"
+              onClick={() => setShown(!shown)}
+              aria-pressed={shown}
+              aria-label={shown ? "Hide the key" : "Show the key"}
+              className="shrink-0 rounded-field bg-chip px-3 py-3 text-label
+                         font-semibold text-ink-2"
+            >
+              {shown ? "Hide" : "Show"}
+            </button>
+          )}
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => saveField(id)}
+            className="rounded-button-sm bg-accent px-5 py-2.5 text-label font-bold
+                       text-on-dark"
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            onClick={() => { setEditing(null); setDraft(""); }}
+            className={QUIET}
+          >
+            Cancel
+          </button>
+          {/* Очистка — здесь, а не отдельной кнопкой на экране: стирать длинное
+              значение с клавиатуры мучительно, а «стереть всё» пересекалось бы
+              с «Forget the key» и уносило бы адрес провайдера, который `forget`
+              бережёт нарочно. */}
+          <button type="button" onClick={() => setDraft("")} className={`${QUIET} ml-auto`}>
+            Clear
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Флажок виден всегда, а не только в правке: он про судьбу ключа, а не про
+  // текущий ввод. В правке смотрит на черновик, в покое — на сохранённое.
+  const keyOpen = editing === "key";
+  const check = keyOpen
+    ? rememberToggle(draft, remember)
+    : rememberToggle(settings.apiKey, settings.remember);
+
   return (
-    <section className="flex flex-col gap-5">
-      <div className="flex items-center gap-3">
+    <section className="flex flex-1 flex-col gap-6">
+      <header className="flex items-center gap-3">
         <button
           type="button"
           onClick={onBack}
@@ -79,120 +198,47 @@ export default function SettingsScreen(
         </button>
         <h1 className="flex-1 text-nav font-bold text-ink-strong">Settings</h1>
         {/* Настроено или нет — видно, не читая. Уйти отсюда, не заметив, что
-            читать всё ещё нечем, человек не должен: платится это у знака. */}
+            читать всё ещё нечем, человек не должен: платится это у знака.
+            Цвет нейтральный: красный в продукте значит «знак запрещает». */}
         <span
           className={`rounded-full px-3 py-1.5 text-caption font-bold ${
             state.ready ? "bg-tint text-tint-ink" : "bg-chip text-ink-2"}`}
         >
           {state.chip}
         </span>
-      </div>
+      </header>
 
-      <div className="flex flex-col gap-2">
-        <p className="pl-1.5 text-section font-bold uppercase tracking-[0.1em] text-ink-3">
-          Your key
-        </p>
+      <div className="flex flex-col gap-3">
+        <p className={SECTION}>Your key</p>
+        {field("key", "API key", { secret: true, mono: true })}
 
-        <div className="rounded-card-sm bg-ground shadow-card">
-          {rows.map((r, i) => {
-            const view = row(r.value, { secret: r.secret });
-            const open_ = editing === r.id;
-            return (
-              <div key={r.id}>
-                {i > 0 && <span className="mx-4 block h-px bg-line" />}
-                <div className="flex items-center gap-3 px-4 py-4">
-                  <span className="flex-1">
-                    <span className="block text-body font-semibold text-ink">{r.label}</span>
-                    {!open_ && (
-                      <span className={`mt-0.5 block text-label text-ink-3 ${
-                        r.secret || r.id === "address" ? "font-mono" : ""}`}>
-                        {view.shown}
-                      </span>
-                    )}
-                  </span>
-                  {!open_ && (
-                    <button type="button" onClick={() => open(r.id, r.value)}
-                            className="text-label font-semibold text-link">
-                      {view.action}
-                    </button>
-                  )}
-                </div>
+        <label className="flex items-center gap-3">
+          <input
+            type="checkbox"
+            checked={check.on}
+            disabled={check.disabled}
+            onChange={() => {
+              if (keyOpen) setRemember(!check.on);
+              else onChange({ ...settings, remember: !check.on });
+            }}
+            className="h-5 w-5 shrink-0 accent-accent"
+          />
+          <span className={`text-body ${check.disabled ? "text-ink-off" : "text-ink"}`}>
+            Remember on this device
+          </span>
+        </label>
 
-                {open_ && (
-                  <div className="flex flex-col gap-3 px-4 pb-4">
-                    <div className="flex items-center gap-2">
-                      <input
-                        autoFocus
-                        type={r.secret && !shown ? "password" : "text"}
-                        value={draft}
-                        spellCheck={false}
-                        autoComplete="off"
-                        onChange={(e) => setDraft(e.target.value)}
-                        className={FIELD}
-                      />
-                      {/* Глаз возвращён сознательно: длинный ключ, набранный
-                          на телефоне, нечем проверить иначе. */}
-                      {r.secret && (
-                        <button type="button" onClick={() => setShown(!shown)}
-                                aria-pressed={shown}
-                                aria-label={shown ? "Hide the key" : "Show the key"}
-                                className="shrink-0 rounded-field bg-chip px-3 py-3
-                                           text-label font-semibold text-ink-2">
-                          {shown ? "Hide" : "Show"}
-                        </button>
-                      )}
-                    </div>
-
-                    {r.id === "key" && (() => {
-                      const toggle = rememberToggle(draft, remember);
-                      return (
-                        <div className="flex items-center gap-3">
-                          <button
-                            type="button"
-                            role="switch"
-                            aria-checked={toggle.on}
-                            disabled={toggle.disabled}
-                            onClick={() => setRemember(!toggle.on)}
-                            className={`flex h-7 w-[46px] shrink-0 items-center rounded-full
-                                        px-0.5 ${toggle.disabled ? "bg-chip"
-                                          : toggle.on ? "bg-accent" : "bg-field"}`}
-                          >
-                            <span className={`block h-[22px] w-[22px] rounded-full bg-ground
-                                              ${toggle.on ? "ml-auto" : ""}`} />
-                          </button>
-                          <span className={`text-body ${
-                            toggle.disabled ? "text-ink-off" : "text-ink"}`}>
-                            Remember on this device
-                          </span>
-                        </div>
-                      );
-                    })()}
-
-                    <div className="flex gap-2">
-                      <button type="button" onClick={() => saveField(r.id)}
-                              className="rounded-button-sm bg-accent px-5 py-3 text-body
-                                         font-bold text-on-dark">
-                        Save
-                      </button>
-                      <button type="button"
-                              onClick={() => { setEditing(null); setDraft(""); }}
-                              className="rounded-button-sm px-4 py-3 text-body
-                                         font-semibold text-ink-2">
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        <p className="px-1.5 text-caption text-ink-3">
+        <p className="text-caption text-ink-3">
           Sent from this device to the provider you name, and nowhere else — this app
           has no server of its own. Switched off, the key is forgotten when the tab
           closes.
         </p>
+      </div>
+
+      <div className="flex flex-col gap-3">
+        <p className={SECTION}>Provider</p>
+        {field("address", "Provider address", { mono: true })}
+        {field("model", "Vision model")}
       </div>
 
       {!state.ready && (
@@ -201,19 +247,27 @@ export default function SettingsScreen(
         </p>
       )}
 
-      <button type="button" onClick={onHelp}
-              className="px-1.5 text-left text-label font-semibold text-link">
-        How keys work, and where to get one
-      </button>
-
-      {/* Опасное действие — отдельно и внизу, как ему и положено. Нет ключа —
-          нет и кнопки: обещать действие, которого не будет, незачем. */}
-      {canForget(settings) && (
-        <button type="button" onClick={onForget}
-                className="rounded-card-sm bg-danger-bg py-4 text-body font-bold text-deny">
-          Forget the key
+      {/* Внизу: опасное действие тихой кнопкой по размеру текста — нет ключа,
+          нет и кнопки, — а под ним помощь, последней строкой экрана. */}
+      <div className="mt-auto flex flex-col items-start gap-4 pt-2">
+        {canForget(settings) && (
+          <button
+            type="button"
+            onClick={onForget}
+            className="rounded-button-sm border border-danger-line bg-danger-bg px-4
+                       py-2.5 text-label font-semibold text-deny"
+          >
+            Forget the key
+          </button>
+        )}
+        <button
+          type="button"
+          onClick={onHelp}
+          className="text-left text-label font-semibold text-link"
+        >
+          How keys work, and where to get one
         </button>
-      )}
+      </div>
     </section>
   );
 }
