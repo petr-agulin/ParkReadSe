@@ -5,7 +5,8 @@
 // решения, которое нельзя было бы проверить тестом (решение 151).
 //
 // Вид полей — прежний: подпись, под ней коробка со значением, справа действие.
-// Список строк, который стоял здесь между делом, разработчику не подошёл.
+// Заголовков разделов нет: под каждым из них стояла подпись поля, говорившая
+// то же самое.
 
 import { useState } from "react";
 
@@ -25,8 +26,6 @@ const FIELD = "min-w-0 flex-1 rounded-field bg-inset px-4 py-3 text-body text-in
             + "shadow-[inset_0_0_0_1.5px_var(--color-field)] outline-none";
 
 const QUIET = "rounded-button-sm px-4 py-2.5 text-label font-semibold text-ink-2";
-
-const SECTION = "pl-1.5 text-section font-bold uppercase tracking-[0.1em] text-ink-3";
 
 export default function SettingsScreen(
   { settings, onChange, onForget, onBack, onHelp }: Props,
@@ -85,9 +84,11 @@ export default function SettingsScreen(
               на телефоне с длинным ключом. */}
           <span className="min-w-0 flex-1">
             <span className="block text-label text-ink-3">{label}</span>
+            {/* Моноширинным — только чужой текст: ключ и адрес. «Not set» — наше
+                слово, и выглядит оно как остальные наши слова. */}
             <span
               className={`mt-1.5 block truncate rounded-field bg-inset px-4 py-3
-                          text-body ${mono} ${view.filled ? "text-ink" : "text-ink-3"}
+                          text-body ${view.filled ? `${mono} text-ink` : "text-ink-3"}
                           shadow-[inset_0_0_0_1.5px_var(--color-field)]`}
             >
               {view.shown}
@@ -197,19 +198,16 @@ export default function SettingsScreen(
           ‹
         </button>
         <h1 className="flex-1 text-nav font-bold text-ink-strong">Settings</h1>
-        {/* Настроено или нет — видно, не читая. Уйти отсюда, не заметив, что
-            читать всё ещё нечем, человек не должен: платится это у знака.
-            Цвет нейтральный: красный в продукте значит «знак запрещает». */}
-        <span
-          className={`rounded-full px-3 py-1.5 text-caption font-bold ${
-            state.ready ? "bg-tint text-tint-ink" : "bg-chip text-ink-2"}`}
-        >
+        {/* Настроено или нет — видно, не читая. Подложки нет: овал спорил
+            за внимание с кнопками `Add`/`Edit`, стоящими в сантиметре ниже.
+            Зелёный здесь — `ok`, а не цвет смысла: те принадлежат разбору знака. */}
+        <span className={`text-label font-bold ${
+          state.ready ? "text-ok" : "text-ink-3"}`}>
           {state.chip}
         </span>
       </header>
 
       <div className="flex flex-col gap-3">
-        <p className={SECTION}>Your key</p>
         {field("key", "API key", { secret: true, mono: true })}
 
         <label className="flex items-center gap-3">
@@ -228,34 +226,38 @@ export default function SettingsScreen(
           </span>
         </label>
 
+        {/* Две строки, не больше: длинное обещание здесь не читают. Слово
+            «Unticked» — про тот самый флажок рядом, а не про переключатель,
+            которого на экране нет. */}
         <p className="text-caption text-ink-3">
-          Sent from this device to the provider you name, and nowhere else — this app
-          has no server of its own. Switched off, the key is forgotten when the tab
-          closes.
+          Sent only to the provider you name — this app has no server. Unticked, the
+          key is forgotten when the tab closes.
         </p>
       </div>
 
       <div className="flex flex-col gap-3">
-        <p className={SECTION}>Provider</p>
         {field("address", "Provider address", { mono: true })}
         {field("model", "Vision model")}
       </div>
 
+      {/* Заметкой, а не серой строкой: это единственное место, где сказано,
+          почему приложение ещё не читает знаки, и мимо него проходили. */}
       {!state.ready && (
-        <p className="px-1.5 text-label text-ink-2">
+        <p className="rounded-card-sm bg-note px-4 py-3 text-label text-note-ink">
           To read a sign the app still needs {state.missing.join(", ")}.
         </p>
       )}
 
       {/* Внизу: опасное действие тихой кнопкой по размеру текста — нет ключа,
-          нет и кнопки, — а под ним помощь, последней строкой экрана. */}
+          нет и кнопки, — а под ним помощь, последней строкой экрана. Заливки
+          нет: об опасности говорят слова. */}
       <div className="mt-auto flex flex-col items-start gap-4 pt-2">
         {canForget(settings) && (
           <button
             type="button"
             onClick={onForget}
-            className="rounded-button-sm border border-danger-line bg-danger-bg px-4
-                       py-2.5 text-label font-semibold text-deny"
+            className="rounded-tile border border-field bg-ground px-4 py-2.5
+                       text-label font-semibold text-ink"
           >
             Forget the key
           </button>
