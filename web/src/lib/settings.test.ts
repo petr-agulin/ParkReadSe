@@ -124,7 +124,7 @@ describe("видно ли, что приложение настроено", () =
     // цена этой невнимательности платится у знака, а не здесь.
     const r = readiness(EMPTY_SETTINGS);
     expect(r.ready).toBe(false);
-    expect(r.chip).toBe("Set up");
+    expect(r.chip).toBe("Configure");
     expect(r.missing).toEqual(["your API key", "the provider address", "the model name"]);
   });
 

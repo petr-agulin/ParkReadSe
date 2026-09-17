@@ -45,7 +45,8 @@ function ratio(ink: string, ground: string): number {
 // новый токен обязан попасть в один из списков, иначе последний тест упадёт.
 const LIGHT_INK = ["ink", "ink-strong", "ink-2", "ink-3", "ink-off", "link",
                    "tint-ink", "note-ink", "ok", "free", "fee", "unsure", "deny"];
-const LIGHT_GROUND = ["ground", "ground-2", "inset", "chip", "tint", "note", "danger-bg"];
+const LIGHT_GROUND = ["ground", "ground-2", "inset", "chip", "tint", "note", "danger-bg",
+                      "ok-bg"];
 const DARK_INK = ["on-dark", "on-dark-2"];
 const DARK_GROUND = ["hero", "stage", "plate", "accent", "accent-press"];
 /** Волосяные линии и штрих на значке: текста на себе не несут. */

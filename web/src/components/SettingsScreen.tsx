@@ -198,11 +198,13 @@ export default function SettingsScreen(
           ‹
         </button>
         <h1 className="flex-1 text-nav font-bold text-ink-strong">Settings</h1>
-        {/* Настроено или нет — видно, не читая. Подложки нет: овал спорил
-            за внимание с кнопками `Add`/`Edit`, стоящими в сантиметре ниже.
-            Зелёный здесь — `ok`, а не цвет смысла: те принадлежат разбору знака. */}
-        <span className={`text-label font-bold ${
-          state.ready ? "text-ok" : "text-ink-3"}`}>
+        {/* Настроено или нет — видно, не читая. Подложка нужна: без неё слово
+            не читалось как состояние. Но это метка, а не кнопка — пилюля вдвое
+            ниже `Add`/`Edit` и мягче по цвету, чтобы не спорить с ними.
+            Амбра — та же, что у заметки ниже; мята своя (`ok-bg`): цвета смысла
+            принадлежат разбору знака и берутся только там. */}
+        <span className={`shrink-0 rounded-full px-2.5 py-1 text-caption font-bold ${
+          state.ready ? "bg-ok-bg text-ok" : "bg-note text-note-ink"}`}>
           {state.chip}
         </span>
       </header>
@@ -253,14 +255,21 @@ export default function SettingsScreen(
           нет: об опасности говорят слова. */}
       <div className="mt-auto flex flex-col items-start gap-4 pt-2">
         {canForget(settings) && (
-          <button
-            type="button"
-            onClick={onForget}
-            className="rounded-tile border border-field bg-ground px-4 py-2.5
-                       text-label font-semibold text-ink"
-          >
-            Forget the key
-          </button>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+            <button
+              type="button"
+              onClick={onForget}
+              className="rounded-tile border border-field bg-ground px-4 py-2.5
+                         text-label font-semibold text-ink-2"
+            >
+              Forget the key
+            </button>
+            {/* Рядом сказано, что именно уйдёт: адрес и модель `forget` бережёт
+                нарочно, и гадать об этом человек не должен. */}
+            <span className="text-caption text-ink-3">
+              Removes the key; the address and model stay.
+            </span>
+          </div>
         )}
         <button
           type="button"
