@@ -11,7 +11,7 @@
 // Говорит он не теми словами, что главный экран с ключом: там предлагают снять
 // знак, здесь объясняют, зачем ключ. Расхождение осознанное (см. `lib/home`).
 
-import { ASSURANCES, BENEFITS, HEADLINE } from "../lib/home";
+import { ASSURANCES, BENEFITS, HEADLINE, SIGN_PLATES } from "../lib/home";
 import { Frame, Key, Lock, Shield, Sliders } from "./Icon";
 import SignPlate from "./SignPlate";
 
@@ -40,7 +40,7 @@ export default function FirstLaunch({ onAddKey, onSettings }: Props) {
 
       {/* Знак — один посреди экрана: это предмет, о котором всё приложение. */}
       <div className="flex flex-1 flex-col items-center justify-center gap-7 text-center">
-        <SignPlate size="hero" lines={["Servicefordon", "Vardagar 7–17", "Övrig tid avgift"]} />
+        <SignPlate size="hero" plates={SIGN_PLATES} />
 
         <div>
           <h1 className="text-display font-extrabold text-ink-strong">{HEADLINE}</h1>
@@ -78,7 +78,12 @@ export default function FirstLaunch({ onAddKey, onSettings }: Props) {
           {ASSURANCES.map((text, i) => {
             const Mark = MARKS[i];
             return (
-              <span key={text} className="flex items-center gap-2 text-caption text-ink-3">
+              // `text-section` — это 13 px из шкалы, а не размер по месту.
+              // `tracking-normal` гасит разрядку: она заведена для прописных
+              // секционных подписей, а здесь обычная фраза.
+              <span key={text}
+                    className="flex items-center gap-2 text-section tracking-normal
+                               text-ink-3">
                 <Mark className="h-3.5 w-3.5 shrink-0" />
                 {text}
               </span>

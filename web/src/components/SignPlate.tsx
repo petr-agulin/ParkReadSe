@@ -11,8 +11,9 @@
 // поэтому синий кант идёт раньше белого.
 
 type Props = {
-  /** Что написано на табличках под основным знаком. */
-  lines: string[];
+  /** Таблички под основным знаком: по массиву строк на каждую. На настоящем
+   *  знаке время стоит под словом, а не рядом, поэтому табличка многострочная. */
+  plates: string[][];
   /** `hero` — знак стоит один посреди экрана, и мельче его делать незачем. */
   size?: "hero" | "large" | "small";
   /** По умолчанию знак стоит по центру; в тёмной полосе главного — по левому краю. */
@@ -35,7 +36,7 @@ const LINE: Record<string, string> = {
   small: "w-21 py-[3px] text-[10px]",
 };
 
-export default function SignPlate({ lines, size = "large", align = "center" }: Props) {
+export default function SignPlate({ plates, size = "large", align = "center" }: Props) {
   return (
     <div
       className={`flex shrink-0 flex-col gap-[3px] ${
@@ -48,13 +49,14 @@ export default function SignPlate({ lines, size = "large", align = "center" }: P
       >
         P
       </span>
-      {lines.map((line) => (
+      {plates.map((plate, i) => (
         <span
-          key={line}
-          className={`block rounded-[3px] bg-on-dark text-center font-bold text-tint-ink
+          key={i}
+          className={`flex flex-col rounded-[3px] bg-on-dark text-center font-bold
+                      leading-tight text-tint-ink
                       shadow-[inset_0_0_0_1px_var(--color-field)] ${LINE[size]}`}
         >
-          {line}
+          {plate.map((line) => <span key={line}>{line}</span>)}
         </span>
       ))}
     </div>

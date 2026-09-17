@@ -12,7 +12,8 @@
 import { useRef } from "react";
 
 import {
-  HOME_HEADLINE, HOME_LINES, MOMENT_FROM, MOMENT_TO, entryActions, momentChip,
+  HOME_HEADLINE, HOME_LINES, MOMENT_FROM, MOMENT_TO, SIGN_PLATES, entryActions,
+  momentChip,
 } from "../lib/home";
 import { Camera, Sliders } from "./Icon";
 import SignPlate from "./SignPlate";
@@ -71,11 +72,7 @@ export default function Home({
           в собранный CSS не попадает вовсе, и забота о коротком экране была бы
           показной. */}
       <div className="tight-on-short -mx-4 flex flex-col gap-7 bg-hero px-6 py-8">
-        <SignPlate
-          size="large"
-          align="start"
-          lines={["Servicefordon", "Vardagar 7–17", "Övrig tid avgift"]}
-        />
+        <SignPlate size="large" align="start" plates={SIGN_PLATES} />
         <div>
           <h1 className="text-display font-extrabold text-on-dark">
             {HOME_HEADLINE}
