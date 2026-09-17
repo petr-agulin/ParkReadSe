@@ -255,7 +255,7 @@ export default function SettingsScreen(
           нет: об опасности говорят слова. */}
       <div className="mt-auto flex flex-col items-start gap-4 pt-2">
         {canForget(settings) && (
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+          <div className="flex w-full items-center gap-3">
             <button
               type="button"
               onClick={onForget}
@@ -264,10 +264,15 @@ export default function SettingsScreen(
             >
               Forget the key
             </button>
-            {/* Рядом сказано, что именно уйдёт: адрес и модель `forget` бережёт
-                нарочно, и гадать об этом человек не должен. */}
-            <span className="text-caption text-ink-3">
-              Removes the key; the address and model stay.
+            {/* Строка стоит СПРАВА и переносится внутри себя, а не уходит под
+                кнопку: `min-w-0` разрешает ей ужаться — без него она распирала бы
+                строку, как это уже было с длинным ключом.
+
+                Сказано, откуда именно уходит ключ: `forget` стирает его и в памяти
+                страницы, и в хранилище браузера. Адрес и модель он бережёт нарочно,
+                и гадать об этом человек не должен. */}
+            <span className="min-w-0 text-caption text-ink-3">
+              Erased from this page and this browser. Address and model stay.
             </span>
           </div>
         )}
