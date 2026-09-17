@@ -3,28 +3,36 @@
 // О чужих моделях говорится только проверяемое — имя и совместимость (решение 150).
 // Всё, что мы знаем о качестве, измерено на одной модели и одном наборе из 55
 // снимков; «не хуже» про чужой товар мы не мерили и не скажем.
+//
+// **Про деньги здесь не обещается ничего.** У провайдеров бывают и бесплатные квоты,
+// и платные тарифы, и меняются они без нашего ведома. Экран называет размер запроса
+// и говорит, зачем он человеку, — примерить к своему тарифу. Слов «платно», «бесплатно»
+// и «без карты» на нём нет.
 
 type Props = { onBack: () => void };
 
+// О чужих провайдерах — только проверяемое: имя и совместимость (решение 150).
+// Ни «дёшево», ни «бесплатно», ни «лучше»: тарифы и наборы моделей меняются без нас,
+// и обещание, данное здесь, устареет молча. Чем приложение пользуются каждый день —
+// тоже не их дело: человеку нужен работающий ключ, а не наша биография.
 const PROVIDERS: { name: string; note: string }[] = [
-  {
-    name: "Google Gemini",
-    note: "What this app is used with day to day, and the only one its accuracy "
-        + "has been measured on. A key is free to create, with no card.",
-  },
+  { name: "Google Gemini", note: "One place to look for a vision model and a key." },
   { name: "OpenAI", note: "Vision models of the GPT family." },
   { name: "Mistral", note: "Pixtral." },
   { name: "OpenRouter", note: "One key, many models from several vendors." },
   {
     name: "A model you host yourself",
-    note: "If it answers at your own address in the same dialect, point ParkRead at it.",
+    note: "If it answers at your address in the same dialect, point ParkRead at it.",
   },
 ];
 
+// Четыре шага, а не три: выбор модели был пропущен, хотя без её точного имени
+// последний шаг выполнить нечем.
 const STEPS = [
-  "Open an account with the provider you picked, and turn on API access.",
-  "Create an API key there. Copy it once — most providers show it only that one time.",
-  "In Settings, paste the key, set the provider address, and name the vision model.",
+  "Open your provider's API keys page.",
+  "Create a key there. Copy it once — most providers show it only that one time.",
+  "Pick a vision model from the provider's list and note its exact name.",
+  "In ParkRead's settings, paste the key, set the provider address and the model name.",
 ];
 
 export default function KeyHelp({ onBack }: Props) {
@@ -51,15 +59,16 @@ export default function KeyHelp({ onBack }: Props) {
           Any vision model will do.
         </h2>
         <p className="mt-3 text-body text-ink-2">
-          ParkRead is not tied to one provider. You bring the key, you pick the model,
-          and you pay whoever you chose.
+          ParkRead is not tied to one provider: you bring the key and pick the model.
         </p>
         {/* Требование к провайдеру названо прямо: «умеет смотреть на снимок» мало.
-            Модель за другим интерфейсом не заработает, и человек не поймёт почему. */}
+            Модель за другим интерфейсом не заработает, и человек не поймёт почему.
+            Последняя фраза — мост к списку ниже: до неё абзац обрывался на технике. */}
         <p className="mt-3 text-body text-ink-2">
-          One thing is required: the provider must answer in the OpenAI-compatible way
+          One requirement: the provider must answer the OpenAI-compatible way
           (<code className="font-mono text-label">POST /chat/completions</code>).
-          A vision model behind a different interface will not work here.
+          A model behind a different interface will not work here. Some that do are
+          listed below.
         </p>
       </div>
 
@@ -89,21 +98,34 @@ export default function KeyHelp({ onBack }: Props) {
           ))}
         </ol>
         <p className="mt-4 text-label text-ink-3">
-          Each provider words its screens differently, so these are the parts to look
-          for rather than the exact clicks.
+          Providers word their screens differently, so look for these parts rather than
+          the exact clicks. For example:{" "}
+          <a
+            href="https://aistudio.google.com/docs/api-key"
+            target="_blank"
+            rel="noreferrer"
+            className="font-semibold text-link"
+          >
+            aistudio.google.com/docs/api-key
+          </a>.
         </p>
-        {/* Цена названа здесь же: открытый вопрос спрашивал и «где взять», и «сколько
-            стоит», и без второй половины экран отвечал бы наполовину. */}
+        {/* Размер запроса назван с причиной: сам по себе он ничего человеку
+            не говорит. Сказано, ЗАЧЕМ он ему — примерить к тарифу или к бесплатной
+            квоте, не гадая. Про «платно» здесь не сказано ни слова: у провайдеров
+            бывает и то, и другое. */}
         <p className="mt-2 text-label text-ink-3">
-          Reading one sign costs two model calls — roughly 1700 tokens.
+          Reading one sign takes two model calls, about 1700 tokens — enough to weigh
+          against your provider's free allowance or its rates.
         </p>
       </div>
 
       <div className="rounded-card-sm bg-note p-5">
+        {/* Не «платёжный инструмент»: ключ бывает и от бесплатной квоты. Опасность
+            от этого не меньше — тратит её тот, у кого ключ на руках. */}
         <p className="text-label text-note-ink">
-          A key is a payment instrument. ParkRead keeps it on this device unless you
-          switch that off, so on a phone that is not yours, use “Forget key” in
-          Settings.
+          The key is yours, and whoever holds it spends your allowance. ParkRead keeps
+          it on this device unless you switch that off — on a phone that is not yours,
+          use “Forget key” in Settings.
         </p>
       </div>
     </section>
