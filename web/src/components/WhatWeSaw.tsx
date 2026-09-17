@@ -76,7 +76,10 @@ export default function WhatWeSaw({
       {/* Уверенности в шапке нет: она была сказана дважды — чипом здесь и строкой
           прямо под ним, в `Completeness`. Осталась строка, где рядом с ней
           полнота, причины и тон. */}
-      <h2 className="mb-3 text-card-sm font-bold text-ink-strong">What we read</h2>
+      {/* Тот же кегль, что у «Who can park here» и «Your parking window»: три
+          карточки разбора — ровня, и заголовок одной из них не может быть
+          на ступень мельче остальных. */}
+      <h2 className="mb-3 text-card font-extrabold text-ink-strong">What we read</h2>
       <Completeness data={data} />
 
       {wide && photo}
