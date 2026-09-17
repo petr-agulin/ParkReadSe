@@ -424,7 +424,7 @@ export default function SignPicker({
         <button type="button" onClick={send} disabled={!loaded || busy || sending}
                 className="rounded-button-sm bg-accent py-5 text-row font-bold
                            text-on-dark disabled:opacity-50">
-          {busy || sending ? "Sending…" : "Send this to be read"}
+          {busy || sending ? "Reading…" : "Send this to be read"}
         </button>
       </div>
 
