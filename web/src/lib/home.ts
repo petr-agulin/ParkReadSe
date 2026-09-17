@@ -62,24 +62,6 @@ export type Chip = { label: string; canReset: boolean };
  * говорит СЛОВО, а не застывший отсчёт: нарисованное «now · Tue 19:38» пришлось бы
  * обновлять каждую минуту, иначе оно врёт тому, кто простоял у знака пять минут.
  */
-/**
- * Сокращения дня и месяца — только для строки момента.
- *
- * Полные слова («Thursday 17 September») занимают столько, что строка переносится
- * даже на широком телефоне. В `when` их не трогаем: там же называется время внутри
- * фраз на экране разбора, а «until Wed. 16 Sep. at 07:00» посреди предложения
- * читается хуже целого слова.
- *
- * У «May» точки нет: сокращать в нём нечего.
- */
-const SHORT: Record<string, string> = {
-  Monday: "Mon.", Tuesday: "Tue.", Wednesday: "Wed.", Thursday: "Thu.",
-  Friday: "Fri.", Saturday: "Sat.", Sunday: "Sun.",
-  January: "Jan.", February: "Feb.", March: "Mar.", April: "Apr.",
-  May: "May", June: "Jun.", July: "Jul.", August: "Aug.",
-  September: "Sep.", October: "Oct.", November: "Nov.", December: "Dec.",
-};
-
 export function momentChip(moment: string): Chip {
   const chosen = moment.trim().length > 0;
   // Выбранный момент — строка длинная («Thursday 17 September at 02:01»), и на
@@ -87,11 +69,9 @@ export function momentChip(moment: string): Chip {
   // раз — перед «at»: пробел после «at» неразрывный, поэтому время не отрывается
   // от предлога и не остаётся на строке в одиночестве. Ломается строка там, где
   // её сломал бы человек: дата, а под ней время.
-  const label = chosen
-    ? when(moment)
-      .replace(/[A-Z][a-z]+/g, (word) => SHORT[word] ?? word)
-      .replace(/\bat (?=\d)/, "at ")
-    : "Now";
+  // Сокращает теперь сам `when` — и здесь, и на разборе. Держать второй словарь
+  // рядом незачем; здесь остаётся только неразрывный пробел.
+  const label = chosen ? when(moment).replace(/\bat (?=\d)/, "at ") : "Now";
   return { label, canReset: chosen };
 }
 

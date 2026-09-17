@@ -6,14 +6,9 @@
 // означает, что кода не существует — табло оператора не дорожный знак.
 
 import { useState } from "react";
-import { confidenceLabel, plateRow } from "../lib/reading";
+import { plateRow } from "../lib/reading";
 import type { Analysis, GeneralRule, Panel } from "../types";
 import Completeness from "./Completeness";
-
-// Цвет решает бэкенд (`tone`), вёрстка только красит.
-const TONE: Record<string, string> = {
-  good: "text-free", caution: "text-fee", bad: "text-deny",
-};
 
 /**
  * Табличка строкой «подпись → значение».
@@ -89,14 +84,10 @@ export default function WhatWeSaw({
 
   return (
     <section className="rounded-card bg-ground p-6 shadow-raised">
-      {/* Уверенность — в шапке карточки, рядом с названием: это оговорка
-          к прочитанному, а не отдельный вывод. */}
-      <div className="mb-3 flex items-baseline gap-2.5">
-        <h2 className="flex-1 text-card-sm font-bold text-ink-strong">What we read</h2>
-        <span className={`text-label font-semibold ${TONE[data.completeness.tone] ?? ""}`}>
-          {confidenceLabel(data.completeness).text}
-        </span>
-      </div>
+      {/* Уверенности в шапке нет: она была сказана дважды — чипом здесь и строкой
+          прямо под ним, в `Completeness`. Осталась строка, где рядом с ней
+          полнота, причины и тон. */}
+      <h2 className="mb-3 text-card-sm font-bold text-ink-strong">What we read</h2>
       <Completeness data={data} />
 
       {wide && photo}

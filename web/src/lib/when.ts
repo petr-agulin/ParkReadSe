@@ -18,7 +18,26 @@ const FULL: Intl.DateTimeFormatOptions = {
   hour12: false, hourCycle: "h23",      // полночь — «00:00», а не «24:00»
 };
 
-/** Момент словами: «Friday, 30 October at 14:00». */
+/**
+ * Сокращения дня и месяца.
+ *
+ * Полные слова («Thursday 17 September») занимают столько, что строка переносится
+ * даже на широком телефоне. Довод «внутри фраз сокращения читаются хуже» звучал
+ * и был отвергнут разработчиком по делу: эту строку не читают как прозу —
+ * её сканируют, стоя у столба.
+ *
+ * У «May» точки нет: сокращать в нём нечего.
+ */
+const SHORT: Record<string, string> = {
+  Monday: "Mon.", Tuesday: "Tue.", Wednesday: "Wed.", Thursday: "Thu.",
+  Friday: "Fri.", Saturday: "Sat.", Sunday: "Sun.",
+  January: "Jan.", February: "Feb.", March: "Mar.", April: "Apr.",
+  May: "May", June: "Jun.", July: "Jul.", August: "Aug.",
+  September: "Sep.", October: "Oct.", November: "Nov.", December: "Dec.",
+};
+
+/** Момент словами: «Fri. 30 Oct. at 14:00». */
 export function when(iso: string): string {
-  return new Date(iso).toLocaleString(LOCALE, FULL);
+  return new Date(iso).toLocaleString(LOCALE, FULL)
+    .replace(/[A-Z][a-z]+/g, (word) => SHORT[word] ?? word);
 }

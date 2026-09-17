@@ -13,9 +13,11 @@ const ROOT = fileURLToPath(new URL("../../../", import.meta.url));
 const reading = () => readFileSync(`${ROOT}web/src/components/Reading.tsx`, "utf-8");
 
 describe("ответ идёт перед доказательством (решение 149)", () => {
-  it("кому можно → окно → таблички, именно в этом порядке", () => {
+  it("окно → кому можно → таблички, именно в этом порядке", () => {
     // Человек у знака хочет ответ; реконструкция нужна ему, чтобы этот ответ
-    // проверить, а не вместо него.
+    // проверить, а не вместо него. Два блока ответа разработчик поменял местами:
+    // сначала окно, потом адресаты. Суть решения 149 от этого цела — таблички
+    // по-прежнему последние.
     const page = reading();
     const who = page.indexOf('id="who"');
     const window_ = page.indexOf('id="window"');
@@ -25,8 +27,8 @@ describe("ответ идёт перед доказательством (реш�
     expect(window_, "блока окна нет вовсе").toBeGreaterThan(-1);
     expect(plates, "блока табличек нет вовсе").toBeGreaterThan(-1);
 
-    expect(who).toBeLessThan(window_);
-    expect(window_).toBeLessThan(plates);
+    expect(window_).toBeLessThan(who);
+    expect(who).toBeLessThan(plates);
   });
 
   it("оговорка о непрочитанной панели стоит НАД окном", () => {
@@ -40,14 +42,16 @@ describe("ответ идёт перед доказательством (реш�
     expect(caveat).toBeLessThan(window_);
   });
 
-  it("полнота осталась внизу, вместе с прочитанным", () => {
-    // Обычная уверенность — оговорка к разбору табличек, а не к окну:
-    // её место в третьей карточке, у слова «confident».
+  it("уверенность названа один раз, внизу, вместе с прочитанным", () => {
+    // Была сказана дважды: чипом в шапке карточки и строкой прямо под ним.
+    // Чип убран, осталась строка — там же полнота, причины и тон.
     const what = readFileSync(`${ROOT}web/src/components/WhatWeSaw.tsx`, "utf-8");
-    expect(what).toContain("confidenceLabel");
-    // А сама оговорка о запрете — не здесь: иначе она встала бы дважды.
     const completeness = readFileSync(
       `${ROOT}web/src/components/Completeness.tsx`, "utf-8");
+
+    expect(completeness, "уверенности нет и внизу").toContain("confidence");
+    expect(what, "уверенность вернулась в шапку").not.toContain("confident");
+    // А оговорка о запрете — не здесь: иначе она встала бы дважды.
     expect(completeness).not.toContain("no period below is presented");
   });
 

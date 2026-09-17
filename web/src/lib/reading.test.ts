@@ -2,8 +2,8 @@
 
 import { describe, expect, it } from "vitest";
 
-import { confidenceLabel, meaningLine, plateRow, readFor } from "./reading";
-import type { Analysis, Meaning, Panel } from "../types";
+import { meaningLine, plateRow, readFor } from "./reading";
+import type { Meaning, Panel } from "../types";
 
 const meaning = (over: Partial<Meaning> = {}): Meaning => ({
   key: "avgift", label: "Fee", code: "T16", text: "", short: "A fee applies",
@@ -76,28 +76,13 @@ describe("строка таблички", () => {
   });
 });
 
-const completeness = (over: Partial<Analysis["completeness"]> = {}):
-    Analysis["completeness"] => ({
-  category: "full", category_text: "Full reading", tone: "good", confidence: 0.98,
-  signals: {}, reasons: [], unread_panels: [], may_hide_prohibition: false, ...over,
-});
-
-describe("подпись уверенности", () => {
-  it("округляется до процента и несёт тон бэкенда", () => {
-    expect(confidenceLabel(completeness())).toEqual({ text: "98% confident", tone: "good" });
-  });
-
-  it("тон не сочиняется вёрсткой", () => {
-    expect(confidenceLabel(completeness({ confidence: 0.5, tone: "bad" })))
-      .toEqual({ text: "50% confident", tone: "bad" });
-  });
-});
-
 describe("на какой момент посчитан ответ", () => {
-  it("момент назван словами, и решение оставлено человеку", () => {
+  it("момент назван словами и сокращённо", () => {
+    // Оговорка «решение за вами» ушла отсюда под заголовок окна: она про окно,
+    // а не про дату, рядом с которой стояла.
     const line = readFor("2026-09-16T07:00");
     expect(line).toMatch(/^Read for /);
-    expect(line).toMatch(/Wednesday/);
-    expect(line).toMatch(/Judgement is yours\.$/);
+    expect(line).toMatch(/Wed\./);
+    expect(line).not.toContain("Judgement");
   });
 });

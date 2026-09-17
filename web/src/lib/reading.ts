@@ -3,7 +3,7 @@
 //
 // Ни разметки, ни браузера. Компонент красит то, что решено здесь (решение 151).
 
-import type { Analysis, Meaning, Panel } from "../types";
+import type { Meaning, Panel } from "../types";
 import { when } from "./when";
 
 /**
@@ -47,20 +47,20 @@ export function plateRow(panel: Panel): PlateRow {
   return { label, values, stacked: values.length > 1 || !panel.carries_rule };
 }
 
-/** Уверенность в шапке карточки «что прочитано». Тон решает бэкенд. */
-export function confidenceLabel(c: Analysis["completeness"]): {
-  text: string; tone: "good" | "caution" | "bad";
-} {
-  return { text: `${Math.round(c.confidence * 100)}% confident`, tone: c.tone };
-}
+// Подписи уверенности здесь больше нет: она стояла дважды — чипом в шапке
+// карточки «что прочитано» и строкой под ним, в `Completeness`. Осталась строка,
+// где рядом с ней полнота, причины и тон.
 
 /**
- * На какой момент посчитан ответ — и чьё решение.
+ * На какой момент посчитан ответ.
  *
  * Момент выбирается на главном экране, поэтому ответ обязан назвать его вслух:
- * иначе разбор «на 07:00» невозможно отличить от разбора «на сейчас». Вторая
- * половина строки — не вежливость: продукт читает знак, а не разрешает стоянку.
+ * иначе разбор «на 07:00» невозможно отличить от разбора «на сейчас».
+ *
+ * Оговорка о том, чьё решение, ушла отсюда под заголовок окна: продукт читает
+ * знак, а не разрешает стоянку, — но сказать это надо там, где показано окно,
+ * а не рядом с датой.
  */
 export function readFor(moment: string): string {
-  return `Read for ${when(moment)}. Judgement is yours.`;
+  return `Read for ${when(moment)}.`;
 }

@@ -16,11 +16,15 @@ describe("момент на экране", () => {
     expect(when("2026-10-27T00:00")).toContain("00:00");
   });
 
-  it("день недели и месяц названы по-английски, как весь экран", () => {
+  it("день недели и месяц названы по-английски и сокращённо", () => {
+    // Сокращённо — потому что строку не читают, а сканируют: полные слова
+    // переносят её на вторую строку даже на широком телефоне.
     const text = when("2026-10-30T14:00");
-    expect(text).toContain("Friday");
-    expect(text).toContain("October");
+    expect(text).toContain("Fri.");
+    expect(text).toContain("Oct.");
     expect(text).toContain("30");
+    expect(text).not.toContain("Friday");
+    expect(text).not.toContain("October");
   });
 
   it("формат не зависит от устройства", () => {
