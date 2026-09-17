@@ -201,8 +201,6 @@ export default function App() {
           />
         )}
 
-        {busy && <p className="text-label text-ink-2">Reading the sign…</p>}
-
         {error && (
           <p className="rounded-card-sm bg-danger-bg p-4 text-label text-deny">{error}</p>
         )}
