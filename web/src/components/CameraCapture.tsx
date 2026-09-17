@@ -147,7 +147,7 @@ export default function CameraCapture({ onCaptured, onCancel, onPick }: Props) {
       {hasTorch && (
         <button type="button" onClick={toggleTorch} aria-pressed={torch}
                 className="rounded-full bg-chip px-4 py-2 text-label font-semibold text-ink-2">
-          {torch ? "Flash on" : "Flash off"}
+          {torch ? "Torch on" : "Torch off"}
         </button>
       )}
     </div>
@@ -177,10 +177,16 @@ export default function CameraCapture({ onCaptured, onCancel, onPick }: Props) {
   }
 
   return (
-    <section className="flex flex-col gap-4">
+    <section className="flex flex-1 flex-col gap-4">
       {nav}
 
-      <div ref={room} className="flex w-full items-center justify-center">
+      {/* Подсказка — над видоискателем, а не на кадре: на кадре она закрывает
+          ровно то, во что целятся. И говорит, что делать, а не называет предмет. */}
+      <p className="text-center text-label text-ink-2">
+        Fit the whole sign in the frame, with every plate under it.
+      </p>
+
+      <div ref={room} className="flex w-full flex-1 items-center justify-center">
         {/* Сцена по размеру потока, а не наоборот: иначе по бокам остаются
             тёмные поля, и видоискатель выглядит рамкой в рамке. Полный обрез
             показывал бы не то, что снимается (решение 148). */}
@@ -198,13 +204,6 @@ export default function CameraCapture({ onCaptured, onCancel, onPick }: Props) {
             }}
             className="absolute inset-0 h-full w-full object-cover"
           />
-
-          <span className="absolute inset-x-0 top-4 flex justify-center">
-            <span className="rounded-full bg-stage/70 px-4 py-2 text-caption font-semibold
-                             text-on-dark">
-              Whole sign, every plate under it
-            </span>
-          </span>
 
           {/* Подсказка — ровно та рамка, что встанет на следующем экране: считается
               той же функцией от размера потока, а не подобранной на глаз долей. */}
@@ -225,32 +224,37 @@ export default function CameraCapture({ onCaptured, onCancel, onPick }: Props) {
             );
           })()}
 
-          {/* Спуск по центру, галерея слева, справа пустое место той же ширины:
-              оно и держит спуск посередине. */}
-          <div ref={footer}
-               className="absolute inset-x-0 bottom-0 flex items-center justify-between
-                          px-6 pb-6">
-            <button
-              type="button"
-              onClick={() => gallery.current?.click()}
-              className="flex h-14 w-14 items-center justify-center rounded-field
-                         bg-ground/90 text-caption font-bold text-ink-2"
-            >
-              Photo
-            </button>
-            <button
-              type="button"
-              onClick={take}
-              disabled={!size || taking}
-              aria-label="Take the photo"
-              className="flex h-23 w-23 items-center justify-center rounded-full bg-ground
-                         shadow-raised disabled:opacity-50"
-            >
-              <span className="block h-[70px] w-[70px] rounded-full bg-accent" />
-            </button>
-            <span className="h-14 w-14" aria-hidden />
-          </div>
         </div>
+      </div>
+
+      {/* Кнопки стоят у нижнего края экрана, а не поверх кадра. `lib/layout`
+          прямо говорит, что раскладка «кнопки поверх снимка» проверялась
+          на двух телефонах и была отброшена, — на этом экране она задержалась.
+
+          Высоту этого ряда вычитает `roomBelow`. Пока ряд лежал на кадре,
+          вычитание было поправкой на то, что места не занимает; теперь оно
+          просто правда, и видоискателю достаётся ровно остаток. */}
+      <div ref={footer} className="flex items-center justify-between px-2">
+        <button
+          type="button"
+          onClick={() => gallery.current?.click()}
+          className="flex h-14 w-20 shrink-0 items-center justify-center rounded-field
+                     bg-chip text-caption font-bold text-ink-2"
+        >
+          Pick photo
+        </button>
+        <button
+          type="button"
+          onClick={take}
+          disabled={!size || taking}
+          aria-label="Take the photo"
+          className="flex h-23 w-23 shrink-0 items-center justify-center rounded-full
+                     bg-ground shadow-raised disabled:opacity-50"
+        >
+          <span className="block h-[70px] w-[70px] rounded-full bg-accent" />
+        </button>
+        {/* Пустое место той же ширины, что и плитка: оно держит спуск посередине. */}
+        <span className="h-14 w-20 shrink-0" aria-hidden />
       </div>
 
       {galleryInput}
