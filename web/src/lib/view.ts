@@ -47,7 +47,7 @@ export type Action =
   | "captured"        // спуск нажат: снимок есть, дальше рамка
   | "replace"         // «Replace» на рамке — обратно в камеру
   | "sent"            // кадр ушёл модели, ответ получен
-  | "read-another";   // «Read another sign»
+  | "scan-another";   // «Scan another sign» — и стрелка в шапке разбора
 
 /** Где мы сейчас и откуда пришли.
  *
@@ -66,7 +66,10 @@ const TARGET: Record<Action, Screen | null> = {
   captured: "frame",
   replace: "camera",
   sent: "reading",
-  "read-another": null, // возврат в начало
+  // С разбора уходят снимать следующий знак, а не на главный экран: человек
+  // стоит у столба, и следующее его действие — снова камера. На главный ведёт
+  // системная кнопка «назад» в браузере.
+  "scan-another": "camera",
 };
 
 /**
@@ -82,8 +85,6 @@ export function go(view: View, action: Action, settings: Settings): View {
     const to = view.from ?? start(settings);
     return { screen: reachable(settings, to) ? to : start(settings) };
   }
-  if (action === "read-another") return { screen: start(settings) };
-
   const to = TARGET[action];
   if (!to || !reachable(settings, to)) return view;
   // Помнит дорогу только тот, кто обязан по ней вернуться.

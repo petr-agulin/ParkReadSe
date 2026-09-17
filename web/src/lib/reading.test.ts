@@ -2,8 +2,8 @@
 
 import { describe, expect, it } from "vitest";
 
-import { meaningLine, plateRow, readFor } from "./reading";
-import type { Meaning, Panel } from "../types";
+import { firstWindow, meaningLine, plateRow, readFor, showsWindow } from "./reading";
+import type { Meaning, Panel, Period, Regime } from "../types";
 
 const meaning = (over: Partial<Meaning> = {}): Meaning => ({
   key: "avgift", label: "Fee", code: "T16", text: "", short: "A fee applies",
@@ -76,6 +76,45 @@ describe("табличка карточкой", () => {
     const row = plateRow(panel({ text: "", meanings: [], index: 3 }));
     expect(row.quote).toBe("");
     expect(row.lines).toEqual(["Panel 3"]);
+  });
+});
+
+const period = (over: Partial<Period> = {}): Period => ({
+  start: "2026-09-17T10:00", end: "2026-09-17T12:00", state: "allowed",
+  state_text: "Parking allowed", ends_at_horizon: false, certain: true,
+  aside: [], stay_end_text: "", stay_end_reason: "", tone: "free",
+  start_day: null, end_day: null, headline: "Free parking", minutes: 120,
+  notes: [], conditions: [], max_duration_minutes: null, note: null, ...over,
+});
+
+const regime = (over: Partial<Regime> = {}): Regime => ({
+  extent: "here", extent_text: "", extent_short: "", audience: null,
+  audience_short: null, eligibility: [], who_can_park: [], notes: [],
+  no_window_text: null, clock_change_text: null, window_for: [], place_notes: [],
+  duration_expires_at: null, duration_source: null, periods: [period()], ...over,
+});
+
+describe("какая карточка окна рисуется", () => {
+  it("нет ни шкалы, ни объяснения — карточки не будет", () => {
+    expect(showsWindow(regime({ periods: [], no_window_text: null }))).toBe(false);
+  });
+
+  it("есть шкала — есть карточка", () => {
+    expect(showsWindow(regime())).toBe(true);
+  });
+
+  it("шкалы нет, но сказать есть что — карточка есть", () => {
+    // Арендованное место: окна нет, а строка о нём нужна.
+    expect(showsWindow(regime({ periods: [], no_window_text: "Leased bay" }))).toBe(true);
+  });
+
+  it("первой считается первая НАРИСОВАННАЯ, а не первая в списке", () => {
+    // Иначе строка «Read for …» повисла бы на карточке, которой на экране нет,
+    // и исчезла бы вместе с ней.
+    const empty = regime({ periods: [], no_window_text: null });
+    expect(firstWindow([empty, regime()])).toBe(1);
+    expect(firstWindow([regime(), regime()])).toBe(0);
+    expect(firstWindow([empty, empty])).toBe(-1);
   });
 });
 

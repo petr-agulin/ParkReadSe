@@ -185,7 +185,8 @@ export default function App() {
             data={data}
             preview={preview}
             rules={rules}
-            onAnother={() => { reset(); move("read-another"); }}
+            onAnother={() => { reset(); move("scan-another"); }}
+            onBack={() => { reset(); move("scan-another"); }}
           />
         ) : (
           <Home

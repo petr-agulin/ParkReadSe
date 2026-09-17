@@ -16,6 +16,7 @@ import { isStayLimit, lasting, splitWindow } from "../lib/period";
 import type { DayNote, Period, Regime, Term } from "../types";
 import { when } from "../lib/when";
 import SignIcon from "./SignIcon";
+import { showsWindow } from "../lib/reading";
 
 const COLUMN = "w-9 shrink-0";      // ширина значка: линия идёт ровно под ним
 
@@ -164,13 +165,14 @@ function Segment({ p, extra }: { p: Period; extra: Term[] }) {
 }
 
 export default function PeriodTimeline(
-  { regime, showExtent = false }: { regime: Regime; showExtent?: boolean },
+  { regime, showExtent = false, momentLine }:
+    { regime: Regime; showExtent?: boolean; momentLine?: string },
 ) {
   const periods = regime.periods ?? [];
   // Шкалы может не быть, а сказать при этом есть что: знак, который о выбранном
   // моменте молчит, окна не даёт, и вместо шкалы встаёт фраза. Поэтому пусто
   // здесь только тогда, когда пусто и то и другое.
-  if (periods.length === 0 && !regime.no_window_text) return null;
+  if (!showsWindow(regime)) return null;
 
   // Запрет перед окном — это ещё не окно, и делит их `lib/period`.
   const { leadIn, window } = splitWindow(periods);
@@ -205,6 +207,13 @@ export default function PeriodTimeline(
           </span>
         )}
       </div>
+
+      {/* На какой момент посчитан ответ — под заголовком окна, потому что
+          оговаривает именно окно. Ставится только у ПЕРВОЙ нарисованной
+          карточки: окон бывает несколько, а момент у разбора один, и повторённый
+          под каждым заголовком он читался бы как разные моменты. */}
+      {momentLine && <p className="mb-3 text-label text-ink-3">{momentLine}</p>}
+
       {/* Шкалы может не быть вовсе. На знаке арендованных мест «Free parking,
           28 h max» — число не со знака, а из правила 24 часов: чьё это место,
           тот знает срок из договора, а всем прочим стоять нельзя вовсе.

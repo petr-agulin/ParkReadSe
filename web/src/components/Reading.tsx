@@ -11,7 +11,7 @@
 // Сами карточки рисуют прежние компоненты. Здесь — порядок и та оговорка,
 // которая обязана стоять ВЫШЕ окна.
 
-import { readFor } from "../lib/reading";
+import { firstWindow, readFor } from "../lib/reading";
 import type { Analysis, GeneralRule } from "../types";
 import ErrorBoundary from "./ErrorBoundary";
 import PeriodTimeline from "./PeriodTimeline";
@@ -23,18 +23,35 @@ type Props = {
   preview: string | null;
   rules: GeneralRule[];
   onAnother: () => void;
+  /** Стрелка в шапке. Ведёт туда же, куда кнопка внизу, — в камеру:
+   *  с разбора уходят снимать следующий знак. */
+  onBack: () => void;
 };
 
-export default function Reading({ data, preview, rules, onAnother }: Props) {
+export default function Reading({ data, preview, rules, onAnother, onBack }: Props) {
   const c = data.completeness;
+  // Первой рисуется не обязательно первый режим: режим без периодов и без
+  // объяснения карточки не даёт вовсе. Строку момента вешаем на ту, что видна,
+  // и какая это — решает `lib/reading`, а не эта разметка.
+  const firstCard = firstWindow(data.regimes);
 
   return (
     <ErrorBoundary>
       <section className="flex flex-col gap-3.5">
-        {/* На какой момент посчитан ответ. Момент выбирается на главном экране,
-            и разбор «на 07:00» иначе не отличить от разбора «на сейчас».
-            Чьё это решение — сказано под заголовком окна, там же, где окно. */}
-        <p className="px-1.5 text-label text-ink-3">{readFor(data.moment)}</p>
+        {/* Навигация как на камере. Стрелка шлёт то же действие, что и кнопка
+            внизу: с разбора уходят снимать следующий знак, а не на главный. */}
+        <div className="flex items-center gap-3.5">
+          <button
+            type="button"
+            onClick={onBack}
+            aria-label="Back"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-chip
+                       text-lg font-semibold text-ink-2"
+          >
+            ‹
+          </button>
+          <span className="flex-1 text-nav font-bold text-ink-strong">Sign reading</span>
+        </div>
 
         {/* Оговорка стоит НАД окном, потому что оговаривает именно его: уехав
             в карточку «что прочитано», она оказалась бы ниже того, к чему
@@ -61,6 +78,7 @@ export default function Reading({ data, preview, rules, onAnother }: Props) {
             <PeriodTimeline
               key={i}
               regime={r}
+              momentLine={i === firstCard ? readFor(data.moment) : undefined}
               showExtent={new Set(data.regimes.map((x) => x.extent)).size > 1
                           || r.extent !== "here"}
             />
@@ -82,7 +100,7 @@ export default function Reading({ data, preview, rules, onAnother }: Props) {
           onClick={onAnother}
           className="rounded-button-sm bg-accent py-4 text-body font-bold text-on-dark"
         >
-          Read another sign
+          Scan another sign
         </button>
       </section>
     </ErrorBoundary>

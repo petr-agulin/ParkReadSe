@@ -107,12 +107,21 @@ describe("путь от главного до разбора", () => {
     expect(go(at("frame"), "replace", READY)).toEqual({ screen: "camera" });
   });
 
-  it("«Read another sign» возвращает на главный", () => {
-    expect(go(at("reading"), "read-another", READY)).toEqual({ screen: "home" });
+  it("«Scan another sign» ведёт в камеру, а не на главный", () => {
+    // С разбора уходят снимать следующий знак: человек стоит у столба.
+    expect(go(at("reading"), "scan-another", READY)).toEqual({ screen: "camera" });
   });
 
-  it("«назад» с камеры, рамки и разбора ведёт в начало", () => {
-    for (const screen of ["camera", "frame", "reading"] as Screen[]) {
+  it("без ключа и этот переход закрыт", () => {
+    // Особого случая у него больше нет — значит, работают общие ворота.
+    const here = at("reading");
+    expect(go(here, "scan-another", EMPTY)).toEqual(here);
+  });
+
+  it("«назад» с камеры и рамки ведёт в начало", () => {
+    // Разбора в списке нет: его стрелка в шапке шлёт `scan-another`, как
+    // и кнопка внизу, — обе ведут в камеру, а не в начало.
+    for (const screen of ["camera", "frame"] as Screen[]) {
       expect(go(at(screen), "back", READY), screen).toEqual({ screen: "home" });
     }
   });
