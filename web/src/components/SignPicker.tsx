@@ -304,17 +304,24 @@ export default function SignPicker({
   const size = loaded?.size;
 
   return (
-    <section className="flex flex-col gap-4">
+    <section className="flex flex-1 flex-col gap-4">
       {nav}
 
-      {/* Снимок лежит на тёмном поле во всю ширину экрана — карточки внутри
-          карточки больше нет. Сам он при этом не растянут и не обрезан: что
-          видно, то и уходит (решение 148). */}
-      <div
-        ref={room}
-        className="flex w-full items-center justify-center overflow-hidden
-                   rounded-card bg-stage"
-      >
+      {/* Подсказка — над снимком, а не на нём: на снимке она закрывает ровно то,
+          во что целятся. В отличие от камеры она живая: про угловые ручки узнать
+          больше неоткуда. */}
+      <p className="text-center text-label text-ink-2">
+        {zoom > 1.01
+          ? "Zoom in, then fine-tune with the corners"
+          : "Drag the frame onto the sign"}
+      </p>
+
+      {/* Снимок не растянут и не обрезан: что видно, то и уходит (решение 148).
+          Обёртка забирает остаток высоты и прижимает снимок к подсказке — сама
+          она пустая, а тёмная карточка сидит на снимке. Виси `bg-stage` здесь,
+          она растянулась бы на весь остаток, и полоса под кадром стала бы шире,
+          а не уже. */}
+      <div ref={room} className="flex w-full flex-1 items-start justify-center">
       <div
         ref={stage}
         onPointerDown={onPointerDown}
@@ -322,7 +329,7 @@ export default function SignPicker({
         onPointerUp={endPointer}
         onPointerCancel={endPointer}
         onWheel={onWheel}
-        className="relative touch-none select-none overflow-hidden"
+        className="relative touch-none select-none overflow-hidden rounded-card bg-stage"
         style={base ? { width: base.w, height: base.h } : { width: "100%", height: "100%" }}
       >
         {loaded && placed && (
@@ -389,36 +396,25 @@ export default function SignPicker({
           </button>
         )}
 
-        {/* Подсказка меняется с приближением: иначе про угловые ручки узнать
-            неоткуда. Статичная строка макета этого не говорит. */}
-        <span className="pointer-events-none absolute inset-x-0 top-4 flex justify-center">
-          <span className="rounded-full bg-stage/70 px-4 py-2 text-caption font-semibold
-                           text-on-dark">
-            {zoom > 1.01
-              ? "Zoom in, then fine-tune with the corners"
-              : "Drag the frame onto the sign"}
-          </span>
-        </span>
-
-        {/* Затемнение под нижним слоем — единственный градиент в продукте.
-            Без него подпись 11 px белым моноширинным лежит прямо на снимке
-            и на светлом знаке не читается вовсе. */}
-        <div
-          ref={footer}
-          className="scrim absolute inset-x-0 bottom-0 flex flex-col gap-3 px-5 pb-5 pt-10"
-        >
-          <span className="text-center font-mono text-mono text-on-dark">
-            {loaded
-              ? `sending about ${Math.round(share * 100)}% of ${loaded.size.w}×${loaded.size.h}`
-              : "opening the photo…"}
-          </span>
-          <button type="button" onClick={send} disabled={!loaded || busy || sending}
-                  className="rounded-button-sm bg-accent py-5 text-row font-bold
-                             text-on-dark disabled:opacity-50">
-            {busy || sending ? "Sending…" : "Send this to be read"}
-          </button>
-        </div>
       </div>
+      </div>
+
+      {/* Кнопка и строка о размере — внизу экрана, а не поверх снимка. Строка
+          стоит при кнопке: она говорит ровно о том, что кнопка отправит.
+          Затемнение (`.scrim`) держалось на том, что белая моноширинная строка
+          лежала на снимке и на светлом знаке не читалась. Строка ушла с кадра,
+          и затемнять стало нечего — градиент удалён. */}
+      <div ref={footer} className="flex flex-col gap-3">
+        <span className="text-center font-mono text-mono text-ink-3">
+          {loaded
+            ? `sending about ${Math.round(share * 100)}% of ${loaded.size.w}×${loaded.size.h}`
+            : "opening the photo…"}
+        </span>
+        <button type="button" onClick={send} disabled={!loaded || busy || sending}
+                className="rounded-button-sm bg-accent py-5 text-row font-bold
+                           text-on-dark disabled:opacity-50">
+          {busy || sending ? "Sending…" : "Send this to be read"}
+        </button>
       </div>
 
       {another_}
