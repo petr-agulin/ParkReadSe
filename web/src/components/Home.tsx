@@ -105,7 +105,12 @@ export default function Home({
           <span className="text-ink-3">›</span>
           {/* По вертикали поле растянуто за строку текста: сама она около 24 px,
               а цель нажатия меньше 44 px не бывает. Раскладку это не двигает —
-              слой лежит поверх. */}
+              слой лежит поверх.
+
+              `w-full` обязателен. У поля выбора даты браузер задаёт СВОЮ ширину
+              (в Chrome около 200 px), и пары `left:0` + `right:0` мало: связка
+              переопределена, побеждает собственная ширина, и поле вылезает вправо
+              из родителя шириной в «Now ›». Страницу от этого возит вбок. */}
           <input
             type="datetime-local"
             value={moment}
@@ -113,7 +118,8 @@ export default function Home({
             max={MOMENT_TO}
             aria-label="Moment to read the sign at"
             onChange={(e) => onMoment(e.target.value)}
-            className="absolute -inset-y-3 inset-x-0 cursor-pointer opacity-0"
+            className="absolute -inset-y-3 inset-x-0 w-full min-w-0 cursor-pointer
+                       opacity-0"
           />
         </span>
       </div>
