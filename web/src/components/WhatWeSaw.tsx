@@ -11,46 +11,35 @@ import type { Analysis, GeneralRule, Panel } from "../types";
 import Completeness from "./Completeness";
 
 /**
- * Табличка строкой «подпись → значение».
+ * Табличка карточкой: сверху её собственный текст, под ним — что он значит,
+ * в углу — главный это знак или табличка под ним.
  *
- * Форму строки решает `lib/reading`: пока смысл один — строка, дальше подпись
- * уходит на свою, а значения идут списком. Три смысла, втиснутые в одну ячейку,
- * читаются как один длинный.
+ * Читается как сама табличка. Прежняя форма «подпись слева → значение справа»
+ * держалась, пока значение одно, и разъезжалась дальше; разработчик посмотрел
+ * на оба варианта на телефоне и выбрал этот.
+ *
+ * Что показывать, решает `lib/reading`: пустой `quote` значит, что своего текста
+ * у таблички нет — верхней строки тогда не будет вовсе.
  */
 function Plate({ panel }: { panel: Panel }) {
   const row = plateRow(panel);
-  const values = (
-    <div className="flex min-w-0 flex-1 flex-col gap-1">
-      {row.values.map((v, i) => (
-        <span
-          key={i}
-          className={row.stacked
-            ? "border-l-2 border-line pl-3 text-row text-ink"
-            : "text-row text-ink"}
-        >
-          {v}
-        </span>
-      ))}
-      {/* Пометку «это не правило» нельзя подавать как значение таблички:
-          табло оператора дорожным знаком не является. */}
-      {!panel.carries_rule && (
-        <span className="text-label text-ink-3">Not a parking rule</span>
-      )}
-    </div>
-  );
-
-  if (row.stacked) {
-    return (
-      <div className="flex flex-col gap-1.5">
-        <span className="text-label text-ink-3">{row.label}</span>
-        {values}
-      </div>
-    );
-  }
   return (
-    <div className="flex items-baseline gap-3.5">
-      <span className="w-26 shrink-0 text-label text-ink-3">{row.label}</span>
-      {values}
+    <div className="flex items-start justify-between gap-3 rounded-tile border border-line
+                    bg-inset px-4 py-3">
+      {/* `min-w-0` — чтобы длинная строка переносилась, а не выталкивала
+          метку за край карточки. */}
+      <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+        {row.quote && <span className="text-body text-ink">{row.quote}</span>}
+        {row.lines.map((line, i) => (
+          <span key={i} className="text-body text-ink-3">{line}</span>
+        ))}
+        {/* Пометку «это не правило» нельзя подавать как смысл таблички:
+            табло оператора дорожным знаком не является. */}
+        {!panel.carries_rule && (
+          <span className="text-label text-ink-3">Not a parking rule</span>
+        )}
+      </div>
+      <span className="shrink-0 text-label text-link">{row.tag}</span>
     </div>
   );
 }

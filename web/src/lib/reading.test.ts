@@ -38,41 +38,44 @@ describe("значение таблички строкой", () => {
   });
 });
 
-describe("строка таблички", () => {
-  it("один смысл — строка «подпись → значение»", () => {
+describe("табличка карточкой", () => {
+  it("сверху — что написано на табличке, под ним — что это значит", () => {
     const row = plateRow(panel());
-    expect(row.stacked).toBe(false);
-    expect(row.label).toBe("Avgift");
-    expect(row.values).toEqual(["Fee (T16). A fee applies"]);
+    expect(row.quote).toBe("Avgift");
+    expect(row.lines).toEqual(["Fee (T16). A fee applies"]);
+    expect(row.tag).toBe("Panel");
   });
 
-  it("несколько смыслов — подпись отдельной строкой, значения списком", () => {
-    // Три смысла, втиснутые в одну ячейку, читаются как один длинный.
+  it("у таблички без своего текста верхней строки нет вовсе", () => {
+    // Пиктограмма: текста на ней нет, и выдумывать его незачем — карточка
+    // начинается сразу со смысла.
+    const row = plateRow(panel({ text: "", meanings: [meaning({ label: "Motorcycle" })] }));
+    expect(row.quote).toBe("");
+    expect(row.lines).toEqual(["Motorcycle (T16). A fee applies"]);
+  });
+
+  it("главный знак назван главным, всё прочее — табличкой", () => {
+    // `kind` — открытая строка: незнакомый вид должен попасть в «Panel».
+    expect(plateRow(panel({ kind: "main_sign" })).tag).toBe("Primary sign");
+    expect(plateRow(panel({ kind: "что-то новое" })).tag).toBe("Panel");
+  });
+
+  it("несколько смыслов — каждый своей строкой", () => {
     const row = plateRow(panel({ meanings: [meaning(), meaning({ key: "b", label: "Hours" })] }));
-    expect(row.stacked).toBe(true);
-    expect(row.values).toHaveLength(2);
-  });
-
-  it("табличка без правила тоже идёт списком", () => {
-    // Пометку «это не правило» нельзя подавать как значение таблички.
-    expect(plateRow(panel({ carries_rule: false })).stacked).toBe(true);
+    expect(row.lines).toHaveLength(2);
   });
 
   it("непонятый остаток не теряется", () => {
-    // Пустая панель без подписи однажды оставила на экране голую рамку.
     const row = plateRow(panel({ not_interpreted_text: "This wording is not interpreted" }));
-    expect(row.values).toContain("This wording is not interpreted");
-    expect(row.stacked).toBe(true);
+    expect(row.lines).toContain("This wording is not interpreted");
   });
 
-  it("у таблички без текста подписью становится её название", () => {
-    // Пиктограмма: текста на ней нет вовсе.
-    const row = plateRow(panel({ text: "", meanings: [meaning({ label: "Motorcycle" })] }));
-    expect(row.label).toBe("Motorcycle");
-  });
-
-  it("нечитаемая панель не остаётся безымянной", () => {
-    expect(plateRow(panel({ text: "", meanings: [], index: 3 })).label).toBe("Panel 3");
+  it("пустая панель не остаётся голой карточкой", () => {
+    // Ни текста, ни смыслов — на экране была бы пустая рамка. Так однажды
+    // и случилось, потому у безымянной панели есть имя.
+    const row = plateRow(panel({ text: "", meanings: [], index: 3 }));
+    expect(row.quote).toBe("");
+    expect(row.lines).toEqual(["Panel 3"]);
   });
 });
 
