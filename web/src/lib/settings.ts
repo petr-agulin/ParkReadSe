@@ -154,6 +154,6 @@ export function readiness(s: Settings): Readiness {
   };
 }
 
-/** Показывать ли «Forget the key». Кнопке, которой нечего делать, на экране
+/** Показывать ли «Forget key». Кнопке, которой нечего делать, на экране
  *  не место: она обещает действие и не совершает его. */
 export const canForget = (s: Settings): boolean => s.apiKey.trim().length > 0;

@@ -102,7 +102,7 @@ export default function KeyHelp({ onBack }: Props) {
       <div className="rounded-card-sm bg-note p-5">
         <p className="text-label text-note-ink">
           A key is a payment instrument. ParkRead keeps it on this device unless you
-          switch that off, so on a phone that is not yours, use “Forget the key” in
+          switch that off, so on a phone that is not yours, use “Forget key” in
           Settings.
         </p>
       </div>

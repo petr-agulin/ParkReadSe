@@ -168,7 +168,7 @@ export default function SettingsScreen(
           </button>
           {/* Очистка — здесь, а не отдельной кнопкой на экране: стирать длинное
               значение с клавиатуры мучительно, а «стереть всё» пересекалось бы
-              с «Forget the key» и уносило бы адрес провайдера, который `forget`
+              с «Forget key» и уносило бы адрес провайдера, который `forget`
               бережёт нарочно. */}
           <button type="button" onClick={() => setDraft("")} className={`${QUIET} ml-auto`}>
             Clear
@@ -262,7 +262,7 @@ export default function SettingsScreen(
               className="shrink-0 rounded-button-sm bg-chip px-4 py-3 text-label
                          font-semibold text-ink-2"
             >
-              Forget the key
+              Forget key
             </button>
             {/* Строка стоит СПРАВА и переносится внутри себя, а не уходит под
                 кнопку: `min-w-0` разрешает ей ужаться — без него она распирала бы
@@ -272,7 +272,7 @@ export default function SettingsScreen(
                 страницы, и в хранилище браузера. Адрес и модель он бережёт нарочно,
                 и гадать об этом человек не должен. */}
             <span className="min-w-0 text-caption text-ink-3">
-              Erased from this page and this browser. Address and model stay.
+              Erased from this page and browser. Address and model stay.
             </span>
           </div>
         )}
