@@ -183,10 +183,13 @@ export default function CameraCapture({ onCaptured, onCancel, onPick }: Props) {
       {/* Подсказка — над видоискателем, а не на кадре: на кадре она закрывает
           ровно то, во что целятся. И говорит, что делать, а не называет предмет. */}
       <p className="text-center text-label text-ink-2">
-        Fit the whole sign in the frame, with every plate under it.
+        Aim at the whole sign. You'll frame it next.
       </p>
 
-      <div ref={room} className="flex w-full flex-1 items-center justify-center">
+      {/* `items-start`, а не `items-center`: обёртка растянута на весь остаток,
+          и по центру сцена отъезжала от подсказки — на втором телефоне между ними
+          зияла дыра. Кадр начинается сразу под текстом. */}
+      <div ref={room} className="flex w-full flex-1 items-start justify-center">
         {/* Сцена по размеру потока, а не наоборот: иначе по бокам остаются
             тёмные поля, и видоискатель выглядит рамкой в рамке. Полный обрез
             показывал бы не то, что снимается (решение 148). */}
