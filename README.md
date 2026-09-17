@@ -175,10 +175,11 @@ and a window without an address bar; underneath it stays a page with a page's li
 use the camera while open and with permission, and can reach nothing else on the phone.
 Nobody reviewed it — no store saw it.
 
-**You bring your own key.** The provider's address, the model name and your key go in the
-"Your key" panel. Without them the app opens and explains itself, but cannot read a sign. Each reading costs two model calls, billed to you by your provider. The
-key is held in the tab and forgotten when you close it, unless you tick **Remember on this
-device**; **Forget the key** erases it immediately.
+**You bring your own key.** The provider's address, the model name and your key go in
+**Settings**. Without them the app opens and explains itself but cannot read a sign, and the
+camera and the gallery stay shut until it can. Each reading costs two model calls, billed to
+you by your provider. The key is held in the tab and forgotten when you close it, unless you
+tick **Remember on this device**; **Forget key** erases it immediately.
 
 **Your photo goes to your provider and nowhere else.** There is no account, no server of
 ours and no history: nothing is stored beyond the app's own files and your saved key —
