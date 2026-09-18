@@ -1,62 +1,65 @@
-// Подсказка рамки: где на снимке основной знак.
+// A suggestion for the frame: where the main sign is on the photograph.
 //
-// Это НЕ детектор. Детектором такой поиск уже проверялся и провалился: он терял
-// белые таблички и не собирал стопку целиком. Здесь у него работа полегче —
-// поставить рамку туда, где, скорее всего, знак, чтобы человеку чаще всего
-// оставалось только нажать «отправить». Ошибку видно на экране и она правится
-// одним движением, поэтому неверная подсказка стоит секунды, а не ответа.
+// This is NOT a detector. A search like this was already tried as one and failed: it
+// lost white plates and never gathered a whole stack. Here its job is easier - put
+// the frame where the sign probably is, so that most of the time the person only has
+// to press "send". A mistake is visible on screen and corrected with one movement,
+// so a wrong suggestion costs a second rather than an answer.
 //
-// Ищется только **основной знак**: он всегда цветной — синий `P` или запрещающий.
-// Докуда идут таблички, не угадывается, а берётся с запасом вниз.
+// Only the **main sign** is looked for: it is always coloured - a blue `P` or a
+// prohibition. How far the plates run is not guessed but taken generously downwards.
 
 import type { Box, Size } from "./crop";
 import { clamp } from "./crop";
 
-/** Найденное цветное пятно в пикселях исходного снимка. */
+/** A patch of colour found, in the pixels of the original photograph. */
 export type Region = {
   x: number; y: number; w: number; h: number;
-  /** Сколько пикселей действительно закрашено: пятно должно быть плотным. */
+  /** How many pixels are actually filled: the patch has to be solid. */
   area: number;
   kind: "blue" | "yellow";
-  /** Доля светлого внутри пятна. У знака `P` внутри белая буква, у синей полосы
-   *  автомобильного номера — почти ничего. Это и отличает знак от машины. */
+  /** The share of light pixels inside the patch. A `P` sign has a white letter
+   *  inside; the blue strip of a number plate has almost nothing. That is what
+   *  tells a sign from a car. */
   white: number;
 };
 
-/** Ширина уменьшенной копии, по которой идёт поиск. Больше — медленнее, и без пользы:
- *  знак на снимке с телефона занимает десятки точек даже здесь. */
+/** The width of the reduced copy the search runs on. Larger is slower and gains
+ *  nothing: a sign in a phone photograph covers dozens of points even here. */
 export const SCAN_WIDTH = 320;
 
-/** Меньше этой доли кадра — шум: блик, наклейка, кусок неба. */
+/** Below this share of the frame it is noise: a glare, a sticker, a piece of sky. */
 export const MIN_AREA_SHARE = 0.0006;
 
-/** Больше этой доли — не знак, а стена, машина или само небо. */
+/** Above this share it is not a sign but a wall, a car, or the sky itself. */
 export const MAX_AREA_SHARE = 0.25;
 
-/** Основной знак близок к квадрату: `P` в квадрате, запрещающий — круг в квадрате. */
+/** A main sign is close to square: `P` in a square, a prohibition a circle in one. */
 export const MIN_ASPECT = 0.45;
 export const MAX_ASPECT = 2.2;
 
-/** Пятно должно заполнять свою рамку: у знака заполнение близко к единице,
- *  у случайного мазка — нет. */
+/** The patch must fill its own box: on a sign the fill is close to one, on a random
+ *  smear it is not. */
 export const MIN_FILL = 0.5;
 
-/** Во сколько раз рамка шире найденного знака: таблички под ним обычно шире его. */
+/** How many times wider than the sign the frame is: the plates below it are usually
+ *  wider than the sign itself. */
 export const WIDTH_FACTOR = 1.9;
 
-/** На сколько высот знака рамка уходит вниз, **когда табличек не видно**.
- *  Если они найдены, протяжённость берётся по ним, а не по этому числу. */
+/** How many sign heights the frame reaches downwards **when no plates are visible**.
+ *  If they are found, the extent is taken from them rather than from this number. */
 export const DOWN_FACTOR = 4.5;
 
-/** Насколько ниже якоря ещё ищутся таблички той же колонки. */
+/** How far below the anchor plates of the same column are still looked for. */
 export const COLUMN_REACH = 6;
 
-/** Белого внутри знака: у `P` — буква, у указателей — надписи. Слишком мало
- *  бывает у синей полосы номера и у крашеной стены, слишком много — у окна. */
+/** How much white belongs inside a sign: the letter on a `P`, the words on a
+ *  wayfinding sign. Too little happens on the blue strip of a number plate and on a
+ *  painted wall; too much happens on a window. */
 export const WHITE_MIN = 0.04;
 export const WHITE_MAX = 0.65;
 
-/** Небольшой запас над знаком, чтобы он не упирался в край рамки. */
+/** A little room above the sign, so it does not press against the edge of the frame. */
 export const UP_FACTOR = 0.25;
 
 function plausible(r: Region, image: Size): boolean {
@@ -70,9 +73,9 @@ function plausible(r: Region, image: Size): boolean {
   );
 }
 
-/** Держит ли это пятно якорь внутри себя. Так устроен зональный знак E20:
- *  синий круг сидит в жёлтом квадрате, и квадрат — часть того же знака,
- *  а не сосед снизу. */
+/** Whether this patch holds the anchor inside itself. That is how the zone sign E20
+ *  is built: a blue circle sits inside a yellow square, and the square is part of
+ *  the same sign rather than a neighbour below it. */
 function encloses(r: Region, anchor: Region): boolean {
   const pad = anchor.h * 0.25;
   return (
@@ -83,11 +86,13 @@ function encloses(r: Region, anchor: Region): boolean {
 }
 
 /**
- * Пятна того же знака: висящие под якорем таблички и фон, в котором он сидит.
+ * The patches belonging to the same sign: the plates hanging under the anchor, and
+ * the background it sits in.
  *
- * Одного «снизу» мало. У зонального знака (E20) и у «Parkering förbjuden» синий
- * круг находится ВНУТРИ жёлтого щита: по вертикали тот начинается выше и кончается
- * ниже, и правило про соседей снизу его теряло — рамка обрезала знак по кругу.
+ * "Below" alone is not enough. On a zone sign (E20) and on "Parkering forbjuden" the
+ * blue circle sits INSIDE a yellow shield: vertically the shield starts higher and
+ * ends lower, and a rule about neighbours below lost it - the frame cut the sign
+ * down to the circle.
  */
 export function columnAround(anchor: Region, regions: Region[]): Region[] {
   const reach = anchor.h * COLUMN_REACH;
@@ -103,29 +108,31 @@ export function columnAround(anchor: Region, regions: Region[]): Region[] {
 }
 
 /**
- * Какое из пятен считать основным знаком.
+ * Which patch to treat as the main sign.
  *
- * Цвет и размер сами по себе ничего не доказывают: синяя полоса автомобильного
- * номера и жёлтая стена проходят такую проверку не хуже знака — так и случилось
- * на замере. Поэтому нужен **признак со стороны**: белое внутри пятна (буква `P`,
- * надписи) или таблички, стоящие с ним одной колонкой. Без подтверждения
- * подсказки нет вовсе — уверенно показать на чужую машину хуже, чем промолчать.
+ * Colour and size prove nothing on their own: the blue strip of a number plate and a
+ * yellow wall pass such a check as well as a sign does - and on the measurement they
+ * did. So corroboration from elsewhere is required: white inside the patch (the
+ * letter `P`, lettering) or plates standing with it in one column. Without
+ * corroboration there is no suggestion at all - pointing confidently at somebody
+ * else's car is worse than staying silent.
  */
 export function pickAnchor(regions: Region[], image: Size): Region | null {
   let best: Region | null = null;
   let bestScore = 0;
   for (const r of regions) {
-    // Основной знак в Швеции синий: E19 «P», запрещающие — синий круг с красным.
-    // Жёлтое — всегда табличка ПОД знаком, и якорем быть не может: на замере
-    // рамка встала на жёлтый фасад дома, которому балконы дали ту самую колонку.
-    // В колонку жёлтое по-прежнему входит, иначе не собралась бы стопка целиком.
+    // A main sign in Sweden is blue: E19 "P", and the prohibitions are a blue circle
+    // with red. Yellow is always a plate BELOW the sign and can never be the anchor:
+    // on the measurement the frame landed on the yellow facade of a building whose
+    // balconies gave it exactly that column. Yellow still joins a column, or the
+    // stack would not be gathered whole.
     if (r.kind !== "blue") continue;
     if (!plausible(r, image)) continue;
     const hasWhite = r.white >= WHITE_MIN && r.white <= WHITE_MAX;
     const column = columnAround(r, regions);
-    if (!hasWhite && column.length === 0) continue;   // подтверждения нет
+    if (!hasWhite && column.length === 0) continue;   // no corroboration
 
-    // Чем выше в кадре, тем вероятнее, что это верх стопки.
+    // The higher in the frame, the likelier this is the top of the stack.
     const height = 1 + (1 - (r.y + r.h / 2) / image.h) * 0.5;
     const evidence = (hasWhite ? 1.5 : 1) * (1 + Math.min(column.length, 3) * 0.4);
     const score = r.area * height * evidence;
@@ -135,12 +142,13 @@ export function pickAnchor(regions: Region[], image: Size): Region | null {
 }
 
 /**
- * Рамка вокруг знака: сам знак сверху, таблички под ним.
+ * The frame around a sign: the sign itself on top, the plates below it.
  *
- * Докуда идёт стопка, берётся из найденных пятен колонки, а не из числа: на замере
- * постоянный множитель уводил рамку далеко вниз, а на знаке внутри большой жёлтой
- * таблички — наоборот, обрезал её. Пятен не нашлось — тогда запас вниз по-прежнему
- * щедрый: срезанная табличка стоит неверного ответа, лишний фон — одного движения.
+ * How far the stack runs is taken from the patches found in the column rather than
+ * from a number: on the measurement a constant multiplier carried the frame far too
+ * low, and on a sign inside a large yellow plate it did the opposite and cut it
+ * short. Where no patches are found the reach downwards is still generous: a plate
+ * shaved off costs a wrong answer, extra background costs one movement.
  */
 export function frameFromAnchor(anchor: Region, image: Size, column: Region[] = []): Box {
   let left = anchor.x;
@@ -160,7 +168,8 @@ export function frameFromAnchor(anchor: Region, image: Size, column: Region[] = 
     left = anchor.x + anchor.w / 2 - w / 2;
     right = left + w;
   } else {
-    // Небольшой запас по краям: у табличек бывает светлая кайма, а цвет её не ловит.
+    // A little room at the edges: plates often have a pale border, and colour does
+    // not catch it.
     const pad = anchor.h * 0.2;
     left -= pad; right += pad; bottom += pad;
   }
@@ -169,12 +178,12 @@ export function frameFromAnchor(anchor: Region, image: Size, column: Region[] = 
   return clamp({ x: left, y: top, w: right - left, h: bottom - top }, image);
 }
 
-/** Светлый ли пиксель: белая буква, надпись, кайма. */
+/** Is this pixel light: a white letter, lettering, a border. */
 function isWhite(r: number, g: number, b: number): boolean {
   return r > 165 && g > 165 && b > 165;
 }
 
-/** Цвет пикселя — знаковый синий или знаковая желтизна? */
+/** Is this pixel's colour a sign's blue or a sign's yellow? */
 function classify(r: number, g: number, b: number): 0 | 1 | 2 {
   if (b > 55 && b - r > 30 && b - g > 14 && !(b > 195 && r > 165)) return 1;
   if (r > 95 && g > 70 && r - b > 55 && g - b > 30) return 2;
@@ -182,11 +191,11 @@ function classify(r: number, g: number, b: number): 0 | 1 | 2 {
 }
 
 /**
- * Найти цветные пятна на уменьшенной копии снимка.
+ * Find the patches of colour on a reduced copy of the photograph.
  *
- * Единственное место, которому нужны настоящие пиксели, поэтому оно тонкое:
- * решения принимают чистые функции выше, а тесты держат их. Здесь только разметка
- * связных областей.
+ * This is the only place that needs real pixels, which is why it is thin: the
+ * decisions are made by the pure functions above, and the tests hold those. Here
+ * there is only the labelling of connected areas.
  */
 export function scanRegions(source: CanvasImageSource, image: Size): Region[] {
   const scale = Math.min(1, SCAN_WIDTH / image.w);
@@ -230,7 +239,8 @@ export function scanRegions(source: CanvasImageSource, image: Size): Region[] {
       if (qy > 0 && mask[q - W] === kind && !seen[q - W]) { seen[q - W] = 1; stack.push(q - W); }
       if (qy < H - 1 && mask[q + W] === kind && !seen[q + W]) { seen[q + W] = 1; stack.push(q + W); }
     }
-    // Доля светлого внутри рамки пятна: буква `P`, надписи, кайма.
+    // The share of light pixels inside the patch's box: the letter `P`, lettering,
+    // a border.
     let white = 0, cells = 0;
     for (let y = y0; y <= y1; y++) {
       for (let x = x0; x <= x1; x++) {
@@ -250,10 +260,10 @@ export function scanRegions(source: CanvasImageSource, image: Size): Region[] {
 }
 
 /**
- * Предложение рамки для этого снимка, или `null`, если знака не видно.
+ * A suggested frame for this photograph, or `null` if no sign is visible.
  *
- * Ошибка поиска — не повод ломать экран: вызывающий тогда ставит рамку по центру,
- * как раньше.
+ * A failure of the search is no reason to break the screen: the caller then centres
+ * the frame, as it did before.
  */
 export function suggestFrame(source: CanvasImageSource, image: Size): Box | null {
   try {

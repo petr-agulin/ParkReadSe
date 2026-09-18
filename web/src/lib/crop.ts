@@ -1,30 +1,34 @@
-// Геометрия кадра: где рамка и что из неё получится.
+// The geometry of the frame: where it is, and what will come out of it.
 //
-// Здесь нет ни DOM, ни canvas — только числа, поэтому всё проверяется тестами.
-// Работа с пикселями живёт рядом, в image.ts, и опирается на решения этого файла.
+// There is no DOM and no canvas here - only numbers, which is why all of it is
+// covered by tests. Working with the pixels lives next door, in image.ts, and rests
+// on the decisions made in this file.
 
 export type Size = { w: number; h: number };
 export type Point = { x: number; y: number };
 export type Box = { x: number; y: number; w: number; h: number };
 
-/** Доля высоты снимка под рамку по умолчанию. На проверке 0.55 оказалась мала:
- *  вблизи стопка занимает почти весь кадр, и рамку приходилось растягивать каждый раз. */
+/** The share of the photograph's height the frame takes by default. On test 0.55
+ *  proved too small: close up, the stack fills almost the whole frame, and the
+ *  rectangle had to be stretched every time. */
 export const DEFAULT_HEIGHT = 0.7;
 
-/** Ширина к высоте. Стопка знака вытянута вверх, и рамка повторяет её форму. */
+/** Width to height. A sign's stack is tall, and the frame follows its shape. */
 export const BOX_ASPECT = 0.45;
 
-/** Меньше этого рамку не ужать: дальше в неё не попадает даже одна табличка. */
+/** The frame is never squeezed below this: past it not even one plate fits inside. */
 export const MIN_SIDE = 24;
 
-/** Запас вокруг рамки при отправке. Срезанная табличка стоит неверного ответа,
- *  лишний фон — нескольких токенов, и цена этих ошибок несопоставима. */
+/** The margin around the frame when sending. A plate shaved off costs a wrong
+ *  answer; extra background costs a few tokens, and those prices are not
+ *  comparable. */
 export const MARGIN = 0.18;
 
-/** Предел длинной стороны кадра, уходящего модели. */
+/** The limit on the long side of the frame that goes to the model. */
 export const MAX_SIDE = 1400;
 
-/** Рамка целиком внутри снимка. Сначала ужимаем, если не влезает, потом сдвигаем. */
+/** The frame wholly inside the photograph. First it is shrunk if it will not fit,
+ *  then moved. */
 export function clamp(box: Box, image: Size): Box {
   const w = Math.min(Math.max(box.w, MIN_SIDE), image.w);
   const h = Math.min(Math.max(box.h, MIN_SIDE), image.h);
@@ -36,31 +40,33 @@ export function clamp(box: Box, image: Size): Box {
   };
 }
 
-/** Размер рамки по умолчанию: вытянутая вверх, по доле высоты снимка. */
+/** The default size of the frame: tall, as a share of the photograph's height. */
 export function defaultSize(image: Size): Size {
   const h = Math.min(image.h * DEFAULT_HEIGHT, image.h);
   const w = Math.min(h * BOX_ASPECT, image.w);
   return { w, h };
 }
 
-/** Рамка по умолчанию — по центру снимка. Касания не было, а отправить можно. */
+/** The default frame, in the middle of the photograph. Nothing was touched, and it
+ *  can still be sent. */
 export function defaultBox(image: Size): Box {
   const { w, h } = defaultSize(image);
   return clamp({ x: (image.w - w) / 2, y: (image.h - h) / 2, w, h }, image);
 }
 
-/** Рамка вокруг точки касания. У края снимка сдвигается внутрь, а не вылезает. */
+/** A frame around the point touched. At the edge of the photograph it moves inwards
+ *  rather than overhanging. */
 export function boxAt(point: Point, image: Size, size?: Size): Box {
   const { w, h } = size ?? defaultSize(image);
   return clamp({ x: point.x - w / 2, y: point.y - h / 2, w, h }, image);
 }
 
-/** Сдвиг рамки на вектор, с тем же ограничением по краям. */
+/** Moving the frame by a vector, with the same limit at the edges. */
 export function moveBy(box: Box, dx: number, dy: number, image: Size): Box {
   return clamp({ ...box, x: box.x + dx, y: box.y + dy }, image);
 }
 
-/** Тяга за угол: двигается указанный угол, противоположный стоит на месте. */
+/** Dragging a corner: the named corner moves, the opposite one stays put. */
 export function resizeCorner(
   box: Box,
   corner: "nw" | "ne" | "sw" | "se",
@@ -76,7 +82,7 @@ export function resizeCorner(
   return clamp({ x: x0, y: y0, w: x1 - x0, h: y1 - y0 }, image);
 }
 
-/** Рамка плюс запас по краям, не вылезая за снимок. */
+/** The frame plus its margin, without running past the photograph. */
 export function withMargin(box: Box, image: Size, margin = MARGIN): Box {
   const mx = box.w * margin;
   const my = box.h * margin;
@@ -91,21 +97,21 @@ export function withMargin(box: Box, image: Size, margin = MARGIN): Box {
 }
 
 export type Plan = {
-  /** Что вырезать из исходного снимка, в его же пикселях. */
+  /** What to cut out of the original photograph, in its own pixels. */
   crop: Box;
-  /** Размер того, что уйдёт наружу. */
+  /** The size of what will leave the device. */
   out: Size;
-  /** Уменьшали ли: кадр меньше предела остаётся как есть. */
+  /** Whether it was downscaled: a crop below the limit is left as it is. */
   downscaled: boolean;
 };
 
 /**
- * Порядок обязателен: **сначала кадр, потом уменьшение**.
+ * The order is obligatory: **crop first, downscale second**.
  *
- * Кадрирование выбрасывает фон и сохраняет пиксели знака; уменьшение целого
- * снимка режет их вместе с фоном. Поэтому предел применяется к вырезанному
- * куску, а не к исходнику, и растягивать мелкий кадр мы не станем никогда:
- * пикселей от этого не прибавится, а вес запроса вырастет.
+ * Cropping throws away the background and keeps the sign's pixels; downscaling the
+ * whole photograph cuts them along with the background. So the limit applies to the
+ * piece cut out rather than to the original - and a small crop is never stretched:
+ * that adds no pixels, and only makes the request heavier.
  */
 export function plan(box: Box, image: Size, maxSide = MAX_SIDE): Plan {
   const crop = withMargin(clamp(box, image), image);
@@ -119,11 +125,11 @@ export function plan(box: Box, image: Size, maxSide = MAX_SIDE): Plan {
 }
 
 /**
- * Куда ляжет картинка, вписанная целиком в отведённое место (`object-contain`).
+ * Where a picture lands when fitted whole into the space it is given.
  *
- * Нужна и экрану выбора, и видоискателю: у обоих сцена ограничена экраном, форма
- * снимка своя, и вокруг остаются поля. Рамку надо считать по картинке, иначе она
- * съезжает с неё.
+ * Both the framing screen and the viewfinder need this: in each the stage is bounded
+ * by the screen, the photograph has its own shape, and margins are left around it.
+ * The frame has to be computed against the picture, or it drifts off it.
  */
 export function fit(image: Size, into: Size): Box {
   const scale = Math.min(into.w / image.w, into.h / image.h);
@@ -132,15 +138,16 @@ export function fit(image: Size, into: Size): Box {
   return { x: (into.w - w) / 2, y: (into.h - h) / 2, w, h };
 }
 
-/** Предел приближения. Дальше пиксели снимка всё равно кончаются. */
+/** The limit of the zoom. Past it the photograph runs out of pixels anyway. */
 export const MAX_ZOOM = 8;
 
 /**
- * Экранная точка → пиксель снимка.
+ * A point on screen becomes a pixel of the photograph.
  *
- * `placed` — куда сейчас положена картинка на сцене, уже с приближением. Именно
- * поэтому кадр не зависит от приближения: наружу уходит прямоугольник в пикселях
- * ИСХОДНИКА, а увеличение меняет лишь то, чем по нему целятся.
+ * `placed` is where the picture lies on the stage right now, zoom included. That is
+ * exactly why the crop does not depend on the zoom: what leaves the device is a
+ * rectangle in the pixels of the ORIGINAL, and zooming changes only what one aims
+ * with.
  */
 export function toImagePoint(p: Point, placed: Box, image: Size): Point {
   return {
@@ -150,10 +157,10 @@ export function toImagePoint(p: Point, placed: Box, image: Size): Point {
 }
 
 /**
- * Приблизить, оставив точку под пальцами на месте.
+ * Zoom in, keeping the point under the fingers where it is.
  *
- * `base` — картинка без приближения (`fit`), от неё считается кратность: меньше
- * единицы не даём, иначе снимок начал бы болтаться в пустоте.
+ * `base` is the picture with no zoom (`fit`), and the factor is counted from it: it
+ * is never allowed below one, or the photograph would start floating in emptiness.
  */
 export function zoomAt(
   placed: Box,
@@ -174,10 +181,10 @@ export function zoomAt(
 }
 
 /**
- * Не дать утащить снимок за край.
+ * Do not let the photograph be dragged off the edge.
  *
- * Что меньше сцены — стоит по центру; что больше — прижимается краями, чтобы
- * рядом с картинкой не появлялось пустоты.
+ * What is smaller than the stage stands in the middle; what is larger is held by its
+ * edges, so that no emptiness appears beside the picture.
  */
 export function clampPan(placed: Box, stage: Size): Box {
   const axis = (pos: number, size: number, limit: number) =>
@@ -189,16 +196,16 @@ export function clampPan(placed: Box, stage: Size): Box {
   };
 }
 
-/** Во сколько раз снимок сейчас увеличен относительно «целиком на экране». */
+/** How many times the photograph is currently enlarged relative to "all on screen". */
 export function zoomLevel(placed: Box, base: Box): number {
   return placed.w / base.w;
 }
 
 /**
- * Какая часть снимка сейчас на экране — в пикселях снимка.
+ * Which part of the photograph is on screen now - in the photograph's own pixels.
  *
- * Это и есть граница для рамки: выделять то, чего не видно, человек не может,
- * а рамка, ушедшая за край, просто пропадает.
+ * This is the boundary for the frame: a person cannot select what they cannot see,
+ * and a frame that has gone past the edge simply disappears.
  */
 export function visibleRect(placed: Box, image: Size, stage: Size): Box {
   const k = placed.w / image.w;
@@ -212,17 +219,18 @@ export function visibleRect(placed: Box, image: Size, stage: Size): Box {
   };
 }
 
-/** Доля видимого, которую занимает рамка. Это и есть «как она выглядит на экране». */
+/** The share of what is visible that the frame takes up. That is what "how it looks
+ *  on screen" means. */
 export function fractionIn(box: Box, visible: Box): Size {
   return { w: box.w / visible.w, h: box.h / visible.h };
 }
 
 /**
- * Рамка для нового приближения: та же доля экрана, и снова по середине.
+ * The frame for a new zoom: the same share of the screen, and centred again.
  *
- * Смысл в том, что на экране рамка выглядит одинаково при любом увеличении —
- * значит, её углы всегда под рукой. А в пикселях снимка она при этом сама
- * сужается: приблизился к дальнему знаку — и выделение уже по нему.
+ * The point is that the frame looks the same on screen at any magnification - so its
+ * corners are always within reach. In the photograph's pixels it narrows by itself:
+ * zoom in on a distant sign and the selection is already on it.
  */
 export function frameForView(frac: Size, visible: Box, image: Size): Box {
   const w = visible.w * frac.w;
@@ -233,7 +241,8 @@ export function frameForView(frac: Size, visible: Box, image: Size): Box {
   );
 }
 
-/** Доля площади снимка, уходящая наружу. Для подписи под предпросмотром. */
+/** The share of the photograph's area that leaves the device. For the caption under
+ *  the preview. */
 export function shareOfFrame(crop: Box, image: Size): number {
   return (crop.w * crop.h) / (image.w * image.h);
 }

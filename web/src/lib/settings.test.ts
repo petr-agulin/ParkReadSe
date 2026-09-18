@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { EMPTY_SETTINGS, MASK, NOT_SET, canAnswerHere, canForget, forget, load,
          missing, readiness, rememberToggle, row, save, type Store } from "./settings";
 
-/** Хранилище в памяти — то же, что у браузера, только видимое тесту. */
+/** A store in memory - the same as the browser's, only visible to the test. */
 function store(): Store & { seen: Map<string, string> } {
   const seen = new Map<string, string>();
   return {
@@ -14,84 +14,85 @@ function store(): Store & { seen: Map<string, string> } {
   };
 }
 
-const provider = { baseUrl: "https://provider.invalid/v1", visionModel: "зоркая" };
+const provider = { baseUrl: "https://provider.invalid/v1", visionModel: "sharp-eye" };
 
-describe("ключ пользователя", () => {
-  it("без галочки не сохраняется нигде", () => {
+describe("the user's key", () => {
+  it("is stored nowhere without the checkbox", () => {
     const s = store();
-    save(s, { apiKey: "секрет", remember: false, provider });
-    expect([...s.seen.values()].join("|")).not.toContain("секрет");
+    save(s, { apiKey: "secret", remember: false, provider });
+    expect([...s.seen.values()].join("|")).not.toContain("secret");
     expect(load(s).apiKey).toBe("");
   });
 
-  it("с галочкой запоминается и возвращается при следующем открытии", () => {
+  it("with the checkbox it is remembered and comes back next time", () => {
     const s = store();
-    save(s, { apiKey: "секрет", remember: true, provider });
+    save(s, { apiKey: "secret", remember: true, provider });
     const again = load(s);
-    expect(again.apiKey).toBe("секрет");
+    expect(again.apiKey).toBe("secret");
     expect(again.remember).toBe(true);
     expect(again.provider).toEqual(provider);
   });
 
-  it("снятая галочка стирает сохранённое сразу, а не когда-нибудь", () => {
+  it("unticking the box erases what was stored at once, not some day", () => {
     const s = store();
-    save(s, { apiKey: "секрет", remember: true, provider });
-    save(s, { apiKey: "секрет", remember: false, provider });
+    save(s, { apiKey: "secret", remember: true, provider });
+    save(s, { apiKey: "secret", remember: false, provider });
     expect(load(s).apiKey).toBe("");
   });
 
-  it("«забыть» уносит ключ, но не адрес провайдера", () => {
+  it("\"forget\" takes the key away but not the provider's address", () => {
     const s = store();
-    save(s, { apiKey: "секрет", remember: true, provider });
+    save(s, { apiKey: "secret", remember: true, provider });
     const after = forget(s);
     expect(after.apiKey).toBe("");
-    expect(after.provider).toEqual(provider);       // вводить заново незачем
+    expect(after.provider).toEqual(provider);       // no reason to type it again
   });
 
-  it("хранилища может не быть вовсе — продукт от этого не ломается", () => {
-    // Приватная вкладка, запрет сайту, старый телефон: тогда просто не помним.
-    expect(() => save(null, { apiKey: "секрет", remember: true, provider })).not.toThrow();
+  it("there may be no store at all - the product does not break on that", () => {
+    // A private tab, a site denied storage, an old phone: then we simply do not
+    // remember.
+    expect(() => save(null, { apiKey: "secret", remember: true, provider })).not.toThrow();
     expect(load(null)).toEqual(EMPTY_SETTINGS);
     expect(forget(null).apiKey).toBe("");
   });
 
-  it("испорченная запись читается как её отсутствие", () => {
+  it("a corrupted record reads as its absence", () => {
     const s = store();
-    s.setItem("parkread.provider", "{это не json");
+    s.setItem("parkread.provider", "{this is not json");
     expect(load(s).provider.baseUrl).toBe("");
   });
 });
 
-describe("готовность отвечать в браузере", () => {
-  it("нужны ключ, адрес и одна модель — второй не спрашивается", () => {
-    expect(canAnswerHere({ apiKey: "к", remember: false, provider })).toBe(true);
+describe("readiness to answer in the browser", () => {
+  it("a key, an address and one model are needed - a second is never asked for", () => {
+    expect(canAnswerHere({ apiKey: "k", remember: false, provider })).toBe(true);
     expect(Object.keys(provider).sort()).toEqual(["baseUrl", "visionModel"]);
     expect(canAnswerHere({ apiKey: "", remember: false, provider })).toBe(false);
-    expect(canAnswerHere({ apiKey: "к", remember: false,
+    expect(canAnswerHere({ apiKey: "k", remember: false,
                            provider: { ...provider, visionModel: "" } })).toBe(false);
   });
 
-  it("чего не хватает — говорится словами, а не «ошибка»", () => {
+  it("what is missing is said in words, not as \"an error\"", () => {
     expect(missing(EMPTY_SETTINGS))
       .toEqual(["your API key", "the provider address", "the model name"]);
-    expect(missing({ apiKey: "к", remember: false, provider })).toEqual([]);
+    expect(missing({ apiKey: "k", remember: false, provider })).toEqual([]);
   });
 });
 
-describe("строка настроек", () => {
-  it("пустая говорит «ещё не задано» и предлагает добавить", () => {
+describe("a row of the settings", () => {
+  it("an empty one says \"not set yet\" and offers to add", () => {
     expect(row("")).toEqual({ shown: NOT_SET, action: "Add", filled: false });
     expect(row("   ")).toEqual({ shown: NOT_SET, action: "Add", filled: false });
   });
 
-  it("заполненная показывает значение и предлагает правку", () => {
+  it("a filled one shows the value and offers to edit", () => {
     expect(row(provider.baseUrl))
       .toEqual({ shown: provider.baseUrl, action: "Edit", filled: true });
   });
 
-  it("ключ показывается маской, и маска не выдаёт его длины", () => {
-    // Число точек по длине ключа сообщало бы размер платного средства всякому,
-    // кто заглянет через плечо или увидит скриншот.
+  it("the key is shown as a mask, and the mask does not give away its length", () => {
+    // A number of dots matching the length of the key would tell the size of a paid
+    // credential to anyone glancing over a shoulder or seeing a screenshot.
     const short = row("abc", { secret: true });
     const long = row("a".repeat(120), { secret: true });
     expect(short.shown).toBe(MASK);
@@ -101,48 +102,48 @@ describe("строка настроек", () => {
   });
 });
 
-describe("переключатель «запомнить» (решение 146)", () => {
-  it("при пустом поле показан включённым, но нажать нельзя", () => {
-    // Он показывает умолчание. Выбирать пока нечего: ключа нет.
+describe("the \"remember\" switch (decision 146)", () => {
+  it("with an empty field it is shown on, but cannot be pressed", () => {
+    // It shows the default. There is nothing to choose yet: there is no key.
     expect(rememberToggle("")).toEqual({ on: true, disabled: true });
     expect(rememberToggle("  ")).toEqual({ on: true, disabled: true });
   });
 
-  it("с первым введённым знаком оживает, оставаясь включённым", () => {
-    expect(rememberToggle("к")).toEqual({ on: true, disabled: false });
+  it("it comes alive with the first character typed, and stays on", () => {
+    expect(rememberToggle("k")).toEqual({ on: true, disabled: false });
   });
 
-  it("выключить можно ДО сохранения — в этом и смысл", () => {
-    expect(rememberToggle("ключ", false)).toEqual({ on: false, disabled: false });
-    expect(rememberToggle("ключ", true)).toEqual({ on: true, disabled: false });
+  it("it can be switched off BEFORE saving - that is the whole point", () => {
+    expect(rememberToggle("key", false)).toEqual({ on: false, disabled: false });
+    expect(rememberToggle("key", true)).toEqual({ on: true, disabled: false });
   });
 });
 
-describe("видно ли, что приложение настроено", () => {
-  it("пустые настройки названы и чипом, и словами", () => {
-    // Уйти из настроек, не заметив, что читать всё ещё нечем, человек не должен:
-    // цена этой невнимательности платится у знака, а не здесь.
+describe("whether it is visible that the application is configured", () => {
+  it("empty settings are named by the chip and in words alike", () => {
+    // A person must not leave the settings without noticing there is still nothing
+    // to read with: the price of that inattention is paid at a sign, not here.
     const r = readiness(EMPTY_SETTINGS);
     expect(r.ready).toBe(false);
     expect(r.chip).toBe("Configure");
     expect(r.missing).toEqual(["your API key", "the provider address", "the model name"]);
   });
 
-  it("полные — «All set», и перечислять нечего", () => {
-    const r = readiness({ apiKey: "к", remember: true, provider });
+  it("complete ones say \"All set\", with nothing left to list", () => {
+    const r = readiness({ apiKey: "k", remember: true, provider });
     expect(r).toEqual({ ready: true, chip: "All set", missing: [] });
   });
 
-  it("половина настроек — это всё ещё «не настроено»", () => {
-    expect(readiness({ apiKey: "к", remember: true,
+  it("half the settings is still \"not configured\"", () => {
+    expect(readiness({ apiKey: "k", remember: true,
                        provider: { ...provider, baseUrl: "" } }).ready).toBe(false);
   });
 });
 
-describe("«забыть ключ»", () => {
-  it("показывается, только когда есть что забывать", () => {
+describe("\"forget the key\"", () => {
+  it("is shown only when there is something to forget", () => {
     expect(canForget(EMPTY_SETTINGS)).toBe(false);
     expect(canForget({ apiKey: "  ", remember: false, provider })).toBe(false);
-    expect(canForget({ apiKey: "к", remember: false, provider })).toBe(true);
+    expect(canForget({ apiKey: "k", remember: false, provider })).toBe(true);
   });
 });
