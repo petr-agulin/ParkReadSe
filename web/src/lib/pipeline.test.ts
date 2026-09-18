@@ -23,6 +23,14 @@ const provider: Provider = {
 const photo: Photo = { name: "знак.jpg",
                        data: new Blob([new Uint8Array([1])], { type: "image/jpeg" }) };
 
+/** Настоящий снимок набора: размер читается из его же байтов, как в браузере. */
+function realPhoto(file: string): Photo {
+  const bytes = new Uint8Array(readFileSync(`${ROOT}testset/photos/${file}`));
+  return { name: file,
+           data: new Blob([bytes],
+                          { type: file.endsWith(".png") ? "image/png" : "image/jpeg" }) };
+}
+
 /** Настоящий разбор знака из набора — тот же, что читает питон. */
 function realSign(stem: string) {
   return JSON.parse(readFileSync(`${ROOT}demo/${stem}.extract.json`, "utf-8")).response;
@@ -54,6 +62,27 @@ describe("конвейер", () => {
     expect(out.stoppedAt).toBe("triage");
     expect(out.reason).toBe("стена");
     expect(f.calls(), "извлечение не запускалось").toBe(1);
+  });
+
+  // Найдено сверкой `AGENT_SPEC.md` с кодом: площадь кадра до оценки не доходила,
+  // потому что конвейер подставлял `null`. Снимок `061` — тот самый случай из шапки
+  // `photo.ts`: 82×179, а модель вернула полсотни символов связного шведского текста
+  // и ни одной пометки о помехах.
+  it("площадь кадра доходит до оценки полноты", async () => {
+    const sign = realSign("061-lastplats-langt-avstand");
+    const assess = (p: Photo) => analyze(p, provider, moment, cal,
+      deps(fakeProvider(reply(TRIAGE_OK), reply(sign))));
+
+    const onBig = await assess(realPhoto("003-p-2tim.jpg"));
+    const onTiny = await assess(realPhoto("061-lastplats-langt-avstand.png"));
+
+    expect(onBig.assessment.signals.text_fits_the_pixels,
+           "крупный кадр этот текст вмещает").toBe(1);
+    expect(onTiny.assessment.signals.text_fits_the_pixels,
+           "тесный кадр его не вмещает — иначе размер снимка до оценки не дошёл")
+      .toBeLessThan(1);
+    expect(onTiny.assessment.reasons, "и причина обязана дойти до человека")
+      .toContain("text_exceeds_the_pixels");
   });
 
   it("метка отсева не останавливает, когда её не требуют", async () => {

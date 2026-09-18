@@ -9,6 +9,7 @@ import { Calendar } from "./calendar";
 import type { Naive } from "./civil";
 import { applyAsymmetry, grade, tooLittle, type Assessment } from "./completeness";
 import { evaluateParkingRules, type Evaluation } from "./engine";
+import { pixels } from "./photo";
 import { toJson } from "./present";
 import { recognise, type Recognised } from "./reference";
 import type { SignDoc } from "./sign";
@@ -112,11 +113,16 @@ export async function analyze(image: Photo, provider: Provider, moment: Naive,
 
   const doc = outcome.extraction!.data as SignDoc;
   const ev = evaluateParkingRules(doc, moment, cal);
+  // Площадь кадра считает сам конвейер. Раньше сюда уходил `null` — «размер знает
+  // вызывающий экран», — и ни один экран его не передавал: сигнал всегда давал
+  // полный балл при весе 0.10, а причина о нехватке пикселей была недостижима.
+  // Настоящий размер знали только замер и тесты, то есть ровно то, чем калиброван
+  // порог. Снимок лежит в `image.data`, и спрашивать его у вызывающего незачем.
   const assessment = grade(doc, {
     flags: outcome.flags,
     repairs: outcome.extraction!.validation.repairs,
     evaluation: ev,
-    imagePixels: null,           // размер снимка знает вызывающий экран
+    imagePixels: pixels(new Uint8Array(await image.data.arrayBuffer())),
   });
   return { outcome, assessment, evaluation: applyAsymmetry(ev, assessment) };
 }
