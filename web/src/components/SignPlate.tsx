@@ -1,22 +1,26 @@
-// Нарисованный знак: синий щиток с белой «P» и белые таблички под ним.
+// The drawn sign: a blue shield with a white "P" and white plates beneath it.
 //
-// Рисуется кодом, а не картинкой: это предмет, о котором продукт говорит,
-// и он должен быть чётким на любом экране и работать без единого снимка.
-// Настоящих фотографий знаков в интерфейсе нет вовсе — на них номера машин.
+// It is drawn in code rather than as a picture: this is the thing the product talks
+// about, and it has to be crisp on any screen and work without a single photograph.
+// There are no real photographs of signs anywhere in the interface - they carry
+// number plates.
 //
-// **Кайма у щитка двойная**, как у настоящего `E19`: снаружи синий кант, под ним
-// белая полоса, дальше синее поле с буквой. Сделано двумя внутренними тенями
-// на одном элементе, а не вложенными коробками: знак остаётся одним предметом,
-// а не сборкой из рамок. Первой в списке лежит тень, которая рисуется поверх,
-// поэтому синий кант идёт раньше белого.
+// **The shield's border is double**, as on a real `E19`: a blue edge outside, a white
+// band under it, then the blue field with the letter. It is made with two inset
+// shadows on one element rather than with nested boxes: the sign stays one object
+// rather than an assembly of frames. The first in the list is the shadow drawn on
+// top, which is why the blue edge comes before the white.
 
 type Props = {
-  /** Таблички под основным знаком: по массиву строк на каждую. На настоящем
-   *  знаке время стоит под словом, а не рядом, поэтому табличка многострочная. */
+  /** The plates beneath the main sign: an array of lines for each. On a real sign
+   *  the hours stand under the word rather than beside it, so a plate takes several
+   *  lines. */
   plates: string[][];
-  /** `hero` — знак стоит один посреди экрана, и мельче его делать незачем. */
+  /** `hero` - the sign stands alone in the middle of the screen, and there is no
+   *  reason to make it smaller. */
   size?: "hero" | "large" | "small";
-  /** По умолчанию знак стоит по центру; в тёмной полосе главного — по левому краю. */
+  /** By default the sign is centred; in the dark band of the home screen it sits to
+   *  the left. */
   align?: "center" | "start";
 };
 
@@ -29,7 +33,8 @@ const PLATE: Record<string, string> = {
        + "shadow-[inset_0_0_0_2px_var(--color-plate),inset_0_0_0_5px_var(--color-on-dark)]",
 };
 
-// Табличка под знаком: тонкий кант, чтобы белое на светлом фоне не растворялось.
+// A plate beneath the sign: a thin edge, so that white on a pale ground does not
+// dissolve into it.
 const LINE: Record<string, string> = {
   hero: "w-33 py-1 text-caption",
   large: "w-22 py-[3px] text-[10px]",

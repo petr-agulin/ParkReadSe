@@ -1,11 +1,11 @@
-// Значки узлов шкалы: начало и конец стоянки.
+// The icons at the nodes of the timeline: the start of a stay and its close.
 //
-// Рисуются как сам знак `E19` — синий щиток с белой каймой и белой «P», — потому что
-// именно его человек держит перед глазами. Конец стоянки — тот же щиток, перечёркнутый
-// красным, как запрещающий знак `C35`.
+// They are drawn as the `E19` sign itself - a blue shield with a white border and a
+// white "P" - because that is what the person has in front of their eyes. The close
+// of a stay is the same shield struck through in red, like a prohibiting `C35`.
 //
-// SVG, а не эмодзи и не картинка: чёткость на любом экране, цвет из палитры, размер
-// задаётся снаружи.
+// An inline drawing rather than an emoji or a picture: crisp on any screen, its
+// colours from the palette, its size set from outside.
 
 export default function SignIcon({
   kind, size = "large",
