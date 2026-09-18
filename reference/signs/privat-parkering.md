@@ -7,7 +7,7 @@ code: T22
 schema: —
 en: The sign marks private land and names its owner, so the lot is not evidently open to the public; it does not state the owner's terms, and those exist off the sign
 short: Private land — the owner's terms are not stated here
-source: разбор разработчика; lagen om kontrollavgift vid olovlig parkering (LKOP)
+source: the developer's own reading; lagen om kontrollavgift vid olovlig parkering (LKOP)
 ---
 
 **Регламентом эта табличка не предусмотрена.** Это свободный текст на дополнительной

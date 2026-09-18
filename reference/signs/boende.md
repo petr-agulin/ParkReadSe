@@ -7,7 +7,7 @@ code: T19
 schema: —
 en: The sign notes that residents may have separate parking terms
 short: Residents may have separate terms
-source: разбор разработчика на собственных снимках
+source: the developer's own reading of the test photographs
 ---
 
 **Не сужает круг тех, кому можно стоять.** Сообщает, что у живущих в районе могут быть

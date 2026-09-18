@@ -7,7 +7,7 @@ code: T16
 schema: parsed.tariff_code
 en: The sign states a municipal tariff number
 short: Municipal tariff number
-source: разбор разработчика на собственных снимках
+source: the developer's own reading of the test photographs
 ---
 
 Номер тарифа. Задаётся муниципалитетом и в разных городах означает разное, поэтому

@@ -7,7 +7,7 @@ code: T22
 schema: — (в вычисления не входит)
 en: The sign states that the fee is paid by phone
 short: Fee paid by phone
-source: разбор разработчика на собственных снимках
+source: the developer's own reading of the test photographs
 ---
 
 Плата вносится телефоном: приложением вроде EasyPark или отправкой SMS.

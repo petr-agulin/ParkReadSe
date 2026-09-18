@@ -6,7 +6,7 @@ label: Info board
 schema: panel.kind=info_board
 en: The pole also carries an operator payment board, which is not a road sign
 short: Operator's payment board, not a road sign
-source: разбор разработчика на собственных снимках
+source: the developer's own reading of the test photographs
 ---
 
 Платёжное табло оператора — **не дорожный знак**. Код зоны, логотипы приложений,

@@ -7,7 +7,7 @@ code: T22
 schema: parsed.uninterpreted / место как пометка
 en: The sign applies to the numbered spaces stated
 short: Applies to the numbered spaces
-source: разбор разработчика на собственных снимках
+source: the developer's own reading of the test photographs
 ---
 
 Номера конкретных мест, а не их количество. Сосед по смыслу — `N platser`, но там
