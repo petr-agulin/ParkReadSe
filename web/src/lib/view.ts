@@ -1,93 +1,96 @@
-// Какой экран показывать и куда ведут действия.
+// Which screen to show, and where the actions lead.
 //
-// Здесь только решения: ни разметки, ни состояния React, ни обращений к браузеру.
-// Компонент красит то, что уже решено и проверено здесь, — по тому же правилу,
-// по которому слова о знаке живут в `present`, а не в вёрстке. Среды DOM в наборе
-// нет вовсе (решение 151), и это единственный способ держать переходы под тестом.
+// Only decisions here: no markup, no React state, no calls to the browser. The
+// component paints what has already been decided and checked here - by the same rule
+// that keeps the words about a sign in `present` rather than in the markup. There is
+// no DOM environment in the suite at all (decision 151), and this is the only way to
+// keep the transitions under test.
 
 import { canAnswerHere, type Settings } from "./settings";
 
 export type Screen =
-  | "first-launch"   // 2f — ключа ещё нет
-  | "home"           // 3a — ключ есть
+  | "first-launch"   // 2f - there is no key yet
+  | "home"           // 3a - there is a key
   | "settings"       // 3e
-  | "help"           // 2h — где взять ключ
+  | "help"           // 2h - where to get a key
   | "camera"         // 3d
-  | "frame"          // 3b — кадрирование
-  | "reading";       // 3c — разбор
+  | "frame"          // 3b - framing
+  | "reading";       // 3c - the reading
 
-/** Экраны, доступные без ключа (решение 147).
+/** The screens reachable without a key (decision 147).
  *
- *  Снимать и выбирать снимок нельзя: кадр, сделанный без ключа, кончается
- *  сообщением «нужен ключ», а путь, ведущий в тупик, хуже честного «сначала ключ».
- *  Отвергнуто было другое — встречать человека ТРЕБОВАНИЕМ вместо объяснения,
- *  и `2f` объясняет: показывает знак, говорит, что читает, и просит в последнюю
- *  очередь. */
+ *  Taking or choosing a photograph is not among them: a frame captured without a key
+ *  ends in the message "a key is needed", and a path leading to a dead end is worse
+ *  than an honest "the key first". What was rejected was the other thing - meeting a
+ *  person with a DEMAND instead of an explanation; `2f` explains: it shows a sign,
+ *  says what it reads, and asks last. */
 export const WITHOUT_KEY: readonly Screen[] = ["first-launch", "settings", "help"];
 
-/** Начальный экран: без ключа — первый запуск, с ключом — главный.
- *  Это два состояния одного места, а не два разных экрана в пути. */
+/** The first screen: without a key the first launch, with one the home screen.
+ *  These are two states of one place, not two different screens along a path. */
 export function start(settings: Settings): Screen {
   return canAnswerHere(settings) ? "home" : "first-launch";
 }
 
-/** Можно ли вообще оказаться на этом экране при таких настройках. */
+/** Whether this screen can be reached at all with these settings. */
 export function reachable(settings: Settings, screen: Screen): boolean {
   if (!canAnswerHere(settings)) return WITHOUT_KEY.includes(screen);
-  // С ключом первого запуска не бывает: его место занимает главный экран.
+  // With a key there is no first launch: the home screen takes its place.
   return screen !== "first-launch";
 }
 
 export type Action =
-  | "open-settings"   // таблетка Settings на главном, «Add your key» на 2f
-  | "open-help"       // «How keys work, and where to get one»
-  | "back"            // стрелка в шапке
-  | "scan"            // «Scan a sign» — в видоискатель
-  | "pick"            // «Pick a photo you already took» — сразу к рамке
-  | "captured"        // спуск нажат: снимок есть, дальше рамка
-  | "replace"         // «Replace» на рамке — обратно в камеру
-  | "sent"            // кадр ушёл модели, ответ получен
-  | "scan-another";   // «Scan another sign» — и стрелка в шапке разбора
+  | "open-settings"   // the settings control on the home screen, "Add your key" on 2f
+  | "open-help"       // "How keys work, and where to get one"
+  | "back"            // the arrow in the header
+  | "scan"            // "Scan a sign" - into the viewfinder
+  | "pick"            // "Pick a photo you already took" - straight to the frame
+  | "captured"        // the shutter was pressed: there is a photograph, now the frame
+  | "replace"         // "Replace" on the framing screen - back to the camera
+  | "sent"            // the frame went to the model, and an answer came back
+  | "scan-another";   // "Scan another sign" - and the arrow in the reading's header
 
-/** Где мы сейчас и откуда пришли.
+/** Where we are now and where we came from.
  *
- *  `from` нужен ровно двум экранам — настройкам и помощи: на них попадают
- *  и с первого запуска, и с главного, и «назад» обязан вернуть туда, откуда
- *  человек пришёл. Нарисованная в макете кнопка «Back to Settings» была бы
- *  неправдой в половине случаев, поэтому её и не будет. */
+ *  `from` is needed by exactly two screens - the settings and the help: they are
+ *  reached both from the first launch and from the home screen, and "back" must
+ *  return where the person came from. A "Back to Settings" button, as drawn in the
+ *  mock-up, would be untrue half the time, which is why there will not be one. */
 export type View = { screen: Screen; from?: Screen };
 
 const TARGET: Record<Action, Screen | null> = {
   "open-settings": "settings",
   "open-help": "help",
-  back: null,           // решается по `from`
+  back: null,           // decided by `from`
   scan: "camera",
   pick: "frame",
   captured: "frame",
   replace: "camera",
   sent: "reading",
-  // С разбора уходят снимать следующий знак, а не на главный экран: человек
-  // стоит у столба, и следующее его действие — снова камера. На главный ведёт
-  // системная кнопка «назад» в браузере.
+  // From the reading one goes to photograph the next sign, not to the home screen:
+  // the person is standing at a pole, and their next action is the camera again. The
+  // home screen is reached by the browser's own back button.
   "scan-another": "camera",
 };
 
 /**
- * Следующий вид. Недостижимый экран не показывается: вид остаётся прежним.
+ * The next view. An unreachable screen is not shown: the view stays as it was.
  *
- * Это вторые ворота, а не первые. Первые — сам экран: без ключа на нём нет ни
- * «Scan a sign», ни «Pick a photo», и нажать нечего. Но ворота, которые держатся
- * только на том, что кнопку не нарисовали, держатся на памяти верстальщика.
+ * This is the second gate, not the first. The first is the screen itself: without a
+ * key it carries neither "Scan a sign" nor "Pick a photo", and there is nothing to
+ * press. But a gate that rests only on a button not having been drawn rests on the
+ * memory of whoever writes the markup.
  */
 export function go(view: View, action: Action, settings: Settings): View {
   if (action === "back") {
-    // Настройки и помощь возвращают туда, откуда пришли; всё остальное — в начало.
+    // The settings and the help return where they were entered from; everything else
+    // returns to the beginning.
     const to = view.from ?? start(settings);
     return { screen: reachable(settings, to) ? to : start(settings) };
   }
   const to = TARGET[action];
   if (!to || !reachable(settings, to)) return view;
-  // Помнит дорогу только тот, кто обязан по ней вернуться.
+  // Only those obliged to travel back along it remember the way.
   return to === "settings" || to === "help"
     ? { screen: to, from: view.screen }
     : { screen: to };

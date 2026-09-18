@@ -1,6 +1,8 @@
-// Переходы между экранами и ворота по ключу. Требования 3 и 4 шага 11.
+// The transitions between screens and the gate on the key. Requirements 3 and 4 of
+// step 11.
 //
-// Тесты написаны ДО вёрстки: экран потом только красит то, что здесь решено.
+// The tests were written BEFORE the markup: the screen afterwards only paints what
+// was decided here.
 
 import { describe, expect, it } from "vitest";
 
@@ -8,44 +10,44 @@ import { EMPTY_SETTINGS, type Settings } from "./settings";
 import { WITHOUT_KEY, go, reachable, start, type Screen, type View } from "./view";
 
 const READY: Settings = {
-  apiKey: "к",
+  apiKey: "k",
   remember: true,
-  provider: { baseUrl: "https://example.invalid/v1", visionModel: "модель" },
+  provider: { baseUrl: "https://example.invalid/v1", visionModel: "a-model" },
 };
 const EMPTY: Settings = { ...EMPTY_SETTINGS };
-// Половина настроек — это всё ещё «нельзя читать»: ключ без адреса бесполезен.
-const HALF: Settings = { ...EMPTY_SETTINGS, apiKey: "к" };
+// Half the settings is still "nothing can be read": a key with no address is useless.
+const HALF: Settings = { ...EMPTY_SETTINGS, apiKey: "k" };
 
 const ALL: Screen[] = ["first-launch", "home", "settings", "help", "camera",
                        "frame", "reading"];
 const at = (screen: Screen, from?: Screen): View => ({ screen, from });
 
-describe("какой экран первый", () => {
-  it("без ключа — первый запуск, с ключом — главный", () => {
+describe("which screen comes first", () => {
+  it("without a key the first launch, with one the home screen", () => {
     expect(start(EMPTY)).toBe("first-launch");
     expect(start(HALF)).toBe("first-launch");
     expect(start(READY)).toBe("home");
   });
 });
 
-describe("ворота по ключу (решение 147)", () => {
-  it("без ключа доступны ровно три экрана", () => {
-    // Ни камеры, ни галереи, ни рамки: путь, ведущий к «нужен ключ», хуже,
-    // чем честная просьба ключа в самом начале.
+describe("the gate on the key (decision 147)", () => {
+  it("without a key exactly three screens are reachable", () => {
+    // No camera, no gallery, no frame: a path leading to "a key is needed" is worse
+    // than an honest request for the key at the very beginning.
     expect(ALL.filter((s) => reachable(EMPTY, s))).toEqual([...WITHOUT_KEY]);
   });
 
-  it("неполные настройки — те же три", () => {
+  it("incomplete settings give the same three", () => {
     expect(ALL.filter((s) => reachable(HALF, s))).toEqual([...WITHOUT_KEY]);
   });
 
-  it("с ключом доступно всё, кроме первого запуска", () => {
-    // `2f` — это состояние «ключа нет», а не экран, куда можно вернуться.
+  it("with a key everything is reachable except the first launch", () => {
+    // `2f` is the state "there is no key", not a screen one can return to.
     expect(ALL.filter((s) => reachable(READY, s)))
       .toEqual(["home", "settings", "help", "camera", "frame", "reading"]);
   });
 
-  it("съёмка и выбор снимка без ключа не открываются вовсе", () => {
+  it("taking and choosing a photograph do not open at all without a key", () => {
     const here = at("first-launch");
     expect(go(here, "scan", EMPTY)).toEqual(here);
     expect(go(here, "pick", EMPTY)).toEqual(here);
@@ -53,42 +55,43 @@ describe("ворота по ключу (решение 147)", () => {
   });
 });
 
-describe("настройки и помощь возвращают туда, откуда пришли", () => {
-  it("с первого запуска — на первый запуск", () => {
+describe("the settings and the help return where they were entered from", () => {
+  it("from the first launch, back to the first launch", () => {
     const open = go(at("first-launch"), "open-settings", EMPTY);
     expect(open).toEqual({ screen: "settings", from: "first-launch" });
     expect(go(open, "back", EMPTY)).toEqual({ screen: "first-launch" });
   });
 
-  it("с главного — на главный", () => {
+  it("from the home screen, back to the home screen", () => {
     const open = go(at("home"), "open-settings", READY);
     expect(open).toEqual({ screen: "settings", from: "home" });
     expect(go(open, "back", READY)).toEqual({ screen: "home" });
   });
 
-  it("помощь открывается из настроек и туда же возвращает", () => {
-    // Вход в помощь один — из настроек: с первого запуска ссылку убрали, чтобы
-    // первый экран просил одно и только одно. Сам переход модель по-прежнему
-    // допускает откуда угодно, но предлагать его больше некому.
+  it("the help opens from the settings and returns there", () => {
+    // There is one way into the help - from the settings: the link was taken off the
+    // first launch so that the first screen asks one thing and one thing only. The
+    // model still allows the transition from anywhere, but there is nobody left to
+    // offer it.
     const fromSettings = go(at("settings", "home"), "open-help", READY);
     expect(fromSettings).toEqual({ screen: "help", from: "settings" });
     expect(go(fromSettings, "back", READY)).toEqual({ screen: "settings" });
   });
 
-  it("дорога, ставшая недостижимой, не возвращает в тупик", () => {
-    // Пришли в настройки с главного, ключ забыли — назад ведёт на первый запуск,
-    // а не на экран, которого при пустых настройках не существует.
+  it("a way that has become unreachable does not lead back into a dead end", () => {
+    // We came to the settings from the home screen and forgot the key - back leads to
+    // the first launch, not to a screen that does not exist with empty settings.
     expect(go(at("settings", "home"), "back", EMPTY))
       .toEqual({ screen: "first-launch" });
   });
 
-  it("без записанной дороги «назад» ведёт в начало", () => {
+  it("with no way recorded, \"back\" leads to the beginning", () => {
     expect(go(at("settings"), "back", READY)).toEqual({ screen: "home" });
   });
 });
 
-describe("путь от главного до разбора", () => {
-  it("снять: главный → камера → рамка → разбор", () => {
+describe("the path from the home screen to the reading", () => {
+  it("taking one: home, camera, frame, reading", () => {
     let v = go(at("home"), "scan", READY);
     expect(v).toEqual({ screen: "camera" });
     v = go(v, "captured", READY);
@@ -97,37 +100,40 @@ describe("путь от главного до разбора", () => {
     expect(v).toEqual({ screen: "reading" });
   });
 
-  it("выбрать снимок: главный → сразу рамка", () => {
+  it("choosing a photograph: home, and straight to the frame", () => {
     expect(go(at("home"), "pick", READY)).toEqual({ screen: "frame" });
   });
 
-  it("«Replace» на рамке ведёт в камеру — она же вход в галерею", () => {
-    // Один контрол вместо пары «Take another / Another photo»: на `3d` есть
-    // и спуск, и плитка галереи, поэтому оба источника в одном тапе.
+  it("\"Replace\" on the frame leads to the camera - which is also the way to the gallery", () => {
+    // One control instead of a pair of "Take another / Another photo": `3d` has both
+    // a shutter and a gallery tile, so both sources are one tap away.
     expect(go(at("frame"), "replace", READY)).toEqual({ screen: "camera" });
   });
 
-  it("«Scan another sign» ведёт в камеру, а не на главный", () => {
-    // С разбора уходят снимать следующий знак: человек стоит у столба.
+  it("\"Scan another sign\" leads to the camera, not to the home screen", () => {
+    // From the reading one goes to photograph the next sign: the person is standing
+    // at a pole.
     expect(go(at("reading"), "scan-another", READY)).toEqual({ screen: "camera" });
   });
 
-  it("без ключа и этот переход закрыт", () => {
-    // Особого случая у него больше нет — значит, работают общие ворота.
+  it("without a key this transition is closed as well", () => {
+    // It no longer has a special case of its own - so the general gate is working.
     const here = at("reading");
     expect(go(here, "scan-another", EMPTY)).toEqual(here);
   });
 
-  it("«назад» с камеры и рамки ведёт в начало", () => {
-    // Разбора в списке нет: его стрелка в шапке шлёт `scan-another`, как
-    // и кнопка внизу, — обе ведут в камеру, а не в начало.
+  it("\"back\" from the camera and the frame leads to the beginning", () => {
+    // The reading is not in the list: the arrow in its header sends `scan-another`,
+    // as does the button at the foot - both lead to the camera rather than to the
+    // beginning.
     for (const screen of ["camera", "frame"] as Screen[]) {
       expect(go(at(screen), "back", READY), screen).toEqual({ screen: "home" });
     }
   });
 
-  it("дорогу помнят только настройки и помощь", () => {
-    // Иначе «назад» с рамки уводило бы в камеру, из которой человек уже ушёл.
+  it("only the settings and the help remember the way", () => {
+    // Otherwise "back" from the frame would lead into the camera the person has
+    // already left.
     expect(go(at("home"), "scan", READY).from).toBeUndefined();
     expect(go(at("camera"), "captured", READY).from).toBeUndefined();
     expect(go(at("frame"), "sent", READY).from).toBeUndefined();
