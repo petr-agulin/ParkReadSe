@@ -1,11 +1,13 @@
-// Слова продукта и шкала периодов. Перенесено из `tests/test_api.py` (шаг 8).
+// The product's words and the timeline of periods. Carried over from
+// `tests/test_api.py` (step 8).
 //
-// Большая часть тех тестов проверяла не HTTP, а ОТВЕТ: что сказано человеку у знака,
-// в каком порядке и какими словами. Сервер уходит — проверки остаются, потому что
-// предмет у них другой: не ручка, а продукт.
+// Most of those tests checked not HTTP but the ANSWER: what is said to a person at a
+// sign, in what order and in which words. The server has gone - the checks remain,
+// because their subject is a different one: not the handle, but the product.
 //
-// Ответ собирается тем же путём, что и в приложении, только без сети: сохранённый
-// ответ модели → проверка по схеме → справочник → полнота → движок → показ.
+// The answer is assembled by the same path as in the application, only without a
+// network: a saved model answer, then the schema check, the reference, completeness,
+// the engine, and the presentation.
 
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -28,12 +30,13 @@ import { ok, sign as validateSign } from "./validation";
 
 const ROOT = fileURLToPath(new URL("../../../", import.meta.url));
 const CAL = new Calendar();
-const DEFAULT_MOMENT = "2026-03-10T12:00";     // обычный вторник
+const DEFAULT_MOMENT = "2026-03-10T12:00";     // an ordinary Tuesday
 
 const read = (path: string) => readFileSync(ROOT + path, "utf-8");
 const readJson = (path: string) => JSON.parse(read(path));
 
-/** Ответ продукта по снимку набора: тот же путь, что в приложении, без сети. */
+/** The product's answer for a photograph of the set: the same path as in the
+ *  application, without a network. */
 function answerFor(label: string, moment = DEFAULT_MOMENT): Record<string, any> {
   const fixture = readJson(`demo/${label}.extract.json`);
   const triageFile = `${ROOT}demo/${label}.triage.json`;
@@ -58,7 +61,7 @@ function answerFor(label: string, moment = DEFAULT_MOMENT): Record<string, any> 
                 m, CAL);
 }
 
-/** Все снимки набора, у которых есть сохранённый ответ модели. */
+/** Every photograph of the set that has a saved model answer. */
 const answered = () => readdirSync(`${ROOT}demo`)
   .filter((f) => f.endsWith(".extract.json"))
   .map((f) => f.slice(0, -".extract.json".length))
@@ -70,25 +73,25 @@ const period = (state: string, conditions: string[]): Period => ({
   state, conditions, maxDurationMinutes: null, note: null,
 });
 
-describe("ответ целиком", () => {
+describe("the answer as a whole", () => {
   // py: test_api::test_analyze_returns_the_four_blocks
-  it("состоит из тех же блоков", () => {
+  it("consists of the same blocks", () => {
     const b = answerFor(PHOTO);
     expect(["full", "partial"]).toContain(b.completeness.category);
-    expect(b.what_we_saw.panels.length, "блок 1: панели").toBeGreaterThan(0);
-    expect(b.regimes.length, "блок 3: шкала периодов").toBeGreaterThan(0);
+    expect(b.what_we_saw.panels.length, "block 1: the panels").toBeGreaterThan(0);
+    expect(b.regimes.length, "block 3: the timeline of periods").toBeGreaterThan(0);
     expect(b.day_class).toBe("weekday");
     expect(b.has_answer).toBe(true);
   });
 
   // py: test_api::test_response_states_its_contract_version
-  it("называет версию контракта", () => {
+  it("states the version of its contract", () => {
     expect(answerFor(PHOTO).contract).toBe(CONTRACT);
     expect(Number.isInteger(CONTRACT)).toBe(true);
   });
 
   // py: test_api::test_forbidden_wording_never_appears
-  it("не разрешает и не приказывает", () => {
+  it("neither permits nor orders", () => {
     const raw = JSON.stringify(answerFor(PHOTO)).toLowerCase();
     for (const bad of ["parking allowed", "you may park", "you need to move the car",
                        "you can park here"]) {
@@ -97,19 +100,19 @@ describe("ответ целиком", () => {
   });
 
   // py: test_api::test_general_rules_never_ride_inside_an_analysis
-  it("общие правила внутри разбора не едут", () => {
-    // Их нет на знаке, и в вычисления они не входят: не путешествуя вместе
-    // с ответом, они не могут случайно оказаться его частью.
+  it("never carries the general rules inside a reading", () => {
+    // They are not on the sign and take no part in the computation: by never
+    // travelling with the answer, they cannot accidentally become part of it.
     const b = answerFor(PHOTO);
     expect(b).not.toHaveProperty("general_rules");
     expect(b).not.toHaveProperty("rules");
   });
 
   // py: test_api::test_wording_comes_from_the_reference_not_from_the_api
-  it("формулировки приходят из справочника готовыми", () => {
+  it("takes its wording ready-made from the reference", () => {
     const b = answerFor("006-tillstand-07-17-ovrig-tid-avgift");
     const terms = b.regimes.flatMap((r: any) => r.periods.flatMap((p: any) => p.conditions));
-    expect(terms.length, "условия размечены ключами справочника").toBeGreaterThan(0);
+    expect(terms.length, "the conditions are marked with reference keys").toBeGreaterThan(0);
     for (const t of terms) {
       expect(t.known, t.key).toBe(true);
       expect(t.text).not.toBe(t.key);
@@ -117,7 +120,7 @@ describe("ответ целиком", () => {
   });
 
   // py: test_api::test_state_wording_is_authored_by_the_backend
-  it("подписи состояний приходят готовыми", () => {
+  it("takes the captions of the states ready-made", () => {
     const b = answerFor(PHOTO);
     const texts = b.regimes.flatMap((r: any) => r.periods.map((p: any) => p.state_text));
     expect(texts.length).toBeGreaterThan(0);
@@ -126,27 +129,27 @@ describe("ответ целиком", () => {
   });
 
   // py: test_api::test_no_internal_token_is_shown_without_words
-  it("служебный токен не показывается без слов", () => {
-    // «Stretch: here» — та самая ошибка, с которой началась обкатка.
+  it("never shows an internal token without words", () => {
+    // "Stretch: here" was the very mistake the running-in started with.
     const b = answerFor(PHOTO);
     for (const r of b.regimes) {
       expect(r.extent_text.startsWith("The sign"), r.extent_text).toBe(true);
       expect(r.extent_text).not.toBe(r.extent);
     }
     for (const item of [...b.completeness.reasons, ...b.uncertainties]) {
-      expect(item.text, `токен без текста: ${item.token}`).not.toBe(item.token);
+      expect(item.text, `a token with no text: ${item.token}`).not.toBe(item.token);
     }
   });
 
   // py: test_api::test_an_unknown_token_never_reaches_the_screen_as_itself
-  it("неизвестный токен на экран как есть не выходит", () => {
-    const pair = explain("совершенно_новый_повод", REASON_TEXT);
-    expect(pair.token).toBe("совершенно_новый_повод");
+  it("never lets an unknown token reach the screen as itself", () => {
+    const pair = explain("a_completely_new_reason", REASON_TEXT);
+    expect(pair.token).toBe("a_completely_new_reason");
     expect(pair.text).toBe("");
   });
 
   // py: test_api::test_every_reason_and_uncertainty_token_has_wording
-  it("у каждого повода и каждой неопределённости есть формулировка", () => {
+  it("gives every reason and every uncertainty a wording", () => {
     const produced = new Set<string>();
     for (const file of ["completeness.ts", "engine.ts"]) {
       const src = read(`web/src/lib/${file}`);
@@ -154,7 +157,8 @@ describe("ответ целиком", () => {
         produced.add(m[1].replace(/:$/, ""));
       }
     }
-    expect(produced.size, "токены не нашлись — проверка потеряла смысл").toBeGreaterThan(0);
+    expect(produced.size, "no tokens were found - the check has lost its point")
+      .toBeGreaterThan(0);
     const known = new Set([...Object.keys(REASON_TEXT), ...Object.keys(UNCERTAINTY_TEXT),
                            "unread_panels", "uninterpreted_plates"]);
     expect([...produced].filter((t) => !known.has(t))).toEqual([]);
@@ -164,7 +168,7 @@ describe("ответ целиком", () => {
   });
 
   // py: test_api::test_every_reason_the_code_can_produce_has_a_caption
-  it("у каждой причины, какую умеет породить полнота, есть подпись", () => {
+  it("gives every reason the completeness grading can produce a caption", () => {
     const refusals = (TRIAGE_SCHEMA as Record<string, any>).properties.category.enum
       .filter((c: string) => c !== "parking_sign");
     const reasons = new Set<string>();
@@ -172,7 +176,7 @@ describe("ответ целиком", () => {
       for (const r of grade(null, { triageCategory: category }).reasons) reasons.add(r);
     }
     for (const r of grade(null, { schemaValid: false }).reasons) reasons.add(r);
-    // разбор с каждым мыслимым изъяном сразу
+    // a reading with every conceivable flaw at once
     const bad: SignDoc = {
       schema_version: 1,
       main_sign: { type: "unknown", background_color: "blue", form: "regular",
@@ -183,16 +187,16 @@ describe("ответ целиком", () => {
     };
     for (const r of grade(bad, { flags: ["panel_count_disagreement:1!=2",
                                          "uninterpreted_panels:1"],
-                                 repairs: ["что-то починили"], imagePixels: 10 }).reasons) {
+                                 repairs: ["something was repaired"], imagePixels: 10 }).reasons) {
       reasons.add(r);
     }
     expect([...reasons].filter((t) => !explain(t, REASON_TEXT).text)).toEqual([]);
   });
 
   // py: test_api::test_user_facing_text_never_explains_the_machinery
-  it("текст для человека не рассказывает про внутреннюю кухню", () => {
-    // «Two independent readings counted the plates differently» — рассказ об
-    // устройстве, из которого нельзя понять, чему верить.
+  it("never explains the machinery in the text meant for a person", () => {
+    // "Two independent readings counted the plates differently" is a tale about the
+    // works, and there is no telling from it what to believe.
     const forbidden = ["independent reading", "triage", "extraction", "fixture", "schema",
                        "panel_count", "validator", "pipeline", "prompt", "the model",
                        "vision api", "json"];
@@ -202,50 +206,50 @@ describe("ответ целиком", () => {
     for (const e of allEntries()) texts.push(e.en, e.short, e.label);
     for (const text of texts) {
       for (const bad of forbidden) {
-        expect(text.toLowerCase(), `внутренняя кухня в тексте: ${text}`).not.toContain(bad);
+        expect(text.toLowerCase(), `the machinery in the text: ${text}`).not.toContain(bad);
       }
     }
   });
 
   // py: test_api::test_confidence_caveats_do_not_contradict_the_headline
-  it("оговорки уверенности не спорят с заголовком", () => {
+  it("keeps the confidence caveats from contradicting the heading", () => {
     expect(REASON_TEXT.panel_count_disagreement.startsWith("Confidence is lower")).toBe(true);
     expect(REASON_TEXT.day_class_unknown.startsWith("Confidence is lower")).toBe(true);
   });
 
   // py: test_api::test_completeness_tone_is_decided_by_the_backend
-  it("цвет полноты решает не вёрстка", () => {
+  it("lets the backend decide the colour of the completeness", () => {
     expect(toneOf("full", 0.975)).toBe("good");
-    expect(toneOf("full", GOOD_ENOUGH - 0.01), "оговорка снимает зелёный").toBe("caution");
-    expect(toneOf("partial", 0.99), "прочитано не всё — не зелёный").toBe("caution");
+    expect(toneOf("full", GOOD_ENOUGH - 0.01), "a caveat takes the green away").toBe("caution");
+    expect(toneOf("partial", 0.99), "not everything was read - not green").toBe("caution");
     expect(toneOf("insufficient", 0.99)).toBe("bad");
     expect(toneOf("not_a_parking_sign", 1.0)).toBe("bad");
   });
 
   // py: test_api::test_tone_travels_with_the_answer
-  it("цвет едет вместе с ответом", () => {
+  it("sends the colour along with the answer", () => {
     const c = answerFor(PHOTO, "2026-09-02T17:11").completeness;
     expect(["good", "caution", "bad"]).toContain(c.tone);
     expect(c.tone === "good").toBe(c.category === "full" && c.confidence >= 0.9);
   });
 });
 
-describe("блок «что мы прочли»", () => {
+describe("the block \"what we read\"", () => {
   // py: test_api::test_every_shown_value_carries_its_field_name
-  it("у каждого значения написано имя поля", () => {
+  it("names the field beside every value shown", () => {
     const w = answerFor(PHOTO).what_we_saw;
     const mainNames = new Set(w.main_sign_fields.map((f: any) => f.name));
     for (const name of ["type", "form", "background_color"]) expect(mainNames).toContain(name);
     for (const p of w.panels) {
       const names = p.fields.map((f: any) => f.name);
-      expect(names.slice(0, 2), "порядок полей фиксирован").toEqual(["index", "kind"]);
-      expect(names, "пустой список строк — тоже факт").toContain("lines");
+      expect(names.slice(0, 2), "the order of the fields is fixed").toEqual(["index", "kind"]);
+      expect(names, "an empty list of lines is a fact too").toContain("lines");
       for (const f of p.fields) expect(f.value, f.name).toBeTruthy();
     }
   });
 
   // py: test_api::test_parsed_fields_are_named_with_their_schema_path
-  it("разобранные поля названы путём из схемы", () => {
+  it("names the parsed fields by their path in the schema", () => {
     const w = answerFor(PHOTO).what_we_saw;
     const rows: Record<string, string> = {};
     for (const p of w.panels) for (const f of p.fields) rows[f.name] = f.value;
@@ -254,37 +258,37 @@ describe("блок «что мы прочли»", () => {
   });
 
   // py: test_api::test_no_parsed_field_is_silently_dropped_from_the_screen
-  it("незнакомое поле разбора не теряется молча", () => {
+  it("never loses an unfamiliar parsed field in silence", () => {
     const rows = panelFields({ index: 1, kind: "sign_plate", lines: ["x"],
-                               parsed: { "выдуманное_поле": "значение" } } as unknown as Panel, []);
-    expect(rows.some((r) => r.name === "parsed.выдуманное_поле")).toBe(true);
+                               parsed: { "invented_field": "a value" } } as unknown as Panel, []);
+    expect(rows.some((r) => r.name === "parsed.invented_field")).toBe(true);
   });
 
   // py: test_api::test_panels_are_titled_panel_without_a_number
-  it("панели подписаны «Panel», без номера", () => {
+  it("titles the panels \"Panel\", without a number", () => {
     const w = answerFor(PHOTO).what_we_saw;
     expect(w.panels.map((p: any) => p.title)).toEqual(w.panels.map(() => "Panel"));
   });
 
   // py: test_api::test_primary_sign_is_named_and_coded
-  it("основной знак назван и снабжён кодом", () => {
+  it("names the main sign and gives it its code", () => {
     const w = answerFor(PHOTO).what_we_saw;
     expect(w.primary_sign.label).toBe("Parking");
     expect(w.primary_sign.code).toBe("E19");
   });
 
   // py: test_api::test_info_board_says_what_it_is_and_shows_its_text
-  it("табло говорит, чем оно является, и показывает свой текст", () => {
+  it("lets a payment board say what it is and show its text", () => {
     const w = answerFor("008-rorelsehindrad-avgift").what_we_saw;
     const boards = w.panels.filter((p: any) => p.kind === "info_board");
-    expect(boards.length, "на 008 есть платёжное табло").toBeGreaterThan(0);
+    expect(boards.length, "008 does carry a payment board").toBeGreaterThan(0);
     expect(boards[0].meanings[0].label).toBe("Info board");
-    expect(boards[0].meanings[0].code, "у табло кода нет").toBe("");
-    expect(boards[0].text, "текст табла показывается").toBeTruthy();
+    expect(boards[0].meanings[0].code, "a board has no code").toBe("");
+    expect(boards[0].text, "the board's text is shown").toBeTruthy();
   });
 
   // py: test_api::test_a_time_plate_reads_as_one_sentence
-  it("табличка времени читается одним предложением", () => {
+  it("reads a plate about time as one sentence", () => {
     const panel: Panel = { index: 1, kind: "sign_plate",
       lines: ["Torsdag 10-14", "Jämna veckor", "Augusti-Juni"],
       background_color: "yellow", legibility: { readable: true },
@@ -298,7 +302,7 @@ describe("блок «что мы прочли»", () => {
     expect(meanings).toHaveLength(1);
     expect(meanings[0].label).toBe("No parking");
     expect(meanings[0].code).toBe("C35");
-    expect(meanings[0].continues, "одно предложение, без точки").toBe(true);
+    expect(meanings[0].continues, "one sentence, with no full stop").toBe(true);
     for (const part of ["Thursdays", "10:00", "14:00", "even weeks"]) {
       expect(meanings[0].short).toContain(part);
     }
@@ -306,7 +310,7 @@ describe("блок «что мы прочли»", () => {
   });
 
   // py: test_api::test_two_plates_with_the_same_code_merge_into_one_line
-  it("две таблички с одним кодом сливаются в одну строку", () => {
+  it("merges two plates with the same code into one line", () => {
     const merged = merge([
       { key: "avgift", label: "Fee", code: "T16", text: "payment required",
         short: "Parking is not free", continues: false },
@@ -319,35 +323,36 @@ describe("блок «что мы прочли»", () => {
   });
 
   // py: test_api::test_a_hyphenated_word_is_joined_back_into_one_word
-  it("перенос с дефисом склеивается обратно в одно слово", () => {
+  it("joins a hyphenated word back into one word", () => {
     expect(joinLines(["Beskicknings-", "fordon"])).toBe("Beskickningsfordon");
-    // дефис внутри строки — часть записи времени, а не перенос
+    // a hyphen inside a line is part of a time, not a break
     expect(joinLines(["2 tim", "8-18", "(8-15)"])).toBe("2 tim 8-18 (8-15)");
     expect(joinLines(["0-12 m"])).toBe("0-12 m");
   });
 
   // py: test_api::test_an_uninterpreted_panel_does_not_repeat_its_own_text
-  it("непонятая панель не повторяет свой же текст", () => {
+  it("keeps a panel it did not understand from repeating its own text", () => {
     expect(notInterpreted([], ["Beskicknings-", "fordon"]))
       .toBe("Not interpreted — shown above exactly as printed");
-    // у панели с понятыми ключами остаток называется: строкой выше не он
+    // where a panel has keys that were understood, the remainder is named: the line
+    // above is not it
     expect(notInterpreted(["boende"], ["Ci"])).toBe("Not interpreted: Ci");
   });
 
   // py: test_api::test_a_plate_the_reference_knows_is_not_called_uninterpreted
-  it("понятая табличка не зовётся непонятой", () => {
+  it("never calls a plate it understood an uninterpreted one", () => {
     for (const label of ["015-motorcykel", "017-rorelsehindrad",
                          "032-rorelsehindrad-pil-hoger"]) {
       for (const p of answerFor(label).what_we_saw.panels) {
-        expect(p.not_interpreted_text, `${label}, панель ${p.index}`).toBeNull();
+        expect(p.not_interpreted_text, `${label}, panel ${p.index}`).toBeNull();
       }
     }
   });
 
   // py: test_api::test_a_plate_with_an_unknown_symbol_narrows_instead_of_widening
-  it("табличка с неизвестным рисунком сужает, а не расширяет", () => {
-    // Снимок `042`: пиктограмма приходила как `other` без текста, и знак читался
-    // как стоянка для всех.
+  it("lets a plate with an unknown drawing narrow rather than widen", () => {
+    // Photograph `042`: the pictogram arrived as `other` with no text, and the sign
+    // read as parking for everyone.
     const doc: SignDoc = { schema_version: 1,
       main_sign: { type: "parking", background_color: "blue", form: "regular",
                    legibility: { readable: true } },
@@ -356,7 +361,7 @@ describe("блок «что мы прочли»", () => {
       panel_count: 1, boundaries: { certain: true } };
     const rec = recognise(doc);
     expect(rec.panelKeys[1]).toEqual([]);
-    expect(rec.uninterpreted, "бессловесная табличка обязана считаться непонятой")
+    expect(rec.uninterpreted, "a wordless plate must count as not understood")
       .toHaveProperty("1");
     const a = grade(doc, { flags: ["uninterpreted_panels:1"] });
     expect(a.category).toBe(PARTIAL);
@@ -364,9 +369,9 @@ describe("блок «что мы прочли»", () => {
   });
 });
 
-describe("шкала периодов", () => {
+describe("the timeline of periods", () => {
   // py: test_api::test_the_timeline_ends_where_the_stay_ends
-  it("кончается там, где кончается стоянка", () => {
+  it("ends where the stay ends", () => {
     const r = answerFor("008-rorelsehindrad-avgift", "2026-09-02T17:11").regimes[0];
     expect(r.duration_expires_at).toBe("2026-09-03T17:11");
     expect(r.periods[r.periods.length - 1].end).toBe(r.duration_expires_at);
@@ -375,25 +380,26 @@ describe("шкала периодов", () => {
   });
 
   // py: test_api::test_the_stay_end_is_stated_under_its_own_period
-  it("конец стоянки сказан под своим отрезком", () => {
+  it("states the close of the stay under its own period", () => {
     const r = answerFor(PHOTO, "2026-09-02T17:11").regimes[0];
     const marked = r.periods.filter((p: any) => p.stay_end_text);
-    expect(marked, "ровно один отрезок кончает стоянку").toHaveLength(1);
+    expect(marked, "exactly one period closes the stay").toHaveLength(1);
     expect(marked[0]).toBe(r.periods[r.periods.length - 1]);
     expect(marked[0].stay_end_text.toLowerCase()).toContain("the sign");
   });
 
   // py: test_api::test_without_a_limit_the_timeline_stops_at_the_first_change
-  it("без предела шкала доводится до первой смены состояния", () => {
+  it("runs to the first change of state when there is no limit", () => {
     const r = answerFor("019-forbud-7-18-avgift-ovrig-tid", "2026-09-02T17:11").regimes[0];
     const states = r.periods.map((p: any) => p.state);
     expect(states[0]).toBe("prohibited");
-    expect(states[states.length - 1], "доведено до снятия запрета").not.toBe(states[0]);
+    expect(states[states.length - 1], "carried to the lifting of the prohibition")
+      .not.toBe(states[0]);
     expect(states).toHaveLength(2);
   });
 
   // py: test_api::test_identical_neighbouring_segments_are_joined
-  it("одинаковые соседние отрезки склеиваются", () => {
+  it("joins identical neighbouring segments", () => {
     const r = answerFor(PHOTO, "2026-09-02T17:11").regimes[0];
     expect(r.periods).toHaveLength(1);
     expect(r.duration_expires_at).toBe("2026-09-03T10:00");
@@ -403,7 +409,7 @@ describe("шкала периодов", () => {
   });
 
   // py: test_api::test_joining_never_hides_a_change_of_rule
-  it("склейка не прячет смену правила", () => {
+  it("never lets the joining hide a change of rule", () => {
     const r = answerFor("019-forbud-7-18-avgift-ovrig-tid", "2026-09-01T23:30").regimes[0];
     for (let i = 1; i < r.periods.length; i += 1) {
       const a = r.periods[i - 1];
@@ -414,13 +420,13 @@ describe("шкала периодов", () => {
   });
 
   // py: test_api::test_period_tone_and_headline_come_from_the_rule
-  it("цвет и заголовок отрезка — свойство правила", () => {
+  it("makes the colour and the heading of a period a property of the rule", () => {
     expect(periodTone(period("allowed", ["avgift"]))).toBe("paid");
     expect(periodTone(period("allowed", []))).toBe("free");
     expect(periodTone(period("prohibited", []))).toBe("prohibited");
     expect(periodTone(period("uncertain", []))).toBe("uncertain");
-    // «Free parking» разрешена там, где условий нет вовсе: иначе она соседствовала
-    // бы с «требуется диск».
+    // "Free parking" is allowed where there are no conditions at all: otherwise it
+    // would stand next to "a disc is required".
     const free = period("allowed", []);
     const withDisc = period("allowed", ["p-skiva"]);
     expect(headline(free, periodTone(free))).toBe("Free parking");
@@ -429,7 +435,7 @@ describe("шкала периодов", () => {
   });
 
   // py: test_api::test_period_carries_its_duration_and_notes
-  it("отрезок несёт свою длительность, а плата в примечания не дублируется", () => {
+  it("gives a period its length, without repeating the fee in the notes", () => {
     const r = answerFor(PHOTO, "2026-09-02T22:59").regimes[0];
     for (const p of r.periods) {
       expect(p.minutes).toBeGreaterThan(0);
@@ -439,15 +445,15 @@ describe("шкала периодов", () => {
   });
 
   // py: test_api::test_stay_end_reason_says_why_without_repeating_when
-  it("причина конца стоянки говорит ПОЧЕМУ, не повторяя КОГДА", () => {
+  it("makes the reason for the close say WHY without repeating WHEN", () => {
     const r = answerFor("008-rorelsehindrad-avgift", "2026-09-02T23:24").regimes[0];
     const last = r.periods[r.periods.length - 1];
     expect(last.stay_end_reason).toBe("general 24-hour rule, not written on the sign");
-    expect(last.stay_end_reason, "когда — говорит узел").not.toContain("must end here");
+    expect(last.stay_end_reason, "the when is said by the node").not.toContain("must end here");
   });
 
   // py: test_api::test_every_duration_source_has_a_reason
-  it("у каждого источника предела есть причина", () => {
+  it("gives every source of a limit a reason", () => {
     expect(Object.keys(STAY_END_REASON).sort()).toEqual(Object.keys(STAY_END_TEXT).sort());
     expect(Object.keys(STAY_END_REASON).sort()).toEqual(["24h_default", "plate", "prohibition"]);
     for (const text of Object.values(STAY_END_REASON)) {
@@ -457,17 +463,18 @@ describe("шкала периодов", () => {
   });
 
   // py: test_api::test_an_endless_prohibition_is_marked_as_reaching_the_horizon
-  it("бессрочный запрет помечен как упирающийся в горизонт", () => {
-    // `169 h 30 min` под запретом — свойство расчёта, а не знака.
+  it("marks an endless prohibition as running into the horizon", () => {
+    // "169 h 30 min" under a prohibition is a property of the computation, not of
+    // the sign.
     const r = answerFor("007-gul-forbud-forhyrda-platser", "2026-09-04T22:29").regimes[0];
     const last = r.periods[r.periods.length - 1];
     expect(last.state).toBe("prohibited");
-    expect(last.ends_at_horizon, "запрет без конца обязан быть помечен").toBe(true);
+    expect(last.ends_at_horizon, "a prohibition with no end must be marked").toBe(true);
     expect(r.duration_expires_at).toBeNull();
   });
 
   // py: test_api::test_the_ban_period_itself_is_still_computed
-  it("сам запрет по-прежнему считается", () => {
+  it("still computes the prohibition itself", () => {
     const doc: SignDoc = { schema_version: 1,
       main_sign: { type: "parking", background_color: "blue", form: "regular",
                    legibility: { readable: true } },
@@ -478,41 +485,42 @@ describe("шкала периодов", () => {
                    day_class: "named_weekday", named_weekday: "friday" }] } }] };
     const r = evaluateParkingRules(doc, parseNaive("2026-09-04T02:15"), CAL).regimes[0];
     expect(r.periods[0].state).toBe("prohibited");
-    expect(r.periods[0].end.hh, "запрет снимается в 06:00").toBe(6);
+    expect(r.periods[0].end.hh, "the prohibition lifts at 06:00").toBe(6);
   });
 
   // py: test_api::test_the_day_class_stands_under_the_date_on_the_scale
-  it("класс дня стоит под датой", () => {
-    // Пятница 30 октября 2026 — канун Alla helgons dag, и работают часы в скобках.
+  it("puts the class of the day under the date", () => {
+    // Friday 30 October 2026 is the eve of Alla helgons dag, and the bracketed hours
+    // apply.
     let r = answerFor(PHOTO, "2026-10-30T14:00").regimes[0];
     expect(r.periods[0].start_day)
       .toEqual({ text: "Eve of Alla helgons dag (All Saints' Day)", kind: "eve" });
-    expect(r.periods[r.periods.length - 1].end_day, "понедельник — будний").toBeNull();
+    expect(r.periods[r.periods.length - 1].end_day, "Monday is a weekday").toBeNull();
 
     r = answerFor(PHOTO, "2026-12-25T10:00").regimes[0];
     expect(r.periods[0].start_day)
       .toEqual({ text: "Red day: Juldagen (Christmas Day)", kind: "red" });
 
-    // Обычные воскресенье и суббота подписи не получают (решение 119).
+    // An ordinary Sunday and Saturday get no caption (decision 119).
     expect(answerFor(PHOTO, "2026-09-13T10:00").regimes[0].periods[0].start_day).toBeNull();
     expect(answerFor(PHOTO, "2026-09-12T10:00").regimes[0].periods[0].start_day).toBeNull();
-    // А суббота перед Пасхой — получает: завтрашний день именован.
+    // But the Saturday before Easter does: tomorrow is a named day.
     expect(answerFor(PHOTO, "2026-04-04T10:00").regimes[0].periods[0].start_day)
       .toEqual({ text: "Eve of Påskdagen (Easter Sunday)", kind: "eve" });
   });
 });
 
-describe("кому отведены места", () => {
+describe("who the spaces are designated for", () => {
   // py: test_api::test_who_can_park_never_addresses_the_reader
-  it("никогда не обращается к читателю", () => {
-    // Продукт называет круг и останавливается: относится ли к нему стоящий
-    // у знака, знает только он сам.
+  it("never addresses the reader", () => {
+    // The product names the set and stops: whether the person at the sign belongs to
+    // it is something only they know.
     const forbidden = ["you may", "you can", "you cannot", "you must", "your car",
                        "not allowed to", "you need"];
     for (const label of ["008-rorelsehindrad-avgift", "015-motorcykel",
                          "009-besokande-avgift", "003-p-2tim"]) {
       const r = answerFor(label, "2026-09-02T17:11").regimes[0];
-      expect(r.who_can_park.length, `${label}: круг обязан быть назван`).toBeGreaterThan(0);
+      expect(r.who_can_park.length, `${label}: the set must be named`).toBeGreaterThan(0);
       for (const term of r.who_can_park) {
         const low = term.text.toLowerCase();
         expect(low.startsWith("the sign"), `${label}: ${term.text}`).toBe(true);
@@ -522,16 +530,16 @@ describe("кому отведены места", () => {
   });
 
   // py: test_api::test_a_sign_that_narrows_nobody_still_names_the_circle
-  it("знак, никого не сужающий, всё равно называет круг", () => {
+  it("still names the set on a sign that narrows nobody", () => {
     const r = answerFor("003-p-2tim", "2026-09-02T17:11").regimes[0];
-    expect(r.eligibility, "круг знаком не сужен").toEqual([]);
+    expect(r.eligibility, "the sign narrows the set for nobody").toEqual([]);
     expect(r.who_can_park[0].text).toContain("all vehicles");
     expect(r.who_can_park[0].text).toContain("general parking rules");
   });
 
   // py: test_api::test_a_complementary_plate_does_not_replace_the_general_rule
-  it("дополняющая табличка не заменяет общее правило знака", () => {
-    // `Boende` не запрещает никому — он сообщает, что у жильцов свои условия.
+  it("never lets a complementary plate replace the sign's general rule", () => {
+    // `Boende` forbids nobody - it says that residents have conditions of their own.
     const doc: SignDoc = { schema_version: 1,
       main_sign: { type: "parking", background_color: "blue", form: "regular",
                    legibility: { readable: true } },
@@ -542,12 +550,12 @@ describe("кому отведены места", () => {
     const r = evaluateParkingRules(doc, parseNaive("2026-09-02T22:52"), CAL).regimes[0];
     const who = whoCanPark(r, "main-parking", false, false);
     expect(who).toHaveLength(2);
-    expect(who[0].text, "общее правило идёт первым").toContain("all vehicles");
-    expect(who[1].text, "дополнение — вторым").toContain("residents");
+    expect(who[0].text, "the general rule comes first").toContain("all vehicles");
+    expect(who[1].text, "the addition comes second").toContain("residents");
   });
 
   // py: test_api::test_a_narrowing_plate_does_replace_the_general_rule
-  it("сужающая табличка общее правило заменяет", () => {
+  it("does let a narrowing plate replace the general rule", () => {
     for (const [label, expected] of [
       ["008-rorelsehindrad-avgift", "disabled parking permit"],
       ["009-besokande-avgift", "visitors"],
@@ -561,9 +569,9 @@ describe("кому отведены места", () => {
   });
 
   // py: test_api::test_an_unknown_plate_is_named_in_who_can_park
-  it("непонятая табличка названа в круге стоящих", () => {
-    // `Beskickningsfordon` сообщал «стоянка для всех» — формально верно и ровно
-    // поэтому опасно.
+  it("names a plate it did not understand among who may park", () => {
+    // `Beskickningsfordon` reported "parking for everyone" - formally true, and
+    // dangerous for exactly that reason.
     const r = { extent: "here", eligibility: [], placeNotes: [], periods: [],
                 durationExpiresAt: null, durationSource: null, audience: null,
                 audienceExcluded: [] };
@@ -571,27 +579,27 @@ describe("кому отведены места", () => {
     const guarded = whoCanPark(r, "main-parking", true, false);
     expect(guarded).toHaveLength(plain.length + 1);
     expect(guarded[guarded.length - 1].text).toContain("may narrow who these spaces are for");
-    expect(guarded[guarded.length - 1].known, "оговорка не притворяется знанием").toBe(false);
+    expect(guarded[guarded.length - 1].known, "a caveat does not pose as knowledge").toBe(false);
   });
 
   // py: test_api::test_a_prohibition_with_hours_is_not_stated_as_a_prohibition_always
-  it("запрет с часами не подаётся как запрет всегда", () => {
+  it("never states a prohibition with hours as a prohibition always", () => {
     const r = answerFor("019-forbud-7-18-avgift-ovrig-tid", "2026-09-06T19:27").regimes[0];
     const line = r.who_can_park[0].text;
     expect(line).toContain("only during the hours it names");
-    expect(line, "«не запрещает» не равно «разрешает»").toContain("general parking rules");
+    expect(line, "\"does not prohibit\" is not \"permits\"").toContain("general parking rules");
   });
 
   // py: test_api::test_a_prohibition_without_hours_keeps_its_plain_wording
-  it("запрет без часов сохраняет прямую формулировку", () => {
+  it("keeps the plain wording on a prohibition with no hours", () => {
     const r = answerFor("055-forbud-stannande-snotackt-pil").regimes[0];
     expect(r.who_can_park[0].text).toBe("The sign prohibits stopping and parking");
   });
 });
 
-describe("подпись окна", () => {
+describe("the caption of the window", () => {
   // py: test_api::test_the_window_says_who_it_is_for_when_it_is_not_for_everyone
-  it("окно говорит, для кого оно, когда оно не для всех", () => {
+  it("says who the window is for when it is not for everyone", () => {
     const r = answerFor("008-rorelsehindrad-avgift").regimes[0];
     expect(r.window_for.map((x: any) => x.text))
       .toEqual(["A disabled parking permit is required"]);
@@ -600,20 +608,20 @@ describe("подпись окна", () => {
   });
 
   // py: test_api::test_a_sign_for_everyone_says_nothing_extra_under_the_window
-  it("у знака для всех под окном ничего лишнего", () => {
+  it("says nothing extra under the window of a sign for everyone", () => {
     expect(answerFor("003-p-2tim").regimes[0].window_for).toEqual([]);
   });
 
   // py: test_api::test_a_complementary_plate_is_not_mistaken_for_the_circle
-  it("дополняющая табличка не принимается за круг окна", () => {
+  it("never mistakes a complementary plate for the set of the window", () => {
     const regimes = answerFor("033-avgift-8-21-uppstallning-zon-e-boende-storskogen").regimes;
     const withNotes = regimes.filter((r: any) => r.notes.length);
-    expect(withNotes.length, "режим с табличкой жильцов не найден").toBeGreaterThan(0);
+    expect(withNotes.length, "no regime with a residents' plate was found").toBeGreaterThan(0);
     for (const r of withNotes) expect(r.window_for).toEqual([]);
   });
 
   // py: test_api::test_under_a_prohibition_the_circle_is_named_as_an_exception
-  it("под запретом круг назван исключением", () => {
+  it("names the set as an exception under a prohibition", () => {
     const r = answerFor("007-gul-forbud-forhyrda-platser").regimes[0];
     for (const p of r.periods) if (p.aside.length) expect(p.state).toBe("prohibited");
     expect(r.window_for.map((x: any) => x.text))
@@ -622,14 +630,14 @@ describe("подпись окна", () => {
   });
 
   // py: test_api::test_under_a_permission_the_circle_is_not_called_an_exception
-  it("под разрешением тот же круг исключением не зовётся", () => {
+  it("never calls the same set an exception under a permission", () => {
     const r = answerFor("004-endast-besokande-pingstkyrkan").regimes[0];
     for (const p of r.periods) if (p.aside.length) expect(p.state).toBe("allowed");
     expect(r.window_for.map((x: any) => x.text)).toEqual(["Visitors only"]);
   });
 
   // py: test_api::test_each_window_says_which_stretch_it_covers
-  it("каждое окно говорит, какой участок оно покрывает", () => {
+  it("makes each window say which stretch it covers", () => {
     const regimes = answerFor("010-forhyrda-platser-tva-pilar").regimes;
     expect(regimes).toHaveLength(2);
     expect(regimes.map((r: any) => r.extent_short))
@@ -638,27 +646,28 @@ describe("подпись окна", () => {
   });
 
   // py: test_api::test_every_extent_the_engine_can_produce_has_a_short_caption
-  it("у каждого участка, какой умеет движок, есть короткая подпись", () => {
+  it("gives every stretch the engine can produce a short caption", () => {
     const extents = new Set([...Object.values(ARROW_EXTENT), "here"]);
     expect([...extents].filter((e) => !(e in EXTENT_SHORT))).toEqual([]);
     expect(Object.keys(EXTENT_SHORT).sort()).toEqual(Object.keys(EXTENT_TEXT).sort());
   });
 
   // py: test_api::test_a_plate_bound_to_hours_is_not_printed_as_the_circle_of_the_window
-  it("указание, расписанное по часам, кругом окна не печатается", () => {
-    // `012`: «A special parking permit is required» стояло под НОЧНЫМ отрезком,
-    // где довольно платы.
+  it("never prints an instruction spelled out by the hour as the set of the window", () => {
+    // `012`: "A special parking permit is required" stood under the NIGHT segment,
+    // where the fee is enough.
     const r = answerFor("012-tillstand-7-17-ovrig-tid-avgift", "2026-09-06T16:29").regimes[0];
     expect(r.window_for).toEqual([]);
     const withPermit = r.periods.filter((p: any) =>
       p.notes.some((n: any) => n.text.includes("permit")));
-    expect(withPermit.length, "разрешение осталось у своего отрезка").toBeGreaterThan(0);
+    expect(withPermit.length, "the permit stayed with its own segment").toBeGreaterThan(0);
     for (const p of withPermit) expect(p.start.endsWith("07:00"), p.start).toBe(true);
   });
 
   // py: test_api::test_no_line_under_a_window_is_printed_twice
-  it("ни одна строка под окном не печатается дважды", () => {
-    // `010` справа: одна табличка выводилась и условием, и кругом — разными словами.
+  it("never prints a line under a window twice", () => {
+    // `010` on the right: one plate came out both as a condition and as the set, in
+    // different words.
     const trouble: [string, string[]][] = [];
     for (const label of answered()) {
       for (const r of answerFor(label, "2026-03-02T12:00").regimes) {
@@ -674,7 +683,7 @@ describe("подпись окна", () => {
   });
 
   // py: test_api::test_the_circle_never_names_what_the_timeline_states_by_the_hour
-  it("круг окна никогда не называет то, что шкала говорит по часам", () => {
+  it("never lets the set of the window name what the timeline states by the hour", () => {
     const trouble: [string, string[]][] = [];
     for (const label of answered()) {
       for (const r of answerFor(label, "2026-03-02T12:00").regimes) {
@@ -688,8 +697,8 @@ describe("подпись окна", () => {
   });
 });
 
-describe("окна по адресату", () => {
-  /** Знак из Frihamnen через показ. */
+describe("windows by audience", () => {
+  /** The sign from Frihamnen, through the presentation. */
   function frihamnenWindows(moment: string) {
     const doc: SignDoc = { schema_version: 1,
       main_sign: { type: "parking", background_color: "blue", form: "regular",
@@ -713,8 +722,8 @@ describe("окна по адресату", () => {
   }
 
   // py: test_api::test_a_condition_addressed_to_one_vehicle_class_gets_its_own_window
-  it("условие для одного вида транспорта получает своё окно", () => {
-    const wins = frihamnenWindows("2026-09-13T10:00");        // воскресенье
+  it("gives a condition addressed to one class of vehicle a window of its own", () => {
+    const wins = frihamnenWindows("2026-09-13T10:00");        // a Sunday
     expect(wins.map((w: any) => w.audience_short))
       .toEqual(["All vehicles except buses", "Buses"]);
     const [everyone, buses] = wins;
@@ -727,7 +736,7 @@ describe("окна по адресату", () => {
   });
 
   // py: test_api::test_the_second_window_is_hidden_when_it_says_the_same
-  it("второе окно прячется, когда говорит то же самое", () => {
+  it("hides the second window when it says the same thing", () => {
     const wins = frihamnenWindows("2026-09-10T21:15");
     expect(wins).toHaveLength(1);
     expect(wins[0].audience_short).toBeNull();
@@ -736,8 +745,9 @@ describe("окна по адресату", () => {
   });
 
   // py: test_api::test_silence_about_a_fee_is_not_called_free
-  it("молчание о плате не зовётся бесплатностью", () => {
-    // `049`: плата названа только «в остальное время», а границу задаёт табличка мопедов.
+  it("never calls silence about a fee free", () => {
+    // `049`: the fee is named only for "other times", and the boundary of those is
+    // set by the moped plate.
     const doc: SignDoc = readJson("testset/expected/049-moped-sasong-avgift-tva-taxor.json");
     const inSeason = parseNaive("2026-07-15T12:00");
     let ev = evaluateParkingRules(doc, inSeason, CAL);
@@ -752,7 +762,7 @@ describe("окна по адресату", () => {
            JSON.stringify(aside)).toBe(true);
     expect(mopeds.periods[0].headline).toBe("Parking fee");
 
-    // Вне сезона платят все, и оговорке взяться неоткуда.
+    // Out of season everyone pays, and the caveat has nowhere to come from.
     const offSeason = parseNaive("2026-11-16T12:00");
     ev = evaluateParkingRules(doc, offSeason, CAL);
     wins = windows(ev.regimes.map((r) =>
@@ -763,17 +773,17 @@ describe("окна по адресату", () => {
   });
 
   // py: test_api::test_a_residents_note_is_repeated_under_every_stretch_of_the_window
-  it("примечание жильцов повторяется под каждым отрезком окна", () => {
+  it("repeats a residents' note under every stretch of the window", () => {
     const r = answerFor("033-avgift-8-21-uppstallning-zon-e-boende-storskogen",
                         "2026-09-06T21:43").regimes[0];
-    expect(r.periods.length, "нужен знак с несколькими отрезками").toBeGreaterThan(1);
+    expect(r.periods.length, "a sign with several segments is needed").toBeGreaterThan(1);
     for (const p of r.periods) {
       expect(p.aside.some((x: any) => x.text.includes("residents")), p.start).toBe(true);
     }
   });
 
   // py: test_api::test_boende_alone_never_makes_the_answer_incomplete
-  it("`Boende` сам по себе неполноты не создаёт", () => {
+  it("never lets `Boende` on its own make the answer incomplete", () => {
     const d = answerFor("033-avgift-8-21-uppstallning-zon-e-boende-storskogen",
                         "2026-09-06T21:43");
     expect(d.completeness.category, JSON.stringify(d.completeness.reasons)).toBe("full");
@@ -781,25 +791,26 @@ describe("окна по адресату", () => {
   });
 });
 
-describe("арендованные места и частная земля", () => {
+describe("rented spaces and private land", () => {
   // py: test_api::test_a_rented_space_gets_no_parking_window
-  it("арендованное место окна стоянки не получает", () => {
-    // `020`: «Free parking ● 28 h 19 min max» — число целиком из правила 24 часов.
+  it("gives a rented space no parking window", () => {
+    // `020`: "Free parking ● 28 h 19 min max" - the number comes entirely from the
+    // 24-hour rule.
     const r = answerFor("020-forhyrda-platser-13-och-14-avstand").regimes[0];
-    expect(r.no_window_text, "шкала должна быть убрана").toBeTruthy();
+    expect(r.no_window_text, "the timeline must be taken away").toBeTruthy();
     expect(r.no_window_text).toContain("rented");
     expect(r.who_can_park.some((x: any) => x.text.includes("rented"))).toBe(true);
   });
 
   // py: test_api::test_a_rented_sign_that_states_its_own_hours_keeps_the_timeline
-  it("арендованные места со своими часами шкалу сохраняют", () => {
+  it("keeps the timeline where rented spaces state hours of their own", () => {
     const r = answerFor("007-gul-forbud-forhyrda-platser").regimes[0];
     expect(r.no_window_text).toBeNull();
-    expect(r.periods.length, "шкала должна остаться").toBeGreaterThan(0);
+    expect(r.periods.length, "the timeline must remain").toBeGreaterThan(0);
   });
 
   // py: test_api::test_only_rented_spaces_lose_the_timeline
-  it("прочие круги шкалу сохраняют", () => {
+  it("keeps the timeline for every other set", () => {
     for (const label of ["004-endast-besokande-pingstkyrkan", "008-rorelsehindrad-avgift",
                          "015-motorcykel", "003-p-2tim"]) {
       for (const r of answerFor(label).regimes) {
@@ -809,17 +820,17 @@ describe("арендованные места и частная земля", () 
   });
 
   // py: test_api::test_private_land_is_named_in_both_places_and_keeps_its_timeline
-  it("частная земля названа в обоих местах и шкалу сохраняет", () => {
+  it("names private land in both places and keeps its timeline", () => {
     const r = answerFor("021-privat-parkering-brf").regimes[0];
     expect(r.who_can_park.some((x: any) => x.text.includes("private land"))).toBe(true);
     expect(r.window_for.some((x: any) => x.text.includes("Private land"))).toBe(true);
     expect(r.no_window_text).toBeNull();
-    expect(r.periods.length, "шкала должна остаться").toBeGreaterThan(0);
+    expect(r.periods.length, "the timeline must remain").toBeGreaterThan(0);
     expect(r.who_can_park.some((x: any) => x.text.includes("permits parking"))).toBe(true);
   });
 
   // py: test_api::test_an_ordinary_sign_says_nothing_about_private_land
-  it("обычный знак о частной земле молчит", () => {
+  it("says nothing about private land on an ordinary sign", () => {
     const r = answerFor("003-p-2tim").regimes[0];
     for (const x of [...r.who_can_park, ...r.window_for]) {
       expect(x.text.toLowerCase()).not.toContain("private land");
@@ -827,12 +838,12 @@ describe("арендованные места и частная земля", () 
   });
 });
 
-describe("за что продукт ручается", () => {
+describe("what the product vouches for", () => {
   // py: test_api::test_an_incomplete_parse_marks_its_periods_as_not_vouched_for
-  it("неполный разбор помечает свои отрезки", () => {
-    for (const label of ["021-privat-parkering-brf",          // частная земля
-                         "029-beskickningsfordon-0-12m",      // табличка не понята
-                         "061-lastplats-langt-avstand"]) {    // не хватило пикселей
+  it("marks the periods of an incomplete reading", () => {
+    for (const label of ["021-privat-parkering-brf",          // private land
+                         "029-beskickningsfordon-0-12m",      // a plate not understood
+                         "061-lastplats-langt-avstand"]) {    // not enough pixels
       const d = answerFor(label);
       expect(d.completeness.category, label).not.toBe("full");
       for (const r of d.regimes) {
@@ -842,7 +853,7 @@ describe("за что продукт ручается", () => {
   });
 
   // py: test_api::test_a_complete_parse_keeps_a_solid_line
-  it("полный разбор держит сплошную линию", () => {
+  it("keeps a solid line on a complete reading", () => {
     for (const label of ["003-p-2tim", "008-rorelsehindrad-avgift",
                          "007-gul-forbud-forhyrda-platser"]) {
       const d = answerFor(label);
@@ -854,7 +865,7 @@ describe("за что продукт ручается", () => {
   });
 
   // py: test_api::test_certainty_follows_completeness_across_the_whole_set
-  it("связь та же на всём наборе", () => {
+  it("holds the same connection across the whole set", () => {
     const trouble: [string, boolean, string][] = [];
     for (const label of answered()) {
       const d = answerFor(label, "2026-03-02T12:00");
@@ -873,8 +884,8 @@ describe("за что продукт ручается", () => {
   });
 
   // py: test_api::test_the_engine_note_reaches_the_screen_as_a_sentence_not_a_token
-  it("заметка движка доходит до экрана предложением, а не токеном", () => {
-    // `037`: на странице стояло `wayfinding_sign_permits_nothing`.
+  it("lets the engine's note reach the screen as a sentence, not a token", () => {
+    // `037`: the page carried the bare token instead.
     const d = answerFor("037-hanvisning-p-med-pil");
     expect(d.note.token).toBe("wayfinding_sign_permits_nothing");
     expect(d.note.text.startsWith("This sign points the way")).toBe(true);
@@ -882,19 +893,19 @@ describe("за что продукт ручается", () => {
   });
 
   // py: test_api::test_every_note_the_engine_can_produce_has_a_caption
-  it("у каждой заметки движка есть подпись", () => {
+  it("gives every note the engine can produce a caption", () => {
     const src = read("web/src/lib/engine.ts");
     const tokens = new Set([...src.matchAll(/note: "([a-z_]+)"/g)].map((m) => m[1]));
-    expect(tokens.size, "заметок в движке не нашлось").toBeGreaterThan(0);
+    expect(tokens.size, "no notes were found in the engine").toBeGreaterThan(0);
     expect([...tokens].filter((t) => !(t in NOTE_TEXT))).toEqual([]);
   });
 });
 
-describe("вёрстка не сочиняет слов", () => {
+describe("the markup invents no words", () => {
   const timeline = () => read("web/src/components/PeriodTimeline.tsx");
 
   // py: test_api::test_the_circle_is_not_repeated_once_per_window
-  it("круг стоящих не повторяется по разу на окно", () => {
+  it("never repeats the set of who may park once per window", () => {
     const page = read("web/src/components/WhoCanPark.tsx");
     expect(page).toContain("distinctCircles(");
     const rule = read("web/src/lib/circles.ts");
@@ -903,18 +914,18 @@ describe("вёрстка не сочиняет слов", () => {
   });
 
   // py: test_api::test_the_clock_on_screen_is_the_clock_on_the_sign
-  it("часы на экране — часы со знака", () => {
+  it("makes the clock on screen the clock on the sign", () => {
     const fmt = read("web/src/lib/when.ts");
     expect(fmt).toContain("hour12: false");
     expect(fmt).toContain('hourCycle: "h23"');
     expect(fmt).toContain("toLocaleString(LOCALE");
     expect(fmt).not.toContain("undefined");
     expect(timeline()).toContain('from "../lib/when"');
-    expect(timeline(), "формат обязан жить в одном месте").not.toContain("toLocaleString");
+    expect(timeline(), "the format must live in one place").not.toContain("toLocaleString");
   });
 
   // py: test_api::test_the_scale_stays_continuous_when_a_node_grows
-  it("шкала остаётся непрерывной, когда узел растёт", () => {
+  it("keeps the timeline continuous when a node grows", () => {
     const page = timeline();
     expect(page).toContain("function Rail(");
     expect(page.split("<Rail p=").length - 1).toBeGreaterThanOrEqual(4);
@@ -922,10 +933,11 @@ describe("вёрстка не сочиняет слов", () => {
     const dayNote = page.split("const DAY_NOTE =")[1].split(";")[0];
     expect(dayNote).toContain("font-semibold");
     expect(dayNote).toContain("text-ink-2");
-    // Цвета смысла сюда не идут: красный на этой шкале уже значит «стоять нельзя»,
-    // а класс дня — пояснение, а не правило. Запрет назван именами ТОКЕНОВ: прежние
-    // «red» и «amber» после перехода на токены не встречаются в файле вовсе,
-    // и проверка на них стала бы пустой, не перестав быть зелёной.
+    // The colours of meaning do not belong here: red on this timeline already means
+    // "you may not stand", and the class of the day is an explanation rather than a
+    // rule. The prohibition is named by TOKEN names: the former palette words no
+    // longer occur in the file at all, and a check on them would have become empty
+    // without ceasing to be green.
     for (const meaning of ["text-deny", "text-fee", "text-free"]) {
       expect(dayNote, meaning).not.toContain(meaning);
     }
@@ -933,20 +945,20 @@ describe("вёрстка не сочиняет слов", () => {
   });
 
   // py: test_api::test_the_window_never_claims_to_be_the_driver_s_plan
-  it("окно не выдаёт себя за план водителя", () => {
+  it("never lets the window pass itself off as the driver's plan", () => {
     const page = timeline();
     expect(page).toContain('title="Window starts"');
     expect(page).toContain('title="Window ends"');
     expect(page).toContain("the sign carries on");
     expect(page).toContain("more windows to follow");
-    expect(page, "длительность названа пределом, а не планом").toContain("max");
+    expect(page, "the length is named as a limit, not as a plan").toContain("max");
     for (const gone of ['title="Park start"', 'title="Park end"', "end of this stay"]) {
       expect(page, gone).not.toContain(gone);
     }
   });
 
   // py: test_api::test_a_ban_at_the_selected_time_is_shown_before_the_window
-  it("запрет в начале показан ДО окна", () => {
+  it("shows a prohibition at the start BEFORE the window", () => {
     const page = timeline();
     const rule = read("web/src/lib/period.ts");
     expect(page).toContain('title="Your selected start time"');
@@ -959,9 +971,9 @@ describe("вёрстка не сочиняет слов", () => {
   });
 });
 
-describe("даты называются так, как их называет табличка", () => {
+describe("dates are named the way the plate names them", () => {
   // py: test_api::test_dates_are_stated_as_the_plate_states_them
-  it("исключение остаётся исключением", () => {
+  it("keeps an exception an exception", () => {
     const phrase = timePhrase({ time_windows: [{ from: "00:00", to: "06:00",
       day_class: "named_weekday", named_weekday: "friday",
       dates: { mode: "except", ranges: [{ from: "07-01", to: "07-31" }] } }] });
@@ -971,7 +983,7 @@ describe("даты называются так, как их называет т�
   });
 
   // py: test_api::test_single_excluded_days_are_named_as_days
-  it("отдельные исключённые дни названы днями", () => {
+  it("names single excluded days as days", () => {
     const phrase = timePhrase({ time_windows: [{ from: "00:00", to: "06:00",
       day_class: "named_weekday", named_weekday: "friday",
       dates: { mode: "except", ranges: [{ from: "06-15", to: "06-15" },
@@ -980,7 +992,7 @@ describe("даты называются так, как их называет т�
   });
 
   // py: test_api::test_a_season_keeps_its_day_precision
-  it("сезон сохраняет точность до дня", () => {
+  it("keeps a season precise to the day", () => {
     const phrase = timePhrase({ time_windows: [{ from: "12:00", to: "15:00",
       day_class: "named_weekday", named_weekday: "tuesday",
       dates: { mode: "only", ranges: [{ from: "11-01", to: "05-15" }] } }] });
@@ -988,16 +1000,16 @@ describe("даты называются так, как их называет т�
   });
 
   // py: test_api::test_a_whole_month_is_named_by_its_month
-  it("целый месяц называется месяцем", () => {
+  it("names a whole month by its month", () => {
     expect(rangeName({ from: "07-01", to: "07-31" })).toBe("July");
     expect(rangeName({ from: "06-15", to: "06-15" })).toBe("15 June");
     expect(rangeName({ from: "11-01", to: "05-15" })).toBe("1 November to 15 May");
   });
 });
 
-describe("справочник как источник слов", () => {
+describe("the reference as the source of the words", () => {
   // py: test_api::test_every_prohibiting_main_sign_has_a_wording_for_the_timed_case
-  it("у каждого запрещающего знака есть формулировка для случая с часами", () => {
+  it("gives every prohibiting sign a wording for the case with hours", () => {
     const prohibiting = allEntries()
       .filter((e) => e.key.startsWith("main-") && e.key.includes("prohibition"))
       .map((e) => e.key);
