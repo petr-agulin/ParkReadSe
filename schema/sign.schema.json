@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "sign.schema.json",
-  "title": "Извлечённая структура парковочного знака",
-  "description": "Контракт между vision-моделью и детерминированным кодом. Модель заполняет ТОЛЬКО эти поля: закрытый список, additionalProperties запрещены везде. Всё, что модель хотела бы сказать помимо схемы, попадает в notes и в вычисления не входит.",
+  "title": "The extracted structure of a parking sign",
+  "description": "The contract between the vision model and the deterministic code. The model fills in ONLY these fields: a closed list, with additionalProperties forbidden everywhere. Anything the model would like to say beyond the schema goes into notes and does not enter the computation.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -17,7 +17,7 @@
       "const": 1
     },
     "main_sign": {
-      "description": "Верхняя панель стопки. НЕ входит в panels: на проверке модели она дублировала P первой табличкой, поэтому валидация обязана отбрасывать панель, всё содержимое которой — пиктограмма основного знака.",
+      "description": "The top panel of the stack. NOT part of panels: in a probe the model duplicated the P as a first plate, so validation must discard a panel whose entire content is the main sign's pictogram.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -28,7 +28,7 @@
       ],
       "properties": {
         "type": {
-          "description": "wayfinding_* стоянки не разрешают вовсе — это указатели направления, и путать их с разрешающим знаком нельзя.",
+          "description": "wayfinding_* permit no parking at all - they are direction signs, and must not be confused with a sign that permits parking.",
           "enum": [
             "parking",
             "prohibition_parking",
@@ -42,7 +42,7 @@
           "$ref": "#/$defs/color"
         },
         "form": {
-          "description": "zone — начало зоны (жёлтый квадрат с круглым знаком внутри). Правило читается так же, как у обычного знака; протяжённость зоны продукт не вычисляет.",
+          "description": "zone marks the start of a zone (a yellow square with a round sign inside). The rule reads the same as on an ordinary sign; the product does not compute how far the zone extends.",
           "enum": [
             "regular",
             "zone",
@@ -55,19 +55,19 @@
       }
     },
     "panels": {
-      "description": "Панели НИЖЕ основного знака, строго в порядке сверху вниз. Порядок значим: от него зависит правило.",
+      "description": "The panels BELOW the main sign, strictly in top-to-bottom order. The order matters: the rule depends on it.",
       "type": "array",
       "items": {
         "$ref": "#/$defs/panel"
       }
     },
     "panel_count": {
-      "description": "Число панелей ниже основного знака. Дублирует длину panels намеренно: расхождение — сигнал того, что модель потеряла границу, и его нельзя получить из самого списка.",
+      "description": "The number of panels below the main sign. Deliberately duplicates the length of panels: a disagreement signals that the model lost a boundary, and it cannot be derived from the list itself.",
       "type": "integer",
       "minimum": 0
     },
     "boundaries": {
-      "description": "Про границы между панелями. Модель СООБЩАЕТ здесь своё мнение, но код его не принимает на веру: на снимке 013 две таблички были слиты в одну при certain = true. Признак неопределённости собирается кодом из независимых сигналов.",
+      "description": "About the boundaries between panels. The model STATES its opinion here, but the code does not take it on trust: on photograph 013 two plates were merged into one with certain = true. Uncertainty is assembled by code from independent signals.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -78,7 +78,7 @@
           "type": "boolean"
         },
         "doubt": {
-          "description": "Между какими соседними панелями граница под вопросом. Индексы панелей.",
+          "description": "Between which adjacent panels the boundary is in doubt. Panel indices.",
           "type": "array",
           "items": {
             "type": "integer",
@@ -88,7 +88,7 @@
       }
     },
     "notes": {
-      "description": "Свободный текст модели. В движок и в формулу уверенности НЕ входит: проза не проверяется кодом. Существует, чтобы модели было куда деть наблюдение, для которого нет поля, и чтобы такие наблюдения было видно при разборе ошибок.",
+      "description": "Free text from the model. Does NOT enter the engine or the confidence formula: prose is not checked by code. It exists so the model has somewhere to put an observation for which there is no field, and so such observations stay visible when errors are examined.",
       "type": [
         "string",
         "null"
@@ -96,7 +96,7 @@
       "maxLength": 1000
     },
     "model_confidence": {
-      "description": "Самооценка модели. Один из входов формулы уверенности этапа 4, и не решающий.",
+      "description": "The model's own estimate. One of the inputs to the confidence formula, and not the deciding one.",
       "type": [
         "number",
         "null"
@@ -107,7 +107,7 @@
   },
   "$defs": {
     "color": {
-      "description": "Цвет фона — извлекаемое поле, а не оформление. Жёлтый в Швеции носят предупреждающие и запрещающие знаки, поэтому жёлтая панель означает запрет или ограничение; синяя и белая стоят под разрешающими.",
+      "description": "Background colour is an extracted field, not decoration. In Sweden warning and prohibition signs are yellow, so a yellow panel means a prohibition or a restriction; blue and white sit under permitting signs.",
       "enum": [
         "blue",
         "yellow",
@@ -118,7 +118,7 @@
       ]
     },
     "legibility": {
-      "description": "Читаемость как поле схемы, а не как фраза в notes: формула уверенности этапа 4 работает с полями, а не с прозой.",
+      "description": "Legibility as a schema field rather than a phrase in notes: the confidence formula works with fields, not with prose.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -160,12 +160,12 @@
       ],
       "properties": {
         "index": {
-          "description": "Порядковый номер сверху вниз, начиная с 1.",
+          "description": "Position from the top, starting at 1.",
           "type": "integer",
           "minimum": 1
         },
         "kind": {
-          "description": "Что это за панель. `sign_plate` — табличка, задающая правило: только такие попадают в движок. `operator_plate` — табличка с названием оператора и телефоном: по форме законная дополнительная табличка, но правил не задаёт. `info_board` — платёжное табло с кодом зоны и рекламой приложений, дорожным знаком не является. Две последние помечаются, а не выбрасываются: на фотографии они видны, и молчаливый пропуск выглядит как потеря. В ответ пользователю они не попадают.",
+          "description": "What kind of panel this is. `sign_plate` - a plate that states a rule: only these reach the engine. `operator_plate` - a plate carrying an operator's name and telephone: in form a lawful additional plate, but it states no rule. `info_board` - a payment board with a zone code and app advertising, which is not a road sign at all. The last two are marked rather than discarded: they are visible in the photograph, and passing over them silently looks like a loss. They do not reach the user's answer.",
           "enum": [
             "sign_plate",
             "operator_plate",
@@ -173,7 +173,7 @@
           ]
         },
         "lines": {
-          "description": "Дословный текст построчно, на шведском, со скобками и дефисами как на знаке. Пустой массив, если на панели только пиктограмма.",
+          "description": "The text verbatim, line by line, in Swedish, with brackets and hyphens as on the sign. An empty array if the panel carries only a pictogram.",
           "type": "array",
           "items": {
             "type": "string"
@@ -191,12 +191,12 @@
       }
     },
     "parsed": {
-      "description": "Второй слой: то, что модель отнесла к известным категориям. Поля независимы и все необязательны — на одной панели их обычно одно-два. Смысл (ворота это, пометка или правило) присваивает КОД по справочнику, а не модель.",
+      "description": "The second layer: what the model assigned to known categories. The fields are independent and all optional - one panel usually carries one or two. Meaning (whether this is a gate, a note or a rule) is assigned by CODE from the reference, not by the model.",
       "type": "object",
       "additionalProperties": false,
       "properties": {
         "duration_limit": {
-          "description": "Максимальная длительность подряд: `2 tim`, `30 min`.",
+          "description": "The maximum length of a single stay: `2 tim`, `30 min`.",
           "type": "object",
           "additionalProperties": false,
           "required": [
@@ -217,7 +217,7 @@
           }
         },
         "time_windows": {
-          "description": "Окна на панели. Их может быть несколько с разными классами дня: `8-18` и `(8-15)` на одной табличке — это два окна.",
+          "description": "Windows on the panel. There may be several with different day classes: `8-18` and `(8-15)` on one plate are two windows.",
           "type": "array",
           "items": {
             "type": "object",
@@ -235,7 +235,7 @@
                 "$ref": "#/$defs/clock"
               },
               "day_class": {
-                "description": "unspecified — дни не указаны; all_days — явный токен `alla dagar`; weekday/eve/red — класс по оформлению числа; named_weekday — назван день недели. unspecified и all_days РАЗНЫЕ значения: на их различии стоит вычисление дополнения.",
+                "description": "unspecified - no days are stated; all_days - the explicit token `alla dagar`; weekday/eve/red - the class given by how the number is set; named_weekday - a weekday is named. unspecified and all_days are DIFFERENT values: computing the complement rests on that difference.",
                 "enum": [
                   "unspecified",
                   "all_days",
@@ -246,7 +246,7 @@
                 ]
               },
               "named_weekday": {
-                "description": "Заполняется только при day_class = named_weekday. Это ЛИТЕРАЛ: календарь праздников к нему не применяется — запрет `Tisdag 18-24` действует и в праздничный вторник.",
+                "description": "Filled in only when day_class = named_weekday. This is a LITERAL: the holiday calendar does not apply to it - a `Tisdag 18-24` prohibition holds on a Tuesday that is a holiday.",
                 "enum": [
                   "monday",
                   "tuesday",
@@ -258,14 +258,14 @@
                 ]
               },
               "week_parity": {
-                "description": "Чётность номера недели ISO: `jämna veckor` — чётные, `udda veckor` — нечётные. Так в Швеции размечают уборку улиц: запрет действует не каждую неделю, а через одну. Без этого поля продукт считает запрет действующим ВСЕГДА и завышает строгость; хуже — на разрешающем окне он завысил бы разрешение.",
+                "description": "The parity of the ISO week number: `jamna veckor` even, `udda veckor` odd. This is how street cleaning is marked in Sweden: the prohibition applies every other week rather than every week. Without this field the product treats the prohibition as always in force and overstates strictness; worse, on a permitting window it would overstate permission.",
                 "enum": [
                   "even",
                   "odd"
                 ]
               },
               "dates": {
-                "description": "Даты, ограничивающие окно. `mode: only` — окно действует ТОЛЬКО в этих промежутках; `mode: except` — действует всегда, КРОМЕ них. Промежуток задаётся днём и месяцем без года (`MM-DD`) и может перехлёстывать конец года: `11-01` … `05-15` — это зима. Один день записывается промежутком, у которого начало равно концу.\n\nТак на табличках и пишут: `Gäller ej 1 juli - 31 juli` — это `except` с промежутком в июль, `1 nov-15 maj` — это `only` с зимним промежутком, а `Gäller ej 15/6 15/8` — `except` с двумя промежутками по одному дню. Раньше здесь были номера целых месяцев, и середина месяца в них не выражалась вовсе.",
+                "description": "Dates bounding the window. `mode: only` - the window applies ONLY within these ranges; `mode: except` - it applies always EXCEPT within them. A range is given as a day and month without a year (`MM-DD`) and may straddle the end of the year: `11-01` ... `05-15` is winter. A single day is written as a range whose start equals its end.\n\nThis is how the plates are written: `Galler ej 1 juli - 31 juli` is `except` with a range across July, `1 nov-15 maj` is `only` with a winter range, and `Galler ej 15/6 15/8` is `except` with two single-day ranges.",
                 "type": "object",
                 "additionalProperties": false,
                 "required": [
@@ -307,28 +307,28 @@
           }
         },
         "fee": {
-          "description": "На панели заявлена плата (`Avgift`).",
+          "description": "A fee is stated on the panel (`Avgift`).",
           "type": "boolean"
         },
         "payment_method": {
-          "description": "Что нужно **предъявить**, чтобы стоянка была законной: билет или парковочный диск. Это условие стоянки, а не способ оплаты. Канал оплаты (приложение, SMS, автомат) в область продукта не входит: на вопрос «можно ли здесь стоять и на каких условиях» он не отвечает.",
+          "description": "What must be **shown** for the stay to be lawful: a ticket or a parking disc. This is a condition of parking, not a means of payment. The payment channel (app, SMS, machine) is out of scope: it answers no part of whether one may park here and on what terms.",
           "enum": [
             "ticket",
             "parking_disc"
           ]
         },
         "permit_required": {
-          "description": "Нужно особое разрешение (`Särskilt P-tillstånd erfordras`).",
+          "description": "A special permit is required (`Sarskilt P-tillstand erfordras`).",
           "type": "boolean"
         },
         "scope_shift": {
-          "description": "Токен сдвига охвата: `Övrig tid` и подобные. Означает, что дальнейшее относится к дополнению объявленного окна. Неопознанный токен сдвига — причина отказа: без него неизвестно, к какому времени относятся следующие строки.",
+          "description": "A scope-shift token: `Ovrig tid` and the like. It means that what follows refers to the complement of the declared window. An unrecognised shift token is grounds for refusal: without it there is no telling what time the following lines refer to.",
           "enum": [
             "remaining_time"
           ]
         },
         "eligibility": {
-          "description": "Кому знак отводит места. Это ПОДПИСЬ к режиму, а не проверка: продукт не знает, кто перед знаком, и никогда не решает, относится ли к категории читатель.",
+          "description": "Who the sign designates the spaces for. This is a CAPTION to the regime, not a check: the product does not know who is standing at the sign, and never decides whether the reader belongs to the category.",
           "enum": [
             "residents",
             "visitors",
@@ -339,7 +339,7 @@
           ]
         },
         "vehicle_class": {
-          "description": "Появляется, только когда знак СУЖАЕТ круг. Отсутствие поля означает, что круг не сужен: одинокий P разрешает стоянку всем зарегистрированным моторным транспортным средствам, и подставлять сюда легковой автомобиль нельзя.",
+          "description": "Appears only where the sign NARROWS the range. The absence of the field means the range is not narrowed: a lone P permits parking for every registered motor vehicle, and a car must not be substituted here.",
           "enum": [
             "motorcycle",
             "car_only",
@@ -350,7 +350,7 @@
           ]
         },
         "arrow": {
-          "description": "Стрелка протяжённости: на какой участок относительно знака распространяется указание над ней. Отдельной «граничной» семантики нет — стрелка вниз означает, что участок кончается у знака.",
+          "description": "The extent arrow: which stretch relative to the sign the instruction above it applies to. There is no separate boundary meaning - an arrow pointing down means the stretch ends at the sign.",
           "enum": [
             "up",
             "down",
@@ -361,12 +361,12 @@
           ]
         },
         "place_count": {
-          "description": "Число мест (`2 platser`). Это количество, а не длительность: ближайший сосед по написанию — `2 tim`.",
+          "description": "A number of spaces (`2 platser`). This is a count, not a duration: its nearest neighbour in writing is `2 tim`.",
           "type": "integer",
           "minimum": 1
         },
         "stretch_metres": {
-          "description": "Отрезок, на котором действует знак (`0-25 m`).",
+          "description": "The stretch over which the sign applies (`0-25 m`).",
           "type": "object",
           "additionalProperties": false,
           "required": [
@@ -385,18 +385,18 @@
           }
         },
         "placement": {
-          "description": "Требование к постановке: только на размеченном месте, либо способ расстановки, показанный пиктограммой.",
+          "description": "A requirement about how to stand: only within a marked bay, or the arrangement shown by a pictogram.",
           "enum": [
             "marked_bay_only",
             "as_shown"
           ]
         },
         "prohibition": {
-          "description": "На панели символ запрета. Запрет в своём окне ПЕРЕКРЫВАЕТ разрешение, а не складывается с ним наравне.",
+          "description": "A prohibition symbol on the panel. Within its own window a prohibition OVERRIDES permission rather than being weighed equally with it.",
           "type": "boolean"
         },
         "pictogram": {
-          "description": "Пиктограмма на панели, если она есть. Панель может нести указание вообще без текста.",
+          "description": "The pictogram on the panel, if there is one. A panel may carry an instruction with no text at all.",
           "enum": [
             "parking",
             "wheelchair",
@@ -414,7 +414,7 @@
           ]
         },
         "operator": {
-          "description": "Информационная табличка оператора: название и телефон. Правил не задаёт, в движок не входит и уверенность не снижает.",
+          "description": "An operator's information plate: name and telephone. States no rule, does not enter the engine, and does not lower the confidence.",
           "type": "object",
           "additionalProperties": false,
           "properties": {
@@ -430,28 +430,28 @@
           }
         },
         "tariff_code": {
-          "description": "Номер тарифа (`Taxa 13`). Задаётся муниципалитетом, на разбор не влияет: показывается дословно и уверенность не снижает.",
+          "description": "A tariff number (`Taxa 13`). Set by the municipality and does not affect the reading: it is shown verbatim and does not lower the confidence.",
           "type": "string"
         },
         "area_code": {
-          "description": "Код зоны для оплаты через приложение (`Områdeskod 31370`).",
+          "description": "The zone code for paying through an app (`Omradeskod 31370`).",
           "type": "string"
         },
         "uninterpreted": {
-          "description": "Строки, которые модель прочитала, но ни к какой категории не отнесла. Показываются пользователю дословно и в вычисления не входят.",
+          "description": "Lines the model read but assigned to no category. Shown to the user verbatim and not part of the computation.",
           "type": "array",
           "items": {
             "type": "string"
           }
         },
         "permits_parking": {
-          "description": "Табличка сама показывает знак стоянки (`P Avgift`, `P Förhyrda platser`) и тем самым восстанавливает разрешение в своём охвате. Нужна там, где основной знак запрещающий: снимок 019 — запрет 7-18, а «övrig tid» снова разрешает стоянку за плату. Без этого поля запрет распространялся бы и на дополнение.",
+          "description": "The plate itself shows a parking sign (`P Avgift`, `P Forhyrda platser`) and thereby restores permission within its own scope. Needed where the main sign is a prohibition: photograph 019 carries a 7-18 prohibition, and `ovrig tid` permits parking again for a fee. Without this field the prohibition would extend to the complement as well.",
           "type": "boolean"
         }
       }
     },
     "clock": {
-      "description": "Час в формате HH:MM, 24-часовой. Модель нормализует `7-17` и `07-17` одинаково.",
+      "description": "An hour as HH:MM, 24-hour. The model normalises `7-17` and `07-17` alike.",
       "type": "string",
       "pattern": "^([01][0-9]|2[0-4]):[0-5][0-9]$"
     }

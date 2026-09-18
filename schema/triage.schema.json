@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "triage.schema.json",
-  "title": "Ответ стадии отсева",
-  "description": "Стадия 0 конвейера. Один дешёвый вызов модели, отвечающий на единственный вопрос: парковочный ли это знак. Модель возвращает МЕТКУ, а не решение: продолжать конвейер или нет, решает код.",
+  "title": "The answer of the triage stage",
+  "description": "Stage 0 of the pipeline. One cheap model call answering a single question: is this a parking sign. The model returns a LABEL, not a decision: whether the pipeline continues is decided by code.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -15,7 +15,7 @@
       "const": 1
     },
     "category": {
-      "description": "Единственное поле, влияющее на ход конвейера. Порог смещён в сторону пропуска: сомнительное помечается parking_sign и уходит на разбор, потому что отсечь настоящий знак дороже, чем потратить лишний вызов на мусор.",
+      "description": "The only field that affects the course of the pipeline. The threshold leans towards letting things through: anything doubtful is labelled parking_sign and goes on to be read, because discarding a real sign costs more than spending one extra call on rubbish.",
       "enum": [
         "parking_sign",
         "other_road_sign",
@@ -23,12 +23,12 @@
       ]
     },
     "what_i_see": {
-      "description": "Одна короткая фраза о том, что на снимке. Нужна только для ответа пользователю, когда отсев остановил разбор. В вычисления не входит.",
+      "description": "One short phrase about what is in the photograph. Needed only for the answer shown to the user when triage stopped the reading. Does not enter the computation.",
       "type": "string",
       "maxLength": 200
     },
     "model_confidence": {
-      "description": "Самооценка модели. Хранится ради замера на этапе 5 и НЕ является основанием ни для одного решения: на снимке 013 модель сообщила о полной уверенности, потеряв границу между табличками.",
+      "description": "The model's own estimate. Kept for the measurement and grounds for no decision at all: on photograph 013 the model reported full certainty while losing the boundary between two plates.",
       "type": [
         "number",
         "null"
@@ -37,7 +37,7 @@
       "maximum": 1
     },
     "panels_below_main_sign": {
-      "description": "Сколько табличек ниже основного знака ЗАДАЮТ ПРАВИЛО — часы, длительность, плата, круг стоящих, стрелка, число мест. Таблички оператора и платёжные табло не считаются. Спрашивается здесь намеренно: это независимый взгляд на ту же фотографию, другой вызов и другой промпт. Раньше просили считать всё подряд — замер показал, что именно на «всём подряд» счёт и разваливается: табло это стопка наклеек без внятных границ, и число панелей на ней модель называет наугад. Теперь обе стороны считают одно и то же.",
+      "description": "How many plates below the main sign STATE A RULE - hours, duration, fee, who may park, an arrow, a number of spaces. Operator plates and payment boards do not count. It is asked here deliberately: this is an independent look at the same photograph, on a different call with a different prompt. Counting everything was tried, and the measurement showed that counting everything is exactly where the count falls apart: a payment board is a stack of stickers with no clear boundaries, and the model names their number at random. Now both sides count the same thing.",
       "type": [
         "integer",
         "null"
