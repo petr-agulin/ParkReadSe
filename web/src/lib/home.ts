@@ -71,6 +71,13 @@ export const ASSURANCES = [
   "Only the framed part is sent",
 ];
 
+/** The non-breaking space, named rather than pasted.
+ *
+ *  As a literal character it is invisible in the source, and a transcription that
+ *  turns it into an ordinary space changes behaviour while looking identical. That
+ *  happened once here, in the test asserting it. Named, it cannot. */
+const NBSP = String.fromCharCode(0xA0);
+
 export type Chip = { label: string; canReset: boolean };
 
 /**
@@ -91,7 +98,7 @@ export function momentChip(moment: string): Chip {
   // The shortening is now done by `when` itself, here and on the reading alike.
   // There is no reason to keep a second dictionary beside it; what remains here is
   // only the non-breaking space.
-  const label = chosen ? when(moment).replace(/\bat (?=\d)/, "at ") : "Now";
+  const label = chosen ? when(moment).replace(/\bat (?=\d)/, `at${NBSP}`) : "Now";
   return { label, canReset: chosen };
 }
 

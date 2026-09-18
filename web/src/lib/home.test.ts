@@ -51,11 +51,12 @@ describe("the moment chip", () => {
     // time fell below on its own. A non-breaking space leaves the browser one
     // sensible place to break - before "at".
     const label = momentChip("2026-09-17T02:01").label;
-    // Written as an escape on purpose. A pasted non-breaking space is invisible in
-    // the source, and transcribing it as an ordinary one leaves this assertion
-    // passing against the spaces between the other words - green, and proving
-    // nothing. That happened here once.
-    expect(label).toContain(" ");
+    // The character is NAMED rather than pasted, and deliberately so. Written as a
+    // literal it is invisible in the source: transcribing this file once turned it
+    // into an ordinary space, and since the label is full of ordinary spaces the
+    // assertion went on passing while proving nothing.
+    const nbsp = String.fromCharCode(0xA0);
+    expect(label).toContain(nbsp);
     // No ordinary space is left between "at" and the digits: that was the place it
     // broke.
     expect(label).not.toMatch(/at (?=\d)/);
