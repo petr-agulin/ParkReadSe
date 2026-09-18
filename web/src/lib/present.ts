@@ -1,16 +1,17 @@
-// Стадия 4 конвейера: разбор в форму, пригодную для показа. Порт `parkread/present.py`.
+// Stage 4 of the pipeline: laying the reading out in a form fit to be shown. A port
+// of `parkread/present.py`.
 //
-// Здесь НЕ СЧИТАЮТ ПРАВИЛА — всё уже посчитано движком и оценкой полноты; здесь их
-// раскладывают по блокам экрана.
+// NO RULES ARE COMPUTED HERE - the engine and the completeness grading have already
+// done that; here their results are sorted into the blocks of the screen.
 //
-// **Формулировки берутся из справочника, а не сочиняются.** Ключ вроде `avgift`
-// заменяется готовой строкой записи. Ключ, которого в справочнике нет, отдаётся
-// как есть — по принципу «чего нет в белом списке, показывается дословно
-// и не интерпретируется».
+// **The wording is taken from the reference, not invented.** A key such as `avgift`
+// is replaced by the ready-made string of its entry. A key the reference does not
+// have is passed through as it is - by the principle that whatever is not in the
+// whitelist is shown verbatim and not interpreted.
 //
-// Все подписи о смысле знака живут здесь, а не во вёрстке: фронтенд не сочиняет
-// ни одной фразы, поэтому запрещённая формулировка ловится одним тестом и не может
-// просочиться через разметку.
+// Every caption about the meaning of a sign lives here rather than in the markup:
+// the front end invents not one phrase, so a forbidden wording is caught by a single
+// test and cannot seep through the layout.
 
 import { Calendar, EVE, RED } from "./calendar";
 import { isoDate, isoNaive, type Civil, type Naive, addDays } from "./civil";
@@ -27,14 +28,14 @@ export const STATE_TEXT: Record<string, string> = {
   allowed: "The sign permits parking during this period",
   prohibited: "The sign is a no-parking sign for this period",
   uncertain: "The sign's conditions for this period could not be read in full",
-  // Прочитали всё и знаем, что знак об этом времени не говорит: его запрет
-  // ограничен окном, а разрешения он не даёт.
+  // Everything was read, and we know the sign says nothing about this time: its
+  // prohibition is bounded by a window, and it grants no permission.
   not_stated: "The sign's restriction does not cover this period, and the sign "
             + "states nothing else about it",
 };
 
-// Участок — внутренний токен, и показывать его человеку нельзя: «here» ничего
-// не сообщает тому, кто стоит перед знаком.
+// A stretch is an internal token and must never be shown to a person: "here" tells
+// nothing to someone standing in front of the sign.
 export const EXTENT_SHORT: Record<string, string> = {
   here: "Here at the sign",
   left: "To the left of the sign",
@@ -57,10 +58,10 @@ export const EXTENT_TEXT: Record<string, string> = {
                  + "both ahead of the sign and up to it",
 };
 
-// «Free parking» — особый случай. Словарь продукта эту формулировку запрещает:
-// она обещает бесплатность там, где может требоваться диск или билет. Там, где
-// продукт установил, что условий НЕТ ВООБЩЕ, она точнее длинной фразы — и разрешена
-// ровно в этом случае.
+// "Free parking" is a special case. The product's vocabulary forbids that wording:
+// it promises free parking where a disc or a ticket may still be required. Where the
+// product has established that there are NO conditions at all, it is more exact than
+// a long phrase - and it is permitted in exactly that case.
 export const PERIOD_HEADLINE: Record<string, string> = {
   paid: "Parking fee",
   free: "Free parking",
@@ -70,8 +71,9 @@ export const PERIOD_HEADLINE: Record<string, string> = {
   not_stated: "Nothing stated on the sign",
 };
 
-// Кому адресовано окно. Существительное берётся отсюда, а не из справочника:
-// там у записи стоит «Buses only» — утверждение о знаке, а здесь нужно название.
+// Who a window is addressed to. The noun comes from here rather than from the
+// reference: there the entry reads "Buses only" - a statement about the sign -
+// whereas here a name is needed.
 export const AUDIENCE_NOUN: Record<string, string> = {
   "pictogram-bus": "buses",
   "pictogram-truck": "lorries",
@@ -93,7 +95,7 @@ export const STAY_END_TEXT: Record<string, string> = {
   "24h_default": "This stay must end here — general 24-hour rule, not written on the sign",
 };
 
-// Порог откалиброван замером на наборе снимков, а не выбран.
+// The threshold was calibrated by measurement over the set of photographs, not chosen.
 export const GOOD_ENOUGH = 0.9;
 
 export function toneOf(category: string, confidence: number): string {
@@ -109,8 +111,8 @@ export const CATEGORY_TEXT: Record<string, string> = {
   not_a_parking_sign: "This photograph does not show a parking sign",
 };
 
-// Формулировка объясняет ПОСЛЕДСТВИЕ, а не устройство: пользователь не знает,
-// что разбор идёт двумя вызовами модели, и знать не должен.
+// The wording explains the CONSEQUENCE, not the machinery: the user does not know
+// the reading takes two calls to the model, and does not need to.
 export const REASON_TEXT: Record<string, string> = {
   main_sign_unknown: "The sign at the top of the pole could not be identified",
   main_sign_unreadable: "The sign at the top of the pole could not be read",
@@ -148,7 +150,8 @@ export const UNCERTAINTY_TEXT: Record<string, string> = {
 
 export type Explained = { token: string; text: string };
 
-/** Токен → пара «токен и текст». Токен нужен замеру, текст — человеку. */
+/** A token becomes a pair of token and text. The measurement needs the token, the
+ *  person needs the text. */
 export function explain(token: string, table: Record<string, string>): Explained {
   if (token.startsWith("uninterpreted_plates:")) {
     const which = token.slice("uninterpreted_plates:".length);
@@ -161,12 +164,13 @@ export function explain(token: string, table: Record<string, string>): Explained
     const which = token.slice("unread_panels:".length);
     return { token, text: `Plates ${which} on the sign could not be read` };
   }
-  // Подписи нет — на экран не выходит НИЧЕГО: служебное слово на странице видел бы
-  // каждый, а пропажу строки ловит тест.
+  // With no caption, NOTHING reaches the screen: an internal word on the page would
+  // be seen by everyone, and a test catches the missing line.
   return { token, text: table[token] ?? "" };
 }
 
-// Подписи к непонятой табличке. Видов три, и путать их нельзя.
+// Captions for a plate that was not understood. There are three kinds, and they must
+// not be confused.
 const NOT_INTERPRETED: Record<string, string> = {
   shown_above: "Not interpreted — shown above exactly as printed",
   symbol: "A symbol here that the service does not know — it may narrow "
@@ -184,7 +188,7 @@ export function notInterpreted(keys: string[], leftovers: string[] | null): stri
 
 export type Term = { key: string; text: string; known: boolean };
 
-/** Ключ справочника → готовая для показа пара. Неизвестный ключ не выдумывается. */
+/** A reference key becomes a pair ready to show. An unknown key is not invented. */
 function term(key: string): Term {
   const entry = refGet(key);
   if (entry === null) return { key, text: key, known: false };
@@ -193,7 +197,8 @@ function term(key: string): Term {
 
 const EXCEPTION_PREFIX = "The sign names an exception: ";
 
-/** Короткая подпись из справочника — для мест, где длинная фраза не помещается. */
+/** The short caption from the reference - for places where the long phrase will not
+ *  fit. */
 function shortTerm(key: string, exception = false): Term {
   const entry = refGet(key);
   if (entry === null) return { key, text: key, known: false };
@@ -204,8 +209,9 @@ function shortTerm(key: string, exception = false): Term {
 const dateOf = (t: Naive): Civil => ({ y: t.y, m: t.m, d: t.d });
 const sameMoment = (a: Naive, b: Naive) => isoNaive(a) === isoNaive(b);
 
-/** Склеить соседние отрезки, неотличимые на экране: две одинаковые полосы подряд
- *  читаются как ошибка, а различие между ними и так сказано концом стоянки. */
+/** Join neighbouring periods that look identical on screen: two identical bands in a
+ *  row read as a fault, and what separates them is already said by the end of the
+ *  stay. */
 function joinAlike(periods: Period[]): Period[] {
   const out: Period[] = [];
   for (const p of periods) {
@@ -220,9 +226,9 @@ function joinAlike(periods: Period[]): Period[] {
   return out;
 }
 
-/** Шкала — про то, что знак о моменте ГОВОРИТ. Молчание на ней не рисуется:
- *  спрошено про молчащий момент — шкалы нет вовсе; молчание в хвосте — «Window
- *  ends» после запрета обещало окно, которого знак не даёт. */
+/** The timeline is about what the sign SAYS of a moment. Silence is not drawn on it:
+ *  ask about a silent moment and there is no timeline at all; silence in the tail
+ *  meant "Window ends" after a prohibition promised a window the sign never gave. */
 function stated(periods: Period[]): Period[] {
   if (periods.length && periods[0].state === NOT_STATED) return [];
   let out = periods;
@@ -230,8 +236,8 @@ function stated(periods: Period[]): Period[] {
   return out;
 }
 
-/** Сколько шкалы показывать: есть предел стоянки — шкала кончается им; нет —
- *  доводим до первой смены состояния включительно. */
+/** How much of the timeline to show: with a limit on the stay it ends there; without
+ *  one, it runs to the first change of state inclusive. */
 export function visible(r: Regime): Period[] {
   const periods = r.periods;
   if (!periods.length) return periods;
@@ -253,10 +259,10 @@ export function visible(r: Regime): Period[] {
   return stated(joinAlike(periods));
 }
 
-// Класс дня строкой под датой. Подпись появляется там, где день ИМЕНОВАН:
-// у праздника и у кануна перед праздником. Обычные воскресенья и субботы её
-// не получают — «Red day: Sunday» под строкой «Sunday, 13 September» повторяет
-// уже написанное.
+// The class of the day, as a line under the date. The caption appears where a day is
+// NAMED: on a holiday and on the eve before one. Ordinary Sundays and Saturdays do
+// not get it - "Red day: Sunday" under the line "Sunday, 13 September" repeats what
+// is already written.
 function holidayLabel(cal: Calendar, d: Civil): string | null {
   const sv = cal.holidayName(d);
   if (!sv) return null;
@@ -273,8 +279,8 @@ function dayNote(cal: Calendar, d: Civil): DayNote | null {
     return name ? { text: `Red day: ${name}`, kind: "red" } : null;
   }
   if (day === EVE) {
-    // «Eve of», а не «день перед красным: имя»: после двоеточия имя читалось
-    // как название СЕГОДНЯШНЕГО дня, хотя праздник — завтра.
+    // "Eve of", not "the day before a red one: name": after a colon the name read as
+    // the name of TODAY, though the holiday is tomorrow.
     const name = holidayLabel(cal, addDays(d, 1));
     return name ? { text: `Eve of ${name}`, kind: "eve" } : null;
   }
@@ -288,8 +294,8 @@ export function periodTone(p: Period): string {
   return p.conditions.includes("avgift") ? "paid" : "free";
 }
 
-/** «Free parking» — только когда условий нет вовсе, и только когда знак об этом
- *  времени высказался (снимок `049`). */
+/** "Free parking" only when there are no conditions at all, and only when the sign
+ *  has spoken about this time (photograph `049`). */
 export function headline(p: Period, tone: string): string {
   if (tone === "free" && (p.conditions.length || p.note === FEE_PERIOD_ELSEWHERE)) {
     return PERIOD_HEADLINE.free_with_conditions;
@@ -303,19 +309,22 @@ function periodView(p: Period, horizon: Naive, cal: Calendar, stayEnd: string,
   return {
     start: isoNaive(p.start),
     end: isoNaive(p.end),
-    // Класс дня у обоих концов отрезка: узлы шкалы показывают именно их.
+    // The class of the day at both ends of the period: the nodes of the timeline
+    // show exactly those.
     start_day: dayNote(cal, dateOf(p.start)),
     end_day: dayNote(cal, dateOf(p.end)),
     state: p.state,
     state_text: STATE_TEXT[p.state] ?? p.state,
     tone,
     headline: headline(p, tone),
-    // Длительность настоящая, а не по циферблату: ночь перевода длится 23 или 25 часов.
+    // Real elapsed time, not marks on a dial: the night the clocks change lasts 23
+    // or 25 hours.
     minutes: realMinutes(p.start, p.end),
-    // Плата уже названа заголовком отрезка; ниже — то, что к ней добавляется.
+    // The fee is already named by the period's headline; below it goes what is added
+    // to it.
     notes: p.conditions.filter((c) => c !== "avgift").map(term),
-    // Период, упирающийся в конец горизонта, ничем не кончается: знак в этот
-    // момент не меняется, а дата тут была бы выдумкой продукта.
+    // A period running into the end of the horizon ends with nothing: the sign does
+    // not change at that moment, and a date there would be the product's invention.
     ends_at_horizon: isoNaive(p.end) >= isoNaive(horizon),
     stay_end_text: stayEnd,
     stay_end_reason: reason,
@@ -327,16 +336,17 @@ function periodView(p: Period, horizon: Naive, cal: Calendar, stayEnd: string,
   };
 }
 
-// Пояснение к дырке в стопке: плата названа «в остальное время», а границу этого
-// времени задаёт табличка, обращённая к другому транспорту (снимок `049`).
+// An explanation of the hole in the stack: the fee is named for "other times", and
+// the boundary of those times is set by a plate addressed to a different kind of
+// vehicle (photograph `049`).
 function feeElsewhereTerm(excluded: string[]): Term {
   const nouns = excluded.map((k) => AUDIENCE_NOUN[k]).filter(Boolean);
-  const кому = nouns.join(", ") || "another kind of vehicle";
+  const addressed = nouns.join(", ") || "another kind of vehicle";
   return {
     key: "fee-period-elsewhere",
     known: true,
     text: `The fee plate applies to “other times”; the period it refers `
-        + `to is written on a plate addressed to ${кому}`,
+        + `to is written on a plate addressed to ${addressed}`,
   };
 }
 
@@ -346,8 +356,9 @@ const UNKNOWN_PLATE_TERM: Term = {
   text: "One plate could not be interpreted; it may narrow who these spaces are for",
 };
 
-// Запрет С ЧАСАМИ — не то же самое, что запрет всегда (снимок `019`).
-// «Не запрещает» не равно «разрешает»: вне названных часов знак просто молчит.
+// A prohibition WITH HOURS is not the same as a prohibition always (photograph
+// `019`). "Does not prohibit" is not "permits": outside the hours it names, the sign
+// is simply silent.
 export const TIMED_PROHIBITION_TEXT: Record<string, string> = {
   "main-prohibition-parking":
     "The sign prohibits parking only during the hours it names — outside "
@@ -372,8 +383,9 @@ export const NO_WINDOW_NOTHING_STATED =
   + "parking here at other times the sign states nothing: the general rules of "
   + "the road apply, and they are not on this sign.";
 
-// Заметка о переводе часов. Даты в тексте нет намеренно: перевод может прийтись
-// и на ближайшую ночь, и на следующее воскресенье. Часы, наоборот, постоянные.
+// A note about the clocks changing. There is deliberately no date in the text: the
+// change may fall on the coming night or on the Sunday after. The hours, by
+// contrast, are fixed.
 export const CLOCK_CHANGE_TEXT: Record<string, string> = {
   back: "The clocks go back on the night shown here: at 03:00 they return to "
       + "02:00, so that night is an hour longer. The times shown already allow for it.",
@@ -387,23 +399,25 @@ function clockChange(periods: Period[]): string | null {
   return side ? CLOCK_CHANGE_TEXT[side] : null;
 }
 
-/** Есть ли смысл рисовать шкалу — или её содержание вводит в заблуждение. */
+/** Is there any point drawing a timeline - or would its content mislead? */
 function noWindow(r: Regime, circle: Term[]): string | null {
-  // Знак молчит о СПРОШЕННОМ моменте — этого довольно: между «сейчас» и запретом
-  // он не разрешает ничего, и рисовать там окно значит обещать своё.
+  // The sign is silent about the moment ASKED - that is enough: between "now" and
+  // the prohibition it permits nothing, and drawing a window there would be
+  // promising something of our own.
   if (r.periods.length && r.periods[0].state === NOT_STATED) {
     return NO_WINDOW_NOTHING_STATED;
   }
-  // Снимок `020`: «Free parking, 28 h max» под знаком арендованных мест — число
-  // целиком из правила 24 часов, а не со знака.
+  // Photograph `020`: "Free parking, 28 h max" under a sign for rented spaces - the
+  // number comes entirely from the 24-hour rule, not from the sign.
   if (!circle.some((t) => t.key === RENTED)) return null;
   if (r.periods.some((p) => p.state !== ALLOWED)) return null;
   if (r.durationSource !== "24h_default") return null;
   return NO_WINDOW_RENTED;
 }
 
-/** Подпись основного знака: запрет на весь срок и запрет с 7 до 18 — разные
- *  утверждения, и второе без оговорки читается как первое. */
+/** The caption of the main sign: a prohibition for the whole time and a prohibition
+ *  from 7 to 18 are different statements, and the second without its caveat reads as
+ *  the first. */
 function mainTerm(r: Regime, mainKey: string): Term {
   const base = term(mainKey);
   const timed = TIMED_PROHIBITION_TEXT[mainKey];
@@ -411,7 +425,8 @@ function mainTerm(r: Regime, mainKey: string): Term {
   return base;
 }
 
-/** Таблички, которые СУЖАЮТ круг стоящих. Дополняющие (`Boende`) сюда не входят. */
+/** Plates that NARROW who may park. Ones that merely add (`Boende`) do not belong
+ *  here. */
 function narrowing(r: Regime): string[] {
   return r.eligibility.filter((k) => {
     const e = refGet(k);
@@ -431,18 +446,19 @@ function audienceShort(r: Regime): string | null {
   return null;
 }
 
-/** Круг стоящих: сначала общее правило знака, если его никто не сузил.
+/** Who may park: the sign's general rule first, if nobody narrowed it.
  *
- *  Непонятая табличка обязана быть названа здесь — правило асимметрии: при неполном
- *  разборе можно сузить, но не расширить. */
+ *  A plate that was not understood must be named here - the asymmetry rule: on an
+ *  incomplete reading one may narrow, but not widen. */
 export function whoCanPark(r: Regime, mainKey: string | null, unknownPlates: boolean,
                     privateLand: boolean): Term[] {
   const narrow = narrowing(r);
   const extra = r.eligibility.filter((k) => !narrow.includes(k));
 
   let caveat: Term[] = unknownPlates ? [{ ...UNKNOWN_PLATE_TERM }] : [];
-  // Оговорка про частную землю идёт ПОСЛЕ общего правила знака, а не вместо него:
-  // знак `P` и правда разрешает стоянку, но условий владельца на столбе нет.
+  // The caveat about private land comes AFTER the sign's general rule, not instead
+  // of it: a `P` sign really does permit parking, but the owner's conditions are not
+  // on the pole.
   if (privateLand) caveat = [...caveat, term(PRIVATE_LAND)];
   if (narrow.length) return [...narrow, ...extra].map(term).concat(caveat);
   const head = mainKey ? [mainTerm(r, mainKey)] : [];
@@ -452,19 +468,21 @@ export function whoCanPark(r: Regime, mainKey: string | null, unknownPlates: boo
 export function regimeView(r: Regime, horizon: Naive, cal: Calendar,
                            mainKey: string | null = null, unknownPlates = false,
                            privateLand = false, certain = true): Record<string, any> {
-  // Под синим `P` табличка сужает разрешение; под запретом — вводит исключение.
-  const запрет = Boolean(mainKey) && (mainKey as string).includes("prohibition");
-  const нужное = запрет ? PROHIBITED : ALLOWED;
+  // Under a blue `P` a plate narrows the permission; under a prohibition it
+  // introduces an exception.
+  const prohibiting = Boolean(mainKey) && (mainKey as string).includes("prohibition");
+  const wantedState = prohibiting ? PROHIBITED : ALLOWED;
 
   const shown = visible(r);
-  // Указание, расписанное ПО ЧАСАМ, кругом окна не является: там оно уже сказано,
-  // и сказано точнее — с часами, к которым относится (снимок `012`).
-  const поЧасам = new Set(r.periods.flatMap((p) => p.conditions));
-  let круг = narrowing(r).filter((k) => !поЧасам.has(k))
-                         .map((k) => shortTerm(k, запрет));
-  // Частная земля — не круг стоящих, а оговорка ко всему окну.
-  if (privateLand) круг = [...круг, shortTerm(PRIVATE_LAND)];
-  const примечания = r.eligibility
+  // An instruction spelled out BY THE HOUR is not the audience of the window: there
+  // it has already been said, and said more precisely - with the hours it applies to
+  // (photograph `012`).
+  const spelledByHour = new Set(r.periods.flatMap((p) => p.conditions));
+  let windowFor = narrowing(r).filter((k) => !spelledByHour.has(k))
+                              .map((k) => shortTerm(k, prohibiting));
+  // Private land is not who may park but a caveat to the whole window.
+  if (privateLand) windowFor = [...windowFor, shortTerm(PRIVATE_LAND)];
+  const plainNotes = r.eligibility
     .filter((k) => { const e = refGet(k); return e !== null && !countsTowardsRules(e); })
     .map(term);
 
@@ -478,16 +496,16 @@ export function regimeView(r: Regime, horizon: Naive, cal: Calendar,
     audience_short: audienceShort(r),
     eligibility: r.eligibility.map(term),
     who_can_park: whoCanPark(r, mainKey, unknownPlates, privateLand),
-    notes: примечания,
-    window_for: круг,
-    no_window_text: noWindow(r, [...круг, ...примечания]),
+    notes: plainNotes,
+    window_for: windowFor,
+    no_window_text: noWindow(r, [...windowFor, ...plainNotes]),
     clock_change_text: clockChange(shown),
     place_notes: r.placeNotes.map(term),
     duration_expires_at: expiresIso,
     duration_source: r.durationSource,
     periods: shown.map((p) => {
       const last = expiresIso !== null && isoNaive(p.end) === expiresIso;
-      const aside = [...(p.state === нужное ? круг : []), ...примечания]
+      const aside = [...(p.state === wantedState ? windowFor : []), ...plainNotes]
         .filter((t) => !p.conditions.includes(t.key));
       if (p.note === FEE_PERIOD_ELSEWHERE) aside.push(feeElsewhereTerm(r.audienceExcluded));
       return periodView(p, horizon, cal,
@@ -498,10 +516,11 @@ export function regimeView(r: Regime, horizon: Naive, cal: Calendar,
   };
 }
 
-// --- блок «что сервис увидел» ----------------------------------------------
+// --- the block "what the service saw" ---------------------------------------
 //
-// Блок показывает не пересказ, а РАЗБОР: что именно прочитано и как это поле
-// называется. Порядок фиксирован здесь, а не собирается из словаря.
+// The block shows not a retelling but the READING: what exactly was read and what
+// that field is called. The order is fixed here rather than assembled from a
+// dictionary.
 
 const PANEL_ORDER = ["index", "kind", "background_color", "lines"];
 const PARSED_ORDER = [
@@ -511,7 +530,7 @@ const PARSED_ORDER = [
   "tariff_code", "area_code", "permits_parking", "uninterpreted",
 ];
 
-/** Значение поля одной строкой: `2 hours` читается, объект — нет. */
+/** A field's value on one line: `2 hours` reads, an object does not. */
 function fmt(value: unknown): string {
   if (typeof value === "boolean") return value ? "yes" : "no";
   if (value === null || value === undefined) return "—";
@@ -551,7 +570,7 @@ function mainSignFields(main: Record<string, unknown>): Field[] {
 export function panelFields(panel: Panel, referenceKeys: string[]): Field[] {
   const raw = panel as unknown as Record<string, unknown>;
   const rows: (Field | null)[] = PANEL_ORDER.map((k) => row(k, raw[k]));
-  // `lines` показывается всегда: пустой список здесь — факт о панели.
+  // `lines` is always shown: an empty list here is a fact about the panel.
   if (!(panel.lines ?? []).length) rows.push({ name: "lines", value: "(no text)" });
 
   const parsed = (panel.parsed ?? {}) as Record<string, unknown>;
@@ -559,17 +578,17 @@ export function panelFields(panel: Panel, referenceKeys: string[]): Field[] {
     if (key in parsed) rows.push(row(`parsed.${key}`, parsed[key]));
   }
   for (const key of Object.keys(parsed).filter((k) => !PARSED_ORDER.includes(k)).sort()) {
-    rows.push(row(`parsed.${key}`, parsed[key]));      // поле вне схемы не прячем
+    rows.push(row(`parsed.${key}`, parsed[key]));      // a field outside the schema is not hidden
   }
   rows.push(row("legibility", panel.legibility));
   rows.push(row("reference_keys", referenceKeys));
   return rows.filter((r): r is Field => r !== null);
 }
 
-// --- время одной фразой ----------------------------------------------------
+// --- time in a single phrase ------------------------------------------------
 //
-// Табличка `Torsdag 10-14 / Jämna veckor / Augusti-Juni` — ОДНО указание, и на
-// экране оно должно быть одной строкой.
+// The plate `Torsdag 10-14 / Jämna veckor / Augusti-Juni` is ONE instruction, and on
+// screen it must be one line.
 
 const MONTHS = ["", "January", "February", "March", "April", "May", "June", "July",
                 "August", "September", "October", "November", "December"];
@@ -582,7 +601,7 @@ const DAY_PHRASE: Record<string, string> = {
   unspecified: "on weekdays",
 };
 
-// Ключи справочника, которые описывают ВРЕМЯ: они уходят в общую фразу.
+// Reference keys that describe TIME: they go into the shared phrase.
 export const TIME_KEYS = new Set(["window-weekday", "window-eve", "window-red", "alla-dagar",
                            "named-weekday", "jamna-veckor", "udda-veckor", "datumintervall"]);
 
@@ -594,7 +613,7 @@ const md = (value: string): [number, number] => {
   return [Number(m), Number(d)];
 };
 
-/** Промежуток дат по-человечески: целый месяц — месяцем, один день — днём. */
+/** A range of dates in human terms: a whole month as a month, a single day as a day. */
 export function rangeName(rng: { from: string; to: string }): string {
   const [am, ad] = md(rng.from);
   const [bm, bd] = md(rng.to);
@@ -611,14 +630,14 @@ function joinNames(names: string[]): string {
   return names.slice(0, -1).join(", ") + " and " + names[names.length - 1];
 }
 
-/** Даты группы окон одной фразой — так, как написано на табличке. */
+/** The dates of a group of windows in one phrase - the way the plate writes them. */
 function datesPhrase(windows: TimeWindow[]): string {
   const dates = windows.map((w) => w.dates);
   if (dates.some((d) => d === undefined || d === null)) return "";
 
   const ranges = dates.flatMap((d) => d!.ranges ?? []);
   const modes = new Set(dates.map((d) => d!.mode));
-  if (modes.size !== 1) return "";       // разные режимы в одной группе
+  if (modes.size !== 1) return "";       // different modes within one group
   const names = ranges.map(rangeName);
 
   if ([...modes][0] === "except") return "all year except " + joinNames(names);
@@ -626,7 +645,7 @@ function datesPhrase(windows: TimeWindow[]): string {
   return "in " + joinNames(names);
 }
 
-/** Чем окна отличаются, кроме дат. */
+/** What distinguishes windows, apart from their dates. */
 const windowKey = (w: TimeWindow) =>
   [w.day_class, w.named_weekday, w.from, w.to, w.week_parity].join("|");
 
@@ -642,7 +661,7 @@ function windowPhrase(w: TimeWindow, dates: string): string {
   return out.join(", ");
 }
 
-/** Окна, отличающиеся только датами, сливаются в одно предложение. */
+/** Windows differing only in their dates merge into one sentence. */
 export function timePhrase(parsed: Parsed): string {
   const windows = (parsed.time_windows ?? []).filter((w) => w.from);
   const groups = new Map<string, TimeWindow[]>();
@@ -658,7 +677,7 @@ export function timePhrase(parsed: Parsed): string {
 type Meaning = { key: string; label: string; code: string; text: string;
                  short: string; continues: boolean };
 
-/** Ключ справочника → как табличка называется официально и что она значит. */
+/** A reference key becomes the plate's official name and what it means. */
 function meaning(key: string): Meaning {
   const e = refGet(key);
   if (e === null) {
@@ -668,8 +687,9 @@ function meaning(key: string): Meaning {
            short: e.short, continues: false };
 }
 
-/** Две записи с одним названием и кодом — одна строка на экране (`Avgift` и `Taxa 2`
- *  обе несут код T16). Смысл разный, поэтому короткие подписи склеиваются. */
+/** Two entries with the same name and code are one line on screen (`Avgift` and
+ *  `Taxa 2` both carry the code T16). Their meanings differ, so the short captions
+ *  are joined. */
 export function merge(items: Meaning[]): Meaning[] {
   const out: Meaning[] = [];
   for (const item of items) {
@@ -687,8 +707,8 @@ export function merge(items: Meaning[]): Meaning[] {
   return out;
 }
 
-/** Строки таблички в одну фразу. Шведские таблички переносят слово с дефисом:
- *  `Beskicknings-` / `fordon` — одно слово, а не два. */
+/** The lines of a plate as one phrase. Swedish plates hyphenate across a line break:
+ *  `Beskicknings-` / `fordon` is one word, not two. */
 export function joinLines(lines: string[]): string {
   let out = "";
   for (const raw of lines) {
@@ -717,8 +737,8 @@ export function panelView(panel: Panel, keys: string[]): Record<string, unknown>
     const phrase = timePhrase(parsed);
     let items = merge(keys.filter((k) => !TIME_KEYS.has(k)).map(meaning));
     if (phrase) {
-      // Фраза о времени прицепляется к тому указанию, которое она уточняет:
-      // «No parking (C35) on Thursdays between 10:00 and 14:00, in even weeks».
+      // The phrase about time attaches to the instruction it qualifies:
+      // "No parking (C35) on Thursdays between 10:00 and 14:00, in even weeks".
       if (items.length) items[0] = { ...items[0], short: phrase, continues: true };
       else items = [{ key: "time-window", label: "Hours", code: "T6",
                       text: "", short: phrase, continues: true }];
@@ -734,8 +754,8 @@ export type Sighting = {
   recognised: Recognised | null;
 };
 
-/** Блок 1: что сервис увидел. Панели показываются ВСЕ, включая те, что правил
- *  не задают: на фотографии они видны, и их отсутствие выглядит потерей. */
+/** Block 1: what the service saw. ALL panels are shown, including those that state
+ *  no rule: they are visible in the photograph, and their absence looks like a loss. */
 function whatWeSaw(s: Sighting): Record<string, unknown> {
   if (!s.doc) {
     return { main_sign: null, main_sign_fields: [], primary_sign: null, panels: [] };
@@ -770,8 +790,9 @@ function whatWeSaw(s: Sighting): Record<string, unknown> {
   };
 }
 
-/** Подпись к полноте. У `partial` причин две, и они разные: знак без единой
- *  таблички с правилом прочитан ЦЕЛИКОМ — просто читать было нечего. */
+/** The caption for completeness. `partial` has two causes, and they differ: a sign
+ *  with no rule-bearing plate at all was read IN FULL - there was simply nothing to
+ *  read. */
 function categoryText(a: Assessment): string {
   if (a.category === PARTIAL && a.reasons.length === 1
       && a.reasons[0] === "main_sign_uncorroborated") {
@@ -800,14 +821,14 @@ function sameWindow(a: Record<string, any>, b: Record<string, any>): boolean {
     && a.no_window_text === b.no_window_text;
 }
 
-/** Окно адресата показывается, только когда оно ОТЛИЧАЕТСЯ от общего. */
+/** An audience's window is shown only when it DIFFERS from the shared one. */
 export function windows(views: Record<string, any>[]): Record<string, any>[] {
-  const общее = new Map<string, Record<string, any>>();
-  for (const v of views) if (!v.audience) общее.set(v.extent, v);
+  const shared = new Map<string, Record<string, any>>();
+  for (const v of views) if (!v.audience) shared.set(v.extent, v);
 
-  const kept = views.filter((v) => !(v.audience && общее.has(v.extent)
-                                     && sameWindow(общее.get(v.extent)!, v)));
-  // Не осталось ни одного адресата на участке — общему окну подпись не нужна.
+  const kept = views.filter((v) => !(v.audience && shared.has(v.extent)
+                                     && sameWindow(shared.get(v.extent)!, v)));
+  // No audience left on the stretch - then the shared window needs no caption.
   const withAudience = new Set(kept.filter((v) => v.audience).map((v) => v.extent));
   for (const v of kept) {
     if (!v.audience && !withAudience.has(v.extent)) v.audience_short = null;
@@ -827,8 +848,9 @@ export type Analysis = {
              panels_below_main_sign: number | null } | null;
 };
 
-/** Полный ответ по снимку. Форма одна и та же во всех исходах: сначала полнота,
- *  потом то, что удалось прочитать. Отказ — не другая форма ответа. */
+/** The complete answer about a photograph. The shape is the same in every outcome:
+ *  completeness first, then whatever could be read. A refusal is not a different
+ *  shape of answer. */
 export function toJson(analysis: Analysis, moment: Naive, cal: Calendar): Record<string, any> {
   const a = analysis.assessment;
   const ev = analysis.evaluation;
@@ -852,13 +874,13 @@ export function toJson(analysis: Analysis, moment: Naive, cal: Calendar): Record
 
   if (ev !== null) {
     const mainKey = analysis.recognised ? analysis.recognised.mainSignKey : null;
-    // Непонятая табличка — свойство всего разбора, а не участка: какому именно
-    // участку она принадлежит, мы как раз и не знаем.
+    // A plate that was not understood is a property of the whole reading, not of a
+    // stretch: which stretch it belongs to is exactly what we do not know.
     const unknownPlates = a.uninterpretedPlates.length > 0;
-    // Частная земля — свойство площадки, а не участка.
+    // Private land is a property of the site, not of a stretch.
     const privateLand = analysis.recognised !== null
       && Object.values(analysis.recognised.panelKeys).some((ks) => ks.includes(PRIVATE_LAND));
-    // За что продукт может поручиться: разбор неполный — ни за один отрезок.
+    // What the product can vouch for: on an incomplete reading, not one period.
     const certain = a.category === FULL;
     body.regimes = windows(ev.regimes.map(
       (r) => regimeView(r, horizonEnd(moment), cal, mainKey, unknownPlates,
