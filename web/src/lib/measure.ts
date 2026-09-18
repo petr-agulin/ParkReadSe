@@ -1,18 +1,19 @@
-// Замер. Порт `parkread/accuracy.py`.
+// The measurement. Ported from `parkread/accuracy.py`.
 //
-// Мерятся ДВЕ РАЗНЫЕ ВЕЩИ, и путать их нельзя:
+// TWO DIFFERENT THINGS are measured, and they must not be confused:
 //
-// - **точность извлечения** — поля разбора модели против эталона разработчика;
-// - **расхождение ОТВЕТА** — что прочтёт человек, посчитанное дважды: по эталону
-//   и по разбору модели.
+// - **extraction accuracy** - the fields of the model's reading against the
+//   developer's reference reading;
+// - **disagreement of the ANSWER** - what a person would read, computed twice: from
+//   the reference reading and from the model's.
 //
-// Порог 0.9 стоит на втором. Поля расходятся у девятнадцати снимков, ответ — у трёх:
-// цвет таблички, лишний перенос строки и порядок панелей в разборе видны, а до
-// человека не доходят, и калибровать по ним значило бы настраивать оговорку на то,
-// чего пользователь не увидит.
+// The 0.9 threshold stands on the second. Fields disagree on nineteen photographs,
+// the answer on three: a plate's colour, a stray line break and the order of panels
+// are visible in the reading yet never reach the person, and calibrating on them
+// would mean tuning a caveat to something the user will not see.
 //
-// **Это инструмент разработчика, а не часть продукта.** В страницу он не попадает:
-// его никто не импортирует из приложения.
+// **This is a developer's tool, not part of the product.** It never reaches the
+// page: nothing in the application imports it.
 
 import { Calendar } from "./calendar";
 import { addMinutes, isoNaive, type Naive } from "./civil";
@@ -22,10 +23,10 @@ import type { Panel, SignDoc, TimeWindow } from "./sign";
 const plates = (doc: SignDoc): Panel[] =>
   (doc.panels ?? []).filter((p) => p.kind === "sign_plate");
 
-/** Весь текст таблички одной строкой, без регистра и лишних пробелов.
+/** All the text of a plate on one line, without case or extra spaces.
  *
- *  Перенос строк ВНУТРИ таблички последствия не имеет: строки одной таблички
- *  действуют совместно, а как они разбиты при печати, правила не меняет. */
+ *  A line break INSIDE a plate has no consequence: the lines of one plate apply
+ *  jointly, and how they were broken when printed changes no rule. */
 function text(panel: Panel): string {
   return (panel.lines ?? [])
     .filter((x) => x.trim())
@@ -34,8 +35,8 @@ function text(panel: Panel): string {
     .toLowerCase();
 }
 
-/** Чем панель отличается от соседей: нужна, чтобы мерить ПОРЯДОК отдельно
- *  от содержания. */
+/** What distinguishes a panel from its neighbours: needed to measure ORDER apart
+ *  from content. */
 function signature(panel: Panel): string {
   const t = text(panel);
   if (t) return t;
@@ -43,8 +44,9 @@ function signature(panel: Panel): string {
   return String(parsed.arrow ?? parsed.pictogram ?? "?");
 }
 
-/** Пары «та же панель здесь и там», сопоставленные по тексту. Панели без пары
- *  молчат намеренно: их расхождение уже посчитано в `panels.content`. */
+/** Pairs of "the same panel here and there", matched by text. Panels without a pair
+ *  stay silent on purpose: their disagreement is already counted in
+ *  `panels.content`. */
 function* matched(expected: SignDoc, actual: SignDoc): Generator<[Panel, Panel]> {
   const bySig = new Map<string, Panel[]>();
   for (const p of actual.panels ?? []) {
@@ -65,11 +67,11 @@ for (let m = 1; m <= 12; m += 1) {
   for (let d = 1; d <= MONTH_LEN[m]; d += 1) ALL_DAYS.push(m * 100 + d);
 }
 
-/** Множество дней, в которые окно действует.
+/** The set of days on which a window applies.
  *
- *  `Augusti-Juni` записывается двумя способами — «только с 1 августа по 30 июня»
- *  и «кроме июля», — и это ОДНО И ТО ЖЕ правило. Сравнивать записи буквально
- *  значит мерить форму записи, а не прочитанное. */
+ *  `Augusti-Juni` gets written two ways - "only from 1 August to 30 June" and
+ *  "except July" - and it is ONE AND THE SAME rule. Comparing the records literally
+ *  would measure the form of writing rather than what was read. */
 export function coveredDays(dates: NonNullable<TimeWindow["dates"]>): number[] {
   const hit = new Set<number>();
   for (const rng of dates.ranges ?? []) {
@@ -87,7 +89,7 @@ export function coveredDays(dates: NonNullable<TimeWindow["dates"]>): number[] {
   return kept.sort((a, b) => a - b);
 }
 
-/** Окна к сравнимому виду: даты — множеством дней, остальное как есть. */
+/** Windows brought to a comparable form: dates as a set of days, the rest as it is. */
 function normaliseWindows(value: TimeWindow[] | undefined): unknown[] {
   return (value ?? []).map((w) => {
     const out: Record<string, unknown> = { ...w };
@@ -96,9 +98,9 @@ function normaliseWindows(value: TimeWindow[] | undefined): unknown[] {
   });
 }
 
-/** Значение так, как его печатает питон (`repr`): одинарные кавычки, `True`,
- *  `None`. Замер читает человек, и его вывод сверяется с питоновским строка
- *  в строку — значит, и запись значений должна совпадать. */
+/** A value the way Python prints it (`repr`): single quotes, `True`, `None`. The
+ *  measurement is read by a person, and its output was compared with Python's line
+ *  by line - so values had to be written the same way. */
 export function pyRepr(value: unknown): string {
   if (value === null || value === undefined) return "None";
   if (typeof value === "boolean") return value ? "True" : "False";
@@ -142,7 +144,8 @@ const PARSED_FIELDS = ["duration_limit", "time_windows", "fee", "permit_required
                        "place_count", "stretch_metres", "placement", "prohibition",
                        "payment_method", "permits_parking"] as const;
 
-/** Точность извлечения: поля разбора модели против эталона разработчика. */
+/** Extraction accuracy: the fields of the model's reading against the developer's
+ *  reference reading. */
 export function compare(expected: SignDoc, actual: SignDoc, label: string,
                         rep: Report): void {
   rep.photos += 1;
@@ -150,41 +153,41 @@ export function compare(expected: SignDoc, actual: SignDoc, label: string,
   const me: any = expected.main_sign;
   const ma: any = actual.main_sign;
   add(rep, "main_sign.type", me.type === ma.type,
-      `${label}: основной знак ${ma.type} вместо ${me.type}`);
+      `${label}: main sign ${ma.type} instead of ${me.type}`);
   add(rep, "main_sign.background_color", me.background_color === ma.background_color,
-      `${label}: цвет знака ${ma.background_color} вместо ${me.background_color}`);
+      `${label}: sign colour ${ma.background_color} instead of ${me.background_color}`);
   add(rep, "main_sign.form", me.form === ma.form,
-      `${label}: вид знака ${ma.form} вместо ${me.form}`);
+      `${label}: sign form ${ma.form} instead of ${me.form}`);
 
   const pe = plates(expected);
   const pa = plates(actual);
   add(rep, "panel_count", pe.length === pa.length,
-      `${label}: табличек ${pa.length} вместо ${pe.length}`);
+      `${label}: ${pa.length} plates instead of ${pe.length}`);
 
   const sigE = pe.map(signature);
   const sigA = pa.map(signature);
   add(rep, "panels.content", same([...sigE].sort(), [...sigA].sort()),
-      `${label}: содержание табличек разошлось`);
-  // Порядок меряется ОТДЕЛЬНО: от него зависит правило.
+      `${label}: the content of the plates disagrees`);
+  // Order is measured SEPARATELY: the rule depends on it.
   add(rep, "panels.order", same(sigE, sigA),
-      `${label}: порядок табличек ${pyRepr(sigA)} вместо ${pyRepr(sigE)}`);
+      `${label}: plate order ${pyRepr(sigA)} instead of ${pyRepr(sigE)}`);
 
-  // Несёт панель правило или нет — единственное, что здесь имеет последствие:
-  // принять табличку с правилом за нерулевую значит потерять указание.
+  // Whether a panel carries a rule is the only thing here with a consequence:
+  // taking a rule-bearing plate for a non-rule one means losing an instruction.
   for (const [e, a] of matched(expected, actual)) {
     add(rep, "panel.rule_bearing",
         (e.kind === "sign_plate") === (a.kind === "sign_plate"),
-        `${label}: панель ${a.index} помечена ${a.kind} вместо ${e.kind}`
-        + " — это меняет состав правил");
+        `${label}: panel ${a.index} marked ${a.kind} instead of ${e.kind}`
+        + " - this changes which rules apply");
   }
 
-  // пофразовое сравнение только там, где длины совпали
+  // phrase-by-phrase comparison only where the lengths matched
   for (let i = 0; i < Math.min(pe.length, pa.length); i += 1) {
     const e = pe[i];
     const a = pa[i];
     add(rep, "panel.lines", text(e) === text(a),
-        `${label}: панель ${a.index} прочитана как ${pyRepr(a.lines)}`
-        + ` вместо ${pyRepr(e.lines)}`);
+        `${label}: panel ${a.index} read as ${pyRepr(a.lines)}`
+        + ` instead of ${pyRepr(e.lines)}`);
     add(rep, "panel.background_color", e.background_color === a.background_color);
     const ep: any = e.parsed ?? {};
     const ap: any = a.parsed ?? {};
@@ -197,24 +200,24 @@ export function compare(expected: SignDoc, actual: SignDoc, label: string,
           got = normaliseWindows(got as TimeWindow[] | undefined);
         }
         add(rep, `parsed.${key}`, same(want, got),
-            `${label}: панель ${a.index} поле ${key} = ${pyRepr(ap[key])}`
-            + ` вместо ${pyRepr(ep[key])}`);
+            `${label}: panel ${a.index} field ${key} = ${pyRepr(ap[key])}`
+            + ` instead of ${pyRepr(ep[key])}`);
       }
     }
   }
 }
 
 export function table(rep: Report): string {
-  const rows = ["| Поле | Совпало | Всего | Точность |", "|---|---|---|---|"];
+  const rows = ["| Field | Matched | Total | Accuracy |", "|---|---|---|---|"];
   for (const name of [...rep.fields.keys()].sort()) {
     const f = rep.fields.get(name)!;
     const share = f.total ? Math.round((f.hits / f.total) * 100) : 0;
     rows.push(`| \`${name}\` | ${f.hits} | ${f.total} | ${share}% |`);
   }
-  return `Снимков в замере: ${rep.photos}\n\n` + rows.join("\n");
+  return `Photographs measured: ${rep.photos}\n\n` + rows.join("\n");
 }
 
-// --- отсев -----------------------------------------------------------------
+// --- triage -----------------------------------------------------------------
 
 export type TriageReport = {
   realSigns: number;
@@ -225,9 +228,9 @@ export type TriageReport = {
   junkLetThroughShare: number;
 };
 
-/** Доля ложных отсевов — самая дорогая ошибка стадии 0: человек стоит перед знаком
- *  и не получает ничего. Мусор, пропущенный дальше, считается отдельно: он стоит
- *  лишнего вызова, а не ответа. */
+/** The share of false rejects - the most expensive mistake of stage 0: a person
+ *  stands at a sign and gets nothing. Rubbish let through is counted separately: it
+ *  costs an extra call rather than an answer. */
 export function triageReport(expectedIsParking: Record<string, boolean>,
                              triage: Record<string, string>): TriageReport {
   const names = Object.keys(expectedIsParking).filter((k) => k in triage);
@@ -245,11 +248,11 @@ export function triageReport(expectedIsParking: Record<string, boolean>,
   };
 }
 
-// --- калибровка порога -----------------------------------------------------
+// --- calibrating the threshold ----------------------------------------------
 
 export const HORIZON_HOURS = 24 * 7;
 
-/** Состояние И условия в этот час: для человека это одно сообщение. */
+/** The state AND the conditions at this hour: to a person that is one message. */
 function stateAt(ev: Evaluation, moment: Naive): [string, string[]] {
   const m = isoNaive(moment);
   for (const regime of ev.regimes) {
@@ -268,8 +271,8 @@ export type Verdict = {
   states: [string, string[]][];
 };
 
-/** Ответ по знаку в сравнимом виде: можно ли тут стоять, кому отведены места
- *  и что происходит в каждый час недели вперёд. */
+/** The answer about a sign in a comparable form: whether one may stand here, who the
+ *  spaces are for, and what happens in each hour of the week ahead. */
 export function verdictSlice(doc: SignDoc, moment: Naive, cal: Calendar): Verdict {
   const ev = evaluateParkingRules(doc, moment, cal);
   const states: [string, string[]][] = [];
@@ -283,49 +286,50 @@ export function verdictSlice(doc: SignDoc, moment: Naive, cal: Calendar): Verdic
   };
 }
 
-/** Чем ответ по разбору отличается от ответа по эталону.
+/** How the answer from the reading differs from the answer from the reference.
  *
- *  Часы, в которые разбор ШИРЕ эталона, считаются отдельно: ошибка в эту сторону
- *  стоит пользователю эвакуации, в обратную — лишней осторожности. */
+ *  Hours where the reading is WIDER than the reference are counted separately: an
+ *  error in that direction costs the user a tow, in the other direction only extra
+ *  caution. */
 export function verdictDifferences(expected: Verdict, actual: Verdict): string[] {
   const out: string[] = [];
   if (expected.permitsParking !== actual.permitsParking) {
-    out.push(`стоянка здесь: ${pyBool(actual.permitsParking)} вместо `
+    out.push(`parking here: ${pyBool(actual.permitsParking)} instead of `
            + `${pyBool(expected.permitsParking)}`);
   }
   if (!same(expected.eligibility, actual.eligibility)) {
-    out.push(`круг стоящих: ${pyList(actual.eligibility)} вместо `
+    out.push(`who may park: ${pyList(actual.eligibility)} instead of `
            + `${pyList(expected.eligibility)}`);
   }
   const pairs = expected.states.map((e, i) => [e, actual.states[i]] as const);
-  // Состояние и условия разводятся намеренно: «нельзя вместо можно» и «плата
-  // не в те дни» — ошибки разной цены.
+  // State and conditions are kept apart on purpose: "forbidden instead of allowed"
+  // and "a fee on the wrong days" are mistakes of different cost.
   const byState = pairs.filter(([e, a]) => e[0] !== a[0]);
   if (byState.length) {
     const wider = byState.filter(([, a]) => a[0] === "allowed").length;
-    out.push(`часов расходится по состоянию ${byState.length}/${pairs.length},`
-           + ` из них шире ${wider}`);
+    out.push(`hours differing by state ${byState.length}/${pairs.length},`
+           + ` of which wider ${wider}`);
   }
   const byCond = pairs.filter(([e, a]) => e[0] === a[0] && !same(e[1], a[1]));
   if (byCond.length) {
-    const примеры = [...new Set(byCond.map(([e, a]) =>
-      (a[1].join(", ") || "—") + " вместо " + (e[1].join(", ") || "—")))].sort();
-    out.push(`часов расходится по условиям ${byCond.length}/${pairs.length}: `
-           + примеры.slice(0, 2).join("; "));
+    const examples = [...new Set(byCond.map(([e, a]) =>
+      (a[1].join(", ") || "-") + " instead of " + (e[1].join(", ") || "-")))].sort();
+    out.push(`hours differing by conditions ${byCond.length}/${pairs.length}: `
+           + examples.slice(0, 2).join("; "));
   }
   return out;
 }
 
 const pyBool = (v: boolean) => pyRepr(v);
-const pyList = (v: string[]) => (v.length ? pyRepr(v) : "—");
+const pyList = (v: string[]) => (v.length ? pyRepr(v) : "-");
 
 export type ThresholdRow = { confidence: number; category: string; diverged: boolean;
                              label: string };
 
-/** Сколько разошедшихся ответов ловит каждый порог и какой ценой. */
+/** How many disagreeing answers each threshold catches, and at what cost. */
 export function thresholdTable(rows: ThresholdRow[],
                                thresholds = [0.85, 0.875, 0.9, 0.92, 0.95]): string {
-  const lines = ["| Порог | Помечено | Из них разошлись | Пропущено как «полный» | Из них разошлись |",
+  const lines = ["| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |",
                  "|---|---|---|---|---|"];
   for (const t of thresholds) {
     const flagged = rows.filter((r) => r.confidence < t || r.category !== "full");
@@ -337,16 +341,17 @@ export function thresholdTable(rows: ThresholdRow[],
   return lines.join("\n");
 }
 
-/** Сигналы, ни разу не менявшиеся на наборе.
+/** Signals that never once changed across the set.
  *
- *  Вывод отсюда НЕ «убрать вес»: сигнал может быть постоянным потому, что
- *  в наборе нет снимков, которые его сдвинули бы. */
+ *  The conclusion is NOT "drop the weight": a signal can be constant because the set
+ *  holds no photograph that would have moved it. */
 export function deadSignals(seen: Map<string, Set<number>>): string[] {
   return [...seen.entries()].filter(([, v]) => v.size <= 1)
                             .map(([k]) => k).sort();
 }
 
-/** Отпечаток промпта: ответ, полученный ДРУГИМ вопросом, в замер не входит. */
+/** The prompt's fingerprint: an answer obtained with a DIFFERENT question does not
+ *  enter the measurement. */
 export async function fingerprint(prompt: string): Promise<string> {
   const bytes = new TextEncoder().encode(prompt);
   const digest = await crypto.subtle.digest("SHA-256", bytes);

@@ -1,10 +1,11 @@
-// `npm run measure` — замер точности и калибровка порога, как их печатали
-// `cli.py accuracy` и `cli.py calibrate`. Эталон вывода снят с питона, пока он был
-// цел: `parity/python-report.txt` (шаг 8, требование 12).
+// `npm run measure` - the accuracy measurement and the threshold calibration, as
+// `cli.py accuracy` and `cli.py calibrate` used to print them. A reference copy of
+// that output was taken while Python was still whole: `parity/python-report.txt`.
+// It is a historical record now, not something compared against.
 //
-// **Инструмент разработчика, а не часть продукта.** Живёт вне `src/`, приложением
-// не импортируется и в сборку не попадает. В обычный прогон (`npm test`) не входит:
-// печатать таблицы на каждый прогон незачем.
+// **A developer's tool, not part of the product.** It lives outside `src/`, is never
+// imported by the application and never reaches the build. It stays out of the
+// ordinary run (`npm test`): printing tables on every run is pointless.
 
 import { describe, it } from "vitest";
 
@@ -18,11 +19,11 @@ import { extractPrompt } from "../src/lib/prompts";
 import { DEMO, EXPECTED, answersFromAnotherPrompt, assessAnswer, loadPairs,
          loadTriageExpectations, marked, triageAnswers } from "../tools/testset";
 
-const MOMENT = "2026-03-02T00:00";      // обычный понедельник, вне праздников
+const MOMENT = "2026-03-02T00:00";      // an ordinary Monday, outside holidays
 const percent = (x: number) => `${Math.round(x * 100)}%`;
 
-describe("замер", () => {
-  it("печатает точность извлечения и калибровку порога", async () => {
+describe("the measurement", () => {
+  it("prints the extraction accuracy and the threshold calibration", async () => {
     const cal = new Calendar();
     const moment = parseNaive(MOMENT);
     const mark = await fingerprint(extractPrompt());
@@ -31,45 +32,45 @@ describe("замер", () => {
     const outdated = answersFromAnotherPrompt(EXPECTED, DEMO, mark);
     const out: string[] = [];
 
-    // Ответы, полученные другим промптом, называются вслух в обоих разделах.
+    // Answers obtained with a different prompt are named aloud in both sections.
     const nameOutdated = () => {
       if (!outdated.length) return;
-      out.push("", `В замер НЕ вошли ${outdated.length}: ответ получен другим промптом.`);
+      out.push("", `NOT included, ${outdated.length}: the answer came from another prompt.`);
       for (const label of outdated) out.push(`  ${label}`);
     };
 
-    // --- точность извлечения ------------------------------------------------
-    out.push("===== точность извлечения =====");
+    // --- extraction accuracy ------------------------------------------------
+    out.push("===== extraction accuracy =====");
     if (!pairs.length) {
-      out.push(`Нет ни одного настоящего ответа модели. Эталонов: ${totalExpected}.`);
+      out.push(`Not one real answer from the model. Reference readings: ${totalExpected}.`);
       console.log(out.join("\n"));
       return;
     }
     const rep = emptyReport();
     for (const { label, expected, actual } of pairs) compare(expected, actual, label, rep);
     out.push(table(rep), "",
-             `Покрытие замера: ${pairs.length} из ${totalExpected} эталонов `
-             + `(${percent(pairs.length / totalExpected)}). Остальные ждут живого прогона.`);
+             `Coverage of the measurement: ${pairs.length} of ${totalExpected} reference `
+             + `readings (${percent(pairs.length / totalExpected)}). The rest await a live run.`);
     nameOutdated();
     if (rep.mistakes.length) {
-      out.push("", "Типовые ошибки извлечения:");
+      out.push("", "Typical extraction mistakes:");
       for (const m of rep.mistakes.slice(0, 20)) out.push(`  - ${m}`);
     }
 
-    // Парковочный снимок или нет — из объявленного списка, а не из наличия эталона:
-    // неразмеченный знак — не мусор.
+    // Whether a photograph is a parking one comes from the declared list rather than
+    // from having a reference reading: an unmarked sign is not rubbish.
     const notParking = loadTriageExpectations();
     const triage = triageAnswers(DEMO);
     if (Object.keys(triage).length) {
       const isParking = Object.fromEntries(Object.keys(triage).map((k) => [k, !(k in notParking)]));
       const t = triageReport(isParking, triage);
-      out.push("", `Отсев: настоящих знаков ${t.realSigns}, ошибочно отсеяно ${t.falseRejects} `
-                 + `(${percent(t.falseRejectShare)}); кадров не о парковке ${t.junkFrames}, `
-                 + `пропущено дальше ${t.junkLetThrough}`);
+      out.push("", `Triage: real signs ${t.realSigns}, wrongly rejected ${t.falseRejects} `
+                 + `(${percent(t.falseRejectShare)}); frames not about parking ${t.junkFrames}, `
+                 + `let through ${t.junkLetThrough}`);
     }
 
-    // --- калибровка порога ---------------------------------------------------
-    out.push("", "===== калибровка порога =====");
+    // --- calibrating the threshold -------------------------------------------
+    out.push("", "===== threshold calibration =====");
     const rows: ThresholdRow[] = [];
     const diverged = new Map<string, string[]>();
     const seen = new Map<string, Set<number>>();
@@ -87,23 +88,23 @@ describe("замер", () => {
     rows.sort((x, y) => (x.confidence - y.confidence) || x.category.localeCompare(y.category)
                      || Number(x.diverged) - Number(y.diverged) || x.label.localeCompare(y.label));
 
-    out.push(`Снимков в калибровке: ${rows.length}`,
-             `Ответ совпал с эталоном: ${rows.length - diverged.size}; разошёлся: ${diverged.size}`,
-             "", "Разошедшиеся ответы:");
+    out.push(`Photographs in the calibration: ${rows.length}`,
+             `Answer matched the reference: ${rows.length - diverged.size}; disagreed: ${diverged.size}`,
+             "", "Disagreeing answers:");
     for (const row of rows.filter((r) => r.diverged)) {
       out.push(`  ${String(row.confidence).padEnd(6)} ${row.category.padEnd(8)} ${row.label}`);
       for (const line of diverged.get(row.label)!) out.push(`           ${line}`);
     }
-    out.push("", thresholdTable(rows), "", `Порог сейчас: ${GOOD_ENOUGH}`);
+    out.push("", thresholdTable(rows), "", `Threshold now: ${GOOD_ENOUGH}`);
     nameOutdated();
 
     const dead = deadSignals(seen);
     if (dead.length) {
       const weight = dead.reduce((sum, k) => sum + WEIGHTS[k], 0);
-      out.push("", `Сигналы, ни разу не изменившиеся на наборе (вес ${weight.toFixed(2)} из 1.00):`);
-      for (const k of dead) out.push(`  ${k} (вес ${WEIGHTS[k].toFixed(2)})`);
-      out.push("  Это НЕ повод переложить их вес на остальные: постоянны они потому,",
-               "  что в наборе нет снимков, которые их сдвинули бы. Нужны плохие кадры.");
+      out.push("", `Signals that never changed across the set (weight ${weight.toFixed(2)} of 1.00):`);
+      for (const k of dead) out.push(`  ${k} (weight ${WEIGHTS[k].toFixed(2)})`);
+      out.push("  This is NOT a reason to move their weight onto the others: they are",
+               "  constant because the set holds no photograph that would shift them.");
     }
     console.log(out.join("\n"));
   });

@@ -1,9 +1,10 @@
-// Замер умеет находить ошибку. Перенесено из `tests/test_accuracy.py` (шаг 8).
+// The measurement can find a mistake. Carried over from `tests/test_accuracy.py`
+// (step 8).
 //
-// Инструмент, который на любом входе показывает 100%, хуже отсутствия инструмента:
-// он создаёт уверенность и не даёт информации. Поэтому здесь каждая проверка
-// портит эталон известным образом и требует, чтобы замер это увидел — и чтобы
-// НЕ увидел того, что на ответ не влияет.
+// A tool that shows 100% on any input is worse than no tool at all: it creates
+// confidence and gives no information. So every check here damages a reference
+// reading in a known way and demands that the measurement see it - and that it NOT
+// see what makes no difference to the answer.
 
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -19,7 +20,7 @@ const expected = (name: string): SignDoc =>
 
 const share = (rep: Report, field: string) => {
   const f = rep.fields.get(field);
-  expect(f, `поле ${field} не мерилось`).toBeDefined();
+  expect(f, `the field ${field} was never measured`).toBeDefined();
   return f!.total ? f!.hits / f!.total : 0;
 };
 
@@ -31,9 +32,9 @@ function measure(e: SignDoc, a: SignDoc, label: string): Report {
 
 const BASE = "005-2tim-8-18-parentes-8-15-dubbelpil";
 
-describe("сравнение разбора с эталоном", () => {
+describe("comparing a reading with the reference", () => {
   // py: test_accuracy::test_identical_gives_full_marks
-  it("совпадающий разбор — полные баллы и ни одной ошибки", () => {
+  it("an identical reading scores full marks and not one mistake", () => {
     const e = expected(BASE);
     const rep = measure(e, structuredClone(e), "005");
     for (const f of rep.fields.values()) expect(f.hits, f.name).toBe(f.total);
@@ -41,8 +42,8 @@ describe("сравнение разбора с эталоном", () => {
   });
 
   // py: test_accuracy::test_detects_merged_panels
-  it("находит слитые таблички", () => {
-    // Ошибка со снимка `013`: две таблички слиты в одну.
+  it("finds merged plates", () => {
+    // The mistake from photograph `013`: two plates merged into one.
     const e = expected(BASE);
     const a = structuredClone(e);
     a.panels = [a.panels![0]];
@@ -54,50 +55,53 @@ describe("сравнение разбора с эталоном", () => {
   });
 
   // py: test_accuracy::test_detects_wrong_order_even_when_content_is_right
-  it("порядок меряется отдельно: те же таблички в другом порядке — другое правило", () => {
+  it("order is measured apart: the same plates reordered are a different rule", () => {
     const e = expected("010-forhyrda-platser-tva-pilar");
     const a = structuredClone(e);
     const p = a.panels!;
     a.panels = [p[2], p[1], p[0], p[3]].map((x, i) => ({ ...x, index: i + 1 }));
     const rep = measure(e, a, "010");
-    expect(share(rep, "panels.content"), "содержание то же").toBe(1);
-    expect(share(rep, "panels.order"), "а порядок другой").toBe(0);
+    expect(share(rep, "panels.content"), "the content is the same").toBe(1);
+    expect(share(rep, "panels.order"), "but the order is not").toBe(0);
   });
 
   // py: test_accuracy::test_detects_misread_text
-  it("находит неверно прочитанный текст", () => {
+  it("finds text that was read wrongly", () => {
     const e = expected(BASE);
     const a = structuredClone(e);
-    a.panels![0].lines = ["2 tim", "8-18", "8-15"];     // потеряны скобки
+    a.panels![0].lines = ["2 tim", "8-18", "8-15"];     // the brackets were lost
     expect(share(measure(e, a, "005"), "panel.lines")).toBeLessThan(1);
   });
 
   // py: test_accuracy::test_detects_non_rule_panel_taken_for_a_plate
-  it("находит табло, принятое за табличку с правилом", () => {
-    // Снимки `002`, `004`, `007`: подмена вида панели добавляет указание, которого нет.
+  it("finds a payment board taken for a plate that states a rule", () => {
+    // Photographs `002`, `004`, `007`: swapping the kind of panel adds an
+    // instruction that is not there.
     const e = expected("002-avgift-forbud-utanfor-markerad-plats");
     const a = structuredClone(e);
     a.panels![3].kind = "sign_plate";
     const rep = measure(e, a, "002");
     expect(share(rep, "panel.rule_bearing")).toBeLessThan(1);
-    expect(rep.mistakes.some((m) => m.includes("rule_bearing") || m.includes("помечена")))
+    expect(rep.mistakes.some((m) => m.includes("rule_bearing") || m.includes("marked")))
       .toBe(true);
   });
 
   // py: test_accuracy::test_detects_rule_plate_taken_for_an_operator_plate
-  it("находит табличку с правилом, помеченную табличкой оператора", () => {
-    // Обратная ошибка и более дорогая: указание молча выпадает из разбора.
+  it("finds a rule-bearing plate marked as an operator's plate", () => {
+    // The opposite mistake, and the more expensive one: an instruction silently
+    // drops out of the reading.
     const e = expected("004-endast-besokande-pingstkyrkan");
     const a = structuredClone(e);
     a.panels![0].kind = "operator_plate";
     const rep = measure(e, a, "004");
     expect(share(rep, "panel.rule_bearing")).toBeLessThan(1);
-    expect(share(rep, "panels.content"), "указание выпало из состава правил").toBe(0);
+    expect(share(rep, "panels.content"), "the instruction left the set of rules").toBe(0);
   });
 
   // py: test_accuracy::test_confusion_inside_the_non_rule_pair_is_not_an_error
-  it("путаница внутри пары без правил ошибкой не считается", () => {
-    // Табличка оператора против табла — различие без последствия: обе вне движка.
+  it("confusion inside the pair that states no rule does not count as a mistake", () => {
+    // An operator's plate against a payment board: a difference with no consequence,
+    // since both stay outside the engine.
     const e = expected("004-endast-besokande-pingstkyrkan");
     const a = structuredClone(e);
     a.panels![1].kind = "info_board";
@@ -105,7 +109,7 @@ describe("сравнение разбора с эталоном", () => {
   });
 
   // py: test_accuracy::test_line_wrapping_inside_one_plate_is_not_an_error
-  it("перенос строк внутри одной таблички ошибкой не считается", () => {
+  it("a line break inside one plate does not count as a mistake", () => {
     const e = expected("023-avgift-4tim-laddande-elbilar");
     const a = structuredClone(e);
     a.panels![2].lines = ["Endast", "laddande", "elbilar"];
@@ -115,8 +119,9 @@ describe("сравнение разбора с эталоном", () => {
   });
 
   // py: test_accuracy::test_but_moving_words_between_plates_is_an_error
-  it("а перенос слов между табличками — ошибка", () => {
-    // Граница МЕЖДУ табличками строгая: те же слова по разным табличкам — другое правило.
+  it("but moving words between plates is a mistake", () => {
+    // The boundary BETWEEN plates is strict: the same words on different plates are
+    // a different rule.
     const e = expected("023-avgift-4tim-laddande-elbilar");
     const a = structuredClone(e);
     a.panels![1].lines = ["4 tim", "Endast laddande elbilar"];
@@ -125,7 +130,7 @@ describe("сравнение разбора с эталоном", () => {
   });
 
   // py: test_accuracy::test_detects_wrong_parsed_field
-  it("находит неверно разобранное поле", () => {
+  it("finds a field parsed wrongly", () => {
     const e = expected(BASE);
     const a = structuredClone(e);
     a.panels![0].parsed!.duration_limit = { amount: 3, unit: "hours" };
@@ -133,7 +138,7 @@ describe("сравнение разбора с эталоном", () => {
   });
 
   // py: test_accuracy::test_case_and_spacing_do_not_count_as_errors
-  it("регистр и пробелы ошибкой не считаются: меряется прочитанное", () => {
+  it("case and spacing are not mistakes: what is measured is what was read", () => {
     const e = expected(BASE);
     const a = structuredClone(e);
     a.panels![0].lines = ["2  TIM", "8-18 ", " (8-15)"];
@@ -141,19 +146,19 @@ describe("сравнение разбора с эталоном", () => {
   });
 
   // py: test_accuracy::test_two_encodings_of_the_same_dates_are_equal
-  it("две записи одних и тех же дат равны", () => {
-    // `Augusti-Juni` — и «только с 1 августа по 30 июня», и «кроме июля».
+  it("two ways of writing the same dates are equal", () => {
+    // `Augusti-Juni` is both "only from 1 August to 30 June" and "except July".
     const only = { mode: "only" as const, ranges: [{ from: "08-01", to: "06-30" }] };
     const except = { mode: "except" as const, ranges: [{ from: "07-01", to: "07-31" }] };
     expect(coveredDays(only)).toEqual(coveredDays(except));
     const other = { mode: "except" as const, ranges: [{ from: "06-01", to: "06-30" }] };
-    expect(coveredDays(only), "разные правила остаются разными").not.toEqual(coveredDays(other));
+    expect(coveredDays(only), "different rules stay different").not.toEqual(coveredDays(other));
   });
 });
 
-describe("отсев", () => {
+describe("triage", () => {
   // py: test_accuracy::test_false_reject_is_counted
-  it("считает ложный отказ — самую дорогую ошибку отсева", () => {
+  it("counts a false reject - the most expensive mistake of triage", () => {
     const t = triageReport({ a: true, b: true, c: false },
                            { a: "parking_sign", b: "not_a_sign", c: "not_a_sign" });
     expect(t.realSigns).toBe(2);
@@ -163,7 +168,7 @@ describe("отсев", () => {
   });
 
   // py: test_accuracy::test_junk_let_through_is_counted_separately
-  it("пропущенный мусор считается отдельно", () => {
+  it("counts rubbish let through separately", () => {
     const t = triageReport({ a: true, c: false }, { a: "parking_sign", c: "parking_sign" });
     expect(t.falseRejects).toBe(0);
     expect(t.junkLetThrough).toBe(1);
@@ -171,11 +176,12 @@ describe("отсев", () => {
   });
 });
 
-describe("расхождение ОТВЕТА", () => {
-  // Порог сравнивается не с совпадением полей, а с совпадением ответа: цвет таблички
-  // и порядок панелей в разборе видны, а до человека не доходят.
+describe("disagreement of the ANSWER", () => {
+  // The threshold is compared against agreement of the answer, not of the fields: a
+  // plate's colour and the order of panels are visible in the reading yet never
+  // reach the person.
 
-  /** Час — пара «состояние и условия»: для человека это одно сообщение. */
+  /** An hour is a pair of state and conditions: to a person that is one message. */
   function verdict({ permits = true, eligibility = [] as string[],
                      states = Array<string>(24).fill("allowed"),
                      conditions = null as string[][] | null } = {}): Verdict {
@@ -185,51 +191,53 @@ describe("расхождение ОТВЕТА", () => {
   }
 
   // py: test_accuracy::test_identical_verdicts_have_no_differences
-  it("одинаковые ответы не расходятся", () => {
+  it("identical answers do not disagree", () => {
     expect(verdictDifferences(verdict(), verdict())).toEqual([]);
   });
 
   // py: test_accuracy::test_a_pointer_read_as_a_parking_sign_is_the_whole_verdict
-  it("указатель, прочитанный как знак стоянки, — расходится весь ответ", () => {
-    // `050` и `037`: расходится не поле, а весь ответ — в сторону расширения.
+  it("a direction sign read as a parking sign disagrees in the whole answer", () => {
+    // `050` and `037`: what disagrees is not a field but the whole answer, and in
+    // the direction of widening.
     const diff = verdictDifferences(
       verdict({ permits: false, states: Array(24).fill("prohibited") }), verdict());
-    expect(diff.some((d) => d.includes("стоянка здесь"))).toBe(true);
-    expect(diff.some((d) => d.includes("по состоянию 24/24, из них шире 24"))).toBe(true);
+    expect(diff.some((d) => d.includes("parking here"))).toBe(true);
+    expect(diff.some((d) => d.includes("by state 24/24, of which wider 24"))).toBe(true);
   });
 
   // py: test_accuracy::test_widening_is_counted_apart_from_narrowing
-  it("расширение считается отдельно от сужения", () => {
-    // Ошибка в сторону расширения стоит эвакуации, в обратную — лишней осторожности.
+  it("widening is counted apart from narrowing", () => {
+    // An error towards widening costs a tow; the other way, only extra caution.
     const wider = verdictDifferences(verdict({ states: Array(24).fill("prohibited") }),
                                      verdict({ states: Array(24).fill("allowed") }));
     const narrower = verdictDifferences(verdict({ states: Array(24).fill("allowed") }),
                                         verdict({ states: Array(24).fill("prohibited") }));
-    expect(wider[0]).toContain("из них шире 24");
-    expect(narrower[0]).toContain("из них шире 0");
+    expect(wider[0]).toContain("of which wider 24");
+    expect(narrower[0]).toContain("of which wider 0");
   });
 
   // py: test_accuracy::test_a_condition_on_the_wrong_days_is_a_difference_too
-  it("условие не в те дни — тоже расхождение, и не по состоянию", () => {
-    // Знак `030`: плата по субботам, разбор сказал «по воскресеньям». Час за часом
-    // оба ответа — `allowed`, и замер этого не видел; ошибка нашлась в браузере.
+  it("a condition on the wrong days is a disagreement too, and not one of state", () => {
+    // Sign `030`: a fee on Saturdays, and the reading said Sundays. Hour by hour
+    // both answers are `allowed`, so the measurement did not see it; the mistake was
+    // found in the browser.
     const reference = verdict({ conditions: [...Array(12).fill(["avgift"]), ...Array(12).fill([])] });
     const answer = verdict({ conditions: [...Array(12).fill([]), ...Array(12).fill(["avgift"])] });
     const diff = verdictDifferences(reference, answer);
-    expect(diff.some((d) => d.includes("по условиям 24/24"))).toBe(true);
-    expect(diff.some((d) => d.includes("по состоянию"))).toBe(false);
+    expect(diff.some((d) => d.includes("by conditions 24/24"))).toBe(true);
+    expect(diff.some((d) => d.includes("by state"))).toBe(false);
   });
 
   // py: test_accuracy::test_a_narrowed_circle_of_users_is_a_difference_too
-  it("суженный круг стоящих — тоже расхождение", () => {
-    // `042`: круг сужен до мотоциклов там, где знак о велосипедах.
+  it("a narrowed set of who may park is a disagreement too", () => {
+    // `042`: narrowed to motorcycles where the sign is about bicycles.
     const diff = verdictDifferences(verdict(), verdict({ eligibility: ["pictogram-motorcycle"] }));
-    expect(diff.some((d) => d.includes("круг стоящих"))).toBe(true);
+    expect(diff.some((d) => d.includes("who may park"))).toBe(true);
   });
 
   // py: test_accuracy::test_dead_signals_are_the_ones_that_never_moved
-  it("мёртвые сигналы — те, что ни разу не сдвинулись", () => {
-    const seen = new Map([["а", new Set([1])], ["б", new Set([0, 1])], ["в", new Set<number>()]]);
-    expect(deadSignals(seen)).toEqual(["а", "в"]);
+  it("dead signals are the ones that never moved", () => {
+    const seen = new Map([["a", new Set([1])], ["b", new Set([0, 1])], ["c", new Set<number>()]]);
+    expect(deadSignals(seen)).toEqual(["a", "c"]);
   });
 });
