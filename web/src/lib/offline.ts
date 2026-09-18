@@ -1,32 +1,34 @@
-// Что приложение умеет без сети — и чего не умеет никогда.
+// What the application can do without a network — and what it can never do.
 //
-// Здесь ПРАВИЛА служебного работника, а не он сам: `sw.ts` — двадцать строк обвязки
-// над этими функциями. Разделено ради проверки. Служебный работник — единственная
-// часть продукта, которая переживает закрытие вкладки, и ошибка в нём чинится не
-// перезагрузкой, а руками человека, который о нём не знает. Значит, его решения
-// должны проверяться тестом, а не наблюдением.
+// What lives here are the RULES of the service worker, not the worker itself: `sw.ts`
+// is twenty lines of wrapping over these functions. They are kept apart for the sake
+// of checking. The service worker is the one part of the product that survives the
+// closing of a tab, and a fault in it is cured not by a reload but by the hands of a
+// person who does not know it is there. So its decisions have to be checked by a
+// test, not by observation.
 //
-// Три правила, и каждое отвечает на свой вопрос.
+// Three rules, and each answers a question of its own.
 //
-// **Страница — сеть первой.** Иначе человек залипнет на вчерашней версии и никогда
-// об этом не узнает: оболочка в кэше выглядит точно так же, как свежая.
+// **The page — the network first.** Otherwise a person sticks on yesterday's version
+// and never learns of it: a shell out of the cache looks exactly like a fresh one.
 //
-// **Файлы сборки — кэш первым.** В их именах хэш содержимого: под тем же именем
-// старого не бывает, и спрашивать сеть незачем.
+// **The files of the build — the cache first.** Their names carry a hash of the
+// contents: under the same name there is never an older one, and there is nothing to
+// ask the network about.
 //
-// **Всё остальное — мимо нас.** Вызов модели уходит к провайдеру и НЕ кэшируется
-// ни при каких условиях: закэшированный ответ знака — это вчерашний ответ, выданный
-// за сегодняшний, и отличить его от настоящего человек у знака не сможет.
+// **Everything else — past us.** A call to the model goes to the provider and is NOT
+// cached under any circumstances: a cached answer about a sign is yesterday's answer
+// served as today's, and a person at a sign has no way of telling it from a real one.
 
-/** Меняется вместе с составом оболочки. Старые кэши стираются при запуске нового
- *  работника, так что смена версии — это чистая оболочка на всех устройствах. */
+/** Changes together with what the shell is made of. Old caches are wiped when a new
+ *  worker starts, so a change of version means a clean shell on every device. */
 export const VERSION = "1";
 export const CACHE = `parkread-shell-${VERSION}`;
 
-/** Оболочка: то, что кладётся в кэш сразу, чтобы приложение открылось без сети.
- *  Пути относительные — адрес хостинга заранее неизвестен. Файлов сборки здесь нет:
- *  их имена содержат хэш и известны только сборщику; они попадают в кэш сами,
- *  при первом же открытии. */
+/** The shell: what goes into the cache at once, so the application opens with no
+ *  network. The paths are relative — the address of the host is not known in advance.
+ *  The files of the build are not here: their names contain a hash and are known to
+ *  the bundler alone; they reach the cache by themselves, at the first opening. */
 export const SHELL = [
   "./",
   "./index.html",
@@ -36,14 +38,16 @@ export const SHELL = [
   "./icon-maskable-512.png",
 ];
 
-/** Что сказано человеку, когда сети нет. Обещать офлайн-разбор нельзя, а молчать
- *  о причине — тем более: снимок читает модель, и без сети до неё не дойти. */
+/** What is said to a person when there is no network. Reading offline cannot be
+ *  promised, and keeping quiet about the reason still less: the photograph is read by
+ *  the model, and with no network there is no reaching it. */
 export const OFFLINE_NOTE =
   "No connection. Reading a sign needs the network: the photo goes to the model "
   + "that reads it.";
 
-/** Страница на случай, когда нет ни сети, ни оболочки в кэше. Без стилей и скриптов:
- *  это последний экран, и он обязан показаться сам по себе. */
+/** The page for when there is neither a network nor a shell in the cache. With no
+ *  styles and no scripts: this is the last screen, and it is obliged to show itself
+ *  on its own. */
 export const OFFLINE_PAGE =
   "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\">"
   + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
@@ -53,7 +57,8 @@ export const OFFLINE_PAGE =
 
 export type Req = { method: string; url: string; navigate: boolean };
 
-/** `page` — сеть первой, `asset` — кэш первым, `network` — не вмешиваемся. */
+/** `page` — the network first, `asset` — the cache first, `network` — we do not step
+ *  in. */
 export type Route = "page" | "asset" | "network";
 
 export const STRATEGY: Record<Route, string> = {
@@ -62,14 +67,15 @@ export const STRATEGY: Record<Route, string> = {
   network: "never-cached",
 };
 
-/** Папка, в которой живёт приложение: всё за её пределами — чужое. */
+/** The folder the application lives in: everything past its edge belongs to somebody
+ *  else. */
 function folder(scope: string): string {
   const path = new URL(scope).pathname;
   return path.slice(0, path.lastIndexOf("/") + 1);
 }
 
 export function route(req: Req, scope: string): Route {
-  // Не-GET не кэшируется никогда: вызов модели — это POST, и он уходит нетронутым.
+  // A non-GET is never cached: a call to the model is a POST, and it goes untouched.
   if (req.method.toUpperCase() !== "GET") return "network";
 
   let url: URL;
@@ -91,16 +97,17 @@ export interface CacheLike<R> {
 }
 
 export interface Env<R> {
-  /** Адрес папки приложения, как его знает работник. */
+  /** The address of the application's folder, as the worker knows it. */
   scope: string;
   fetch(url: string): Promise<R>;
   cache(): Promise<CacheLike<R>>;
-  /** Ответ читается один раз: в кэш кладётся копия, человеку уходит оригинал. */
+  /** A response is read once: a copy goes into the cache, the original to the
+   *  person. */
   copy(response: R): R;
   offline(): R;
 }
 
-/** Ответ на запрос — или `null`, если вмешиваться не наше дело. */
+/** The answer to a request — or `null`, if stepping in is not our business. */
 export async function respond<R>(req: Req, env: Env<R>): Promise<R | null> {
   const kind = route(req, env.scope);
   if (kind === "network") return null;
@@ -115,7 +122,7 @@ export async function respond<R>(req: Req, env: Env<R>): Promise<R | null> {
     return fresh;
   }
 
-  // Страница: сеть первой. Кэш здесь — не ускорение, а запасной выход.
+  // The page: the network first. The cache here is not a speeding-up but a way out.
   try {
     const fresh = await env.fetch(req.url);
     await cache.put(req.url, env.copy(fresh));
@@ -127,8 +134,8 @@ export async function respond<R>(req: Req, env: Env<R>): Promise<R | null> {
   }
 }
 
-/** Имена кэшей, подлежащих удалению: все, кроме нынешнего. Так смена версии
- *  не оставляет за собой прошлую оболочку. */
+/** The names of the caches due for deletion: all but the present one. So a change of
+ *  version leaves no previous shell behind it. */
 export function outdated(names: readonly string[]): string[] {
   return names.filter((name) => name !== CACHE);
 }

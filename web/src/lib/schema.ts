@@ -1,24 +1,26 @@
-// Проверка схемы — своя, а не библиотекой (решение 124).
+// The checking of the schema — our own, and not by a library (decision 124).
 //
-// Схема продукта использует десять ключевых слов и ни одного комбинатора: `type`,
+// The product's schema uses a closed set of keywords and not one combinator: `type`,
 // `required`, `properties`, `additionalProperties`, `enum`, `const`, `minimum`,
-// `maximum`, `pattern`, `maxLength`, `minItems` и `$ref` внутрь `$defs`. Это
-// закрытый набор, и сотня строк здесь заменяет зависимость в тридцать килобайт,
-// которая закрыла бы восемь строк склейки.
+// `maximum`, `pattern`, `maxLength`, `minItems`, and `$ref` into `$defs`. A hundred
+// lines here replace a dependency of thirty kilobytes that would have covered eight
+// lines of joining.
 //
-// **Условие, на котором это решение стоит:** мутационный тест. Каждая фикстура
-// ломается нарочно — убирается обязательное поле, портится `enum`, меняется тип, —
-// и отбраковка обязана совпасть с `jsonschema` питона, пока тот жив.
+// **The condition this decision stands on:** the mutation test. Every fixture is
+// broken on purpose — a required field taken away, an `enum` spoiled, a type changed
+// — and the rejection must agree with an independent judge. That judge is `ajv`, kept
+// to the tests alone (decision 138), so the page never carries it.
 //
-// **Когда переходить на библиотеку:** появится в схеме комбинатор (`oneOf`,
-// `if/then`, `patternProperties`) — брать `ajv`, скомпилированный на сборке.
-// Своя проверка на комбинаторах начинает врать, и чинить это не стоит
-// сэкономленных килобайтов.
+// **When to move to a library:** as soon as a combinator appears in the schema
+// (`oneOf`, `if/then`, `patternProperties`) — take `ajv`, compiled at build time. Our
+// own check begins to lie on combinators, and mending that is not worth the kilobytes
+// it saves.
 
 export type Schema = Record<string, any>;
 
-/** Ошибка проверки: путь до места и что с ним не так. Форма та же, что у питона
- *  (`path: message`), чтобы одно и то же место читалось одинаково с обеих сторон. */
+/** An error of the check: the path to the place, and what is wrong with it. The form
+ *  (`path: message`) is the one the Python side used, so the saved reference answers
+ *  still read the same way. */
 export type SchemaError = string;
 
 const typeOf = (value: unknown): string => {
@@ -40,7 +42,7 @@ function matchesType(value: unknown, want: string | string[]): boolean {
 
 function resolve(schema: Schema, root: Schema): Schema {
   if (!schema || typeof schema.$ref !== "string") return schema;
-  // Ссылки только внутрь `$defs` собственного файла — других в схеме нет.
+  // References only into the `$defs` of the file itself — the schema has no others.
   const path = schema.$ref.replace(/^#\//, "").split("/");
   let node: any = root;
   for (const part of path) node = node?.[part];
@@ -48,10 +50,11 @@ function resolve(schema: Schema, root: Schema): Schema {
 }
 
 function where(path: string[]): string {
-  return path.length ? path.join("/") : "<корень>";
+  return path.length ? path.join("/") : "<root>";
 }
 
-/** Все ошибки документа против схемы, в порядке пути — как их сортирует питон. */
+/** Every error of a document against the schema, in order of path — the order the
+ *  saved reference answers were written in. */
 export function validate(doc: unknown, schema: Schema, root: Schema = schema,
                          path: string[] = []): SchemaError[] {
   const node = resolve(schema, root);
@@ -132,8 +135,8 @@ function deepEqual(a: unknown, b: unknown): boolean {
   return false;
 }
 
-/** Проходит ли документ схему. Ошибки нужны для разбора полётов, а решение —
- *  одно: годен или нет. */
+/** Whether a document passes the schema. The errors are for the post-mortem, while
+ *  the decision is a single one: fit or not. */
 export function valid(doc: unknown, schema: Schema): boolean {
   return validate(doc, schema).length === 0;
 }

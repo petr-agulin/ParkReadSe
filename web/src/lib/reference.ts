@@ -1,16 +1,17 @@
-// Справочник — он же белый список.
+// The reference — and the whitelist with it.
 //
-// Чего в `reference/signs/` нет, продукт не интерпретирует: показывает дословно
-// и помечает. Сами записи приезжают из `reference.data.ts`, который порождает
-// `npm run emit` из markdown: парсить преамбулы на устройстве нечем, а источником
-// остаётся markdown.
+// What is not in `reference/signs/` the product does not interpret: it shows it word
+// for word and marks it. The entries themselves arrive from `reference.data.ts`,
+// which `npm run emit` generates out of markdown: there is nothing on the device to
+// parse preambles with, and the source stays markdown.
 
 import { ENTRIES, type RefEntry } from "./reference.data";
 import type { Parsed, SignDoc } from "./sign";
 
 export type Entry = RefEntry;
 
-/** Считается ли запись правилом — то есть влияет ли её отсутствие на полноту. */
+/** Whether an entry counts as a rule — that is, whether its absence bears on the
+ *  completeness. */
 export function countsTowardsRules(e: Entry): boolean {
   return e.category === "main_sign" || e.category === "rule";
 }
@@ -27,15 +28,16 @@ export function keys(): string[] {
   return Object.keys(ENTRIES).sort();
 }
 
-/** Все записи в порядке ключа — тем, кто показывает справочник целиком. */
+/** Every entry in order of key — for whoever shows the reference whole. */
 export function all(): Entry[] {
   return keys().map((k) => ENTRIES[k]);
 }
 
-// --- сопоставление извлечённой панели со справочником ----------------------
+// --- matching an extracted panel against the reference ----------------------
 //
-// Ключи берутся из ПОЛЕЙ схемы, а не из текста: текст муниципальный и разный,
-// а поля закрыты списком. Поэтому сопоставление детерминированное.
+// The keys are taken from the FIELDS of the schema rather than from the text: the
+// text is municipal and varies, while the fields are closed by a list. So the
+// matching is a deterministic one.
 
 const MAIN: Record<string, string> = {
   parking: "main-parking",
@@ -64,8 +66,9 @@ const SIMPLE: [keyof Parsed, string][] = [
   ["area_code", "omradeskod"],
 ];
 
-// Единственные таблицы соответствия «значение схемы → запись справочника».
-// Своя копия однажды уже разошлась со схемой и потеряла автобусы (снимок `038`).
+// The only tables mapping "a value of the schema → an entry of the reference". A copy
+// of its own has already drifted from the schema once and lost the buses (photograph
+// `038`).
 export const ELIGIBILITY_KEYS: Record<string, string> = {
   visitors: "besokande",
   rented: "forhyrda-platser",
@@ -80,8 +83,8 @@ export const VEHICLE_KEYS: Record<string, string> = {
   electric: "pictogram-electric-car",
   bus: "pictogram-bus",
   truck: "pictogram-truck",
-  // `T8-8`: велосипеды и мопеды класса II. Мопед класса I идёт с мотоциклами —
-  // единственный вид транспорта, поделённый между двумя пиктограммами.
+  // `T8-8`: bicycles and class II mopeds. A class I moped goes with the motorcycles —
+  // the one kind of vehicle divided between two pictograms.
   bicycle: "pictogram-bicycle",
 };
 
@@ -93,9 +96,9 @@ const PLACEMENT: Record<string, string> = {
 
 export type Recognised = {
   mainSignKey: string | null;
-  panelKeys: Record<number, string[]>;        // индекс панели → ключи справочника
-  uninterpreted: Record<number, string[]>;    // индекс панели → строки как есть
-  missingKeys: string[];                      // поля есть, а записи в справочнике нет
+  panelKeys: Record<number, string[]>;        // panel index → keys of the reference
+  uninterpreted: Record<number, string[]>;    // panel index → the lines as they are
+  missingKeys: string[];                      // the fields are there, the entry is not
 };
 
 export const PRIVATE_LAND_PHRASE = "privat parkering";
@@ -120,10 +123,10 @@ export function recognise(doc: SignDoc): Recognised {
     const keys: string[] = [];
     if (p.kind === "info_board") keys.push("info-board");
     if (p.kind === "operator_plate") keys.push("operator-plate");
-    // `Privat parkering` — единственная запись, которую опознаём ПО ТЕКСТУ.
-    // Схема под неё поля не имеет и не должна: свободный текст регламентом
-    // не предусмотрен. Но следствие важное — земля частная, условий владельца
-    // на столбе нет.
+    // `Privat parkering` is the one entry recognised BY TEXT. The schema has no field
+    // for it and should have none: free text is not provided for by the regulations.
+    // But the consequence is an important one — the land is private, and the owner's
+    // conditions are not on the pole.
     if ((p.lines ?? []).join(" ").toLowerCase().includes(PRIVATE_LAND_PHRASE)) {
       keys.push("privat-parkering");
     }
@@ -145,16 +148,17 @@ export function recognise(doc: SignDoc): Recognised {
       if (value && value in table) keys.push(table[value]);
     }
     if (parsed.arrow) {
-      // Стрелка под УКАЗАТЕЛЕМ значит «туда», а не «дотуда» (снимок `037`):
-      // `T11` описывает МЕСТО, где можно стоять, а у указателя места нет вовсе.
+      // An arrow under a WAYFINDING sign means "that way", not "as far as there"
+      // (photograph `037`): `T11` describes the PLACE where one may stand, and a
+      // wayfinding sign has no place at all.
       keys.push(wayfinding ? "wayfinding-direction"
                            : `arrow-${parsed.arrow.replace(/_/g, "-")}`);
     }
     for (const w of parsed.time_windows ?? []) {
       const k = w.day_class ? DAY[w.day_class] : undefined;
       if (k) keys.push(k);
-      // Чётность недели и сезон сужают окно и обязаны быть НАЗВАНЫ: правило,
-      // которое молча применяется, пользователь проверить не может.
+      // The parity of the week and the season narrow the window and are obliged to be
+      // NAMED: a rule applied in silence is one the user cannot check.
       if (w.week_parity) keys.push(w.week_parity === "even" ? "jamna-veckor" : "udda-veckor");
       if (w.dates) keys.push("datumintervall");
     }
@@ -169,10 +173,10 @@ export function recognise(doc: SignDoc): Recognised {
     }
     panelKeys[i] = unique;
 
-    // Нераспознанное. Табличка с правилом, из которой не вышло НИ ОДНОГО ключа,
-    // не понята — есть на ней текст или нет (снимок `042`: пиктограмма
-    // неизвестного класса приезжала как `pictogram: other` без строк текста
-    // и проваливалась между двумя сетями).
+    // The unrecognised. A plate carrying a rule out of which NOT ONE key came is not
+    // understood — whether there is text on it or not (photograph `042`: a pictogram
+    // of an unknown class arrived as `pictogram: other` with no lines of text and fell
+    // between the two nets).
     const notUnderstood = unique.length === 0 && p.kind === "sign_plate";
     const leftovers = [...(parsed.uninterpreted ?? [])];
     if (notUnderstood) leftovers.push(...(p.lines ?? []));

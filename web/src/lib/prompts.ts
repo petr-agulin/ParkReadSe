@@ -1,26 +1,28 @@
-// Промпты для двух вызовов модели.
+// The prompts for the two calls to the model.
 //
-// Здесь остаётся только то, что кодом не проверяется: тон, границы темы,
-// формулировки задачи. Всё, у чего есть последствие — порог, арифметика,
-// отбраковка лишних полей — живёт в коде и в схеме.
+// What stays here is only what code does not check: the tone, the bounds of the
+// subject, the wording of the task. Everything with a consequence — a threshold, the
+// arithmetic, the rejection of extra fields — lives in the code and in the schema.
 //
-// **Тексты не переписываются руками.** Промпт — это САМ ВОПРОС к модели: его
-// отпечаток держит все сохранённые ответы, и опечатка стоила бы полного прогона
-// набора. Источник — `prompts/*.md`, откуда их переносит `npm run emit`; здесь
-// собирается только оболочка.
+// **The texts are not rewritten by hand.** A prompt is THE QUESTION ITSELF put to the
+// model: its fingerprint holds every saved answer, and a typo would cost a full run
+// of the set. The source is `prompts/*.md`, from where `npm run emit` carries them;
+// what is assembled here is only the shell around them.
 //
-// **Форма ответа тоже не переписывается.** На OpenAI-совместимом диалекте провайдер
-// схему не принимает, поэтому список полей объясняется словами — и порождается
-// из самой схемы, чтобы не разойтись с ней.
+// **The shape of the answer is not rewritten either.** In the OpenAI-compatible
+// dialect a provider does not accept a schema, so the list of fields is explained in
+// words — and it is generated from the schema itself, so as not to drift from it.
 
 import { EXTRACT_INSTRUCTIONS, SHAPE_HEADER, TRIAGE_INSTRUCTIONS } from "./prompts.data";
 import type { Schema } from "./schema";
 import { SIGN_SCHEMA, TRIAGE_SCHEMA } from "./schema.data";
 
-/** Компактный скелет JSON по схеме: имена полей, типы, перечисления.
+/** A compact skeleton of the JSON by the schema: the names of the fields, the types,
+ *  the enumerations.
  *
- *  Описания полей не переносятся: они длинные и на русском, а модель ведёт
- *  англоязычная инструкция выше. Здесь нужна только форма. */
+ *  The descriptions of the fields are not carried over: the shape is all that is
+ *  wanted here. Leaving them out also keeps the prompt's fingerprint clear of them —
+ *  a description can be reworded without costing a run of the whole set. */
 export function shapeHint(schema: Schema, indent = 0): string {
   const defs: Record<string, Schema> = schema.$defs ?? {};
 

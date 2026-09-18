@@ -1,36 +1,38 @@
-// Классы дня по шведскому календарю. Порт `parkread/calendar_se.py`, слово в слово.
+// The classes of day by the Swedish calendar. A port of `parkread/calendar_se.py`,
+// word for word.
 //
-// Праздники задаёт `Lag (1989:253) om allmänna helgdagar`: § 1 перечисляет красные
-// дни, § 2 называет их даты. Правил три — постоянная дата, смещение от Пасхи
-// и «суббота, попавшая в такие-то числа», — и все три вычислимы, поэтому список
-// не хранится (решение 108).
+// The holidays are set by `Lag (1989:253) om allmänna helgdagar`: § 1 lists the red
+// days, § 2 names their dates. There are three rules — a fixed date, an offset from
+// Easter, and "the Saturday falling on such-and-such dates" — and all three are
+// computable, so no list is kept on disk (decision 108).
 //
-// Порядок проверок важен, и красное побеждает скобки по определению: канун — это
-// *vardag före sön- och helgdag*, то есть РАБОЧИЙ день перед красным. Праздник
-// рабочим днём не является и кануном быть не может.
+// The order of the checks matters, and red beats the brackets by definition: an eve
+// is a *vardag före sön- och helgdag*, that is, a WORKING day before a red one. A
+// holiday is not a working day and cannot be an eve.
 //
-// Окно продукта — 2026-2030 (решение 115): набор праздников со временем меняется
-// (до 2005 года вместо `nationaldagen` красным был `annandag pingst`), и «любой
-// год» тихо врал бы.
+// The product's window is 2026-2030 (decision 115): the set of holidays changes with
+// time (before 2005 the red day was `annandag pingst` rather than `nationaldagen`),
+// and "any year at all" would quietly lie.
 
 import { addDays, compare, days, isoDate, parseDate, weekday, type Civil } from "./civil";
 
 export const WEEKDAY = "weekday";   // vardag
 export const EVE = "eve";           // vardag före sön- och helgdag
 export const RED = "red";           // sön- och helgdag
-export const UNKNOWN = "unknown";   // дата вне вычисленного периода
+export const UNKNOWN = "unknown";   // a date outside the computed period
 
 export const SELECTABLE_FROM: Civil = { y: 2026, m: 1, d: 1 };
 export const SELECTABLE_TO: Civil = { y: 2030, m: 12, d: 31 };
 
-// Считается на год шире с каждой стороны: шкала строится на восемь суток вперёд,
-// и разбор 28 декабря 2030-го спрашивает про январь 2031-го.
+// Counted a year wider on each side: the scale is built eight days ahead, and a
+// reading on 28 December 2030 asks about January 2031.
 export const MARGIN = 1;
 
-/** Пасхальное воскресенье по григорианскому компутусу (Meeus/Jones/Butcher).
+/** Easter Sunday by the Gregorian computus (Meeus/Jones/Butcher).
  *
- *  «Полнолуние» закона — церковное, табличное, а не наблюдаемое: церковь считает
- *  по эпакте и золотому числу. Эта функция ту же таблицу и воспроизводит. */
+ *  The law's "full moon" is the ecclesiastical one — from a table, not observed: the
+ *  church counts by the epact and the golden number. This function reproduces that
+ *  same table. */
 export function easter(year: number): Civil {
   const a = year % 19;
   const b = Math.floor(year / 100);
@@ -48,15 +50,16 @@ export function easter(year: number): Civil {
   return { y: year, m: Math.floor(total / 31), d: (total % 31) + 1 };
 }
 
-/** Суббота в семидневном окне, начинающемся с указанного числа: так закон задаёт
- *  `midsommardagen` (20-26 июня) и `alla helgons dag` (31 октября - 6 ноября). */
+/** The Saturday in the seven-day window beginning on the given date: that is how the
+ *  law sets `midsommardagen` (20-26 June) and `alla helgons dag` (31 October -
+ *  6 November). */
 function saturdayBetween(year: number, month: number, first: number): Civil {
   const start = { y: year, m: month, d: first };
   return addDays(start, ((5 - weekday(start)) % 7 + 7) % 7);
 }
 
-/** Тринадцать красных дней года. Воскресенья сюда не входят — они красные сами
- *  по себе, и по той же § 1. */
+/** The thirteen red days of the year. Sundays are not among them — they are red in
+ *  their own right, and by that same § 1. */
 export function holidays(year: number): Map<string, string> {
   const e = easter(year);
   const pairs: [Civil, string][] = [
@@ -66,7 +69,7 @@ export function holidays(year: number): Map<string, string> {
     [e, "Påskdagen"],
     [addDays(e, 1), "Annandag påsk"],
     [{ y: year, m: 5, d: 1 }, "Första maj"],
-    // «Sjätte torsdagen efter påskdagen» — +39 дней; «sjunde söndagen» — +49.
+    // "Sjätte torsdagen efter påskdagen" — +39 days; "sjunde söndagen" — +49.
     [addDays(e, 39), "Kristi himmelsfärdsdag"],
     [addDays(e, 49), "Pingstdagen"],
     [{ y: year, m: 6, d: 6 }, "Sveriges nationaldag"],
@@ -78,8 +81,8 @@ export function holidays(year: number): Map<string, string> {
   return new Map(pairs.map(([d, name]) => [isoDate(d), name]));
 }
 
-// Английские названия — для экрана; шведское остаётся рядом, потому что именно оно
-// стоит в календаре, который человек откроет для проверки.
+// The English names are for the screen; the Swedish stays beside them, because the
+// Swedish is what stands in the calendar a person will open to check.
 export const NAME_EN: Record<string, string> = {
   "Nyårsdagen": "New Year's Day",
   "Trettondedag jul": "Epiphany",
@@ -96,7 +99,8 @@ export const NAME_EN: Record<string, string> = {
   "Annandag jul": "Boxing Day",
 };
 
-/** Можно ли спрашивать про этот день. Граница продукта, а не календаря. */
+/** Whether this day may be asked about. A boundary of the product, not of the
+ *  calendar. */
 export function selectable(d: Civil): boolean {
   return compare(d, SELECTABLE_FROM) >= 0 && compare(d, SELECTABLE_TO) <= 0;
 }
@@ -126,15 +130,15 @@ export class Calendar {
   }
 
   private isRed(d: Civil): boolean {
-    return this.red.has(isoDate(d)) || weekday(d) === 6;   // праздник или воскресенье
+    return this.red.has(isoDate(d)) || weekday(d) === 6;   // a holiday, or a Sunday
   }
 
   covers(d: Civil): boolean {
     return compare(d, this.coveredFrom) >= 0 && compare(d, this.coveredTo) <= 0;
   }
 
-  /** 1) красный: праздник или воскресенье. 2) канун: не красный, а следующий
-   *  день красный. 3) будни: всё остальное. */
+  /** 1) red: a holiday or a Sunday. 2) an eve: not red itself, while the next day is
+   *  red. 3) a weekday: everything else. */
   dayClass(d: Civil): string {
     if (!this.covers(d)) return UNKNOWN;
     if (this.isRed(d)) return RED;
@@ -142,13 +146,14 @@ export class Calendar {
     return WEEKDAY;
   }
 
-  /** Рабочий день — только `weekday`. Суббота, воскресенье, праздник и канун
-   *  счётчик 24 часов не тратят. */
+  /** A working day is `weekday` and nothing else. Saturday, Sunday, a holiday and an
+   *  eve do not spend the 24-hour counter. */
   isWorkingDay(d: Civil): boolean {
     return this.dayClass(d) === WEEKDAY;
   }
 
-  /** Первый рабочий день строго после `d`. `null`, если вышли за календарь. */
+  /** The first working day strictly after `d`. `null` if we have run off the
+   *  calendar. */
   nextWorkingDay(d: Civil): Civil | null {
     let cur = addDays(d, 1);
     while (this.covers(cur)) {
