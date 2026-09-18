@@ -1,19 +1,20 @@
-// Кому отведены места.
+// Who the spaces are set aside for.
 //
-// **Это подпись, а не проверка.** Продукт называет круг и останавливается: относится
-// ли к нему человек у знака, знает только он сам (`PROJECT_BRIEF.md`). Поэтому здесь
-// не бывает «вам можно» и «вам нельзя» — только то, что говорит сам знак.
+// **This is a caption, not a check.** The product names the circle and stops there:
+// whether the person at the sign belongs to it, they alone know (`PROJECT_BRIEF.md`).
+// So there is never a "you may" or a "you may not" here — only what the sign itself
+// says.
 //
-// Круг приходит с бэкенда готовой строкой из справочника. Если знак никого не сужает,
-// там стоит его собственное значение: `P` отведён всем зарегистрированным
-// транспортным средствам.
+// The circle arrives from the backend as a finished string out of the reference. If
+// the sign narrows nobody, its own meaning stands there: `P` is set aside for every
+// registered vehicle.
 
 import { distinctCircles } from "../lib/circles";
 import type { Regime } from "../types";
 
 export default function WhoCanPark({ regimes }: { regimes: Regime[] }) {
-  // Окон бывает несколько, а круг у них часто один: повторять его незачем
-    // (`lib/circles`). Разные круги остаются раздельными.
+  // There are several windows, and often one circle between them: no reason to repeat
+  // it (`lib/circles`). Different circles stay apart.
   const shown = distinctCircles(
     regimes.map((r) => r.who_can_park ?? []).filter((c) => c.length > 0),
   );
@@ -25,11 +26,11 @@ export default function WhoCanPark({ regimes }: { regimes: Regime[] }) {
 
       {shown.map((circle, i) => (
         <div key={i} className={i > 0 ? "mt-3" : undefined}>
-          {/* Про сторону здесь не говорим вовсе: блок отвечает на вопрос «кому»,
-              а не «где». Место названо панелью со стрелкой. */}
-          {/* Одно условие — просто строка. Несколько — список: иначе они
-              слипаются в абзац, и непонятно, где кончается одно и начинается
-              другое. */}
+          {/* The side of the road is not spoken of here at all: this block answers
+              "who", not "where". The place is named by the panel with the arrow. */}
+          {/* One condition is simply a line. Several make a list: otherwise they
+              stick together into a paragraph, and it is unclear where one ends and
+              the next begins. */}
           <ul
             className={
               circle.length > 1

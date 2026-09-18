@@ -1,12 +1,13 @@
-// Значки интерфейса. Рисуются здесь, а не берутся набором.
+// The marks of the interface. Drawn here rather than taken from a set.
 //
-// Открытый вопрос `design.md` — «взять один набор (Lucide), а не рисовать» —
-// решён на первом же экране, которому значки понадобились: рисуем. Причина та же,
-// по которой шрифт остался системным (решение 143): набор значков — это чужой
-// пакет ради полудюжины путей, а страница обещает не тянуть лишнего.
+// The open question in `design.md` — "take one set (Lucide) rather than draw" — was
+// settled on the first screen that needed marks: we draw. The reason is the one that
+// kept the typeface a system one (decision 143): a set of icons is somebody else's
+// package for half a dozen paths, and the page promises to pull nothing it does not
+// need.
 //
-// Цвет берётся у текста (`currentColor`), поэтому значок красится токеном
-// на месте: `text-ink-2`, `text-on-dark` и так далее.
+// The colour is taken from the text (`currentColor`), so a mark is painted by a token
+// where it stands: `text-ink-2`, `text-on-dark` and so on.
 
 type Props = { className?: string };
 
@@ -29,8 +30,8 @@ function Svg({ className, children }: Props & { children: React.ReactNode }) {
   );
 }
 
-/** Настройки: три ползунка, лёжа. Та же фигура, что стояла вертикально,
- *  повёрнутая на четверть оборота, — поэтому остаётся в одном ряду с остальными. */
+/** Settings: three sliders, lying down. The same figure that used to stand upright,
+ *  turned a quarter of a turn — which is why it stays in one row with the rest. */
 export function Sliders(p: Props) {
   return (
     <Svg {...p}>
@@ -40,7 +41,7 @@ export function Sliders(p: Props) {
   );
 }
 
-/** Камера: основное действие — снять знак. */
+/** The camera: the main action — photograph a sign. */
 export function Camera(p: Props) {
   return (
     <Svg {...p}>
@@ -51,7 +52,7 @@ export function Camera(p: Props) {
   );
 }
 
-/** Ключ. */
+/** A key. */
 export function Key(p: Props) {
   return (
     <Svg {...p}>
@@ -61,7 +62,7 @@ export function Key(p: Props) {
   );
 }
 
-/** Замок: ключ остаётся на устройстве. */
+/** A lock: the key stays on the device. */
 export function Lock(p: Props) {
   return (
     <Svg {...p}>
@@ -71,7 +72,7 @@ export function Lock(p: Props) {
   );
 }
 
-/** Щит: своего сервера у приложения нет. */
+/** A shield: the application has no server of its own. */
 export function Shield(p: Props) {
   return (
     <Svg {...p}>
@@ -80,10 +81,11 @@ export function Shield(p: Props) {
   );
 }
 
-// Крестик отсюда убран вместе с кнопкой сброса момента (пункт 27): очищать
-// дату даёт системный диалог. Лежать без дела он не должен — историю помнит git.
+// The cross went out of here together with the button that reset the moment (item 27):
+// clearing the date is the system dialog's job. It must not lie about unused — git
+// remembers the history.
 
-/** Рамка: наружу уходит только вырезанное. */
+/** A frame: only what is cropped goes outward. */
 export function Frame(p: Props) {
   return (
     <Svg {...p}>

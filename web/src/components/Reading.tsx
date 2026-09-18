@@ -1,15 +1,15 @@
-// Экран 3c — разбор знака.
+// Screen 3c — the reading of a sign.
 //
-// **Ответ идёт перед доказательством** (решение 149): окно стоянки, затем кому
-// отведены места, и только потом — что именно прочитано с табличек. Человек стоит
-// у знака и хочет ответ; реконструкция нужна ему, чтобы этот ответ проверить,
-// а не вместо него.
+// **The answer comes before the evidence** (decision 149): the parking window, then
+// who the spaces are set aside for, and only after that what exactly was read off the
+// plates. A person stands at a sign and wants the answer; the reconstruction is there
+// so they can check that answer, not instead of it.
 //
-// Два блока ответа поменялись местами по слову разработчика; суть решения 149
-// цела — доказательство по-прежнему последнее.
+// The two answer blocks swapped places at the developer's word; the substance of
+// decision 149 is intact — the evidence is still last.
 //
-// Сами карточки рисуют прежние компоненты. Здесь — порядок и та оговорка,
-// которая обязана стоять ВЫШЕ окна.
+// The cards themselves are drawn by the same components as before. What lives here is
+// the order, and the caveat that is obliged to stand ABOVE the window.
 
 import { firstWindow, readFor } from "../lib/reading";
 import type { Analysis, GeneralRule } from "../types";
@@ -23,23 +23,24 @@ type Props = {
   preview: string | null;
   rules: GeneralRule[];
   onAnother: () => void;
-  /** Стрелка в шапке. Ведёт туда же, куда кнопка внизу, — в камеру:
-   *  с разбора уходят снимать следующий знак. */
+  /** The arrow in the header. It leads where the button at the bottom leads — to the
+   *  camera: from a reading one goes to photograph the next sign. */
   onBack: () => void;
 };
 
 export default function Reading({ data, preview, rules, onAnother, onBack }: Props) {
   const c = data.completeness;
-  // Первой рисуется не обязательно первый режим: режим без периодов и без
-  // объяснения карточки не даёт вовсе. Строку момента вешаем на ту, что видна,
-  // и какая это — решает `lib/reading`, а не эта разметка.
+  // The first card drawn is not necessarily the first regime: a regime with no periods
+  // and no explanation gives no card at all. The moment line is hung on the one that
+  // is visible, and which that is `lib/reading` decides, not this markup.
   const firstCard = firstWindow(data.regimes);
 
   return (
     <ErrorBoundary>
       <section className="flex flex-col gap-3.5">
-        {/* Навигация как на камере. Стрелка шлёт то же действие, что и кнопка
-            внизу: с разбора уходят снимать следующий знак, а не на главный. */}
+        {/* Navigation as on the camera. The arrow sends the same action as the button
+            at the bottom: from a reading one goes to photograph the next sign, not to
+            the home screen. */}
         <div className="flex items-center gap-3.5">
           <button
             type="button"
@@ -53,9 +54,9 @@ export default function Reading({ data, preview, rules, onAnother, onBack }: Pro
           <span className="flex-1 text-nav font-bold text-ink-strong">Sign reading</span>
         </div>
 
-        {/* Оговорка стоит НАД окном, потому что оговаривает именно его: уехав
-            в карточку «что прочитано», она оказалась бы ниже того, к чему
-            относится. Остальная полнота живёт там, внизу. */}
+        {/* The caveat stands ABOVE the window because it qualifies exactly that:
+            carried off into the "what was read" card it would end up below the thing
+            it speaks about. The rest of the completeness lives down there. */}
         {c.may_hide_prohibition && (
           <p className="rounded-card-sm bg-danger-bg p-4 text-body font-semibold text-deny">
             An unread panel may carry a prohibition, so no period below is presented
@@ -63,16 +64,16 @@ export default function Reading({ data, preview, rules, onAnother, onBack }: Pro
           </p>
         )}
 
-        {/* Формулировка приходит из ответа, а не живёт в вёрстке: место для слов
-            о знаке — рядом с остальными, в `present`. */}
+        {/* The wording arrives from the answer rather than living in the markup: the
+            place for words about a sign is beside the rest, in `present`. */}
         {data.has_answer && data.note && (
           <p className="rounded-card-sm bg-ground p-4 text-label text-ink-2 shadow-card">
             {data.note.text}
           </p>
         )}
 
-        {/* Одна карточка окна на каждый режим: стрелки делят знак на участки,
-            адресаты — на круги, и у каждого своё окно. */}
+        {/* One window card for each regime: arrows divide the sign into stretches and
+            the addressees into circles, and each has a window of its own. */}
         <div id="window" className="flex flex-col gap-3.5">
           {data.regimes.map((r, i) => (
             <PeriodTimeline
@@ -85,8 +86,9 @@ export default function Reading({ data, preview, rules, onAnother, onBack }: Pro
           ))}
         </div>
 
-        {/* Адресаты — под окном: слово разработчика. Суть решения 149 цела —
-            таблички по-прежнему последние, доказательство идёт после ответа. */}
+        {/* The addressees go under the window: the developer's word. The substance of
+            decision 149 is intact — the plates are still last, and the evidence comes
+            after the answer. */}
         <div id="who">
           <WhoCanPark regimes={data.regimes} />
         </div>

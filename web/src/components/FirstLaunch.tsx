@@ -1,15 +1,17 @@
-// Экран 2f — первый запуск, ключа ещё нет.
+// Screen 2f — the first launch, with no key yet.
 //
-// Задача у него одна: объяснить, что это за приложение, и попросить ключ. Камеры
-// и галереи здесь нет вовсе (решение 147): кадр, снятый без ключа, кончился бы
-// сообщением «нужен ключ», а путь в тупик хуже честной просьбы в самом начале.
+// It has one task: explain what this application is and ask for a key. There is no
+// camera and no gallery here at all (decision 147): a frame taken without a key would
+// end in the message "a key is needed", and a path into a dead end is worse than an
+// honest request at the very start.
 //
-// **Экран обязан помещаться целиком** — до последней строки, без прокрутки.
-// Высоту окна задаёт оболочка (`App`) в `svh`, экран занимает её через `flex-1`
-// и сам ничего не меряет.
+// **The screen is obliged to fit whole** — down to its last line, with no scrolling.
+// The height of the window is set by the shell (`App`) in `svh`; the screen takes it
+// through `flex-1` and measures nothing itself.
 //
-// Говорит он не теми словами, что главный экран с ключом: там предлагают снять
-// знак, здесь объясняют, зачем ключ. Расхождение осознанное (см. `lib/home`).
+// It speaks in words other than those of the home screen with a key: there they offer
+// to photograph a sign, here they explain what the key is for. The divergence is
+// deliberate (see `lib/home`).
 
 import { ASSURANCES, BENEFITS, HEADLINE, SIGN_PLATES } from "../lib/home";
 import { Frame, Key, Lock, Shield, Sliders } from "./Icon";
@@ -38,14 +40,15 @@ export default function FirstLaunch({ onAddKey, onSettings }: Props) {
         </button>
       </header>
 
-      {/* Знак — один посреди экрана: это предмет, о котором всё приложение. */}
+      {/* The sign stands alone in the middle of the screen: it is the thing the whole
+          application is about. */}
       <div className="flex flex-1 flex-col items-center justify-center gap-7 text-center">
         <SignPlate size="hero" plates={SIGN_PLATES} />
 
         <div>
           <h1 className="text-display font-extrabold text-ink-strong">{HEADLINE}</h1>
-          {/* Обещания — мельче и бледнее заголовка: это пояснение к нему,
-              а не три отдельных заявления. */}
+          {/* The promises are smaller and paler than the headline: they explain it
+              rather than making three separate claims. */}
           <div className="mt-2 flex flex-col text-label text-ink-3">
             {BENEFITS.map((line) => <span key={line}>{line}</span>)}
           </div>
@@ -71,16 +74,17 @@ export default function FirstLaunch({ onAddKey, onSettings }: Props) {
           <span className="text-card text-on-dark opacity-85">›</span>
         </button>
 
-        {/* Не пилюли, а тихий список: у пилюль своя заливка и своя форма, и рядом
-            с синей кнопкой они спорят с ней за внимание, хотя это всего лишь
-            сноска к ней. Подробности ждут в настройках, рядом с переключателем. */}
+        {/* Not pills but a quiet list: pills have a fill and a shape of their own, and
+            next to the blue button they argue with it for attention, though they are
+            only a footnote to it. The details wait in the settings, beside the
+            switch. */}
         <div className="flex flex-col items-center gap-1.5">
           {ASSURANCES.map((text, i) => {
             const Mark = MARKS[i];
             return (
-              // `text-section` — это 13 px из шкалы, а не размер по месту.
-              // `tracking-normal` гасит разрядку: она заведена для прописных
-              // секционных подписей, а здесь обычная фраза.
+              // `text-section` is 13 px from the scale, not a size chosen on the spot.
+              // `tracking-normal` kills the letter-spacing: that is set up for
+              // capitalised section captions, and this is an ordinary phrase.
               <span key={text}
                     className="flex items-center gap-2 text-section tracking-normal
                                text-ink-3">

@@ -1,9 +1,10 @@
-// Блок 1: что сервис увидел.
+// Block 1: what the service saw.
 //
-// Человек у знака читает знак, а не схему. На каждую панель — что на ней написано
-// и что это значит, с официальным названием и кодом (`Length of road section (T1)`).
-// Коды приходят из справочника, куда занесены по сериям E, C и T; пустой код
-// означает, что кода не существует — табло оператора не дорожный знак.
+// A person at a sign reads the sign, not a diagram. For each panel — what is written
+// on it and what that means, with the official name and the code
+// (`Length of road section (T1)`). The codes come from the reference, where they are
+// entered by the E, C and T series; an empty code means no code exists — an operator's
+// board is not a road sign.
 
 import { useState } from "react";
 import { plateRow } from "../lib/reading";
@@ -11,30 +12,30 @@ import type { Analysis, GeneralRule, Panel } from "../types";
 import Completeness from "./Completeness";
 
 /**
- * Табличка карточкой: сверху её собственный текст, под ним — что он значит,
- * в углу — главный это знак или табличка под ним.
+ * A plate as a card: its own text on top, what that text means beneath it, and in the
+ * corner whether this is the main sign or a plate under it.
  *
- * Читается как сама табличка. Прежняя форма «подпись слева → значение справа»
- * держалась, пока значение одно, и разъезжалась дальше; разработчик посмотрел
- * на оба варианта на телефоне и выбрал этот.
+ * It reads the way the plate itself does. The former shape — caption on the left,
+ * meaning on the right — held while the meaning was single and came apart beyond
+ * that; the developer looked at both on a phone and chose this one.
  *
- * Что показывать, решает `lib/reading`: пустой `quote` значит, что своего текста
- * у таблички нет — верхней строки тогда не будет вовсе.
+ * What to show is decided by `lib/reading`: an empty `quote` means the plate has no
+ * text of its own, and then there is no top line at all.
  */
 function Plate({ panel }: { panel: Panel }) {
   const row = plateRow(panel);
   return (
     <div className="flex items-start justify-between gap-3 rounded-tile border border-line
                     bg-inset px-4 py-3">
-      {/* `min-w-0` — чтобы длинная строка переносилась, а не выталкивала
-          метку за край карточки. */}
+      {/* `min-w-0` so that a long line wraps instead of pushing the label past the
+          edge of the card. */}
       <div className="flex min-w-0 flex-1 flex-col gap-0.5">
         {row.quote && <span className="text-body text-ink">{row.quote}</span>}
         {row.lines.map((line, i) => (
           <span key={i} className="text-body text-ink-3">{line}</span>
         ))}
-        {/* Пометку «это не правило» нельзя подавать как смысл таблички:
-            табло оператора дорожным знаком не является. */}
+        {/* The mark "this is not a rule" must not be served as the plate's meaning:
+            an operator's board is not a road sign. */}
         {!panel.carries_rule && (
           <span className="text-label text-ink-3">Not a parking rule</span>
         )}
@@ -48,8 +49,9 @@ export default function WhatWeSaw({
   data, preview, rules,
 }: { data: Analysis; preview: string | null; rules: GeneralRule[] }) {
   const [openRules, setOpenRules] = useState(false);
-  // Горизонтальный снимок в узкой колонке превращается в марку. Ориентацию
-  // узнаём у самой картинки и кладём такую над разбором, во всю ширину.
+  // A horizontal photograph in a narrow column turns into a postage stamp. We ask the
+  // picture itself about its orientation and lay a wide one above the reading, across
+  // the full width.
   const [wide, setWide] = useState(false);
   const saw = data.what_we_saw;
   const panels = saw.panels ?? [];
@@ -73,12 +75,12 @@ export default function WhatWeSaw({
 
   return (
     <section className="rounded-card bg-ground p-6 shadow-raised">
-      {/* Уверенности в шапке нет: она была сказана дважды — чипом здесь и строкой
-          прямо под ним, в `Completeness`. Осталась строка, где рядом с ней
-          полнота, причины и тон. */}
-      {/* Тот же кегль, что у «Who can park here» и «Your parking window»: три
-          карточки разбора — ровня, и заголовок одной из них не может быть
-          на ступень мельче остальных. */}
+      {/* How sure we are is not in the header: it used to be said twice — as a chip
+          here and as a line directly beneath it, in `Completeness`. The line stayed,
+          where the completeness, the reasons and the tone stand beside it. */}
+      {/* The same size as "Who can park here" and "Your parking window": the three
+          reading cards are equals, and the heading of one of them cannot be a step
+          smaller than the rest. */}
       <h2 className="mb-3 text-card font-extrabold text-ink-strong">What we read</h2>
       <Completeness data={data} />
 
@@ -101,8 +103,9 @@ export default function WhatWeSaw({
 
           {rules.length > 0 && (
             <div className="rounded-md border border-dashed border-line bg-inset p-2.5">
-              {/* Кнопка — только заголовок. Раскрытый текст лежит СНАРУЖИ неё:
-                  внутри кнопки клик по самому правилу сворачивал бы список. */}
+              {/* The button is the heading alone. The unfolded text lies OUTSIDE it:
+                  inside the button, a click on the rule itself would fold the list
+                  back up. */}
               <button
                 type="button"
                 onClick={() => setOpenRules(!openRules)}

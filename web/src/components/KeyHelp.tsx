@@ -1,20 +1,22 @@
-// Экран 2h — «где взять ключ». Текст и ничего кроме: ни состояния, ни решений.
+// Screen 2h — "where to get a key". Text and nothing besides: no state, no decisions.
 //
-// О чужих моделях говорится только проверяемое — имя и совместимость (решение 150).
-// Всё, что мы знаем о качестве, измерено на одной модели и одном наборе из 55
-// снимков; «не хуже» про чужой товар мы не мерили и не скажем.
+// Of other people's models only the checkable is said — the name and the compatibility
+// (decision 150). Everything we know about quality was measured on one model and one
+// set of 55 photographs; "no worse" about somebody else's goods we have not measured
+// and will not say.
 //
-// **Про деньги здесь не обещается ничего.** У провайдеров бывают и бесплатные квоты,
-// и платные тарифы, и меняются они без нашего ведома. Экран называет размер запроса
-// и говорит, зачем он человеку, — примерить к своему тарифу. Слов «платно», «бесплатно»
-// и «без карты» на нём нет.
+// **Nothing here promises a price.** Providers have free allowances and paid rates
+// alike, and both change without our knowing. The screen names the size of a request
+// and says what it is for — to weigh against your own provider's terms. It calls no
+// provider cheap, and promises nothing about what a key will cost.
 
 type Props = { onBack: () => void };
 
-// О чужих провайдерах — только проверяемое: имя и совместимость (решение 150).
-// Ни «дёшево», ни «бесплатно», ни «лучше»: тарифы и наборы моделей меняются без нас,
-// и обещание, данное здесь, устареет молча. Чем приложение пользуются каждый день —
-// тоже не их дело: человеку нужен работающий ключ, а не наша биография.
+// Of other people's providers — only the checkable: the name and the compatibility
+// (decision 150). Neither "cheap" nor "free" nor "better": rates and model line-ups
+// change without us, and a promise given here would go stale in silence. What the
+// application is used for every day is not their business either: the person needs a
+// working key, not our biography.
 const PROVIDERS: { name: string; note: string }[] = [
   { name: "Google Gemini", note: "One place to look for a vision model and a key." },
   { name: "OpenAI", note: "Vision models of the GPT family." },
@@ -26,8 +28,8 @@ const PROVIDERS: { name: string; note: string }[] = [
   },
 ];
 
-// Четыре шага, а не три: выбор модели был пропущен, хотя без её точного имени
-// последний шаг выполнить нечем.
+// Four steps, not three: choosing a model was skipped, though without its exact name
+// there is nothing to carry out the last step with.
 const STEPS = [
   "Open your provider's API keys page.",
   "Create a key there. Copy it once — most providers show it only that one time.",
@@ -38,9 +40,9 @@ const STEPS = [
 export default function KeyHelp({ onBack }: Props) {
   return (
     <section className="flex flex-col gap-4">
-      {/* Возврат — стрелкой, и она ведёт туда, откуда пришли: `2h` открывается
-          и с первого запуска, и из настроек, поэтому кнопки «Back to Settings»
-          внизу нет вовсе — она была бы неправдой в половине случаев. */}
+      {/* Going back is by arrow, and it leads where we came from: `2h` opens both from
+          the first launch and from the settings, so there is no "Back to Settings"
+          button at the bottom at all — it would be untrue in half the cases. */}
       <div className="flex items-center gap-3">
         <button
           type="button"
@@ -61,9 +63,10 @@ export default function KeyHelp({ onBack }: Props) {
         <p className="mt-3 text-body text-ink-2">
           ParkRead is not tied to one provider: you bring the key and pick the model.
         </p>
-        {/* Требование к провайдеру названо прямо: «умеет смотреть на снимок» мало.
-            Модель за другим интерфейсом не заработает, и человек не поймёт почему.
-            Последняя фраза — мост к списку ниже: до неё абзац обрывался на технике. */}
+        {/* The requirement on a provider is named outright: "can look at a photograph"
+            is not enough. A model behind another interface will not work, and the
+            person would not understand why. The last phrase is a bridge to the list
+            below: without it the paragraph broke off on technicalities. */}
         <p className="mt-3 text-body text-ink-2">
           One requirement: the provider must answer the OpenAI-compatible way
           (<code className="font-mono text-label">POST /chat/completions</code>).
@@ -109,10 +112,10 @@ export default function KeyHelp({ onBack }: Props) {
             aistudio.google.com/docs/api-key
           </a>.
         </p>
-        {/* Размер запроса назван с причиной: сам по себе он ничего человеку
-            не говорит. Сказано, ЗАЧЕМ он ему — примерить к тарифу или к бесплатной
-            квоте, не гадая. Про «платно» здесь не сказано ни слова: у провайдеров
-            бывает и то, и другое. */}
+        {/* The size of a request is named with its reason: by itself it tells a person
+            nothing. What it is FOR is said — to hold against a rate or an allowance,
+            without guessing. No promise about price is made here: providers have the
+            one and the other. */}
         <p className="mt-2 text-label text-ink-3">
           Reading one sign takes two model calls, about 1700 tokens — enough to weigh
           against your provider's free allowance or its rates.
@@ -120,8 +123,9 @@ export default function KeyHelp({ onBack }: Props) {
       </div>
 
       <div className="rounded-card-sm bg-note p-5">
-        {/* Не «платёжный инструмент»: ключ бывает и от бесплатной квоты. Опасность
-            от этого не меньше — тратит её тот, у кого ключ на руках. */}
+        {/* Not "a payment instrument": a key can belong to an allowance that costs
+            nothing. The danger is no smaller for that — the one spending it is
+            whoever holds it. */}
         <p className="text-label text-note-ink">
           The key is yours, and whoever holds it spends your allowance. ParkRead keeps
           it on this device unless you switch that off — on a phone that is not yours,
