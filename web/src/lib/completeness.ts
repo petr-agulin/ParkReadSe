@@ -1,15 +1,16 @@
-// Полнота извлечения и политика ответа. Порт `parkread/completeness.py`, дословный.
+// How complete the reading is, and what the answer may say. Ported from
+// `parkread/completeness.py`, line for line.
 //
-// Разрыв, который этот модуль закрывает: уверенность как одно число даёт два исхода —
-// «ответ» или «отказ». Реальность богаче: чаще всего часть знака прочитана, а часть
-// нет, и обслуживать надо именно этот случай.
+// The gap this module closes: confidence as a single number gives two outcomes -
+// an answer or a refusal. Reality is richer: most often part of the sign was read
+// and part was not, and it is exactly that case which has to be served.
 //
-// КАТЕГОРИЮ ЗАДАЁТ ТО, ЧЕГО НЕ ХВАТАЕТ, а не то, насколько сильно код в себе
-// сомневается. Число уверенности работает внутри категории, а не вместо неё.
+// THE CATEGORY IS SET BY WHAT IS MISSING, not by how strongly the code doubts
+// itself. The confidence number works inside the category, not instead of it.
 //
-// Главное правило частичного разбора — СУЗИТЬ МОЖНО, РАСШИРИТЬ НЕЛЬЗЯ. Непрочитанная
-// панель может оказаться запретом. Ошибка в сторону сужения стоит пользователю лишней
-// осторожности, ошибка в сторону расширения стоит эвакуации.
+// The governing rule of a partial reading is NARROWING IS ALLOWED, WIDENING IS NOT.
+// An unread panel may be a prohibition. An error towards narrowing costs the user
+// some extra caution; an error towards widening costs a tow.
 
 import { ALLOWED, UNCERTAIN, type Evaluation } from "./engine";
 import type { Panel, Parsed, SignDoc } from "./sign";
@@ -19,7 +20,7 @@ export const FULL = "full";
 export const PARTIAL = "partial";
 export const INSUFFICIENT = "insufficient";
 
-// пометки на периодах
+// notes placed on periods
 export const MAY_PROHIBIT = "unread_panel_may_prohibit";
 export const MAY_BE_INCOMPLETE = "conditions_may_be_incomplete";
 
@@ -37,46 +38,48 @@ export function hasAnswer(a: Assessment): boolean {
   return a.category === FULL || a.category === PARTIAL;
 }
 
-// Веса калиброваны замером (`npm run measure`). Шесть сигналов из одиннадцати на наборе
-// не изменились ни разу, и весят вместе 0.55 — но перекладывать их вес нельзя:
-// постоянны они потому, что в наборе нет снимков, где основной знак не читается
-// или день непонятен. `schema_valid` постоянен по другой причине: разбор, схему
-// не прошедший, до формулы не доходит вовсе, поэтому его вес и равен нулю.
+// The weights were calibrated by measurement (`npm run measure`). Six of the eleven
+// signals never once changed across the set, and together they weigh 0.55 - but
+// their weight must not be redistributed: they are constant because the set holds no
+// photograph where the main sign is unreadable or the day is unclear. `schema_valid`
+// is constant for a different reason: a reading that fails the schema never reaches
+// the formula at all, which is why its weight is zero.
 export const WEIGHTS: Record<string, number> = {
   schema_valid: 0.0,
   main_sign_identified: 0.15,
   main_sign_readable: 0.10,
   panels_read_share: 0.20,
-  // Прочитать текст таблички и понять её — разные вещи (`Beskickningsfordon`
-  // разбирался с уверенностью 98%: текст снят, смысл неизвестен).
+  // Reading a plate's text and understanding it are different things
+  // (`Beskickningsfordon` was read with 98% confidence: the text was captured, the
+  // meaning unknown).
   plates_interpreted: 0.10,
   panel_count_agreement: 0.10,
-  // Чем подтверждается, что знак прочитан верно, кроме него самого: табличка
-  // с ПРАВИЛОМ — независимое подтверждение, стрелка — нет (снимок `050`).
+  // What corroborates that the sign was read correctly, other than itself: a plate
+  // stating a RULE is independent corroboration, an arrow is not (photograph `050`).
   main_sign_corroborated: 0.10,
-  // Хватило ли на прочитанный текст пикселей. Продукт меряет это САМ: сколько
-  // пикселей у снимка — факт, а не мнение модели.
+  // Whether the frame held enough pixels for the text claimed. The product measures
+  // this ITSELF: how many pixels a photograph has is a fact, not an opinion.
   text_fits_the_pixels: 0.10,
   no_repairs_needed: 0.05,
   day_class_known: 0.05,
   model_confidence: 0.05,
 };
 
-// Площадь кадра на печатный знак, ниже которой прочтение неправдоподобно.
-// Число из замера: три самых «плотных» снимка набора — ровно те три, на которых
-// ответ разошёлся с эталоном.
+// Area of frame per printed character, below which a reading is implausible. The
+// number comes from the measurement: the three most crowded photographs of the set
+// are exactly the three whose answer disagreed with the reference.
 export const PIXELS_PER_CHARACTER = 1000;
 
-// Ниже этой доли разбор перестаёт быть полным: заявлено больше текста, чем кадр
-// может содержать.
+// Below this share the reading stops being full: more text is claimed than the frame
+// can hold.
 export const TEXT_PLAUSIBLE_ENOUGH = 0.5;
 
 const parsedOf = (p: Panel): Parsed => p.parsed ?? {};
 const platesOf = (doc: SignDoc): Panel[] =>
   (doc.panels ?? []).filter((p) => p.kind === "sign_plate");
 
-/** Насколько заявленный текст умещается в пиксели снимка. Размер неизвестен
- *  или текста не заявлено — единица: наказывать не за что. */
+/** How far the claimed text fits into the photograph's pixels. An unknown size, or
+ *  no text claimed, gives one: there is nothing to penalise. */
 function textFits(sign: SignDoc, imagePixels: number | null): number {
   if (!imagePixels) return 1.0;
   const chars = platesOf(sign)
@@ -85,8 +88,8 @@ function textFits(sign: SignDoc, imagePixels: number | null): number {
   return Math.min(1.0, imagePixels / (chars * PIXELS_PER_CHARACTER));
 }
 
-/** Панель считается непрочитанной, если модель прямо сказала «нечитаемо» либо
- *  на ней нет ни текста, ни единого разобранного поля. */
+/** A panel counts as unread if the model said outright that it is illegible, or if
+ *  it carries neither text nor a single parsed field. */
 function unreadPanels(panels: Panel[]): Panel[] {
   return panels.filter((p) => {
     if (p.kind !== "sign_plate") return false;
@@ -96,39 +99,40 @@ function unreadPanels(panels: Panel[]): Panel[] {
   });
 }
 
-// Поля, которые говорят о ПРАВИЛЕ стоянки: сколько, кому, когда, почём.
+// Fields that speak of the RULE of parking: how long, for whom, when, at what price.
 export const RULE_KEYS = new Set([
   "fee", "tariff_code", "payment_method", "duration_limit", "time_windows",
   "eligibility", "vehicle_class", "permit_required", "prohibition",
   "scope_shift", "permits_parking",
 ]);
 
-// Поля, которые говорят лишь о ПОЛОЖЕНИИ: куда, сколько метров, сколько мест, как
-// ставить. Правило они уточняют, но сами не свидетельствуют, что оно есть: стрелка
-// на указателе к стоянке выглядит точно так же. В подсчёте не участвуют — список
-// держит границу: тест не даст ни одному из них попасть в `RULE_KEYS`.
+// Fields that speak only of PLACE: where, how many metres, how many spaces, how to
+// stand. They qualify a rule but do not themselves witness that one exists: an arrow
+// on a sign pointing to a car park looks exactly the same. They take no part in the
+// count - the list holds the boundary, and a test keeps any of them from reaching
+// `RULE_KEYS`.
 export const PLACEMENT_KEYS = new Set([
   "arrow", "placement", "stretch_metres", "place_count", "pictogram",
 ]);
 
-/** Есть ли хоть одна табличка, подтверждающая, что знак и правда о стоянке ЗДЕСЬ.
+/** Is there any plate corroborating that the sign really is about parking HERE?
  *
- *  Без таких табличек весь ответ держится на одном поле `main_sign.type` — одном
- *  прочтении одной картинки, которому нечего противопоставить (снимок `050`). */
+ *  Without such plates the whole answer rests on the single field `main_sign.type` -
+ *  one reading of one picture, with nothing to set against it (photograph `050`). */
 function corroborated(plates: Panel[]): boolean {
   return plates.some((p) => Object.keys(parsedOf(p)).some((k) => RULE_KEYS.has(k)));
 }
 
-/** Может ли непрочитанная панель оказаться запретом. Жёлтый в Швеции носят
- *  запрещающие знаки; нечитаемый цвет — худший случай, и он тоже считается. */
+/** Could an unread panel turn out to be a prohibition? In Sweden prohibiting signs
+ *  are yellow; an unreadable colour is the worst case, and it counts too. */
 function mayProhibit(panel: Panel): boolean {
   const color = panel.background_color;
   return color === "yellow" || color === "unreadable" || color === "other"
       || color === null || color === undefined;
 }
 
-/** Прочитано ли настолько мало, что говорить не о чем. Условие вынесено сюда,
- *  чтобы конвейер мог спросить об этом ДО подсчёта полноты целиком. */
+/** Was so little read that there is nothing to speak of? The condition lives here so
+ *  the pipeline can ask it BEFORE computing completeness in full. */
 export function tooLittle(sign: SignDoc): boolean {
   const main = sign.main_sign;
   const plates = platesOf(sign);
@@ -148,7 +152,7 @@ export type GradeOptions = {
   imagePixels?: number | null;
 };
 
-/** Категория и уверенность по тому, что вернули стадии 0-1 и движок. */
+/** The category and the confidence, from what stages 0-1 and the engine returned. */
 export function grade(sign: SignDoc | null, options: GradeOptions = {}): Assessment {
   const { triageCategory = "parking_sign", schemaValid = true,
           flags = [], repairs = [], evaluation = null, imagePixels = null } = options;
@@ -175,8 +179,8 @@ export function grade(sign: SignDoc | null, options: GradeOptions = {}): Assessm
   const mainOk = main.type !== "unknown";
   const mainReadable = main.legibility?.readable ?? true;
   const disagreement = flags.some((f) => f.startsWith("panel_count_disagreement"));
-  // Таблички, текст которых снят, а смысл в справочнике не найден: для продукта
-  // это не «прочитано», а «прочитано и не понято».
+  // Plates whose text was captured but whose meaning was not found in the reference:
+  // for the product that is not "read" but "read and not understood".
   const plateIdx = new Set(plates.map((p) => p.index));
   const uninterpretedIdx = [...new Set(
     flags.filter((f) => f.startsWith("uninterpreted_panels:"))
@@ -209,7 +213,7 @@ export function grade(sign: SignDoc | null, options: GradeOptions = {}): Assessm
   const confidence = round(
     Object.entries(signals).reduce((sum, [k, v]) => sum + WEIGHTS[k] * v, 0), 3);
 
-  // --- категория: её задаёт то, чего не хватает ---
+  // --- the category: it is set by what is missing ---
   const reasons: string[] = [];
   if (!mainOk) reasons.push("main_sign_unknown");
   if (!mainReadable) reasons.push("main_sign_unreadable");
@@ -222,18 +226,20 @@ export function grade(sign: SignDoc | null, options: GradeOptions = {}): Assessm
   if (fits < TEXT_PLAUSIBLE_ENOUGH) reasons.push("text_exceeds_the_pixels");
   if (!dayKnown) reasons.push("day_class_unknown");
 
-  // Расхождение в счёте панелей — сигнал, а не приговор: оно снижает уверенность
-  // и попадает в причины, но ответа не отнимает. Замер на 22 ответах: флаг
-  // сработал 5 раз, все пять — ложная тревога, а цена молчания — самая дорогая
-  // ошибка продукта по его же таблице рисков.
+  // A disagreement in the panel count is a signal, not a verdict: it lowers the
+  // confidence and joins the reasons, but it does not take the answer away.
+  // Measured over 22 answers: the flag fired 5 times, all five false alarms, and the
+  // price of silence is the product's most expensive mistake by its own table of
+  // risks.
   let category: string;
   if (tooLittle(sign)) {
     category = INSUFFICIENT;
   } else if (unreadIdx.length || uninterpretedIdx.length || !isCorroborated
              || fits < TEXT_PLAUSIBLE_ENOUGH) {
-    // Непонятая табличка — это именно PARTIAL: часть знака до продукта не дошла.
-    // Знак без единой таблички с правилом — тоже PARTIAL, с другой стороны:
-    // понимать нечего, потому что подтверждения нет. Ответ при этом остаётся.
+    // A plate that was not understood is precisely PARTIAL: part of the sign never
+    // reached the product. A sign without a single rule-bearing plate is PARTIAL too,
+    // from the other side: there is nothing to understand, because there is no
+    // corroboration. The answer remains either way.
     category = PARTIAL;
   } else {
     category = FULL;
@@ -243,16 +249,17 @@ export function grade(sign: SignDoc | null, options: GradeOptions = {}): Assessm
            mayHideProhibition: hides, uninterpretedPlates: uninterpretedIdx };
 }
 
-/** Округление «как в питоне»: половина уходит от нуля.
+/** Rounding "the way Python does it": a half goes away from zero.
  *
- *  `Math.round` половину всегда двигает вверх, а `round()` питона — к чётному,
- *  и на `.5` они расходятся. Здесь важно совпадение до знака: уверенность
- *  сравнивается с порогом 0.9, и разница в третьем знаке меняет цвет строки. */
+ *  `Math.round` always moves a half upwards, while Python's `round()` moves it to
+ *  the even neighbour, and on `.5` the two disagree. Here agreement matters down to
+ *  the digit: the confidence is compared with the 0.9 threshold, and a difference in
+ *  the third place changes the colour of a line. */
 function round(value: number, digits: number): number {
   const factor = 10 ** digits;
   const scaled = value * factor;
   const rounded = Math.round(scaled);
-  // Python: банковское округление ровно на половине.
+  // Python: banker's rounding exactly on the half.
   if (Math.abs(scaled - Math.trunc(scaled) ) === 0.5) {
     const down = Math.floor(scaled);
     return (down % 2 === 0 ? down : down + 1) / factor;
@@ -260,15 +267,15 @@ function round(value: number, digits: number): number {
   return rounded / factor;
 }
 
-// --- правило асимметрии ----------------------------------------------------
+// --- the asymmetry rule ----------------------------------------------------
 
-/** Сузить можно, расширить нельзя.
+/** Narrowing is allowed, widening is not.
  *
- *  При частичном разборе ответ не вправе утверждать то, что непрочитанная панель
- *  могла бы отменить: если она МОЖЕТ БЫТЬ ЗАПРЕТОМ, ни один период не подаётся
- *  как разрешающий; если она скорее уточняет разрешение, период с пустым списком
- *  условий помечается — «в остальное время ограничений нет» при неполном разборе
- *  есть утверждение, основанное на отсутствии данных. */
+ *  On a partial reading the answer has no right to assert what an unread panel could
+ *  overturn: if that panel MAY BE A PROHIBITION, no period is presented as
+ *  permitting; and if it more likely qualifies a permission, a period with an empty
+ *  list of conditions is marked - "at other times there are no restrictions" on an
+ *  incomplete reading is a claim founded on the absence of data. */
 export function applyAsymmetry(evaluation: Evaluation, assessment: Assessment): Evaluation {
   if (assessment.category !== PARTIAL) return evaluation;
 

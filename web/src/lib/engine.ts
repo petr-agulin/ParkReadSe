@@ -1,24 +1,26 @@
-// `evaluateParkingRules` — чистая функция без обращений к модели.
-// Порт `parkread/engine.py`, дословный: улучшения не применяются по дороге,
-// а выносятся разработчику (решение 123).
+// `evaluateParkingRules` - a pure function with no call to the model.
+// A port of `parkread/engine.py`, line for line: improvements are not applied along
+// the way but put to the developer (decision 123).
 //
-// Здесь вся арифметика уходит из модели в код. Реализуется тот самый порядок
-// сборки из семи шагов, что записан в `PROJECT_BRIEF.md`:
+// This is where all the arithmetic moves out of the model and into code. It
+// implements the seven-step order of assembly written down in `PROJECT_BRIEF.md`:
 //
-// 1. базовый режим по основному знаку;
-// 2. разбиение стопки на таблички (уже сделано извлечением);
-// 3. разделение на участки по стрелкам;
-// 4. условия допуска — в подпись к режиму, а не в проверку;
-// 5. условия места — в постоянные пометки;
-// 6. раскладка по времени: окна поверх базы, дополнение — база либо то, что назвал
-//    токен сдвига;
-// 7. наложение запретов: запрет в своём окне перекрывает разрешение.
+// 1. the base regime from the main sign;
+// 2. splitting the stack into plates (already done by extraction);
+// 3. dividing into stretches by arrows;
+// 4. conditions of eligibility - into a caption to the regime, not into a check;
+// 5. conditions of place - into permanent notes;
+// 6. laying out over time: windows on top of the base, and the complement being the
+//    base or whatever the shift token named;
+// 7. applying prohibitions: within its window a prohibition overrides permission.
 //
-// Три вещи, которые легко сделать неправильно и которые здесь сделаны намеренно:
+// Three things that are easy to get wrong and are deliberate here:
 //
-// - вне окна возвращается БАЗОВЫЙ режим, а не «ничего» и не условия из окна;
-// - условие допуска НИКОГДА не проверяется: продукт не знает, кто стоит у знака;
-// - названный день недели — ЛИТЕРАЛ: календарь праздников к нему не применяется.
+// - outside a window the BASE regime returns, not "nothing" and not the conditions
+//   from inside the window;
+// - a condition of eligibility is NEVER checked: the product does not know who is
+//   standing at the sign;
+// - a named weekday is a LITERAL: the holiday calendar does not apply to it.
 
 import { Calendar, RED, UNKNOWN, WEEKDAY } from "./calendar";
 import { add as clockAdd } from "./clock";
@@ -27,24 +29,24 @@ import { addDays, addMinutes, compare, minutes, weekday,
 import { ELIGIBILITY_KEYS, VEHICLE_KEYS } from "./reference";
 import type { Panel, Parsed, SignDoc, TimeWindow } from "./sign";
 
-export const HORIZON_DAYS = 8;        // насколько вперёд строится шкала периодов
+export const HORIZON_DAYS = 8;        // how far ahead the timeline of periods runs
 const DAY_MINUTES = 24 * 60;
 
-// состояния периода
+// states of a period
 export const ALLOWED = "allowed";
 export const PROHIBITED = "prohibited";
 export const UNCERTAIN = "uncertain";
-// Знак ничего не говорит об этом времени. Не «можно» и не «нельзя»: запрещающий
-// знак с табличкой времени запрещает ТОЛЬКО в своё окно, а вне его не разрешает
-// ничего. Смешивать с UNCERTAIN нельзя: там не смогли прочесть, здесь прочли
-// и знаем, что сказать нечего.
+// The sign says nothing about this time. Neither "you may" nor "you may not": a
+// prohibiting sign with a time plate prohibits ONLY within its window, and outside
+// it permits nothing. It must not be mixed with UNCERTAIN: there something could not
+// be read, here it was read and we know there is nothing to say.
 export const NOT_STATED = "not_stated";
 
-// Заметка отрезка: плата названа только «в остальное время», а какое время
-// «остальное» — написано на табличке, обращённой к другому виду транспорта.
+// A note on a period: a fee is named only for "the remaining time", and which time
+// is "remaining" is written on a plate addressed to a different kind of vehicle.
 export const FEE_PERIOD_ELSEWHERE = "fee_period_belongs_to_another_audience";
 
-// участки
+// stretches
 export const HERE = "here";
 export const ARROW_EXTENT: Record<string, string> = {
   left: "left", right: "right",
@@ -59,20 +61,20 @@ export type Period = {
   start: Naive;
   end: Naive;
   state: string;
-  conditions: string[];               // ключи справочника
-  maxDurationMinutes: number | null;  // null -> действует умолчание в 24 часа
+  conditions: string[];               // reference keys
+  maxDurationMinutes: number | null;  // null -> the 24-hour default applies
   note: string | null;
 };
 
 export type Regime = {
   extent: string;
-  eligibility: string[];              // кому отведены места
-  placeNotes: string[];               // где и сколько
+  eligibility: string[];              // who the spaces are designated for
+  placeNotes: string[];               // where, and how many
   periods: Period[];
   durationExpiresAt: Naive | null;
   durationSource: string | null;      // "plate" | "24h_default"
-  // Кому адресовано ЭТО окно. Не то же, что `eligibility`: там сказано, кому
-  // отведены места, а здесь — для кого посчитан вот этот отсчёт времени.
+  // Who THIS window is addressed to. Not the same as `eligibility`: that says who
+  // the spaces are for, this says whose stay the countdown was computed for.
   audience: string | null;
   audienceExcluded: string[];
 };
@@ -80,7 +82,7 @@ export type Regime = {
 export type Evaluation = {
   regimes: Regime[];
   uncertainties: string[];
-  permitsParking: boolean;            // false у указателей направления
+  permitsParking: boolean;            // false for signs that point the way
   note: string | null;
 };
 
@@ -99,14 +101,14 @@ const midnight = (d: Civil): Naive => ({ ...d, hh: 0, mm: 0 });
 const minuteOfDay = (t: Naive): number => t.hh * 60 + t.mm;
 const sortedUnique = (xs: string[]): string[] => [...new Set(xs)].sort();
 
-// --- шаг 3: разделение на участки по стрелкам ------------------------------
+// --- step 3: dividing into stretches by arrows ------------------------------
 
-/** Стрелка ЗАКРЫВАЕТ указания над собой и привязывает их к участку.
+/** An arrow CLOSES the instructions above it and ties them to a stretch.
  *
- *  Несколько стрелок — несколько режимов на одном знаке (снимок `010`).
- *  Отсутствие стрелки означает, что место здесь же, у знака (снимок `015`). */
+ *  Several arrows mean several regimes on one sign (photograph `010`). No arrow
+ *  means the place is right here, at the sign (photograph `015`). */
 export function splitByArrows(panels: Panel[]): [string, Panel[]][] {
-  // Делят участок только таблички С ПРАВИЛАМИ: табло оператора участком не является.
+  // Only plates that STATE A RULE divide a stretch: an operator's board is not one.
   const plates = panels.filter((p) => p.kind === "sign_plate");
 
   const groups: [string, Panel[]][] = [];
@@ -120,9 +122,9 @@ export function splitByArrows(panels: Panel[]): [string, Panel[]][] {
       current.push(p);
     }
   }
-  // Таблички НИЖЕ последней стрелки участка не заводят (снимок `033`): стрелка
-  // закрывает указания над собой, а то, что под ней, относится к знаку целиком
-  // и достаётся каждому участку.
+  // Plates BELOW the last arrow do not start a stretch (photograph `033`): an arrow
+  // closes the instructions above it, and what stands under it belongs to the sign
+  // as a whole and reaches every stretch.
   let result: [string, Panel[]][];
   if (groups.length === 0) {
     result = [[HERE, current]];
@@ -135,37 +137,38 @@ export function splitByArrows(panels: Panel[]): [string, Panel[]][] {
   return kept.length ? kept : [[HERE, []]];
 }
 
-// --- шаг 6: применимость указания в конкретный момент ----------------------
+// --- step 6: whether an instruction applies at a given moment ---------------
 
 const WEEKDAY_NAMES = ["monday", "tuesday", "wednesday", "thursday",
                        "friday", "saturday", "sunday"];
 
-/** `null` означает «неизвестно»: дата вне календаря, а окно зависит от класса дня. */
+/** `null` means "unknown": the date is outside the calendar, and the window depends
+ *  on the class of the day. */
 export function windowApplies(win: TimeWindow, moment: Naive, cal: Calendar): boolean | null {
   const dc = win.day_class ?? "unspecified";
   const d = dateOf(moment);
 
   if (dc === "named_weekday") {
-    // Литерал. Календарь праздников к нему НЕ применяется: запрет `Tisdag 18-24`
-    // действует и в праздничный вторник.
+    // A literal. The holiday calendar does NOT apply to it: a `Tisdag 18-24`
+    // prohibition holds on a Tuesday that is a holiday.
     if (WEEKDAY_NAMES[weekday(d)] !== win.named_weekday) return false;
   } else {
     const day = cal.dayClass(d);
     if (day === UNKNOWN && dc !== "all_days") return null;
-    // «Дни не указаны» означает будни по умолчанию, а не «каждый день».
+    // "Days unstated" means weekdays by default, not "every day".
     if (dc === "unspecified" && day !== WEEKDAY) return false;
     if ((dc === WEEKDAY || dc === "eve" || dc === RED) && day !== dc) return false;
   }
 
-  // Чётность недели и диапазон дат сужают окно ещё раз.
+  // The week parity and the range of dates narrow the window once more.
   if (!weekParityMatches(win, d)) return false;
   if (!datesMatch(win, d)) return false;
 
   return inClockWindow(win, moment);
 }
 
-/** `jämna veckor` — чётные недели ISO, `udda veckor` — нечётные. Поля нет —
- *  окно действует каждую неделю. */
+/** `jämna veckor` means even ISO weeks, `udda veckor` odd ones. With no such field
+ *  the window applies every week. */
 function weekParityMatches(win: TimeWindow, d: Civil): boolean {
   const parity = win.week_parity;
   if (!parity) return true;
@@ -173,9 +176,9 @@ function weekParityMatches(win: TimeWindow, d: Civil): boolean {
   return parity === "even" ? week % 2 === 0 : week % 2 === 1;
 }
 
-/** Номер недели по ISO — тот же, что у питоновского `date.isocalendar()[1]`. */
+/** The ISO week number - the same one Python's `date.isocalendar()[1]` gives. */
 export function isoWeek(d: Civil): number {
-  // Четверг той же недели решает, какому году неделя принадлежит.
+  // The Thursday of the same week decides which year the week belongs to.
   const thursday = addDays(d, 3 - ((weekday(d) + 7) % 7));
   const jan1 = { y: thursday.y, m: 1, d: 1 };
   const days = (a: Civil, b: Civil) => Math.round(compare(a, b));
@@ -186,25 +189,25 @@ function inClockWindow(win: TimeWindow, moment: Naive): boolean {
   const start = clockMinute(win.from);
   const end = clockMinute(win.to);
   const t = minuteOfDay(moment);
-  // `24:00` — конец суток, а не время 00:00 того же дня.
+  // `24:00` is the end of the day, not 00:00 of the same day.
   if (end === 0) return t >= start;
   if (start <= end) return start <= t && t < end;
-  return t >= start || t < end;         // окно через полночь
+  return t >= start || t < end;         // a window across midnight
 }
 
-/** Время с таблички в минутах от полуночи. Конец суток — ноль.
+/** A time from a plate, in minutes from midnight. The end of the day is zero.
  *
- *  `23:59` считается тем же концом суток: на знаках так не пишут, а модель
- *  сплошь и рядом записывает `00-24` как `00:00-23:59`, и последняя минута дня
- *  выпадала из окна (снимок `049`). */
+ *  `23:59` counts as that same end of day: signs are not written that way, but the
+ *  model writes `00-24` as `00:00-23:59` all the time, and the last minute of the
+ *  day was falling outside the window (photograph `049`). */
 export function clockMinute(s: string): number {
   const [h, m] = s.split(":");
   if (h === "24" || (h === "23" && m === "59")) return 0;
   return Number(h) * 60 + Number(m);
 }
 
-/** `MM-DD` в пару чисел. Года здесь нет намеренно: табличка вешается один раз
- *  и действует каждый год. */
+/** `MM-DD` into a pair of numbers. There is no year here on purpose: a plate is hung
+ *  once and applies every year. */
 function md(value: string): [number, number] {
   const [month, day] = value.split("-");
   return [Number(month), Number(day)];
@@ -220,7 +223,7 @@ function inRange(d: Civil, rng: { from: string; to: string }): boolean {
   return here >= start || here <= end;
 }
 
-/** Даты, ограничивающие окно: «только в эти промежутки» или «всегда, кроме них». */
+/** The dates bounding a window: "only within these ranges" or "always except them". */
 function datesMatch(win: TimeWindow, d: Civil): boolean {
   const dates = win.dates;
   if (!dates) return true;
@@ -228,13 +231,13 @@ function datesMatch(win: TimeWindow, d: Civil): boolean {
   return dates.mode === "only" ? hit : !hit;
 }
 
-/** Докуда построена шкала. Это НЕ граница правила: знак в этот момент ничего
- *  не меняет, просто дальше мы не смотрим. */
+/** How far the timeline is drawn. This is NOT a boundary of a rule: the sign changes
+ *  nothing at that moment, we simply look no further. */
 export function horizonEnd(now: Naive): Naive {
   return midnight(addDays(dateOf(now), HORIZON_DAYS));
 }
 
-/** Моменты, в которые что-то может измениться: полуночи и края всех окон. */
+/** The moments where something may change: midnights and the edges of every window. */
 function boundaries(now: Naive, instructions: Parsed[]): Naive[] {
   const marks = new Set<number>([minutes(now)]);
   const day0 = dateOf(now);
@@ -256,7 +259,7 @@ function boundaries(now: Naive, instructions: Parsed[]): Naive[] {
                    .map((t) => addMinutes({ y: 1970, m: 1, d: 1, hh: 0, mm: 0 }, t));
 }
 
-// --- сборка режима --------------------------------------------------------
+// --- assembling a regime ---------------------------------------------------
 
 function durationMinutes(parsed: Parsed): number | null {
   const d = parsed.duration_limit;
@@ -264,26 +267,28 @@ function durationMinutes(parsed: Parsed): number | null {
   return Math.trunc(d.amount * (d.unit === "hours" ? 60 : 1));
 }
 
-/** Несёт ли табличка собственное правило — плату, предел, разрешение, запрет
- *  или свои часы. Пиктограмма рядом с таким правилом адресует ЕГО, а не знак. */
+/** Whether a plate carries a rule of its own - a fee, a limit, a permit, a
+ *  prohibition or its own hours. A pictogram beside such a rule addresses THAT rule,
+ *  not the sign. */
 function addressesACondition(parsed: Parsed): boolean {
   return Boolean(conditionsOf(parsed).length || parsed.duration_limit
                  || parsed.prohibition || parsed.time_windows);
 }
 
-/** Ключ справочника, если табличка адресует своё условие виду транспорта.
+/** The reference key, if the plate addresses its condition to a kind of vehicle.
  *
- *  Правило разработчика (2026-09-10): «только для автобусов» знак говорит лишь
- *  тогда, когда пиктограмма на табличке ОДНА. Стоит рядом что-нибудь ещё — часы,
- *  плата, тариф, — и табличка мест не отводит, а ставит условие своему виду
- *  транспорта. Пиктограмма БЕЗ условия (снимок `038`) сюда не попадает. */
+ *  The developer's rule (2026-09-10): a sign says "buses only" just when the
+ *  pictogram on the plate stands ALONE. Put anything else beside it - hours, a fee,
+ *  a tariff - and the plate designates no spaces but sets a condition for its own
+ *  kind of vehicle. A pictogram WITHOUT a condition (photograph `038`) does not come
+ *  here. */
 function addressedClass(parsed: Parsed): string | null {
   const key = parsed.vehicle_class ? VEHICLE_KEYS[parsed.vehicle_class] : undefined;
   return key && addressesACondition(parsed) ? key : null;
 }
 
-/** Один знак — несколько окон, если условие адресовано виду транспорта
- *  (снимок из Frihamnen, решение 120). */
+/** One sign, several windows, when a condition is addressed to a kind of vehicle
+ *  (the photograph from Frihamnen, decision 120). */
 function splitByVehicle(panels: Panel[]): [string | null, string[], Panel[]][] {
   const addressed = panels.map((p) => [addressedClass(parsedOf(p)), p] as const);
   const keys: string[] = [];
@@ -298,7 +303,7 @@ function splitByVehicle(panels: Panel[]): [string | null, string[], Panel[]][] {
   return out;
 }
 
-/** Ключи справочника, которые указание добавляет к периоду. */
+/** The reference keys an instruction adds to a period. */
 function conditionsOf(parsed: Parsed): string[] {
   const out: string[] = [];
   if (parsed.fee) out.push("avgift");
@@ -314,11 +319,12 @@ function buildRegime(extent: string, panels: Panel[], baseState: string,
                      others: Panel[]): Regime {
   const plates = panels.filter((p) => p.kind === "sign_plate");
 
-  // шаг 4: условие допуска — подпись к режиму
+  // step 4: a condition of eligibility is a caption to the regime
   const eligibility: string[] = [];
   for (const p of plates) {
     const parsed = parsedOf(p);
-    // Пиктограмма, адресующая условие, круг стоящих не сужает (решение 120).
+    // A pictogram that addresses a condition does not narrow who may park
+    // (decision 120).
     const vehicle = addressedClass(parsed)
       ? undefined
       : (parsed.vehicle_class ? VEHICLE_KEYS[parsed.vehicle_class] : undefined);
@@ -326,13 +332,13 @@ function buildRegime(extent: string, panels: Panel[], baseState: string,
     for (const key of [vehicle, who]) {
       if (key && !eligibility.includes(key)) eligibility.push(key);
     }
-    // «Арендованное место, где вдобавок нужно разрешение» — два условия сразу.
+    // "A rented space that also needs a permit" is two conditions at once.
     if (parsed.permit_required && !eligibility.includes("sarskilt-p-tillstand")) {
       eligibility.push("sarskilt-p-tillstand");
     }
   }
 
-  // шаг 5: условия места — постоянные пометки
+  // step 5: conditions of place become permanent notes
   const placeNotes: string[] = [];
   for (const p of plates) {
     const parsed = parsedOf(p);
@@ -342,7 +348,7 @@ function buildRegime(extent: string, panels: Panel[], baseState: string,
     if (parsed.stretch_metres) placeNotes.push("stretch-metres");
   }
 
-  // разделение указаний по роли во времени
+  // sorting the instructions by their role in time
   const windowed: Parsed[] = [];
   const always: Parsed[] = [];
   const shifted: Parsed[] = [];
@@ -358,34 +364,36 @@ function buildRegime(extent: string, panels: Panel[], baseState: string,
     else if (conditionsOf(parsed).length || parsed.duration_limit) always.push(parsed);
   }
 
-  // Табличка со временем под ЗАПРЕЩАЮЩИМ знаком не добавляет условий к вечному
-  // запрету, а ОЧЕРЧИВАЕТ его (решение 113). Под разрешающим знаком наоборот.
+  // A plate with hours under a PROHIBITING sign does not add conditions to a
+  // perpetual prohibition - it DRAWS ITS BOUNDS (decision 113). Under a permitting
+  // sign it is the other way round.
   const scoping = [...windowed, ...prohibitions].filter((p) => !p.permits_parking);
   const scoped = baseState === PROHIBITED && scoping.some((p) => p.time_windows);
 
-  // Часы, занятые табличками ЧУЖОГО адресата: условий они этому окну не дают,
-  // но «Övrig tid» через них не переступает (снимок `049`, решение 121).
+  // Hours taken by plates addressed to SOMEONE ELSE: they give this window no
+  // conditions, but "Övrig tid" does not step across them (photograph `049`,
+  // decision 121).
   const occupied = others.map(parsedOf).filter((q) => q.time_windows);
 
   const periods = timeline(now, cal, baseState, windowed, always, shifted,
                            prohibitions, uncertainties, scoped, occupied);
 
-  // Длительность: табличка перекрывает умолчание в 24 часа — но только там,
-  // где она действует.
+  // Duration: a plate overrides the 24-hour default - but only where the plate
+  // applies.
   let expires: Naive | null = null;
   let source: string | null = null;
   const nowM = minutes(now);
   const current = periods.find((p) => minutes(p.start) <= nowM && nowM < minutes(p.end));
-  // Знак, который сейчас молчит, стоянки не даёт — значит, и ограничивать нечего.
+  // A sign that is silent right now grants no parking, so there is nothing to limit.
   const silent = current !== undefined && current.state === NOT_STATED;
   const limit = silent ? null : (current ? current.maxDurationMinutes : null);
-  // Настоящее время, а не деления циферблата (решение 116).
+  // Real elapsed time, not the marks on a dial (decision 116).
   const edge = limit ? clockAdd(now, limit) : null;
 
-  // Предел кусается не всегда — и в ТЕКУЩЕМ окне тоже: граница берётся, только
-  // когда она попадает ВНУТРЬ окна (решение 118, снимок `005`). Конец окна
-  // берётся не по одному отрезку: полночь режет окно на несколько, а предел
-  // у них один и тот же.
+  // A limit does not always bite - not even in the CURRENT window: the boundary is
+  // taken only when it falls INSIDE the window (decision 118, photograph `005`). The
+  // end of the window is not taken from a single period: midnight cuts a window into
+  // several, and the limit across them is one and the same.
   let windowEnd: Naive | null = null;
   if (limit && current) {
     windowEnd = current.end;
@@ -406,8 +414,8 @@ function buildRegime(extent: string, panels: Panel[], baseState: string,
     if (expires === null) uncertainties.push("24h_expiry_outside_calendar");
   }
 
-  // Ограничение, которое ВСТУПИТ позже, тоже обрывает стоянку (снимок `005`).
-  // Счёт идёт от НАЧАЛА окна, а не от постановки машины.
+  // A restriction that STARTS later also ends the stay (photograph `005`). It counts
+  // from the START of the window, not from the moment the car was parked.
   for (const later of periods) {
     if (minutes(later.start) <= nowM || later.state !== ALLOWED) continue;
     if (expires !== null && minutes(later.start) >= minutes(expires)) break;
@@ -422,7 +430,7 @@ function buildRegime(extent: string, panels: Panel[], baseState: string,
     }
   }
 
-  // Запрет обрывает стоянку раньше предела.
+  // A prohibition ends the stay earlier than any limit.
   const stop = periods.find((p) => minutes(p.start) > nowM && p.state === PROHIBITED);
   if (stop && !silent && (expires === null || minutes(stop.start) < minutes(expires))) {
     expires = stop.start;
@@ -459,11 +467,12 @@ function timeline(now: Naive, cal: Calendar, baseState: string,
     let conds = [...baseConditions];
     let unknown = false;
     let duration = baseDuration;
-    // Запрет очерчен окном: вне окна знак молчит, пока что-нибудь не скажет
-    // обратного — попадание в окно ниже или табличка «в остальное время».
+    // The prohibition is bounded by a window: outside it the sign is silent, until
+    // something says otherwise - falling inside a window below, or a plate saying
+    // "at other times".
     if (scoped) state = NOT_STATED;
 
-    // шаг 6: окна поверх базы
+    // step 6: windows on top of the base
     let inside = false;
     for (const parsed of windowed) {
       const results = windowsOf(parsed).map((w) => windowApplies(w, t0, cal));
@@ -471,32 +480,32 @@ function timeline(now: Naive, cal: Calendar, baseState: string,
       if (results.some((r) => r === true)) {
         inside = true;
         conds = conds.concat(conditionsOf(parsed));
-        // Ограничение длительности с окном действует ТОЛЬКО в окне.
+        // A duration limit that carries a window applies ONLY inside that window.
         duration = durationMinutes(parsed) ?? duration;
-        // Под запрещающим знаком попадание в окно и есть запрет.
+        // Under a prohibiting sign, falling inside the window is the prohibition.
         if (scoped && !parsed.permits_parking) state = PROHIBITED;
       }
     }
 
-    // Время, занятое табличкой чужого адресата, «остальным» не является.
+    // Time taken by a plate addressed to someone else is not "remaining" time.
     let note: string | null = null;
     if (!inside) {
       for (const parsed of occupied) {
         if (windowsOf(parsed).some((w) => windowApplies(w, t0, cal) === true)) {
           inside = true;
-          // Плата названа только «в остальное время» — значит, про этот час знак
-          // прочим ничего не сказал. Это не «бесплатно».
+          // The fee is named only for "the remaining time", so about this hour the
+          // sign told everyone else nothing. That is not "free".
           if (shifted.length) note = FEE_PERIOD_ELSEWHERE;
           break;
         }
       }
     }
 
-    // дополнение: база либо то, что назвал токен сдвига
+    // the complement: the base, or whatever the shift token named
     if (!inside) {
       for (const parsed of shifted) {
         conds = conds.concat(conditionsOf(parsed));
-        // Табличка может сама восстанавливать разрешение (снимок `019`).
+        // A plate may restore permission by itself (photograph `019`).
         if (parsed.permits_parking) state = ALLOWED;
         duration = durationMinutes(parsed) ?? duration;
       }
@@ -509,7 +518,7 @@ function timeline(now: Naive, cal: Calendar, baseState: string,
       }
     }
 
-    // шаг 7: запрет перекрывает разрешение
+    // step 7: a prohibition overrides permission
     for (const parsed of prohibitions) {
       const results = windowsOf(parsed).map((w) => windowApplies(w, t0, cal));
       if (results.some((r) => r === null)) unknown = true;
@@ -530,7 +539,7 @@ function timeline(now: Naive, cal: Calendar, baseState: string,
                maxDurationMinutes: duration, note });
   }
 
-  // склеить соседние одинаковые
+  // merge neighbours that say the same thing
   const merged: Period[] = [];
   for (const p of raw) {
     const last = merged[merged.length - 1];
@@ -543,15 +552,15 @@ function timeline(now: Naive, cal: Calendar, baseState: string,
   return merged;
 }
 
-// --- правило 24 часов ------------------------------------------------------
+// --- the 24-hour rule ------------------------------------------------------
 
-/** ГАРАНТИРОВАННАЯ НЕПРЕРЫВНОСТЬ: водителю положены полные 24 часа подряд,
- *  и если выходные их обрывают, счётчик обнуляется и начинается заново
- *  с ближайшего рабочего дня (решение 82).
+/** GUARANTEED CONTINUITY: the driver is owed a full 24 hours in a row, and if a
+ *  weekend cuts them short the counter resets and starts afresh on the nearest
+ *  working day (decision 82).
  *
- *  - Понедельник 13:00 → вторник 13:00.
- *  - Пятница 13:00 → вторник 00:00: до субботы остаётся 11 часов, а не 24.
- *  - Суббота и воскресенье в любой час → вторник 00:00. */
+ *  - Monday 13:00 -> Tuesday 13:00.
+ *  - Friday 13:00 -> Tuesday 00:00: only 11 hours remain until Saturday, not 24.
+ *  - Saturday or Sunday at any hour -> Tuesday 00:00. */
 export function twentyFourHourExpiry(start: Naive, cal: Calendar): Naive | null {
   const startDate = dateOf(start);
   if (!cal.covers(startDate)) return null;
@@ -561,13 +570,13 @@ export function twentyFourHourExpiry(start: Naive, cal: Calendar): Naive | null 
     return next === null ? null : clockAdd(midnight(next), DAY_MINUTES);
   }
 
-  // Сутки — настоящие: в ночь перевода их конец на часах сдвигается на час.
+  // The day is a real one: on the night the clocks change, its end shifts by an hour.
   const end = clockAdd(start, DAY_MINUTES);
   const endDate = dateOf(end);
   let day = startDate;
   while (compare(day, endDate) <= 0) {
     if (!cal.covers(day)) return null;
-    // Нерабочий день ВНУТРИ суток обрывает их.
+    // A non-working day INSIDE the 24 hours cuts them short.
     if (!cal.isWorkingDay(day) && minutes(midnight(day)) < minutes(end)) {
       const next = cal.nextWorkingDay(day);
       return next === null ? null : clockAdd(midnight(next), DAY_MINUTES);
@@ -577,7 +586,7 @@ export function twentyFourHourExpiry(start: Naive, cal: Calendar): Naive | null 
   return end;
 }
 
-// --- вход ------------------------------------------------------------------
+// --- the way in ------------------------------------------------------------
 
 export function evaluateParkingRules(sign: SignDoc, moment: Naive,
                                      cal: Calendar): Evaluation {
@@ -593,8 +602,8 @@ export function evaluateParkingRules(sign: SignDoc, moment: Naive,
   if (main.type === "unknown") uncertainties.push("main_sign_unknown");
   if (!cal.covers(dateOf(moment))) uncertainties.push("date_outside_calendar");
 
-  // Делят знак две вещи и делят независимо: стрелка — участок, пиктограмма
-  // с условием — адресата.
+  // Two things divide a sign, and they divide it independently: an arrow gives a
+  // stretch, a pictogram carrying a condition gives an audience.
   const regimes: Regime[] = [];
   for (const [extent, panels] of splitByArrows(sign.panels ?? [])) {
     for (const [audience, excluded, group] of splitByVehicle(panels)) {
@@ -603,7 +612,7 @@ export function evaluateParkingRules(sign: SignDoc, moment: Naive,
                                audience, excluded, others));
     }
   }
-  // Режимы строятся по одним и тем же табличкам, поэтому оговорки повторяются.
+  // The regimes are built from the same plates, so the caveats repeat.
   return { regimes, uncertainties: [...new Set(uncertainties)],
            permitsParking: true, note: null };
 }
