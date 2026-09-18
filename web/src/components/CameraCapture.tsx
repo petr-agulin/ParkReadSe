@@ -1,7 +1,9 @@
-// Живая камера: человек целится, снимок берётся в полном разрешении потока.
+// The live camera: the person aims, and the photograph is taken at the stream's full
+// resolution.
 //
-// Кадр отсюда уходит не наружу, а на экран выбора знака: целиться на ходу неточно,
-// и подтверждение остаётся за человеком. Наружу по-прежнему уходит только вырезанное.
+// A frame from here does not leave the device - it goes to the framing screen: aiming
+// on the move is imprecise, and the confirmation stays with the person. What leaves is
+// still only what was cut out.
 
 import { useEffect, useRef, useState } from "react";
 import { cameraFailure, captureConstraints, torchSupported } from "../lib/camera";
@@ -11,8 +13,8 @@ import { roomBelow } from "../lib/layout";
 type Props = {
   onCaptured: (file: File, box: Box) => void;
   onCancel: () => void;
-  /** Плитка галереи рядом со спуском: отсюда можно уйти в другую полосу —
-   *  к уже снятому кадру, — не возвращаясь на главный экран. */
+  /** The gallery tile beside the shutter: from here one can step into the other
+   *  path - to a photograph already taken - without returning to the home screen. */
   onPick: (file: File) => void;
 };
 
@@ -34,8 +36,8 @@ export default function CameraCapture({ onCaptured, onCancel, onPick }: Props) {
     navigator.mediaDevices
       .getUserMedia(captureConstraints())
       .then((s) => {
-        // Уход с экрана мог случиться, пока спрашивали доступ: поток надо погасить,
-        // иначе на телефоне остаётся гореть индикатор камеры.
+        // The screen may have been left while permission was being asked: the stream
+        // has to be put out, or the camera indicator stays lit on the phone.
         if (dead) { s.getTracks().forEach((t) => t.stop()); return; }
         stream.current = s;
         setHasTorch(torchSupported(s.getVideoTracks()[0]));
@@ -53,17 +55,17 @@ export default function CameraCapture({ onCaptured, onCancel, onPick }: Props) {
     };
   }, []);
 
-  // Поток вписан в сцену целиком, вокруг остаются поля — те же вычисления, что
-  // на экране выбора, и та же функция. Иначе подсказка показывала бы одно,
-  // а рамка на следующем экране вставала бы в другое место.
+  // The stream is fitted into the stage whole, with margins around it - the same
+  // computation as on the framing screen, and the same function. Otherwise the guide
+  // would show one thing and the frame on the next screen would stand somewhere else.
   useEffect(() => {
     if (!size || !room.current) return;
     const el = room.current;
     const measure = () => {
       const r = el.getBoundingClientRect();
-      // Поток берёт всю ширину, высоты — сколько осталось под ним. Считаем
-      // от верха СТРАНИЦЫ, а не окна: иначе размер зависел бы от прокрутки
-      // в момент замера.
+      // The stream takes the full width, and as much height as is left beneath it. It
+      // is measured from the top of the PAGE rather than the window: otherwise the
+      // size would depend on where the page was scrolled at the moment of measuring.
       const pageTop = r.top + window.scrollY;
       const room = {
         w: r.width,
@@ -82,9 +84,9 @@ export default function CameraCapture({ onCaptured, onCancel, onPick }: Props) {
     if (!track) return;
     const next = !torch;
     try {
-      // Фонарик не стандартизован: в типах его нет вовсе, потому и приведение
-      // через `unknown`. Браузер, который его не знает, просто откажет — и тогда
-      // кнопка исчезает, а не остаётся врать.
+      // The torch is not standardised: it does not exist in the types at all, which
+      // is why the cast goes through `unknown`. A browser that does not know it
+      // simply refuses - and then the button disappears rather than staying to lie.
       await track.applyConstraints(
         { advanced: [{ torch: next }] } as unknown as MediaTrackConstraints,
       );
@@ -98,8 +100,9 @@ export default function CameraCapture({ onCaptured, onCancel, onPick }: Props) {
     const v = video.current;
     if (!v || !v.videoWidth || !size) return;
     setTaking(true);
-    // Пиксели берём из потока, а не с экрана: на экране кадр умещён под телефон,
-    // а знак через дорогу переживает кадрирование только за счёт настоящих пикселей.
+    // The pixels are taken from the stream rather than from the screen: on screen the
+    // frame is fitted to the phone, and a sign across the road survives cropping only
+    // thanks to the real pixels.
     const canvas = document.createElement("canvas");
     canvas.width = size.w;
     canvas.height = size.h;
@@ -108,8 +111,9 @@ export default function CameraCapture({ onCaptured, onCancel, onPick }: Props) {
       (blob) => {
         setTaking(false);
         if (!blob) { setFailed("The frame could not be captured. Try again."); return; }
-        // Кадр остаётся в памяти страницы и на диск не пишется. Съёмка из потока
-        // не создаёт EXIF вовсе — геометке взяться неоткуда.
+        // The frame stays in the page's memory and is never written to disk. Taking
+        // it from the stream creates no metadata at all - there is nowhere for a
+        // location tag to come from.
         onCaptured(new File([blob], "camera.jpg", { type: "image/jpeg" }), defaultBox(size));
       },
       "image/jpeg",
@@ -117,8 +121,9 @@ export default function CameraCapture({ onCaptured, onCancel, onPick }: Props) {
     );
   }
 
-  /** Вход в галерею. `capture` не ставим: он открыл бы камеру вместо галереи,
-   *  и уже снятый кадр стал бы недоступен. */
+  /** The way into the gallery. The capture attribute is deliberately not set: it
+   *  would open the camera instead of the gallery, and a photograph already taken
+   *  would become unreachable. */
   const galleryInput = (
     <input
       ref={gallery}
@@ -127,7 +132,7 @@ export default function CameraCapture({ onCaptured, onCancel, onPick }: Props) {
       className="hidden"
       onChange={(e) => {
         const picked = e.target.files?.[0];
-        e.target.value = "";          // иначе тот же файл второй раз не даёт события
+        e.target.value = "";          // or the same file a second time fires no event
         if (picked) onPick(picked);
       }}
     />
@@ -141,9 +146,9 @@ export default function CameraCapture({ onCaptured, onCancel, onPick }: Props) {
         ‹
       </button>
       <span className="flex-1 text-nav font-bold text-ink-strong">Scan a sign</span>
-      {/* Вспышка — в шапке, чтобы не лежать на кадре. Её нет вовсе там, где
-          камера её не умеет: на iOS Safari фонарика нет, и мёртвой таблетке
-          там взяться неоткуда. */}
+      {/* The torch sits in the header so as not to lie over the frame. It is absent
+          entirely where the camera cannot do it: on iOS Safari there is no torch, and
+          a dead control has nowhere to come from there. */}
       {hasTorch && (
         <button type="button" onClick={toggleTorch} aria-pressed={torch}
                 className="rounded-full bg-chip px-4 py-2 text-label font-semibold text-ink-2">
@@ -153,9 +158,9 @@ export default function CameraCapture({ onCaptured, onCancel, onPick }: Props) {
     </div>
   );
 
-  // Отказ занимает место видоискателя: шапка остаётся, а выходом служит та же
-  // плитка галереи. Причин четыре, и они разные по сути — запретили, нет камеры,
-  // занята другим приложением, не завелась.
+  // A failure takes the place of the viewfinder: the header stays, and the way out is
+  // the same gallery tile. There are four causes, and they differ in kind - permission
+  // refused, no camera, busy with another application, would not start.
   if (failed) {
     return (
       <section className="flex flex-col gap-4">
@@ -180,19 +185,21 @@ export default function CameraCapture({ onCaptured, onCancel, onPick }: Props) {
     <section className="flex flex-1 flex-col gap-4">
       {nav}
 
-      {/* Подсказка — над видоискателем, а не на кадре: на кадре она закрывает
-          ровно то, во что целятся. И говорит, что делать, а не называет предмет. */}
+      {/* The hint stands above the viewfinder rather than on the frame: on the frame
+          it covers exactly what is being aimed at. And it says what to do rather than
+          naming the thing. */}
       <p className="text-center text-label text-ink-2">
         Aim at the whole sign. You'll frame it next.
       </p>
 
-      {/* `items-start`, а не `items-center`: обёртка растянута на весь остаток,
-          и по центру сцена отъезжала от подсказки — на втором телефоне между ними
-          зияла дыра. Кадр начинается сразу под текстом. */}
+      {/* `items-start` rather than centring: the wrapper is stretched across the
+          remainder, and centred the stage drifted away from the hint - on the second
+          phone a gap yawned between them. The frame begins directly under the text. */}
       <div ref={room} className="flex w-full flex-1 items-start justify-center">
-        {/* Сцена по размеру потока, а не наоборот: иначе по бокам остаются
-            тёмные поля, и видоискатель выглядит рамкой в рамке. Полный обрез
-            показывал бы не то, что снимается (решение 148). */}
+        {/* The stage is sized to the stream rather than the other way round:
+            otherwise dark margins remain at the sides and the viewfinder looks like a
+            frame inside a frame. Cropping to fill would show something other than
+            what is being photographed (decision 148). */}
         <div
           className="relative overflow-hidden rounded-card bg-stage"
           style={view ? { width: view.w, height: view.h } : { width: "100%", height: "100%" }}
@@ -208,8 +215,9 @@ export default function CameraCapture({ onCaptured, onCancel, onPick }: Props) {
             className="absolute inset-0 h-full w-full object-cover"
           />
 
-          {/* Подсказка — ровно та рамка, что встанет на следующем экране: считается
-              той же функцией от размера потока, а не подобранной на глаз долей. */}
+          {/* The guide is exactly the frame that will stand on the next screen:
+              computed by the same function from the size of the stream, not a share
+              picked by eye. */}
           {size && view && (() => {
             const guide = defaultBox(size);
             const k = view.w / size.w;
@@ -230,13 +238,13 @@ export default function CameraCapture({ onCaptured, onCancel, onPick }: Props) {
         </div>
       </div>
 
-      {/* Кнопки стоят у нижнего края экрана, а не поверх кадра. `lib/layout`
-          прямо говорит, что раскладка «кнопки поверх снимка» проверялась
-          на двух телефонах и была отброшена, — на этом экране она задержалась.
+      {/* The buttons stand at the foot of the screen rather than over the frame.
+          `lib/layout` says outright that the layout with buttons over the photograph
+          was tried on two phones and abandoned - on this screen it had lingered.
 
-          Высоту этого ряда вычитает `roomBelow`. Пока ряд лежал на кадре,
-          вычитание было поправкой на то, что места не занимает; теперь оно
-          просто правда, и видоискателю достаётся ровно остаток. */}
+          The height of this row is what `roomBelow` subtracts. While the row lay over
+          the frame, that subtraction was an allowance for something taking no space;
+          now it is simply true, and the viewfinder gets exactly the remainder. */}
       <div ref={footer} className="flex items-center justify-between px-2">
         <button
           type="button"
@@ -256,7 +264,8 @@ export default function CameraCapture({ onCaptured, onCancel, onPick }: Props) {
         >
           <span className="block h-[70px] w-[70px] rounded-full bg-accent" />
         </button>
-        {/* Пустое место той же ширины, что и плитка: оно держит спуск посередине. */}
+        {/* Empty space the same width as the tile: it is what holds the shutter in
+            the middle. */}
         <span className="h-14 w-20 shrink-0" aria-hidden />
       </div>
 
