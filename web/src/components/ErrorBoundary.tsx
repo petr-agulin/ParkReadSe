@@ -1,7 +1,7 @@
-// Пустой экран — худший из возможных ответов: человек не знает ни что случилось,
-// ни что делать дальше. Без этой границы любая ошибка отрисовки гасила страницу
-// целиком и молча (найдено на обкатке: старый процесс бэкенда отдавал ответ без
-// новых полей, и интерфейс просто исчез).
+// An empty screen is the worst answer there is: the person knows neither what
+// happened nor what to do next. Without this boundary any drawing error put the whole
+// page out, and silently (found in trials: an old backend process returned an answer
+// without the new fields, and the interface simply vanished).
 
 import { Component, type ErrorInfo, type ReactNode } from "react";
 
@@ -16,7 +16,7 @@ export default class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    console.error("ParkRead: ошибка отрисовки", error, info);
+    console.error("ParkRead: failed to draw the answer", error, info);
   }
 
   render() {
