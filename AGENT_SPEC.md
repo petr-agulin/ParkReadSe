@@ -1,219 +1,240 @@
-# AGENT_SPEC — ИИ-ассистент разбора парковочного знака
+# AGENT_SPEC — the AI assistant that reads a parking sign
 
-## Роль
+## Role
 
-Ассистент-консультант, который читает шведский парковочный знак и объясняет
-его содержание.
+A consulting assistant that reads a Swedish parking sign and explains what it states.
 
-## Цель
+## Goal
 
-Дать пользователю понятную интерпретацию знака с честной оценкой уверенности —
-либо явно отказаться, если данных недостаточно.
+Give the user an understandable reading of the sign with an honest measure of confidence —
+or say plainly that there is not enough to go on.
 
-**Ассистент не выносит вердикт о допустимости парковки.** Он извлекает данные,
-а объясняет их код. Оценку правил по времени выполняет детерминированная функция
-вне модели. Юридической или финансовой гарантии результата продукт не даёт.
+**The assistant does not rule on whether parking is allowed.** It extracts data; the code
+explains it. Evaluating the rules against a moment in time is done by a deterministic
+function outside the model. The product offers no legal or financial guarantee.
 
 ---
 
-## Разрешённые инструменты
+## The tools the model is given
 
-**Модели не выдано ни одного инструмента.** Список пуст — и это осознанное решение,
-а не упущение.
+**None.** The list is empty, and that is a decision rather than an omission.
 
-Ассистент устроен как **фиксированный конвейер из четырёх стадий**. Стадии идут строго
-по порядку, их порядок задан кодом, и модель на него не влияет. Модель вызывается
-**дважды** — на стадии отсева и на стадии извлечения — и оба раза не может ничего
-прочитать, записать, вызвать или запросить: у неё на входе изображение, на выходе
-метка или JSON.
+The assistant is a **fixed pipeline**. The stages run in a set order, and that order is
+written in code the model cannot influence. The model is called **twice** — once to triage,
+once to extract — and on each call it can read nothing, write nothing, and request nothing:
+an image goes in, a label or JSON comes out.
 
-**Два вызова не создают ветвления, которым управляет модель.** Классификатор отсева
-возвращает **значение поля**, а не решение: продолжать конвейер или нет, решает `if`,
-написанный разработчиком. Инструментов нет ни у одного вызова, порядок стадий
-не меняется, и утверждение «модель не совершает действий» по-прежнему проверяется
-по коду.
+There is one exception to "twice", and it is also decided by code: if the extraction comes
+back saying too little — the main sign unknown or unreadable, or fewer than half the plates
+read — the same question is asked **once more**, and never in a loop. The second answer is
+kept only if it is better. So a single photograph costs two calls, or three at most.
 
-| Стадия | Что делает | Кто исполняет |
+**Two calls do not create a branch the model controls.** Triage returns the **value of a
+field**, not a decision; whether the pipeline continues is decided by an `if` written by the
+developer.
+
+| Stage | What happens | Who does it |
 |---|---|---|
-| 0. `classify_image(image)` | Один дешёвый вызов модели. Возвращает метку: шведский парковочный знак / другой дорожный знак / не знак. Порог смещён в сторону пропуска: отсечь настоящий знак дороже, чем пропустить мусор | Модель, без инструментов |
-| 1. `extract_sign_data(image)` | Один вызов vision-модели. Возвращает JSON: основной знак — с цветом фона и видом знака — и упорядоченный сверху вниз список **панелей ниже него, куда сам основной знак не входит**, с границами между ними. По каждой панели: её вид (`sign_plate` — табличка знака, `info_board` — платёжное табло оператора, дорожным знаком не являющееся), дословный текст построчно, читаемость и разобранные поля (временные окна, окна платности, максимальная длительность, требования разрешения, класс дня, стрелки) | Модель, без инструментов |
-| 2. `evaluate_parking_rules(sign_json, datetime)` | Чистая функция. Валидирует JSON по схеме, сверяет разобранные поля с белым списком справочника и собирает итог по модели из `PROJECT_BRIEF.md`: базовый режим по основному знаку, композиция «var för sig / gemensamt», разделение на участки по стрелкам, условия допуска и места, дополнение по недельному календарю, класс дня. Возвращает **список режимов**, у каждого свои периоды | Код |
-| 3. `render_result(evaluation)` | Определяет категорию полноты разбора (полный / частичный / недостаточно данных), считает итоговую уверенность, собирает текст объяснения из справочника по кодам либо формирует отказ. При частичном разборе применяет правило асимметрии: сузить можно, расширить нельзя | Код |
+| 0. `classifyImage` | One cheap model call. Returns a label: Swedish parking sign / another road sign / not a sign. It also reports how many panels it sees below the main sign, which is used later as an independent check. The threshold leans towards letting things through: discarding a real sign costs more than admitting rubbish | Model, no tools |
+| 1. `extractSignData` | One vision call. Returns JSON: the main sign — with its background colour and kind — and an ordered top-to-bottom list of **the panels below it, which never includes the main sign itself**, with the boundaries between them. For each panel: its kind (`sign_plate`, or `info_board` for an operator's payment board, which is not a road sign), its text line by line, its legibility, and the parsed fields — time windows, fee windows, maximum duration, permit requirements, day class, arrows | Model, no tools |
+| 2. `evaluateParkingRules` | A pure function. Validates the JSON against the schema, checks the parsed fields against the reference whitelist, and assembles the result: the base regime from the main sign, composition by "var för sig / gemensamt", division into stretches by arrows, conditions of eligibility and place, completion by the weekly calendar, day class. Returns a **list of regimes**, each with its own periods | Code |
+| 3. `grade` → `applyAsymmetry` → `toJson` | Decides how complete the reading is (full / partial / insufficient / not a parking sign), computes the final confidence, applies the asymmetry rule, and assembles the explanation from the reference by key — or a refusal | Code |
 
-**Почему без tool-calling.** Инструмент, который модель может вызвать по своему решению, —
-это ветвление, которым управляет модель. Здесь ветвлений нет вовсе: конвейер один и тот же
-на каждом запросе. Отсутствие инструментов делает утверждение «модель не совершает
-действий» проверяемым по коду, а не декларацией. Справочник читает код после извлечения,
-а не модель во время рассуждения.
+**Why no tool-calling.** A tool the model may invoke at its own discretion is a branch the
+model controls. Here there are no branches at all: the pipeline is the same on every
+request. Having no tools makes "the model performs no actions" checkable in the code rather
+than declared in an instruction. The reference is read by code after extraction, never by
+the model while it reasons.
 
-Произвольного доступа к файловой системе, к сети, к shell и к произвольному SQL нет
-ни у модели, ни у стадий конвейера.
-
----
-
-## Запрещённые действия
-
-- Выносить вывод при уверенности ниже порога
-- Достраивать правила, которых нет на снимке
-- Ссылаться на нормы, которых нет в справочнике проекта
-- Утверждать юридическую или финансовую гарантию результата
-- Употреблять формулировки, адресованные пользователю, а не знаку: «parking allowed»,
-  «free parking», «you may park», «you need to move the car», «prohibited». Каждая
-  подпись — утверждение о **знаке** («the sign requires a parking disc, max 2 h»),
-  а не о том, что человеку можно делать. Словарь формулировок — в `PROJECT_BRIEF.md`
-- Молча выбирать наиболее вероятный вариант там, где данных не хватает: состояние
-  «неопределённость» показывается пользователю, а не схлопывается в догадку
-- Смешивать указания с разных табличек при их **формировании**: по официальному
-  правилу Transportstyrelsen слова соседней таблички не входят в указание («var för sig»),
-  и только строки внутри одной таблички образуют одно указание («gemensamt»)
-- Выдавать вывод по отдельной табличке: итог — производная от **всех** табличек,
-  прочитанных сверху вниз одна за другой. Ни первая, ни последняя не даёт ответа сама
-  по себе, и пересказ одной таблички вместо совмещённого итога запрещён
-- Подавать общие правила ПДД Швеции как часть разбора знака: они показываются
-  отдельным блоком с пометкой «на знаке этого нет, проверьте сами»
-- Заявлять полноту предметной области — перечень шведских табличек исчерпывающим
-  не является
-- Писать куда-либо, кроме своей папки данных
-- Сохранять фотографии пользователя
-- Отвечать на что-либо, кроме разбора знака на присланном снимке
-- Вести диалог, задавать уточняющие вопросы, принимать текстовый ввод
-- Самостоятельно вычислять, что действует по времени: это делает
-  `evaluate_parking_rules`, а не модель
-- Достраивать вне объявленного окна условия из этого окна: вне окна действует базовый
-  режим либо то, что назвал токен сдвига, и решает это код
-- Расширять разрешение при неполном разборе. Непрочитанная панель может оказаться
-  запретом, поэтому неполные данные позволяют только сузить сказанное знаком.
-  Утверждение «в остальное время ограничений нет» при непрочитанной панели запрещено
-- Заключать, относится ли пользователь к названной на знаке категории («только
-  для жильцов», «только по разрешению», «только мотоциклам»). Категория называется,
-  режим для неё показывается целиком, а вывод о человеке не делается никогда.
-  Ответ «здесь нельзя» на знаке, отводящем места мотоциклам, — это подстановка
-  автомобиля за пользователя, и она запрещена так же, как любой другой вердикт
+Neither the model nor any stage has arbitrary access to the file system, the network, a
+shell, or SQL.
 
 ---
 
-## Разрешённые источники
+## Forbidden actions
 
-| Источник | Кто читает | Роль |
+- Extending permission when the reading is incomplete. An unread panel may be a
+  prohibition, so incomplete data may only **narrow** what the sign says. The claim
+  "at other times there are no restrictions" is forbidden while a panel is unread
+- Filling in rules that are not on the photograph
+- Citing regulations that are not in the project's reference
+- Claiming a legal or financial guarantee
+- Wording addressed to the user rather than to the sign: "parking allowed", "free parking",
+  "you may park", "you need to move the car", "prohibited". Every line states something
+  about the **sign** ("the sign requires a parking disc, max 2 h"), never about what a
+  person may do. The vocabulary lives in `PROJECT_BRIEF.md`
+- Silently choosing the most likely reading where the data does not settle it: uncertainty
+  is shown to the user, not collapsed into a guess
+- Mixing wording across plates when **forming** an instruction: by Transportstyrelsen's
+  rule the words of a neighbouring plate are not part of an instruction ("var för sig"),
+  and only lines within one plate form a single instruction ("gemensamt")
+- Answering from one plate alone: the result derives from **all** plates, read top to
+  bottom. Neither the first nor the last gives the answer by itself
+- Presenting Sweden's general traffic rules as part of the sign's reading: they are shown
+  in a separate block marked "this is not on the sign — check it yourself"
+- Claiming completeness of the subject: the list of Swedish plates is not exhaustive
+- Storing the user's photographs
+- Answering anything other than the sign in the photograph sent
+- Holding a conversation, asking clarifying questions, or accepting text input
+- Working out by itself what applies at a given time: that is `evaluateParkingRules`,
+  not the model
+- Carrying conditions from inside a declared window to the time outside it: outside the
+  window the base regime applies, or whatever a scope-shift token named, and code decides
+- Concluding whether the user belongs to a category named on the sign ("residents only",
+  "permit holders only", "motorcycles only"). The category is named, its regime is shown in
+  full, and no conclusion about the person is ever drawn. Answering "you cannot park here"
+  for a sign that designates motorcycle spaces substitutes a car for the user, and is
+  forbidden like any other verdict
+
+---
+
+## Permitted sources
+
+| Source | Who reads it | Role |
 |---|---|---|
-| Папка справочника знаков и табличек (Markdown) | Код, после извлечения | Объяснения и белый список трактовки |
-| Календарь шведских праздников — вычисляется кодом, окно 2026-2030 | Код, в движке правил | Определение класса дня |
-| Заметки об общих правилах (Markdown) | Код, при сборке ответа | Справка, помеченная как «не с этого знака». В вычисления не входит |
-| Изображение из текущего запроса | Модель, один раз | Единственный вход стадии 1 |
+| The sign and plate reference (Markdown) | Code, after extraction | Explanations, and the whitelist of what may be interpreted |
+| Swedish public holidays — computed in code, window 2026–2030 | Code, in the rules engine | Determining the day class |
+| Notes on general rules (Markdown) | Code, when assembling the answer | Reference marked "not from this sign". Never enters the computation |
+| The image in the current request | Model, twice at most | The only input to stages 0 and 1 |
 
-**Памяти между запросами у ассистента нет:** каждый снимок разбирается с нуля.
-Истории разборов продукт не ведёт — ни на устройстве, ни где-либо ещё.
+**The assistant has no memory between requests:** every photograph is read from scratch.
+The product keeps no history of readings — not on the device, not anywhere. Nothing is
+written to disk at all; the key and provider live in browser storage, and only if the
+person allows it.
 
-Всё остальное — вне границ. Общие знания модели о парковке в Швеции источником
-не считаются и в ответ не попадают: текст объяснения собирается кодом из справочника.
-
----
-
-## Политика отказа
-
-**Отсев и отказ — разные вещи.** Снимок, на котором нет парковочного знака, до политики
-отказа не доходит: его останавливает стадия 0, и ответ говорит не «не удалось разобрать»,
-а «парковочного знака на снимке нет». Ниже — про снимки, которые отсев пропустил.
-
-Вывод **не формируется**, если:
-
-- итоговая уверенность ниже порога (`GOOD_ENOUGH`, 0.9, в коде);
-- на снимке нет основного знака;
-- табличка обрезана кадром или нечитаема;
-- нераспознанная табличка затрагивает основное правило, а не второстепенное уточнение;
-- порядок табличек в стопке восстановить не удалось — неизвестный порядок означает
-  неизвестное правило;
-- распознанное противоречит само себе (например, два несовместимых временных окна);
-- **граница между табличками не определена** — неясно, одна это табличка или две.
-  От этого зависит, действуют указания совместно или раздельно, а значит и весь разбор:
-  одни и те же слова дают разные правила. Пропуск границы даёт не приблизительный
-  ответ, а другой.
-
-  **Неопределённость границы устанавливается не по заявлению модели.** На проверке
-  (`testset/PROBE_LOG.md`, снимок `013`) две таблички были слиты в одну, и модель
-  при этом сообщила, что границы определены уверенно. Признак берётся из независимого
-  сигнала — например, из числа панелей, запрошенного отдельно от их содержимого;
-  расхождение и есть неопределённость;
-- **токен сдвига охвата не опознан** (`Övrig tid` и подобные). Без него неизвестно,
-  к какому времени относятся последующие строки, и правило собирается неверно.
-
-В этих случаях ассистент возвращает:
-
-1. то, что удалось распознать, с указанием уверенности;
-2. чего именно не хватает;
-3. конкретную просьбу — переснять ближе, снять всю стопку целиком,
-   снять при лучшем освещении.
-
-Формулировка отказа не должна выглядеть как ошибка приложения: это нормальный
-исход разбора.
-
-### Итоговая уверенность считается кодом
-
-Оценка, которую возвращает vision-модель, плохо откалибрована: модель уверенно ошибается,
-и её число нельзя класть в основу защиты. Итоговая уверенность собирается из сигналов,
-которыми владеет код:
-
-- прошёл ли ответ валидацию по схеме;
-- найден ли основной знак;
-- доля табличек, попавших в нераспознанные;
-- восстановлен ли порядок табличек;
-- есть ли внутренние противоречия во временных окнах;
-- определён ли класс дня по календарю;
-- и только затем — оценка модели, как один из входов.
-
-Порог назначается **измерением**, а не на глаз: движок пускается дважды по тестовому
-набору — по эталонной разметке и по ответу модели, — и сравнивается то, что прочтёт
-человек. Порог выбирается по этому расхождению (`npm run measure`).
+Everything else is out of bounds. The model's general knowledge of parking in Sweden does
+not count as a source and does not reach the answer: the text of the explanation is
+assembled by code from the reference.
 
 ---
 
-## Поведение при нехватке данных
+## Refusal policy
 
-**Уточняющих вопросов ассистент не задаёт.** Взаимодействие одношаговое: одна фотография —
-один ответ. При нехватке данных возможны ровно два исхода:
+**Triage and refusal are different things.** A photograph with no parking sign in it never
+reaches the refusal policy: stage 0 stops it, and the answer says not "this could not be
+read" but "there is no parking sign in this photograph". What follows is about photographs
+that triage let through.
 
-1. **Частичный разбор** — если недостающее касается второстепенного уточнения. Показывается
-   разобранная часть, недостающее называется прямо, уверенность снижена.
-2. **Отказ** — если недостающее касается основного правила. Показывается то, что удалось
-   распознать, и конкретная просьба переснять.
+**What withholds an answer is the category, not the confidence number.** The category is
+set by *what is missing*:
 
-Отдельный случай — **неизвестный класс дня** (дата вне календаря праздников). Тогда
-ответ приводит обе трактовки, будни и воскресенья/праздники, и просит пользователя
-проверить статус дня самостоятельно. Разрешения на парковку такой ответ не выдаёт
-ни в одной из веток.
+- **insufficient** — the main sign is unknown or unreadable, or fewer than half the plates
+  were read. No reading is offered.
+- **partial** — a plate went unread, or was read but not found in the reference, or no
+  plate states a parking rule at all, or the frame was too small to hold the text claimed.
+  A reading is offered, narrowed by the asymmetry rule.
+- **full** — every plate was read and understood.
 
-Диалог сознательно исключён из MVP: он добавляет состояние сессии и вторую реплику,
-не улучшая разбор.
+An answer is produced for **full** and **partial**, and withheld for **insufficient** and
+**not a parking sign**.
+
+**What the confidence threshold actually does.** `GOOD_ENOUGH` (0.9, in `present.ts`,
+chosen by measurement and not by eye) decides the **tone** of the result on screen: a full
+reading at or above it reads as settled, and anything else carries a note of caution. It
+does not gate whether an answer appears. The number works inside the category, not instead
+of it.
+
+A reading is also held back where the data contradicts itself or cannot be ordered:
+
+- the order of plates in the stack could not be established — an unknown order means an
+  unknown rule;
+- what was recognised contradicts itself (two incompatible time windows, say);
+- **the boundary between plates is undetermined** — it is unclear whether this is one plate
+  or two. Whether instructions apply jointly or separately depends on it, and so does the
+  whole reading: the same words yield different rules. A missed boundary gives not an
+  approximate answer but a different one.
+
+  **An undetermined boundary is not established by the model saying so.** On a probe
+  (`testset/PROBE_LOG.md`, photograph `013`) two plates were merged into one while the
+  model reported the boundaries as certain. The signal is taken from an independent
+  source — the panel count asked for separately from the panel contents — and the
+  disagreement is the uncertainty;
+- **a scope-shift token was not recognised** (`Övrig tid` and the like). Without it there
+  is no telling what time the following lines refer to.
+
+Where an answer is withheld, the assistant returns what it did recognise, says what is
+missing, and makes a specific request — come closer, photograph the whole stack, try better
+light. A refusal is a normal outcome of reading, and must not look like a fault in the
+application.
+
+### Confidence is computed by code
+
+The estimate a vision model returns is poorly calibrated: it is confidently wrong, and its
+number cannot carry a safeguard. The final confidence is assembled from eleven signals the
+code owns, with weights calibrated by measurement (`npm run measure`):
+
+| Signal | Weight | What it asks |
+|---|---|---|
+| `panels_read_share` | 0.20 | what fraction of the plates was read |
+| `main_sign_identified` | 0.15 | is the sign at the top of the pole known |
+| `main_sign_readable` | 0.10 | was it legible |
+| `plates_interpreted` | 0.10 | was every plate found in the reference |
+| `panel_count_agreement` | 0.10 | does the extraction agree with the count triage saw |
+| `main_sign_corroborated` | 0.10 | does any plate state a parking rule, or does the whole reading rest on the symbol alone |
+| `text_fits_the_pixels` | 0.10 | could a frame this size hold the text claimed |
+| `no_repairs_needed` | 0.05 | did the answer need repairing to fit the schema |
+| `day_class_known` | 0.05 | is the date inside the holiday calendar |
+| `model_confidence` | 0.05 | the model's own estimate — one input among eleven |
+| `schema_valid` | 0.00 | carries no weight by design: a reading that fails the schema never reaches the formula |
+
+`text_fits_the_pixels` is the product measuring rather than asking: how many pixels a
+photograph has is a fact, not an opinion. The area is taken by the pipeline from the
+photograph it was handed, so the running application scores it exactly as the measurement
+that calibrated the threshold does.
 
 ---
 
-## Как проверяется, что ассистент не выходит за рамки
+## Behaviour when data is missing
 
-| Граница | Чем обеспечена |
+**The assistant asks no clarifying questions.** The exchange is one step: one photograph,
+one answer. When something is missing there are exactly two outcomes:
+
+1. **A partial reading** — if what is missing is a secondary detail. The part that was read
+   is shown, what is missing is named plainly, confidence is lower.
+2. **A refusal** — if what is missing bears on the main rule. What was recognised is shown,
+   with a specific request to retake the photograph.
+
+**The asymmetry rule governs a partial reading: narrowing is allowed, widening is not.** If
+an unread panel could be a prohibition — its background yellow, or its colour unreadable,
+since prohibition signs in Sweden are yellow — then no period is presented as permitting.
+Otherwise a period with no conditions is marked, because "at other times there are no
+restrictions" would be a claim founded on absent data.
+
+A separate case is an **unknown day class** (a date outside the holiday calendar). The
+answer then gives both readings, weekdays and Sundays/holidays, and asks the user to check
+the status of the day. It grants permission in neither branch.
+
+Dialogue is deliberately outside the MVP: it adds session state and a second turn without
+improving the reading.
+
+---
+
+## How it is checked that the assistant stays within bounds
+
+| Boundary | How it is secured |
 |---|---|
-| Действия модели | Инструментов у модели нет вовсе; один вызов, изображение на входе, JSON на выходе. Проверяется по коду, а не по инструкции |
-| Ветвление | Конвейер фиксирован: три стадии в неизменном порядке, модель на порядок не влияет |
-| Арифметика по времени | Вынесена в `evaluate_parking_rules` — чистую функцию; результат воспроизводим и покрывается тестами |
-| Композиция | Реализовано официальное правило Transportstyrelsen: несколько табличек — каждая самостоятельное указание к знаку, несколько строк на одной табличке — одно совместное указание. Покрыто тестами на обоих официальных примерах с идентичным набором слов и разной группировкой |
-| Граница табличек | Извлекается как данные наравне с текстом; неопределённая граница ведёт к отказу, а не к предположению. Реконструкция знака на экране делает группировку видимой пользователю |
-| Проверка самой границы | Не берётся из заявления модели: на `013` слияние двух табличек сопровождалось `boundaries_certain: true`. Признак собирается независимым запросом и сверкой, а расхождение трактуется как неопределённость |
-| Основной знак в списке табличек | Модель дублировала его первой панелью без текста. Промпт это запрещает, но проверяет валидация: панель, всё содержимое которой — пиктограмма основного знака, отбрасывается как нарушение схемы |
-| Правило 24 часов | Умолчание для знака без таблички длительности считает код: счётчик идёт только по рабочим дням, выходные и праздники его не тратят. Табличка длительности умолчание перекрывает — отдельное правило разрешения конфликта со своим тестом |
-| Вычисление `Övrig tid` | Дополнение по недельному календарю с учётом классов дней и праздников считает код: вычесть набор интервалов из недели модель не может в принципе |
-| Приоритет запрета | Табличка запрета (например, день уборки улицы) перекрывает разрешающие указания на своём окне. Правило разрешения конфликта реализовано кодом и покрыто отдельным тестом: подсказать парковку в день уборки — самая дорогая ошибка продукта |
-| Источник фактов | Текст объяснения собирается кодом из справочника; свободный текст модели в ответ не попадает |
-| Граница знаний | Белый список: чего нет в справочнике — показывается дословно как неинтерпретируемое и в вычисления не входит |
-| Формулировки ответа | Текст собирается кодом из справочника, поэтому подписи вида «parking allowed» физически не могут прийти из ответа модели. Словарь проверяется тестом на запрещённые шаблоны |
-| Неоднозначность | «Неопределённость» — отдельное состояние результата, а не повод выбрать вариант. Возникает по проверяемым кодом причинам: неизвестный класс дня, неопознанный токен сдвига охвата, невосстановленный порядок строк, внутреннее противоречие |
-| Общие правила | Хранятся отдельно, помечены в ответе, в вычисления не входят никогда |
-| Отказ при низкой уверенности | Порог проверяется кодом до формирования ответа; сама уверенность тоже считается кодом |
-| Плохие снимки | Набор тестовых сценариев с заведомо непригодными фотографиями: темнота, обрезка, отсутствие знака, блики |
-| Воспроизводимость | Сохранённые ответы модели в `demo/`: один и тот же вход даёт один и тот же выход, поэтому поведение проверяется регрессией, а не разовым впечатлением |
-| Наблюдаемость | Логирование каждой стадии: что получила, что вернула |
-| Фотографии пользователя | Не сохраняются на диск; в лог попадает факт вызова, а не изображение |
+| Actions by the model | The model has no tools at all; an image goes in, a label or JSON comes out. Checked in the code, not in an instruction |
+| Branching | The pipeline is fixed: four stages in an unchanging order, and the model does not affect the order. The one repeat of extraction is triggered by code, capped at one, and recorded in the flags |
+| Arithmetic over time | Moved into `evaluateParkingRules`, a pure function; the result is reproducible and covered by tests |
+| Composition | Transportstyrelsen's own rule is implemented: several plates are each a separate instruction to the sign, several lines on one plate are a single joint instruction. Covered by tests on both official examples — identical words, different grouping |
+| Plate boundaries | Extracted as data alongside the text; an undetermined boundary leads to a refusal, not an assumption. Redrawing the sign on screen makes the grouping visible to the user |
+| Checking the boundary itself | Not taken from the model's own claim: on `013` two merged plates came with `boundaries_certain: true`. The signal is gathered by an independent request and compared, and disagreement counts as uncertainty |
+| The main sign inside the panel list | The model once duplicated it as a first, textless panel. The prompt forbids it, but validation enforces it: a panel whose entire content is the main sign's pictogram is rejected as a schema violation |
+| The 24-hour rule | The default for a sign with no duration plate is computed by code: the counter advances only on working days, and weekends and holidays do not spend it. A duration plate overrides the default — a separate conflict rule with its own test |
+| Computing `Övrig tid` | Completion by the weekly calendar, accounting for day classes and holidays, is done in code: subtracting a set of intervals from a week is not something the model can do reliably |
+| Priority of prohibition | A prohibition plate (a street-cleaning day, say) overrides permitting instructions on its window. The conflict rule is code and has its own test: suggesting parking on a cleaning day is the product's most expensive mistake |
+| The source of facts | The explanation is assembled by code from the reference; the model's free text never reaches the answer |
+| The boundary of knowledge | The whitelist: what is not in the reference is shown verbatim as uninterpreted and does not enter the computation |
+| The wording of the answer | Text is assembled by code from the reference, so a caption such as "parking allowed" cannot physically arrive from the model. The vocabulary is checked by a test for forbidden patterns |
+| Ambiguity | "Uncertain" is a state of the result, not a reason to pick a variant. It arises for reasons code can check: unknown day class, unrecognised scope-shift token, unrecoverable order, internal contradiction |
+| General rules | Kept separately, marked in the answer, and never part of the computation |
+| Withholding an answer | Decided by category before the answer is formed; the confidence number sets the tone, not the gate |
+| Bad photographs | A set of test scenarios with deliberately unusable photographs: darkness, cropping, no sign, glare |
+| Reproducibility | Saved model answers in `demo/`: the same input gives the same output, so behaviour is checked by regression rather than by a single impression. The measurement runs on them without a key |
+| The user's photographs | Never saved anywhere |
 
-**Принцип, из которого всё это следует:** правило, оставленное просьбой в инструкции
-модели, выполняется через раз. Правило, перенесённое в код, выполняется всегда.
-Поэтому в инструкции остаются тон и формулировки, а всё, у чего есть последствие —
-порог уверенности, арифметика времени, композиция табличек, граница справочника,
-доступ к файлам — живёт в коде.
+**The principle all of this follows from:** a rule left as a request in the model's
+instructions is followed some of the time. A rule moved into code is followed always. So
+the instructions keep tone and wording, while everything with a consequence — the
+confidence threshold, the arithmetic over time, the composition of plates, the boundary of
+the reference — lives in code.
