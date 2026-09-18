@@ -9,14 +9,15 @@ createRoot(document.getElementById("root")!).render(
   </StrictMode>,
 );
 
-// Служебный работник — только в собранной странице: в разработке его файл
-// не собирается вовсе, а закэшированная оболочка мешала бы видеть правки.
+// The service worker — only in the built page: in development its file is not built
+// at all, and a cached shell would get in the way of seeing edits.
 //
-// Регистрация относительная и считается от адреса СТРАНИЦЫ, а не от адреса этого
-// файла: работник управляет своей папкой, и из `assets/` он управлял бы только ею.
+// The registration is relative and is counted from the address of the PAGE, not of
+// this file: the worker governs its own folder, and from `assets/` it would govern
+// only that.
 //
-// Неудача ничего не ломает: приложение работает и без офлайна, а обещать его
-// там, где браузер работника не дал, было бы неправдой.
+// A failure breaks nothing: the application works without offline too, and promising
+// offline where the browser refused the worker would be untrue.
 if (import.meta.env.PROD && "serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("./sw.js").catch(() => {});

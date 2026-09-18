@@ -1,3 +1,3 @@
 /// <reference types="vite/client" />
 
-// Типы Vite для кода фронтенда: `import.meta.env` и импорт ресурсов.
+// Vite's types for the frontend code: `import.meta.env` and the importing of assets.

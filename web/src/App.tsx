@@ -1,12 +1,10 @@
-// Экран целиком. Плоская архитектура: по компоненту на экран, состояние здесь.
+// The whole screen. A flat architecture: one component per screen, and the state
+// here.
 //
-// Какой экран показывать и куда ведут действия, решает `lib/view`; здесь только
-// состояние и краска. Снимок, рамка и разбор — это ДАННЫЕ (`picked`, `aimed`,
-// `data`), а не выбор экрана: экран выбирает вид-модель, и она же держит ворота
-// по ключу (решение 147).
-//
-// Камера, кадр и разбор перерисовываются этапами 5-6; пока на их местах прежние
-// компоненты, уже переведённые на токены.
+// Which screen to show, and where the actions lead, is decided by `lib/view`; here
+// there is only state and paint. The photograph, the frame and the reading are DATA
+// (`picked`, `aimed`, `data`) rather than a choice of screen: the screen is chosen by
+// the view-model, and the same model keeps the gate on the key (decision 147).
 
 import { useEffect, useState } from "react";
 import { Calendar } from "./lib/calendar";
@@ -28,7 +26,7 @@ import CameraCapture from "./components/CameraCapture";
 import type { Box } from "./lib/crop";
 import Reading from "./components/Reading";
 
-/** Сейчас по часам устройства, в том же виде, что даёт поле выбора момента. */
+/** Now by the device's clock, in the same shape the moment field gives. */
 function nowLocal(): string {
   const t = new Date();
   const pad = (n: number) => String(n).padStart(2, "0");
@@ -44,30 +42,33 @@ export default function App() {
   const [preview, setPreview] = useState<string | null>(null);
   const [moment, setMoment] = useState("");
   const [picked, setPicked] = useState<File | null>(null);
-  // Рамка, наведённая в видоискателе: экран кадрирования начинает с неё.
+  // The frame aimed in the viewfinder: the cropping screen starts from it.
   const [aimed, setAimed] = useState<Box | undefined>(undefined);
-  // Общие правила едут вместе со страницей (шаг 6d): раньше они приходили
-  // с сервера, и без него блок исчезал МОЛЧА — ни строки о том, что он был.
+  // The general rules travel with the page (step 6d): they used to arrive from a
+  // server, and without one the block vanished IN SILENCE — not a line to say it had
+  // ever been there.
   const rules: GeneralRule[] = GENERAL_RULES;
-  // Ключ и провайдер. Вспоминается то, что человек разрешил вспомнить.
+  // The key and the provider. What the person allowed to be remembered is remembered.
   const [settings, setSettings] = useState<Settings>(() => load(browserStore()));
-  // Какой экран открыт. Начальный выбирается по настройкам: без ключа человеку
-  // показывать нечего, кроме приглашения его завести.
+  // Which screen is open. The first one is chosen by the settings: with no key there
+  // is nothing to show a person but the invitation to get one.
   const [view, setView] = useState<View>(() => ({ screen: start(settings) }));
   const [online, setOnline] = useState(
     typeof navigator === "undefined" || navigator.onLine);
 
   const move = (action: Action) => setView((v) => go(v, action, settings));
 
-  // Съёмку предлагаем, только если браузер её отдаст: `getUserMedia` живёт лишь
-  // в защищённом контексте, и по адресу вида `http://192.168.x.x` его нет вовсе.
+  // Shooting is offered only if the browser will give it: `getUserMedia` lives in a
+  // secure context alone, and at an address of the form `http://192.168.x.x` it is
+  // not there at all.
   const canShoot = cameraSupported(
     typeof navigator === "undefined" ? undefined : navigator.mediaDevices,
     typeof window !== "undefined" && window.isSecureContext,
   );
 
-  // Превью живёт в браузере как blob и снимается при замене: снимок никуда
-  // не сохраняется — ни на диск, ни в память страницы дольше нужного.
+  // The preview lives in the browser as a blob and is taken down when replaced: the
+  // photograph is saved nowhere — neither to disk nor in the page's memory for longer
+  // than it is needed.
   useEffect(() => () => { if (preview) URL.revokeObjectURL(preview); }, [preview]);
 
   useEffect(() => {
@@ -85,7 +86,7 @@ export default function App() {
     save(browserStore(), next);
   }
 
-  /** Снимок выбран в галерее: ничего не отправляется, идём кадрировать. */
+  /** A photograph was chosen in the gallery: nothing is sent, we go and crop it. */
   function onPickFile(file: File) {
     setError(null);
     setData(null);
@@ -94,8 +95,9 @@ export default function App() {
     move("pick");
   }
 
-  // Наружу уходит только вырезанное, и в разборе показывается оно же — иначе
-  // человек сверял бы ответ с картинкой, которой модель не видела.
+  // Only what was cropped goes outward, and the reading shows that same thing —
+  // otherwise a person would be checking the answer against a picture the model never
+  // saw.
   async function onSend(cropped: File) {
     setBusy(true);
     setError(null);
@@ -113,8 +115,8 @@ export default function App() {
         setPicked(null);
         move("sent");
       } else {
-        // Сюда попасть нельзя: без ключа ни камеры, ни галереи не предлагают.
-        // Но если попали — сказать теми же словами, что и настройки.
+        // There is no getting here: with no key neither camera nor gallery is
+        // offered. But if we did get here — say it in the same words as the settings.
         throw new Error(`To read a sign the app needs ${missing(settings).join(", ")}.`);
       }
     } catch (e) {
@@ -124,7 +126,7 @@ export default function App() {
     }
   }
 
-  /** Уйти с пути и не оставить за собой ничего. */
+  /** Leave the path, and leave nothing behind. */
   function reset() {
     setPicked(null);
     setAimed(undefined);
@@ -136,11 +138,12 @@ export default function App() {
   const screen = view.screen;
 
   return (
-    // Окно меряется здесь и только здесь, в `svh` — это наименьшая его высота,
-    // при показанной адресной строке. `vh` считался бы так, будто строки нет,
-    // и страница вышла бы ровно на неё длиннее окна: всё уместилось, а прокрутка
-    // всё равно есть. `dvh` меняется на ходу и перестаёт помещаться в ту секунду,
-    // когда строка выезжает. Экраны свою высоту не считают — занимают эту.
+    // The window is measured here and only here, in `svh` — the smallest height it
+    // has, the one with the address bar shown. `vh` would be counted as though the
+    // bar were not there, and the page would come out exactly its height longer than
+    // the window: everything fits, and there is a scrollbar all the same. `dvh`
+    // changes as you go, and stops fitting the second the bar slides out. Screens do
+    // not measure their own height — they take this one.
     <div className="flex min-h-[100svh] flex-col bg-ground-2 py-6">
       <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-4 px-4">
         {screen === "settings" ? (

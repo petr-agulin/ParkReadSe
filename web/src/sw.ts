@@ -1,12 +1,12 @@
-// Служебный работник: обвязка над `lib/offline.ts`.
+// The service worker: a wrapper over `lib/offline.ts`.
 //
-// Здесь нет ни одного решения — они все в `offline.ts`, где их проверяет тест.
-// Этот файл только переводит их на язык браузера: поставить оболочку в кэш,
-// стереть прошлую, ответить на запрос.
+// There is not one decision here — they all live in `offline.ts`, where a test checks
+// them. This file only translates them into the browser's language: put the shell in
+// the cache, wipe the previous one, answer a request.
 //
-// Написан руками, а не плагином (требование шага 9): плагин принёс бы генератор,
-// конфиг и своё представление о том, что кэшировать, — а решать, что кэшируется,
-// здесь важнее, чем сэкономить сорок строк.
+// Written by hand rather than by a plugin (a requirement of step 9): a plugin would
+// have brought a generator, a config and its own idea of what to cache — and deciding
+// what gets cached matters more here than saving forty lines.
 
 import { CACHE, OFFLINE_PAGE, SHELL, outdated, respond, route,
          type Req } from "./lib/offline";
@@ -42,8 +42,8 @@ worker.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE)
       .then((cache) => cache.addAll(SHELL.map((path) => new URL(path, scope).href)))
-      // Новый работник не ждёт, пока закроются все вкладки: иначе правка
-      // доезжала бы до человека через день и без всякого объяснения.
+      // A new worker does not wait for every tab to close: otherwise a fix would
+      // reach the person a day later, and with no explanation at all.
       .then(() => worker.skipWaiting()),
   );
 });
@@ -62,8 +62,9 @@ worker.addEventListener("fetch", (event) => {
     url: event.request.url,
     navigate: event.request.mode === "navigate",
   };
-  // Решение принимается СРАЗУ и по тем же правилам: чужой запрос — вызов модели
-  // в том числе — не проходит через работника вовсе, а не проходит и не кэшируется.
+  // The decision is taken AT ONCE and by the same rules: somebody else's request — a
+  // call to the model included — does not pass through the worker at all, and what
+  // does not pass is not cached either.
   if (route(req, worker.registration.scope) === "network") return;
   event.respondWith(
     respond(req, env).then((answer) => answer ?? fetch(event.request)),
