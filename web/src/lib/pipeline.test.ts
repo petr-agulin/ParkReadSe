@@ -1,5 +1,5 @@
-// Порядок стадий: отсев → извлечение → движок → полнота, и что происходит,
-// когда что-нибудь из этого не срабатывает.
+// The order of the stages: triage, extraction, the engine, completeness - and what
+// happens when one of them does not fire.
 
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -16,14 +16,15 @@ const moment = parseNaive("2026-03-02T12:00");
 
 const provider: Provider = {
   baseUrl: "https://example.invalid/v1",
-  apiKey: "ключ",
-  visionModel: "чтение",
+  apiKey: "a-key",
+  visionModel: "a-reader",
 };
 
-const photo: Photo = { name: "знак.jpg",
+const photo: Photo = { name: "sign.jpg",
                        data: new Blob([new Uint8Array([1])], { type: "image/jpeg" }) };
 
-/** Настоящий снимок набора: размер читается из его же байтов, как в браузере. */
+/** A real photograph of the set: its size is read from its own bytes, as in the
+ *  browser. */
 function realPhoto(file: string): Photo {
   const bytes = new Uint8Array(readFileSync(`${ROOT}testset/photos/${file}`));
   return { name: file,
@@ -31,7 +32,7 @@ function realPhoto(file: string): Photo {
                           { type: file.endsWith(".png") ? "image/png" : "image/jpeg" }) };
 }
 
-/** Настоящий разбор знака из набора — тот же, что читает питон. */
+/** A real reading of a sign from the set - the same one the measurement reads. */
 function realSign(stem: string) {
   return JSON.parse(readFileSync(`${ROOT}demo/${stem}.extract.json`, "utf-8")).response;
 }
@@ -41,7 +42,7 @@ const reply = (content: unknown) => () => new Response(JSON.stringify({
                                   ? content : JSON.stringify(content) } }],
 }), { status: 200 });
 
-const TRIAGE_OK = { category: "parking_sign", what_i_see: "синий P",
+const TRIAGE_OK = { category: "parking_sign", what_i_see: "a blue P",
                     panels_below_main_sign: 1 };
 
 function fakeProvider(...replies: (() => Response)[]) {
@@ -54,21 +55,21 @@ function fakeProvider(...replies: (() => Response)[]) {
 const deps = (f: { fetchImpl: typeof fetch }) =>
   ({ pause: async () => {}, fetchImpl: f.fetchImpl });
 
-describe("конвейер", () => {
-  it("отсев останавливает конвейер и второго вызова не делает", async () => {
-    const f = fakeProvider(reply({ category: "not_a_sign", what_i_see: "стена",
+describe("the pipeline", () => {
+  it("stops at triage and makes no second call", async () => {
+    const f = fakeProvider(reply({ category: "not_a_sign", what_i_see: "a wall",
                                    panels_below_main_sign: 0 }));
     const out = await run(photo, provider, deps(f));
     expect(out.stoppedAt).toBe("triage");
-    expect(out.reason).toBe("стена");
-    expect(f.calls(), "извлечение не запускалось").toBe(1);
+    expect(out.reason).toBe("a wall");
+    expect(f.calls(), "extraction never ran").toBe(1);
   });
 
-  // Найдено сверкой `AGENT_SPEC.md` с кодом: площадь кадра до оценки не доходила,
-  // потому что конвейер подставлял `null`. Снимок `061` — тот самый случай из шапки
-  // `photo.ts`: 82×179, а модель вернула полсотни символов связного шведского текста
-  // и ни одной пометки о помехах.
-  it("площадь кадра доходит до оценки полноты", async () => {
+  // Found by checking `AGENT_SPEC.md` against the code: the area of the frame never
+  // reached the grading, because the pipeline passed `null`. Photograph `061` is the
+  // very case from the header of `photo.ts`: 82x179, and the model returned fifty-odd
+  // characters of fluent Swedish with not one note about conditions.
+  it("carries the area of the frame through to the completeness grading", async () => {
     const sign = realSign("061-lastplats-langt-avstand");
     const assess = (p: Photo) => analyze(p, provider, moment, cal,
       deps(fakeProvider(reply(TRIAGE_OK), reply(sign))));
@@ -77,16 +78,16 @@ describe("конвейер", () => {
     const onTiny = await assess(realPhoto("061-lastplats-langt-avstand.png"));
 
     expect(onBig.assessment.signals.text_fits_the_pixels,
-           "крупный кадр этот текст вмещает").toBe(1);
+           "a large frame does hold this text").toBe(1);
     expect(onTiny.assessment.signals.text_fits_the_pixels,
-           "тесный кадр его не вмещает — иначе размер снимка до оценки не дошёл")
+           "a tight one does not - or the size never reached the grading")
       .toBeLessThan(1);
-    expect(onTiny.assessment.reasons, "и причина обязана дойти до человека")
+    expect(onTiny.assessment.reasons, "and the reason must reach the person")
       .toContain("text_exceeds_the_pixels");
   });
 
-  it("метка отсева не останавливает, когда её не требуют", async () => {
-    const f = fakeProvider(reply({ category: "other_road_sign", what_i_see: "знак",
+  it("does not stop on a triage label when it is not enforced", async () => {
+    const f = fakeProvider(reply({ category: "other_road_sign", what_i_see: "a sign",
                                    panels_below_main_sign: 1 }),
                            reply(realSign("001-p-30min")));
     const out = await run(photo, provider, { ...deps(f), triageEnforce: false });
@@ -95,54 +96,54 @@ describe("конвейер", () => {
   });
 
   // py: test_api::test_a_reading_that_says_too_little_is_asked_once_more
-  it("прочитано слишком мало — переспрашивает ровно один раз", async () => {
-    // Найдено разработчиком в браузере: `049` и `056` с первой попытки давали
-    // «слишком мало», со второй разбирались целиком.
-    const мало = { schema_version: 1,
-                   main_sign: { type: "unknown", background_color: "blue",
-                                form: "regular", legibility: { readable: true } },
-                   panels: [], panel_count: 0, boundaries: { certain: true } };
-    const f = fakeProvider(reply(TRIAGE_OK), reply(мало), reply(realSign("001-p-30min")));
+  it("asks once more, and exactly once, when too little was read", async () => {
+    // Found by the developer in the browser: `049` and `056` said "too little" on the
+    // first attempt and were read in full on the second.
+    const scant = { schema_version: 1,
+                    main_sign: { type: "unknown", background_color: "blue",
+                                 form: "regular", legibility: { readable: true } },
+                    panels: [], panel_count: 0, boundaries: { certain: true } };
+    const f = fakeProvider(reply(TRIAGE_OK), reply(scant), reply(realSign("001-p-30min")));
     const out = await run(photo, provider, deps(f));
-    expect(f.calls(), "отсев + две попытки чтения").toBe(3);
+    expect(f.calls(), "triage plus two attempts at reading").toBe(3);
     expect(out.flags).toContain("extraction_retried");
     expect(out.stoppedAt).toBeNull();
-    expect(out.extraction?.data?.main_sign.type, "взят лучший ответ").toBe("parking");
+    expect(out.extraction?.data?.main_sign.type, "the better answer was taken").toBe("parking");
   });
 
   // py: test_api::test_a_good_reading_is_never_asked_twice
-  it("хороший разбор не переспрашивается", () => {
-    // Переспрос стоит вызова, и тратить его на разбор, которым продукт доволен,
-    // незачем.
+  it("never asks twice about a good reading", () => {
+    // A second ask costs a call, and there is no reason to spend one on a reading the
+    // product is satisfied with.
     const f = fakeProvider(reply(TRIAGE_OK), reply(realSign("001-p-30min")),
-                           reply({ совсем: "не то" }));
+                           reply({ nothing: "like it" }));
     return run(photo, provider, deps(f)).then((out) => {
-      expect(f.calls(), "отсев + одно чтение").toBe(2);
+      expect(f.calls(), "triage plus one reading").toBe(2);
       expect(out.flags).not.toContain("extraction_retried");
     });
   });
 
   // py: test_api::test_the_retry_happens_once_and_not_in_a_loop
-  it("второй ответ не берётся, если он не лучше", async () => {
-    const мало = { schema_version: 1,
-                   main_sign: { type: "unknown", background_color: "blue",
-                                form: "regular", legibility: { readable: true } },
-                   panels: [], panel_count: 0, boundaries: { certain: true } };
-    const f = fakeProvider(reply(TRIAGE_OK), reply(мало), reply(мало));
+  it("does not take the second answer when it is no better", async () => {
+    const scant = { schema_version: 1,
+                    main_sign: { type: "unknown", background_color: "blue",
+                                 form: "regular", legibility: { readable: true } },
+                    panels: [], panel_count: 0, boundaries: { certain: true } };
+    const f = fakeProvider(reply(TRIAGE_OK), reply(scant), reply(scant));
     const out = await run(photo, provider, deps(f));
     expect(f.calls()).toBe(3);
-    expect(out.stoppedAt).toBeNull();          // ответ есть, просто скудный
+    expect(out.stoppedAt).toBeNull();          // there is an answer, merely a thin one
     expect(out.extraction?.data?.main_sign.type).toBe("unknown");
   });
 
-  it("ответ не по схеме останавливает на извлечении и называет причину", async () => {
-    const f = fakeProvider(reply(TRIAGE_OK), reply({ совсем: "не то" }));
+  it("stops at extraction on an answer that fails the schema, and names why", async () => {
+    const f = fakeProvider(reply(TRIAGE_OK), reply({ nothing: "like it" }));
     const out = await run(photo, provider, deps(f));
     expect(out.stoppedAt).toBe("extraction");
     expect(out.reason).toBeTruthy();
   });
 
-  it("целый снимок доходит до готового ответа", async () => {
+  it("carries a whole photograph through to a finished answer", async () => {
     const f = fakeProvider(reply(TRIAGE_OK), reply(realSign("005-2tim-8-18-parentes-8-15-dubbelpil")));
     const analysis = await analyze(photo, provider, moment, cal, deps(f));
     expect(analysis.assessment.category).toBe("full");
@@ -152,18 +153,19 @@ describe("конвейер", () => {
     expect(body.contract).toBeGreaterThan(0);
     expect(body.regimes.length).toBeGreaterThan(0);
     expect(body.regimes[0].periods[0].headline).toBeTruthy();
-    // Стадии записаны: отсев виден в ответе, как и раньше.
+    // The stages are recorded: triage is visible in the answer, as before.
     expect(body.triage?.category).toBe("parking_sign");
   });
 
-  it("остановка на отсеве — тот же ответ, только без вывода", async () => {
-    const f = fakeProvider(reply({ category: "not_a_sign", what_i_see: "кот",
+  it("stopping at triage gives the same answer, only without a reading", async () => {
+    const f = fakeProvider(reply({ category: "not_a_sign", what_i_see: "a cat",
                                    panels_below_main_sign: 0 }));
     const body = answer(await analyze(photo, provider, moment, cal, deps(f)), moment, cal);
     expect(body.has_answer).toBe(false);
     expect(body.completeness.category).toBe("not_a_parking_sign");
     expect(body.regimes).toEqual([]);
-    // Форма ответа не меняется: отказ — тот же ответ без вывода.
+    // The shape of the answer does not change: a refusal is the same answer with no
+    // reading in it.
     expect(body).toHaveProperty("what_we_saw");
     expect(body).toHaveProperty("uncertainties");
   });
