@@ -127,6 +127,6 @@ export type Analysis = {
   note?: { token: string; text: string } | null;
 };
 
-export type GeneralRule = { key: string; text: string; source: string; body: string };
+export type GeneralRule = { key: string; text: string; source: string };
 
 export type ApiError = { error: string; message?: string };

@@ -60,9 +60,13 @@ describe("порождённое свежее", () => {
     // блок исчезал без единого слова (шаг 6d).
     const emitted = read("web/src/lib/rules.data.ts");
     expect(emitted, "пересобрать: npm run emit").toBe(emitRules());
-    for (const field of ["key", "text", "source", "body"]) {
+    for (const field of ["key", "text", "source"]) {
       expect(emitted, field).toContain(`"${field}"`);
     }
+    // А сами статьи — нет. Их не отрисовывает ничто: экран берёт только `text`.
+    // Написаны они для разработчика и остаются русскими по §2 `AGENTS.md`,
+    // поэтому в браузере это тысячи символов прозы, которую никто не прочтёт.
+    expect(emitted, "статьи уехали в страницу").not.toContain('"body"');
     // Страница берёт их локально и в сеть за справкой не ходит.
     const app = read("web/src/App.tsx");
     expect(app).toContain("GENERAL_RULES");
