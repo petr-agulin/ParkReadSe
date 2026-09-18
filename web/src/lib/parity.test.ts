@@ -1,14 +1,15 @@
-// Двойной прогон: одна и та же задача — двум реализациям, ответ сравнивается.
+// The double run: the same task given to two implementations, and the answers
+// compared.
 //
-// Считает ответы `web/tools/goldens.ts`, он же их и пишет; здесь они сверяются
-// с тем, что лежит в `parity/`. Пробы живут там, а не тут, ровно по одной причине:
-// команда, которая пишет эталоны, и прогон, который их проверяет, обязаны считать
-// ОДНИМ кодом. Две копии одной пробы разъедутся молча — а это та самая беда,
-// против которой весь двойной прогон и заведён.
+// The answers are computed by `web/tools/goldens.ts`, which also writes them; here
+// they are checked against what lies in `parity/`. The probes live there rather than
+// here for exactly one reason: the command that writes a reference answer and the run
+// that checks it must compute with ONE piece of code. Two copies of one probe drift
+// apart in silence - which is the very trouble the whole double run exists against.
 //
-// Расхождение должно ЧИТАТЬСЯ: «не сошлось» бесполезно, когда случаев под две
-// сотни, а в каждом — режимы, отрезки и подписи. Поэтому путь до поля собирается
-// целиком (`differences`).
+// A disagreement has to READ: "did not match" is useless when there are close to two
+// hundred cases and each holds regimes, segments and captions. So the path down to
+// the field is assembled in full (`differences`).
 
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -17,86 +18,88 @@ import { describe, expect, it } from "vitest";
 import { differences, report } from "./parity";
 import { LAYERS, PROBES } from "../../tools/goldens";
 
-// Эталоны лежат вне `web/`: они об ответе продукта, а не о сборке страницы.
+// The reference answers live outside `web/`: they are about the product's answer, not
+// about the building of the page.
 const DIR = fileURLToPath(new URL("../../../parity/", import.meta.url));
 const read = (name: string) => JSON.parse(readFileSync(`${DIR}${name}.json`, "utf-8"));
 
-describe("двойной прогон", () => {
-  it("эталоны на месте и случаи объявлены", () => {
+describe("the double run", () => {
+  it("has its reference answers in place and its cases declared", () => {
     const cases = read("cases");
     expect(Array.isArray(cases)).toBe(true);
     expect(cases.length).toBeGreaterThan(100);
     for (const layer of LAYERS) expect(read(layer)).toBeTruthy();
   });
 
-  it("список портированных слоёв объявлен и состоит из известных", () => {
+  it("declares the ported layers, and every one of them is known", () => {
     const ported: string[] = read("PORTED").layers;
     expect(Array.isArray(ported)).toBe(true);
     for (const layer of ported) expect(LAYERS).toContain(layer);
   });
 
-  it("портированный слой сходится с эталоном, непортированный назван вслух", async () => {
+  it("agrees with the reference on a ported layer, and names an unported one aloud", async () => {
     const ported: string[] = read("PORTED").layers;
     const pending = LAYERS.filter((l) => !ported.includes(l));
-    // Не украшение: строка в выводе — единственное, что не даёт забыть,
-    // что половина ответа ещё нигде не проверяется.
-    if (pending.length) console.log(`двойной прогон: ждут порта — ${pending.join(", ")}`);
+    // Not decoration: a line in the output is the only thing keeping anyone from
+    // forgetting that half the answer is checked nowhere yet.
+    if (pending.length) console.log(`double run: awaiting a port — ${pending.join(", ")}`);
 
     for (const layer of ported) {
       const probe = PROBES[layer];
-      // Слой объявлен портированным, а считать его нечем — это ошибка списка.
-      expect(probe, `слой ${layer} объявлен портированным, но пробы нет`).toBeTruthy();
+      // A layer declared ported with nothing to compute it is an error in the list.
+      expect(probe, `layer ${layer} is declared ported, but there is no probe`).toBeTruthy();
       const lines = report(layer, read(layer), await probe!());
       expect(lines, lines.join("\n")).toEqual([]);
     }
   }, 120_000);
 });
 
-describe("расхождение читается", () => {
-  it("путь ведёт до поля, а не до случая", () => {
-    const было = { regimes: [{ periods: [{ state: "allowed" }] }] };
-    const стало = { regimes: [{ periods: [{ state: "prohibited" }] }] };
-    expect(differences(было, стало)).toEqual([
+describe("a disagreement reads", () => {
+  it("leads down to the field, not merely to the case", () => {
+    const before = { regimes: [{ periods: [{ state: "allowed" }] }] };
+    const after = { regimes: [{ periods: [{ state: "prohibited" }] }] };
+    expect(differences(before, after)).toEqual([
       'regimes[0].periods[0].state: "prohibited" ≠ "allowed"',
     ]);
   });
 
-  it("пропавшее и лишнее поле различаются", () => {
-    expect(differences({ a: 1, b: 2 }, { a: 1 })).toEqual(["b: поля нет"]);
-    expect(differences({ a: 1 }, { a: 1, b: 2 })).toEqual(["b: лишнее поле — 2"]);
+  it("tells a missing field from an extra one", () => {
+    expect(differences({ a: 1, b: 2 }, { a: 1 })).toEqual(["b: the field is missing"]);
+    expect(differences({ a: 1 }, { a: 1, b: 2 })).toEqual(["b: an extra field — 2"]);
   });
 
-  it("разная длина списка называется числом", () => {
+  it("names a differing list length as a number", () => {
     const lines = differences({ p: [1, 2] }, { p: [1] });
-    expect(lines[0]).toBe("p: элементов 1, а не 2");
+    expect(lines[0]).toBe("p: 1 items, not 2");
   });
 
-  it("у длинной строки называется первый разошедшийся знак", () => {
-    // Календарь отдаёт по букве на день: две простыни рядом не показывают ничего.
-    const было = "w".repeat(60) + "e" + "w".repeat(60);
-    const стало = "w".repeat(60) + "r" + "w".repeat(60);
-    expect(differences({ classes: было }, { classes: стало }))
-      .toEqual(['classes: расходится со знака 60: "wwwwwrwwwww" ≠ "wwwwwewwwww"']);
+  it("names the first differing character of a long string", () => {
+    // The calendar yields a letter per day: two such sheets side by side show
+    // nothing.
+    const before = "w".repeat(60) + "e" + "w".repeat(60);
+    const after = "w".repeat(60) + "r" + "w".repeat(60);
+    expect(differences({ classes: before }, { classes: after }))
+      .toEqual(['classes: differs from character 60: "wwwwwrwwwww" ≠ "wwwwwewwwww"']);
   });
 
-  it("короткая строка показывается целиком", () => {
+  it("shows a short string whole", () => {
     expect(differences({ state: "allowed" }, { state: "prohibited" }))
       .toEqual(['state: "prohibited" ≠ "allowed"']);
   });
 
-  it("совпадение молчит", () => {
+  it("stays silent when the two agree", () => {
     const answer = { a: [1, { b: "x" }], c: null };
     expect(differences(answer, structuredClone(answer))).toEqual([]);
   });
 
-  it("отчёт называет слой и случай", () => {
+  it("names the layer and the case in its report", () => {
     const lines = report("engine", { "demo/005@base": { permits: true } },
                          { "demo/005@base": { permits: false } });
     expect(lines).toEqual(["engine · demo/005@base · permits: false ≠ true"]);
   });
 
-  it("непосчитанный случай — тоже расхождение", () => {
+  it("counts a case that was never computed as a disagreement too", () => {
     expect(report("engine", { "demo/005@base": {} }, {}))
-      .toEqual(["engine · demo/005@base: случай не посчитан"]);
+      .toEqual(["engine · demo/005@base: the case was not computed"]);
   });
 });
