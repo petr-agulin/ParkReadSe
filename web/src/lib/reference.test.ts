@@ -1,6 +1,6 @@
-// Справочник — граница компетенции продукта: чего в нём нет, то показывается
-// дословно и не толкуется. Здесь проверяется именно эта граница и разборы,
-// переехавшие вместе со справочником.
+// The reference is the boundary of the product's competence: what is not in it is
+// shown verbatim and not interpreted. What is checked here is that boundary, and the
+// readings that moved across together with the reference.
 
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -29,50 +29,52 @@ const plate = (parsed: Panel["parsed"], lines: string[] = [],
                kind: Panel["kind"] = "sign_plate"): Panel =>
   ({ kind, lines, background_color: "blue", legibility: { readable: true }, parsed });
 
-describe("справочник", () => {
-  it("записи приехали из markdown целиком", () => {
+describe("the reference", () => {
+  it("the entries arrived from the markdown in full", () => {
     expect(all().length).toBeGreaterThan(40);
     const parking = get("main-parking")!;
     expect(parking.category).toBe("main_sign");
     expect(parking.en.length).toBeGreaterThan(0);
-    expect(has("такого-ключа-нет")).toBe(false);
+    expect(has("no-such-key")).toBe(false);
   });
 
-  it("ключ, которого в справочнике нет, толковать нечем", () => {
-    // Граница компетенции: продукт называет то, чего не понял, и не выдумывает.
+  it("a key the reference does not have is a key there is nothing to interpret with", () => {
+    // The boundary of competence: the product names what it did not understand and
+    // invents nothing.
     const rec = recognise(doc([plate({ pictogram: "other" }, ["Något helt nytt"])]));
     expect(rec.panelKeys[1]).toEqual([]);
-    // Текст сохраняется дословно, чтобы человек прочёл его сам.
+    // The text is kept verbatim, so the person can read it themselves.
     expect(rec.uninterpreted[1]).toEqual(["Något helt nytt"]);
   });
 
-  it("табличка без ключей не понята, даже когда текста на ней нет", () => {
-    // Снимок `042` (велосипеды и мопеды): пиктограмма неизвестного класса
-    // приезжала как `pictogram: other` без единой строки текста и проваливалась
-    // между двумя сетями — непрочитанной не считалась, непонятой тоже.
+  it("a plate with no keys is not understood, even with no text on it", () => {
+    // Photograph `042` (bicycles and mopeds): a pictogram of an unknown class
+    // arrived as `pictogram: other` without a single line of text and fell between
+    // two nets - it counted as neither unread nor not understood.
     const rec = recognise(doc([plate({ pictogram: "other" })]));
     expect(rec.panelKeys[1]).toEqual([]);
     expect(rec.uninterpreted[1]).toEqual([]);
     expect(1 in rec.uninterpreted).toBe(true);
   });
 
-  it("стрелка под указателем значит «туда», а не «дотуда»", () => {
-    // Снимок `037`, найдено разработчиком в браузере: под `F28` стоит стрелка
-    // поворота, и продукт называл её протяжённостью участка (`T11`) — «действует
-    // справа от знака». Но указатель стоянки не разрешает, и протягивать вправо
-    // нечего: `T11` описывает МЕСТО, а места здесь нет вовсе.
-    const указатель = recognise(doc([plate({ arrow: "right", pictogram: "arrow" })],
-                                    "wayfinding_parking_house"));
-    expect(указатель.panelKeys[1]).toEqual(["wayfinding-direction"]);
+  it("an arrow under a wayfinding sign means \"that way\", not \"up to here\"", () => {
+    // Photograph `037`, found by the developer in the browser: under an `F28` stands
+    // a turning arrow, and the product called it the extent of a stretch (`T11`) -
+    // "applies to the right of the sign". But a sign pointing to parking permits
+    // nothing, and there is nothing to extend: `T11` describes a PLACE, and here
+    // there is no place at all.
+    const wayfinding = recognise(doc([plate({ arrow: "right", pictogram: "arrow" })],
+                                     "wayfinding_parking_house"));
+    expect(wayfinding.panelKeys[1]).toEqual(["wayfinding-direction"]);
 
-    // Под обычным `P` та же стрелка — это участок.
-    const обычный = recognise(doc([plate({ arrow: "right" })]));
-    expect(обычный.panelKeys[1]).toEqual(["arrow-right"]);
+    // Under an ordinary `P` the same arrow is a stretch.
+    const ordinary = recognise(doc([plate({ arrow: "right" })]));
+    expect(ordinary.panelKeys[1]).toEqual(["arrow-right"]);
   });
 
-  it("«Privat parkering» опознаётся по тексту — единственная такая запись", () => {
-    // Схема под неё поля не имеет и не должна: свободный текст регламентом
-    // не предусмотрен. Но следствие важное — земля частная.
+  it("\"Privat parkering\" is recognised by its text - the only entry that is", () => {
+    // The schema has no field for it and should not: free text is not something the
+    // regulations provide for. But the consequence matters - the land is private.
     const rec = recognise(doc([
       plate({ operator: "Brf Ängslyckan" }, ["Privat parkering", "Brf Ängslyckan"],
             "operator_plate"),
@@ -80,14 +82,14 @@ describe("справочник", () => {
     expect(rec.panelKeys[1]).toContain("privat-parkering");
   });
 
-  it("зональный знак опознаётся отдельной записью", () => {
+  it("a zone sign is recognised by an entry of its own", () => {
     const zone = recognise(doc([], "parking", "zone"));
     expect(zone.mainSignKey).toBe("main-zone-parking");
     expect(recognise(doc([])).mainSignKey).toBe("main-parking");
   });
 
-  it("чётность недели и сезон обязаны быть названы", () => {
-    // Правило, которое молча применяется, пользователь проверить не может.
+  it("the week parity and the season must be named", () => {
+    // A rule applied silently is one the user cannot check.
     const rec = recognise(doc([plate({
       time_windows: [{ from: "09:00", to: "12:00", day_class: "named_weekday",
                        named_weekday: "wednesday", week_parity: "even",
@@ -99,30 +101,33 @@ describe("справочник", () => {
   });
 });
 
-describe("записи справочника годны для показа", () => {
-  // Перенесено из `tests/test_api.py` (шаг 8): справочник — источник всех слов
-  // о знаке, и дыра в нём выходит на экран ключом или пустотой.
+describe("the reference entries are fit to be shown", () => {
+  // Carried over from `tests/test_api.py` (step 8): the reference is the source of
+  // every word about a sign, and a hole in it reaches the screen as a key or as
+  // nothing at all.
 
   // py: test_api::test_every_reference_entry_has_a_human_label
-  it("у каждой записи есть человеческое название", () => {
-    // Запись без названия покажется человеку ключом справочника — то есть кодом.
+  it("every entry has a human name", () => {
+    // An entry with no name would appear to a person as a reference key - a code.
     expect(all().filter((e) => !e.label).map((e) => e.key)).toEqual([]);
   });
 
   // py: test_api::test_every_entry_has_a_short_caption_too
-  it("у каждой записи есть и короткая подпись", () => {
-    // `en` — полное утверждение для шкалы, `short` — строка под текстом панели.
+  it("every entry has a short caption as well", () => {
+    // `en` is the full statement for the timeline, `short` the line under a panel's
+    // text.
     for (const e of all()) {
-      expect(e.short, `${e.key}: нет короткой подписи`).toBeTruthy();
-      expect(e.short.length, `${e.key}: подпись длинная — ${e.short}`).toBeLessThanOrEqual(60);
+      expect(e.short, `${e.key}: no short caption`).toBeTruthy();
+      expect(e.short.length, `${e.key}: the caption is long - ${e.short}`)
+        .toBeLessThanOrEqual(60);
     }
   });
 
   // py: test_api::test_official_codes_look_like_official_codes
-  it("коды выглядят как официальные", () => {
-    // C — запрещающие, D — предписывающие, E — указательные, F — направления,
-    // S — символы, T — таблички. Пустой код допустим («кода не существует»),
-    // выдуманный — нет.
+  it("the codes look like official codes", () => {
+    // C for prohibitions, D for mandatory signs, E for location signs, F for
+    // direction, S for symbols, T for plates. An empty code is allowed ("no such
+    // code exists"); an invented one is not.
     for (const e of all()) {
       expect(e.code === "" || /^[CDEFST]\d{1,2}$/.test(e.code), `${e.key}: ${e.code}`)
         .toBe(true);
@@ -130,20 +135,22 @@ describe("записи справочника годны для показа", (
   });
 
   // py: test_api::test_no_time_key_is_left_out_of_the_composed_phrase
-  it("ни один ключ времени не забыт в общей фразе", () => {
-    // Забытый ключ выходит второй строкой и повторяет то, что фраза уже сказала.
+  it("no key about time is left out of the composed phrase", () => {
+    // A forgotten key comes out as a second line, repeating what the phrase already
+    // said.
     const t6 = all().filter((e) => e.code === "T6").map((e) => e.key).sort();
     expect(t6).toEqual([...TIME_KEYS].sort());
   });
 
   // py: test_api::test_every_schema_value_reaches_the_reference
-  it("каждое значение схемы доходит до записи справочника", () => {
-    // Значение без записи — тупик: модель читает его верно, ключа не находится,
-    // и указание молча исчезает из разбора (`vehicle_class: bus`, снимок `038`).
+  it("every value of the schema reaches an entry of the reference", () => {
+    // A value with no entry is a dead end: the model reads it correctly, no key is
+    // found, and the instruction vanishes from the reading in silence
+    // (`vehicle_class: bus`, photograph `038`).
     const parsed = (SIGN_SCHEMA as Record<string, any>).$defs.parsed.properties;
     for (const [field, table] of [["vehicle_class", VEHICLE_KEYS],
                                   ["eligibility", ELIGIBILITY_KEYS]] as const) {
-      // `custom` не сопоставляется намеренно: он значит «ничего из списка не подошло».
+      // `custom` is deliberately unmapped: it means "none of the listed ones fitted".
       const values = (parsed[field].enum as string[]).filter((v) => v !== "custom");
       expect(values.filter((v) => !(v in table)), field).toEqual([]);
       for (const v of values) expect(get(table[v]), `${field}: ${v}`).not.toBeNull();
@@ -151,36 +158,45 @@ describe("записи справочника годны для показа", (
   });
 
   // py: test_api::test_the_vehicle_table_exists_in_one_place_only
-  it("таблица транспорта существует в одном месте", () => {
-    // Таблиц было две, и значение, добавленное в схему, приходилось вносить
-    // в оба места. Автобус внесли в схему и забыли в движке — снимок `038`.
+  it("the table of vehicles exists in one place only", () => {
+    // There used to be two tables, and a value added to the schema had to be entered
+    // in both. The bus was entered into the schema and forgotten in the engine -
+    // photograph `038`.
     const engine = source("web/src/lib/engine.ts");
     expect(engine).toContain('import { ELIGIBILITY_KEYS, VEHICLE_KEYS } from "./reference"');
-    expect(engine, "движок снова завёл собственную копию таблицы")
+    expect(engine, "the engine has started its own copy of the table again")
       .not.toContain('"motorcycle": "pictogram-motorcycle"');
   });
 
   // py: test_api::test_the_bicycle_symbol_is_a_class_of_its_own
-  it("велосипед — отдельный класс, и мопед поделён между двумя пиктограммами", () => {
-    // Класс II идёт с велосипедом, класс I — с мотоциклом. Перепутать значит
-    // отправить мопедиста не на ту стоянку, поэтому обе статьи говорят об этом.
+  it("the moped is split between the two pictograms, and both say so in English", () => {
+    // A motorcycle pictogram covers motorcycles and heavy class I mopeds; a bicycle
+    // pictogram covers bicycles and light class II mopeds. Confusing the two sends a
+    // moped rider to the wrong bay, so the distinction is stated in the text the
+    // reader actually sees - not only in the article written for the developer.
     expect(VEHICLE_KEYS.bicycle).toBe("pictogram-bicycle");
+    expect(VEHICLE_KEYS.motorcycle).toBe("pictogram-motorcycle");
+
     const bicycle = get("pictogram-bicycle")!;
+    const motorcycle = get("pictogram-motorcycle")!;
     expect(bicycle).not.toBeNull();
+    expect(motorcycle).not.toBeNull();
     expect(bicycle.code).toBe("T8");
-    expect(bicycle.en).toContain("class II");
-    // Текст статьи в браузер не едет — он живёт в markdown, из которого собран
-    // справочник, и проверяется там же.
-    expect(source("reference/signs/pictogram-motorcycle.md"),
-           "статья мотоцикла обязана называть класс I").toContain("класса I");
-    expect(source("reference/signs/pictogram-bicycle.md"),
-           "статья велосипеда — класс II").toContain("класса II");
+    expect(motorcycle.code).toBe("T8");
+
+    // The longer class is checked first on each side: one numeral is a prefix of the
+    // other, so asserting the shorter one alone would pass on either entry and prove
+    // nothing.
+    expect(bicycle.en, "the bicycle entry must name the light class").toContain("class II mopeds");
+    expect(motorcycle.en, "the motorcycle entry must name the heavy class")
+      .toContain("class I mopeds");
+    expect(motorcycle.en, "the light class belongs to the bicycle").not.toContain("class II");
   });
 
   // py: test_api::test_the_phrase_matched_in_code_is_the_one_the_article_declares
-  it("оборот, по которому опознаёт код, объявлен в самой статье", () => {
-    // Разойдись они — правило молча перестанет срабатывать, а статья останется
-    // выглядеть рабочей.
+  it("the phrase the code matches on is the one the article itself declares", () => {
+    // Let the two drift apart and the rule quietly stops firing, while the article
+    // goes on looking as though it works.
     const article = source("reference/signs/privat-parkering.md");
     const tokens = article.split("---")[1].split("\n")
       .find((line) => line.startsWith("tokens:"))!;

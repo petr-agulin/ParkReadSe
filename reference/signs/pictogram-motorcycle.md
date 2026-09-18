@@ -5,8 +5,8 @@ category: rule
 label: Symbol panel
 code: T8
 schema: parsed.vehicle_class=motorcycle
-en: The sign designates these spaces for motorcycles
-short: Motorcycles only
+en: The sign designates these spaces for motorcycles and class I mopeds
+short: Motorcycles and class I mopeds only
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 

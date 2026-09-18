@@ -1,8 +1,9 @@
-// Экран выбора знака: снимок, рамка, и ясная развилка — отправить, снять ещё раз
-// или уйти.
+// The framing screen: the photograph, the frame, and a clear fork - send it, take
+// another, or leave.
 //
-// Наружу отсюда уходит только вырезанное. Приближение — про то, чем целятся:
-// рамка живёт в пикселях исходника и от увеличения не зависит вовсе.
+// Only what is cut out ever leaves this screen. Zooming is about what you aim with:
+// the frame lives in the pixels of the original and does not depend on the zoom at
+// all.
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Box, Point, Size } from "../lib/crop";
@@ -16,15 +17,15 @@ import { roomBelow } from "../lib/layout";
 
 type Props = {
   file: File;
-  /** Рамка, уже наведённая человеком в видоискателе. Пусто — ставим по центру. */
+  /** The frame the person already aimed in the viewfinder. Empty - we centre it. */
   initialBox?: Box;
   busy: boolean;
   onSend: (cropped: File) => void;
-  /** Другой снимок из галереи — остаёмся здесь же, с новой картинкой. */
+  /** Another photograph from the gallery - we stay here, with the new picture. */
   onReplace: (file: File) => void;
-  /** Снять заново — возврат в наш видоискатель, а не в системную камеру. */
+  /** Take another - back to our own viewfinder, not to the system camera. */
   onRetake: () => void;
-  /** Отмена — уйти на начало и ничего за собой не оставить. */
+  /** Cancel - go back to the start and leave nothing behind. */
   onCancel: () => void;
 };
 
@@ -43,8 +44,9 @@ export default function SignPicker({
   const [loaded, setLoaded] = useState<Loaded | null>(null);
   const [failed, setFailed] = useState<string | null>(null);
   const [box, setBox] = useState<Box | null>(null);
-  // Доля экрана, которую занимает рамка. Человек меняет её углами, приближение —
-  // никогда: в этом и смысл, рамка всегда выглядит одинаково и вся на виду.
+  // The share of the screen the frame takes up. The person changes it by the
+  // corners, the zoom never does: that is the point - the frame always looks the
+  // same and stays wholly in view.
   const frac = useRef<Size>({ w: DEFAULT_HEIGHT * BOX_ASPECT, h: DEFAULT_HEIGHT });
   const [sending, setSending] = useState(false);
   const room = useRef<HTMLDivElement>(null);
@@ -52,14 +54,14 @@ export default function SignPicker({
   const stage = useRef<HTMLDivElement>(null);
   const another = useRef<HTMLInputElement>(null);
 
-  // `base` — снимок целиком на экране, `placed` — где он лежит сейчас, уже
-  // с приближением. Обе величины в пикселях сцены.
+  // `base` is the whole photograph on screen, `placed` is where it lies now, zoom
+  // included. Both are in the pixels of the stage.
   const [base, setBase] = useState<Box | null>(null);
   const [placed, setPlaced] = useState<Box | null>(null);
   const [stageDims, setStageDims] = useState<Size | null>(null);
 
-  // Жесты держим в ref, а не в состоянии: они меняются на каждое движение пальца,
-  // и перерисовка на каждый шаг ни к чему.
+  // Gestures are kept in refs rather than in state: they change on every movement of
+  // a finger, and redrawing at every step is pointless.
   const drag = useRef<Drag | null>(null);
   const pinch = useRef<Pinch | null>(null);
   const pointers = useRef(new Map<number, Point>());
@@ -72,9 +74,10 @@ export default function SignPicker({
         if (dead) { release(l); return; }
         mine = l;
         setLoaded(l);
-        // Рамка есть всегда: отправить можно и без касания. Из видоискателя
-        // приходит уже наведённая; для снимка из галереи её предлагает поиск
-        // основного знака на устройстве, а не нашёл — встаёт по центру, как раньше.
+        // There is always a frame: it can be sent without a single touch. From the
+        // viewfinder it arrives already aimed; for a photograph from the gallery it
+        // is proposed by the search for the main sign on the device, and failing
+        // that it stands in the centre, as before.
         const start = initialBox ?? suggestFrame(l.image, l.size) ?? defaultBox(l.size);
         setBox(start);
         frac.current = fractionIn(start, { x: 0, y: 0, ...l.size });
@@ -83,18 +86,19 @@ export default function SignPicker({
     return () => { dead = true; release(mine); };
   }, [file, initialBox]);
 
-  // Снимок вписывается в сцену целиком, вокруг остаются поля. При смене размера
-  // окна или повороте телефона приближение сбрасывается: пересчитывать сдвиг
-  // под новую сцену — больше путаницы, чем пользы.
+  // The photograph fits into the stage whole, with margins left around it. On a
+  // change of window size or a turn of the phone the zoom is reset: recomputing the
+  // pan for a new stage is more confusion than it is worth.
   useEffect(() => {
     if (!loaded || !room.current) return;
     const el = room.current;
     const measure = () => {
       const r = el.getBoundingClientRect();
-      // Ширину снимок берёт всю, высоты — сколько осталось под ним, чтобы кнопки
-      // не ушли за край. Считаем от верха СТРАНИЦЫ, а не окна: иначе размер
-      // зависел бы от того, куда прокручено в момент замера, и один и тот же
-      // экран мерился бы по-разному (на проверке: 103 против 159).
+      // The photograph takes the full width, and as much height as is left beneath
+      // it so the buttons do not run off the edge. It is measured from the top of
+      // the PAGE rather than the window: otherwise the size would depend on where
+      // the page happened to be scrolled at the moment of measuring, and one and the
+      // same screen would measure differently (observed: 103 against 159).
       const pageTop = r.top + window.scrollY;
       const room = {
         w: r.width,
@@ -125,14 +129,14 @@ export default function SignPicker({
   const toImage = (e: { clientX: number; clientY: number }, size: Size): Point =>
     toImagePoint(toStage(e), placed!, size);
 
-  // Замысел человека и показанная рамка — разные вещи. Показанная всегда вписана
-  // в то, что сейчас на экране: приближаешься — ужимается и остаётся на виду,
-  // отдаляешься — возвращается к заданному.
+  // What the person intends and what the frame shows are different things. What is
+  // shown always fits inside what is on screen now: zoom in and it shrinks and stays
+  // in view, zoom out and it returns to what was set.
   const visible = useMemo(
     () => (loaded && placed && stageDims ? visibleRect(placed, loaded.size, stageDims) : null),
     [loaded, placed, stageDims],
   );
-  /** Приближение изменилось — рамка снова по середине и той же доли экрана. */
+  /** The zoom changed - the frame is centred again, at the same share of the screen. */
   function reframe(next: Box) {
     if (!loaded || !stageDims) return;
     setBox(frameForView(frac.current, visibleRect(next, loaded.size, stageDims), loaded.size));
@@ -143,8 +147,8 @@ export default function SignPicker({
     (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
     pointers.current.set(e.pointerId, toStage(e));
 
-    // Два пальца — это про картинку, а не про рамку: щипок начинается,
-    // а начатое одним пальцем перетаскивание отменяется.
+    // Two fingers are about the picture, not the frame: a pinch begins, and anything
+    // begun with one finger is cancelled.
     if (pointers.current.size === 2) {
       const [a, b] = [...pointers.current.values()];
       drag.current = null;
@@ -164,9 +168,10 @@ export default function SignPicker({
     const p = toImage(e, loaded.size);
     const insideBox =
       p.x >= box.x && p.x <= box.x + box.w && p.y >= box.y && p.y <= box.y + box.h;
-    // Внутри рамки палец её двигает, снаружи — двигает СНИМОК. Раньше касание
-    // снаружи мгновенно переставляло рамку, и первый палец щипка утаскивал её
-    // на каждом шаге приближения. Ставит рамку теперь только явная кнопка.
+    // Inside the frame a finger moves the frame; outside it moves the PHOTOGRAPH.
+    // A touch outside used to reposition the frame instantly, and the first finger
+    // of a pinch dragged it away at every step of the zoom. Only an explicit button
+    // places the frame now.
     if (insideBox) drag.current = { kind: "move", from: p, box };
     else drag.current = { kind: "pan", from: toStage(e), placed };
   }
@@ -181,7 +186,8 @@ export default function SignPicker({
       const mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
       const start = pinch.current;
       const zoomed = zoomAt(start.placed, dist / start.dist, start.mid, base);
-      // Щипок и приближает, и тащит: середина между пальцами ведёт картинку.
+      // A pinch both zooms and drags: the midpoint between the fingers leads the
+      // picture.
       const moved = {
         ...zoomed,
         x: zoomed.x + (mid.x - start.mid.x),
@@ -199,8 +205,8 @@ export default function SignPicker({
     if (drag.current.kind === "pan") {
       const d = drag.current;
       const now = toStage(e);
-      // Рамка при этом не двигается: сдвигая снимок, человек разглядывает его,
-      // а не переставляет выделение.
+      // The frame does not move meanwhile: dragging the photograph, the person is
+      // examining it rather than moving the selection.
       setPlaced(clampPan(
         { ...d.placed, x: d.placed.x + (now.x - d.from.x), y: d.placed.y + (now.y - d.from.y) },
         stageSize(),
@@ -215,7 +221,8 @@ export default function SignPicker({
     } else {
       const next = resizeCorner(box, drag.current.corner, p, loaded.size);
       setBox(next);
-      // Человек задал новый вид рамки — его и держим при следующем приближении.
+      // The person has set a new shape for the frame - that is what the next zoom
+      // will keep.
       if (visible) frac.current = fractionIn(next, visible);
     }
   }
@@ -226,7 +233,8 @@ export default function SignPicker({
     if (pointers.current.size === 0) drag.current = null;
   }
 
-  // На ноутбуке пальцев нет, а проверять приближение надо: колесо делает то же самое.
+  // A laptop has no fingers, and the zoom still has to be testable: the wheel does
+  // the same thing.
   function onWheel(e: React.WheelEvent) {
     if (!base || !placed) return;
     const factor = e.deltaY < 0 ? 1.15 : 1 / 1.15;
@@ -273,9 +281,9 @@ export default function SignPicker({
         ‹
       </button>
       <span className="flex-1 text-nav font-bold text-ink-strong">Frame the sign</span>
-      {/* Один контрол вместо пары «снять ещё раз / другой снимок»: он ведёт
-          на экран камеры, а там есть и спуск, и плитка галереи — оба источника
-          в одном тапе. */}
+      {/* One control instead of a pair of "take another / choose a photo": it leads
+          to the camera screen, and there are both a shutter and a gallery tile
+          there - both sources in one tap. */}
       <button type="button" onClick={onRetake} disabled={busy || sending}
               className="text-label font-semibold text-link disabled:opacity-50">
         Replace
@@ -307,31 +315,33 @@ export default function SignPicker({
     <section className="flex flex-1 flex-col gap-4">
       {nav}
 
-      {/* Подсказка — над снимком, а не на нём: на снимке она закрывает ровно то,
-          во что целятся. В отличие от камеры она живая: про угловые ручки узнать
-          больше неоткуда. */}
-      {/* Высота закреплена под ДВЕ строки, и это не украшение.
+      {/* The hint sits above the photograph, not on it: on the photograph it covers
+          exactly what is being aimed at. Unlike the camera's, it is live - there is
+          nowhere else to learn about the corner handles. */}
+      {/* Its height is fixed for TWO lines, and that is not decoration.
 
-          Подсказка меняется с приближением, а стоит она теперь в общей колонке.
-          Перенеси длинный вариант на вторую строку — обёртка ниже потеряет строку
-          высоты, `ResizeObserver` на ней сработает, `measure()` заново впишет
-          снимок и положит `base` и `placed` одинаковыми, а `zoom` считается из них
-          (`zoomLevel`) и станет равен 1. Приближение сбрасывалось бы в тот же миг,
-          когда его делают, а подсказка вернулась бы к короткой — и так по кругу.
+          The hint changes with the zoom, and it now stands in the shared column.
+          Let the longer wording wrap to a second line and the wrapper below loses a
+          line of height, the observer on it fires, the measuring pass fits the
+          photograph afresh and sets `base` and `placed` equal, and the zoom is
+          computed from those two - so it becomes 1. The zoom would reset at the very
+          moment it was being made, the hint would go back to the short wording, and
+          round it would go again.
 
-          Пока коробка одной высоты при одной и двух строках, менять обёртке
-          нечего. */}
+          While the box is one height at both one line and two, the wrapper has
+          nothing to change. */}
       <p className="min-h-11 text-center text-label text-ink-2">
         {zoom > 1.01
           ? "Zoom in, then fine-tune with the corners"
           : "Drag the frame onto the sign"}
       </p>
 
-      {/* Снимок не растянут и не обрезан: что видно, то и уходит (решение 148).
-          Обёртка забирает остаток высоты и прижимает снимок к подсказке — сама
-          она пустая, а тёмная карточка сидит на снимке. Виси `bg-stage` здесь,
-          она растянулась бы на весь остаток, и полоса под кадром стала бы шире,
-          а не уже. */}
+      {/* The photograph is neither stretched nor cropped: what is seen is what is
+          sent (decision 148). The wrapper takes the remaining height and presses the
+          photograph up against the hint - the wrapper itself is empty, and the dark
+          card sits on the photograph. Were the dark ground on the wrapper, it would
+          stretch across the whole remainder, and the band under the frame would grow
+          wider rather than narrower. */}
       <div ref={room} className="flex w-full flex-1 items-start justify-center">
       <div
         ref={stage}
@@ -358,7 +368,7 @@ export default function SignPicker({
             className="pointer-events-none absolute"
             style={{ left: placed.x, top: placed.y, width: placed.w, height: placed.h }}
           >
-            {/* Затемнение снаружи рамки: видно, что уйдёт, а что нет. */}
+            {/* Darkening outside the frame: it shows what will go and what will not. */}
             <div className="absolute inset-0 bg-stage/50"
                  style={{
                    clipPath: `polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0,
@@ -384,9 +394,9 @@ export default function SignPicker({
                   aria-label={`Resize ${c}`}
                   className={`pointer-events-auto absolute h-11 w-11 ${cornerClass(c)}`}
                 >
-                  {/* Точка не ловит касание сама: иначе нажатие приходит на неё,
-                      `data-corner` не находится, и тяга за угол превращается
-                      в перестановку рамки. */}
+                  {/* The dot does not catch the touch itself: otherwise the press
+                      lands on it, the corner attribute is not found, and dragging a
+                      corner turns into repositioning the frame. */}
                   <span
                     className={`pointer-events-none absolute h-6 w-6 rounded-[7px] bg-ground
                                 shadow-handle ${dotClass(c)}`}
@@ -410,11 +420,12 @@ export default function SignPicker({
       </div>
       </div>
 
-      {/* Кнопка и строка о размере — внизу экрана, а не поверх снимка. Строка
-          стоит при кнопке: она говорит ровно о том, что кнопка отправит.
-          Затемнение (`.scrim`) держалось на том, что белая моноширинная строка
-          лежала на снимке и на светлом знаке не читалась. Строка ушла с кадра,
-          и затемнять стало нечего — градиент удалён. */}
+      {/* The button and the line about size sit at the bottom of the screen rather
+          than over the photograph. The line stands with the button: it says exactly
+          what the button will send. The gradient that used to darken the area behind
+          it existed because a white monospaced line lay on the photograph and could
+          not be read against a pale sign. The line left the frame, so there was
+          nothing left to darken and the gradient is gone. */}
       <div ref={footer} className="flex flex-col gap-3">
         <span className="text-center font-mono text-mono text-ink-3">
           {loaded
