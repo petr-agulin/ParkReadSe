@@ -1,9 +1,9 @@
-// Движок правил. Перенесено из `tests/test_engine.py` ЦЕЛИКОМ (шаг 8).
+// The rules engine. Carried over from `tests/test_engine.py` IN FULL (step 8).
 //
-// Тесты постоянные: каждый закрывает ошибку, уже допущенную при разборе вручную
-// или найденную на проверке модели, и за многими стоит решение разработчика.
-// Раньше сюда переехала только часть (16 из 63): остальное держала сверка
-// с питоном, а сверка уходит вместе с ним.
+// These tests are permanent: each closes a mistake already made while reading a
+// sign by hand or found while probing the model, and behind many of them stands a
+// decision of the developer. Only part of them moved here at first (16 of 63): the
+// rest were held by the comparison with Python, and that comparison left with it.
 
 import { describe, expect, it } from "vitest";
 
@@ -21,7 +21,7 @@ const CAL = new Calendar();
 const at = (iso: string): Naive => parseNaive(iso);
 const iso = (t: Naive | null) => (t ? isoNaive(t) : null);
 
-// --- конструкторы знаков ---------------------------------------------------
+// --- building signs ---------------------------------------------------------
 
 function sign(panels: Panel[] = [], main = "parking", form = "regular"): SignDoc {
   return {
@@ -46,7 +46,7 @@ function win(from: string, to: string, dayClass = "unspecified", named?: string)
   return w;
 }
 
-/** Состояние и условия режима в конкретный момент. */
+/** The state and the conditions of a regime at a given moment. */
 function state(r: Regime, moment: string): [string | null, string[]] {
   for (const p of r.periods) {
     if (isoNaive(p.start) <= moment && moment < isoNaive(p.end)) return [p.state, p.conditions];
@@ -57,14 +57,14 @@ function state(r: Regime, moment: string): [string | null, string[]] {
 const evaluate = (doc: SignDoc, moment: string) => evaluateParkingRules(doc, at(moment), CAL);
 const first = (doc: SignDoc, moment: string) => evaluate(doc, moment).regimes[0];
 const expiry = (moment: string) => iso(twentyFourHourExpiry(at(moment), CAL));
-/** Что экран скажет вместо шкалы, если скажет. */
+/** What the screen will say instead of a timeline, if it says anything. */
 const noWindow = (r: Regime, moment: string) =>
   regimeView(r, horizonEnd(at(moment)), CAL).no_window_text;
 
 const TWO_TIM: Parsed = { duration_limit: { amount: 2, unit: "hours" } };
 const AVGIFT_8_18: Parsed = { fee: true, time_windows: [win("08:00", "18:00", WEEKDAY)] };
 
-/** Зональный запрет: `Onsdag 9-12`, чётные недели, с 1 октября по 30 апреля. */
+/** A zonal prohibition: `Onsdag 9-12`, even weeks, 1 October to 30 April. */
 function zonal(): TimeWindow {
   const w = win("09:00", "12:00", "named_weekday", "wednesday");
   w.week_parity = "even";
@@ -72,9 +72,9 @@ function zonal(): TimeWindow {
   return w;
 }
 
-describe("календарь в движке", () => {
+describe("the calendar inside the engine", () => {
   // py: test_engine::test_day_classes_match_fixture
-  it("кануны 2026 года: 57, из них 48 суббот", () => {
+  it("the eves of 2026: 57 of them, 48 being Saturdays", () => {
     const eves: Civil[] = [];
     for (let d: Civil = { y: 2026, m: 1, d: 1 }; d.y === 2026; d = addDays(d, 1)) {
       if (CAL.dayClass(d) === EVE) eves.push(d);
@@ -84,26 +84,26 @@ describe("календарь в движке", () => {
   });
 
   // py: test_engine::test_red_beats_eve
-  it("праздник на субботу остаётся красным: канун — РАБОЧИЙ день перед красным", () => {
+  it("a holiday on a Saturday stays red: an eve is a WORKING day before a red one", () => {
     expect(CAL.dayClass(parseDate("2026-06-06"))).toBe(RED);     // Sveriges nationaldag
-    expect(CAL.dayClass(parseDate("2026-12-25"))).toBe(RED);     // перед вторым днём
-    expect(CAL.dayClass(parseDate("2026-01-10"))).toBe(EVE);     // обычная суббота
-    expect(CAL.dayClass(parseDate("2026-04-30"))).toBe(EVE);     // будний канун
-    expect(CAL.dayClass(parseDate("2026-01-09"))).toBe(WEEKDAY); // пятница
+    expect(CAL.dayClass(parseDate("2026-12-25"))).toBe(RED);     // before the second day
+    expect(CAL.dayClass(parseDate("2026-01-10"))).toBe(EVE);     // an ordinary Saturday
+    expect(CAL.dayClass(parseDate("2026-04-30"))).toBe(EVE);     // a weekday eve
+    expect(CAL.dayClass(parseDate("2026-01-09"))).toBe(WEEKDAY); // Friday
   });
 
   // py: test_engine::test_date_outside_calendar_is_unknown
-  it("вне окна с запасом — «неизвестно», а не выдумка", () => {
+  it("outside the window, with room to spare: unknown rather than invented", () => {
     expect(CAL.dayClass(parseDate("2035-03-01"))).toBe(UNKNOWN);
     expect(CAL.dayClass(parseDate("2019-03-01"))).toBe(UNKNOWN);
   });
 });
 
-describe("правило 24 часов", () => {
+describe("the 24-hour rule", () => {
   // py: test_engine::test_24h_guaranteed_continuity
-  it("выходные обрывают сутки, и они даются заново с понедельника", () => {
-    // Правило спорное; разработчик сверил распространённость трактовок и выбрал
-    // преобладающую — «гарантированная непрерывность» (решение 82).
+  it("a weekend cuts the day short, and it starts afresh on Monday", () => {
+    // The rule is contested; the developer checked how widely each reading is held
+    // and took the prevailing one - guaranteed continuity (decision 82).
     expect(expiry("2026-03-02T13:00")).toBe("2026-03-03T13:00");
     expect(expiry("2026-03-05T13:00")).toBe("2026-03-06T13:00");
     expect(expiry("2026-03-06T13:00")).toBe("2026-03-10T00:00");
@@ -111,20 +111,20 @@ describe("правило 24 часов", () => {
   });
 
   // py: test_engine::test_24h_all_weekend_starts_give_the_same_answer
-  it("любое начало в выходные даёт один ответ — до вторника 00:00", () => {
+  it("any start during the weekend gives one answer - until Tuesday 00:00", () => {
     for (const start of ["2026-03-07T00:01", "2026-03-07T08:00", "2026-03-08T23:59"]) {
       expect(expiry(start), start).toBe("2026-03-10T00:00");
     }
   });
 
   // py: test_engine::test_24h_friday_afternoon_is_not_cut_short_by_saturday
-  it("пятница 13:00 не обрезается субботой: сутки даются целиком позже", () => {
+  it("Friday 13:00 is not cut short by Saturday: the day comes whole, later", () => {
     expect(expiry("2026-03-06T13:00")).not.toBe("2026-03-07T13:00");
     expect(expiry("2026-03-06T13:00")).toBe("2026-03-10T00:00");
   });
 
   // py: test_engine::test_duration_plate_overrides_24h
-  it("табличка длительности перекрывает умолчание, а не складывается с ним", () => {
+  it("a duration plate overrides the default rather than adding to it", () => {
     const bare = first(sign(), "2026-03-02T13:00");
     const limited = first(sign([plate({ duration_limit: { amount: 30, unit: "minutes" } },
                                       ["30 min"])]), "2026-03-02T13:00");
@@ -134,9 +134,9 @@ describe("правило 24 часов", () => {
   });
 });
 
-describe("официальная пара: одни и те же слова, разная группировка", () => {
+describe("the official pair: the same words, grouped differently", () => {
   // py: test_engine::test_official_pair_two_plates
-  it("ДВЕ таблички: 2 часа всегда, плата — только 8-18", () => {
+  it("TWO plates: two hours always, a fee only from 8 to 18", () => {
     const r = first(sign([plate(TWO_TIM, ["2 tim"]), plate(AVGIFT_8_18, ["Avgift", "8-18"])]),
                     "2026-03-02T20:00");
     expect(r.durationSource).toBe("plate");
@@ -145,26 +145,27 @@ describe("официальная пара: одни и те же слова, р�
   });
 
   // py: test_engine::test_official_pair_one_plate
-  it("ОДНА табличка: и лимит, и плата живут внутри окна", () => {
+  it("ONE plate: both the limit and the fee live inside the window", () => {
     const joint = sign([plate({ ...TWO_TIM, ...AVGIFT_8_18 }, ["2 tim", "Avgift", "8-18"])]);
     const r = first(joint, "2026-03-02T20:00");
     expect(state(r, "2026-03-02T20:00")).toEqual([ALLOWED, []]);
     expect(state(r, "2026-03-03T10:00")).toEqual([ALLOWED, ["avgift"]]);
-    // Вечером, вне окна, лимит не идёт — отсчитывать не с чего. Но и «сутки» —
-    // не ответ: в 08:00 окно откроется, и с этой минуты пойдут два часа.
-    // Раньше тест утверждал `24h_default` и закреплял ошибку со снимка `005`.
+    // In the evening, outside the window, the limit does not run - there is nothing
+    // to count from. But "a whole day" is no answer either: at 08:00 the window
+    // opens, and two hours start from that minute. This test once claimed
+    // `24h_default` and pinned the mistake from photograph `005`.
     expect(iso(r.durationExpiresAt)).not.toBe("2026-03-02T22:00");
     expect(iso(r.durationExpiresAt)).toBe("2026-03-03T10:00");
     expect(r.durationSource).toBe("plate");
-    // Внутри окна лимит идёт от самой постановки.
+    // Inside the window the limit runs from the moment of parking.
     const inside = first(joint, "2026-03-03T10:00");
     expect(inside.durationSource).toBe("plate");
     expect(iso(inside.durationExpiresAt)).toBe("2026-03-03T12:00");
   });
 
   // py: test_engine::test_a_limit_that_starts_later_ends_the_stay_when_it_starts
-  it("вступающий позже предел обрывает стоянку с начала своего окна", () => {
-    // Снимок `005`: пятница 22:10, продукт отвечал «сутки, до вторника».
+  it("a limit that starts later ends the stay when its window opens", () => {
+    // Photograph `005`: Friday 22:10, and the product answered "a day, until Tuesday".
     const r = first(sign([plate({ ...TWO_TIM, time_windows: [win("08:00", "18:00", WEEKDAY),
                                                              win("08:00", "15:00", EVE)] },
                                 ["2 tim", "8-18", "(8-15)"])]), "2026-09-04T22:10");
@@ -173,8 +174,8 @@ describe("официальная пара: одни и те же слова, р�
   });
 
   // py: test_engine::test_a_limit_wider_than_its_window_never_bites
-  it("предел шире своего окна не кусается вовсе", () => {
-    // `2 tim` в окне `08-09`: в 09:00 ограничение уже кончилось.
+  it("a limit wider than its own window never bites", () => {
+    // `2 tim` inside an `08-09` window: by 09:00 the restriction is already over.
     const r = first(sign([plate({ ...TWO_TIM, time_windows: [win("08:00", "09:00", WEEKDAY)] },
                                 ["2 tim", "8-9"])]), "2026-03-02T20:00");
     expect(r.durationSource).toBe("24h_default");
@@ -182,36 +183,36 @@ describe("официальная пара: одни и те же слова, р�
   });
 
   // py: test_engine::test_conclusion_differs_from_any_single_plate
-  it("итог стопки не совпадает с итогом ни одной её таблички", () => {
+  it("the result of the stack matches the result of none of its plates", () => {
     const now = "2026-03-03T10:00";
     const full = first(sign([plate(TWO_TIM, ["2 tim"]), plate(AVGIFT_8_18, ["Avgift", "8-18"])]), now);
     const a = first(sign([plate(TWO_TIM, ["2 tim"])]), now);
     const b = first(sign([plate(AVGIFT_8_18, ["Avgift", "8-18"])]), now);
-    expect(state(full, now)).not.toEqual(state(a, now));   // у первой нет платы
-    expect(full.durationSource).not.toBe(b.durationSource); // у второй нет лимита
+    expect(state(full, now)).not.toEqual(state(a, now));   // the first states no fee
+    expect(full.durationSource).not.toBe(b.durationSource); // the second states no limit
   });
 });
 
-describe("дни без указания и `alla dagar`", () => {
+describe("days left unstated, and `alla dagar`", () => {
   // py: test_engine::test_unspecified_days_means_weekdays_only
-  it("дни не указаны — это будни, а не каждый день", () => {
+  it("days left unstated means weekdays, not every day", () => {
     const r = first(sign([plate({ fee: true, time_windows: [win("08:00", "18:00")] },
                                 ["Avgift 8-18"])]), "2026-03-03T10:00");
     expect(state(r, "2026-03-03T10:00")).toEqual([ALLOWED, ["avgift"]]);
-    expect(state(r, "2026-03-07T10:00")).toEqual([ALLOWED, []]);   // суббота
+    expect(state(r, "2026-03-07T10:00")).toEqual([ALLOWED, []]);   // Saturday
   });
 
   // py: test_engine::test_all_days_token_covers_weekend
-  it("`alla dagar` накрывает выходные", () => {
+  it("`alla dagar` covers the weekend", () => {
     const r = first(sign([plate({ fee: true, time_windows: [win("08:00", "18:00", "all_days")] },
                                 ["Avgift 8-18", "alla dagar"])]), "2026-03-03T10:00");
     expect(state(r, "2026-03-07T10:00")).toEqual([ALLOWED, ["avgift"]]);
   });
 });
 
-describe("приоритет запрета и окна под запрещающим знаком", () => {
+describe("prohibition wins, and windows under a prohibiting sign", () => {
   // py: test_engine::test_prohibition_overrides_permission
-  it("«час бесплатно, но стоять нельзя» решается в пользу запрета", () => {
+  it("\"free for an hour, but you may not stand here\" resolves to the prohibition", () => {
     const r = first(sign([
       plate({ fee: true }, ["Avgift"]),
       plate({ prohibition: true, time_windows: [win("00:00", "06:00", "named_weekday", "thursday")] },
@@ -222,45 +223,45 @@ describe("приоритет запрета и окна под запрещаю�
   });
 
   // py: test_engine::test_a_window_under_a_prohibiting_sign_limits_the_prohibition
-  it("окно под запрещающим знаком очерчивает запрет", () => {
-    // Зональный `E20`: «No parking» в сентябрьскую среду нечётной недели, когда
-    // ни одно условие таблички не выполнено (решение 113).
+  it("a window under a prohibiting sign draws the bounds of the prohibition", () => {
+    // A zonal `E20`: "No parking" on a September Wednesday of an odd week, when not
+    // one condition of the plate is met (decision 113).
     const s = sign([plate({ time_windows: [zonal()] }, ["Onsdag 9-12", "jämna veckor"])],
                    "prohibition_parking");
     const stateFrom = (moment: string, from: string) => state(first(s, from), moment)[0];
     expect(stateFrom("2026-09-09T12:33", "2026-09-09T12:33")).toBe(NOT_STATED);
-    expect(stateFrom("2026-10-14T10:00", "2026-10-13T12:00")).toBe(PROHIBITED);  // чётная
-    expect(stateFrom("2026-10-14T13:00", "2026-10-13T12:00")).toBe(NOT_STATED);  // после 12:00
-    expect(stateFrom("2026-10-15T10:00", "2026-10-13T12:00")).toBe(NOT_STATED);  // четверг
-    expect(stateFrom("2026-10-21T10:00", "2026-10-20T12:00")).toBe(NOT_STATED);  // нечётная
+    expect(stateFrom("2026-10-14T10:00", "2026-10-13T12:00")).toBe(PROHIBITED);  // even week
+    expect(stateFrom("2026-10-14T13:00", "2026-10-13T12:00")).toBe(NOT_STATED);  // after 12:00
+    expect(stateFrom("2026-10-15T10:00", "2026-10-13T12:00")).toBe(NOT_STATED);  // Thursday
+    expect(stateFrom("2026-10-21T10:00", "2026-10-20T12:00")).toBe(NOT_STATED);  // odd week
   });
 
   // py: test_engine::test_a_sign_that_states_nothing_shows_no_window_at_all
-  it("знак, которому нечего сказать, окна не показывает вовсе", () => {
+  it("a sign with nothing to say shows no window at all", () => {
     const moment = "2026-09-09T16:27";
     const silent = first(sign([plate({ time_windows: [zonal()] }, ["Onsdag 9-12"])],
                               "prohibition_parking"), moment);
     expect(new Set(silent.periods.map((p) => p.state))).toEqual(new Set([NOT_STATED]));
     expect(noWindow(silent, moment)).toBe(NO_WINDOW_NOTHING_STATED);
-    // А там, где знаку есть что сказать, шкала остаётся.
+    // And where the sign does have something to say, the timeline stays.
     expect(noWindow(first(sign([plate({ fee: true }, ["Avgift"])]), moment), moment)).toBeNull();
   });
 
   // py: test_engine::test_the_scale_shows_only_what_the_sign_states
-  it("шкала — только о том, что знак говорит о выбранном моменте", () => {
+  it("the timeline shows only what the sign states about the chosen moment", () => {
     const s = sign([plate({ time_windows: [zonal()] }, ["Onsdag 9-12", "jämna veckor"])],
                    "prohibition_parking");
-    // Понедельник: знак молчит — шкалы нет, есть фраза.
+    // Monday: the sign is silent - no timeline, just a phrase.
     const quiet = first(s, "2026-10-12T10:00");
     expect(visible(quiet)).toEqual([]);
     expect(noWindow(quiet, "2026-10-12T10:00")).toBe(NO_WINDOW_NOTHING_STATED);
-    // Среда внутри окна: только запрет, и ничего после него.
+    // Wednesday inside the window: the prohibition only, and nothing after it.
     const ban = first(s, "2026-10-14T10:00");
     const shown = visible(ban);
     expect(shown.map((p) => p.state)).toEqual([PROHIBITED]);
     expect(isoNaive(shown[0].end)).toBe("2026-10-14T12:00");
     expect(noWindow(ban, "2026-10-14T10:00")).toBeNull();
-    // Знак, которому есть что сказать, показывает окно целиком.
+    // A sign with something to say shows its window in full.
     const paid = first(sign([plate({ fee: true, time_windows: [win("08:00", "18:00")] },
                                    ["Avgift 8-18"])]), "2026-03-02T09:00");
     expect(visible(paid).length).toBeGreaterThanOrEqual(1);
@@ -268,7 +269,7 @@ describe("приоритет запрета и окна под запрещаю�
   });
 
   // py: test_engine::test_a_window_under_a_permitting_sign_still_returns_to_permission
-  it("под разрешающим знаком вне окна возвращается разрешение, а не молчание", () => {
+  it("under a permitting sign, outside the window permission returns, not silence", () => {
     const r = first(sign([plate({ fee: true, time_windows: [win("08:00", "18:00")] },
                                 ["Avgift 8-18"])]), "2026-03-02T07:00");
     expect(state(r, "2026-03-02T12:00")).toEqual([ALLOWED, ["avgift"]]);
@@ -276,7 +277,7 @@ describe("приоритет запрета и окна под запрещаю�
   });
 
   // py: test_engine::test_ovrig_tid_still_beats_silence_under_a_prohibiting_sign
-  it("`övrig tid` сильнее молчания и под запрещающим знаком", () => {
+  it("`övrig tid` beats silence under a prohibiting sign too", () => {
     const r = first(sign([
       plate({ time_windows: [win("07:00", "18:00")] }, ["7-18"]),
       plate({ scope_shift: "remaining_time", permits_parking: true, fee: true },
@@ -287,8 +288,8 @@ describe("приоритет запрета и окна под запрещаю�
   });
 
   // py: test_engine::test_named_weekday_ignores_holiday_calendar
-  it("названный день недели — литерал: запрет и в праздничный четверг", () => {
-    expect(CAL.dayClass(parseDate("2026-01-01"))).toBe(RED);     // Nyårsdagen, четверг
+  it("a named weekday is a literal: the prohibition holds on a holiday Thursday", () => {
+    expect(CAL.dayClass(parseDate("2026-01-01"))).toBe(RED);     // Nyarsdagen, a Thursday
     const r = first(sign([
       plate({ prohibition: true, time_windows: [win("00:00", "06:00", "named_weekday", "thursday")] },
             ["Torsd 0-6"], "sign_plate", "yellow"),
@@ -297,15 +298,16 @@ describe("приоритет запрета и окна под запрещаю�
   });
 
   // py: test_engine::test_a_prohibiting_sign_without_plates_prohibits_always
-  it("запрещающий знак без табличек запрещает всегда", () => {
+  it("a prohibiting sign with no plates prohibits always", () => {
     const r = first(sign([], "prohibition_parking"), "2026-09-09T12:00");
     expect(state(r, "2026-09-09T12:00")[0]).toBe(PROHIBITED);
     expect(state(r, "2026-09-12T03:00")[0]).toBe(PROHIBITED);
   });
 
   // py: test_engine::test_prohibition_main_sign_inverts_base
-  it("запрещающий основной знак переворачивает базу; `övrig tid` открывает дополнение", () => {
-    // Снимок `019`: запрет в будни 7-18, в остальное время — обычный P с платой.
+  it("a prohibiting main sign inverts the base; `övrig tid` opens the complement", () => {
+    // Photograph `019`: prohibited on weekdays 7-18, and at other times an ordinary
+    // P with a fee.
     const r = first(sign([
       plate({ time_windows: [win("07:00", "18:00", WEEKDAY)] }, ["7-18"], "sign_plate", "yellow"),
       plate({ fee: true, scope_shift: "remaining_time", permits_parking: true },
@@ -317,26 +319,27 @@ describe("приоритет запрета и окна под запрещаю�
   });
 });
 
-describe("предел и окно", () => {
+describe("the limit and its window", () => {
   // py: test_engine::test_a_window_to_24_00_runs_to_the_end_of_the_day
-  it("`24:00` и `23:59` — конец суток, а не минута до него", () => {
+  it("`24:00` and `23:59` are the end of the day, not a minute short of it", () => {
     const r = first(sign([plate({ fee: true, time_windows: [win("00:00", "24:00")] },
                                 ["Avgift 00-24"])]), "2026-03-02T12:00");
     expect(state(r, "2026-03-02T23:59")).toEqual([ALLOWED, ["avgift"]]);
     expect(state(r, "2026-03-02T12:00")).toEqual([ALLOWED, ["avgift"]]);
-    // Модель пишет `00:00-23:59` там, где на знаке `00-24` (снимок `049`).
+    // The model writes `00:00-23:59` where the sign says `00-24` (photograph `049`).
     const almost = first(sign([plate({ fee: true, time_windows: [win("00:00", "23:59")] },
                                      ["Avgift 00-24"])]), "2026-03-02T12:00");
     expect(state(almost, "2026-03-02T23:59")).toEqual([ALLOWED, ["avgift"]]);
     const edges = almost.periods.flatMap((p) => [p.start, p.end])
       .filter((t) => t.hh === 23 && t.mm === 59);
-    expect(edges, "сутки не режутся на куски").toEqual([]);
+    expect(edges, "the day is not cut into pieces").toEqual([]);
   });
 
   // py: test_engine::test_a_limit_does_not_outlive_the_window_that_set_it
-  it("предел не переживает окно, которое его ввело", () => {
-    // Снимок `005`, пятница 30 октября 2026 — канун Alla helgons dag: окно в скобках
-    // закрывается в 15:00, а продукт отвечал «до 16:00» (решение 118).
+  it("a limit does not outlive the window that set it", () => {
+    // Photograph `005`, Friday 30 October 2026 - the eve of Alla helgons dag: the
+    // bracketed window closes at 15:00, and the product answered "until 16:00"
+    // (decision 118).
     const s = sign([plate({ ...TWO_TIM, time_windows: [win("08:00", "18:00", WEEKDAY),
                                                        win("08:00", "15:00", EVE)] },
                           ["2 tim", "8-18", "(8-15)"])]);
@@ -348,7 +351,7 @@ describe("предел и окно", () => {
   });
 
   // py: test_engine::test_a_window_cut_by_midnight_is_still_one_window
-  it("окно, разрезанное полуночью, остаётся одним окном", () => {
+  it("a window cut by midnight is still one window", () => {
     const r = first(sign([plate({ ...TWO_TIM, time_windows: [win("20:00", "02:00")] },
                                 ["2 tim", "20-02"])]), "2026-09-09T23:00");
     expect(iso(r.durationExpiresAt)).toBe("2026-09-10T01:00");
@@ -356,9 +359,9 @@ describe("предел и окно", () => {
   });
 
   // py: test_engine::test_a_silent_period_carries_no_stay_limit
-  it("молчащий отрезок не несёт предела стоянки", () => {
-    // Рядом с «Nothing stated on the sign» стояло «47 h max» — число от начала
-    // ближайшего запрета, читавшееся как позволение столько простоять.
+  it("a silent period carries no limit on the stay", () => {
+    // Next to "Nothing stated on the sign" stood "47 h max" - a number counted from
+    // the start of the nearest prohibition, read as permission to stay that long.
     const s = sign([plate({ time_windows: [zonal()] }, ["Onsdag 9-12", "jämna veckor"])],
                    "prohibition_parking");
     const r = first(s, "2026-10-12T10:00");
@@ -366,7 +369,7 @@ describe("предел и окно", () => {
     expect(r.periods.some((p) => p.state === PROHIBITED)).toBe(true);
     expect(r.durationExpiresAt).toBeNull();
     expect(r.durationSource).toBeNull();
-    // А там, где знак стоянку даёт, запрет её по-прежнему обрывает.
+    // And where the sign does grant parking, a prohibition still ends it.
     const speaking = first(sign([
       plate({ prohibition: true, time_windows: [win("10:00", "14:00", "named_weekday", "thursday")] },
             ["Torsd 10-14"], "sign_plate", "yellow"),
@@ -376,8 +379,8 @@ describe("предел и окно", () => {
   });
 
   // py: test_engine::test_prohibition_ends_the_stay_earlier_than_the_24h_limit
-  it("запрет обрывает стоянку раньше суток", () => {
-    // `Torsdag 10-14` — машину убрать в 10:00, а не досидеть до 18:41 следующего дня.
+  it("a prohibition ends the stay earlier than the 24-hour limit", () => {
+    // `Torsdag 10-14` - move the car at 10:00, not sit on until 18:41 the next day.
     const r = first(sign([
       plate({ fee: true }, ["Avgift"]),
       plate({ prohibition: true, time_windows: [win("10:00", "14:00", "named_weekday", "thursday")] },
@@ -388,15 +391,15 @@ describe("предел и окно", () => {
   });
 
   // py: test_engine::test_without_a_prohibition_the_24h_limit_still_governs
-  it("без запрета правит правило 24 часов", () => {
+  it("with no prohibition the 24-hour rule governs", () => {
     const r = first(sign([plate({ fee: true }, ["Avgift"])]), "2026-09-02T18:41");
     expect(iso(r.durationExpiresAt)).toBe("2026-09-03T18:41");
     expect(r.durationSource).toBe("24h_default");
   });
 });
 
-describe("адресат условия: пиктограмма на табличке (решение 120)", () => {
-  /** Frihamnen: `30 min 00-24 (00-14)` для всех, `[автобус] Avgift (14-24) 00-24`. */
+describe("who a condition addresses: a pictogram on a plate (decision 120)", () => {
+  /** Frihamnen: `30 min 00-24 (00-14)` for everyone, `[bus] Avgift (14-24) 00-24`. */
   const frihamnen = () => sign([
     plate({ duration_limit: { amount: 30, unit: "minutes" },
             time_windows: [win("00:00", "24:00", WEEKDAY), win("00:00", "14:00", EVE)] },
@@ -407,15 +410,15 @@ describe("адресат условия: пиктограмма на табли�
   ]);
 
   // py: test_engine::test_a_pictogram_on_a_plate_with_a_rule_addresses_that_rule
-  it("пиктограмма рядом с условием говорит, КОМУ условие, а не кому места", () => {
+  it("a pictogram beside a condition says WHO the condition is for, not whose the spaces are", () => {
     const ev = evaluate(frihamnen(), "2026-09-13T10:00");
     expect(ev.regimes.map((r) => r.audience)).toEqual([null, "pictogram-bus"]);
     expect(ev.regimes.every((r) => r.eligibility.length === 0)).toBe(true);
     expect(ev.regimes[0].audienceExcluded).toEqual(["pictogram-bus"]);
     const [everyone, buses] = ev.regimes;
-    expect(state(everyone, "2026-09-13T10:00")).toEqual([ALLOWED, []]);        // воскресенье
+    expect(state(everyone, "2026-09-13T10:00")).toEqual([ALLOWED, []]);        // Sunday
     expect(state(buses, "2026-09-13T10:00")).toEqual([ALLOWED, ["avgift"]]);
-    // Будни: обеим половинам одно и то же — полчаса с первой таблички.
+    // Weekdays: both halves get the same - half an hour, from the first plate.
     const moment = "2026-09-10T21:15";
     for (const r of evaluate(frihamnen(), moment).regimes) {
       const p = r.periods.find((x) => isoNaive(x.start) <= moment && moment < isoNaive(x.end))!;
@@ -424,8 +427,8 @@ describe("адресат условия: пиктограмма на табли�
   });
 
   // py: test_engine::test_a_pictogram_alone_still_narrows_the_whole_sign
-  it("пиктограмма отдельной табличкой — круг стоящих", () => {
-    // Снимок `038`: места отведены автобусам.
+  it("a pictogram on a plate of its own says who may park", () => {
+    // Photograph `038`: the spaces are designated for buses.
     const ev = evaluate(sign([plate({ vehicle_class: "bus", pictogram: "bus" }),
                               plate({ eligibility: "visitors" }, ["Besökande"])]),
                         "2026-03-02T12:00");
@@ -435,9 +438,9 @@ describe("адресат условия: пиктограмма на табли�
   });
 
   // py: test_engine::test_only_a_pictogram_standing_alone_narrows_the_sign
-  it("сужает круг только пиктограмма, стоящая на табличке одна", () => {
-    // Правило разработчика: рядом с ней что угодно ещё — и табличка уже не отводит
-    // места, а ставит условие своему транспорту.
+  it("only a pictogram standing alone narrows the sign", () => {
+    // The developer's rule: put anything else beside it and the plate no longer
+    // designates spaces - it sets a condition for its own kind of vehicle.
     const alone = evaluate(sign([plate({ vehicle_class: "bus", pictogram: "bus" })]),
                            "2026-03-02T12:00");
     expect(alone.regimes).toHaveLength(1);
@@ -450,9 +453,9 @@ describe("адресат условия: пиктограмма на табли�
   });
 
   // py: test_engine::test_ovrig_tid_counts_the_whole_sign_not_half_of_it
-  it("«övrig tid» считается по всему знаку, а не по половине", () => {
-    // Снимок `049`: сезон занят табличкой мопедов — для прочих машин он
-    // «остальным временем» НЕ является (решение 121).
+  it("\"övrig tid\" is counted over the whole sign, not half of it", () => {
+    // Photograph `049`: the season is taken by the moped plate - for other vehicles
+    // it is NOT "the remaining time" (decision 121).
     const season = win("00:00", "24:00", "all_days");
     season.dates = { mode: "only", ranges: [{ from: "04-01", to: "09-30" }] };
     const s = sign([
@@ -462,22 +465,22 @@ describe("адресат условия: пиктограмма на табли�
             ["Övrig tid", "Avgift", "Taxa 2"]),
     ]);
     const [everyone, mopeds] = evaluate(s, "2026-07-15T12:00").regimes;
-    expect(state(everyone, "2026-07-15T12:00")).toEqual([ALLOWED, []]);      // знак молчит
+    expect(state(everyone, "2026-07-15T12:00")).toEqual([ALLOWED, []]);      // the sign is silent
     expect(state(mopeds, "2026-07-15T12:00")).toEqual([ALLOWED, ["avgift"]]);
-    // Молчание не выдаётся за бесплатность: отрезок помечен.
+    // Silence is not passed off as free: the period is marked.
     const now = everyone.periods.find((p) => isoNaive(p.start) <= "2026-07-15T12:00"
                                            && "2026-07-15T12:00" < isoNaive(p.end))!;
     expect(now.note).toBe(FEE_PERIOD_ELSEWHERE);
     expect(mopeds.periods.every((p) => p.note === null)).toBe(true);
-    // Вне сезона платят все, и половины сходятся.
+    // Out of season everyone pays, and the halves agree.
     for (const r of evaluate(s, "2026-11-16T12:00").regimes) {
       expect(state(r, "2026-11-16T12:00")).toEqual([ALLOWED, ["avgift"]]);
     }
   });
 
   // py: test_engine::test_arrows_and_audience_divide_the_sign_independently
-  it("стрелка и адресат делят знак по очереди и независимо", () => {
-    // Автобусная табличка над стрелкой влево делит только левый участок.
+  it("an arrow and an audience divide the sign in turn, and independently", () => {
+    // A bus plate above a left arrow divides only the left stretch.
     const ev = evaluate(sign([
       plate({ duration_limit: { amount: 30, unit: "minutes" } }, ["30 min"]),
       plate({ fee: true, vehicle_class: "bus" }, ["Avgift"]),
@@ -492,9 +495,9 @@ describe("адресат условия: пиктограмма на табли�
   });
 });
 
-describe("сдвиг охвата", () => {
+describe("the shift of scope", () => {
   // py: test_engine::test_ovrig_tid_fills_the_complement
-  it("`övrig tid` заполняет дополнение к окну", () => {
+  it("`övrig tid` fills the complement of the window", () => {
     const r = first(sign([
       plate({ permit_required: true, time_windows: [win("07:00", "17:00", WEEKDAY)] },
             ["Särskilt P-tillstånd erfordras", "07-17"]),
@@ -502,21 +505,21 @@ describe("сдвиг охвата", () => {
     ]), "2026-03-02T12:00");
     expect(state(r, "2026-03-02T12:00")).toEqual([ALLOWED, ["sarskilt-p-tillstand"]]);
     expect(state(r, "2026-03-02T20:00")).toEqual([ALLOWED, ["avgift"]]);
-    expect(state(r, "2026-03-07T12:00")).toEqual([ALLOWED, ["avgift"]]);   // суббота
+    expect(state(r, "2026-03-07T12:00")).toEqual([ALLOWED, ["avgift"]]);   // Saturday
   });
 
   // py: test_engine::test_without_scope_shift_base_returns_outside_window
-  it("без сдвига вне окна возвращается базовый режим", () => {
+  it("with no shift, the base regime returns outside the window", () => {
     const r = first(sign([plate(AVGIFT_8_18, ["Avgift 8-18"])]), "2026-03-02T12:00");
     expect(state(r, "2026-03-02T20:00")).toEqual([ALLOWED, []]);
   });
 });
 
-describe("эталоны знаков Б и В", () => {
+describe("the reference readings of sign B and sign V", () => {
   // py: test_engine::test_sign_b_developer_reading
-  it("знак Б: мотоциклам платно в свои часы, прочим свободно, запрет для всех", () => {
-    // Разбор перечитан разработчиком 2026-09-10: пиктограмма стоит вместе
-    // с `Avgift 7-19 (11-17) Taxa 13`, значит мест не отводит.
+  it("sign B: motorcycles pay in their hours, others stand free, all are barred", () => {
+    // The reading was revisited by the developer on 2026-09-10: the pictogram stands
+    // together with `Avgift 7-19 (11-17) Taxa 13`, so it designates no spaces.
     const ev = evaluate(sign([
       plate({ vehicle_class: "motorcycle", fee: true, tariff_code: "Taxa 13",
               time_windows: [win("07:00", "19:00", WEEKDAY), win("11:00", "17:00", EVE)] },
@@ -530,10 +533,10 @@ describe("эталоны знаков Б и В", () => {
     expect(everyone.eligibility).toEqual([]);
     expect(bikes.eligibility).toEqual([]);
     expect(everyone.placeNotes).toContain("stretch-metres");
-    expect(state(bikes, "2026-03-02T12:00")).toEqual([ALLOWED, ["avgift"]]);   // будни 7-19
-    expect(state(bikes, "2026-03-07T12:00")).toEqual([ALLOWED, ["avgift"]]);   // суббота 11-17
-    expect(state(bikes, "2026-03-07T09:00")).toEqual([ALLOWED, []]);           // суббота до 11
-    expect(state(bikes, "2026-03-02T20:00")).toEqual([ALLOWED, []]);           // вне окна
+    expect(state(bikes, "2026-03-02T12:00")).toEqual([ALLOWED, ["avgift"]]);   // weekdays 7-19
+    expect(state(bikes, "2026-03-07T12:00")).toEqual([ALLOWED, ["avgift"]]);   // Saturday 11-17
+    expect(state(bikes, "2026-03-07T09:00")).toEqual([ALLOWED, []]);           // Saturday before 11
+    expect(state(bikes, "2026-03-02T20:00")).toEqual([ALLOWED, []]);           // outside the window
     expect(state(everyone, "2026-03-02T12:00")).toEqual([ALLOWED, []]);
     expect(state(everyone, "2026-03-07T12:00")).toEqual([ALLOWED, []]);
     expect(state(everyone, "2026-03-05T03:00")).toEqual([PROHIBITED, []]);
@@ -541,7 +544,7 @@ describe("эталоны знаков Б и В", () => {
   });
 
   // py: test_engine::test_sign_v_no_vehicle_plate_does_not_narrow
-  it("знак В: без таблички транспорта круг по транспорту не сужается", () => {
+  it("sign V: with no vehicle plate, the range is not narrowed by vehicle", () => {
     const r = first(sign([
       plate({ fee: true, tariff_code: "Taxa 3",
               time_windows: [win("07:00", "19:00", WEEKDAY), win("11:00", "17:00", EVE)] },
@@ -553,15 +556,15 @@ describe("эталоны знаков Б и В", () => {
     const vehicles = ["pictogram-motorcycle", "bil-personbil", "pictogram-electric-car"];
     expect(r.eligibility.filter((k) => vehicles.includes(k))).toEqual([]);
     expect(r.eligibility).toEqual(["boende"]);
-    expect(state(r, "2026-03-09T03:00")).toEqual([PROHIBITED, []]);   // понедельник 0-6
+    expect(state(r, "2026-03-09T03:00")).toEqual([PROHIBITED, []]);   // Monday 0-6
     expect(state(r, "2026-03-03T12:00")).toEqual([ALLOWED, ["avgift"]]);
   });
 });
 
-describe("стрелки и участки", () => {
+describe("arrows and stretches", () => {
   // py: test_engine::test_arrows_split_into_two_regimes
-  it("стрелка закрывает указание над собой: два участка — два режима", () => {
-    // Снимок `010`.
+  it("an arrow closes the instruction above it: two stretches, two regimes", () => {
+    // Photograph `010`.
     const ev = evaluate(sign([
       plate({ eligibility: "rented" }, ["Förhyrda platser"]),
       plate({ arrow: "left" }, [], "sign_plate", "white"),
@@ -577,13 +580,13 @@ describe("стрелки и участки", () => {
   });
 
   // py: test_engine::test_no_arrow_means_here
-  it("нет стрелки — место здесь", () => {
+  it("no arrow means the place is here", () => {
     const ev = evaluate(sign([plate({ vehicle_class: "motorcycle" })]), "2026-03-02T12:00");
     expect(ev.regimes.map((r) => r.extent)).toEqual(["here"]);
   });
 
   // py: test_engine::test_info_board_below_the_arrow_is_not_a_second_stretch
-  it("табло под стрелкой второго участка не заводит", () => {
+  it("a payment board below the arrow does not start a second stretch", () => {
     const ev = evaluate(sign([
       plate({ fee: true }, ["Avgift"]),
       plate({ arrow: "both_horizontal" }),
@@ -593,8 +596,8 @@ describe("стрелки и участки", () => {
   });
 
   // py: test_engine::test_plates_below_the_last_arrow_do_not_make_a_second_stretch
-  it("таблички ниже последней стрелки второго участка не заводят", () => {
-    // Снимок `033`: `Zon E` и `Boende Storskogen` под стрелкой влево.
+  it("plates below the last arrow do not start a second stretch", () => {
+    // Photograph `033`: `Zon E` and `Boende Storskogen` under a left arrow.
     const ev = evaluate(sign([
       plate(AVGIFT_8_18, ["Avgift", "8-18"]),
       plate({ arrow: "left" }),
@@ -606,7 +609,7 @@ describe("стрелки и участки", () => {
   });
 
   // py: test_engine::test_the_tail_reaches_every_stretch_not_just_the_last
-  it("хвост стопки достаётся каждому участку, а не последнему", () => {
+  it("the tail of the stack reaches every stretch, not only the last", () => {
     const ev = evaluate(sign([
       plate(TWO_TIM, ["2 tim"]),
       plate({ arrow: "left" }),
@@ -619,29 +622,30 @@ describe("стрелки и участки", () => {
   });
 
   // py: test_engine::test_a_sign_without_arrows_is_still_one_stretch_here
-  it("знак без стрелок — по-прежнему один участок здесь", () => {
+  it("a sign with no arrows is still one stretch, here", () => {
     expect(evaluate(sign([plate(TWO_TIM, ["2 tim"])]), "2026-03-02T12:00").regimes
       .map((r) => r.extent)).toEqual(["here"]);
   });
 
   // py: test_engine::test_an_arrow_under_a_wayfinding_sign_means_direction_not_extent
-  it("стрелка под указателем — направление, а не протяжённость", () => {
-    // Снимок `037`: указатель стоянки не разрешает вовсе, протягивать нечего.
+  it("an arrow under a wayfinding sign means direction, not extent", () => {
+    // Photograph `037`: a sign pointing to parking permits nothing, so there is no
+    // extent to draw.
     const keys = recognise(sign([plate({ arrow: "right", pictogram: "arrow" })],
                                 "wayfinding_parking_house")).panelKeys[1];
     expect(keys).toEqual(["wayfinding-direction"]);
   });
 
   // py: test_engine::test_the_same_arrow_under_a_parking_sign_is_still_the_extent
-  it("та же стрелка под обычным `P` — по-прежнему протяжённость", () => {
+  it("the same arrow under an ordinary `P` is still the extent", () => {
     const keys = recognise(sign([plate({ arrow: "right", pictogram: "arrow" })])).panelKeys[1];
     expect(keys).toEqual(["arrow-right"]);
   });
 });
 
-describe("границы продукта", () => {
+describe("the boundaries of the product", () => {
   // py: test_engine::test_info_board_never_enters_rules
-  it("платёжное табло в правила не попадает", () => {
+  it("a payment board never enters the rules", () => {
     const r = first(sign([
       plate({ fee: true }, ["Avgift"]),
       plate({ area_code: "31370" }, ["Områdeskod 31370"], "info_board", "other"),
@@ -651,30 +655,30 @@ describe("границы продукта", () => {
   });
 
   // py: test_engine::test_wayfinding_sign_permits_nothing
-  it("указатель не разрешает ничего", () => {
+  it("a wayfinding sign permits nothing", () => {
     const ev = evaluate(sign([], "wayfinding_park_and_ride"), "2026-03-02T12:00");
     expect(ev.permitsParking).toBe(false);
     expect(ev.regimes).toEqual([]);
   });
 
   // py: test_engine::test_date_outside_calendar_is_uncertain_not_error
-  it("дата вне календаря — неопределённость, а не ошибка", () => {
+  it("a date outside the calendar is uncertainty, not an error", () => {
     const ev = evaluate(sign([plate(AVGIFT_8_18)]), "2035-05-03T10:00");
     expect(ev.uncertainties).toContain("date_outside_calendar");
     expect(ev.regimes[0].periods.some((p) => p.state === UNCERTAIN)).toBe(true);
   });
 
   // py: test_engine::test_residents_plate_answers_who_can_park
-  it("`Boende` отвечает на вопрос «кому»", () => {
+  it("`Boende` answers the question of who", () => {
     const r = first(sign([plate({ eligibility: "residents" }, ["Boende Solna"])]),
                     "2026-09-02T19:27");
     expect(r.eligibility).toEqual(["boende"]);
   });
 });
 
-describe("эталоны со снимков 020-026", () => {
+describe("reference readings from photographs 020-026", () => {
   // py: test_engine::test_sign_022_charging_electric_only
-  it("022: два места справа только для заряжающихся электромобилей, 4 часа, платно", () => {
+  it("022: two spaces on the right for charging electric cars only, 4 hours, paid", () => {
     const r = first(sign([
       plate({ fee: true }, ["Avgift"]),
       plate({ duration_limit: { amount: 4, unit: "hours" } }, ["4 tim"]),
@@ -686,7 +690,7 @@ describe("эталоны со снимков 020-026", () => {
     expect(r.extent).toBe("right");
     expect(r.eligibility).toEqual(["pictogram-electric-car"]);
     expect(r.placeNotes).toContain("place-count");
-    // Плата и лимит без окон действуют всегда: и в будни, и в выходные, и ночью.
+    // A fee and a limit with no windows apply always: weekdays, weekends and nights.
     for (const moment of ["2026-03-02T12:00", "2026-03-07T03:00", "2026-03-08T23:00"]) {
       expect(state(r, moment), moment).toEqual([ALLOWED, ["avgift"]]);
     }
@@ -695,7 +699,7 @@ describe("эталоны со снимков 020-026", () => {
   });
 
   // py: test_engine::test_sign_023_same_rule_without_count_and_arrow
-  it("023: то же правило без числа мест и стрелки — вывод тот же", () => {
+  it("023: the same rule without a count or an arrow - the same conclusion", () => {
     const r = first(sign([
       plate({ fee: true }, ["Avgift"]),
       plate({ duration_limit: { amount: 4, unit: "hours" } }, ["4 tim"]),
@@ -709,7 +713,7 @@ describe("эталоны со снимков 020-026", () => {
   });
 
   // py: test_engine::test_forhyrda_platser_with_numbered_spaces
-  it("020: арендованные места с номерами — ворота по аренде", () => {
+  it("020: rented spaces with numbers - the gate is the tenancy", () => {
     const r = first(sign([
       plate({ eligibility: "rented" }, ["Förhyrda platser", "Gäller plats 13 och 14"]),
       plate({ arrow: "right" }, [], "sign_plate", "white"),
@@ -719,20 +723,20 @@ describe("эталоны со снимков 020-026", () => {
   });
 
   // py: test_engine::test_privat_parkering_does_not_restrict
-  it("021: «Privat parkering» правил не задаёт", () => {
-    // Знак `P` на частной земле означает то же: стоять может кто угодно, 24 часа.
+  it("021: \"Privat parkering\" states no rule", () => {
+    // A `P` sign on private land means the same: anyone may stand, for 24 hours.
     const r = first(sign([
       plate({ operator: { name: "Brf Ängslyckan" } } as unknown as Parsed,
             ["Privat parkering", "Brf Ängslyckan"], "operator_plate"),
       plate({ arrow: "right" }, [], "sign_plate", "white"),
     ]), "2026-03-02T12:00");
-    expect(r.eligibility, "круг не сужается").toEqual([]);
-    expect(r.durationSource, "умолчание в 24 часа действует").toBe("24h_default");
+    expect(r.eligibility, "the range is not narrowed").toEqual([]);
+    expect(r.durationSource, "the 24-hour default applies").toBe("24h_default");
     expect(state(r, "2026-03-02T12:00")).toEqual([ALLOWED, []]);
   });
 
   // py: test_engine::test_sign_024_payment_by_phone_only
-  it("024: способ оплаты в область продукта не входит — важно только «платно»", () => {
+  it("024: the means of payment is out of scope - only \"paid\" matters", () => {
     const r = first(sign([
       plate({ fee: true }, ["Avgift erläggs med"]),
       plate({ arrow: "both_horizontal" }, [], "sign_plate", "white"),
@@ -747,7 +751,7 @@ describe("эталоны со снимков 020-026", () => {
   });
 
   // py: test_engine::test_sign_025_eligibility_and_duration_on_one_plate
-  it("025: `30 min` и «только гостям» на одной табличке — одно указание", () => {
+  it("025: `30 min` and \"guests only\" on one plate are one instruction", () => {
     const r = first(sign([
       plate({ stretch_metres: { from: 0, to: 30 } }, ["0-30 m"]),
       plate({ duration_limit: { amount: 30, unit: "minutes" }, eligibility: "visitors" },
@@ -763,8 +767,8 @@ describe("эталоны со снимков 020-026", () => {
   });
 
   // py: test_engine::test_metres_are_not_minutes
-  it("метры не становятся минутами", () => {
-    // Ловушка снимка `025`: `0-30 m` и `30 min` стоят рядом.
+  it("metres do not become minutes", () => {
+    // The trap of photograph `025`: `0-30 m` and `30 min` stand side by side.
     const r = first(sign([plate({ stretch_metres: { from: 0, to: 30 } }, ["0-30 m"])]),
                     "2026-03-02T12:00");
     expect(r.durationSource).toBe("24h_default");
@@ -772,7 +776,7 @@ describe("эталоны со снимков 020-026", () => {
   });
 
   // py: test_engine::test_sign_026_zone_reads_as_ordinary_sign
-  it("026: зональный щит читается как обычный знак", () => {
+  it("026: a zonal board reads as an ordinary sign", () => {
     const r = first(sign([
       plate({ fee: true }, ["Avgift"]),
       plate({ prohibition: true, placement: "marked_bay_only" },
@@ -786,7 +790,7 @@ describe("эталоны со снимков 020-026", () => {
   });
 });
 
-describe("чётные недели, сезоны и отдельные дни", () => {
+describe("even weeks, seasons and single days", () => {
   const tuesdaySeason = () => {
     const w = win("12:00", "15:00", "named_weekday", "tuesday");
     w.dates = { mode: "only", ranges: [{ from: "11-01", to: "05-15" }] };
@@ -794,48 +798,48 @@ describe("чётные недели, сезоны и отдельные дни",
   };
 
   // py: test_engine::test_even_week_prohibition_applies_every_second_week
-  it("`jämna veckor` — запрет через неделю, а не каждую", () => {
+  it("`jämna veckor` prohibits every second week, not every week", () => {
     const w = win("10:00", "14:00", "named_weekday", "thursday");
     w.week_parity = "even";
     const s = sign([plate({ prohibition: true, time_windows: [w] }, ["Torsdag 10-14", "Jämna veckor"])]);
-    expect(isoWeek(parseDate("2026-09-03")) % 2).toBe(0);    // неделя 36
-    expect(isoWeek(parseDate("2026-09-10")) % 2).toBe(1);    // неделя 37
+    expect(isoWeek(parseDate("2026-09-03")) % 2).toBe(0);    // week 36
+    expect(isoWeek(parseDate("2026-09-10")) % 2).toBe(1);    // week 37
     expect(state(first(s, "2026-09-03T11:00"), "2026-09-03T11:00")[0]).toBe(PROHIBITED);
     expect(state(first(s, "2026-09-10T11:00"), "2026-09-10T11:00")[0]).toBe(ALLOWED);
   });
 
   // py: test_engine::test_date_range_may_wrap_the_year_end
-  it("диапазон дат может переходить через Новый год", () => {
+  it("a range of dates may wrap around the new year", () => {
     expect(state(first(tuesdaySeason(), "2026-12-01T13:00"), "2026-12-01T13:00")[0]).toBe(PROHIBITED);
     expect(state(first(tuesdaySeason(), "2026-06-02T13:00"), "2026-06-02T13:00")[0]).toBe(ALLOWED);
   });
 
   // py: test_engine::test_mid_month_boundary_is_kept_to_the_day
-  it("граница посреди месяца держится до дня", () => {
-    // `15 maj` — это 15 мая, а не май целиком (снимок `034`).
+  it("a boundary in mid-month is kept to the day", () => {
+    // `15 maj` is the 15th of May, not the whole of May (photograph `034`).
     expect(state(first(tuesdaySeason(), "2026-05-12T13:00"), "2026-05-12T13:00")[0]).toBe(PROHIBITED);
     expect(state(first(tuesdaySeason(), "2026-05-19T13:00"), "2026-05-19T13:00")[0]).toBe(ALLOWED);
   });
 
   // py: test_engine::test_single_days_are_ranges_of_one_day
-  it("отдельные дни — промежутки длиной в день", () => {
-    // `Gäller ej 15/6 15/8` разработчик прочёл как два отдельных дня.
+  it("single days are ranges one day long", () => {
+    // `Gäller ej 15/6 15/8` the developer read as two separate days.
     const w = win("00:00", "06:00", "named_weekday", "friday");
     w.dates = { mode: "except", ranges: [{ from: "06-15", to: "06-15" },
                                          { from: "08-15", to: "08-15" }] };
     const s = sign([plate({ prohibition: true, time_windows: [w] }, ["Fred 0-6", "Gäller ej 15/6 15/8"])]);
-    expect(weekday(parseDate("2026-06-19"))).toBe(4);        // пятница, но не 15-е
+    expect(weekday(parseDate("2026-06-19"))).toBe(4);        // a Friday, but not the 15th
     expect(state(first(s, "2026-06-19T03:00"), "2026-06-19T03:00")[0]).toBe(PROHIBITED);
-    // Сам исключённый день — ровно один день, не больше.
+    // The excluded day itself is exactly one day, and no more.
     const onlyJune: TimeWindow = { from: "00:00", to: "24:00", day_class: "all_days",
                                    dates: { mode: "except", ranges: [{ from: "06-15", to: "06-15" }] } };
-    expect(windowApplies(onlyJune, at("2026-06-15T12:00"), CAL), "15 июня исключён").toBe(false);
-    expect(windowApplies(onlyJune, at("2026-06-16T12:00"), CAL), "16 июня — нет").toBe(true);
+    expect(windowApplies(onlyJune, at("2026-06-15T12:00"), CAL), "15 June is excluded").toBe(false);
+    expect(windowApplies(onlyJune, at("2026-06-16T12:00"), CAL), "16 June is not").toBe(true);
   });
 
   // py: test_engine::test_parity_and_season_are_named_to_the_reader
-  it("чётность и сезон названы читателю", () => {
-    // Правило, которое применяется молча, человек проверить не может.
+  it("the week parity and the season are named to the reader", () => {
+    // A rule applied silently is one the person cannot check.
     const w = win("10:00", "14:00", "named_weekday", "thursday");
     w.week_parity = "even";
     w.dates = { mode: "except", ranges: [{ from: "07-01", to: "07-31" }] };

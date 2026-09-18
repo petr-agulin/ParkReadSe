@@ -1,8 +1,10 @@
-// Эталоны и машинерия сверки. Перенесено из `tests/test_parity.py` (шаг 8).
+// The reference answers and the machinery of comparison. Carried over from
+// `tests/test_parity.py` (step 8).
 //
-// Эти проверки стерегут не правила, а САМ МЕХАНИЗМ: что в эталоны не попало ничего
-// лишнего, что типы выведены из схемы, что время не берётся у машины и что замер
-// остаётся инструментом, а не частью продукта. Правила стерегут тесты рядом.
+// These checks guard not the rules but the MACHINERY: that nothing extra reached the
+// reference answers, that the types are derived from the schema, that time is never
+// taken from the machine, and that the measurement stays a tool rather than part of
+// the product. The rules are guarded by the tests beside them.
 
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { extname, join } from "node:path";
@@ -17,7 +19,7 @@ const read = (p: string) => readFileSync(join(ROOT, p), "utf-8");
 const readJson = (p: string) => JSON.parse(read(p));
 const stem = (f: string) => f.replace(/\.[^.]+$/, "");
 
-/** Все файлы `web/src`, которые уходят в приложение. */
+/** Every file of `web/src` that travels into the application. */
 function appSources(dir = join(ROOT, "web", "src")): string[] {
   return readdirSync(dir).flatMap((name) => {
     const full = join(dir, name);
@@ -26,7 +28,7 @@ function appSources(dir = join(ROOT, "web", "src")): string[] {
   });
 }
 
-/** Все тестовые файлы фронтенда: и в приложении, и в инструментах. */
+/** Every test file of the front end: in the application and in the tools alike. */
 function testFiles(dir = join(ROOT, "web")): string[] {
   return readdirSync(dir).flatMap((name) => {
     const full = join(dir, name);
@@ -36,11 +38,12 @@ function testFiles(dir = join(ROOT, "web")): string[] {
   });
 }
 
-describe("состав эталонов", () => {
+describe("what the reference answers are made of", () => {
   // py: test_parity::test_every_document_of_the_set_is_a_case
-  it("каждый разбор набора — случай сверки", () => {
-    // Сверка идёт по всему набору, а не по паре удобных снимков: у модели бывают
-    // склейки панелей и странные поля, каких в аккуратном эталоне не бывает.
+  it("every reading of the set is a case of the comparison", () => {
+    // The comparison runs over the whole set rather than a couple of convenient
+    // photographs: the model produces merged panels and odd fields that a tidy
+    // reference reading never has.
     const docs = [
       ...readdirSync(join(ROOT, "demo")).filter((f) => f.endsWith(".extract.json"))
         .map((f) => `demo/${f.slice(0, -".extract.json".length)}`),
@@ -55,8 +58,9 @@ describe("состав эталонов", () => {
   });
 
   // py: test_parity::test_the_engine_golden_holds_the_answer_not_the_innards
-  it("эталон движка держит ответ, а не внутренности", () => {
-    // Иначе сверка ломалась бы на каждой перестановке кода, ничего не говоря о смысле.
+  it("the engine's reference answer holds the answer, not the innards", () => {
+    // Otherwise the comparison would break on every rearrangement of the code while
+    // saying nothing about meaning.
     const golden = readJson("parity/engine.json");
     const one = golden["demo/005-2tim-8-18-parentes-8-15-dubbelpil@base"];
     expect(Object.keys(one).sort())
@@ -70,8 +74,8 @@ describe("состав эталонов", () => {
   });
 
   // py: test_parity::test_the_present_golden_is_the_finished_answer
-  it("эталон показа — готовый ответ", () => {
-    // Слова — работа показа, и разойтись они могут молча.
+  it("the presentation's reference answer is the finished answer", () => {
+    // The words are the work of presentation, and they can drift silently.
     const golden = readJson("parity/present.json");
     const one = golden["expected/049-moped-sasong-avgift-tva-taxor@season-edge"];
     expect(one.contract).toBe(CONTRACT);
@@ -80,9 +84,9 @@ describe("состав эталонов", () => {
   });
 
   // py: test_parity::test_no_photograph_ever_reaches_the_reference_answers
-  it("ни одна фотография в эталоны не попадает", () => {
-    // Снимки с номерами машин в репозиторий не идут (`AGENTS.md`, §14),
-    // и этот путь для них тоже закрыт.
+  it("not one photograph ever reaches the reference answers", () => {
+    // Photographs with number plates never enter the repository (`AGENTS.md`, §14),
+    // and this path is closed to them as well.
     const dir = join(ROOT, "parity");
     for (const name of readdirSync(dir).sort()) {
       expect([".json", ".txt"], name).toContain(extname(name));
@@ -94,56 +98,60 @@ describe("состав эталонов", () => {
   });
 
   // py: test_parity::test_the_stale_answers_are_named_and_not_counted
-  it("устаревшие ответы названы вслух и не посчитаны", () => {
-    // Молчаливый пропуск выглядел бы как «такого снимка нет», а снимок есть.
+  it("outdated answers are named aloud and not counted", () => {
+    // Passing over them silently would look like "there is no such photograph",
+    // when there is one.
     const golden = readJson("parity/measure.json");
-    expect(golden.excluded.length, "на наборе есть устаревшие ответы").toBeGreaterThan(0);
+    expect(golden.excluded.length, "the set does hold outdated answers").toBeGreaterThan(0);
     expect(golden.photos + golden.excluded.length).toBeGreaterThanOrEqual(57);
     expect(golden.fingerprint).toHaveLength(12);
   });
 
   // py: test_parity::test_the_threshold_table_is_the_one_the_threshold_stands_on
-  it("таблица порога — та, на которой порог и стоит", () => {
-    // Поля расходятся у девятнадцати снимков, ответ — у трёх; порог стоит на втором.
+  it("the threshold table is the one the threshold stands on", () => {
+    // Fields disagree on nineteen photographs, the answer on three; the threshold
+    // stands on the second.
     const golden = readJson("parity/measure.json");
     expect(golden.threshold_table).toContain("| 0.900 |");
-    // Разошедшиеся ответы лежат словарём «снимок → чем разошёлся».
+    // Disagreeing answers are a map of "photograph -> how it disagreed".
     const diverged = Object.keys(golden.diverged).length;
-    expect(diverged, "расхождений ответа мало — так и должно быть").toBeLessThan(10);
+    expect(diverged, "few answers disagree - as it should be").toBeLessThan(10);
     const fieldsOff = Object.values(golden.fields as Record<string, [number, number]>)
       .filter(([hits, total]) => hits < total).length;
-    expect(fieldsOff, "поля обязаны расходиться чаще ответа").toBeGreaterThan(diverged);
+    expect(fieldsOff, "fields must disagree more often than the answer").toBeGreaterThan(diverged);
   });
 });
 
-describe("что осталось верным на этой стороне", () => {
+describe("what stayed true on this side", () => {
   // py: test_parity::test_the_types_match_the_schema
-  it("типы разбора выведены из схемы, а не угаданы", () => {
-    // Второй экземпляр схемы, написанный по памяти, однажды разойдётся с первым,
-    // и первым пострадает поле, которое модель вернула, а браузер не прочёл.
+  it("the reading's types are derived from the schema, not guessed", () => {
+    // A second copy of the schema, written from memory, will one day drift from the
+    // first, and the first casualty will be a field the model returned and the
+    // browser failed to read.
     const schema = readJson("schema/sign.schema.json");
     const types = read("web/src/lib/sign.ts");
     for (const field of Object.keys(schema.$defs.parsed.properties)) {
-      expect(types, `поля ${field} нет в типах`).toContain(field);
+      expect(types, `the field ${field} is missing from the types`).toContain(field);
     }
     for (const field of Object.keys(schema.$defs.panel.properties)) {
-      expect(types, `поля панели ${field} нет в типах`).toContain(field);
+      expect(types, `the panel field ${field} is missing from the types`).toContain(field);
     }
     for (const field of ["vehicle_class", "eligibility", "arrow", "scope_shift",
                          "payment_method", "placement"]) {
       for (const value of schema.$defs.parsed.properties[field].enum ?? []) {
-        expect(types, `${field}: ${value} не назван в типах`).toContain(`"${value}"`);
+        expect(types, `${field}: ${value} is not named in the types`).toContain(`"${value}"`);
       }
     }
     for (const value of schema.properties.main_sign.properties.type.enum) {
-      expect(types, `тип знака ${value} не назван`).toContain(`"${value}"`);
+      expect(types, `the sign type ${value} is not named`).toContain(`"${value}"`);
     }
   });
 
   // py: test_parity::test_the_ported_engine_touches_no_clock_of_its_own
-  it("движок не заводит собственных часов", () => {
-    // `Date` — про мгновение, а знак — про календарь: вместе с `Date` в расчёт
-    // вошли бы часовой пояс машины, летнее время и месяцы с нуля (риск 5 порта).
+  it("the engine keeps no clock of its own", () => {
+    // `Date` is about an instant, and a sign is about a calendar: along with `Date`
+    // the machine's time zone, summer time and months counted from zero would enter
+    // the computation (risk 5 of the port).
     for (const name of ["engine.ts", "calendar.ts", "clock.ts", "civil.ts"]) {
       const source = read(`web/src/lib/${name}`);
       for (const bad of ["new Date", "Date.now", "toLocale", "getTimezoneOffset",
@@ -154,32 +162,32 @@ describe("что осталось верным на этой стороне", ()
   });
 
   // py: test_parity::test_the_rulings_moved_with_the_engine
-  it("разборы разработчика переехали вместе с движком", () => {
-    // Тесты движка говорят, ПОЧЕМУ ответ такой: за каждым стоит решение
-    // разработчика или находка на живом снимке.
+  it("the developer's readings moved along with the engine", () => {
+    // The engine's tests say WHY an answer is what it is: behind each stands a
+    // decision of the developer or a finding on a real photograph.
     const ported = read("web/src/lib/engine.test.ts");
-    for (const mark of ["решение 82", "решение 113", "решение 118", "решение 120",
-                        "решение 121", "`005`", "`033`", "`038`", "`049`",
-                        "знак Б", "Frihamnen"]) {
+    for (const mark of ["decision 82", "decision 113", "decision 118", "decision 120",
+                        "decision 121", "`005`", "`033`", "`038`", "`049`",
+                        "sign B", "Frihamnen"]) {
       expect(ported, mark).toContain(mark);
     }
   });
 
   // py: test_parity::test_the_forbidden_wording_guard_moved_with_the_words
-  it("словарь формулировок сторожит тест на той же стороне, где живут слова", () => {
-    // Оставить его только в питоне значит потерять страховку в день, когда питон
-    // уйдёт, — а формулировки ради этой страховки и держат в одном месте.
+  it("the vocabulary guard lives on the same side as the words", () => {
+    // Leaving it only in Python would have meant losing the safeguard the day Python
+    // left - and the wording is kept in one place for the sake of that safeguard.
     const guard = read("web/src/lib/present.test.ts");
     for (const bad of ["parking allowed", "you may park", "you can park here"]) {
       expect(guard, bad).toContain(bad);
     }
-    expect(guard, "проверяется весь набор, а не один снимок").toContain("parity/cases.json");
+    expect(guard, "the whole set is checked, not one photograph").toContain("parity/cases.json");
   });
 });
 
-describe("замер остаётся инструментом", () => {
+describe("the measurement stays a tool", () => {
   // py: test_parity::test_the_measurement_is_a_tool_and_not_part_of_the_product
-  it("в страницу замер не попадает", () => {
+  it("the measurement never reaches the page", () => {
     for (const path of appSources()) {
       const text = readFileSync(path, "utf-8");
       if (path.endsWith("measure.ts")) continue;
@@ -187,14 +195,15 @@ describe("замер остаётся инструментом", () => {
       expect(text, path).not.toContain('from "../lib/measure"');
     }
     const scripts = readJson("web/package.json").scripts;
-    expect(scripts, "нет команды npm run measure").toHaveProperty("measure");
+    expect(scripts, "there is no npm run measure").toHaveProperty("measure");
     expect(scripts.measure).toContain("--dir measure");
-    expect(scripts.test, "замер попадёт в обычный прогон").toContain("--exclude");
+    expect(scripts.test, "the measurement would join the ordinary run").toContain("--exclude");
   });
 
   // py: test_parity::test_the_measurement_reads_the_same_set_from_disk
-  it("замер читает с диска тот же набор", () => {
-    // Эталоны разработчика, ответы модели и снимки: площадь кадра входит в уверенность.
+  it("the measurement reads the same set from disk", () => {
+    // The developer's reference readings, the model's answers and the photographs:
+    // the area of the frame enters the confidence.
     const set = read("web/tools/testset.ts");
     for (const path of ["testset", "expected", "demo", "photos"]) {
       expect(set, path).toContain(path);
@@ -205,54 +214,56 @@ describe("замер остаётся инструментом", () => {
   });
 });
 
-describe("эталоны пишет TypeScript", () => {
+describe("TypeScript writes the reference answers", () => {
   // py: test_parity::test_the_golden_answers_are_current
-  it("переписанные этой командой, они совпадают с лежащими — до байта", async () => {
-    // Упало — значит, ответ продукта изменился. Это не поломка теста, это его
-    // работа: посмотреть расхождение (`npm test -- parity`) и переписать
-    // сознательно (`npm run goldens:write`).
+  it("rewritten by this command, they match what is lying there - to the byte", async () => {
+    // A failure means the product's answer changed. That is not a broken test, it is
+    // the test working: look at the difference (`npm test -- parity`) and rewrite
+    // deliberately (`npm run goldens:write`).
     expect(await stale()).toEqual([]);
   }, 120_000);
 
   // py: test_parity::test_the_case_file_is_read_by_both_sides
-  it("случаи объявлены файлом, а не собираются на лету каждым по-своему", () => {
+  it("the cases are declared in a file, not assembled on the fly by each side", () => {
     expect(readJson("parity/cases.json")).toEqual(buildCases());
-    // Тот же файл читает и сверка — иначе стороны проверялись бы на разных задачах.
+    // The comparison reads the same file - otherwise the two sides would be checked
+    // on different exercises.
     expect(read("web/src/lib/parity.test.ts")).toContain('read("cases")');
   });
 
   // py: test_parity::test_the_awkward_moments_are_all_covered
-  it("особые моменты покрыты все и у каждого названа причина", () => {
-    // На каждом из них уже ломалось что-нибудь живое: канун, красный день,
-    // обе ночи перевода, край сезона, полночь.
+  it("the awkward moments are all covered and each is given a reason", () => {
+    // Something real once broke on each of them: an eve, a red day, both nights of
+    // the clock change, the edge of a season, midnight.
     expect(SPECIAL.map((s) => s.label).sort()).toEqual(
       ["dst-back", "dst-forward", "eve", "midnight", "red", "season-edge"]);
     const ids = buildCases().map((c) => c.id);
     for (const { label } of SPECIAL) {
       expect(ids.some((i) => i.endsWith(`@${label}`)), label).toBe(true);
     }
-    // Без причины список превращается в набор чисел.
+    // Without a reason the list turns into a set of numbers.
     expect(SPECIAL.filter((s) => !s.why)).toEqual([]);
   });
 
   // py: test_parity::test_the_layers_are_declared_and_none_is_ported_yet
-  it("слои объявлены, и у каждого есть проба", () => {
+  it("the layers are declared, and each has a probe", () => {
     const ported: string[] = readJson("parity/PORTED.json").layers;
-    expect(ported.filter((l) => !LAYERS.includes(l)), "неизвестный слой").toEqual([]);
-    expect(LAYERS.filter((l) => !PROBES[l]), "слой без пробы").toEqual([]);
+    expect(ported.filter((l) => !LAYERS.includes(l)), "an unknown layer").toEqual([]);
+    expect(LAYERS.filter((l) => !PROBES[l]), "a layer with no probe").toEqual([]);
   });
 
   // py: test_parity::test_rewriting_is_a_separate_command
-  it("переписывание — отдельная команда, а не побочный эффект прогона", () => {
-    // Иначе эталоны однажды перезапишут, чтобы «стало зелено», и вместе
-    // с красным исчезнет расхождение.
+  it("rewriting is a separate command, not a side effect of a run", () => {
+    // Otherwise the reference answers get rewritten one day to "make it green", and
+    // the disagreement disappears along with the red.
     const scripts = readJson("web/package.json").scripts;
-    expect(scripts.goldens, "нет команды проверки").toBeTruthy();
+    expect(scripts.goldens, "there is no checking command").toBeTruthy();
     expect(scripts.goldens).not.toContain("--write");
     expect(scripts["goldens:write"]).toContain("--write");
 
-    // Ни один тест не переписывает эталоны сам. Этот файл из проверки исключён:
-    // он же эту строку и называет — иначе тест ловил бы сам себя.
+    // No test rewrites the reference answers by itself. This file is excluded from
+    // the check: it is the one naming that string, and the test would otherwise
+    // catch itself.
     for (const file of testFiles()) {
       if (file.endsWith("goldens.test.ts")) continue;
       const text = readFileSync(file, "utf-8");
@@ -262,18 +273,18 @@ describe("эталоны пишет TypeScript", () => {
     }
   });
 
-  it("числа пишутся по-питоновски: дробное остаётся дробным", () => {
-    // Питон отличает `1.0` от `1`, а `JSON.stringify` — нет. В эталонах таких
-    // чисел три с половиной тысячи, и без этого правила первое же переписывание
-    // переставило бы их все.
+  it("numbers are written the Python way: a float stays a float", () => {
+    // Python distinguishes `1.0` from `1`, and `JSON.stringify` does not. There are
+    // three and a half thousand such numbers in the reference answers, and without
+    // this rule the first rewrite would have rearranged every one of them.
     const text = pyDump({ confidence: 1, signals: { a: 0, b: 0.5 },
                           rows: [[1, "x", false, "y"]], panels: 2 });
     expect(text).toContain('"confidence": 1.0');
     expect(text).toContain('"a": 0.0');
     expect(text).toContain('"b": 0.5');
-    expect(text, "целое обязано остаться целым").toContain('"panels": 2');
+    expect(text, "an integer must stay an integer").toContain('"panels": 2');
     expect(text.split("\n").some((l) => l.trim() === "1.0,"),
-           "первый столбец строки замера — дробный").toBe(true);
+           "the first column of a measurement row is a float").toBe(true);
     expect(text.endsWith("\n")).toBe(true);
   });
 });
