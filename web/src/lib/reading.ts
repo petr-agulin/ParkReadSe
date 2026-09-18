@@ -1,17 +1,18 @@
-// Решения экрана разбора: как выглядит строка таблички, чем подписана уверенность
-// и на какой момент посчитан ответ.
+// The decisions of the reading screen: how a plate's row looks, what the confidence
+// is captioned with, and which moment the answer was computed for.
 //
-// Ни разметки, ни браузера. Компонент красит то, что решено здесь (решение 151).
+// No markup and no browser. The component paints what is decided here
+// (decision 151).
 
 import type { Meaning, Panel, Regime } from "../types";
 import { when } from "./when";
 
 /**
- * Одно значение таблички строкой.
+ * One meaning of a plate, as a line.
  *
- * Код идёт в скобках после названия — как на самом знаке. `continues` значит,
- * что подпись продолжает заголовок одним предложением: «No parking (C35) on
- * Thursdays between 10:00 and 14:00», а не двумя обрубками.
+ * The code follows the name in brackets - as it does on the sign itself.
+ * `continues` means the caption carries the heading on as a single sentence:
+ * "No parking (C35) on Thursdays between 10:00 and 14:00", rather than two stumps.
  */
 export function meaningLine(m: Meaning): string {
   const head = m.code ? `${m.label} (${m.code})` : m.label;
@@ -20,80 +21,82 @@ export function meaningLine(m: Meaning): string {
 }
 
 /**
- * Табличка — карточкой: сверху её собственный текст, под ним смыслы.
+ * A plate as a card: its own text on top, the meanings beneath it.
  *
- * Прежняя форма «подпись слева → значение справа» держалась, пока значение одно,
- * и разъезжалась дальше. Карточка читается как сама табличка: сначала то, что
- * на ней написано, потом что это значит.
+ * The old form - a caption on the left, the value on the right - held while there was
+ * one value and came apart beyond that. A card reads like the plate itself: first
+ * what is written on it, then what that means.
  */
 export type PlateRow = {
-  /** Что написано на самой табличке. Пусто — так бывает: у пиктограммы своего
-   *  текста нет, и выдумывать его незачем — карточка начнётся со смысла. */
+  /** What is written on the plate itself. Empty happens: a pictogram has no text of
+   *  its own, and there is no reason to invent any - the card then begins with the
+   *  meaning. */
   quote: string;
-  /** Что это значит — по строке на смысл, плюс непонятый остаток. */
+  /** What it means - a line per meaning, plus whatever was not understood. */
   lines: string[];
-  /** Главный знак или табличка под ним. */
+  /** The main sign, or a plate beneath it. */
   tag: "Primary sign" | "Panel";
 };
 
 export function plateRow(panel: Panel): PlateRow {
   const lines = panel.meanings.map(meaningLine);
-  // Подпись о непонятом — не смысл таблички, но и терять её нельзя.
+  // The note about what was not understood is not a meaning of the plate, but it
+  // must not be lost either.
   if (panel.not_interpreted_text) lines.push(panel.not_interpreted_text);
 
   const quote = panel.text.trim();
-  // Ни текста, ни смыслов: карточка осталась бы пустой рамкой на экране.
-  // Так однажды и случилось, и с тех пор у безымянной панели есть имя.
+  // Neither text nor meanings: the card would have been left an empty box on the
+  // screen. That did happen once, and ever since a nameless panel has a name.
   if (!quote && lines.length === 0) lines.push(`Panel ${panel.index}`);
 
   return {
     quote,
     lines,
-    // `kind` — открытая строка, а не перечисление. Поэтому проверяем главный
-    // знак, а всё остальное считаем табличкой: незнакомый вид попадёт
-    // в «Panel», а не в пустоту.
+    // `kind` is an open string rather than an enumeration. So the main sign is what
+    // gets checked, and everything else counts as a plate: an unfamiliar kind lands
+    // in "Panel" rather than in nothing.
     tag: panel.kind === "main_sign" ? "Primary sign" : "Panel",
   };
 }
 
-// Подписи уверенности здесь больше нет: она стояла дважды — чипом в шапке
-// карточки «что прочитано» и строкой под ним, в `Completeness`. Осталась строка,
-// где рядом с ней полнота, причины и тон.
+// The caption of the confidence is no longer here: it stood twice - as a chip in the
+// header of the "what we read" card and as a line beneath it, in `Completeness`. The
+// line remains, where the completeness, the reasons and the tone stand beside it.
 
 /**
- * Рисуется ли для этого режима карточка окна.
+ * Whether a window card is drawn for this regime.
  *
- * Правило жило внутри самой карточки, и этого хватало, пока никто не спрашивал
- * «а какая карточка первая». Теперь спрашивает: строка «Read for …» ставится
- * под заголовком ПЕРВОЙ, а первой может оказаться не первый режим — режим
- * без периодов и без объяснения не рисуется вовсе. Спроси об этом двое,
- * и правило разъедется; поэтому оно здесь одно.
+ * The rule lived inside the card itself, and that was enough while nobody asked which
+ * card is first. Now something does: the "Read for ..." line goes under the heading of
+ * the FIRST one, and the first may not be the first regime - a regime with no periods
+ * and no explanation is not drawn at all. Let two places ask, and the rule drifts
+ * apart; so it lives here, once.
  */
 export function showsWindow(regime: Regime): boolean {
   return (regime.periods ?? []).length > 0 || Boolean(regime.no_window_text);
 }
 
 /**
- * Номер первой карточки окна, которая действительно рисуется. `-1` — ни одной.
+ * The index of the first window card that is actually drawn. `-1` means none.
  *
- * Не то же, что «первый режим»: режим без шкалы и без объяснения карточки
- * не даёт вовсе, и строка «Read for …», повешенная на него, исчезла бы с экрана
- * вместе с ним. Решение живёт здесь, а не в разметке, потому что здесь его
- * можно проверить (решение 151).
+ * Not the same as "the first regime": a regime with no timeline and no explanation
+ * yields no card at all, and the "Read for ..." line hung on it would disappear from
+ * the screen along with it. The decision lives here rather than in the markup,
+ * because here it can be checked (decision 151).
  */
 export function firstWindow(regimes: Regime[]): number {
   return regimes.findIndex(showsWindow);
 }
 
 /**
- * На какой момент посчитан ответ.
+ * Which moment the answer was computed for.
  *
- * Момент выбирается на главном экране, поэтому ответ обязан назвать его вслух:
- * иначе разбор «на 07:00» невозможно отличить от разбора «на сейчас».
+ * The moment is chosen on the home screen, so the answer is obliged to name it aloud:
+ * otherwise a reading "for 07:00" cannot be told from a reading "for now".
  *
- * Оговорка о том, чьё решение, ушла отсюда под заголовок окна: продукт читает
- * знак, а не разрешает стоянку, — но сказать это надо там, где показано окно,
- * а не рядом с датой.
+ * The caveat about whose decision it is has moved from here to under the window's
+ * heading: the product reads a sign rather than permitting parking - but that has to
+ * be said where the window is shown, not beside the date.
  */
 export function readFor(moment: string): string {
   return `Read for ${when(moment)}.`;
