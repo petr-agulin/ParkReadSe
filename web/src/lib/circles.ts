@@ -1,19 +1,19 @@
-// Круг стоящих — свойство ЗНАКА, а не окна.
+// The circle of those who may stand is a property of the SIGN, not of a window.
 //
-// Окон на экране бывает несколько: их разводит стрелка (разные участки улицы)
-// или адресат (условие, обращённое к одному виду транспорта). Круг при этом
-// часто один и тот же, и повторять его столько раз, сколько окон, незачем:
-// найдено разработчиком на снимке `049`, где «The sign permits parking for all
-// vehicles» стояло дважды подряд.
+// There are several windows on screen at times: an arrow divides them (different
+// stretches of the street), or an addressee does (a condition aimed at one kind of
+// vehicle). The circle is often one and the same, and there is no reason to repeat it
+// once for every window: found by the developer on photograph `049`, where "The sign
+// permits parking for all vehicles" stood twice in a row.
 //
-// Разные круги остаются раздельными: на знаке `010` стрелки задают арендованные
-// места слева и арендованные с особым разрешением справа, и это два разных ответа
-// на вопрос «кому».
+// Different circles stay apart: on sign `010` the arrows set rented spaces on the
+// left and rented ones with a special permit on the right, and those are two
+// different answers to the question "who".
 
 export type Circle = { key: string }[];
 
-/** Круги без повторов, в порядке появления. Сравниваются по ключам справочника:
- *  текст к ключу привязан жёстко, поэтому ключей достаточно. */
+/** The circles without repetition, in order of appearance. Compared by the keys of
+ *  the reference: the text is bound tightly to the key, so the keys are enough. */
 export function distinctCircles<T extends Circle>(circles: T[]): T[] {
   const seen = new Set<string>();
   const out: T[] = [];

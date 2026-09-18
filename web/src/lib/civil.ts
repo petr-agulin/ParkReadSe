@@ -1,22 +1,22 @@
-// Календарная арифметика без `Date`.
+// Calendar arithmetic with no `Date`.
 //
-// `Date` — про мгновение на оси времени, а знак говорит о календаре: «среда»,
-// «31 октября», «08:00». Стоит завести `Date`, и в расчёт входит часовой пояс
-// машины, летнее время и месяцы, считающиеся с нуля. Ошибки от этого тихие
-// и всплывают в отдельные даты — ровно то, чего порт боится больше всего
-// (`PLAN_NEXT.md`, риск 5).
+// A `Date` is about an instant on the axis of time, whereas a sign speaks of the
+// calendar: "Wednesday", "31 October", "08:00". Bring one in and the machine's time
+// zone enters the reckoning with it, along with summer time and months counted from
+// zero. Errors of that kind are quiet, and they surface on particular dates — exactly
+// what the port fears most (`PLAN_NEXT.md`, risk 5).
 //
-// Поэтому здесь целые числа: день — номер суток от 1970-01-01, момент — минута
-// от той же полуночи. Ни поясов, ни перевода часов: перевод живёт в `clock.ts`
-// и применяется явно, там, где считается ДЛИТЕЛЬНОСТЬ.
+// So here there are whole numbers: a day is the number of the day from 1970-01-01, a
+// moment is the minute from that same midnight. No zones and no change of the clocks:
+// the change lives in `clock.ts` and is applied openly, where a LENGTH is counted.
 //
-// Алгоритмы `days`/`civil` — общеизвестная пара Говарда Хиннанта: целочисленные,
-// без таблиц, верные для любого года григорианского календаря.
+// The `days`/`civil` algorithms are the well-known pair of Howard Hinnant's:
+// integer-only, table-free, and correct for any year of the Gregorian calendar.
 
 export type Civil = { y: number; m: number; d: number };
 export type Naive = { y: number; m: number; d: number; hh: number; mm: number };
 
-/** Номер суток от 1970-01-01. */
+/** The number of the day from 1970-01-01. */
 export function days({ y, m, d }: Civil): number {
   const year = y - (m <= 2 ? 1 : 0);
   const era = Math.floor(year / 400);
@@ -26,7 +26,7 @@ export function days({ y, m, d }: Civil): number {
   return era * 146097 + doe - 719468;
 }
 
-/** Обратно: из номера суток в дату. */
+/** Back again: from the number of the day to the date. */
 export function civil(z: number): Civil {
   const shifted = z + 719468;
   const era = Math.floor(shifted / 146097);
@@ -41,9 +41,9 @@ export function civil(z: number): Civil {
   return { y: y + (m <= 2 ? 1 : 0), m, d };
 }
 
-/** День недели по-питоновски: понедельник 0, воскресенье 6.
- *  Считается так же и здесь — иначе правила про субботу и воскресенье
- *  пришлось бы переписывать, а переписанное правило расходится. */
+/** The day of the week the Python way: Monday 0, Sunday 6.
+ *  Counted the same way here — otherwise the rules about Saturday and Sunday would
+ *  have to be rewritten, and a rewritten rule drifts. */
 export function weekday(date: Civil): number {
   const z = days(date);
   return ((z + 3) % 7 + 7) % 7;
@@ -62,7 +62,7 @@ export function isoDate({ y, m, d }: Civil): string {
   return `${String(y).padStart(4, "0")}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
 }
 
-/** Минута от 1970-01-01T00:00, без всякого пояса. */
+/** The minute from 1970-01-01T00:00, with no zone whatever. */
 export function minutes(t: Naive): number {
   return days(t) * 1440 + t.hh * 60 + t.mm;
 }
@@ -77,7 +77,7 @@ export function addMinutes(t: Naive, n: number): Naive {
   return fromMinutes(minutes(t) + n);
 }
 
-/** `YYYY-MM-DDTHH:MM` — та же запись, что у питона с `timespec="minutes"`. */
+/** `YYYY-MM-DDTHH:MM` — the same notation Python gives with `timespec="minutes"`. */
 export function isoNaive(t: Naive): string {
   return `${isoDate(t)}T${String(t.hh).padStart(2, "0")}:${String(t.mm).padStart(2, "0")}`;
 }
