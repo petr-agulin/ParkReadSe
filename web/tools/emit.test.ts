@@ -1,9 +1,10 @@
-// Свежесть порождённых данных. Перенесено из `tests/test_parity.py` (шаг 8, этап 3).
+// The freshness of the generated data. Carried over from `tests/test_parity.py`
+// (step 8, stage 3).
 //
-// Справочник, общие правила, схемы и промпты живут источниками — markdown, JSON
-// и текстовые файлы, — а в браузер едут порождёнными модулями. Правили источник
-// и не пересобрали: падает здесь, а не у человека, которому показали вчерашнюю
-// формулировку.
+// The reference, the general rules, the schemas and the prompts live as sources -
+// markdown, JSON and text files - and travel to the browser as generated modules.
+// Edit a source and forget to rebuild, and it falls here rather than in front of a
+// person who was shown yesterday's wording.
 //
 //     npm run emit
 
@@ -16,63 +17,65 @@ import { EMITTED_FIELDS, ROOT, TARGETS, emitPrompts, emitReference, emitRules,
 
 const read = (path: string) => readFileSync(join(ROOT, path), "utf-8");
 
-describe("порождённое свежее", () => {
+describe("the generated data is fresh", () => {
   // py: test_parity::test_the_browser_reference_is_current
-  it("справочник для браузера собран из markdown и не устарел", () => {
-    expect(read("web/src/lib/reference.data.ts"), "пересобрать: npm run emit")
+  it("the browser's reference is built from the markdown and is not stale", () => {
+    expect(read("web/src/lib/reference.data.ts"), "rebuild with: npm run emit")
       .toBe(emitReference());
   });
 
   // py: test_parity::test_the_browser_schemas_are_current
-  it("схемы в браузере — копия `schema/*.json`", () => {
-    expect(read("web/src/lib/schema.data.ts"), "пересобрать: npm run emit")
+  it("the schemas in the browser are a copy of `schema/*.json`", () => {
+    expect(read("web/src/lib/schema.data.ts"), "rebuild with: npm run emit")
       .toBe(emitSchema());
   });
 
-  it("тексты промптов в браузере — копия файлов `prompts/`", () => {
-    // Промпт — это САМ ВОПРОС к модели: его отпечаток держит все сохранённые
-    // ответы, и правка здесь стоит полного прогона набора.
-    expect(read("web/src/lib/prompts.data.ts"), "пересобрать: npm run emit")
+  it("the prompt texts in the browser are a copy of the files in `prompts/`", () => {
+    // A prompt is the QUESTION ITSELF put to the model: its fingerprint holds every
+    // saved answer, and an edit here costs a full live run of the set.
+    expect(read("web/src/lib/prompts.data.ts"), "rebuild with: npm run emit")
       .toBe(emitPrompts());
   });
 
-  it("все четыре цели пересобираются одной командой", () => {
+  it("all four targets are rebuilt by one command", () => {
     expect(TARGETS.map((t) => t.path)).toEqual([
       "web/src/lib/reference.data.ts", "web/src/lib/rules.data.ts",
       "web/src/lib/schema.data.ts", "web/src/lib/prompts.data.ts"]);
   });
 
   // py: test_parity::test_the_emitted_reference_carries_what_the_screen_shows
-  it("переезжают поля, которые показ берёт у записи", () => {
-    // `body` и `tokens` не переезжают: первое — многоабзацный markdown справки,
-    // второе — подсказка модели; на экране разбора не участвует ни то, ни другое.
+  it("the fields the screen takes from an entry are the ones that travel", () => {
+    // `body` and `tokens` do not travel: the first is a multi-paragraph markdown
+    // article, the second a hint for the model, and neither takes any part in the
+    // reading on screen.
     for (const field of ["en", "short", "label", "code", "category"]) {
       expect(EMITTED_FIELDS as readonly string[]).toContain(field);
     }
     expect(EMITTED_FIELDS as readonly string[]).not.toContain("body");
     expect(EMITTED_FIELDS as readonly string[]).not.toContain("tokens");
-    expect(read("web/src/lib/reference.data.ts")).toContain("Руками не правится");
+    expect(read("web/src/lib/reference.data.ts")).toContain("Never edited by hand");
   });
 
   // py: test_parity::test_the_general_rules_travel_with_the_page
-  it("общие правила едут вместе со страницей", () => {
-    // Раньше справка приходила с сервера, и отказ был МОЛЧАЛИВЫМ: нет сервера —
-    // блок исчезал без единого слова (шаг 6d).
+  it("the general rules travel with the page", () => {
+    // The reference used to arrive from a server, and the failure was SILENT: no
+    // server, and the block vanished without a word (step 6d).
     const emitted = read("web/src/lib/rules.data.ts");
-    expect(emitted, "пересобрать: npm run emit").toBe(emitRules());
+    expect(emitted, "rebuild with: npm run emit").toBe(emitRules());
     for (const field of ["key", "text", "source"]) {
       expect(emitted, field).toContain(`"${field}"`);
     }
-    // А сами статьи — нет. Их не отрисовывает ничто: экран берёт только `text`.
-    // Написаны они для разработчика и остаются русскими по §2 `AGENTS.md`,
-    // поэтому в браузере это тысячи символов прозы, которую никто не прочтёт.
-    expect(emitted, "статьи уехали в страницу").not.toContain('"body"');
-    // Страница берёт их локально и в сеть за справкой не ходит.
+    // But the articles themselves do not. Nothing renders them: the screen takes
+    // only `text`. They are written for the developer and stay in his language by
+    // §2 of `AGENTS.md`, so in the browser they would be thousands of characters of
+    // prose that nobody will read.
+    expect(emitted, "the articles travelled into the page").not.toContain('"body"');
+    // The page takes them locally and never goes to the network for the reference.
     const app = read("web/src/App.tsx");
     expect(app).toContain("GENERAL_RULES");
-    expect(app, "остался сетевой вызов за справкой").not.toContain("generalRules()");
-    // И пометка остаётся: продукт не вправе подать общее правило как прочитанное
-    // со столба.
+    expect(app, "a network call for the reference is back").not.toContain("generalRules()");
+    // And the warning stays: the product may not present a general rule as something
+    // read off the pole.
     expect(read("web/src/components/WhatWeSaw.tsx"))
       .toContain("These are general parking rules applied by law in Sweden.");
   });

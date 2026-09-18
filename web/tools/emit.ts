@@ -1,16 +1,19 @@
-// Данные для браузера порождаются из источников. Порт эмиттеров `parkread/reference.py`
-// (шаг 8, этап 3).
+// The data for the browser is generated from the sources. A port of the emitters in
+// `parkread/reference.py` (step 8, stage 3).
 //
-// Источник — markdown справочника, markdown общих правил, `schema/*.json` и тексты
-// промптов. Порождённое — четыре модуля в `web/src/lib/*.data.ts`: правится источник,
-// сгенерированное следует за ним, а свежесть стережёт тест.
+// The sources are the markdown of the reference, the markdown of the general rules,
+// `schema/*.json` and the texts of the prompts. What is generated are four modules
+// in `web/src/lib/*.data.ts`: the source is edited, the generated file follows, and
+// a test guards the freshness.
 //
-// **Порождённое сверяется с деревом.** `emit.test.ts` строит всё заново и сравнивает
-// с тем, что лежит в репозитории: разойдутся — упадёт тест, а не пользователь. Раньше
-// это же доказывало, что перенос с питона ничего не переписал по дороге; питона
-// в репозитории больше нет, и побайтового совпадения с ним больше не требуется.
+// **What is generated is compared with the tree.** `emit.test.ts` rebuilds
+// everything and compares it with what lies in the repository: let them differ and a
+// test falls rather than a user. This used to prove as well that the move from
+// Python had rewritten nothing along the way; there is no Python in the repository
+// any more, and agreement with it to the byte is no longer required.
 //
-// Только для разработчика и только на Node: читает диск, в сборку не попадает.
+// For the developer only, and on Node only: it reads the disk and never reaches the
+// build.
 
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
@@ -20,7 +23,7 @@ export const ROOT = fileURLToPath(new URL("../../", import.meta.url));
 const NL = "\n";
 const read = (path: string) => readFileSync(join(ROOT, path), "utf-8");
 
-/** Запись справочника: преамбула markdown плюс тело статьи. */
+/** An entry of the reference: the markdown preamble plus the body of the article. */
 export type Entry = {
   key: string; tokens: string; category: string; schema: string; en: string;
   source: string; body: string; short: string; label: string; code: string;
@@ -28,16 +31,16 @@ export type Entry = {
 
 const HEAD = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/;
 
-/** Все записи каталога, в порядке ключа. */
+/** Every entry of a directory, in order of key. */
 export function readEntries(dir: string): Entry[] {
   const entries: Entry[] = [];
   for (const file of readdirSync(join(ROOT, dir)).filter((f) => f.endsWith(".md")).sort()) {
-    // Перевод строки приводится к `\n`, как делает питон при чтении текста: часть
-    // статей лежит с `\r\n`, и без этого не совпали бы ни разбор, ни сам текст,
-    // уезжающий в порождённый файл.
+    // Line endings are normalised to `\n`, as Python did when reading text: some of
+    // the articles are stored with `\r\n`, and without this neither the parsing nor
+    // the text travelling into the generated file would have matched.
     const text = readFileSync(join(ROOT, dir, file), "utf-8").split("\r\n").join("\n");
     const m = HEAD.exec(text);
-    if (!m) throw new Error(`${file}: нет заголовка между --- ---`);
+    if (!m) throw new Error(`${file}: no header between --- ---`);
     const head: Record<string, string> = {};
     for (const line of m[1].split("\n")) {
       const at = line.indexOf(": ");
@@ -45,7 +48,7 @@ export function readEntries(dir: string): Entry[] {
     }
     const key = head.key ?? "";
     if (key !== basename(file, ".md")) {
-      throw new Error(`${file}: key=${key} не совпадает с именем файла`);
+      throw new Error(`${file}: key=${key} does not match the file name`);
     }
     entries.push({
       key, tokens: head.tokens ?? "", category: head.category ?? "",
@@ -57,10 +60,12 @@ export function readEntries(dir: string): Entry[] {
   return entries.sort((a, b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
 }
 
-/** JSON в записи питона: разделители `", "` и `": "`, юникод как есть.
+/** JSON written the way Python writes it: separators `", "` and `": "`, unicode as
+ *  it is.
  *
- *  `JSON.stringify` пишет без пробелов, и одно это дало бы иной файл — при том же
- *  содержании. Пока сгенерированное сверяется с питоньим, запись должна совпадать. */
+ *  `JSON.stringify` writes without spaces, and that alone would give a different
+ *  file for the same content. While the generated files are compared byte for byte
+ *  with what is in the tree, the spelling has to match. */
 export function pyJson(value: unknown): string {
   if (value === null || typeof value !== "object") return JSON.stringify(value);
   if (Array.isArray(value)) return "[" + value.map(pyJson).join(", ") + "]";
@@ -70,11 +75,12 @@ export function pyJson(value: unknown): string {
   return "{" + body + "}";
 }
 
-// Поля, которые показ берёт у записи. `body` и `tokens` не переезжают: первое —
-// многоабзацный markdown справки, второе — подсказка модели; на экране разбора
-// не участвует ни то, ни другое. То же правило и у общих правил ниже: их статьи
-// написаны для разработчика, на экране не отрисовывается ни одна, и везти их
-// в браузер — это тысячи символов прозы в бандле без единого читателя.
+// The fields the screen takes from an entry. `body` and `tokens` do not travel: the
+// first is a multi-paragraph markdown article, the second a hint for the model, and
+// neither takes any part in the reading on screen. The same rule applies to the
+// general rules below: their articles are written for the developer, not one of them
+// is rendered, and carrying them into the browser means thousands of characters of
+// prose in the bundle with no reader.
 export const EMITTED_FIELDS = ["key", "category", "en", "short", "label", "code",
                                "source"] as const;
 
@@ -85,11 +91,11 @@ export function emitReference(): string {
     return "  " + JSON.stringify(e.key) + ": " + pyJson(shown) + ",";
   });
   const head = [
-    "// Справочник продукта: белый список того, что он берётся толковать.",
+    "// The product's reference: the whitelist of what it undertakes to interpret.",
     "//",
-    "// СГЕНЕРИРОВАНО `npm run emit`. Руками не правится:",
-    "// источник — markdown в `reference/signs/`, здесь его следствие.",
-    "// Разойдутся — упадёт питон-тест, а не пользователь.",
+    "// GENERATED by `npm run emit`. Never edited by hand:",
+    "// the source is the markdown in `reference/signs/`, this is its consequence.",
+    "// Let them drift apart and a test falls, not a user.",
     "",
     "export type RefEntry = {",
     "  key: string; category: string; en: string;",
@@ -105,13 +111,15 @@ export function emitRules(): string {
   const rows = readEntries("reference/general_rules").map((e) =>
     "  " + pyJson({ key: e.key, text: e.en, source: e.source }) + ",");
   const head = [
-    "// Общие правила: то, чего на знаке нет, и что продукт НЕ считает.",
+    "// The general rules: what is not on the sign, and what the product does NOT",
+    "// compute.",
     "//",
-    "// СГЕНЕРИРОВАНО `npm run emit`. Руками не правится:",
-    "// источник — markdown в `reference/general_rules/`.",
+    "// GENERATED by `npm run emit`. Never edited by hand:",
+    "// the source is the markdown in `reference/general_rules/`.",
     "//",
-    "// Едут вместе со страницей намеренно: раньше справка приходила с сервера,",
-    "// и без него блок исчезал молча — ни строки о том, что он был.",
+    "// They travel with the page deliberately: the reference used to arrive from a",
+    "// server, and without it the block vanished in silence - not a line to say it",
+    "// had ever been there.",
     "",
     "export type GeneralRule = { key: string; text: string; source: string };",
     "",
@@ -124,11 +132,11 @@ export function emitSchema(): string {
   const sign = JSON.parse(read("schema/sign.schema.json"));
   const triage = JSON.parse(read("schema/triage.schema.json"));
   const head = [
-    "// Схемы ответа модели. СГЕНЕРИРОВАНО `npm run emit`.",
-    "// Руками не правится: источник — `schema/*.json`, здесь его копия.",
+    "// The schemas of the model's answer. GENERATED by `npm run emit`.",
+    "// Never edited by hand: the source is `schema/*.json`, this is its copy.",
     "//",
-    "// Проверяет их своя проверка (`schema.ts`), а не библиотека: схема",
-    "// использует десять ключевых слов и ни одного комбинатора (решение 124).",
+    "// They are checked by our own check (`schema.ts`) rather than by a library:",
+    "// the schema uses ten keywords and not one combinator (decision 124).",
     "",
     'import type { Schema } from "./schema";',
     "",
@@ -143,15 +151,16 @@ export function emitSchema(): string {
 }
 
 export function emitPrompts(): string {
-  // Тексты лежат файлами: промпт — это САМ ВОПРОС к модели, и править его удобнее
-  // как текст, а не как строку в коде. Отпечаток держит все сохранённые ответы,
-  // поэтому копируются они дословно, без единой правки по дороге.
+  // The texts live as files: a prompt is the QUESTION ITSELF put to the model, and
+  // editing it is easier as text than as a string in code. Its fingerprint holds
+  // every saved answer, so they are copied verbatim, without a single change along
+  // the way.
   const head = [
-    "// Тексты промптов. СГЕНЕРИРОВАНО `npm run emit`.",
-    "// Руками не правится: источник — `prompts/*.md`.",
+    "// The texts of the prompts. GENERATED by `npm run emit`.",
+    "// Never edited by hand: the source is `prompts/*.md`.",
     "//",
-    "// Это САМ ВОПРОС к модели: правка меняет отпечаток промпта, и все",
-    "// сохранённые ответы разом перестают на него отвечать.",
+    "// This is the QUESTION ITSELF put to the model: an edit changes the prompt's",
+    "// fingerprint, and every saved answer stops answering it at once.",
     "",
   ];
   const body = [
@@ -172,7 +181,7 @@ export const TARGETS: { path: string; build: () => string }[] = [
   { path: "web/src/lib/prompts.data.ts", build: emitPrompts },
 ];
 
-/** Что разошлось с источником. Пусто — значит порождённое свежее. */
+/** What has drifted from its source. Empty means the generated files are fresh. */
 export function stale(): string[] {
   return TARGETS.filter((t) => read(t.path) !== t.build()).map((t) => t.path);
 }
@@ -181,19 +190,19 @@ function main(write: boolean): void {
   const outdated = stale();
   if (!write) {
     if (outdated.length) {
-      console.error("устарело:\n  " + outdated.join("\n  "));
-      console.error("пересобрать: npm run emit");
+      console.error("out of date:\n  " + outdated.join("\n  "));
+      console.error("rebuild with: npm run emit");
       process.exitCode = 1;
     } else {
-      console.log("порождённые данные свежие");
+      console.log("the generated data is fresh");
     }
     return;
   }
   for (const target of TARGETS.filter((t) => outdated.includes(t.path))) {
     writeFileSync(join(ROOT, target.path), target.build(), "utf-8");
-    console.log("пересобрано: " + target.path);
+    console.log("rebuilt: " + target.path);
   }
-  if (!outdated.length) console.log("нечего пересобирать");
+  if (!outdated.length) console.log("nothing to rebuild");
 }
 
 if (process.argv[1] && process.argv[1].endsWith("emit.ts")) {
