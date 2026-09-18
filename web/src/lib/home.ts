@@ -1,39 +1,41 @@
-// Решения главного экрана: что написано на чипе момента и чем начинается путь
-// к разбору. Ни разметки, ни браузера — только то, что можно проверить тестом
-// (решение 151).
+// The decisions of the home screen: what the moment chip says, and how the path to a
+// reading begins. No markup and no browser - only what a test can check
+// (decision 151).
 
 import { when } from "./when";
 
-/** Края окна продукта. Календарь считается кодом и покрывает 2026-2030;
- *  выбрать момент вне окна нельзя, потому что отвечать за него нечем. */
+/** The edges of the product's window. The calendar is computed in code and covers
+ *  2026-2030; a moment outside that window cannot be chosen, because there is
+ *  nothing to answer for it with. */
 export const MOMENT_FROM = "2026-01-01T00:00";
 export const MOMENT_TO = "2030-12-31T23:59";
 
 /**
- * Что написано на табличках нарисованного знака.
+ * What is written on the plates of the drawn sign.
  *
- * Одно место на оба состояния экрана: раньше этот же список стоял дословно
- * и в `2f`, и в `3a`, а повторённая по файлам строка расходится — вопрос лишь
- * когда. Знак на обоих экранах обязан быть одним и тем же знаком.
+ * One place for both states of the screen: this same list used to stand verbatim in
+ * `2f` and in `3a`, and a line repeated across files drifts apart - the only question
+ * is when. The sign on both screens must be one and the same sign.
  *
- * Каждая табличка — свои строки: на настоящем знаке время стоит под словом,
- * а не рядом с ним.
+ * Each plate has its own lines: on a real sign the hours stand under the word rather
+ * than beside it.
  */
 export const SIGN_PLATES: string[][] = [
   ["Vardagar", "7–17"],
   ["Övrig tid", "avgift"],
 ];
 
-/** Заголовок первого запуска. */
+/** The heading of the first launch. */
 export const HEADLINE = "Snap a sign.";
 
 /**
- * Что человек получит — по строке на обещание.
+ * What a person will get - one line per promise.
  *
- * Набор один на оба состояния главного экрана, и это главное здесь свойство.
- * Первое замечание разработчика с телефона было ровно о том, что два состояния
- * говорили разными словами об одном и том же и читались как разные приложения.
- * Повторённая по файлам строка разойдётся снова — вопрос лишь в том, когда.
+ * The set is shared by both states of the home screen, and that is its main property
+ * here. The developer's first remark from the phone was precisely that the two states
+ * spoke about the same thing in different words and read as two different
+ * applications. A line repeated across files will drift again - the only question is
+ * when.
  */
 export const BENEFITS = [
   "Know who can park here.",
@@ -42,25 +44,26 @@ export const BENEFITS = [
 ];
 
 /**
- * Заголовок главного экрана, когда ключ есть.
+ * The heading of the home screen once there is a key.
  *
- * Ведёт ИСХОДОМ, а не глаголом. Дословный `Snap a sign.` с первого запуска взять
- * было нельзя: кнопка внизу того же экрана говорит `Scan a sign`, и два почти
- * одинаковых слова в пяди друг от друга читаются как заикание. На первом запуске
- * такой кнопки нет, поэтому там глагол уместен, а здесь — нет.
+ * It leads with the OUTCOME rather than with a verb. The literal `Snap a sign.` from
+ * the first launch could not be reused: the button at the foot of the same screen
+ * says `Scan a sign`, and two nearly identical words a hand's breadth apart read as a
+ * stutter. On the first launch there is no such button, so a verb belongs there and
+ * not here.
  */
 export const HOME_HEADLINE = BENEFITS[1];
 
-/** Строки под ним — те же обещания, минус поднятое в заголовок. */
+/** The lines beneath it - the same promises, less the one raised into the heading. */
 export const HOME_LINES = [BENEFITS[0], BENEFITS[2]];
 
 /**
- * Три коротких обещания о том, что происходит с ключом и снимком.
+ * Three short promises about what happens to the key and to the photograph.
  *
- * «Key stays on your device» — про умолчание (решение 146): переключатель
- * «запомнить» включён, и ключ сохраняется. Выключить его можно там же,
- * в настройках, и полное правило сказано именно там: короткой метке оговорку
- * не унести, а врать она не должна.
+ * "Key stays on your device" is about the default (decision 146): the remember
+ * control is on, and the key is saved. It can be turned off in the same place, in the
+ * settings, and the full rule is stated there: a short label cannot carry the caveat,
+ * and it must not lie.
  */
 export const ASSURANCES = [
   "Key stays on your device",
@@ -71,43 +74,47 @@ export const ASSURANCES = [
 export type Chip = { label: string; canReset: boolean };
 
 /**
- * Чип момента.
+ * The moment chip.
  *
- * Пусто значит «сейчас», и время берётся в минуту отправки. Поэтому в покое чип
- * говорит СЛОВО, а не застывший отсчёт: нарисованное «now · Tue 19:38» пришлось бы
- * обновлять каждую минуту, иначе оно врёт тому, кто простоял у знака пять минут.
+ * Empty means "now", and the time is taken at the minute of sending. So at rest the
+ * chip says a WORD rather than a frozen count: a drawn "now · Tue 19:38" would have
+ * to be refreshed every minute, or it lies to anyone who has stood at the sign for
+ * five of them.
  */
 export function momentChip(moment: string): Chip {
   const chosen = moment.trim().length > 0;
-  // Выбранный момент — строка длинная («Thursday 17 September at 02:01»), и на
-  // узком экране она переносится. Перенос отдаётся на откуп браузеру ровно один
-  // раз — перед «at»: пробел после «at» неразрывный, поэтому время не отрывается
-  // от предлога и не остаётся на строке в одиночестве. Ломается строка там, где
-  // её сломал бы человек: дата, а под ней время.
-  // Сокращает теперь сам `when` — и здесь, и на разборе. Держать второй словарь
-  // рядом незачем; здесь остаётся только неразрывный пробел.
+  // A chosen moment is a long string ("Thursday 17 September at 02:01"), and on a
+  // narrow screen it wraps. The wrap is left to the browser at exactly one place -
+  // before "at": the space after "at" is non-breaking, so the time is not torn from
+  // the preposition and left alone on a line. The line breaks where a person would
+  // break it: the date, and the time beneath it.
+  // The shortening is now done by `when` itself, here and on the reading alike.
+  // There is no reason to keep a second dictionary beside it; what remains here is
+  // only the non-breaking space.
   const label = chosen ? when(moment).replace(/\bat (?=\d)/, "at ") : "Now";
   return { label, canReset: chosen };
 }
 
 export type Entry = {
-  /** Что стоит основным действием. */
+  /** Which action stands as the primary one. */
   primary: "scan" | "pick";
   primaryLabel: string;
   primaryNote: string;
-  /** Тихая ссылка под ним; без камеры её нет — выбор снимка уже наверху. */
+  /** The quiet link beneath it; with no camera there is none - picking a photograph
+   *  is already the action above. */
   secondary: string | null;
-  /** Почему съёмки нет. Пусто — камера на месте. */
+  /** Why there is no camera. Empty means the camera is there. */
   unavailable: string | null;
 };
 
 /**
- * Чем начинается путь к разбору.
+ * How the path to a reading begins.
  *
- * Камера — обычный случай: приложением пользуются с телефона. Но `getUserMedia`
- * живёт только в защищённом контексте, и по адресу вида `http://192.168.x.x` его
- * нет вовсе. Мёртвой кнопке там не место: основным действием становится выбор
- * снимка, а причина названа вслух — иначе человек решит, что сломались мы.
+ * The camera is the ordinary case: the application is used from a phone. But
+ * `getUserMedia` lives only in a secure context, and at an address of the form
+ * `http://192.168.x.x` it does not exist at all. A dead button has no place there:
+ * picking a photograph becomes the primary action, and the reason is said aloud -
+ * otherwise the person concludes that we are the ones who are broken.
  */
 export function entryActions(cameraAvailable: boolean): Entry {
   return cameraAvailable

@@ -1,12 +1,12 @@
-// Экран 3e — настройки: ключ и провайдер.
+// Screen 3e - the settings: the key and the provider.
 //
-// Что показывать и как называть действия, решает `lib/settings`: `row`,
-// `rememberToggle`, `readiness`, `canForget`. Здесь только краска — и ни одного
-// решения, которое нельзя было бы проверить тестом (решение 151).
+// What to show and what to call the actions is decided by `lib/settings`: `row`,
+// `rememberToggle`, `readiness`, `canForget`. Here there is only paint - and not one
+// decision that a test could not check (decision 151).
 //
-// Вид полей — прежний: подпись, под ней коробка со значением, справа действие.
-// Заголовков разделов нет: под каждым из них стояла подпись поля, говорившая
-// то же самое.
+// The look of the fields is the old one: a caption, a box with the value beneath it,
+// the action on the right. There are no section headings: under each of them stood a
+// field caption saying the same thing.
 
 import { useState } from "react";
 
@@ -30,12 +30,13 @@ const QUIET = "rounded-button-sm px-4 py-2.5 text-label font-semibold text-ink-2
 export default function SettingsScreen(
   { settings, onChange, onForget, onBack, onHelp }: Props,
 ) {
-  // Правка — явная: открытое поле, Save и Cancel рядом. Молча сохранять по ходу
-  // ввода нельзя — половина ключа так же бесполезна, как его отсутствие,
-  // а выглядела бы как сохранённая настройка.
+  // Editing is explicit: an open field, with Save and Cancel beside it. Saving
+  // silently as the person types is not allowed - half a key is as useless as no key,
+  // and it would look like a saved setting.
   const [editing, setEditing] = useState<Field | null>(
-    // Пришли с первого запуска, где нет ничего: поле ключа открыто сразу,
-    // иначе между «Add your key» и клавиатурой стоял бы лишний тап.
+    // Arriving from the first launch, where there is nothing: the key field is open
+    // at once, or there would be one extra tap between "Add your key" and the
+    // keyboard.
     settings.apiKey || settings.provider.baseUrl || settings.provider.visionModel
       ? null : "key",
   );
@@ -79,13 +80,13 @@ export default function SettingsScreen(
     if (!editing_) {
       return (
         <div className="flex items-end gap-3">
-          {/* `min-w-0` обязателен: без него длинное значение отказывается ужиматься
-              и выталкивает кнопку за край экрана — ровно это и было найдено
-              на телефоне с длинным ключом. */}
+          {/* `min-w-0` is obligatory: without it a long value refuses to shrink and
+              pushes the button off the edge of the screen - which is exactly what was
+              found on a phone with a long key. */}
           <span className="min-w-0 flex-1">
             <span className="block text-label text-ink-3">{label}</span>
-            {/* Моноширинным — только чужой текст: ключ и адрес. «Not set» — наше
-                слово, и выглядит оно как остальные наши слова. */}
+            {/* Monospaced only for somebody else's text: the key and the address.
+                "Not set" is our own word, and it looks like the rest of our words. */}
             <span
               className={`mt-1.5 block truncate rounded-field bg-inset px-4 py-3
                           text-body ${view.filled ? `${mono} text-ink` : "text-ink-3"}
@@ -111,11 +112,12 @@ export default function SettingsScreen(
         <span className="block text-label text-ink-3">{label}</span>
         <div className="flex items-start gap-2">
           {opts.secret && shown ? (
-            // Показанный ключ — в переносящемся поле: он виден целиком, и возить
-            // экран вбок не приходится. Скрытый остаётся `password`: там точки,
-            // читать нечего, а замаскировать переносящееся поле нечем — `textarea`
-            // не умеет `password`, а `-webkit-text-security` местами молча не
-            // работает, и ключ оказался бы открыт там, где обещаны точки.
+            // A revealed key goes in a wrapping field: it is visible whole, and the
+            // screen need not be dragged sideways. A hidden one stays a password
+            // input: there are dots there, nothing to read, and a wrapping field
+            // cannot be masked - a text area has no password type, and the CSS
+            // property for it quietly fails in places, so the key would be exposed
+            // where dots were promised.
             <textarea
               autoFocus
               rows={3}
@@ -135,8 +137,8 @@ export default function SettingsScreen(
               className={`${FIELD} ${mono}`}
             />
           )}
-          {/* Глаз возвращён сознательно: длинный ключ, набранный на телефоне,
-              нечем проверить иначе. */}
+          {/* The eye was brought back deliberately: a long key typed on a phone
+              cannot be checked any other way. */}
           {opts.secret && (
             <button
               type="button"
@@ -166,10 +168,10 @@ export default function SettingsScreen(
           >
             Cancel
           </button>
-          {/* Очистка — здесь, а не отдельной кнопкой на экране: стирать длинное
-              значение с клавиатуры мучительно, а «стереть всё» пересекалось бы
-              с «Forget key» и уносило бы адрес провайдера, который `forget`
-              бережёт нарочно. */}
+          {/* Clearing belongs here rather than as a separate control on the screen:
+              erasing a long value from a keyboard is painful, and an "erase
+              everything" would overlap with "Forget key" and would carry off the
+              provider's address, which `forget` deliberately keeps. */}
           <button type="button" onClick={() => setDraft("")} className={`${QUIET} ml-auto`}>
             Clear
           </button>
@@ -178,8 +180,9 @@ export default function SettingsScreen(
     );
   }
 
-  // Флажок виден всегда, а не только в правке: он про судьбу ключа, а не про
-  // текущий ввод. В правке смотрит на черновик, в покое — на сохранённое.
+  // The box is always visible, not only while editing: it is about the fate of the
+  // key rather than about the current input. While editing it watches the draft; at
+  // rest, what was saved.
   const keyOpen = editing === "key";
   const check = keyOpen
     ? rememberToggle(draft, remember)
@@ -198,11 +201,13 @@ export default function SettingsScreen(
           ‹
         </button>
         <h1 className="flex-1 text-nav font-bold text-ink-strong">Settings</h1>
-        {/* Настроено или нет — видно, не читая. Подложка нужна: без неё слово
-            не читалось как состояние. Но это метка, а не кнопка — пилюля вдвое
-            ниже `Add`/`Edit` и мягче по цвету, чтобы не спорить с ними.
-            Амбра — та же, что у заметки ниже; мята своя (`ok-bg`): цвета смысла
-            принадлежат разбору знака и берутся только там. */}
+        {/* Configured or not is visible without reading. The backing is needed:
+            without it the word did not read as a state. But this is a label rather
+            than a button - a pill half the height of `Add`/`Edit` and softer in
+            colour, so that it does not argue with them.
+            The amber is the same as the note below; the mint is its own (`ok-bg`):
+            the colours of meaning belong to the reading of a sign and are taken only
+            there. */}
         <span className={`shrink-0 rounded-full px-2.5 py-1 text-caption font-bold ${
           state.ready ? "bg-ok-bg text-ok" : "bg-note text-note-ink"}`}>
           {state.chip}
@@ -228,9 +233,9 @@ export default function SettingsScreen(
           </span>
         </label>
 
-        {/* Две строки, не больше: длинное обещание здесь не читают. Слово
-            «Unticked» — про тот самый флажок рядом, а не про переключатель,
-            которого на экране нет. */}
+        {/* Two lines, no more: a long promise here goes unread. The word "Unticked"
+            is about that very box beside it, and not about the sliding control that
+            `design.md` once called for and that is not on this screen. */}
         <p className="text-caption text-ink-3">
           Sent only to the provider you name — this app has no server. Unticked, the
           key is forgotten when the tab closes.
@@ -242,17 +247,17 @@ export default function SettingsScreen(
         {field("model", "Vision model")}
       </div>
 
-      {/* Заметкой, а не серой строкой: это единственное место, где сказано,
-          почему приложение ещё не читает знаки, и мимо него проходили. */}
+      {/* A note rather than a grey line: this is the one place that says why the
+          application is not reading signs yet, and people walked straight past it. */}
       {!state.ready && (
         <p className="rounded-card-sm bg-note px-4 py-3 text-label text-note-ink">
           To read a sign the app still needs {state.missing.join(", ")}.
         </p>
       )}
 
-      {/* Внизу: опасное действие тихой кнопкой по размеру текста — нет ключа,
-          нет и кнопки, — а под ним помощь, последней строкой экрана. Заливки
-          нет: об опасности говорят слова. */}
+      {/* At the foot: the dangerous action as a quiet button the size of its text -
+          no key, no button - and beneath it the help, as the last line of the screen.
+          There is no fill: the danger is spoken by the words. */}
       <div className="mt-auto flex flex-col items-start gap-4 pt-2">
         {canForget(settings) && (
           <div className="flex w-full items-center gap-3">
@@ -264,13 +269,14 @@ export default function SettingsScreen(
             >
               Forget key
             </button>
-            {/* Строка стоит СПРАВА и переносится внутри себя, а не уходит под
-                кнопку: `min-w-0` разрешает ей ужаться — без него она распирала бы
-                строку, как это уже было с длинным ключом.
+            {/* The line stands on the RIGHT and wraps within itself rather than
+                dropping under the button: `min-w-0` lets it shrink - without it, it
+                would force the row wide, exactly as happened with a long key.
 
-                Сказано, откуда именно уходит ключ: `forget` стирает его и в памяти
-                страницы, и в хранилище браузера. Адрес и модель он бережёт нарочно,
-                и гадать об этом человек не должен. */}
+                It says where the key goes from: `forget` erases it both from the
+                page's memory and from the browser's storage. The address and the
+                model it deliberately keeps, and the person should not have to guess
+                that. */}
             <span className="min-w-0 text-caption text-ink-3">
               Erased from this page and browser. Address and model stay.
             </span>
