@@ -1,23 +1,24 @@
-// Форма ответа бэкенда. Повторяет parkread/present.py — если тот изменится,
-// расхождение всплывёт здесь при сборке, а не у пользователя на экране.
+// The shape of the backend's answer. It mirrors `lib/present.ts` — let the two drift
+// apart and the disagreement surfaces here, at build time, rather than on a person's
+// screen.
 
 export type Term = { key: string; text: string; known: boolean };
 
-// Токен остаётся рядом с текстом: он нужен замеру и разбору полётов,
-// а показывается человеку текст.
+// The token stays beside the text: the measurement and the post-mortems need it,
+// while what is shown to a person is the text.
 export type Explained = { token: string; text: string };
 
-// Имя поля приходит из схемы дословно: во вёрстке имена не придумываются,
-// иначе они разойдутся со схемой при первой же её правке.
+// The name of a field comes from the schema word for word: names are not invented in
+// the markup, or they would part company with the schema at its very first edit.
 export type Field = { name: string; value: string };
 
-// Официальное название и код таблички из справочника. Код пуст там,
-// где его не существует: табло оператора — не дорожный знак.
+// The official name and code of a plate, out of the reference. The code is empty
+// where no code exists: an operator's board is not a road sign.
 export type Meaning = { key: string; label: string; code: string;
                        text: string; short: string; continues: boolean };
 
-// Класс дня под датой на шкале: красный день или канун. Текст готовит бэкенд,
-// вёрстка выбирает по `kind` только цвет.
+// The class of the day under a date on the scale: a red day or an eve. The text is
+// prepared by the backend; from `kind` the markup takes the colour and nothing else.
 export type DayNote = { text: string; kind: "red" | "eve" };
 
 export type Period = {
@@ -26,18 +27,22 @@ export type Period = {
   state: "allowed" | "prohibited" | "uncertain";
   state_text: string;
   ends_at_horizon: boolean;
-  /** Может ли продукт поручиться за правило этого отрезка. Ложь — разбор
-   *  неполон или знак отсылает к условиям вне себя; линия тогда пунктирная. */
+  /** Whether the product can vouch for the rule of this stretch. False — the reading
+   *  is incomplete, or the sign refers to conditions outside itself; the line is
+   *  dotted then. */
   certain: boolean;
-  /** Строки под отрезком: круг стоящих и примечания участка. Считает бэкенд. */
+  /** The lines under the stretch: the circle of those who may stand, and the notes of
+   *  the stretch. Counted by the backend. */
   aside: Term[];
   stay_end_text: string;
   stay_end_reason: string;
-  // `not_stated` — знак об этом времени не говорит вовсе: его запрет ограничен
-  // окном, а разрешения он не даёт. Не то же, что `uncertain`: там прочитать
-  // не удалось, здесь прочитано и сказать нечего.
+  // `not_stated` — the sign says nothing whatever about this time: its prohibition is
+  // bounded by the window, and permission it does not give. Not the same as
+  // `uncertain`: there the reading did not succeed, here it did and there is nothing
+  // to say.
   tone: "paid" | "free" | "prohibited" | "uncertain" | "not_stated";
-  /** Класс дня у концов отрезка — под датой в узле шкалы. Пусто у обычных будней. */
+  /** The class of the day at the ends of the stretch — under the date in the scale's
+   *  node. Empty on ordinary weekdays. */
   start_day: DayNote | null;
   end_day: DayNote | null;
   headline: string;
@@ -51,23 +56,26 @@ export type Period = {
 export type Regime = {
   extent: string;
   extent_text: string;
-  /** Участок короткой строкой — заголовком окна. */
+  /** The stretch in a short line — as the window's heading. */
   extent_short: string;
-  /** Кому это окно: пиктограмма на табличке с условием адресует условие своему
-   *  виду транспорта, а не сужает круг стоящих. Пусто, когда знак не делится. */
+  /** Who this window is addressed to: a pictogram on a plate carrying a condition
+   *  addresses that condition to its own kind of vehicle rather than narrowing the
+   *  circle of those who may stand. Empty when the sign does not divide. */
   audience: string | null;
   audience_short: string | null;
   eligibility: Term[];
   who_can_park: Term[];
   notes: Term[];
-  /** Кому годится это окно: короткая подпись круга стоящих.
-   *  Пусто, когда круг никто не сузил, — у обычного P уточнять нечего. */
-  /** Заполнено — шкалы нет, вместо неё эта строка: её содержание вводило бы
-   *  в заблуждение (арендованное место, где предел взялся из умолчания). */
+  /** Filled in — there is no scale, and this line stands in its place: what a scale
+   *  showed would mislead (a rented bay, where the limit came out of a default). */
   no_window_text: string | null;
-  /** Заметка о переводе часов. Заполнена, только когда показанный отрезок
-   *  перевод пересекает; текст — с бэкенда, как и всё о смысле знака. */
+  /** A note about the change of the clocks. Filled in only when the stretch shown
+   *  crosses a change; the text comes from the backend, as does everything about the
+   *  meaning of a sign. */
   clock_change_text: string | null;
+  /** Who the window suits: the short caption of the circle of those who may stand.
+   *  Empty when nobody narrowed the circle — on an ordinary P there is nothing to
+   *  qualify. */
   window_for: Term[];
 
   place_notes: Term[];
@@ -84,7 +92,8 @@ export type Panel = {
   carries_rule: boolean;
   reference_keys: string[];
   uninterpreted: string[];
-  /** Готовая подпись «это не истолковано», или null. Считает бэкенд. */
+  /** The finished caption "this was not interpreted", or null. Counted by the
+   *  backend. */
   not_interpreted_text: string | null;
   fields: Field[];
   title: string;
@@ -121,9 +130,9 @@ export type Analysis = {
   regimes: Regime[];
   uncertainties: Explained[];
   permits_parking: boolean | null;
-  /** Заметка движка ко всему разбору — готовой подписью, а не токеном.
-   *  Показывается ОДИН раз, отдельной карточкой: это про сам знак, а не про
-   *  полноту его чтения. */
+  /** The engine's note on the whole reading — as a finished caption, not a token.
+   *  Shown ONCE, as a card of its own: it is about the sign itself, not about how
+   *  completely the sign was read. */
   note?: { token: string; text: string } | null;
 };
 

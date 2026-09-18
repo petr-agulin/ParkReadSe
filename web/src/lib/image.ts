@@ -1,15 +1,16 @@
-// Работа с пикселями: загрузить снимок, вырезать рамку, отдать файл для отправки.
+// Working with pixels: load a photograph, cut out the frame, hand over a file to
+// send.
 //
-// Решения о том, ЧТО вырезать, принимает crop.ts — здесь только исполнение.
-// Проверяется это глазами и одним ручным сценарием (геометка), потому что canvas
-// без настоящего браузера не живёт.
+// The decisions about WHAT to cut are taken by crop.ts — here there is only the
+// carrying out. It is checked by eye and by one manual scenario (the geotag), because
+// a canvas does not live without a real browser.
 
 import type { Box, Plan, Size } from "./crop";
 import { plan as planCrop } from "./crop";
 
 export type Loaded = { image: HTMLImageElement; size: Size; url: string };
 
-/** Снимок в память страницы. `url` освобождает вызывающий: release(). */
+/** A photograph into the page's memory. The `url` is freed by the caller: release(). */
 export function load(file: File): Promise<Loaded> {
   return new Promise((resolve, reject) => {
     const url = URL.createObjectURL(file);
@@ -29,11 +30,11 @@ export function release(loaded: Loaded | null) {
 }
 
 /**
- * Вырезает рамку и перекодирует её через canvas.
+ * Cuts out the frame and re-encodes it through a canvas.
  *
- * Перекодирование — это и есть снятие EXIF: canvas отдаёт только пиксели,
- * а геометка, время съёмки и модель телефона в них не входят. Отдельного шага
- * «удалить метаданные» нет и не нужно.
+ * The re-encoding IS the stripping of EXIF: a canvas gives back pixels alone, and the
+ * geotag, the time of the shot and the model of the phone are not among them. There
+ * is no separate "remove the metadata" step, and none is needed.
  */
 export async function cut(loaded: Loaded, box: Box, quality = 0.85): Promise<{
   file: File;
@@ -58,8 +59,9 @@ export async function cut(loaded: Loaded, box: Box, quality = 0.85): Promise<{
   );
   if (!blob) throw new Error("The browser could not prepare the image.");
 
-  // Имя нейтральное: в имени, которое дал снимку телефон, случается дата и адрес,
-  // а пользы от него нет. Бэкенд его и так не хранит.
+  // The name is a neutral one: the name the phone gave the photograph sometimes
+  // carries a date and a place in it, and is of no use. The backend does not keep it
+  // in any case.
   const file = new File([blob], "sign.jpg", { type: "image/jpeg" });
   return { file, url: URL.createObjectURL(file), plan: p, bytes: blob.size };
 }

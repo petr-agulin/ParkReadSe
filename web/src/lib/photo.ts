@@ -1,17 +1,19 @@
-// Размер снимка в пикселях, прочитанный из заголовка. Порт `parkread/photo.py`.
+// The size of a photograph in pixels, read out of the header. A port of
+// `parkread/photo.py`.
 //
-// Разбор ручной и намеренно: тянуть ради двух чисел библиотеку изображений значит
-// добавить зависимость, которой больше нигде не нужно. Форматов два, оба фиксированы
-// в первых байтах.
+// The parsing is done by hand, and deliberately: pulling in an image library for the
+// sake of two numbers means adding a dependency wanted nowhere else. There are two
+// formats, and both are fixed in the first bytes.
 //
-// `null` означает «формат не опознан» — и это НЕ повод для тревоги: неизвестный
-// размер не должен наказывать разбор, иначе продукт станет придирчив к формату
-// вместо того, чтобы судить о снимке.
+// `null` means "the format was not recognised" — and that is NOT cause for alarm: an
+// unknown size must not punish the reading, or the product would turn fussy about
+// formats instead of judging the photograph.
 //
-// Зачем это вообще: площадь кадра — единственный способ поймать разбор, которому
-// не хватило пикселей. Модель на снимке 82×179 однажды вернула четыре таблички
-// связного шведского текста и ни одной пометки о помехах: помехи она называет там,
-// где кадр хороший. Сколько пикселей у снимка — факт, а не мнение.
+// Why this exists at all: the area of the frame is the one way to catch a reading
+// that had too few pixels to go on. On a photograph of 82×179 the model once returned
+// four plates of connected Swedish text and not one mark about interference — and
+// interference is what it names where the frame is good. How many pixels a photograph
+// has is a fact, not an opinion.
 
 const PNG_MAGIC = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
 const JPEG_MAGIC = [0xff, 0xd8];
@@ -35,7 +37,7 @@ export function pixelSize(data: Uint8Array): [number, number] | null {
       continue;
     }
     const marker = data[i + 1];
-    // SOF-маркеры несут размер; C4/C8/CC — таблицы, не начало кадра.
+    // The SOF markers carry the size; C4/C8/CC are tables, not the start of a frame.
     if (marker >= 0xc0 && marker <= 0xcf
         && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc) {
       const h = be16(data, i + 5);
@@ -51,7 +53,8 @@ export function pixelSize(data: Uint8Array): [number, number] | null {
   return null;
 }
 
-/** Площадь снимка. `null` — формат не опознан, и наказывать за это нельзя. */
+/** The area of a photograph. `null` — the format was not recognised, and that is not
+ *  a thing to be punished for. */
 export function pixels(data: Uint8Array): number | null {
   const size = pixelSize(data);
   return size === null ? null : size[0] * size[1];

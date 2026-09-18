@@ -1,30 +1,30 @@
-// Живая камера: что спросить у браузера и что он умеет.
+// The live camera: what to ask of the browser, and what it is able to do.
 //
-// Здесь только решения, выразимые числами и условиями, — их держат тесты.
-// Сам поток, кадр и фонарик живут в CameraCapture.tsx.
+// Only the decisions expressible in numbers and conditions live here — and tests hold
+// those. The stream itself, the frame and the torch live in CameraCapture.tsx.
 
-/** Разрешение, которое просим. Именно `ideal`, а не `exact`: аппарат отдаёт
- *  ближайшее, что умеет, а не отказывает совсем. */
+/** The resolution we ask for. `ideal` and not `exact`: the device gives back the
+ *  nearest it can manage rather than refusing outright. */
 export const CAPTURE_IDEAL = 4096;
 
 /**
- * Форма кадра, которую просим у камеры: 3:4, вертикально.
+ * The shape of frame we ask of the camera: 3:4, upright.
  *
- * Браузер сам выбирает режим сенсора, и выборы у телефонов разные: один отдаёт
- * 16:9, другой 4:3. От этого зависит, влезет ли видоискатель в ширину экрана:
- * поток 9:16 слишком высок и упирается в высоту, теряя ширину. 3:4 — родная
- * форма большинства сенсоров, и она заметно ближе к форме места, которое у нас
- * есть. Телефон без такого режима просто отдаст ближайший: это пожелание,
- * а не требование.
+ * The browser picks the sensor's mode itself, and phones pick differently: one gives
+ * back 16:9, another 4:3. Whether the viewfinder fits across the width of the screen
+ * depends on that: a 9:16 stream is too tall, runs up against the height and loses
+ * width. 3:4 is the native shape of most sensors, and it is markedly closer to the
+ * shape of the room we have. A phone without such a mode will simply give back the
+ * nearest one: this is a wish, not a requirement.
  */
 export const CAPTURE_ASPECT = 3 / 4;
 
 /**
- * Камеру предлагаем, только если браузер её отдаст.
+ * The camera is offered only if the browser will give it.
  *
- * `getUserMedia` живёт лишь в защищённом контексте: по `https://` и на `localhost`.
- * По адресу вида `http://192.168.x.x` его нет вовсе, и кнопка «снять» там —
- * обещание, которого не сдержать.
+ * `getUserMedia` lives in a secure context alone: over `https://` and on `localhost`.
+ * At an address of the form `http://192.168.x.x` it is not there at all, and a button
+ * saying "take a photo" there is a promise that cannot be kept.
  */
 export function cameraSupported(
   media: MediaDevices | undefined,
@@ -34,11 +34,11 @@ export function cameraSupported(
 }
 
 /**
- * Просим заднюю камеру и наибольшее разрешение, какое даст аппарат.
+ * We ask for the rear camera and the largest resolution the device will give.
  *
- * Размер экрана здесь ни при чём: на экран мы только смотрим, а режем кадр
- * из настоящих пикселей потока. Знак через дорогу переживает кадрирование
- * только за счёт них.
+ * The size of the screen has nothing to do with it: at the screen we only look, while
+ * the frame is cut from the real pixels of the stream. A sign across the road
+ * survives the cropping on account of those alone.
  */
 export function captureConstraints(): MediaStreamConstraints {
   return {
@@ -52,15 +52,17 @@ export function captureConstraints(): MediaStreamConstraints {
   };
 }
 
-/** Умеет ли эта камера фонарик. На iOS Safari — нет, и кнопки быть не должно. */
+/** Whether this camera can manage a torch. On iOS Safari it cannot, and there must
+ *  then be no button. */
 export function torchSupported(track: MediaStreamTrack | null | undefined): boolean {
   if (!track || typeof track.getCapabilities !== "function") return false;
   const caps = track.getCapabilities() as MediaTrackCapabilities & { torch?: boolean };
   return caps.torch === true;
 }
 
-/** Что писать человеку, когда камера не открылась. Причина важна: «запретили»
- *  и «камеры нет» лечатся по-разному, а браузер сообщает их одним исключением. */
+/** What to tell a person when the camera did not open. The reason matters: "it was
+ *  refused" and "there is no camera" are cured differently, and the browser reports
+ *  both of them with one exception. */
 export function cameraFailure(error: unknown): string {
   const name = error instanceof Error ? error.name : "";
   switch (name) {

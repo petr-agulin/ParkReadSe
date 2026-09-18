@@ -1,12 +1,13 @@
-// Разбор знака — форма, в которой его возвращает модель.
+// The reading of a sign — the shape in which the model returns it.
 //
-// Поля и перечисления **взяты из `schema/sign.schema.json`**, а не придуманы здесь:
-// схема — граница между моделью и кодом, и второй её экземпляр однажды разойдётся
-// с первым. Расхождение ловит питон-тест `test_the_types_match_the_schema`.
+// The fields and the enumerations are **taken from `schema/sign.schema.json`** rather
+// than invented here: the schema is the border between the model and the code, and a
+// second copy of it will one day drift from the first. The drift is caught by the
+// double run, in `tools/goldens.test.ts`.
 //
-// Необязательно почти всё: модель возвращает только то, что прочитала, а движок
-// обязан работать с любым подмножеством. Отсутствие поля — это «на знаке этого
-// не написано», а не ошибка.
+// Almost everything is optional: the model returns only what it read, and the engine
+// is obliged to work with any subset of it. A field that is absent means "the sign
+// does not say this", not an error.
 
 export type DayClass =
   | "unspecified" | "all_days" | "weekday" | "eve" | "red" | "named_weekday";
@@ -19,7 +20,7 @@ export type DateRange = { from: string; to: string };        // `MM-DD`
 export type Dates = { mode?: "only" | "except"; ranges?: DateRange[] };
 
 export type TimeWindow = {
-  from: string;                       // `HH:MM`, и `24:00` — конец суток
+  from: string;                       // `HH:MM`, and `24:00` is the end of the day
   to: string;
   day_class?: DayClass;
   named_weekday?: Weekday;

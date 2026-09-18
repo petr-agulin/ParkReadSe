@@ -1,23 +1,24 @@
-// Сколько экрана отдать снимку.
+// How much of the screen to give the photograph.
 //
-// Правило одно, и оно выбрано руками на двух телефонах: снимок берёт всю ширину
-// колонки, а высоты — сколько осталось на экране под ним. Так кадр обычной формы
-// занимает ширину целиком, а высокий отдаёт немного ширины, но не уводит кнопки
-// за край. Три другие раскладки (поля, во весь экран, кнопки поверх снимка)
-// проверены и отброшены.
+// The rule is a single one, and it was chosen by hand on two phones: the photograph
+// takes the whole width of the column, and for height whatever is left on the screen
+// below it. A frame of ordinary shape then occupies the width entirely, while a tall
+// one gives up a little width but does not carry the buttons past the edge. Three
+// other layouts (margins, the full screen, the buttons over the photograph) were
+// tried and dropped.
 
-/** Меньше этого снимку не даём: иначе целиться в него бессмысленно. */
+/** Less than this we do not give a photograph: aiming at it would be pointless. */
 export const MIN_STAGE = 240;
 
-/** Зазор под снимком, чтобы кнопки не липли к нему вплотную. */
+/** The gap below the photograph, so the buttons do not cling to it. */
 export const GAP = 12;
 
 /**
- * Сколько высоты осталось снимку на экране.
+ * How much height is left to the photograph on the screen.
  *
- * `topOffset` меряется от верха СТРАНИЦЫ, а не окна: иначе размер снимка зависел
- * бы от того, куда прокручено в момент замера, и один и тот же экран мерился бы
- * по-разному.
+ * `topOffset` is measured from the top of the PAGE and not of the window: otherwise
+ * the size of the photograph would depend on where the page happened to be scrolled
+ * at the moment of measuring, and one and the same screen would measure differently.
  */
 export function roomBelow(topOffset: number, footer: number, viewport: number): number {
   return Math.max(MIN_STAGE, viewport - topOffset - footer - GAP);
