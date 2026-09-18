@@ -1,18 +1,24 @@
-// Эталоны двойного прогона: считает и переписывает их TypeScript (шаг 8, этап 5).
+// The reference answers of the double run: TypeScript computes and rewrites them.
 //
-// Раньше эталоны считал питон (`cli.py parity --write`), а браузер только сверялся
-// с ними. Питон уходит — и команда переезжает сюда. Первое переписывание обязано
-// не изменить НИ ОДНОГО БАЙТА: это и есть доказательство, что при переезде ответ
-// продукта остался прежним (требование 6 шага 8). Стережёт это `goldens.test.ts`.
+// Python used to compute them (`cli.py parity --write`) and the browser only checked
+// itself against them. Python is gone, so the command lives here. The reference
+// answers are regenerated deliberately, never as a side effect.
 //
-//     npm run goldens            — свежи ли эталоны
-//     npm run goldens:write      — переписать
+//     npm run goldens            - are the reference answers current
+//     npm run goldens:write      - rewrite them
 //
-// Переписывание — ОТДЕЛЬНАЯ команда, а не побочный эффект прогона: изменился ответ
-// продукта — это видно строкой в `git diff`, а не угадывается. Иначе эталоны однажды
-// перезапишут, чтобы «стало зелено», и вместе с красным исчезнет расхождение.
+// Rewriting is a SEPARATE command rather than a side effect of a run: when the
+// product's answer changes, that shows up as a line in `git diff` instead of being
+// guessed at. Otherwise the reference answers get rewritten one day to "make it
+// green", and the disagreement disappears along with the red.
 //
-// **Снимков здесь нет и быть не должно** — только разборы (`AGENTS.md`, §14).
+// Since the Python side was retired, the comparison is a TypeScript-against-itself
+// regression snapshot: it still catches an answer that changed by accident, but it
+// is no longer evidence of agreement between two implementations. That evidence is
+// the Python-era content of `parity/`, which stays recoverable from git history.
+//
+// **No photographs here, and there must never be any** - only readings
+// (`AGENTS.md`, §14).
 
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -37,40 +43,41 @@ import { ok as resultOk, sign as validateSign } from "../src/lib/validation";
 export const ROOT = fileURLToPath(new URL("../../", import.meta.url));
 export const DIR = `${ROOT}parity/`;
 
-/** Слои порта, снизу вверх. Порядок здесь — тот же, в котором они переезжали. */
+/** The layers of the port, bottom upwards. The order here is the order they moved. */
 export const LAYERS = ["calendar", "clock", "engine", "reference", "completeness",
                        "present", "schema", "validation", "prompts", "measure"];
 
-// Общий момент — тот же понедельник, на котором стоит замер: обычный будний день
-// вне праздников, где ничто не наложилось на ничто.
+// The shared moment is the same Monday the measurement stands on: an ordinary
+// working day outside holidays, where nothing has landed on anything.
 export const BASE_MOMENT = "2026-03-02T00:00";
 
-// Особые моменты. Каждый выбран потому, что на нём уже ломалось что-нибудь живое,
-// и каждый назван — иначе список превращается в набор чисел без причины.
+// The awkward moments. Each was chosen because something real once broke on it, and
+// each is named - otherwise the list becomes a set of numbers with no reason.
 export const SPECIAL = [
   { label: "eve", moment: "2026-10-30T14:00",
-    why: "канун Alla helgons dag: действуют часы в скобках" },
+    why: "the eve of Alla helgons dag: the hours in brackets apply" },
   { label: "red", moment: "2026-12-25T10:00",
-    why: "Juldagen: красный день, и следующий тоже красный" },
+    why: "Juldagen: a red day, and the next day is red too" },
   { label: "dst-back", moment: "2026-10-24T20:00",
-    why: "ночь перевода назад: сутки длятся 25 часов" },
+    why: "the night the clocks go back: the day lasts 25 hours" },
   { label: "dst-forward", moment: "2027-03-27T20:00",
-    why: "ночь перевода вперёд: сутки длятся 23 часа" },
+    why: "the night the clocks go forward: the day lasts 23 hours" },
   { label: "season-edge", moment: "2026-09-30T23:30",
-    why: "последние полчаса сезона 1/4-30/9" },
+    why: "the last half hour of the 1/4-30/9 season" },
   { label: "midnight", moment: "2026-06-10T00:00",
-    why: "полночь: край суток, на котором резались отрезки" },
+    why: "midnight: the edge of the day, where segments were being cut" },
 ];
 
-// Снимки, на которых особые моменты что-то меняют. Весь набор на каждый момент
-// гонять незачем: эталон разбухнет, а нового не скажет.
+// The readings on which the awkward moments change something. Running the whole set
+// at every moment would be pointless: the reference answers would swell and say
+// nothing new.
 export const SPECIAL_DOCS = [
-  "005-2tim-8-18-parentes-8-15-dubbelpil",      // окна будней и канунов
-  "019-forbud-7-18-avgift-ovrig-tid",           // запрет с окном и «övrig tid»
-  "026-zon-e-boende",                           // зональный знак
-  "038-scandic-buss-besokande-pil",             // пиктограмма отдельной табличкой
-  "049-moped-sasong-avgift-tva-taxor",          // адресат, сезон, «övrig tid»
-  "064-motorcykel-tisd-9-17-beskuren",          // адресат и день недели
+  "005-2tim-8-18-parentes-8-15-dubbelpil",      // weekday and eve windows
+  "019-forbud-7-18-avgift-ovrig-tid",           // a prohibition with a window and "ovrig tid"
+  "026-zon-e-boende",                           // a zone sign
+  "038-scandic-buss-besokande-pil",             // a pictogram on a plate of its own
+  "049-moped-sasong-avgift-tva-taxor",          // audience, season, "ovrig tid"
+  "064-motorcykel-tisd-9-17-beskuren",          // audience and a named weekday
 ];
 
 export type Case = { id: string; doc: string; moment: string };
@@ -78,18 +85,20 @@ export type Case = { id: string; doc: string; moment: string };
 const stem = (f: string) => f.replace(/\.[^.]+$/, "");
 const round6 = (v: number) => Number(v.toFixed(6));
 
-// --- питоновский вид JSON ---------------------------------------------------
+// --- JSON the way Python wrote it -------------------------------------------
 //
-// Эталоны писал `json.dumps(..., ensure_ascii=False, indent=1)`, и переезд обязан
-// повторить его до байта. Строки, целые числа, отступы и порядок ключей у JS
-// совпадают с питоном сами. Расходится ОДНО: питон отличает дробное число от
-// целого и пишет `1.0`, а `JSON.stringify` пишет `1` — в эталонах таких чисел
-// три с половиной тысячи.
+// The reference answers were written by `json.dumps(..., ensure_ascii=False,
+// indent=1)`, and the move had to reproduce it to the byte. Strings, integers,
+// indentation and key order agree between JS and Python on their own. ONE thing
+// differs: Python distinguishes a float from an integer and writes `1.0`, while
+// `JSON.stringify` writes `1` - and there are three and a half thousand such
+// numbers in the reference answers.
 //
-// Поэтому дробность объявлена по имени поля, а не угадывается по значению:
-// `confidence`, всё внутри `signals` и первый столбец строк замера. Всё остальное
-// в эталонах — целые. Проверяется это не обещанием, а переписыванием: разойдись
-// хоть одно число — и `git diff` перестанет быть пустым.
+// So floatness is declared by field name rather than guessed from the value:
+// `confidence`, everything inside `signals`, and the first column of the
+// measurement rows. Everything else in the reference answers is an integer. This is
+// checked by rewriting rather than promised: let one number differ, and `git diff`
+// stops being empty.
 
 type Mode = "plain" | "float" | "signals" | "rows" | "row";
 
@@ -101,7 +110,7 @@ function modeFor(key: string): Mode {
 }
 
 function number(value: number, asFloat: boolean): string {
-  if (!Number.isFinite(value)) throw new Error(`не сериализуется: ${value}`);
+  if (!Number.isFinite(value)) throw new Error(`will not serialise: ${value}`);
   return asFloat && Number.isInteger(value) ? `${value}.0` : String(value);
 }
 
@@ -117,7 +126,7 @@ function dump(value: unknown, level: number, mode: Mode): string {
   if (Array.isArray(value)) {
     if (!value.length) return "[]";
     const items = value.map((item, i) => {
-      // Строка замера — это `[уверенность, категория, разошлось, снимок]`.
+      // A measurement row is `[confidence, category, diverged, photograph]`.
       const inner: Mode = mode === "rows" ? "row"
                         : mode === "row" ? (i === 0 ? "float" : "plain")
                         : "plain";
@@ -134,18 +143,19 @@ function dump(value: unknown, level: number, mode: Mode): string {
   return `{\n${items.join(",\n")}\n${close}}`;
 }
 
-/** Значение так, как его записал бы питон, вместе с переводом строки в конце. */
+/** A value as Python would have written it, with a trailing newline. */
 export function pyDump(value: unknown): string {
   return dump(value, 0, "plain") + "\n";
 }
 
-// --- разборы, на которых идёт сверка ---------------------------------------
+// --- the readings the comparison runs on ------------------------------------
 
-/** Все разборы набора: ответы модели из `demo/` и эталоны разработчика.
+/** Every reading of the set: the model's answers from `demo/` and the developer's
+ *  reference readings.
  *
- *  Двух родов намеренно: у модели встречаются склейки панелей и странные поля,
- *  каких в аккуратном эталоне не бывает, и порт обязан вести себя одинаково
- *  и на тех, и на других. */
+ *  Both kinds on purpose: the model's answers contain merged panels and odd fields
+ *  that a tidy reference reading never has, and the port must behave the same on
+ *  both. */
 export function documents(): Record<string, SignDoc> {
   const out: Record<string, SignDoc> = {};
   for (const file of readdirSync(`${ROOT}demo`).filter((f) => f.endsWith(".extract.json")).sort()) {
@@ -161,8 +171,8 @@ export function documents(): Record<string, SignDoc> {
   return out;
 }
 
-/** Случаи: каждый разбор на общий момент плюс особые моменты на тех снимках,
- *  где они что-то меняют. */
+/** The cases: every reading at the shared moment, plus the awkward moments on the
+ *  readings where they change something. */
 export function buildCases(docs = documents()): Case[] {
   const cases: Case[] = Object.keys(docs)
     .map((name) => ({ id: `${name}@base`, doc: name, moment: BASE_MOMENT }));
@@ -178,51 +188,52 @@ export function buildCases(docs = documents()): Case[] {
   return cases.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
 }
 
-// --- рецепты поломок -------------------------------------------------------
+// --- recipes for breaking a reading -----------------------------------------
 
 export type Mutation = { label: string; op: string; path: string[]; value?: unknown };
 
-/** Поломки для проверки СХЕМЫ: документ обязан перестать быть годным. */
+/** Breakages for checking the SCHEMA: the document must stop being valid. */
 export const MUTATIONS: Mutation[] = [
-  { label: "как есть", op: "keep", path: [] },
-  { label: "нет main_sign", op: "delete", path: ["main_sign"] },
-  { label: "тип знака вне перечисления", op: "set",
-    path: ["main_sign", "type"], value: "не-такого-знака" },
-  { label: "panel_count строкой", op: "set", path: ["panel_count"], value: "три" },
-  { label: "лишнее поле в корне", op: "set", path: ["новое_поле"], value: 1 },
-  { label: "отрицательный panel_count", op: "set", path: ["panel_count"], value: -1 },
-  { label: "другая версия схемы", op: "set", path: ["schema_version"], value: 2 },
-  { label: "у панели нет kind", op: "delete", path: ["panels", "0", "kind"] },
-  { label: "время не по образцу", op: "set",
+  { label: "as it is", op: "keep", path: [] },
+  { label: "no main_sign", op: "delete", path: ["main_sign"] },
+  { label: "sign type outside the enumeration", op: "set",
+    path: ["main_sign", "type"], value: "no-such-sign" },
+  { label: "panel_count as a string", op: "set", path: ["panel_count"], value: "three" },
+  { label: "extra field at the root", op: "set", path: ["new_field"], value: 1 },
+  { label: "negative panel_count", op: "set", path: ["panel_count"], value: -1 },
+  { label: "a different schema version", op: "set", path: ["schema_version"], value: 2 },
+  { label: "panel has no kind", op: "delete", path: ["panels", "0", "kind"] },
+  { label: "time not in the required form", op: "set",
     path: ["panels", "0", "parsed", "time_windows"],
-    value: [{ from: "восемь", to: "18:00" }] },
-  { label: "лишнее поле в панели", op: "set",
-    path: ["panels", "0", "странное"], value: true },
-  { label: "цвет панели вне перечисления", op: "set",
+    value: [{ from: "eight", to: "18:00" }] },
+  { label: "extra field in a panel", op: "set",
+    path: ["panels", "0", "odd_field"], value: true },
+  { label: "panel colour outside the enumeration", op: "set",
     path: ["panels", "0", "background_color"], value: "grey" },
 ];
 
-/** Порча, будящая ПОЧИНКУ. Фикстуры лежат уже починенными — на чистом наборе
- *  починка не срабатывает ни разу, и сверять было бы нечего. */
+/** Damage that wakes the REPAIRS. The fixtures are already repaired: on a clean set
+ *  the repairs never fire once, and there would be nothing to compare. */
 export const DAMAGE: Mutation[] = [
-  { label: "как есть", op: "keep", path: [] },
-  { label: "дубль основного знака", op: "append", path: ["panels"],
+  { label: "as it is", op: "keep", path: [] },
+  { label: "duplicate of the main sign", op: "append", path: ["panels"],
     value: { index: 99, kind: "sign_plate", lines: [], background_color: "blue",
              legibility: { readable: true }, parsed: { pictogram: "parking" } } },
-  { label: "пустая строка в панели", op: "append",
+  { label: "an empty line in a panel", op: "append",
     path: ["panels", "0", "lines"], value: "  " },
-  { label: "сбитый индекс панели", op: "set",
+  { label: "a knocked-out panel index", op: "set",
     path: ["panels", "0", "index"], value: 7 },
-  { label: "panel_count не сходится", op: "set", path: ["panel_count"], value: 99 },
-  { label: "значение вне перечисления", op: "set",
+  { label: "panel_count does not add up", op: "set", path: ["panel_count"], value: 99 },
+  { label: "a value outside the enumeration", op: "set",
     path: ["panels", "0", "parsed", "payment_method"], value: "mobile" },
-  { label: "цвет панели вне перечисления", op: "set",
+  { label: "panel colour outside the enumeration", op: "set",
     path: ["panels", "0", "background_color"], value: "grey" },
-  { label: "цвет знака вне перечисления", op: "set",
+  { label: "sign colour outside the enumeration", op: "set",
     path: ["main_sign", "background_color"], value: "grey" },
 ];
 
-/** Рецепт поломки — к копии разбора. Путь по ключам; число в пути — индекс. */
+/** A recipe applied to a copy of the reading. The path is by key; a number in the
+ *  path is an index. */
 export function applyMutation(doc: unknown, mutation: Mutation): unknown {
   const out = JSON.parse(JSON.stringify(doc));
   if (mutation.op === "keep") return out;
@@ -245,12 +256,12 @@ export function applyMutation(doc: unknown, mutation: Mutation): unknown {
   return out;
 }
 
-// --- пробы по слоям --------------------------------------------------------
+// --- the probes, layer by layer ---------------------------------------------
 //
-// Задача пробы — посчитать ответ продукта на объявленных входных данных. Входные
-// данные каждая проба выводит САМА: пока эталоны писал питон, их можно было брать
-// из самого эталона, но команда, которая его пишет, так не может — вышло бы,
-// что файл задаёт себе задачу.
+// A probe's job is to compute the product's answer on declared inputs. Each probe
+// derives those inputs ITSELF: while Python wrote the reference answers they could
+// be taken from the reference answer itself, but the command that writes it cannot
+// do that - the file would be setting its own exercise.
 
 export function probeCalendar(): Record<string, unknown> {
   const cal = new Calendar();
@@ -339,7 +350,7 @@ export function probeReference(docs: Record<string, SignDoc>): Record<string, un
   const out: Record<string, unknown> = {};
   for (const name of Object.keys(docs).sort()) {
     const rec = recognise(docs[name]);
-    // Ключи объектов питон кладёт строками и по возрастанию индекса.
+    // Python writes object keys as strings, in ascending order of index.
     const byIndex = (o: Record<number, string[]>) => Object.fromEntries(
       Object.entries(o).sort((a, b) => Number(a[0]) - Number(b[0])));
     out[name] = {
@@ -362,9 +373,9 @@ export function probeCompleteness(cases: Case[], docs: Record<string, SignDoc>):
     out[c.id] = {
       category: a.category,
       confidence: round6(a.confidence),
-      // Питон кладёт сигналы округлёнными до шести знаков и по алфавиту.
-      // Доля прочитанных панелей — это 2/3, и без округления стороны
-      // расходятся на пятнадцатом знаке, ничего при этом не означающем.
+      // Python writes the signals rounded to six places and in alphabetical order.
+      // The share of panels read is 2/3, and without rounding the two sides differ
+      // at the fifteenth place, where it means nothing.
       signals: Object.fromEntries(
         Object.entries(a.signals).sort().map(([k, v]) => [k, round6(v)])),
       reasons: a.reasons,
@@ -376,8 +387,8 @@ export function probeCompleteness(cases: Case[], docs: Record<string, SignDoc>):
   return out;
 }
 
-/** Мутационная проверка схемы: обе стороны применяют один рецепт к одному разбору,
- *  и сравнивается ВЕРДИКТ — годен или нет (решение 124). */
+/** Mutation testing of the schema: the same recipe is applied to the same reading,
+ *  and what is compared is the VERDICT - valid or not (decision 124). */
 export function probeSchema(docs: Record<string, SignDoc>): Record<string, unknown> {
   const out: Record<string, unknown> = {};
   for (const name of Object.keys(docs).sort().slice(0, 20)) {
@@ -388,10 +399,10 @@ export function probeSchema(docs: Record<string, SignDoc>): Record<string, unkno
   return out;
 }
 
-/** Починка ответа модели: что поправлено, что замечено, прошёл ли схему.
- *  Сверяются и сами записи о починке: правка, о которой не сказано, — второй
- *  источник ошибок. Число панелей от отсева сюда не передаётся: оно приходит
- *  от модели, а сверка должна быть воспроизводимой. */
+/** Repairing the model's answer: what was fixed, what was noticed, whether it passed
+ *  the schema. The repair notes are compared too: a fix nobody was told about is the
+ *  second source of errors. The panel count from triage is not passed in here: it
+ *  comes from the model, and the comparison must be reproducible. */
 export function probeValidation(docs: Record<string, SignDoc>): Record<string, unknown> {
   const out: Record<string, unknown> = {};
   for (const name of Object.keys(docs).sort().slice(0, 20)) {
@@ -405,22 +416,23 @@ export function probeValidation(docs: Record<string, SignDoc>): Record<string, u
   return out;
 }
 
-/** Промпты целиком, оба. Сверяется СТРОКА, а не её куски: отпечаток промпта
- *  держит все сохранённые ответы, и расхождение в одном пробеле означало бы,
- *  что браузер задаёт модели другой вопрос. */
+/** Both prompts, in full. What is compared is the STRING, not pieces of it: the
+ *  prompt's fingerprint holds every saved answer, and a difference of one space
+ *  would mean the browser is asking the model a different question. */
 export function probePrompts(): Record<string, unknown> {
   return { triage: triagePrompt(), extract: extractPrompt() };
 }
 
-/** Числа замера: точность извлечения, расхождения ответов, таблица порогов.
- *  Повторяет то же, что делает `npm run measure`, и на тех же входных данных. */
+/** The measurement numbers: extraction accuracy, disagreements of the answer, the
+ *  threshold table. Repeats what `npm run measure` does, on the same inputs. */
 export async function probeMeasure(): Promise<Record<string, unknown>> {
   const cal = new Calendar();
   const moment = parseNaive("2026-03-02T00:00");
   const mark = await fingerprint(extractPrompt());
 
-  // Пары «эталон — ответ модели». Ответ, полученный ДРУГИМ промптом, в замер
-  // не входит: иначе в одном числе смешаются две версии вопроса.
+  // Pairs of "reference reading - model answer". An answer obtained with a DIFFERENT
+  // prompt does not enter the measurement: otherwise two versions of the question
+  // would be mixed into one number.
   const pairs: { label: string; expected: SignDoc; actual: SignDoc }[] = [];
   const excluded: string[] = [];
   for (const file of readdirSync(`${ROOT}testset/expected`).sort()) {
@@ -448,8 +460,8 @@ export async function probeMeasure(): Promise<Record<string, unknown>> {
     if (diff.length) diverged[label] = diff;
   }
 
-  // Уверенность считается так же, как её считает конвейер: с флагами извлечения,
-  // починкой валидатора, пробелами справочника и площадью кадра.
+  // Confidence is computed the way the pipeline computes it: with the extraction
+  // flags, the validator's repairs, gaps in the reference and the area of the frame.
   const rows: ThresholdRow[] = [];
   const seenPixels: Record<string, number | null> = {};
   for (const { label, actual } of pairs) {
@@ -496,7 +508,7 @@ export async function probeMeasure(): Promise<Record<string, unknown>> {
   };
 }
 
-/** Пробы по именам слоёв — тем же, что и в эталонах. */
+/** The probes by layer name - the same names the reference answers use. */
 export const PROBES: Record<string, () => Record<string, unknown> | Promise<Record<string, unknown>>> = {
   calendar: () => probeCalendar(),
   clock: () => probeClock(),
@@ -510,9 +522,9 @@ export const PROBES: Record<string, () => Record<string, unknown> | Promise<Reco
   measure: () => probeMeasure(),
 };
 
-// --- запись и сверка -------------------------------------------------------
+// --- writing and checking ---------------------------------------------------
 
-/** Все эталоны разом. Считается из репозитория и ничего никуда не пишет. */
+/** Every reference answer at once. Computed from the repository, writing nothing. */
 export async function golden(): Promise<Record<string, unknown>> {
   const docs = documents();
   const cases = buildCases(docs);
@@ -533,21 +545,22 @@ export async function golden(): Promise<Record<string, unknown>> {
 
 const fileOf = (name: string) => `${DIR}${name}.json`;
 
-/** Какие эталоны разошлись с тем, что считает код сейчас. Пусто — всё свежее. */
+/** Which reference answers differ from what the code computes now. Empty means all
+ *  of them are current. */
 export async function stale(fresh?: Record<string, unknown>): Promise<string[]> {
   const computed = fresh ?? await golden();
   const out: string[] = [];
   for (const name of ["cases", ...LAYERS]) {
     const path = fileOf(name);
-    if (!existsSync(path)) out.push(`${name}.json: файла нет`);
+    if (!existsSync(path)) out.push(`${name}.json: no such file`);
     else if (readFileSync(path, "utf-8") !== pyDump(computed[name])) {
-      out.push(`${name}.json: ответ продукта изменился`);
+      out.push(`${name}.json: the product's answer changed`);
     }
   }
   return out;
 }
 
-/** Переписать эталоны. Возвращает список изменившихся файлов. */
+/** Rewrite the reference answers. Returns the files that changed. */
 export async function write(): Promise<string[]> {
   const fresh = await golden();
   const changed: string[] = [];
@@ -566,17 +579,17 @@ async function main(shouldWrite: boolean): Promise<void> {
   if (!shouldWrite) {
     const outdated = await stale();
     if (outdated.length) {
-      console.error("эталоны устарели:\n  " + outdated.join("\n  "));
-      console.error("посмотреть расхождение: npm test -- parity");
-      console.error("переписать сознательно: npm run goldens:write");
+      console.error("the reference answers are out of date:\n  " + outdated.join("\n  "));
+      console.error("see the difference: npm test -- parity");
+      console.error("rewrite deliberately: npm run goldens:write");
       process.exitCode = 1;
     } else {
-      console.log("эталоны свежие");
+      console.log("the reference answers are current");
     }
     return;
   }
   const changed = await write();
-  console.log(changed.length ? "переписано: " + changed.join(", ") : "нечего переписывать");
+  console.log(changed.length ? "rewritten: " + changed.join(", ") : "nothing to rewrite");
 }
 
 if (process.argv[1] && process.argv[1].endsWith("goldens.ts")) {

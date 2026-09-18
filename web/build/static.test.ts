@@ -1,12 +1,12 @@
-// Проверка СОБРАННОЙ страницы: `npm run test:build`.
+// Checking the BUILT page: `npm run test:build`.
 //
-// Отдельно от обычного прогона, потому что сборка занимает секунды, а платить их
-// за каждый запуск тестов незачем. Сборка запускается здесь же — проверять то,
-// что лежит в `dist` с прошлого раза, значит проверять прошлый раз.
+// Kept apart from the ordinary run because a build takes seconds, and there is no
+// reason to pay them on every test run. The build happens here: checking whatever
+// `dist` was left holding from last time would be checking last time.
 //
-// Вопрос у всей проверки один: **работает ли страница без питона и из любой папки**.
-// Ответ на него нельзя получить чтением исходников — в сборке остаётся не то,
-// что написано, а то, что уцелело после сборщика.
+// The whole check asks one question: **does the page work with no Python behind it,
+// and from any folder**. That cannot be answered by reading the sources - what
+// survives the bundler is not what was written.
 
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
@@ -26,9 +26,10 @@ function files(dir: string): string[] {
 let built: string[] = [];
 
 beforeAll(() => {
-  // `NODE_ENV` задаётся явно: тестовый прогон выставляет своё значение, дочерняя
-  // сборка его наследует, и Vite собирает страницу как отладочную — с ветками
-  // разработки внутри. Проверка тогда проверяла бы не то, что уедет на хостинг.
+  // `NODE_ENV` is set explicitly: the test run sets its own value, the child build
+  // inherits it, and Vite then builds the page as a development one, with the
+  // development branches still inside. The check would be checking something other
+  // than what goes to the host.
   execFileSync("npm", ["run", "build"], {
     cwd: WEB, stdio: "pipe", shell: true,
     env: { ...process.env, NODE_ENV: "production" },
@@ -36,20 +37,21 @@ beforeAll(() => {
   built = files(DIST);
 }, 300_000);
 
-describe("собранная страница", () => {
-  it("состоит из страницы, работника, манифеста и иконок", () => {
+describe("the built page", () => {
+  it("consists of the page, the worker, the manifest and the icons", () => {
     for (const file of ["index.html", "sw.js", "manifest.webmanifest",
                         "icon-192.png", "icon-512.png", "icon-maskable-512.png"]) {
       expect(existsSync(DIST + file), file).toBe(true);
     }
   });
 
-  it("в исходниках страницы адресов сервера тоже нет", () => {
-    // Требование 14 шага 8: `/api` не должно остаться ни в сборке, ни в исходниках.
-    // В сборке это проверяется ниже, но там строка могла бы просто не дожить
-    // до сборщика — а в исходниках она означала бы, что половина с сервером цела.
-    // Сканируются исходники приложения, а не тесты: в страницу тесты не уезжают,
-    // а строка `/api/` в них — это как раз способ проверить, что её нет.
+  it("carries no server address in the sources either", () => {
+    // Requirement 14 of step 8: the server path must survive neither in the build
+    // nor in the sources. The build is checked below, but there the string might
+    // simply not have reached the bundler - whereas in the sources it would mean
+    // the half that talked to a server is still intact.
+    // Application sources are scanned, not tests: tests never travel into the page,
+    // and the string inside them is exactly how its absence is checked.
     for (const file of files(`${WEB}src/`)
                          .filter((f) => /\.tsx?$/.test(f) && !f.endsWith(".test.ts"))) {
       const text = readFileSync(file, "utf-8");
@@ -58,9 +60,10 @@ describe("собранная страница", () => {
     }
   });
 
-  it("не обращается к серверу: строки `/api` в ней нет", () => {
-    // Половина с питоном спрятана за `import.meta.env.DEV`, и сборщик её выбрасывает.
-    // Если она уцелеет, страница будет молча стучаться в сервер, которого нет.
+  it("never calls a server: the path is not in it", () => {
+    // The half that spoke to Python hid behind a development-only flag, and the
+    // bundler drops it. Were it to survive, the page would knock silently at a
+    // server that does not exist.
     for (const file of built.filter((f) => /\.(js|html|css)$/.test(f))) {
       const text = readFileSync(file, "utf-8");
       expect(text, file).not.toContain("/api/analyze");
@@ -68,10 +71,10 @@ describe("собранная страница", () => {
     }
   });
 
-  it("шрифт системный: снаружи не грузится ничего", () => {
-    // Требование 2 шага 11. Внешний шрифт — это и чужой сервер в списке того,
-    // что тянет страница, и пустой первый экран там, где сети нет. Вид держится
-    // на шкале размеров, а не на гарнитуре.
+  it("uses the system typeface: nothing is fetched from outside", () => {
+    // Requirement 2 of step 11. An external font is both another server in the list
+    // of what the page pulls, and an empty first screen where there is no network.
+    // The look rests on the scale of sizes, not on a typeface.
     for (const file of built.filter((f) => /\.(js|html|css)$/.test(f))) {
       const text = readFileSync(file, "utf-8");
       expect(text, file).not.toContain("fonts.googleapis.com");
@@ -80,40 +83,40 @@ describe("собранная страница", () => {
     }
   });
 
-  it("независимый судья схемы остался в тестах", () => {
-    // `ajv` нужен, чтобы сверять СВОЮ проверку схемы (решение 138), и только там.
-    // Уехал бы в страницу — человек у знака платил бы связью и памятью за то,
-    // что нужно одному тесту.
+  it("keeps the independent judge of the schema in the tests", () => {
+    // `ajv` exists to judge our own schema check (decision 138), and nowhere else.
+    // Had it travelled into the page, the person standing at a sign would pay in
+    // bandwidth and memory for something one test needs.
     for (const file of built.filter((f) => f.endsWith(".js"))) {
       const text = readFileSync(file, "utf-8");
-      // Строка самого `ajv`: своя проверка говорит о том же другими словами.
+      // A string of `ajv` itself: our own check says the same thing in other words.
       expect(text, file).not.toContain("must be equal to one of the allowed values");
       expect(text, file).not.toContain("ajv/dist");
     }
     const pkg = JSON.parse(readFileSync(`${WEB}package.json`, "utf-8"));
-    expect(pkg.devDependencies, "`ajv` обязан быть только в разработческих").toHaveProperty("ajv");
-    expect(pkg.dependencies ?? {}, "`ajv` уехал бы в страницу").not.toHaveProperty("ajv");
+    expect(pkg.devDependencies, "`ajv` belongs to development only").toHaveProperty("ajv");
+    expect(pkg.dependencies ?? {}, "`ajv` would travel into the page").not.toHaveProperty("ajv");
   });
 
-  it("переключателя «браузер/питон» в ней нет", () => {
+  it("carries no browser-or-Python switch", () => {
     for (const file of built.filter((f) => f.endsWith(".js"))) {
       expect(readFileSync(file, "utf-8"), file).not.toContain("Read on this device");
     }
   });
 
-  it("пути относительные: страница живёт хоть в корне, хоть в папке", () => {
+  it("uses relative paths: the page lives at a root or in a folder", () => {
     const html = readFileSync(DIST + "index.html", "utf-8");
     expect(html).toContain("./assets/");
-    // Абсолютный путь привязал бы страницу к корню домена.
+    // An absolute path would tie the page to the root of a domain.
     expect(html).not.toMatch(/(src|href)="\/[^/]/);
   });
 
-  it("работник лежит рядом со страницей и всё нужное несёт в себе", () => {
+  it("puts the worker beside the page, carrying everything it needs", () => {
     const sw = readFileSync(DIST + "sw.js", "utf-8");
     expect(sw).toContain("parkread-shell-");
     expect(sw).toContain("./manifest.webmanifest");
-    // Ни одного импорта: модульные служебные работники есть не везде, и промах
-    // был бы тихим — приложение работает, офлайна просто нет.
+    // Not one import: module service workers are not available everywhere, and the
+    // miss would be silent - the application works, there is simply no offline.
     expect(sw).not.toMatch(/^\s*import[\s({]/m);
   });
 });

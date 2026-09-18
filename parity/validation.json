@@ -1,5 +1,5 @@
 {
- "demo/001-p-30min::как есть": {
+ "demo/001-p-30min::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -38,10 +38,10 @@
    }
   }
  },
- "demo/001-p-30min::дубль основного знака": {
+ "demo/001-p-30min::duplicate of the main sign": {
   "ok": true,
   "repairs": [
-   "убрана панель 99: дубль основного знака"
+   "panel 99 removed: duplicate of the main sign"
   ],
   "flags": [],
   "data": {
@@ -79,10 +79,10 @@
    }
   }
  },
- "demo/001-p-30min::пустая строка в панели": {
+ "demo/001-p-30min::an empty line in a panel": {
   "ok": true,
   "repairs": [
-   "панель 1: убраны пустые строки"
+   "panel 1: empty lines removed"
   ],
   "flags": [],
   "data": {
@@ -120,10 +120,10 @@
    }
   }
  },
- "demo/001-p-30min::сбитый индекс панели": {
+ "demo/001-p-30min::a knocked-out panel index": {
   "ok": true,
   "repairs": [
-   "индекс панели 7 -> 1"
+   "panel index 7 -> 1"
   ],
   "flags": [],
   "data": {
@@ -161,7 +161,7 @@
    }
   }
  },
- "demo/001-p-30min::panel_count не сходится": {
+ "demo/001-p-30min::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 1"
@@ -202,10 +202,10 @@
    }
   }
  },
- "demo/001-p-30min::значение вне перечисления": {
+ "demo/001-p-30min::a value outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: убрано payment_method='mobile' — нет в перечислении схемы"
+   "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -243,10 +243,10 @@
    }
   }
  },
- "demo/001-p-30min::цвет панели вне перечисления": {
+ "demo/001-p-30min::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+   "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -284,10 +284,10 @@
    }
   }
  },
- "demo/001-p-30min::цвет знака вне перечисления": {
+ "demo/001-p-30min::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+   "main sign colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -325,7 +325,7 @@
    }
   }
  },
- "demo/002-avgift-forbud-utanfor-markerad-plats::как есть": {
+ "demo/002-avgift-forbud-utanfor-markerad-plats::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [
@@ -420,10 +420,10 @@
    }
   }
  },
- "demo/002-avgift-forbud-utanfor-markerad-plats::дубль основного знака": {
+ "demo/002-avgift-forbud-utanfor-markerad-plats::duplicate of the main sign": {
   "ok": true,
   "repairs": [
-   "убрана панель 99: дубль основного знака"
+   "panel 99 removed: duplicate of the main sign"
   ],
   "flags": [
    "panel_2_obstructed:sticker"
@@ -517,10 +517,10 @@
    }
   }
  },
- "demo/002-avgift-forbud-utanfor-markerad-plats::пустая строка в панели": {
+ "demo/002-avgift-forbud-utanfor-markerad-plats::an empty line in a panel": {
   "ok": true,
   "repairs": [
-   "панель 1: убраны пустые строки"
+   "panel 1: empty lines removed"
   ],
   "flags": [
    "panel_2_obstructed:sticker"
@@ -614,10 +614,10 @@
    }
   }
  },
- "demo/002-avgift-forbud-utanfor-markerad-plats::сбитый индекс панели": {
+ "demo/002-avgift-forbud-utanfor-markerad-plats::a knocked-out panel index": {
   "ok": true,
   "repairs": [
-   "индекс панели 7 -> 1"
+   "panel index 7 -> 1"
   ],
   "flags": [
    "panel_2_obstructed:sticker"
@@ -711,7 +711,7 @@
    }
   }
  },
- "demo/002-avgift-forbud-utanfor-markerad-plats::panel_count не сходится": {
+ "demo/002-avgift-forbud-utanfor-markerad-plats::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 4"
@@ -808,10 +808,10 @@
    }
   }
  },
- "demo/002-avgift-forbud-utanfor-markerad-plats::значение вне перечисления": {
+ "demo/002-avgift-forbud-utanfor-markerad-plats::a value outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: убрано payment_method='mobile' — нет в перечислении схемы"
+   "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
   ],
   "flags": [
    "panel_2_obstructed:sticker"
@@ -905,10 +905,10 @@
    }
   }
  },
- "demo/002-avgift-forbud-utanfor-markerad-plats::цвет панели вне перечисления": {
+ "demo/002-avgift-forbud-utanfor-markerad-plats::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+   "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [
    "panel_2_obstructed:sticker"
@@ -1002,10 +1002,10 @@
    }
   }
  },
- "demo/002-avgift-forbud-utanfor-markerad-plats::цвет знака вне перечисления": {
+ "demo/002-avgift-forbud-utanfor-markerad-plats::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+   "main sign colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [
    "panel_2_obstructed:sticker"
@@ -1099,7 +1099,7 @@
    }
   }
  },
- "demo/003-p-2tim::как есть": {
+ "demo/003-p-2tim::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -1139,10 +1139,10 @@
    "model_confidence": 0.99
   }
  },
- "demo/003-p-2tim::дубль основного знака": {
+ "demo/003-p-2tim::duplicate of the main sign": {
   "ok": true,
   "repairs": [
-   "убрана панель 99: дубль основного знака"
+   "panel 99 removed: duplicate of the main sign"
   ],
   "flags": [],
   "data": {
@@ -1181,10 +1181,10 @@
    "model_confidence": 0.99
   }
  },
- "demo/003-p-2tim::пустая строка в панели": {
+ "demo/003-p-2tim::an empty line in a panel": {
   "ok": true,
   "repairs": [
-   "панель 1: убраны пустые строки"
+   "panel 1: empty lines removed"
   ],
   "flags": [],
   "data": {
@@ -1223,10 +1223,10 @@
    "model_confidence": 0.99
   }
  },
- "demo/003-p-2tim::сбитый индекс панели": {
+ "demo/003-p-2tim::a knocked-out panel index": {
   "ok": true,
   "repairs": [
-   "индекс панели 7 -> 1"
+   "panel index 7 -> 1"
   ],
   "flags": [],
   "data": {
@@ -1265,7 +1265,7 @@
    "model_confidence": 0.99
   }
  },
- "demo/003-p-2tim::panel_count не сходится": {
+ "demo/003-p-2tim::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 1"
@@ -1307,10 +1307,10 @@
    "model_confidence": 0.99
   }
  },
- "demo/003-p-2tim::значение вне перечисления": {
+ "demo/003-p-2tim::a value outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: убрано payment_method='mobile' — нет в перечислении схемы"
+   "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -1349,10 +1349,10 @@
    "model_confidence": 0.99
   }
  },
- "demo/003-p-2tim::цвет панели вне перечисления": {
+ "demo/003-p-2tim::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+   "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -1391,10 +1391,10 @@
    "model_confidence": 0.99
   }
  },
- "demo/003-p-2tim::цвет знака вне перечисления": {
+ "demo/003-p-2tim::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+   "main sign colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -1433,7 +1433,7 @@
    "model_confidence": 0.99
   }
  },
- "demo/004-endast-besokande-pingstkyrkan::как есть": {
+ "demo/004-endast-besokande-pingstkyrkan::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -1491,10 +1491,10 @@
    }
   }
  },
- "demo/004-endast-besokande-pingstkyrkan::дубль основного знака": {
+ "demo/004-endast-besokande-pingstkyrkan::duplicate of the main sign": {
   "ok": true,
   "repairs": [
-   "убрана панель 99: дубль основного знака"
+   "panel 99 removed: duplicate of the main sign"
   ],
   "flags": [],
   "data": {
@@ -1551,10 +1551,10 @@
    }
   }
  },
- "demo/004-endast-besokande-pingstkyrkan::пустая строка в панели": {
+ "demo/004-endast-besokande-pingstkyrkan::an empty line in a panel": {
   "ok": true,
   "repairs": [
-   "панель 1: убраны пустые строки"
+   "panel 1: empty lines removed"
   ],
   "flags": [],
   "data": {
@@ -1611,10 +1611,10 @@
    }
   }
  },
- "demo/004-endast-besokande-pingstkyrkan::сбитый индекс панели": {
+ "demo/004-endast-besokande-pingstkyrkan::a knocked-out panel index": {
   "ok": true,
   "repairs": [
-   "индекс панели 7 -> 1"
+   "panel index 7 -> 1"
   ],
   "flags": [],
   "data": {
@@ -1671,7 +1671,7 @@
    }
   }
  },
- "demo/004-endast-besokande-pingstkyrkan::panel_count не сходится": {
+ "demo/004-endast-besokande-pingstkyrkan::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 2"
@@ -1731,10 +1731,10 @@
    }
   }
  },
- "demo/004-endast-besokande-pingstkyrkan::значение вне перечисления": {
+ "demo/004-endast-besokande-pingstkyrkan::a value outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: убрано payment_method='mobile' — нет в перечислении схемы"
+   "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -1791,10 +1791,10 @@
    }
   }
  },
- "demo/004-endast-besokande-pingstkyrkan::цвет панели вне перечисления": {
+ "demo/004-endast-besokande-pingstkyrkan::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+   "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -1851,10 +1851,10 @@
    }
   }
  },
- "demo/004-endast-besokande-pingstkyrkan::цвет знака вне перечисления": {
+ "demo/004-endast-besokande-pingstkyrkan::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+   "main sign colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -1911,7 +1911,7 @@
    }
   }
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil::как есть": {
+ "demo/005-2tim-8-18-parentes-8-15-dubbelpil::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -1978,10 +1978,10 @@
    "model_confidence": 0.98
   }
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil::дубль основного знака": {
+ "demo/005-2tim-8-18-parentes-8-15-dubbelpil::duplicate of the main sign": {
   "ok": true,
   "repairs": [
-   "убрана панель 99: дубль основного знака"
+   "panel 99 removed: duplicate of the main sign"
   ],
   "flags": [],
   "data": {
@@ -2047,10 +2047,10 @@
    "model_confidence": 0.98
   }
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil::пустая строка в панели": {
+ "demo/005-2tim-8-18-parentes-8-15-dubbelpil::an empty line in a panel": {
   "ok": true,
   "repairs": [
-   "панель 1: убраны пустые строки"
+   "panel 1: empty lines removed"
   ],
   "flags": [],
   "data": {
@@ -2116,10 +2116,10 @@
    "model_confidence": 0.98
   }
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil::сбитый индекс панели": {
+ "demo/005-2tim-8-18-parentes-8-15-dubbelpil::a knocked-out panel index": {
   "ok": true,
   "repairs": [
-   "индекс панели 7 -> 1"
+   "panel index 7 -> 1"
   ],
   "flags": [],
   "data": {
@@ -2185,7 +2185,7 @@
    "model_confidence": 0.98
   }
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil::panel_count не сходится": {
+ "demo/005-2tim-8-18-parentes-8-15-dubbelpil::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 2"
@@ -2254,10 +2254,10 @@
    "model_confidence": 0.98
   }
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil::значение вне перечисления": {
+ "demo/005-2tim-8-18-parentes-8-15-dubbelpil::a value outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: убрано payment_method='mobile' — нет в перечислении схемы"
+   "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -2323,10 +2323,10 @@
    "model_confidence": 0.98
   }
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil::цвет панели вне перечисления": {
+ "demo/005-2tim-8-18-parentes-8-15-dubbelpil::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+   "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -2392,10 +2392,10 @@
    "model_confidence": 0.98
   }
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil::цвет знака вне перечисления": {
+ "demo/005-2tim-8-18-parentes-8-15-dubbelpil::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+   "main sign colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -2461,7 +2461,7 @@
    "model_confidence": 0.98
   }
  },
- "demo/006-tillstand-07-17-ovrig-tid-avgift::как есть": {
+ "demo/006-tillstand-07-17-ovrig-tid-avgift::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -2556,10 +2556,10 @@
    }
   }
  },
- "demo/006-tillstand-07-17-ovrig-tid-avgift::дубль основного знака": {
+ "demo/006-tillstand-07-17-ovrig-tid-avgift::duplicate of the main sign": {
   "ok": true,
   "repairs": [
-   "убрана панель 99: дубль основного знака"
+   "panel 99 removed: duplicate of the main sign"
   ],
   "flags": [],
   "data": {
@@ -2653,10 +2653,10 @@
    }
   }
  },
- "demo/006-tillstand-07-17-ovrig-tid-avgift::пустая строка в панели": {
+ "demo/006-tillstand-07-17-ovrig-tid-avgift::an empty line in a panel": {
   "ok": true,
   "repairs": [
-   "панель 1: убраны пустые строки"
+   "panel 1: empty lines removed"
   ],
   "flags": [],
   "data": {
@@ -2750,10 +2750,10 @@
    }
   }
  },
- "demo/006-tillstand-07-17-ovrig-tid-avgift::сбитый индекс панели": {
+ "demo/006-tillstand-07-17-ovrig-tid-avgift::a knocked-out panel index": {
   "ok": true,
   "repairs": [
-   "индекс панели 7 -> 1"
+   "panel index 7 -> 1"
   ],
   "flags": [],
   "data": {
@@ -2847,7 +2847,7 @@
    }
   }
  },
- "demo/006-tillstand-07-17-ovrig-tid-avgift::panel_count не сходится": {
+ "demo/006-tillstand-07-17-ovrig-tid-avgift::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 4"
@@ -2944,10 +2944,10 @@
    }
   }
  },
- "demo/006-tillstand-07-17-ovrig-tid-avgift::значение вне перечисления": {
+ "demo/006-tillstand-07-17-ovrig-tid-avgift::a value outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: убрано payment_method='mobile' — нет в перечислении схемы"
+   "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -3041,10 +3041,10 @@
    }
   }
  },
- "demo/006-tillstand-07-17-ovrig-tid-avgift::цвет панели вне перечисления": {
+ "demo/006-tillstand-07-17-ovrig-tid-avgift::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+   "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -3138,10 +3138,10 @@
    }
   }
  },
- "demo/006-tillstand-07-17-ovrig-tid-avgift::цвет знака вне перечисления": {
+ "demo/006-tillstand-07-17-ovrig-tid-avgift::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+   "main sign colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -3235,7 +3235,7 @@
    }
   }
  },
- "demo/007-gul-forbud-forhyrda-platser::как есть": {
+ "demo/007-gul-forbud-forhyrda-platser::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -3293,10 +3293,10 @@
    "model_confidence": 0.98
   }
  },
- "demo/007-gul-forbud-forhyrda-platser::дубль основного знака": {
+ "demo/007-gul-forbud-forhyrda-platser::duplicate of the main sign": {
   "ok": true,
   "repairs": [
-   "убрана панель 99: дубль основного знака"
+   "panel 99 removed: duplicate of the main sign"
   ],
   "flags": [],
   "data": {
@@ -3353,10 +3353,10 @@
    "model_confidence": 0.98
   }
  },
- "demo/007-gul-forbud-forhyrda-platser::пустая строка в панели": {
+ "demo/007-gul-forbud-forhyrda-platser::an empty line in a panel": {
   "ok": true,
   "repairs": [
-   "панель 1: убраны пустые строки"
+   "panel 1: empty lines removed"
   ],
   "flags": [],
   "data": {
@@ -3413,10 +3413,10 @@
    "model_confidence": 0.98
   }
  },
- "demo/007-gul-forbud-forhyrda-platser::сбитый индекс панели": {
+ "demo/007-gul-forbud-forhyrda-platser::a knocked-out panel index": {
   "ok": true,
   "repairs": [
-   "индекс панели 7 -> 1"
+   "panel index 7 -> 1"
   ],
   "flags": [],
   "data": {
@@ -3473,7 +3473,7 @@
    "model_confidence": 0.98
   }
  },
- "demo/007-gul-forbud-forhyrda-platser::panel_count не сходится": {
+ "demo/007-gul-forbud-forhyrda-platser::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 2"
@@ -3533,10 +3533,10 @@
    "model_confidence": 0.98
   }
  },
- "demo/007-gul-forbud-forhyrda-platser::значение вне перечисления": {
+ "demo/007-gul-forbud-forhyrda-platser::a value outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: убрано payment_method='mobile' — нет в перечислении схемы"
+   "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -3593,10 +3593,10 @@
    "model_confidence": 0.98
   }
  },
- "demo/007-gul-forbud-forhyrda-platser::цвет панели вне перечисления": {
+ "demo/007-gul-forbud-forhyrda-platser::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+   "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -3653,10 +3653,10 @@
    "model_confidence": 0.98
   }
  },
- "demo/007-gul-forbud-forhyrda-platser::цвет знака вне перечисления": {
+ "demo/007-gul-forbud-forhyrda-platser::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+   "main sign colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -3713,7 +3713,7 @@
    "model_confidence": 0.98
   }
  },
- "demo/008-rorelsehindrad-avgift::как есть": {
+ "demo/008-rorelsehindrad-avgift::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -3797,10 +3797,10 @@
    }
   }
  },
- "demo/008-rorelsehindrad-avgift::дубль основного знака": {
+ "demo/008-rorelsehindrad-avgift::duplicate of the main sign": {
   "ok": true,
   "repairs": [
-   "убрана панель 99: дубль основного знака"
+   "panel 99 removed: duplicate of the main sign"
   ],
   "flags": [],
   "data": {
@@ -3883,10 +3883,10 @@
    }
   }
  },
- "demo/008-rorelsehindrad-avgift::пустая строка в панели": {
+ "demo/008-rorelsehindrad-avgift::an empty line in a panel": {
   "ok": true,
   "repairs": [
-   "панель 1: убраны пустые строки"
+   "panel 1: empty lines removed"
   ],
   "flags": [],
   "data": {
@@ -3969,10 +3969,10 @@
    }
   }
  },
- "demo/008-rorelsehindrad-avgift::сбитый индекс панели": {
+ "demo/008-rorelsehindrad-avgift::a knocked-out panel index": {
   "ok": true,
   "repairs": [
-   "индекс панели 7 -> 1"
+   "panel index 7 -> 1"
   ],
   "flags": [],
   "data": {
@@ -4055,7 +4055,7 @@
    }
   }
  },
- "demo/008-rorelsehindrad-avgift::panel_count не сходится": {
+ "demo/008-rorelsehindrad-avgift::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 4"
@@ -4141,10 +4141,10 @@
    }
   }
  },
- "demo/008-rorelsehindrad-avgift::значение вне перечисления": {
+ "demo/008-rorelsehindrad-avgift::a value outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: убрано payment_method='mobile' — нет в перечислении схемы"
+   "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -4227,10 +4227,10 @@
    }
   }
  },
- "demo/008-rorelsehindrad-avgift::цвет панели вне перечисления": {
+ "demo/008-rorelsehindrad-avgift::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+   "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -4313,10 +4313,10 @@
    }
   }
  },
- "demo/008-rorelsehindrad-avgift::цвет знака вне перечисления": {
+ "demo/008-rorelsehindrad-avgift::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+   "main sign colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -4399,7 +4399,7 @@
    }
   }
  },
- "demo/009-besokande-avgift::как есть": {
+ "demo/009-besokande-avgift::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -4484,10 +4484,10 @@
    }
   }
  },
- "demo/009-besokande-avgift::дубль основного знака": {
+ "demo/009-besokande-avgift::duplicate of the main sign": {
   "ok": true,
   "repairs": [
-   "убрана панель 99: дубль основного знака"
+   "panel 99 removed: duplicate of the main sign"
   ],
   "flags": [],
   "data": {
@@ -4571,10 +4571,10 @@
    }
   }
  },
- "demo/009-besokande-avgift::пустая строка в панели": {
+ "demo/009-besokande-avgift::an empty line in a panel": {
   "ok": true,
   "repairs": [
-   "панель 1: убраны пустые строки"
+   "panel 1: empty lines removed"
   ],
   "flags": [],
   "data": {
@@ -4658,10 +4658,10 @@
    }
   }
  },
- "demo/009-besokande-avgift::сбитый индекс панели": {
+ "demo/009-besokande-avgift::a knocked-out panel index": {
   "ok": true,
   "repairs": [
-   "индекс панели 7 -> 1"
+   "panel index 7 -> 1"
   ],
   "flags": [],
   "data": {
@@ -4745,7 +4745,7 @@
    }
   }
  },
- "demo/009-besokande-avgift::panel_count не сходится": {
+ "demo/009-besokande-avgift::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 4"
@@ -4832,10 +4832,10 @@
    }
   }
  },
- "demo/009-besokande-avgift::значение вне перечисления": {
+ "demo/009-besokande-avgift::a value outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: убрано payment_method='mobile' — нет в перечислении схемы"
+   "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -4919,10 +4919,10 @@
    }
   }
  },
- "demo/009-besokande-avgift::цвет панели вне перечисления": {
+ "demo/009-besokande-avgift::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+   "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -5006,10 +5006,10 @@
    }
   }
  },
- "demo/009-besokande-avgift::цвет знака вне перечисления": {
+ "demo/009-besokande-avgift::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+   "main sign colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -5093,7 +5093,7 @@
    }
   }
  },
- "demo/010-forhyrda-platser-tva-pilar::как есть": {
+ "demo/010-forhyrda-platser-tva-pilar::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -5173,10 +5173,10 @@
    }
   }
  },
- "demo/010-forhyrda-platser-tva-pilar::дубль основного знака": {
+ "demo/010-forhyrda-platser-tva-pilar::duplicate of the main sign": {
   "ok": true,
   "repairs": [
-   "убрана панель 99: дубль основного знака"
+   "panel 99 removed: duplicate of the main sign"
   ],
   "flags": [],
   "data": {
@@ -5255,10 +5255,10 @@
    }
   }
  },
- "demo/010-forhyrda-platser-tva-pilar::пустая строка в панели": {
+ "demo/010-forhyrda-platser-tva-pilar::an empty line in a panel": {
   "ok": true,
   "repairs": [
-   "панель 1: убраны пустые строки"
+   "panel 1: empty lines removed"
   ],
   "flags": [],
   "data": {
@@ -5337,10 +5337,10 @@
    }
   }
  },
- "demo/010-forhyrda-platser-tva-pilar::сбитый индекс панели": {
+ "demo/010-forhyrda-platser-tva-pilar::a knocked-out panel index": {
   "ok": true,
   "repairs": [
-   "индекс панели 7 -> 1"
+   "panel index 7 -> 1"
   ],
   "flags": [],
   "data": {
@@ -5419,7 +5419,7 @@
    }
   }
  },
- "demo/010-forhyrda-platser-tva-pilar::panel_count не сходится": {
+ "demo/010-forhyrda-platser-tva-pilar::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 4"
@@ -5501,10 +5501,10 @@
    }
   }
  },
- "demo/010-forhyrda-platser-tva-pilar::значение вне перечисления": {
+ "demo/010-forhyrda-platser-tva-pilar::a value outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: убрано payment_method='mobile' — нет в перечислении схемы"
+   "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -5583,10 +5583,10 @@
    }
   }
  },
- "demo/010-forhyrda-platser-tva-pilar::цвет панели вне перечисления": {
+ "demo/010-forhyrda-platser-tva-pilar::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+   "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -5665,10 +5665,10 @@
    }
   }
  },
- "demo/010-forhyrda-platser-tva-pilar::цвет знака вне перечисления": {
+ "demo/010-forhyrda-platser-tva-pilar::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+   "main sign colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -5747,7 +5747,7 @@
    }
   }
  },
- "demo/011-gul-p-avgift-klistermarken::как есть": {
+ "demo/011-gul-p-avgift-klistermarken::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [
@@ -5792,10 +5792,10 @@
    }
   }
  },
- "demo/011-gul-p-avgift-klistermarken::дубль основного знака": {
+ "demo/011-gul-p-avgift-klistermarken::duplicate of the main sign": {
   "ok": true,
   "repairs": [
-   "убрана панель 99: дубль основного знака"
+   "panel 99 removed: duplicate of the main sign"
   ],
   "flags": [
    "panel_1_obstructed:sticker"
@@ -5839,10 +5839,10 @@
    }
   }
  },
- "demo/011-gul-p-avgift-klistermarken::пустая строка в панели": {
+ "demo/011-gul-p-avgift-klistermarken::an empty line in a panel": {
   "ok": true,
   "repairs": [
-   "панель 1: убраны пустые строки"
+   "panel 1: empty lines removed"
   ],
   "flags": [
    "panel_1_obstructed:sticker"
@@ -5886,10 +5886,10 @@
    }
   }
  },
- "demo/011-gul-p-avgift-klistermarken::сбитый индекс панели": {
+ "demo/011-gul-p-avgift-klistermarken::a knocked-out panel index": {
   "ok": true,
   "repairs": [
-   "индекс панели 7 -> 1"
+   "panel index 7 -> 1"
   ],
   "flags": [
    "panel_1_obstructed:sticker"
@@ -5933,7 +5933,7 @@
    }
   }
  },
- "demo/011-gul-p-avgift-klistermarken::panel_count не сходится": {
+ "demo/011-gul-p-avgift-klistermarken::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 1"
@@ -5980,10 +5980,10 @@
    }
   }
  },
- "demo/011-gul-p-avgift-klistermarken::значение вне перечисления": {
+ "demo/011-gul-p-avgift-klistermarken::a value outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: убрано payment_method='mobile' — нет в перечислении схемы"
+   "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
   ],
   "flags": [
    "panel_1_obstructed:sticker"
@@ -6027,10 +6027,10 @@
    }
   }
  },
- "demo/011-gul-p-avgift-klistermarken::цвет панели вне перечисления": {
+ "demo/011-gul-p-avgift-klistermarken::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+   "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [
    "panel_1_obstructed:sticker"
@@ -6074,10 +6074,10 @@
    }
   }
  },
- "demo/011-gul-p-avgift-klistermarken::цвет знака вне перечисления": {
+ "demo/011-gul-p-avgift-klistermarken::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+   "main sign colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [
    "panel_1_obstructed:sticker"
@@ -6121,7 +6121,7 @@
    }
   }
  },
- "demo/012-tillstand-7-17-ovrig-tid-avgift::как есть": {
+ "demo/012-tillstand-7-17-ovrig-tid-avgift::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -6215,10 +6215,10 @@
    }
   }
  },
- "demo/012-tillstand-7-17-ovrig-tid-avgift::дубль основного знака": {
+ "demo/012-tillstand-7-17-ovrig-tid-avgift::duplicate of the main sign": {
   "ok": true,
   "repairs": [
-   "убрана панель 99: дубль основного знака"
+   "panel 99 removed: duplicate of the main sign"
   ],
   "flags": [],
   "data": {
@@ -6311,10 +6311,10 @@
    }
   }
  },
- "demo/012-tillstand-7-17-ovrig-tid-avgift::пустая строка в панели": {
+ "demo/012-tillstand-7-17-ovrig-tid-avgift::an empty line in a panel": {
   "ok": true,
   "repairs": [
-   "панель 1: убраны пустые строки"
+   "panel 1: empty lines removed"
   ],
   "flags": [],
   "data": {
@@ -6407,10 +6407,10 @@
    }
   }
  },
- "demo/012-tillstand-7-17-ovrig-tid-avgift::сбитый индекс панели": {
+ "demo/012-tillstand-7-17-ovrig-tid-avgift::a knocked-out panel index": {
   "ok": true,
   "repairs": [
-   "индекс панели 7 -> 1"
+   "panel index 7 -> 1"
   ],
   "flags": [],
   "data": {
@@ -6503,7 +6503,7 @@
    }
   }
  },
- "demo/012-tillstand-7-17-ovrig-tid-avgift::panel_count не сходится": {
+ "demo/012-tillstand-7-17-ovrig-tid-avgift::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 4"
@@ -6599,10 +6599,10 @@
    }
   }
  },
- "demo/012-tillstand-7-17-ovrig-tid-avgift::значение вне перечисления": {
+ "demo/012-tillstand-7-17-ovrig-tid-avgift::a value outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: убрано payment_method='mobile' — нет в перечислении схемы"
+   "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -6695,10 +6695,10 @@
    }
   }
  },
- "demo/012-tillstand-7-17-ovrig-tid-avgift::цвет панели вне перечисления": {
+ "demo/012-tillstand-7-17-ovrig-tid-avgift::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+   "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -6791,10 +6791,10 @@
    }
   }
  },
- "demo/012-tillstand-7-17-ovrig-tid-avgift::цвет знака вне перечисления": {
+ "demo/012-tillstand-7-17-ovrig-tid-avgift::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+   "main sign colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -6887,7 +6887,7 @@
    }
   }
  },
- "demo/013-rorelsehindrad-2-platser::как есть": {
+ "demo/013-rorelsehindrad-2-platser::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -6968,10 +6968,10 @@
    }
   }
  },
- "demo/013-rorelsehindrad-2-platser::дубль основного знака": {
+ "demo/013-rorelsehindrad-2-platser::duplicate of the main sign": {
   "ok": true,
   "repairs": [
-   "убрана панель 99: дубль основного знака"
+   "panel 99 removed: duplicate of the main sign"
   ],
   "flags": [],
   "data": {
@@ -7051,10 +7051,10 @@
    }
   }
  },
- "demo/013-rorelsehindrad-2-platser::пустая строка в панели": {
+ "demo/013-rorelsehindrad-2-platser::an empty line in a panel": {
   "ok": true,
   "repairs": [
-   "панель 1: убраны пустые строки"
+   "panel 1: empty lines removed"
   ],
   "flags": [],
   "data": {
@@ -7134,10 +7134,10 @@
    }
   }
  },
- "demo/013-rorelsehindrad-2-platser::сбитый индекс панели": {
+ "demo/013-rorelsehindrad-2-platser::a knocked-out panel index": {
   "ok": true,
   "repairs": [
-   "индекс панели 7 -> 1"
+   "panel index 7 -> 1"
   ],
   "flags": [],
   "data": {
@@ -7217,7 +7217,7 @@
    }
   }
  },
- "demo/013-rorelsehindrad-2-platser::panel_count не сходится": {
+ "demo/013-rorelsehindrad-2-platser::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 4"
@@ -7300,10 +7300,10 @@
    }
   }
  },
- "demo/013-rorelsehindrad-2-platser::значение вне перечисления": {
+ "demo/013-rorelsehindrad-2-platser::a value outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: убрано payment_method='mobile' — нет в перечислении схемы"
+   "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -7383,10 +7383,10 @@
    }
   }
  },
- "demo/013-rorelsehindrad-2-platser::цвет панели вне перечисления": {
+ "demo/013-rorelsehindrad-2-platser::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+   "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -7466,10 +7466,10 @@
    }
   }
  },
- "demo/013-rorelsehindrad-2-platser::цвет знака вне перечисления": {
+ "demo/013-rorelsehindrad-2-platser::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+   "main sign colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -7549,7 +7549,7 @@
    }
   }
  },
- "demo/014-motorcykel-pil-skymning::как есть": {
+ "demo/014-motorcykel-pil-skymning::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -7597,10 +7597,10 @@
    }
   }
  },
- "demo/014-motorcykel-pil-skymning::дубль основного знака": {
+ "demo/014-motorcykel-pil-skymning::duplicate of the main sign": {
   "ok": true,
   "repairs": [
-   "убрана панель 99: дубль основного знака"
+   "panel 99 removed: duplicate of the main sign"
   ],
   "flags": [],
   "data": {
@@ -7647,10 +7647,10 @@
    }
   }
  },
- "demo/014-motorcykel-pil-skymning::пустая строка в панели": {
+ "demo/014-motorcykel-pil-skymning::an empty line in a panel": {
   "ok": true,
   "repairs": [
-   "панель 1: убраны пустые строки"
+   "panel 1: empty lines removed"
   ],
   "flags": [],
   "data": {
@@ -7697,10 +7697,10 @@
    }
   }
  },
- "demo/014-motorcykel-pil-skymning::сбитый индекс панели": {
+ "demo/014-motorcykel-pil-skymning::a knocked-out panel index": {
   "ok": true,
   "repairs": [
-   "индекс панели 7 -> 1"
+   "panel index 7 -> 1"
   ],
   "flags": [],
   "data": {
@@ -7747,7 +7747,7 @@
    }
   }
  },
- "demo/014-motorcykel-pil-skymning::panel_count не сходится": {
+ "demo/014-motorcykel-pil-skymning::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 2"
@@ -7797,10 +7797,10 @@
    }
   }
  },
- "demo/014-motorcykel-pil-skymning::значение вне перечисления": {
+ "demo/014-motorcykel-pil-skymning::a value outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: убрано payment_method='mobile' — нет в перечислении схемы"
+   "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -7847,10 +7847,10 @@
    }
   }
  },
- "demo/014-motorcykel-pil-skymning::цвет панели вне перечисления": {
+ "demo/014-motorcykel-pil-skymning::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+   "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -7897,10 +7897,10 @@
    }
   }
  },
- "demo/014-motorcykel-pil-skymning::цвет знака вне перечисления": {
+ "demo/014-motorcykel-pil-skymning::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+   "main sign colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -7947,7 +7947,7 @@
    }
   }
  },
- "demo/015-motorcykel::как есть": {
+ "demo/015-motorcykel::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -7984,10 +7984,10 @@
    "model_confidence": 0.99
   }
  },
- "demo/015-motorcykel::дубль основного знака": {
+ "demo/015-motorcykel::duplicate of the main sign": {
   "ok": true,
   "repairs": [
-   "убрана панель 99: дубль основного знака"
+   "panel 99 removed: duplicate of the main sign"
   ],
   "flags": [],
   "data": {
@@ -8023,10 +8023,10 @@
    "model_confidence": 0.99
   }
  },
- "demo/015-motorcykel::пустая строка в панели": {
+ "demo/015-motorcykel::an empty line in a panel": {
   "ok": true,
   "repairs": [
-   "панель 1: убраны пустые строки"
+   "panel 1: empty lines removed"
   ],
   "flags": [],
   "data": {
@@ -8062,10 +8062,10 @@
    "model_confidence": 0.99
   }
  },
- "demo/015-motorcykel::сбитый индекс панели": {
+ "demo/015-motorcykel::a knocked-out panel index": {
   "ok": true,
   "repairs": [
-   "индекс панели 7 -> 1"
+   "panel index 7 -> 1"
   ],
   "flags": [],
   "data": {
@@ -8101,7 +8101,7 @@
    "model_confidence": 0.99
   }
  },
- "demo/015-motorcykel::panel_count не сходится": {
+ "demo/015-motorcykel::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 1"
@@ -8140,10 +8140,10 @@
    "model_confidence": 0.99
   }
  },
- "demo/015-motorcykel::значение вне перечисления": {
+ "demo/015-motorcykel::a value outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: убрано payment_method='mobile' — нет в перечислении схемы"
+   "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -8179,10 +8179,10 @@
    "model_confidence": 0.99
   }
  },
- "demo/015-motorcykel::цвет панели вне перечисления": {
+ "demo/015-motorcykel::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+   "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -8218,10 +8218,10 @@
    "model_confidence": 0.99
   }
  },
- "demo/015-motorcykel::цвет знака вне перечисления": {
+ "demo/015-motorcykel::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+   "main sign colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -8257,7 +8257,7 @@
    "model_confidence": 0.99
   }
  },
- "demo/016-tillstand-ovrig-tid-5-platser::как есть": {
+ "demo/016-tillstand-ovrig-tid-5-platser::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -8347,10 +8347,10 @@
    }
   }
  },
- "demo/016-tillstand-ovrig-tid-5-platser::дубль основного знака": {
+ "demo/016-tillstand-ovrig-tid-5-platser::duplicate of the main sign": {
   "ok": true,
   "repairs": [
-   "убрана панель 99: дубль основного знака"
+   "panel 99 removed: duplicate of the main sign"
   ],
   "flags": [],
   "data": {
@@ -8439,10 +8439,10 @@
    }
   }
  },
- "demo/016-tillstand-ovrig-tid-5-platser::пустая строка в панели": {
+ "demo/016-tillstand-ovrig-tid-5-platser::an empty line in a panel": {
   "ok": true,
   "repairs": [
-   "панель 1: убраны пустые строки"
+   "panel 1: empty lines removed"
   ],
   "flags": [],
   "data": {
@@ -8531,10 +8531,10 @@
    }
   }
  },
- "demo/016-tillstand-ovrig-tid-5-platser::сбитый индекс панели": {
+ "demo/016-tillstand-ovrig-tid-5-platser::a knocked-out panel index": {
   "ok": true,
   "repairs": [
-   "индекс панели 7 -> 1"
+   "panel index 7 -> 1"
   ],
   "flags": [],
   "data": {
@@ -8623,7 +8623,7 @@
    }
   }
  },
- "demo/016-tillstand-ovrig-tid-5-platser::panel_count не сходится": {
+ "demo/016-tillstand-ovrig-tid-5-platser::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 4"
@@ -8715,10 +8715,10 @@
    }
   }
  },
- "demo/016-tillstand-ovrig-tid-5-platser::значение вне перечисления": {
+ "demo/016-tillstand-ovrig-tid-5-platser::a value outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: убрано payment_method='mobile' — нет в перечислении схемы"
+   "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -8807,10 +8807,10 @@
    }
   }
  },
- "demo/016-tillstand-ovrig-tid-5-platser::цвет панели вне перечисления": {
+ "demo/016-tillstand-ovrig-tid-5-platser::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+   "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -8899,10 +8899,10 @@
    }
   }
  },
- "demo/016-tillstand-ovrig-tid-5-platser::цвет знака вне перечисления": {
+ "demo/016-tillstand-ovrig-tid-5-platser::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+   "main sign colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -8991,7 +8991,7 @@
    }
   }
  },
- "demo/017-rorelsehindrad::как есть": {
+ "demo/017-rorelsehindrad::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -9026,10 +9026,10 @@
    }
   }
  },
- "demo/017-rorelsehindrad::дубль основного знака": {
+ "demo/017-rorelsehindrad::duplicate of the main sign": {
   "ok": true,
   "repairs": [
-   "убрана панель 99: дубль основного знака"
+   "panel 99 removed: duplicate of the main sign"
   ],
   "flags": [],
   "data": {
@@ -9063,10 +9063,10 @@
    }
   }
  },
- "demo/017-rorelsehindrad::пустая строка в панели": {
+ "demo/017-rorelsehindrad::an empty line in a panel": {
   "ok": true,
   "repairs": [
-   "панель 1: убраны пустые строки"
+   "panel 1: empty lines removed"
   ],
   "flags": [],
   "data": {
@@ -9100,10 +9100,10 @@
    }
   }
  },
- "demo/017-rorelsehindrad::сбитый индекс панели": {
+ "demo/017-rorelsehindrad::a knocked-out panel index": {
   "ok": true,
   "repairs": [
-   "индекс панели 7 -> 1"
+   "panel index 7 -> 1"
   ],
   "flags": [],
   "data": {
@@ -9137,7 +9137,7 @@
    }
   }
  },
- "demo/017-rorelsehindrad::panel_count не сходится": {
+ "demo/017-rorelsehindrad::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 1"
@@ -9174,10 +9174,10 @@
    }
   }
  },
- "demo/017-rorelsehindrad::значение вне перечисления": {
+ "demo/017-rorelsehindrad::a value outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: убрано payment_method='mobile' — нет в перечислении схемы"
+   "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -9211,10 +9211,10 @@
    }
   }
  },
- "demo/017-rorelsehindrad::цвет панели вне перечисления": {
+ "demo/017-rorelsehindrad::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+   "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -9248,10 +9248,10 @@
    }
   }
  },
- "demo/017-rorelsehindrad::цвет знака вне перечисления": {
+ "demo/017-rorelsehindrad::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+   "main sign colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -9285,7 +9285,7 @@
    }
   }
  },
- "demo/018-tillstand-utan-tidsangivelse::как есть": {
+ "demo/018-tillstand-utan-tidsangivelse::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -9337,10 +9337,10 @@
    }
   }
  },
- "demo/018-tillstand-utan-tidsangivelse::дубль основного знака": {
+ "demo/018-tillstand-utan-tidsangivelse::duplicate of the main sign": {
   "ok": true,
   "repairs": [
-   "убрана панель 99: дубль основного знака"
+   "panel 99 removed: duplicate of the main sign"
   ],
   "flags": [],
   "data": {
@@ -9391,10 +9391,10 @@
    }
   }
  },
- "demo/018-tillstand-utan-tidsangivelse::пустая строка в панели": {
+ "demo/018-tillstand-utan-tidsangivelse::an empty line in a panel": {
   "ok": true,
   "repairs": [
-   "панель 1: убраны пустые строки"
+   "panel 1: empty lines removed"
   ],
   "flags": [],
   "data": {
@@ -9445,10 +9445,10 @@
    }
   }
  },
- "demo/018-tillstand-utan-tidsangivelse::сбитый индекс панели": {
+ "demo/018-tillstand-utan-tidsangivelse::a knocked-out panel index": {
   "ok": true,
   "repairs": [
-   "индекс панели 7 -> 1"
+   "panel index 7 -> 1"
   ],
   "flags": [],
   "data": {
@@ -9499,7 +9499,7 @@
    }
   }
  },
- "demo/018-tillstand-utan-tidsangivelse::panel_count не сходится": {
+ "demo/018-tillstand-utan-tidsangivelse::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 2"
@@ -9553,10 +9553,10 @@
    }
   }
  },
- "demo/018-tillstand-utan-tidsangivelse::значение вне перечисления": {
+ "demo/018-tillstand-utan-tidsangivelse::a value outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: убрано payment_method='mobile' — нет в перечислении схемы"
+   "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -9607,10 +9607,10 @@
    }
   }
  },
- "demo/018-tillstand-utan-tidsangivelse::цвет панели вне перечисления": {
+ "demo/018-tillstand-utan-tidsangivelse::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+   "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -9661,10 +9661,10 @@
    }
   }
  },
- "demo/018-tillstand-utan-tidsangivelse::цвет знака вне перечисления": {
+ "demo/018-tillstand-utan-tidsangivelse::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+   "main sign colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -9715,7 +9715,7 @@
    }
   }
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid::как есть": {
+ "demo/019-forbud-7-18-avgift-ovrig-tid::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -9821,10 +9821,10 @@
    }
   }
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid::дубль основного знака": {
+ "demo/019-forbud-7-18-avgift-ovrig-tid::duplicate of the main sign": {
   "ok": true,
   "repairs": [
-   "убрана панель 99: дубль основного знака"
+   "panel 99 removed: duplicate of the main sign"
   ],
   "flags": [],
   "data": {
@@ -9929,10 +9929,10 @@
    }
   }
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid::пустая строка в панели": {
+ "demo/019-forbud-7-18-avgift-ovrig-tid::an empty line in a panel": {
   "ok": true,
   "repairs": [
-   "панель 1: убраны пустые строки"
+   "panel 1: empty lines removed"
   ],
   "flags": [],
   "data": {
@@ -10037,10 +10037,10 @@
    }
   }
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid::сбитый индекс панели": {
+ "demo/019-forbud-7-18-avgift-ovrig-tid::a knocked-out panel index": {
   "ok": true,
   "repairs": [
-   "индекс панели 7 -> 1"
+   "panel index 7 -> 1"
   ],
   "flags": [],
   "data": {
@@ -10145,7 +10145,7 @@
    }
   }
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid::panel_count не сходится": {
+ "demo/019-forbud-7-18-avgift-ovrig-tid::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 4"
@@ -10253,10 +10253,10 @@
    }
   }
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid::значение вне перечисления": {
+ "demo/019-forbud-7-18-avgift-ovrig-tid::a value outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: убрано payment_method='mobile' — нет в перечислении схемы"
+   "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -10361,10 +10361,10 @@
    }
   }
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid::цвет панели вне перечисления": {
+ "demo/019-forbud-7-18-avgift-ovrig-tid::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+   "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -10469,10 +10469,10 @@
    }
   }
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid::цвет знака вне перечисления": {
+ "demo/019-forbud-7-18-avgift-ovrig-tid::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+   "main sign colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -10577,7 +10577,7 @@
    }
   }
  },
- "demo/020-forhyrda-platser-13-och-14-avstand::как есть": {
+ "demo/020-forhyrda-platser-13-och-14-avstand::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -10629,10 +10629,10 @@
    }
   }
  },
- "demo/020-forhyrda-platser-13-och-14-avstand::дубль основного знака": {
+ "demo/020-forhyrda-platser-13-och-14-avstand::duplicate of the main sign": {
   "ok": true,
   "repairs": [
-   "убрана панель 99: дубль основного знака"
+   "panel 99 removed: duplicate of the main sign"
   ],
   "flags": [],
   "data": {
@@ -10683,10 +10683,10 @@
    }
   }
  },
- "demo/020-forhyrda-platser-13-och-14-avstand::пустая строка в панели": {
+ "demo/020-forhyrda-platser-13-och-14-avstand::an empty line in a panel": {
   "ok": true,
   "repairs": [
-   "панель 1: убраны пустые строки"
+   "panel 1: empty lines removed"
   ],
   "flags": [],
   "data": {
@@ -10737,10 +10737,10 @@
    }
   }
  },
- "demo/020-forhyrda-platser-13-och-14-avstand::сбитый индекс панели": {
+ "demo/020-forhyrda-platser-13-och-14-avstand::a knocked-out panel index": {
   "ok": true,
   "repairs": [
-   "индекс панели 7 -> 1"
+   "panel index 7 -> 1"
   ],
   "flags": [],
   "data": {
@@ -10791,7 +10791,7 @@
    }
   }
  },
- "demo/020-forhyrda-platser-13-och-14-avstand::panel_count не сходится": {
+ "demo/020-forhyrda-platser-13-och-14-avstand::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 2"
@@ -10845,10 +10845,10 @@
    }
   }
  },
- "demo/020-forhyrda-platser-13-och-14-avstand::значение вне перечисления": {
+ "demo/020-forhyrda-platser-13-och-14-avstand::a value outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: убрано payment_method='mobile' — нет в перечислении схемы"
+   "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -10899,10 +10899,10 @@
    }
   }
  },
- "demo/020-forhyrda-platser-13-och-14-avstand::цвет панели вне перечисления": {
+ "demo/020-forhyrda-platser-13-och-14-avstand::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "панель 1: цвет 'grey' -> 'other' — нет в перечислении схемы"
+   "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {
@@ -10953,10 +10953,10 @@
    }
   }
  },
- "demo/020-forhyrda-platser-13-och-14-avstand::цвет знака вне перечисления": {
+ "demo/020-forhyrda-platser-13-och-14-avstand::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
-   "цвет знака 'grey' -> 'other' — нет в перечислении схемы"
+   "main sign colour 'grey' -> 'other' - not in the schema enumeration"
   ],
   "flags": [],
   "data": {

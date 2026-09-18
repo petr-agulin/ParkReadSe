@@ -1,15 +1,15 @@
-// Валидация ответа модели. Порт `parkread/validation.py`.
+// Validating the model's answer. Ported from `parkread/validation.py`.
 //
-// Схема отбраковывает форму (`schema.ts`); здесь добавляется то, чего в JSON Schema
-// выразить нельзя, и все правки происходят из реальных ошибок прогонов.
+// The schema rejects the shape (`schema.ts`); what is added here is what JSON Schema
+// cannot express, and every rule of it comes from a real failure in a real run.
 //
-// Главное правило модуля: **самооценка модели ни на что не влияет**.
-// `boundaries.certain` и `model_confidence` сохраняются как данные для замера
-// и не используются как основание.
+// The module's first rule: **the model's own estimate decides nothing**.
+// `boundaries.certain` and `model_confidence` are kept as data for the measurement
+// and are never used as grounds.
 //
-// Второе правило: **починка записывается**. Молчаливая правка, о которой никто
-// не знает, — это второй источник ошибок; поэтому каждая попадает в список,
-// а он идёт в сигнал уверенности `no_repairs_needed`.
+// The second rule: **a repair is written down**. A silent fix nobody knows about is
+// the second source of errors, so each one joins the list, and the list feeds the
+// `no_repairs_needed` confidence signal.
 
 import { validate } from "./schema";
 import { SIGN_SCHEMA, TRIAGE_SCHEMA } from "./schema.data";
@@ -29,8 +29,8 @@ export const ok = (r: Result): boolean =>
 
 const FENCE = /^\s*```(?:json)?\s*([\s\S]*?)\s*```\s*$/;
 
-/** Модель иногда оборачивает JSON в markdown-забор, иногда добавляет пролог.
- *  Снимаем то, что снимается; остальное — честная ошибка. */
+/** The model sometimes wraps its JSON in a markdown fence, sometimes adds a preamble.
+ *  Strip what strips; the rest is an honest error. */
 export function parseJson(raw: string): Record<string, any> {
   const text = raw.trim();
   const fenced = FENCE.exec(text);
@@ -44,28 +44,28 @@ export function parseJson(raw: string): Record<string, any> {
       try {
         return JSON.parse(body.slice(start, end + 1));
       } catch {
-        /* ниже — честная ошибка */
+        /* below: an honest error */
       }
     }
   }
   throw new InvalidModelResponse(
-    `ответ не разбирается как JSON (длина ${raw.length} символов)`);
+    `the answer does not parse as JSON (length ${raw.length} characters)`);
 }
 
-/** Правки, которые делаются молча, потому что однозначны. Каждая записывается. */
+/** Fixes made silently, because they are unambiguous. Each one is written down. */
 function repairDoc(doc: Record<string, any>): string[] {
   const done: string[] = [];
   const panels = doc.panels;
   if (!Array.isArray(panels)) return done;
 
-  // Правило 1 из PROBE_LOG: основной знак — не табличка. На снимке `010` модель
-  // записала `P` и в `main_sign`, и первой панелью без текста.
+  // Rule 1 from PROBE_LOG: the main sign is not a plate. On photograph `010` the
+  // model wrote `P` both into `main_sign` and as a first, textless panel.
   const kept = panels.filter((p: any) => {
     if (!p || typeof p !== "object") return true;
     const empty = !(p.lines ?? []).length;
     const pict = (p.parsed ?? {}).pictogram;
     if (empty && ["parking", "p", "main_sign"].includes(pict)) {
-      done.push(`убрана панель ${p.index}: дубль основного знака`);
+      done.push(`panel ${p.index} removed: duplicate of the main sign`);
       return false;
     }
     return true;
@@ -73,22 +73,23 @@ function repairDoc(doc: Record<string, any>): string[] {
   if (kept.length !== panels.length) doc.panels = kept;
   const list: any[] = doc.panels;
 
-  // Пустые строки — не текст. Модель отдаёт стрелочную панель то как [], то как [""],
-  // и разница попадала в замер как ошибка чтения, хотя прочитано одно и то же: ничего.
+  // Empty strings are not text. The model returns an arrow panel sometimes as [],
+  // sometimes as [""], and the difference reached the measurement as a reading
+  // error, though what was read is the same in both: nothing.
   for (const p of list) {
     if (!p || typeof p !== "object" || !Array.isArray(p.lines)) continue;
     const lines = p.lines.filter((s: unknown) => typeof s === "string" && s.trim());
     if (lines.length !== p.lines.length) {
-      done.push(`панель ${p.index}: убраны пустые строки`);
+      done.push(`panel ${p.index}: empty lines removed`);
       p.lines = lines;
     }
   }
 
-  // Индексы обязаны идти подряд сверху вниз: на них ссылается всё остальное.
+  // Indices must run consecutively from the top: everything else refers to them.
   list.forEach((p: any, i: number) => {
     const want = i + 1;
     if (p && typeof p === "object" && p.index !== want) {
-      done.push(`индекс панели ${p.index} -> ${want}`);
+      done.push(`panel index ${p.index} -> ${want}`);
       p.index = want;
     }
   });
@@ -100,20 +101,22 @@ function repairDoc(doc: Record<string, any>): string[] {
   return done;
 }
 
-/** Цвет вне перечисления становится `other`, а не уносит с собой весь разбор.
+/** A colour outside the enumeration becomes `other` instead of taking the whole
+ *  reading down with it.
  *
- *  Найдено живым прогоном на снимке `014`: модель назвала фон панели `grey` — это
- *  изнанка другого знака на том же столбе, некрашеный металл. Строгая проверка
- *  отбраковала бы верно прочитанный знак целиком из-за оттенка, которого нет в списке.
+ *  Found by a live run on photograph `014`: the model called a panel's background
+ *  `grey` - the back of another sign on the same pole, unpainted metal. A strict
+ *  check would have rejected a correctly read sign over a shade absent from a list.
  *
- *  Почему это можно чинить молча, хотя поле обязательное: `other` заведено
- *  в перечислении ровно как «ни один из перечисленных», то есть ответ модели и
- *  означает `other`. И единственное место, где цвет имеет последствие, —
- *  `mayProhibit` в `completeness`: там `other` уже считается возможным запретом.
- *  Починка попадает на осторожную сторону и не может превратить запрет в разрешение.
+ *  Why this may be fixed silently although the field is required: `other` exists in
+ *  the enumeration precisely as "none of those listed", so the model's answer does
+ *  mean `other`. And the single place where colour has a consequence is
+ *  `mayProhibit` in `completeness`, where `other` already counts as a possible
+ *  prohibition. The repair falls on the cautious side and cannot turn a prohibition
+ *  into permission.
  *
- *  Чинится только строка. Пропущенное или нестроковое поле — не «оттенок, которого
- *  нет в списке», а отсутствие ответа, и его надо видеть. */
+ *  Only a string is fixed. A missing or non-string field is not "a shade absent from
+ *  the list" but an absence of an answer, and that must stay visible. */
 function fixUnknownColors(doc: Record<string, any>): string[] {
   const done: string[] = [];
   const allowed: string[] = SIGN_SCHEMA.$defs.color.enum;
@@ -121,7 +124,7 @@ function fixUnknownColors(doc: Record<string, any>): string[] {
   if (main && typeof main === "object") {
     const value = main.background_color;
     if (typeof value === "string" && !allowed.includes(value)) {
-      done.push(`цвет знака ${pyRepr(value)} -> 'other' — нет в перечислении схемы`);
+      done.push(`main sign colour ${pyRepr(value)} -> 'other' - not in the schema enumeration`);
       main.background_color = "other";
     }
   }
@@ -129,21 +132,21 @@ function fixUnknownColors(doc: Record<string, any>): string[] {
     if (!panel || typeof panel !== "object") continue;
     const value = panel.background_color;
     if (typeof value === "string" && !allowed.includes(value)) {
-      done.push(`панель ${panel.index}: цвет ${pyRepr(value)} -> 'other'`
-              + " — нет в перечислении схемы");
+      done.push(`panel ${panel.index}: colour ${pyRepr(value)} -> 'other'`
+              + " - not in the schema enumeration");
       panel.background_color = "other";
     }
   }
   return done;
 }
 
-/** Необязательное поле `parsed` со значением вне перечисления ВЫБРАСЫВАЕТСЯ,
- *  а не роняет весь разбор. Обязательные поля так не чинятся: исключение одно —
- *  цвет выше, и оно названо вместе с причиной.
+/** An optional `parsed` field holding a value outside the enumeration is DROPPED
+ *  rather than taking the whole reading down. Required fields are not fixed this
+ *  way: there is one exception, the colour above, and it is named with its reason.
  *
- *  Найдено замером: на снимке `009` модель вписала `payment_method: mobile`, когда
- *  такого значения в схеме уже не было. Строгая проверка отбраковала бы верно
- *  прочитанный знак целиком — из-за необязательного поля. */
+ *  Found by the measurement: on photograph `009` the model wrote
+ *  `payment_method: mobile` when the schema no longer had that value. A strict check
+ *  would have rejected a correctly read sign over an optional field. */
 function dropUnknownEnums(doc: Record<string, any>): string[] {
   const done: string[] = [];
   const allowed = SIGN_SCHEMA.$defs.parsed.properties as Record<string, any>;
@@ -154,10 +157,8 @@ function dropUnknownEnums(doc: Record<string, any>): string[] {
       const spec = allowed[key];
       if (!spec || !spec.enum) continue;
       if (!spec.enum.includes(parsed[key])) {
-        // Запись повторяет питоновскую дословно, включая кавычки `repr`:
-        // списки этих строк сверяются между реализациями.
-        done.push(`панель ${panel.index}: убрано ${key}=`
-                + `${pyRepr(parsed[key])} — нет в перечислении схемы`);
+        done.push(`panel ${panel.index}: dropped ${key}=`
+                + `${pyRepr(parsed[key])} - not in the schema enumeration`);
         delete parsed[key];
       }
     }
@@ -165,14 +166,14 @@ function dropUnknownEnums(doc: Record<string, any>): string[] {
   return done;
 }
 
-/** Значение так, как его записал бы питон: строка в одинарных кавычках. */
+/** A value written the way Python would write it: a string in single quotes. */
 function pyRepr(value: unknown): string {
   if (typeof value === "string") return `'${value.replace(/'/g, "\\'")}'`;
   return String(value);
 }
 
-/** Сигналы для формулы уверенности. Здесь только наблюдения — решение по ним
- *  принимается в `completeness`. */
+/** Signals for the confidence formula. Observations only - what to make of them is
+ *  decided in `completeness`. */
 function flagsOf(doc: Record<string, any>, panelsSeen: number | null): string[] {
   const out: string[] = [];
   const panels: Panel[] = doc.panels ?? [];
@@ -184,8 +185,9 @@ function flagsOf(doc: Record<string, any>, panelsSeen: number | null): string[] 
   }
   if (!plates.length) out.push("no_sign_plates");
 
-  // Правило 3 из PROBE_LOG: границу нельзя проверять мнением модели — сравниваем
-  // с независимым счётом стадии отсева, по табличкам С ПРАВИЛАМИ.
+  // Rule 3 from PROBE_LOG: a boundary cannot be checked by the model's opinion - it
+  // is compared against the independent count from the triage stage, over the plates
+  // that STATE A RULE.
   if (panelsSeen !== null && panelsSeen !== plates.length) {
     out.push(`panel_count_disagreement:${panelsSeen}!=${plates.length}`);
   }
@@ -208,15 +210,15 @@ function flagsOf(doc: Record<string, any>, panelsSeen: number | null): string[] 
 const errorsOf = (doc: unknown, schema: typeof SIGN_SCHEMA): string[] =>
   validate(doc, schema).slice().sort();
 
-/** Отсев чинится так же, как извлечение: мелочь оформления не должна уносить
- *  с собой годный ответ. Строгим остаётся то, у чего есть последствие:
- *  `category` вне перечисления по-прежнему отбраковывает ответ. */
+/** Triage is repaired the same way extraction is: a detail of formatting must not
+ *  carry off an otherwise good answer. What stays strict is what has a consequence:
+ *  a `category` outside the enumeration still rejects the answer. */
 export function triage(doc: Record<string, any>): Result {
   const repairs: string[] = [];
   const allowed = TRIAGE_SCHEMA.properties as Record<string, any>;
   for (const key of Object.keys(doc)) {
     if (!(key in allowed)) {
-      repairs.push(`убрано лишнее поле '${key}'`);
+      repairs.push(`extra field '${key}' removed`);
       delete doc[key];
     }
   }
@@ -224,11 +226,11 @@ export function triage(doc: Record<string, any>): Result {
   const seen = doc.what_i_see;
   const limit = allowed.what_i_see?.maxLength ?? 200;
   if (typeof seen === "string" && seen.length > limit) {
-    repairs.push(`what_i_see укорочено до ${limit} символов`);
+    repairs.push(`what_i_see shortened to ${limit} characters`);
     doc.what_i_see = seen.slice(0, limit);
   }
 
-  // Число панелей строкой — форма записи, а не другой ответ.
+  // A panel count written as a string is a form of writing, not a different answer.
   const n = doc.panels_below_main_sign;
   if (typeof n === "string" && /^\d+$/.test(n.trim())) {
     repairs.push(`panels_below_main_sign '${n}' -> ${Number(n)}`);
@@ -240,8 +242,8 @@ export function triage(doc: Record<string, any>): Result {
            repairs, flags: [] };
 }
 
-/** `panelsSeen` — число панелей, названное стадией отсева: независимый взгляд
- *  на ту же фотографию, и расхождение означает потерю границы. */
+/** `panelsSeen` is the number of panels named by the triage stage: an independent
+ *  look at the same photograph, and a disagreement means a boundary was lost. */
 export function sign(doc: Record<string, any>,
                      panelsSeen: number | null = null): Result {
   const repairs = [...repairDoc(doc), ...fixUnknownColors(doc), ...dropUnknownEnums(doc)];
