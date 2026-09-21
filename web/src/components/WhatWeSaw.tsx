@@ -34,10 +34,14 @@ function Plate({ panel }: { panel: Panel }) {
         {row.lines.map((line, i) => (
           <span key={i} className="text-body text-ink-3">{line}</span>
         ))}
-        {/* The mark "this is not a rule" must not be served as the plate's meaning:
-            an operator's board is not a road sign. */}
+        {/* The mark "this is not a rule" is a tag, not a line of the plate's meaning:
+            an operator's board is not a road sign. `self-start` keeps the tag to the
+            width of its words; in this column it would otherwise stretch across. */}
         {!panel.carries_rule && (
-          <span className="text-label text-ink-3">Not a parking rule</span>
+          <span className="mt-1 self-start rounded bg-chip px-1.5 py-0.5 text-xs
+                           text-ink-2">
+            Not a parking rule
+          </span>
         )}
       </div>
       <span className="shrink-0 text-label text-link">{row.tag}</span>

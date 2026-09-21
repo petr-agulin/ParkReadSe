@@ -63,3 +63,13 @@ describe("the answer comes before the evidence (decision 149)", () => {
     expect(reading()).toContain("readFor(");
   });
 });
+
+describe("a panel that sets no rule", () => {
+  it("is marked with a tag, not with a line of text", () => {
+    // The developer's call (2026-09-22): the mark is a tag, as before the redesign.
+    // The class is looked for in the ATTRIBUTE of the element holding the words, so a
+    // mention in a comment cannot satisfy the check.
+    const what = readFileSync(`${ROOT}web/src/components/WhatWeSaw.tsx`, "utf-8");
+    expect(what).toMatch(/className="[^"]*\bbg-chip\b[^"]*"\s*>\s*Not a parking rule/);
+  });
+});

@@ -114,8 +114,8 @@ Monospace is only for a quotation from a sign, the key and the provider's addres
 that is someone else's text, and it should not read as ours.
 
 Below 14 px there are four sizes, each with its own place: the section caption at 13;
-the reading screen's small lines — the completeness line, the general rules, the error
-box — at 12 (the bundler's `text-xs`); the monospace caption at 11; and the text strips
+the reading screen's small text — the completeness line, the general rules, the error
+box, the "Not a parking rule" tag — at 12 (the bundler's `text-xs`); the monospace caption at 11; and the text strips
 of the drawn sign at 10, sized to the plate as an object rather than as reading text
 (the hero-size sign uses the 14 caption).
 
@@ -151,6 +151,7 @@ Touch targets from 44 px. The camera shutter 92, the switch 46×28, the round bu
 | "Label → value" row | label 88–116 px `ink-3`, value 17/500, on the baseline |
 | Period timeline | a 30 px column, a sign icon of 36 (20 at a join), a 4 px segment in the colour of meaning |
 | Drawn sign | a blue `plate` shield with a white border, white text strips beneath it |
+| "Not a parking rule" tag | on a plate that sets no rule, under its meaning: `chip` background, `ink-2` text 12, radius 4, as wide as its words |
 | Home screen dark band | the full width of the column, no rounding; the sign, a heading and two quiet lines in a column |
 | Moment row | label on the left, never wrapping; value and chevron on the right; a hairline beneath. Day and month shortened ("Thu. 17 Sep. at 02:01"), the time never separated from "at". The system date picker opens from the value; the label is not pressable |
 | Interface icons | drawn in-house (decision 152): six inline SVGs in `Icon.tsx`, taking their colour from the text via `currentColor` |
