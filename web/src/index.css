@@ -1,78 +1,80 @@
 @import "tailwindcss";
 
-/* Токены оформления. Значения живут здесь одним списком: цвет и размер меняются
-   в одном месте, а не в каждом компоненте. Источник — `design.md`.
+/* Design tokens. The values live here in one list: a colour or a size changes in one
+   place, not in every component. The source is `design.md`.
 
-   Цвета в `oklch`: там светлота одинакова на глаз при разном тоне, поэтому
-   «на полтона тише» получается сдвигом одного числа, а не подбором. */
+   Colours are in `oklch`: there, lightness looks the same to the eye across hues, so
+   "half a tone quieter" is a shift of one number rather than a search. */
 @theme {
-  /* --- поверхности ------------------------------------------------------- */
-  --color-ground: oklch(0.99 0.002 250);      /* карточка, поднятая плоскость */
-  --color-ground-2: oklch(0.97 0.003 250);    /* фон экрана */
-  --color-inset: oklch(0.965 0.003 250);      /* поле ввода, тихая строка */
-  --color-chip: oklch(0.94 0.004 250);        /* нейтральный чип, круглая кнопка */
-  --color-line: oklch(0.94 0.004 250);        /* волосяной разделитель */
-  --color-field: oklch(0.9 0.005 250);        /* кант поля ввода */
+  /* --- surfaces ------------------------------------------------------- */
+  --color-ground: oklch(0.99 0.002 250);      /* card, raised plane */
+  --color-ground-2: oklch(0.97 0.003 250);    /* screen background */
+  --color-inset: oklch(0.965 0.003 250);      /* input field, quiet row */
+  --color-chip: oklch(0.94 0.004 250);        /* neutral chip, round button */
+  --color-line: oklch(0.94 0.004 250);        /* hairline divider */
+  --color-field: oklch(0.9 0.005 250);        /* input field border */
 
-  /* Тёмные плоскости: герой на главном экране и сцена под снимком. */
+  /* Dark planes: the hero on the home screen and the stage under the photograph. */
   --color-hero: oklch(0.32 0.03 250);
-  --color-stage: oklch(0.2 0.01 250);         /* фон под кадром и затемнение */
-  --color-on-dark: oklch(0.99 0.002 250);     /* текст на тёмном */
-  --color-on-dark-2: oklch(0.82 0.01 250);    /* второстепенный текст на тёмном */
+  --color-stage: oklch(0.2 0.01 250);         /* background under the frame, and the dimming */
+  --color-on-dark: oklch(0.99 0.002 250);     /* text on dark */
+  --color-on-dark-2: oklch(0.82 0.01 250);    /* secondary text on dark */
 
-  /* --- текст -------------------------------------------------------------- */
-  --color-ink: oklch(0.24 0.01 250);          /* основной текст */
-  --color-ink-strong: oklch(0.22 0.01 250);   /* крупные заголовки */
-  --color-ink-2: oklch(0.45 0.01 250);        /* второстепенный текст */
-  /* 0.525, а не 0.55: на 0.55 самый тихий текст не добирал 4.5:1 ни на одной
-     поверхности, кроме белой карточки (на чипе — 4.07:1). Правило было записано
-     в `design.md`, но не проверялось ничем. Теперь проверяется. */
-  --color-ink-3: oklch(0.525 0.01 250);       /* подписи, подсказки */
-  --color-ink-off: oklch(0.42 0.01 250);      /* выключенная строка: не прозрачность */
+  /* --- text -------------------------------------------------------------- */
+  --color-ink: oklch(0.24 0.01 250);          /* body text */
+  --color-ink-strong: oklch(0.22 0.01 250);   /* large headings */
+  --color-ink-2: oklch(0.45 0.01 250);        /* secondary text */
+  /* 0.525, not 0.55: at 0.55 the quietest text fell short of 4.5:1 on every surface
+     but the white card (4.07:1 on a chip). The rule was written in `design.md` but
+     checked by nothing. Now it is checked. */
+  --color-ink-3: oklch(0.525 0.01 250);       /* captions, hints */
+  --color-ink-off: oklch(0.42 0.01 250);      /* disabled row: not transparency */
 
-  /* --- действие ----------------------------------------------------------- */
-  --color-accent: oklch(0.52 0.11 250);       /* синий шведского знака */
+  /* --- action ----------------------------------------------------------- */
+  --color-accent: oklch(0.52 0.11 250);       /* the blue of the Swedish sign */
   --color-accent-press: oklch(0.46 0.105 250);
   --color-link: oklch(0.45 0.09 250);
-  --color-tint: oklch(0.94 0.02 250);         /* фон синего чипа */
+  --color-tint: oklch(0.94 0.02 250);         /* blue chip background */
   --color-tint-ink: oklch(0.4 0.09 250);
 
-  /* «Всё готово» в настройках. Отдельный токен, хотя значение сейчас совпадает
-     с `free`: цвета смысла принадлежат разбору знака и только ему, а это про
-     состояние приложения. Разъедутся они спокойно — каждый по своей причине. */
+  /* "All set" in the settings. A token of its own, though its value now matches
+     `free`: the colours of meaning belong to the reading of a sign and to it alone,
+     while this one is about the state of the application. They can drift apart
+     calmly, each for its own reason. */
   --color-ok: oklch(0.42 0.1 150);
-  --color-ok-bg: oklch(0.94 0.03 160);        /* бледная мята под меткой «готово» */
+  --color-ok-bg: oklch(0.94 0.03 160);        /* pale mint under the "ready" mark */
 
-  /* --- цвета смысла ------------------------------------------------------- */
-  /* Только для состояний разбора. Нигде больше. */
-  --color-free: oklch(0.42 0.1 150);          /* условий нет */
-  --color-fee: oklch(0.46 0.11 70);           /* платно */
-  --color-unsure: oklch(0.46 0.11 70);        /* неопределённость — тем же тоном */
-  --color-deny: oklch(0.48 0.16 25);          /* знак запрещает */
-  --color-slash: oklch(0.58 0.2 27);          /* перечёркивание на значке конца */
-  --color-note: oklch(0.96 0.02 70);          /* фон жёлтой заметки */
+  /* --- colours of meaning ------------------------------------------------------- */
+  /* For the states of a reading only. Nowhere else. */
+  --color-free: oklch(0.42 0.1 150);          /* no conditions */
+  --color-fee: oklch(0.46 0.11 70);           /* fee */
+  --color-unsure: oklch(0.46 0.11 70);        /* uncertainty — in the same tone */
+  --color-deny: oklch(0.48 0.16 25);          /* the sign prohibits */
+  --color-slash: oklch(0.58 0.2 27);          /* the strike-through on the end icon */
+  --color-note: oklch(0.96 0.02 70);          /* yellow note background */
   --color-note-ink: oklch(0.38 0.05 70);
-  --color-danger-bg: oklch(0.965 0.02 25);    /* фон опасного действия */
+  --color-danger-bg: oklch(0.965 0.02 25);    /* dangerous action background */
   --color-danger-line: oklch(0.9 0.03 25);
 
-  /* Табличка знака, нарисованная кодом: это предмет, а не оформление. */
+  /* The sign plate drawn in code: it is an object, not decoration. */
   --color-plate: oklch(0.45 0.13 255);
 
-  /* --- шрифт -------------------------------------------------------------- */
-  /* Системный: ничего не грузится снаружи. Вид держится на шкале, а не на гарнитуре. */
+  /* --- typeface -------------------------------------------------------------- */
+  /* The system one: nothing is loaded from outside. The look rests on the scale, not on a typeface. */
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
                "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 
-  /* --- шкала размеров ----------------------------------------------------- */
-  /* Заголовок первого запуска: он один на экране, и ему можно быть крупнее
-     всего остального. Отдельным размером, а не значением по месту, — чтобы
-     `design.md` продолжал описывать все кегли, какие есть в приложении.
+  /* --- size scale ----------------------------------------------------- */
+  /* The first-launch heading: it stands alone on the screen and may be larger than
+     everything else. A size of its own rather than a value on the spot, so that
+     `design.md` goes on describing every size the application has.
 
-     Имя НЕ `hero`: у `text-*` общее пространство имён с цветом текста, а цвет
-     `--color-hero` уже занят тёмной плашкой. Совпади имена — утилита `text-hero`
-     стала бы красить, а не задавать кегль, и заголовок молча поехал бы и в цвете,
-     и в размере. Проверено сборкой: так и случилось, пока размер звался `hero`. */
+     The name is NOT `hero`: `text-*` shares its namespace with the text colour, and
+     the colour `--color-hero` is already taken by the dark band. Had the names
+     matched, the utility `text-hero` would paint instead of setting a size, and the
+     heading would silently shift in both colour and size. Confirmed by the build: it
+     happened while the size was called `hero`. */
   --text-display: 38px;
   --text-display--line-height: 1.1;
   --text-display--letter-spacing: -0.035em;
@@ -98,7 +100,7 @@
   --text-mono: 11px;
   --text-mono--letter-spacing: 0.1em;
 
-  /* --- скругления и тени --------------------------------------------------- */
+  /* --- radii and shadows --------------------------------------------------- */
   --radius-card: 30px;
   --radius-card-sm: 24px;
   --radius-button: 26px;
@@ -115,13 +117,13 @@
   --shadow-mask: 0 0 0 9999px oklch(0.2 0.01 250 / 0.55);
 }
 
-/* На коротком экране тёмная полоса главного ужимается, чтобы основное действие
-   осталось на виду без прокрутки. Знак при этом не трогаем: менять его размер —
-   это снова подбирать пропорции, а ужать отступы и кегль заголовка достаточно.
+/* On a short screen the home screen's dark band shrinks, so the main action stays in
+   view without scrolling. The sign is left alone: changing its size means fitting
+   the proportions again, while shrinking the spacing and the heading is enough.
 
-   Правило записано обычным `@media`, а не утилитой `[@media(...)]:`: такой
-   произвольный вариант сборщик молча НЕ выпускает — в собранном CSS его не было
-   вовсе, вместе с кеглем, который он включал. Проверено по сборке. */
+   The rule is written as a plain `@media`, not as a `[@media(...)]:` utility: the
+   bundler silently does NOT emit such an arbitrary variant — it was absent from the
+   built CSS altogether, along with the size it switched on. Confirmed on the build. */
 @media (max-height: 760px) {
   .tight-on-short {
     padding-block: 1.25rem;
@@ -135,9 +137,10 @@
   }
 }
 
-/* Фон страницы, а не только оболочки. Пока оболочка была выше окна, она его
-   и закрывала; с `svh` — наименьшей высотой окна — при спрятанной адресной строке
-   окно оказывается выше оболочки, и снизу проглядывало бы белое. */
+/* The background of the page, not only of the shell. While the shell was taller than
+   the window it covered it; with `svh` — the window's smallest height — the window is
+   taller than the shell once the address bar hides, and white would show through
+   underneath. */
 body {
   background-color: var(--color-ground-2);
 }
