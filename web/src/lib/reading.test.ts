@@ -1,4 +1,4 @@
-// Решения экрана разбора. Требования 14 и 17 шага 11.
+// The decisions of the reading screen. Requirements 14 and 17 of step 11.
 
 import { describe, expect, it } from "vitest";
 
@@ -17,62 +17,62 @@ const panel = (over: Partial<Panel> = {}): Panel => ({
   meanings: [meaning()], ...over,
 });
 
-describe("значение таблички строкой", () => {
-  it("код идёт в скобках после названия — как на знаке", () => {
+describe("a plate's meaning as a line", () => {
+  it("puts the code in brackets after the name, as on the sign", () => {
     expect(meaningLine(meaning())).toBe("Fee (T16). A fee applies");
   });
 
-  it("кода может не быть: табло оператора — не дорожный знак", () => {
+  it("may have no code: an operator's board is not a road sign", () => {
     expect(meaningLine(meaning({ code: "" }))).toBe("Fee. A fee applies");
   });
 
-  it("`continues` продолжает заголовок одним предложением", () => {
-    // «No parking (C35) on Thursdays…», а не два обрубка через точку.
+  it("`continues` carries the heading on in one sentence", () => {
+    // "No parking (C35) on Thursdays…", not two stumps with a full stop between.
     expect(meaningLine(meaning({ label: "No parking", code: "C35",
                                  short: "on Thursdays", continues: true })))
       .toBe("No parking (C35) on Thursdays");
   });
 
-  it("без пояснения остаётся одно название", () => {
+  it("leaves the name alone when there is no explanation", () => {
     expect(meaningLine(meaning({ short: "" }))).toBe("Fee (T16)");
   });
 });
 
-describe("табличка карточкой", () => {
-  it("сверху — что написано на табличке, под ним — что это значит", () => {
+describe("a plate as a card", () => {
+  it("puts what the plate says on top and what it means beneath", () => {
     const row = plateRow(panel());
     expect(row.quote).toBe("Avgift");
     expect(row.lines).toEqual(["Fee (T16). A fee applies"]);
     expect(row.tag).toBe("Panel");
   });
 
-  it("у таблички без своего текста верхней строки нет вовсе", () => {
-    // Пиктограмма: текста на ней нет, и выдумывать его незачем — карточка
-    // начинается сразу со смысла.
+  it("has no top line for a plate with no text of its own", () => {
+    // A pictogram: there is no text on it and no reason to invent any — the card
+    // starts straight with the meaning.
     const row = plateRow(panel({ text: "", meanings: [meaning({ label: "Motorcycle" })] }));
     expect(row.quote).toBe("");
     expect(row.lines).toEqual(["Motorcycle (T16). A fee applies"]);
   });
 
-  it("главный знак назван главным, всё прочее — табличкой", () => {
-    // `kind` — открытая строка: незнакомый вид должен попасть в «Panel».
+  it("names the main sign primary and everything else a panel", () => {
+    // `kind` is an open string: an unfamiliar kind has to land in "Panel".
     expect(plateRow(panel({ kind: "main_sign" })).tag).toBe("Primary sign");
-    expect(plateRow(panel({ kind: "что-то новое" })).tag).toBe("Panel");
+    expect(plateRow(panel({ kind: "something new" })).tag).toBe("Panel");
   });
 
-  it("несколько смыслов — каждый своей строкой", () => {
+  it("gives several meanings a line each", () => {
     const row = plateRow(panel({ meanings: [meaning(), meaning({ key: "b", label: "Hours" })] }));
     expect(row.lines).toHaveLength(2);
   });
 
-  it("непонятый остаток не теряется", () => {
+  it("does not lose the part that was not understood", () => {
     const row = plateRow(panel({ not_interpreted_text: "This wording is not interpreted" }));
     expect(row.lines).toContain("This wording is not interpreted");
   });
 
-  it("пустая панель не остаётся голой карточкой", () => {
-    // Ни текста, ни смыслов — на экране была бы пустая рамка. Так однажды
-    // и случилось, потому у безымянной панели есть имя.
+  it("does not leave an empty panel as a bare card", () => {
+    // No text and no meanings would put an empty frame on screen. That happened once,
+    // which is why a nameless panel has a name.
     const row = plateRow(panel({ text: "", meanings: [], index: 3 }));
     expect(row.quote).toBe("");
     expect(row.lines).toEqual(["Panel 3"]);
@@ -94,23 +94,23 @@ const regime = (over: Partial<Regime> = {}): Regime => ({
   duration_expires_at: null, duration_source: null, periods: [period()], ...over,
 });
 
-describe("какая карточка окна рисуется", () => {
-  it("нет ни шкалы, ни объяснения — карточки не будет", () => {
+describe("which window card is drawn", () => {
+  it("draws no card when there is neither a scale nor an explanation", () => {
     expect(showsWindow(regime({ periods: [], no_window_text: null }))).toBe(false);
   });
 
-  it("есть шкала — есть карточка", () => {
+  it("draws a card when there is a scale", () => {
     expect(showsWindow(regime())).toBe(true);
   });
 
-  it("шкалы нет, но сказать есть что — карточка есть", () => {
-    // Арендованное место: окна нет, а строка о нём нужна.
+  it("draws a card when there is no scale but something to say", () => {
+    // A rented bay: there is no window, but a line about it is needed.
     expect(showsWindow(regime({ periods: [], no_window_text: "Leased bay" }))).toBe(true);
   });
 
-  it("первой считается первая НАРИСОВАННАЯ, а не первая в списке", () => {
-    // Иначе строка «Read for …» повисла бы на карточке, которой на экране нет,
-    // и исчезла бы вместе с ней.
+  it("counts the first DRAWN card as first, not the first in the list", () => {
+    // Otherwise the "Read for …" line would hang on a card that is not on screen, and
+    // vanish together with it.
     const empty = regime({ periods: [], no_window_text: null });
     expect(firstWindow([empty, regime()])).toBe(1);
     expect(firstWindow([regime(), regime()])).toBe(0);
@@ -118,10 +118,10 @@ describe("какая карточка окна рисуется", () => {
   });
 });
 
-describe("на какой момент посчитан ответ", () => {
-  it("момент назван словами и сокращённо", () => {
-    // Оговорка «решение за вами» ушла отсюда под заголовок окна: она про окно,
-    // а не про дату, рядом с которой стояла.
+describe("the moment the answer was computed for", () => {
+  it("names the moment in words, shortened", () => {
+    // The caveat "the decision is yours" moved from here to under the window's heading:
+    // it is about the window, not about the date it used to stand beside.
     const line = readFor("2026-09-16T07:00");
     expect(line).toMatch(/^Read for /);
     expect(line).toMatch(/Wed\./);

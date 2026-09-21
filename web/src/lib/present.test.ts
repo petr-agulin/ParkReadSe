@@ -1,7 +1,7 @@
-// Слой, который ГОВОРИТ С ЧЕЛОВЕКОМ. Ошибка здесь не роняет прогон — она меняет
-// смысл фразы, и заметить это можно только чтением. Сверка сравнивает готовый текст
-// целиком; здесь проверяется то, что сверка доказать не может: что продукт
-// не начал разрешать, приказывать и обещать.
+// The layer that SPEAKS TO A PERSON. A mistake here does not fail a run — it changes
+// the meaning of a phrase, and only reading notices that. The double run compares the
+// finished text whole; what is checked here is what it cannot prove: that the product
+// has not begun to permit, to order and to promise.
 
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -21,8 +21,8 @@ const ROOT = fileURLToPath(new URL("../../../", import.meta.url));
 const cal = new Calendar();
 
 function answers(): string {
-  // Весь набор разом: запрещённая формулировка может выйти на одном знаке
-  // из полусотни, и проверять один удобный снимок — значит не проверять.
+  // The whole set at once: a forbidden wording may come out on one sign in fifty, and
+  // checking one convenient photograph means not checking.
   const cases = JSON.parse(readFileSync(`${ROOT}parity/cases.json`, "utf-8"));
   const seen = new Set<string>();
   const out: string[] = [];
@@ -46,23 +46,23 @@ function answers(): string {
   return out.join("\n").toLowerCase();
 }
 
-describe("словарь формулировок", () => {
-  // Словарь из `PROJECT_BRIEF.md`: продукт говорит О ЗНАКЕ и не разрешает,
-  // не приказывает и не обещает от своего лица. Проверка переехала вместе
-  // со словами: оставь её в питоне — и после его вывода продукт лишится
-  // ровно той страховки, ради которой формулировки живут в одном месте.
+describe("the vocabulary of wordings", () => {
+  // The vocabulary of `PROJECT_BRIEF.md`: the product speaks ABOUT THE SIGN, and does
+  // not permit, order or promise in its own voice. The check moved together with the
+  // words: left in Python, it would have gone with Python, and the product would have
+  // lost exactly the safeguard the wordings are kept in one place for.
   const FORBIDDEN = ["parking allowed", "you may park", "you can park here",
                      "you need to move the car", "you must", "it is safe to",
                      "we recommend"];
 
-  it("ответ ни на одном знаке набора не разрешает и не приказывает", () => {
+  it("permits and orders nothing in the answer on any sign of the set", () => {
     const text = answers();
     for (const bad of FORBIDDEN) expect(text, bad).not.toContain(bad);
   });
 
-  it("готовые подписи тоже держатся словаря", () => {
-    // Слова об офлайне — тоже слова продукта, и словарь на них распространяется:
-    // они живут в другом файле только потому, что их читает служебный работник.
+  it("keeps the finished captions to the vocabulary too", () => {
+    // The words about being offline are the product's words too, and the vocabulary
+    // covers them: they live in another file only because the service worker reads them.
     const tables = [STATE_TEXT, PERIOD_HEADLINE, REASON_TEXT, UNCERTAINTY_TEXT,
                     CLOCK_CHANGE_TEXT, { offline: OFFLINE_NOTE }];
     for (const table of tables) {
@@ -74,14 +74,14 @@ describe("словарь формулировок", () => {
     }
   });
 
-  it("«Free parking» — единственное исключение, и только без условий", () => {
-    // Словарь эту формулировку запрещает: она обещает бесплатность там, где может
-    // требоваться диск или билет. Разрешена ровно там, где условий нет вовсе.
+  it('allows "Free parking" as the one exception, and only with no conditions', () => {
+    // The vocabulary forbids this wording: it promises no charge where a disc or a
+    // ticket may be required. It is allowed exactly where there are no conditions.
     expect(PERIOD_HEADLINE.free).toBe("Free parking");
     expect(PERIOD_HEADLINE.free_with_conditions).toBe("No fee stated for this period");
   });
 
-  it("каждое состояние отрезка названо словами о знаке", () => {
+  it("names every state of a stretch in words about the sign", () => {
     for (const text of Object.values(STATE_TEXT)) {
       expect(text.toLowerCase()).toContain("the sign");
     }

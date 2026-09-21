@@ -1,14 +1,14 @@
-// Своя проверка схемы — против независимого судьи.
+// Our own schema check — against an independent judge.
 //
-// В браузере схему проверяет свой код (решение 124): тащить в страницу библиотеку
-// ради одной проверки дороже, чем написать её. Но проверка, которая сверяется
-// сама с собой, ничего не стережёт — поэтому рядом стоит `ajv`, настоящий
-// валидатор JSON Schema, и обе стороны судят одни и те же нарочно поломанные
-// разборы. Расходятся — виновата своя проверка, и это видно здесь, а не у человека
-// у знака.
+// In the browser the schema is checked by our own code (decision 124): pulling a
+// library into the page for one check costs more than writing it. But a check that
+// compares itself with itself guards nothing — so `ajv`, a real JSON Schema validator,
+// stands beside it, and both judge the same deliberately broken readings. When they
+// disagree, our own check is at fault, and that shows here rather than to a person at
+// a sign.
 //
-// `ajv` живёт ТОЛЬКО в тестах (решение 138). Что он не попал в страницу, стережёт
-// `npm run test:build`.
+// `ajv` lives ONLY in the tests (decision 138). `npm run test:build` guards that it
+// did not reach the page.
 
 import Ajv2020 from "ajv/dist/2020";
 import { describe, expect, it } from "vitest";
@@ -17,18 +17,18 @@ import { valid } from "./schema";
 import { SIGN_SCHEMA } from "./schema.data";
 import { MUTATIONS, applyMutation, documents } from "../../tools/goldens";
 
-// У `ajv` экспорт по-разному приезжает в ESM и CJS — берём то, что пришло.
+// `ajv`'s export arrives differently under ESM and CJS — take whichever came.
 const Ctor: any = (Ajv2020 as any).default ?? Ajv2020;
-// `strict: false`: схема писана для людей и несёт описания, о которых `ajv`
-// не спрашивали. Судить он должен правила, а не оформление.
+// `strict: false`: the schema is written for people and carries descriptions `ajv`
+// was not asked about. It is to judge the rules, not the presentation.
 const judge = new Ctor({ allErrors: true, strict: false }).compile(SIGN_SCHEMA);
 
-describe("проверка схемы против независимого судьи", () => {
+describe("the schema check against an independent judge", () => {
   // py: test_parity::test_the_schema_check_has_something_to_be_checked_against
-  it("на каждом рецепте поломки вердикт тот же, что у `ajv`", () => {
+  it("gives the same verdict as `ajv` on every breaking recipe", () => {
     const docs = documents();
     const names = Object.keys(docs).sort().slice(0, 20);
-    expect(names.length, "сверять не на чем").toBeGreaterThanOrEqual(10);
+    expect(names.length, "nothing to compare against").toBeGreaterThanOrEqual(10);
 
     let broken = 0;
     for (const name of names) {
@@ -40,12 +40,12 @@ describe("проверка схемы против независимого су
       }
     }
 
-    // Проверка проверки: рецепты обязаны ЛОМАТЬ документ. Не ломали бы — сверка
-    // сравнивала бы две единицы и всегда была зелёной.
-    expect(broken, "ни один рецепт ничего не сломал").toBeGreaterThanOrEqual(8 * names.length);
+    // A check of the check: the recipes are obliged to BREAK the document. If they did
+    // not, the comparison would set two passes side by side and always be green.
+    expect(broken, "not one recipe broke anything").toBeGreaterThanOrEqual(8 * names.length);
   });
 
-  it("целый разбор проходит у обоих", () => {
+  it("passes an intact reading with both", () => {
     const docs = documents();
     const one = docs[Object.keys(docs).sort()[0]];
     expect(valid(one, SIGN_SCHEMA)).toBe(true);

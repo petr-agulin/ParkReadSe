@@ -1,8 +1,8 @@
-// Свойства файла токенов, которые видны только из него самого.
+// Properties of the token file that can only be seen from the file itself.
 //
-// Оба сторожа здесь появились после того, как ошибка уже случилась и нашлась
-// случайно — при взгляде в собранный CSS. Ни один из этих промахов не роняет
-// сборку и не виден в разметке: страница просто выглядит чуть иначе, чем задумано.
+// Both guards here appeared after the mistake had already happened and was found by
+// chance — on a look into the built CSS. Neither slip breaks the build or shows in the
+// markup: the page simply looks a little different from what was intended.
 
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -16,11 +16,11 @@ function token(name: string): Oklch {
   const m = CSS.match(
     new RegExp(`--color-${name}:\\s*oklch\\(([\\d.]+)\\s+([\\d.]+)\\s+([\\d.]+)\\)`),
   );
-  if (!m) throw new Error(`токен --color-${name} не найден`);
+  if (!m) throw new Error(`token --color-${name} not found`);
   return [Number(m[1]), Number(m[2]), Number(m[3])];
 }
 
-/** Относительная яркость по WCAG. oklch → OKLab → линейный sRGB → яркость. */
+/** Relative luminance by WCAG. oklch → OKLab → linear sRGB → luminance. */
 function luminance([L, C, H]: Oklch): number {
   const a = C * Math.cos((H * Math.PI) / 180);
   const b = C * Math.sin((H * Math.PI) / 180);
@@ -41,76 +41,76 @@ function ratio(ink: string, ground: string): number {
   return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
 }
 
-// Роль каждого цвета названа здесь, и ни один не может остаться неназванным:
-// новый токен обязан попасть в один из списков, иначе последний тест упадёт.
+// The role of every colour is named here, and none may stay unnamed: a new token has
+// to go into one of the lists, or the last test fails.
 const LIGHT_INK = ["ink", "ink-strong", "ink-2", "ink-3", "ink-off", "link",
                    "tint-ink", "note-ink", "ok", "free", "fee", "unsure", "deny"];
 const LIGHT_GROUND = ["ground", "ground-2", "inset", "chip", "tint", "note", "danger-bg",
                       "ok-bg"];
 const DARK_INK = ["on-dark", "on-dark-2"];
 const DARK_GROUND = ["hero", "stage", "plate", "accent", "accent-press"];
-/** Волосяные линии и штрих на значке: текста на себе не несут. */
+/** Hairlines and the stroke on an icon: they carry no text. */
 const DECOR = ["line", "field", "danger-line", "slash"];
 
 const MIN = 4.5;
 
-describe("контраст токенов", () => {
-  it("любая краска текста берёт 4.5:1 на любой светлой поверхности", () => {
-    // Порог проверяется по всем парам, а не по тем, что сегодня встречаются
-    // в разметке: список пар пришлось бы вести руками, и он устарел бы первым.
+describe("the contrast of the tokens", () => {
+  it("gives every text colour 4.5:1 on every light surface", () => {
+    // The threshold is checked over all pairs, not the ones the markup uses today: a
+    // list of pairs would have to be kept by hand, and it would be first to go stale.
     for (const ink of LIGHT_INK) {
       for (const ground of LIGHT_GROUND) {
-        expect(ratio(ink, ground), `${ink} на ${ground}`).toBeGreaterThanOrEqual(MIN);
+        expect(ratio(ink, ground), `${ink} on ${ground}`).toBeGreaterThanOrEqual(MIN);
       }
     }
   });
 
-  it("белый текст читается на каждой тёмной поверхности", () => {
+  it("keeps white text legible on every dark surface", () => {
     for (const ground of DARK_GROUND) {
-      expect(ratio("on-dark", ground), `on-dark на ${ground}`).toBeGreaterThanOrEqual(MIN);
+      expect(ratio("on-dark", ground), `on-dark on ${ground}`).toBeGreaterThanOrEqual(MIN);
     }
   });
 
-  it("приглушённый текст на тёмном — только карточка и сцена", () => {
-    // `on-dark-2` намеренно тише белого, и на синей кнопке он НЕ проходит
-    // (3.15:1). Это не дыра в пороге, а граница применения: приглушать текст
-    // на кнопке нечем и незачем — там белый. Осветлить его до кнопки значило бы
-    // отменить причину, по которой он существует.
+  it("allows muted text on dark only on the card and the stage", () => {
+    // `on-dark-2` is deliberately quieter than white, and on the blue button it does
+    // NOT pass (3.15:1). That is not a hole in the threshold but a limit of use: text
+    // on the button has no reason to be muted — it is white there. Lightening it enough
+    // for the button would cancel the reason it exists.
     for (const ground of ["hero", "stage"]) {
-      expect(ratio("on-dark-2", ground), `on-dark-2 на ${ground}`).toBeGreaterThanOrEqual(MIN);
+      expect(ratio("on-dark-2", ground), `on-dark-2 on ${ground}`).toBeGreaterThanOrEqual(MIN);
     }
     expect(ratio("on-dark-2", "accent")).toBeLessThan(MIN);
   });
 
-  it("у каждого цвета названа роль", () => {
+  it("names a role for every colour", () => {
     const declared = [...CSS.matchAll(/--color-([a-z0-9-]+):/g)].map((m) => m[1]);
     const known = new Set([...LIGHT_INK, ...LIGHT_GROUND, ...DARK_INK, ...DARK_GROUND,
                            ...DECOR]);
     const orphans = declared.filter((n) => !known.has(n));
-    expect(orphans, "новый токен не отнесён ни к тексту, ни к поверхности").toEqual([]);
+    expect(orphans, "a new token is assigned to neither text nor surface").toEqual([]);
     expect(declared.length).toBe(known.size);
   });
 });
 
-describe("пространство имён", () => {
-  it("имя кегля не занято цветом, и наоборот", () => {
-    // Утилиты `text-*` общие для размера и для цвета текста. Токен размера,
-    // названный как токен цвета, МОЛЧА становится краской: заголовок уезжает
-    // и в кегле, и в цвете, а сборка не жалуется ни словом.
+describe("the namespace", () => {
+  it("keeps a size name free of colour, and the other way round", () => {
+    // The `text-*` utilities serve both the size and the colour of text. A size token
+    // named like a colour token SILENTLY becomes paint: the heading shifts in both size
+    // and colour, and the build says not a word.
     //
-    // Поймано на `--text-hero`: цвет `--color-hero` уже был занят тёмной плашкой,
-    // и `text-hero` начал красить. Нашлось случайно, при взгляде в собранный CSS,
-    // — потому и сторож.
+    // Caught on `--text-hero`: the colour `--color-hero` was already taken by the dark
+    // band, and `text-hero` began to paint. Found by chance, on a look into the built
+    // CSS — hence the guard.
     const names = (prefix: string) =>
       [...CSS.matchAll(new RegExp(`--${prefix}-([a-z0-9-]+):`, "g"))]
         .map((m) => m[1])
-        // `--text-display--line-height` — не отдельное имя, а свойство размера.
+        // `--text-display--line-height` is not a name of its own but a property of a size.
         .filter((n) => !n.includes("--"));
 
     const sizes = new Set(names("text"));
     const clash = names("color").filter((n) => sizes.has(n));
-    expect(clash, "имя занято и кеглем, и цветом").toEqual([]);
-    // Проверка проверки: если имена перестали находиться, молчание не считается.
+    expect(clash, "the name is taken by both a size and a colour").toEqual([]);
+    // A check of the check: if the names stop being found, silence does not count.
     expect(sizes.size).toBeGreaterThan(5);
   });
 });
