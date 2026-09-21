@@ -1,12 +1,12 @@
-// Иконки приложения. Перенесено из `tests/test_icons.py` (шаг 8, этап 3).
+// The application's icons. Carried over from `tests/test_icons.py` (step 8, stage 3).
 //
-// Проверять картинку глазами можно один раз; дальше её проверяет код. Три вопроса:
-// совпадает ли лежащий файл с тем, что рисует генератор; не вылезает ли содержимое
-// маскируемой иконки за круг, внутри которого не режет ни одна маска; прозрачны ли
-// углы обычной — иначе белый угол ляжет заплаткой на тёмный экран.
+// A picture can be checked by eye once; after that, code checks it. Three questions:
+// does the file on disk match what the generator draws; does the maskable icon's
+// content stay inside the circle no mask cuts into; are the ordinary icon's corners
+// transparent — or a white corner lies like a patch on a dark screen.
 //
-// Файлы не перерисовываются: полный проход по 512×512 занимает секунды. Готовый
-// файл разбирается обратно в пиксели, и с кодом сверяются выборочные строки.
+// The files are not redrawn: a full pass over 512×512 takes seconds. The finished file
+// is decoded back into pixels, and sample rows are compared with the code.
 
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -17,55 +17,55 @@ import { BLUE, ICONS, ROOT, decode, row } from "./icons";
 const PUBLIC = join(ROOT, "web", "public");
 const decoded = (file: string) => decode(readFileSync(join(PUBLIC, file)));
 
-describe("иконки", () => {
+describe("the icons", () => {
   // py: test_icons::test_the_files_on_disk_are_what_the_code_draws
-  it("файлы на диске — это то, что рисует код", () => {
+  it("keeps the files on disk exactly what the code draws", () => {
     for (const { file, size, maskable } of ICONS) {
       const { width, height, rows } = decoded(file);
       expect([width, height], file).toEqual([size, size]);
-      // Девять строк по всей высоте: правка рисунка меняет хоть одну из них.
+      // Nine rows over the whole height: an edit to the drawing changes at least one.
       for (let k = 0; k <= 8; k += 1) {
         const py = Math.min(Math.round((size * k) / 8), size - 1);
-        expect(rows[py], `${file}, строка ${py}`).toEqual(row(size, py, maskable));
+        expect(rows[py], `${file}, row ${py}`).toEqual(row(size, py, maskable));
       }
     }
   });
 
   // py: test_icons::test_the_maskable_icon_keeps_everything_inside_the_safe_circle
-  it("маскируемая держит всё внутри круга безопасности", () => {
-    // Круг радиусом 40% ширины — то, что переживёт любую маску. Уголки рамки и есть
-    // самые дальние от центра точки рисунка, и обрезать их нельзя: без них иконка
-    // станет очередным парковочным `P`.
+  it("keeps everything of the maskable icon inside the safe circle", () => {
+    // A circle of radius 40% of the width is what survives any mask. The frame's
+    // corners are the drawing's points furthest from the centre, and they must not be
+    // cut: without them the icon becomes one more parking `P`.
     const size = 512;
     const limit = 0.4 * size;
     const { rows } = decoded("icon-maskable-512.png");
     for (let y = 0; y < size; y += 1) {
       for (let x = 0; x < size; x += 1) {
         const [r, g, b, a] = rows[y][x];
-        expect(a, "у маскируемой иконки поле сплошное").toBe(255);
+        expect(a, "the maskable icon's field is solid").toBe(255);
         if (r > 200 && g > 200 && b > 200) {
           const far = Math.hypot(x + 0.5 - size / 2, y + 0.5 - size / 2);
-          expect(far <= limit, `белое в (${x}, ${y}) выходит за круг`).toBe(true);
+          expect(far <= limit, `white at (${x}, ${y}) goes past the circle`).toBe(true);
         }
       }
     }
   });
 
   // py: test_icons::test_the_ordinary_icons_are_transparent_at_the_corners
-  it("обычные иконки прозрачны по углам", () => {
-    // Обычная иконка скруглена сама. Непрозрачный угол — белая заплатка,
-    // которая видна на всяком экране, кроме белого.
+  it("keeps the ordinary icons transparent at the corners", () => {
+    // An ordinary icon is rounded by itself. An opaque corner is a white patch, visible
+    // on every screen but a white one.
     for (const { file, size, maskable } of ICONS) {
       if (maskable) continue;
       const { rows } = decoded(file);
-      expect(rows[0][0][3], `${file}: угол непрозрачен`).toBe(0);
-      expect(rows[size >> 1][size >> 1][3], `${file}: середина не сплошная`).toBe(255);
+      expect(rows[0][0][3], `${file}: the corner is opaque`).toBe(0);
+      expect(rows[size >> 1][size >> 1][3], `${file}: the middle is not solid`).toBe(255);
     }
   });
 
   // py: test_icons::test_the_icon_wears_the_blue_of_the_sign
-  it("иконка носит синий шведского знака", () => {
-    // Цвет один и тот же во всём продукте.
+  it("wears the blue of the Swedish sign", () => {
+    // The icon keeps the blue of the sign itself, whatever the interface's accent.
     expect(decoded("icon-512.png").rows[256][8].slice(0, 3)).toEqual(BLUE);
   });
 });

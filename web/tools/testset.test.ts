@@ -1,8 +1,9 @@
-// Честность набора и замера. Перенесено из `tests/test_accuracy.py` (шаг 8).
+// The honesty of the set and the measurement. Carried over from
+// `tests/test_accuracy.py` (step 8).
 //
-// Замер держится на наборе, и набор обязан быть объявлен: у каждого снимка
-// названо состояние, у каждого ответа есть эталон, покрытие видно числом, а порог
-// по-прежнему стоит на том, на чём его посчитали.
+// The measurement rests on the set, and the set is obliged to be declared: every
+// photograph has a named state, every answer a ground truth, the coverage shows as a
+// number, and the threshold still stands on what it was counted on.
 
 import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -20,12 +21,13 @@ import { DEMO, EXPECTED, PENDING_GROUND_TRUTH, ROOT, assessAnswer, loadPairs,
 
 const intersect = <T>(a: Set<T>, b: Set<T>) => [...a].filter((x) => b.has(x)).sort();
 
-describe("покрытие замера", () => {
+describe("the coverage of the measurement", () => {
   // py: test_accuracy::test_hand_marked_fixtures_are_excluded_from_measurement
-  it("затравка в замер не входит", () => {
-    // Затравка — тот же эталон; мерить по ней — сравнивать эталон с самим собой.
-    // Проверка строит свои ответы, а не смотрит в `demo/`: там затравки уже нет,
-    // и тест, опирающийся на рабочий каталог, замолчал бы, когда защита нужна.
+  it("keeps a hand-marked seed out of the measurement", () => {
+    // A seed is the ground truth itself; measuring by it compares the ground truth
+    // with itself. The check builds its own answers rather than looking into `demo/`:
+    // there are no seeds there any more, and a test leaning on the working folder would
+    // fall silent just when the protection is needed.
     const label = "005-2tim-8-18-parentes-8-15-dubbelpil";
     const doc = JSON.parse(readFileSync(join(EXPECTED, `${label}.json`), "utf-8"));
     const dir = mkdtempSync(join(tmpdir(), "parkread-pairs-"));
@@ -45,9 +47,9 @@ describe("покрытие замера", () => {
   });
 
   // py: test_accuracy::test_every_saved_answer_pairs_with_its_ground_truth
-  it("каждый сохранённый ответ находит свой эталон", () => {
-    // Ловит рассинхрон: ответ есть, эталон есть, а пара не складывается, потому
-    // что имя разошлось при переименовании.
+  it("pairs every saved answer with its ground truth", () => {
+    // Catches a mismatch: the answer is there, the ground truth is there, but the pair
+    // does not form because a name drifted in a rename.
     const pairs = new Set(loadPairs(EXPECTED, DEMO, { onlyModel: true }).map((p) => p.label));
     const answered = new Set(readdirSync(DEMO).filter((f) => f.endsWith(".extract.json"))
                                               .map((f) => f.slice(0, -".extract.json".length)));
@@ -55,19 +57,19 @@ describe("покрытие замера", () => {
   });
 
   // py: test_accuracy::test_measurement_coverage_is_visible
-  it("покрытие — число, и оно не больше числа эталонов", () => {
-    // Само число не закрепляется: оно меняется с каждым прогоном.
+  it("shows the coverage as a number no larger than the ground truths", () => {
+    // The number itself is not pinned: it changes with every run.
     expect(loadPairs(EXPECTED, DEMO).length).toBeLessThanOrEqual(marked().size);
   });
 });
 
-describe("состояние каждого снимка объявлено", () => {
+describe("every photograph's state is declared", () => {
   const notASign = new Set(Object.keys(loadTriageExpectations()));
 
   // py: test_accuracy::test_every_photo_is_marked_pending_or_declared_not_a_sign
-  it("снимок либо размечен, либо объявлен не знаком, либо ждёт разметки", () => {
-    // Без третьего состояния «забыли разметить» неотличимо от «ещё не размечали»,
-    // без второго — неразмеченный знак путается с мусором.
+  it("has every photograph marked, declared not a sign, or awaiting marking", () => {
+    // Without the third state "forgot to mark" cannot be told from "not marked yet";
+    // without the second, an unmarked sign is confused with rubbish.
     const done = marked();
     const unaccounted = [...photos()].filter((p) => !done.has(p) && !notASign.has(p)
                                                     && !PENDING_GROUND_TRUTH.has(p));
@@ -75,19 +77,20 @@ describe("состояние каждого снимка объявлено", ()
   });
 
   // py: test_accuracy::test_a_photo_is_never_in_two_states_at_once
-  it("снимок никогда не в двух состояниях сразу", () => {
+  it("never has a photograph in two states at once", () => {
     expect(intersect(marked(), notASign)).toEqual([]);
     expect(intersect(PENDING_GROUND_TRUTH, notASign)).toEqual([]);
   });
 
   // py: test_accuracy::test_pending_list_does_not_rot
-  it("список ожидающих тает: появился эталон — снимок уходит из списка", () => {
+  it("empties the pending list: once a ground truth appears, the photograph leaves it", () => {
     expect(intersect(PENDING_GROUND_TRUTH, marked())).toEqual([]);
   });
 
   // py: test_accuracy::test_every_photo_has_a_transcript_section
-  it("у каждого снимка есть дословная расшифровка", () => {
-    // Расшифровка — первый слой набора: без неё снимок не разметить.
+  it("has a verbatim transcript for every photograph", () => {
+    // The transcript is the first layer of the set: without it a photograph cannot be
+    // marked.
     const text = readFileSync(join(ROOT, "testset", "TRANSCRIPTS.md"), "utf-8");
     const sections = new Set([...text.matchAll(/^## (\d{3}) /gm)].map((m) => m[1]));
     const numbers = new Set([...photos()].map((p) => p.slice(0, 3)));
@@ -95,18 +98,18 @@ describe("состояние каждого снимка объявлено", ()
   });
 });
 
-describe("порог", () => {
+describe("the threshold", () => {
   // py: test_accuracy::test_the_threshold_still_earns_its_value
-  it("по-прежнему стоит на том, на чём его посчитали", async () => {
-    // Порог 0.9 не выбран, а посчитан, и счёт обязан сходиться и завтра. Сдвинет
-    // картину правка промпта, весов или движка — тест назовёт снимок поимённо,
-    // и порог придётся пересчитать сознательно.
+  it("still stands on what it was counted on", async () => {
+    // The 0.9 threshold was not chosen but counted, and the count must hold tomorrow
+    // too. If an edit to the prompt, the weights or the engine shifts the picture, the
+    // test names the photograph, and the threshold has to be recounted deliberately.
     const cal = new Calendar();
     const moment = parseNaive("2026-03-02T00:00");
     const pairs = loadPairs(EXPECTED, DEMO, { promptFingerprint: await fingerprint(extractPrompt()) });
-    // Пар может не оказаться, если промпт только что правили, а прогона не было.
-    // Молча пройти тут нельзя: «проверок 0» выглядит как «всё сошлось».
-    expect(pairs.length, "ответов на текущий промпт нет: промпт правили, а прогона не было")
+    // There may be no pairs if the prompt was just edited and there was no run. Passing
+    // silently is not allowed here: "0 checks" looks like "everything agreed".
+    expect(pairs.length, "no answers to the current prompt: it was edited without a run")
       .toBeGreaterThan(0);
 
     const escaped: string[] = [];
@@ -117,8 +120,8 @@ describe("порог", () => {
       const a = assessAnswer(label, actual, moment, cal);
       if (a.category === FULL && a.confidence >= GOOD_ENOUGH) escaped.push(label);
     }
-    // Побег остался один: `059`. Уверенность 0.998, порогом он не ловится — разбор
-    // внутренне непротиворечив, просто прочитан не тот набор условий.
+    // One escape is left: `059`. Confidence 0.998, and the threshold does not catch it —
+    // the reading is internally consistent; it simply read the wrong set of conditions.
     expect(escaped).toEqual(["059-avstand-p-skiva-2tim-darefter-avgift"]);
   });
 });

@@ -1,13 +1,14 @@
-// Иконки приложения. Порт `parkread/icons.py` (шаг 8, этап 3), без библиотеки
-// изображений — как и в питоне.
+// The application's icons. A port of `parkread/icons.py` (step 8, stage 3), with no
+// image library — as in Python.
 //
-// **Что на иконке.** Синий `P` шведского знака внутри белых уголков рамки, той самой,
-// которую человек наводит на знак. Голый `P` носят и платёжные парковочные приложения;
-// уголки говорят, что это приложение со знаком ДЕЛАЕТ.
+// **What is on the icon.** The blue `P` of the Swedish sign inside the white corners of
+// a frame — the very frame a person aims at a sign. Parking payment apps wear a bare
+// `P` too; the corners say what this application DOES with a sign.
 //
-// Сглаживание — передискретизацией: считаем вчетверо чаще и усредняем. Обычные иконки
-// скруглены сами и прозрачны по углам; маскируемая — со сплошным полем и содержимым
-// внутри круга радиусом 40% ширины, того самого, внутри которого не режет ни одна маска.
+// Smoothing is by supersampling: count four times as often and average. The ordinary
+// icons are rounded themselves and transparent at the corners; the maskable one has a
+// solid field and its content inside a circle of radius 40% of the width — the one no
+// mask cuts into.
 
 import { deflateSync, inflateSync } from "node:zlib";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -16,21 +17,22 @@ import { fileURLToPath } from "node:url";
 
 export const ROOT = fileURLToPath(new URL("../../", import.meta.url));
 
-// Синий значка. Прежде он был и акцентом интерфейса, но с переходом на новую палитру
-// (шаг 11, этап 1) акцент сместился, а значок остался прежним — по слову разработчика.
-// Менять это число значит переснять три PNG и сменить значок у тех, кто уже поставил
-// приложение: отдельная работа, а не перекраска заодно.
+// The icon's blue. It used to be the interface's accent as well, but with the move to
+// the new palette (step 11, stage 1) the accent shifted and the icon stayed as it was —
+// at the developer's word. Changing this number means redrawing three PNGs and changing
+// the icon for everyone who already installed the application: a job of its own, not a
+// recolouring on the side.
 export const BLUE: [number, number, number] = [0x00, 0x57, 0xa8];
 const WHITE: [number, number, number] = [0xff, 0xff, 0xff];
 
 const SUPERSAMPLE = 4;
-// Доля ширины, занятая содержимым. У маскируемой она меньше не для красоты: уголки
-// рамки — самые дальние от центра точки рисунка, и при 0.62 они ложатся ровно внутрь
-// круга безопасности (0.45 * 0.62 * √2 ≈ 0.395 < 0.40).
+// The share of the width the content takes. The maskable one's is smaller not for
+// looks: the frame's corners are the drawing's points furthest from the centre, and at
+// 0.62 they fall just inside the safe circle (0.45 * 0.62 * √2 ≈ 0.395 < 0.40).
 const SCALE = { plain: 0.94, maskable: 0.62 };
 const CORNER_RADIUS = 0.22;
 
-/** Внутри ли точка прямоугольника со скруглением `r`. */
+/** Whether the point lies inside a rectangle rounded by `r`. */
 function roundedRect(x: number, y: number, x0: number, y0: number,
                      x1: number, y1: number, r: number): boolean {
   const cx = Math.min(Math.max(x, x0 + r), x1 - r);
@@ -44,12 +46,12 @@ function roundedRect(x: number, y: number, x0: number, y0: number,
 const disc = (x: number, y: number, cx: number, cy: number, r: number) =>
   (x - cx) ** 2 + (y - cy) ** 2 <= r * r;
 
-/** Буква `P` в единичном квадрате: прямая стойка и круглая дуга.
+/** The letter `P` in a unit square: a straight stem and a round bowl.
  *
- *  Дуга складывается из прямоугольника и круга, а не из скруглённого прямоугольника:
- *  у последнего скругляются ВСЕ углы, и слева, на стыке со стойкой, получалась ступенька. */
+ *  The bowl is made of a rectangle and a circle rather than a rounded rectangle: that
+ *  one rounds ALL its corners, and on the left, where it met the stem, left a step. */
 function letterP(x: number, y: number): boolean {
-  const s = 0.20;                                  // толщина штриха
+  const s = 0.20;                                  // stroke thickness
   const stem = 0.0 <= x && x <= s && 0.0 <= y && y <= 1.0;
   const bowl = (0.0 <= x && x <= 0.52 && 0.0 <= y && y <= 0.56)
             || disc(x, y, 0.52, 0.28, 0.28);
@@ -58,8 +60,8 @@ function letterP(x: number, y: number): boolean {
   return (stem || bowl) && !hole;
 }
 
-/** Четыре уголка рамки. Каждый строится от ВНЕШНЕГО угла внутрь: так обе полосы
- *  кончаются ровно на одной линии. */
+/** The four corners of the frame. Each is built from the OUTER corner inward, so both
+ *  bars end on exactly one line. */
 function cornerMarks(x: number, y: number, margin: number, length: number,
                      thick: number): boolean {
   for (const [ox, dx] of [[margin, 1.0], [1.0 - margin, -1.0]] as const) {
@@ -76,7 +78,7 @@ function cornerMarks(x: number, y: number, margin: number, length: number,
   return false;
 }
 
-/** Белое ли в точке поля: буква или уголок рамки. */
+/** Whether a point of the field is white: the letter or a corner of the frame. */
 function ink(u: number, v: number): boolean {
   const lu = (u - 0.34) / 0.32;
   const lv = (v - 0.27) / 0.46;
@@ -87,8 +89,8 @@ function ink(u: number, v: number): boolean {
 
 export type Pixel = [number, number, number, number];
 
-/** Одна строка иконки, RGBA. Отдельной функцией — чтобы тест мог сверить выборочные
- *  строки готового файла с кодом, не перерисовывая всю картинку. */
+/** One row of the icon, RGBA. A function of its own, so that a test can compare sample
+ *  rows of the finished file with the code without redrawing the whole picture. */
 export function row(size: number, py: number, maskable: boolean): Pixel[] {
   const big = size * SUPERSAMPLE;
   const scale = maskable ? SCALE.maskable : SCALE.plain;
@@ -106,15 +108,15 @@ export function row(size: number, py: number, maskable: boolean): Pixel[] {
         if (ink((x - 0.5) / scale + 0.5, (y - 0.5) / scale + 0.5)) white += 1;
       }
     }
-    const share = ground ? white / ground : 0;          // доля белого в поле
+    const share = ground ? white / ground : 0;          // the share of white in the field
     const colour = [0, 1, 2].map((i) => pyRound(BLUE[i] + (WHITE[i] - BLUE[i]) * share));
     out.push([colour[0], colour[1], colour[2], pyRound(255 * ground / perPixel)]);
   }
   return out;
 }
 
-/** Округление, как у питона: половина уходит к ЧЁТНОМУ. `Math.round` округляет
- *  половину вверх, и на краях буквы это дало бы другой пиксель. */
+/** Rounding as in Python: a half goes to the EVEN side. `Math.round` rounds a half up,
+ *  and at the edges of the letter that would give a different pixel. */
 function pyRound(value: number): number {
   const floor = Math.floor(value);
   const rest = value - floor;
@@ -154,7 +156,7 @@ function crc32(buf: Buffer): number {
   return (c ^ 0xffffffff) >>> 0;
 }
 
-/** PNG из пикселей: заголовок, данные, конец. 8 бит, RGBA, фильтр строк нулевой. */
+/** A PNG from pixels: header, data, end. 8 bits, RGBA, row filter zero. */
 export function png(rows: Pixel[][]): Buffer {
   const height = rows.length;
   const width = rows[0].length;
@@ -180,10 +182,10 @@ export function png(rows: Pixel[][]): Buffer {
   ]);
 }
 
-/** Обратно в пиксели — для проверки. Разбор узкий: только то, что пишем сами. */
+/** Back into pixels — for checking. The parsing is narrow: only what we write ourselves. */
 export function decode(data: Buffer): { width: number; height: number; rows: Pixel[][] } {
   if (data.subarray(0, 8).toString("latin1") !== "\x89PNG\r\n\x1a\n") {
-    throw new Error("не PNG");
+    throw new Error("not a PNG");
   }
   let at = 8;
   let header: Buffer | null = null;
@@ -196,18 +198,18 @@ export function decode(data: Buffer): { width: number; height: number; rows: Pix
     if (tag === "IDAT") parts.push(payload);
     at += 12 + length;
   }
-  if (!header) throw new Error("нет заголовка");
+  if (!header) throw new Error("no header");
   const width = header.readUInt32BE(0);
   const height = header.readUInt32BE(4);
   if (header[8] !== 8 || header[9] !== 6) {
-    throw new Error(`ожидалось 8 бит RGBA, а не ${header[8]}/${header[9]}`);
+    throw new Error(`expected 8-bit RGBA, not ${header[8]}/${header[9]}`);
   }
   const raw = inflateSync(Buffer.concat(parts));
   const stride = 1 + width * 4;
   const rows: Pixel[][] = [];
   for (let y = 0; y < height; y += 1) {
     const line = raw.subarray(y * stride, (y + 1) * stride);
-    if (line[0] !== 0) throw new Error("строка с фильтром: такие мы не пишем");
+    if (line[0] !== 0) throw new Error("a filtered row: we write none of those");
     const out: Pixel[] = [];
     for (let x = 0; x < width; x += 1) {
       out.push([line[1 + x * 4], line[2 + x * 4], line[3 + x * 4], line[4 + x * 4]]);
@@ -233,10 +235,10 @@ const samePixels = (a: Pixel[][], b: Pixel[][]) =>
   a.length === b.length && a.every((line, y) =>
     line.length === b[y].length && line.every((px, x) => px.every((v, i) => v === b[y][x][i])));
 
-/** Нарисовать все иконки. Возвращает имена изменившихся файлов.
+/** Draw every icon. Returns the names of the files that changed.
  *
- *  Сравниваются ПИКСЕЛИ, а не байты: сжатие у разных реализаций zlib может
- *  отличаться при том же изображении, и переписывать файл ради этого незачем. */
+ *  PIXELS are compared, not bytes: different zlib implementations may compress the
+ *  same image differently, and that is no reason to rewrite a file. */
 export function write(outDir: string): string[] {
   mkdirSync(outDir, { recursive: true });
   const changed: string[] = [];
@@ -253,6 +255,6 @@ export function write(outDir: string): string[] {
 
 if (process.argv[1] && process.argv[1].endsWith("icons.ts")) {
   const changed = write(join(ROOT, "web", "public"));
-  console.log(changed.length ? "перерисовано: " + changed.join(", ")
-                             : "нечего перерисовывать: иконки совпадают");
+  console.log(changed.length ? "redrawn: " + changed.join(", ")
+                             : "nothing to redraw: the icons match");
 }

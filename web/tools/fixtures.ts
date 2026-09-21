@@ -1,13 +1,14 @@
-// Сохранённые ответы модели и правила их устаревания. Порт `parkread/fixtures.py`
-// (шаг 8).
+// The model's saved answers, and the rules by which they go stale. A port of
+// `parkread/fixtures.py` (step 8).
 //
-// Каждый настоящий ответ модели на снимок набора сохраняется: из них собирается
-// замер, и одинаковый вход даёт одинаковый выход. Главный вопрос этого модуля —
-// **нужно ли переспрашивать снимок**: пропускать можно только ответ на ТОТ ЖЕ
-// вопрос, иначе замер молча смешает две версии промпта в одном числе.
+// Every real answer of the model on a photograph of the set is saved: the measurement
+// is built from them, and the same input gives the same output. The main question of
+// this module is **whether a photograph must be asked about again**: only an answer
+// to THE SAME question may be skipped, or the measurement would quietly mix two
+// versions of the prompt into one number.
 //
-// Только для разработчика и только на Node. Фотографии пользователей сюда не
-// попадают никогда: сохраняется ответ модели на снимок из набора автора.
+// For the developer only, and on Node only. Users' photographs never come here: what
+// is saved is the model's answer on a photograph from the author's set.
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, extname, join } from "node:path";
@@ -19,9 +20,9 @@ const fileOf = (root: string, image: string, stage: string) =>
 
 const readJson = (path: string) => JSON.parse(readFileSync(path, "utf-8"));
 
-/** Нужно ли переспрашивать снимок: да — если ответа нет, если он размечен руками
- *  или если получен другим промптом. Без отпечатка — тоже: доказать, каким
- *  промптом получен ответ, нечем. */
+/** Whether to ask about a photograph again: yes — if there is no answer, if it was
+ *  marked by hand, or if it came from another prompt. With no fingerprint too: there
+ *  is then nothing to prove which prompt the answer came from. */
 export async function stale(root: string, image: string, stage: string,
                             prompt: string): Promise<boolean> {
   const p = fileOf(root, image, stage);
@@ -31,11 +32,12 @@ export async function stale(root: string, image: string, stage: string,
   return doc.prompt_fingerprint !== await fingerprint(prompt);
 }
 
-/** Отсев уже ответил, что снимок не знак стоянки. Тогда извлечения не было и не
- *  будет, и отсутствие его ответа — не повод переспрашивать снимок вечно.
+/** The triage has already answered that the photograph is not a parking sign. Then
+ *  there was and will be no extraction, and its missing answer is no reason to ask
+ *  about the photograph for ever.
  *
- *  Смотрится сохранённый ОТВЕТ, а не свежесть промпта: изменится промпт отсева —
- *  снимок и так окажется устаревшим по своей стадии. */
+ *  What is looked at is the saved ANSWER, not the freshness of the prompt: if the
+ *  triage prompt changes, the photograph goes stale through its own stage anyway. */
 export function refused(root: string, image: string): boolean {
   const p = fileOf(root, image, "triage");
   if (!existsSync(p)) return false;
@@ -49,8 +51,8 @@ export function load(root: string, image: string, stage: string): unknown {
   return existsSync(p) ? readJson(p).response : null;
 }
 
-/** Сохранить ответ модели. Формат тот же, что писал питон: замер и проверка
- *  свежести читают старые и новые ответы одинаково. */
+/** Save an answer of the model. The format is the one Python wrote: the measurement
+ *  and the freshness check read old and new answers alike. */
 export async function save(root: string, image: string, stage: string, response: unknown,
                            model: string, usage: unknown,
                            prompt: string | null = null): Promise<string> {

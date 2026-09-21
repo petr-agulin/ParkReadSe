@@ -1,10 +1,11 @@
-// Node запускает TypeScript сам, но модули ищет по правилам ESM: относительный
-// импорт обязан нести расширение. Приложение пишет их без расширения — так принято
-// у сборщика, и переписывать сотню импортов ради одной команды нельзя.
+// Node runs TypeScript itself, but looks modules up by the ESM rules: a relative
+// import must carry an extension. The application writes its imports without one —
+// that is the bundler's custom, and rewriting a hundred imports for one command is
+// not on.
 //
-// Поэтому тут крючок: специфика `./engine` пробуется как `./engine.ts`. Нужен он
-// только инструментам разработчика (`npm run ask`), в сборку не входит и ничего
-// не меняет ни в приложении, ни в тестах.
+// Hence a hook here: the specifier `./engine` is tried as `./engine.ts`. Only the
+// developer's tools need it (`npm run ask`); it is not part of the build and changes
+// nothing in the application or the tests.
 
 import { register } from "node:module";
 
