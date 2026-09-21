@@ -4,21 +4,22 @@ import { distinctCircles } from "./circles";
 
 const term = (key: string) => ({ key, text: key, known: true });
 
-describe("круг стоящих без повторов", () => {
-  it("одинаковые круги показываются один раз", () => {
-    // Снимок `049`: два окна, адресат разный, а круг один и тот же.
-    const все = [term("parking")];
-    expect(distinctCircles([все, [term("parking")]])).toHaveLength(1);
+describe("the circle of those who may stand, without repetition", () => {
+  it("shows one and the same circle once", () => {
+    // Photograph `049`: two windows, a different addressee, and one circle between
+    // them.
+    const everyone = [term("parking")];
+    expect(distinctCircles([everyone, [term("parking")]])).toHaveLength(1);
   });
 
-  it("разные круги остаются оба", () => {
-    // Снимок `010`: слева арендованные места, справа арендованные с разрешением.
-    const слева = [term("forhyrda-platser")];
-    const справа = [term("forhyrda-platser"), term("sarskilt-p-tillstand")];
-    expect(distinctCircles([слева, справа])).toHaveLength(2);
+  it("keeps two different circles both", () => {
+    // Photograph `010`: rented spaces on the left, rented with a permit on the right.
+    const left = [term("forhyrda-platser")];
+    const right = [term("forhyrda-platser"), term("sarskilt-p-tillstand")];
+    expect(distinctCircles([left, right])).toHaveLength(2);
   });
 
-  it("порядок сохраняется, а пустых кругов не прибавляется", () => {
+  it("keeps the order, and adds no empty circles", () => {
     const a = [term("boende")];
     const b = [term("besokande")];
     expect(distinctCircles([a, b, a]).map((c) => c[0].key))
