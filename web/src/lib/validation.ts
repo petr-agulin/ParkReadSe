@@ -58,8 +58,8 @@ function repairDoc(doc: Record<string, any>): string[] {
   const panels = doc.panels;
   if (!Array.isArray(panels)) return done;
 
-  // Rule 1 from PROBE_LOG: the main sign is not a plate. On photograph `010` the
-  // model wrote `P` both into `main_sign` and as a first, textless panel.
+  // The main sign is not a plate. On photograph `010` the model wrote `P` both into
+  // `main_sign` and as a first, textless panel.
   const kept = panels.filter((p: any) => {
     if (!p || typeof p !== "object") return true;
     const empty = !(p.lines ?? []).length;
@@ -185,7 +185,8 @@ function flagsOf(doc: Record<string, any>, panelsSeen: number | null): string[] 
   }
   if (!plates.length) out.push("no_sign_plates");
 
-  // Rule 3 from PROBE_LOG: a boundary cannot be checked by the model's opinion - it
+  // A boundary cannot be checked by the model's opinion - on photograph `013` two
+  // plates were merged into one while the model called the boundaries certain. It
   // is compared against the independent count from the triage stage, over the plates
   // that STATE A RULE.
   if (panelsSeen !== null && panelsSeen !== plates.length) {

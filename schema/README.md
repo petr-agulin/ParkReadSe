@@ -31,8 +31,8 @@ reference entry records which schema field that entry corresponds to.
 
 ## Fields that came out of probing the model
 
-Four fields were added from the result of a run (`testset/PROBE_LOG.md`) rather than from
-the design: the model knew these things and was writing them into free text because no
+Four fields were added from the result of the model's first run rather than from the
+design: the model knew these things and was writing them into free text because no
 field existed.
 
 | Field | Why |

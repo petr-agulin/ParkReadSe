@@ -145,8 +145,8 @@ A reading is also held back where the data contradicts itself or cannot be order
   whole reading: the same words yield different rules. A missed boundary gives not an
   approximate answer but a different one.
 
-  **An undetermined boundary is not established by the model saying so.** On a probe
-  (`testset/PROBE_LOG.md`, photograph `013`) two plates were merged into one while the
+  **An undetermined boundary is not established by the model saying so.** On photograph
+  `013` two plates were merged into one while the
   model reported the boundaries as certain. The signal is taken from an independent
   source — the panel count asked for separately from the panel contents — and the
   disagreement is the uncertainty;
