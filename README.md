@@ -111,6 +111,18 @@ Anything outside the reference is marked unrecognised: the plate's text is shown
 with an honest "this service does not interpret this wording", and the confidence drops,
 possibly to a refusal. Free text never reaches the rule arithmetic.
 
+The reference lives in `reference/`. `signs/` holds one Markdown file per entry, named by
+its key; `general_rules/` holds the notes, each marked "this is not on the sign";
+`sources/` holds working notes on the official material (where the Transportstyrelsen
+catalogue and the textbook disagree, the catalogue wins). An entry's header is plain
+`key: value` lines: `key`, `tokens` (what is written on the sign), `category` (`main_sign`,
+`rule`, `info` — recognised but sets no rule, or `not_interpreted` — shown verbatim with no
+meaning), `label`, `code`, `schema` (the schema field it maps to), `en` (the interface text
+itself), `short` and `source`. The body below the header is a note for the developer and
+never reaches the screen. The answer is assembled from the `en` strings, which is why a
+forbidden phrasing cannot arrive from the model. After editing, `npm run emit` regenerates
+the browser's copy.
+
 Day classes (*vardag* / *vardag före sön- och helgdag* / *sön- och helgdag*) are computed
 from Swedish holiday law for 2026–2030. Outside that window the day class is unknown, and
 the answer gives both readings rather than picking one.
@@ -273,4 +285,4 @@ The interface language is English. Technical values — JSON keys, sign codes �
 everywhere.
 
 `AGENT_SPEC.md` holds the contract of the model inside the product: role, tools (none),
-prohibitions and refusal policy.
+prohibitions, refusal policy, and the schema its answers must follow.

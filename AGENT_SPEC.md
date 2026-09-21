@@ -51,6 +51,49 @@ shell, or SQL.
 
 ---
 
+## The schema — the contract with the code
+
+Two JSON Schemas (draft 2020-12), one per model call: `schema/triage.schema.json` (the
+triage label: parking sign, another sign, or not a sign) and `schema/sign.schema.json`
+(the main sign and the panels below it). The reference reading of every photograph in
+`testset/expected/` follows the same schema and must pass validation.
+
+**The list is closed.** Every object carries `additionalProperties: false`: the model fills
+in only the listed fields, and anything else is rejected by validation instead of seeping
+into the engine. The one outlet is `notes` — free text that enters neither the computation
+nor the confidence, so that an observation with no field of its own stays visible when
+errors are examined.
+
+**Two layers per panel.** `lines` is the verbatim Swedish text, line by line, with brackets
+and hyphens as on the sign; `parsed` is what the model assigned to known categories.
+Meaning is assigned by code from `reference/signs/`, never by the model; each reference
+entry's `schema:` field names the schema field it corresponds to.
+
+**Fields that came from the model's first run** rather than from the design — the model
+knew these things and wrote them into prose because no field existed:
+
+| Field | Why |
+|---|---|
+| `panels[].kind` | the model took an operator's payment board for a plate |
+| `main_sign.background_color` | colour was extracted for panels but not for the main sign |
+| `main_sign.form` | a zone sign reads like an ordinary one, but its type differs |
+| `legibility` | the confidence formula needs stickers and cropping as data, not prose |
+
+**Fields the code does not trust.** `boundaries.certain` and `model_confidence` are the
+model's own estimate: kept for the measurement, grounds for no decision (see the refusal
+policy below). `panel_count` deliberately duplicates the length of `panels`: a
+disagreement between them is an independent sign that a boundary was lost.
+
+**Deliberately left out:** the type of land (an owner cannot set a rule against the law, so
+the sign means the same either way); a default vehicle class (a lone `P` narrows nothing,
+and "car" must not be assumed); any conclusion about the user (`eligibility` names who the
+spaces are for, never whether the reader is one of them).
+
+**Checking.** Validation is the project's own code, `web/src/lib/schema.ts`. So that it is
+not measured against itself, the tests judge it with an independent validator, `ajv`, on
+deliberately broken readings; `ajv` is a development dependency and never reaches the
+built page.
+
 ## Forbidden actions
 
 - Extending permission when the reading is incomplete. An unread panel may be a
