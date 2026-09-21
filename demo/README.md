@@ -1,28 +1,30 @@
-# Демо-набор: сохранённые ответы модели
+# The demo set: the model's saved answers
 
-Ответы обеих стадий по снимкам тестового набора. На них стоят замер точности и
-регрессия: один и тот же вход даёт один и тот же выход, и ключ для этого не нужен.
+Answers from both stages on the photographs of the test set. The accuracy measurement
+and the regression checks stand on them: the same input gives the same output, and no
+key is needed for it.
 
-Имя файла — `<снимок>.<стадия>.json`, стадии две: `triage` и `extract`.
+The file name is `<photo>.<stage>.json`, and there are two stages: `triage` and
+`extract`.
 
-## Поле `origin` — читайте его первым
+## The `origin` field — read it first
 
-| Значение | Что это |
+| Value | What it is |
 |---|---|
-| `model` | **настоящий ответ модели**, сохранённый при живом вызове. Есть `usage` — замер токенов |
-| `hand_marked` | размеченный вручную эталон, положенный сюда как затравка |
+| `model` | **a real answer of the model**, saved during a live call. It carries `usage` — the token count |
+| `hand_marked` | a ground truth marked by hand and placed here as a seed |
 
-Различие принципиальное: мерить модель по эталону, написанный не моделью, значит мерить
-не то. В замер входят только файлы `model`.
+The difference matters: measuring the model against a ground truth the model did not
+write measures the wrong thing. Only `model` files go into the measurement.
 
-## Поле `prompt_fingerprint`
+## The `prompt_fingerprint` field
 
-Отпечаток промпта, которым получен ответ. Промпт изменился — ответ отвечает на прежний
-вопрос, и замер его **исключает**, назвав вслух. Смешивать в одном числе две версии
-вопроса нельзя.
+The fingerprint of the prompt the answer was obtained with. If the prompt changed, the
+answer is to the previous question, and the measurement **excludes** it, naming it
+aloud. Two versions of the question may not be mixed into one number.
 
-## Как набор пополняется
+## How the set grows
 
-`npm run ask -- testset/photos/<снимок>` спрашивает модель и сохраняет сюда каждый
-ответ, прошедший валидацию, вместе с `usage`. Команду запускает разработчик: она тратит
-ключ и квоту.
+`npm run ask -- testset/photos/<photo>` asks the model and saves here every answer
+that passed validation, together with its `usage`. The developer runs this command: it
+spends the key and the quota.
