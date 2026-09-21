@@ -414,9 +414,6 @@ exact conditions (such as Kunder for customers, Avgift for a fee, or a time limi
   narrows who may park **and** sets a requirement on the car's state;
 - **`4 tim`** — a third stay length in the set, after `30 min` and `2 tim`.
 
-⚠️ A figure can be made out in a reflection in the building's glass — check that it is not
-an identifiable person.
-
 **Meaning (developer):** To the right of the sign are 2 spaces only for charging electric
 or plug-in hybrid vehicles. Parking is always paid. The maximum stay is 4 hours.
 
