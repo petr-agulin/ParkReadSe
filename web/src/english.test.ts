@@ -25,7 +25,7 @@ const SCANNED = [
   ...["web/", "schema/", "prompts/"].filter((d) => existsSync(ROOT + d))
     .flatMap((d) => files(ROOT + d)),
   ...[".env.example", ".gitignore", "README.md", "AGENT_SPEC.md", "design.md",
-      "reference/README.md", "demo/README.md"]
+      "reference/README.md", "demo/README.md", "testset/TRANSCRIPTS.md"]
     .map((f) => ROOT + f).filter((f) => existsSync(f)),
 ];
 
