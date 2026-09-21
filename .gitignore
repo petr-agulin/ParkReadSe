@@ -1,40 +1,42 @@
-# Секреты. Реальный .env в репозиторий не попадает никогда.
+# Secrets. The real .env never goes into the repository.
 .env
 
-# Сырые снимки с телефона: нужны для разработки кадрирования, но в кадре у них
-# номера машин и люди. В репозиторий не идут НИКОГДА (AGENTS.md, §14).
+# Raw photographs from the phone: needed for developing the cropping, but they show
+# number plates and people. They NEVER go into the repository (AGENTS.md, §14).
 testset/raw/
 
-# Внутренняя кухня разработки: рабочее соглашение, планы, журнал решений.
-# Ведутся как раньше и лежат на диске — но в опубликованный репозиторий не идут.
+# The inner workings of development: the working agreement, the plans, the decision log.
+# They are kept up and stay on disk — but do not go into the published repository.
 AGENTS.md
 CLAUDE.md
 PLAN.md
 PLAN_NEXT.md
 
-# Добавлен 2026-09-18 по решению разработчика. Файл остаётся на диске и ведётся
-# дальше, но в репозиторий не идёт.
+# Added on 2026-09-18 by the developer's decision. The file stays on disk and is kept
+# up, but does not go into the repository.
 PROJECT_BRIEF.md
 
-# Рабочие файлы разработчика и ИИ-ассистента: черновики и заметки по направлению.
+# Working files of the developer and the AI assistant: drafts and notes on direction.
 PARKREAD_PLAN.md
 
-# Системное
+# System
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# ВНИМАНИЕ: демо-набор и тестовые фотографии знаков НЕ игнорируются.
-# Они часть проекта: на них стоит замер точности и сверка эталонов.
+# NOTE: the demo set and the test photographs of signs are NOT ignored.
+# They are part of the project: the accuracy measurement and the reference answers
+# stand on them.
 
-# Страница учебника «Körkortsboken» удалена из проекта: издательство разрешает
-# цитировать короткие отрывки с указанием источника, но не воспроизводить страницу.
-# Правило оставлено, чтобы снимок не вернулся случайно. Разбор — в
+# A page of the «Körkortsboken» textbook was removed from the project: the publisher
+# allows short quotations with the source named, but not reproducing the page. The
+# rule stays so the picture does not come back by accident. The analysis is in
 # reference/sources/RULES_SOURCE.md.
 rules.png
 
-# Скриншоты официальных каталогов знаков удалены при уборке: это чужие изображения,
-# а описания знаков в reference/sources/*.md текстовые и самодостаточные. Правило
-# оставлено, чтобы картинки не вернулись случайно.
+# Screenshots of the official sign catalogues were removed in the clean-up: they are
+# other people's images, while the sign descriptions in reference/sources/*.md are
+# textual and self-contained. The rule stays so the pictures do not come back by
+# accident.
 reference/sources/*.png
 reference/sources/*.jpg
