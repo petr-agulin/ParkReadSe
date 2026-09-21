@@ -2,7 +2,7 @@
 .env
 
 # Raw photographs from the phone: needed for developing the cropping, but they show
-# number plates and people. They NEVER go into the repository (AGENTS.md, §14).
+# number plates and people. They NEVER go into the repository.
 testset/raw/
 
 # The inner workings of development: the working agreement, the plans, the decision log.

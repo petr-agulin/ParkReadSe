@@ -1,7 +1,7 @@
 // Who the spaces are set aside for.
 //
 // **This is a caption, not a check.** The product names the circle and stops there:
-// whether the person at the sign belongs to it, they alone know (`PROJECT_BRIEF.md`).
+// whether the person at the sign belongs to it, they alone know.
 // So there is never a "you may" or a "you may not" here — only what the sign itself
 // says.
 //

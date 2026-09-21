@@ -47,7 +47,7 @@ function answers(): string {
 }
 
 describe("the vocabulary of wordings", () => {
-  // The vocabulary of `PROJECT_BRIEF.md`: the product speaks ABOUT THE SIGN, and does
+  // The product's vocabulary: it speaks ABOUT THE SIGN, and does
   // not permit, order or promise in its own voice. The check moved together with the
   // words: left in Python, it would have gone with Python, and the product would have
   // lost exactly the safeguard the wordings are kept in one place for.

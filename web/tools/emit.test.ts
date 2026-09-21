@@ -66,9 +66,9 @@ describe("the generated data is fresh", () => {
       expect(emitted, field).toContain(`"${field}"`);
     }
     // But the articles themselves do not. Nothing renders them: the screen takes
-    // only `text`. They are written for the developer and stay in his language by
-    // §2 of `AGENTS.md`, so in the browser they would be thousands of characters of
-    // prose that nobody will read.
+    // only `text`. They are written for the developer and stay in the developer's
+    // language, so in the browser they would be thousands of characters of prose that
+    // nobody will read.
     expect(emitted, "the articles travelled into the page").not.toContain('"body"');
     // The page takes them locally and never goes to the network for the reference.
     const app = read("web/src/App.tsx");

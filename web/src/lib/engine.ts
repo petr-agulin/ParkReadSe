@@ -3,7 +3,7 @@
 // the way but put to the developer (decision 123).
 //
 // This is where all the arithmetic moves out of the model and into code. It
-// implements the seven-step order of assembly written down in `PROJECT_BRIEF.md`:
+// implements the seven-step order of assembly:
 //
 // 1. the base regime from the main sign;
 // 2. splitting the stack into plates (already done by extraction);

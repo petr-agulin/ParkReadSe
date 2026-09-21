@@ -4,7 +4,7 @@
 // calendar: "Wednesday", "31 October", "08:00". Bring one in and the machine's time
 // zone enters the reckoning with it, along with summer time and months counted from
 // zero. Errors of that kind are quiet, and they surface on particular dates — exactly
-// what the port fears most (`PLAN_NEXT.md`, risk 5).
+// what the port fears most.
 //
 // So here there are whole numbers: a day is the number of the day from 1970-01-01, a
 // moment is the minute from that same midnight. No zones and no change of the clocks:

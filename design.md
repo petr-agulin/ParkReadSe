@@ -111,9 +111,13 @@ both size and paint, so a size named like a colour silently becomes paint. A tes
 checks it.
 
 Monospace is only for a quotation from a sign, the key and the provider's address:
-that is someone else's text, and it should not read as ours. The scale has two steps
-below 14 px — the section caption at 13 and the monospace caption at 11. Two places
-still go below the scale; see the open questions.
+that is someone else's text, and it should not read as ours.
+
+Below 14 px there are four sizes, each with its own place: the section caption at 13;
+the reading screen's small lines — the completeness line, the general rules, the error
+box — at 12 (the bundler's `text-xs`); the monospace caption at 11; and the text strips
+of the drawn sign at 10, sized to the plate as an object rather than as reading text
+(the hero-size sign uses the 14 caption).
 
 ### Sizes
 
@@ -260,8 +264,9 @@ to 0.98 — and none at all under `prefers-reduced-motion`.
   pass.
 - Colour is never the only carrier of meaning: a word always stands beside a mark.
 - Touch targets from 44 px.
-- Heights are not fixed where text lives. The size scale is in `px`, so text does not
-  follow the system's larger font setting — see the open questions.
+- Heights are not fixed where text lives. The size scale is in `px`: text keeps its
+  designed size and does not follow the system's larger font setting, so every screen
+  is laid out to fit at that one scale.
 - Every field and button has a label for a screen reader.
 
 ---
@@ -273,5 +278,3 @@ to 0.98 — and none at all under `prefers-reduced-motion`.
 | Dark theme | Later. The tokens are set up so it can be added by changing values |
 | App icon | Still in the previous blue: a job of its own, not a recolouring |
 | A typeface of our own | The system one is enough. It could come back, but only as a self-hosted file, with no outside server |
-| Text below the scale | The reading screen's small lines (`Completeness`, the general rules, the error box) use the bundler's default 12 px, and the drawn plate's lines are 10 px at its large and small sizes. Either the scale gains a step for them or they move onto `caption`/`section` — the developer's call |
-| The system's larger font | The scale is in `px`, so a person who set a larger text size on the phone does not get it here. Moving the scale to `rem` is the fix; it needs checking on the phone that every screen still fits |

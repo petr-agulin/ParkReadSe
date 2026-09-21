@@ -17,8 +17,7 @@
 // is no longer evidence of agreement between two implementations. That evidence is
 // the Python-era content of `parity/`, which stays recoverable from git history.
 //
-// **No photographs here, and there must never be any** - only readings
-// (`AGENTS.md`, §14).
+// **No photographs here, and there must never be any** - only readings.
 
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";

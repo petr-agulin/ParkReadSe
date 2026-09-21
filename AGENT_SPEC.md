@@ -62,7 +62,8 @@ shell, or SQL.
 - Wording addressed to the user rather than to the sign: "parking allowed", "free parking",
   "you may park", "you need to move the car", "prohibited". Every line states something
   about the **sign** ("the sign requires a parking disc, max 2 h"), never about what a
-  person may do. The vocabulary lives in `PROJECT_BRIEF.md`
+  person may do. The forbidden wordings are listed and checked in
+  `web/src/lib/present.test.ts`
 - Silently choosing the most likely reading where the data does not settle it: uncertainty
   is shown to the user, not collapsed into a guess
 - Mixing wording across plates when **forming** an instruction: by Transportstyrelsen's

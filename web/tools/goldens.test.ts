@@ -85,8 +85,8 @@ describe("what the reference answers are made of", () => {
 
   // py: test_parity::test_no_photograph_ever_reaches_the_reference_answers
   it("not one photograph ever reaches the reference answers", () => {
-    // Photographs with number plates never enter the repository (`AGENTS.md`, §14),
-    // and this path is closed to them as well.
+    // Photographs with number plates never enter the repository, and this path is
+    // closed to them as well.
     const dir = join(ROOT, "parity");
     for (const name of readdirSync(dir).sort()) {
       expect([".json", ".txt"], name).toContain(extname(name));

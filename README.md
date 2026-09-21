@@ -264,6 +264,5 @@ knows nothing about the model provider, and `engine.ts` imports nothing but the 
 The interface language is English. Technical values — JSON keys, sign codes — stay English
 everywhere.
 
-`PROJECT_BRIEF.md` holds the product's business logic and MVP boundaries; `AGENT_SPEC.md`
-holds the contract of the model inside the product: role, tools (none), prohibitions and
-refusal policy. Both are in Russian.
+`AGENT_SPEC.md` holds the contract of the model inside the product: role, tools (none),
+prohibitions and refusal policy.

@@ -1,4 +1,4 @@
-// The machine-checkable requirements of step 2 in PLAN_NEXT.md: 1, 2, 4, 8, 9.
+// What a machine can check about the cropping (step 2).
 //
 // The tests are named after properties rather than functions: when one breaks, it
 // should be clear what exactly broke.

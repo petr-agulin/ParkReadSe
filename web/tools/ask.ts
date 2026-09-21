@@ -1,8 +1,8 @@
 // A live run of the set: ask the model about the photographs again. A port of
 // `cli.py run` (step 8, stage 4).
 //
-// **The developer runs this command, not the AI:** it spends the key and the quota
-// (`AGENTS.md`, §12). Node reads the key and the address from `.env` itself.
+// **The developer runs this command, not the AI:** it spends the key and the quota.
+// Node reads the key and the address from `.env` itself.
 //
 //     npm run ask -- testset/photos/005-2tim-8-18-parentes-8-15-dubbelpil.jpg
 //     npm run ask -- --refresh testset/photos/*.jpg
