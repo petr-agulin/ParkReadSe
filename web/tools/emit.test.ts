@@ -18,13 +18,11 @@ import { EMITTED_FIELDS, ROOT, TARGETS, emitPrompts, emitReference, emitRules,
 const read = (path: string) => readFileSync(join(ROOT, path), "utf-8");
 
 describe("the generated data is fresh", () => {
-  // py: test_parity::test_the_browser_reference_is_current
   it("the browser's reference is built from the markdown and is not stale", () => {
     expect(read("web/src/lib/reference.data.ts"), "rebuild with: npm run emit")
       .toBe(emitReference());
   });
 
-  // py: test_parity::test_the_browser_schemas_are_current
   it("the schemas in the browser are a copy of `schema/*.json`", () => {
     expect(read("web/src/lib/schema.data.ts"), "rebuild with: npm run emit")
       .toBe(emitSchema());
@@ -43,7 +41,6 @@ describe("the generated data is fresh", () => {
       "web/src/lib/schema.data.ts", "web/src/lib/prompts.data.ts"]);
   });
 
-  // py: test_parity::test_the_emitted_reference_carries_what_the_screen_shows
   it("the fields the screen takes from an entry are the ones that travel", () => {
     // `body` and `tokens` do not travel: the first is a multi-paragraph markdown
     // article, the second a hint for the model, and neither takes any part in the
@@ -56,7 +53,6 @@ describe("the generated data is fresh", () => {
     expect(read("web/src/lib/reference.data.ts")).toContain("Never edited by hand");
   });
 
-  // py: test_parity::test_the_general_rules_travel_with_the_page
   it("the general rules travel with the page", () => {
     // The reference used to arrive from a server, and the failure was SILENT: no
     // server, and the block vanished without a word (step 6d).

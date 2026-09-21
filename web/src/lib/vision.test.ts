@@ -60,7 +60,6 @@ describe("calling the provider", () => {
     expect(url).toBe("https://example.invalid/v1/chat/completions");
   });
 
-  // py: test_vision::test_a_busy_provider_is_retried_not_reported_as_failure
   it("a busy provider is retried, a bad request is not", async () => {
     const busy = fake(answer({}, 503), answer({}, 503), good());
     const paused: number[] = [];
@@ -82,7 +81,6 @@ describe("calling the provider", () => {
     expect(res.text).toContain("parking_sign");
   });
 
-  // py: test_vision::test_a_timeout_is_retried_too
   it("an expired wait is a reason to retry too: there is no answer, not a refusal", async () => {
     // A timeout arrives as an abort on a signal, and it looks different from a
     // network that fell over. The path for both must be the same - a retry.
@@ -92,7 +90,6 @@ describe("calling the provider", () => {
     expect(slow.calls()).toBe(2);
   });
 
-  // py: test_vision::test_a_rejected_request_is_not_retried
   it("a rejected request is not retried: 400, 401, 403, 404", async () => {
     // There is no overload there - there is a wrong request or a wrong key, and a
     // second identical request would only spend the quota a second time. This keeps
@@ -105,7 +102,6 @@ describe("calling the provider", () => {
     }
   });
 
-  // py: test_vision::test_giving_up_says_why_and_how_many_tries
   it("giving up, it says why and how many times it tried", async () => {
     const dead = fake(answer({ error: "busy" }, 503));
     await expect(call(provider, "m", "q", photo, async () => {}, dead.fetchImpl))

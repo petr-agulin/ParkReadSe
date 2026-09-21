@@ -24,7 +24,6 @@ const Ctor: any = (Ajv2020 as any).default ?? Ajv2020;
 const judge = new Ctor({ allErrors: true, strict: false }).compile(SIGN_SCHEMA);
 
 describe("the schema check against an independent judge", () => {
-  // py: test_parity::test_the_schema_check_has_something_to_be_checked_against
   it("gives the same verdict as `ajv` on every breaking recipe", () => {
     const docs = documents();
     const names = Object.keys(docs).sort().slice(0, 20);

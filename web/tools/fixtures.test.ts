@@ -18,7 +18,6 @@ beforeEach(() => { root = mkdtempSync(join(tmpdir(), "parkread-fixtures-")); });
 afterEach(() => { rmSync(root, { recursive: true, force: true }); });
 
 describe("an answer going stale", () => {
-  // py: test_accuracy::test_changed_prompt_makes_a_saved_answer_stale
   it("makes a saved answer stale when the prompt is edited", async () => {
     // Found on a run: after a prompt edit the command skipped all 26 photographs,
     // because it checked that the file existed, not which question it answered.
@@ -28,7 +27,6 @@ describe("an answer going stale", () => {
     expect(await stale(root, IMG, "extract", "prompt B"), "the question changed").toBe(true);
   });
 
-  // py: test_accuracy::test_a_stale_triage_answer_alone_makes_the_photo_stale
   it("makes the photograph stale on a stale triage answer alone", async () => {
     // An edit to the triage prompt does not touch the extraction prompt: look only at
     // the extraction, and a triage edit quietly never reaches the run.
@@ -43,7 +41,6 @@ describe("an answer going stale", () => {
       .toBe(true);
   });
 
-  // py: test_accuracy::test_hand_marked_and_unfingerprinted_answers_are_stale
   it("always asks again about a hand-marked answer and one with no fingerprint", async () => {
     const path = await save(root, IMG, "extract", { ok: true }, "m", null, "P");
     expect(await stale(root, IMG, "extract", "P")).toBe(false);
@@ -58,7 +55,6 @@ describe("an answer going stale", () => {
 });
 
 describe("a triage refusal", () => {
-  // py: test_accuracy::test_a_refused_photo_is_not_asked_again_forever
   it("does not ask about a refused photograph for ever", async () => {
     // It has and will have no extraction answer: the pipeline never gets that far.
     expect(refused(root, IMG), "no triage answer yet").toBe(false);
@@ -67,7 +63,6 @@ describe("a triage refusal", () => {
     expect(await stale(root, IMG, "triage", "triage A"), "the triage itself is fresh").toBe(false);
   });
 
-  // py: test_accuracy::test_a_parking_photo_still_needs_its_extraction
   it("still expects an extraction for a photograph the triage let through", async () => {
     // The relief must not extend to photographs the triage LET THROUGH.
     await save(root, IMG, "triage", { category: "parking_sign" }, "m", null, "triage A");
@@ -76,7 +71,6 @@ describe("a triage refusal", () => {
       .toBe(true);
   });
 
-  // py: test_accuracy::test_a_changed_triage_prompt_reopens_a_refusal
   it("reopens a refusal when the triage prompt is edited", async () => {
     await save(root, IMG, "triage", { category: "not_a_sign" }, "m", null, "triage A");
     expect(refused(root, IMG)).toBe(true);

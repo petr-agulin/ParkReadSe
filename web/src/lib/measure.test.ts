@@ -33,7 +33,6 @@ function measure(e: SignDoc, a: SignDoc, label: string): Report {
 const BASE = "005-2tim-8-18-parentes-8-15-dubbelpil";
 
 describe("comparing a reading with the reference", () => {
-  // py: test_accuracy::test_identical_gives_full_marks
   it("an identical reading scores full marks and not one mistake", () => {
     const e = expected(BASE);
     const rep = measure(e, structuredClone(e), "005");
@@ -41,7 +40,6 @@ describe("comparing a reading with the reference", () => {
     expect(rep.mistakes).toEqual([]);
   });
 
-  // py: test_accuracy::test_detects_merged_panels
   it("finds merged plates", () => {
     // The mistake from photograph `013`: two plates merged into one.
     const e = expected(BASE);
@@ -54,7 +52,6 @@ describe("comparing a reading with the reference", () => {
     expect(rep.mistakes.length).toBeGreaterThan(0);
   });
 
-  // py: test_accuracy::test_detects_wrong_order_even_when_content_is_right
   it("order is measured apart: the same plates reordered are a different rule", () => {
     const e = expected("010-forhyrda-platser-tva-pilar");
     const a = structuredClone(e);
@@ -65,7 +62,6 @@ describe("comparing a reading with the reference", () => {
     expect(share(rep, "panels.order"), "but the order is not").toBe(0);
   });
 
-  // py: test_accuracy::test_detects_misread_text
   it("finds text that was read wrongly", () => {
     const e = expected(BASE);
     const a = structuredClone(e);
@@ -73,7 +69,6 @@ describe("comparing a reading with the reference", () => {
     expect(share(measure(e, a, "005"), "panel.lines")).toBeLessThan(1);
   });
 
-  // py: test_accuracy::test_detects_non_rule_panel_taken_for_a_plate
   it("finds a payment board taken for a plate that states a rule", () => {
     // Photographs `002`, `004`, `007`: swapping the kind of panel adds an
     // instruction that is not there.
@@ -86,7 +81,6 @@ describe("comparing a reading with the reference", () => {
       .toBe(true);
   });
 
-  // py: test_accuracy::test_detects_rule_plate_taken_for_an_operator_plate
   it("finds a rule-bearing plate marked as an operator's plate", () => {
     // The opposite mistake, and the more expensive one: an instruction silently
     // drops out of the reading.
@@ -98,7 +92,6 @@ describe("comparing a reading with the reference", () => {
     expect(share(rep, "panels.content"), "the instruction left the set of rules").toBe(0);
   });
 
-  // py: test_accuracy::test_confusion_inside_the_non_rule_pair_is_not_an_error
   it("confusion inside the pair that states no rule does not count as a mistake", () => {
     // An operator's plate against a payment board: a difference with no consequence,
     // since both stay outside the engine.
@@ -108,7 +101,6 @@ describe("comparing a reading with the reference", () => {
     expect(share(measure(e, a, "004"), "panel.rule_bearing")).toBe(1);
   });
 
-  // py: test_accuracy::test_line_wrapping_inside_one_plate_is_not_an_error
   it("a line break inside one plate does not count as a mistake", () => {
     const e = expected("023-avgift-4tim-laddande-elbilar");
     const a = structuredClone(e);
@@ -118,7 +110,6 @@ describe("comparing a reading with the reference", () => {
     expect(share(rep, "panels.content")).toBe(1);
   });
 
-  // py: test_accuracy::test_but_moving_words_between_plates_is_an_error
   it("but moving words between plates is a mistake", () => {
     // The boundary BETWEEN plates is strict: the same words on different plates are
     // a different rule.
@@ -129,7 +120,6 @@ describe("comparing a reading with the reference", () => {
     expect(share(measure(e, a, "023"), "panels.content")).toBe(0);
   });
 
-  // py: test_accuracy::test_detects_wrong_parsed_field
   it("finds a field parsed wrongly", () => {
     const e = expected(BASE);
     const a = structuredClone(e);
@@ -137,7 +127,6 @@ describe("comparing a reading with the reference", () => {
     expect(share(measure(e, a, "005"), "parsed.duration_limit")).toBe(0);
   });
 
-  // py: test_accuracy::test_case_and_spacing_do_not_count_as_errors
   it("case and spacing are not mistakes: what is measured is what was read", () => {
     const e = expected(BASE);
     const a = structuredClone(e);
@@ -145,7 +134,6 @@ describe("comparing a reading with the reference", () => {
     expect(share(measure(e, a, "005"), "panel.lines")).toBe(1);
   });
 
-  // py: test_accuracy::test_two_encodings_of_the_same_dates_are_equal
   it("two ways of writing the same dates are equal", () => {
     // `Augusti-Juni` is both "only from 1 August to 30 June" and "except July".
     const only = { mode: "only" as const, ranges: [{ from: "08-01", to: "06-30" }] };
@@ -157,7 +145,6 @@ describe("comparing a reading with the reference", () => {
 });
 
 describe("triage", () => {
-  // py: test_accuracy::test_false_reject_is_counted
   it("counts a false reject - the most expensive mistake of triage", () => {
     const t = triageReport({ a: true, b: true, c: false },
                            { a: "parking_sign", b: "not_a_sign", c: "not_a_sign" });
@@ -167,7 +154,6 @@ describe("triage", () => {
     expect(t.junkLetThrough).toBe(0);
   });
 
-  // py: test_accuracy::test_junk_let_through_is_counted_separately
   it("counts rubbish let through separately", () => {
     const t = triageReport({ a: true, c: false }, { a: "parking_sign", c: "parking_sign" });
     expect(t.falseRejects).toBe(0);
@@ -190,12 +176,10 @@ describe("disagreement of the ANSWER", () => {
              states: states.map((s, i) => [s, cond[i]] as [string, string[]]) };
   }
 
-  // py: test_accuracy::test_identical_verdicts_have_no_differences
   it("identical answers do not disagree", () => {
     expect(verdictDifferences(verdict(), verdict())).toEqual([]);
   });
 
-  // py: test_accuracy::test_a_pointer_read_as_a_parking_sign_is_the_whole_verdict
   it("a direction sign read as a parking sign disagrees in the whole answer", () => {
     // `050` and `037`: what disagrees is not a field but the whole answer, and in
     // the direction of widening.
@@ -205,7 +189,6 @@ describe("disagreement of the ANSWER", () => {
     expect(diff.some((d) => d.includes("by state 24/24, of which wider 24"))).toBe(true);
   });
 
-  // py: test_accuracy::test_widening_is_counted_apart_from_narrowing
   it("widening is counted apart from narrowing", () => {
     // An error towards widening costs a tow; the other way, only extra caution.
     const wider = verdictDifferences(verdict({ states: Array(24).fill("prohibited") }),
@@ -216,7 +199,6 @@ describe("disagreement of the ANSWER", () => {
     expect(narrower[0]).toContain("of which wider 0");
   });
 
-  // py: test_accuracy::test_a_condition_on_the_wrong_days_is_a_difference_too
   it("a condition on the wrong days is a disagreement too, and not one of state", () => {
     // Sign `030`: a fee on Saturdays, and the reading said Sundays. Hour by hour
     // both answers are `allowed`, so the measurement did not see it; the mistake was
@@ -228,14 +210,12 @@ describe("disagreement of the ANSWER", () => {
     expect(diff.some((d) => d.includes("by state"))).toBe(false);
   });
 
-  // py: test_accuracy::test_a_narrowed_circle_of_users_is_a_difference_too
   it("a narrowed set of who may park is a disagreement too", () => {
     // `042`: narrowed to motorcycles where the sign is about bicycles.
     const diff = verdictDifferences(verdict(), verdict({ eligibility: ["pictogram-motorcycle"] }));
     expect(diff.some((d) => d.includes("who may park"))).toBe(true);
   });
 
-  // py: test_accuracy::test_dead_signals_are_the_ones_that_never_moved
   it("dead signals are the ones that never moved", () => {
     const seen = new Map([["a", new Set([1])], ["b", new Set([0, 1])], ["c", new Set<number>()]]);
     expect(deadSignals(seen)).toEqual(["a", "c"]);

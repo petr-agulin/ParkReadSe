@@ -106,13 +106,11 @@ describe("the reference entries are fit to be shown", () => {
   // every word about a sign, and a hole in it reaches the screen as a key or as
   // nothing at all.
 
-  // py: test_api::test_every_reference_entry_has_a_human_label
   it("every entry has a human name", () => {
     // An entry with no name would appear to a person as a reference key - a code.
     expect(all().filter((e) => !e.label).map((e) => e.key)).toEqual([]);
   });
 
-  // py: test_api::test_every_entry_has_a_short_caption_too
   it("every entry has a short caption as well", () => {
     // `en` is the full statement for the timeline, `short` the line under a panel's
     // text.
@@ -123,7 +121,6 @@ describe("the reference entries are fit to be shown", () => {
     }
   });
 
-  // py: test_api::test_official_codes_look_like_official_codes
   it("the codes look like official codes", () => {
     // C for prohibitions, D for mandatory signs, E for location signs, F for
     // direction, S for symbols, T for plates. An empty code is allowed ("no such
@@ -134,7 +131,6 @@ describe("the reference entries are fit to be shown", () => {
     }
   });
 
-  // py: test_api::test_no_time_key_is_left_out_of_the_composed_phrase
   it("no key about time is left out of the composed phrase", () => {
     // A forgotten key comes out as a second line, repeating what the phrase already
     // said.
@@ -142,7 +138,6 @@ describe("the reference entries are fit to be shown", () => {
     expect(t6).toEqual([...TIME_KEYS].sort());
   });
 
-  // py: test_api::test_every_schema_value_reaches_the_reference
   it("every value of the schema reaches an entry of the reference", () => {
     // A value with no entry is a dead end: the model reads it correctly, no key is
     // found, and the instruction vanishes from the reading in silence
@@ -157,7 +152,6 @@ describe("the reference entries are fit to be shown", () => {
     }
   });
 
-  // py: test_api::test_the_vehicle_table_exists_in_one_place_only
   it("the table of vehicles exists in one place only", () => {
     // There used to be two tables, and a value added to the schema had to be entered
     // in both. The bus was entered into the schema and forgotten in the engine -
@@ -168,7 +162,6 @@ describe("the reference entries are fit to be shown", () => {
       .not.toContain('"motorcycle": "pictogram-motorcycle"');
   });
 
-  // py: test_api::test_the_bicycle_symbol_is_a_class_of_its_own
   it("the moped is split between the two pictograms, and both say so in English", () => {
     // A motorcycle pictogram covers motorcycles and heavy class I mopeds; a bicycle
     // pictogram covers bicycles and light class II mopeds. Confusing the two sends a
@@ -193,7 +186,6 @@ describe("the reference entries are fit to be shown", () => {
     expect(motorcycle.en, "the light class belongs to the bicycle").not.toContain("class II");
   });
 
-  // py: test_api::test_the_phrase_matched_in_code_is_the_one_the_article_declares
   it("the phrase the code matches on is the one the article itself declares", () => {
     // Let the two drift apart and the rule quietly stops firing, while the article
     // goes on looking as though it works.

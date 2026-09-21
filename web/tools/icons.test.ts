@@ -18,7 +18,6 @@ const PUBLIC = join(ROOT, "web", "public");
 const decoded = (file: string) => decode(readFileSync(join(PUBLIC, file)));
 
 describe("the icons", () => {
-  // py: test_icons::test_the_files_on_disk_are_what_the_code_draws
   it("keeps the files on disk exactly what the code draws", () => {
     for (const { file, size, maskable } of ICONS) {
       const { width, height, rows } = decoded(file);
@@ -31,7 +30,6 @@ describe("the icons", () => {
     }
   });
 
-  // py: test_icons::test_the_maskable_icon_keeps_everything_inside_the_safe_circle
   it("keeps everything of the maskable icon inside the safe circle", () => {
     // A circle of radius 40% of the width is what survives any mask. The frame's
     // corners are the drawing's points furthest from the centre, and they must not be
@@ -51,7 +49,6 @@ describe("the icons", () => {
     }
   });
 
-  // py: test_icons::test_the_ordinary_icons_are_transparent_at_the_corners
   it("keeps the ordinary icons transparent at the corners", () => {
     // An ordinary icon is rounded by itself. An opaque corner is a white patch, visible
     // on every screen but a white one.
@@ -63,7 +60,6 @@ describe("the icons", () => {
     }
   });
 
-  // py: test_icons::test_the_icon_wears_the_blue_of_the_sign
   it("wears the blue of the Swedish sign", () => {
     // The icon keeps the blue of the sign itself, whatever the interface's accent.
     expect(decoded("icon-512.png").rows[256][8].slice(0, 3)).toEqual(BLUE);

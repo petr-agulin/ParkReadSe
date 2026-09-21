@@ -11,7 +11,6 @@ const ROOT = fileURLToPath(new URL("../../../", import.meta.url));
 const read = (name: string) => new Uint8Array(readFileSync(`${ROOT}testset/photos/${name}`));
 
 describe("the size of a photograph", () => {
-  // py: test_completeness::test_the_photo_reads_its_own_size_from_both_formats
   it("is read from the header of both formats, with no image library", () => {
     // The set holds both png and jpg, and a mistake here would quietly zero the whole
     // signal of "are there pixels enough for the text".

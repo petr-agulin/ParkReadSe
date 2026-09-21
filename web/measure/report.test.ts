@@ -1,7 +1,5 @@
 // `npm run measure` - the accuracy measurement and the threshold calibration, as
-// `cli.py accuracy` and `cli.py calibrate` used to print them. A reference copy of
-// that output was taken while Python was still whole: `parity/python-report.txt`.
-// It is a historical record now, not something compared against.
+// `cli.py accuracy` and `cli.py calibrate` used to print them.
 //
 // **A developer's tool, not part of the product.** It lives outside `src/`, is never
 // imported by the application and never reaches the build. It stays out of the

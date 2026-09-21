@@ -24,7 +24,6 @@ const ROOT = fileURLToPath(new URL("../../../", import.meta.url));
 const T = EXTRACT_INSTRUCTIONS;
 
 describe("what the prompt is obliged to explain", () => {
-  // py: test_prompts::test_every_kind_of_main_sign_is_explained_not_just_listed
   it("explains every kind of main sign in words, not only lists it", () => {
     // The choice between them decides whether the talk is of parking HERE.
     const schema = SIGN_SCHEMA as Record<string, any>;
@@ -33,14 +32,12 @@ describe("what the prompt is obliged to explain", () => {
     expect(values.filter((v) => !T.includes(v))).toEqual([]);
   });
 
-  // py: test_prompts::test_the_two_prohibition_signs_are_told_apart_by_something_countable
   it("tells the two prohibition signs apart by something countable", () => {
     // `C35` and `C39` are one and the same round sign, differing in the number of bars.
     expect(T).toContain("ONE diagonal bar");
     expect(T).toContain("TWO bars");
   });
 
-  // py: test_prompts::test_brackets_and_red_ink_are_told_apart_by_the_days_they_mean
   it("tells brackets and red ink apart by the days they mean", () => {
     // Photograph `030`: the reading said `red` where the plate had brackets, and the
     // product announced a fee on Sundays instead of Saturdays. A prompt edit broke it:
@@ -61,7 +58,6 @@ describe("what the prompt is obliged to explain", () => {
     expect(round.toLowerCase()).not.toContain("red");
   });
 
-  // py: test_prompts::test_fields_that_changed_the_answer_are_explained_by_name
   it("explains by name the fields that once changed the answer", () => {
     // `042`: `vehicle_class` replaced by the nearest value; `010`: `permit_required`
     // lost beside `eligibility`; `054`: `prohibition` replaced by `scope_shift`.
@@ -70,7 +66,6 @@ describe("what the prompt is obliged to explain", () => {
     expect(fields.filter((f) => !T.includes(f))).toEqual([]);
   });
 
-  // py: test_prompts::test_the_prompt_names_the_fields_it_forbids_guessing_into
   it("says what to answer where the enumeration runs out", () => {
     // Otherwise the model substitutes the nearest value, and a substitution cannot be
     // told from a reading.
@@ -78,7 +73,6 @@ describe("what the prompt is obliged to explain", () => {
     expect(T).toContain('"other" in "pictogram"');
   });
 
-  // py: test_prompts::test_scope_shift_may_not_be_inferred_from_position
   it("sets `scope_shift` by what is written, not by where the plate sits", () => {
     // Photograph `044`: a `Boende` plate was given `remaining_time`, and the product
     // said "Applies outside the hours above" where the plate carried not one hour.
@@ -88,7 +82,6 @@ describe("what the prompt is obliged to explain", () => {
 });
 
 describe("the triage prompt", () => {
-  // py: test_prompts::test_the_triage_prompt_was_not_disturbed
   it("is untouched: every saved triage answer came from this same question", async () => {
     // An edit to the extraction prompt must not cost the triage answers, as it would
     // if the prompts were shared: the fingerprint would change, and every answer would

@@ -22,7 +22,6 @@ import { DEMO, EXPECTED, PENDING_GROUND_TRUTH, ROOT, assessAnswer, loadPairs,
 const intersect = <T>(a: Set<T>, b: Set<T>) => [...a].filter((x) => b.has(x)).sort();
 
 describe("the coverage of the measurement", () => {
-  // py: test_accuracy::test_hand_marked_fixtures_are_excluded_from_measurement
   it("keeps a hand-marked seed out of the measurement", () => {
     // A seed is the ground truth itself; measuring by it compares the ground truth
     // with itself. The check builds its own answers rather than looking into `demo/`:
@@ -46,7 +45,6 @@ describe("the coverage of the measurement", () => {
     }
   });
 
-  // py: test_accuracy::test_every_saved_answer_pairs_with_its_ground_truth
   it("pairs every saved answer with its ground truth", () => {
     // Catches a mismatch: the answer is there, the ground truth is there, but the pair
     // does not form because a name drifted in a rename.
@@ -56,7 +54,6 @@ describe("the coverage of the measurement", () => {
     expect(intersect(marked(), answered)).toEqual([...pairs].sort());
   });
 
-  // py: test_accuracy::test_measurement_coverage_is_visible
   it("shows the coverage as a number no larger than the ground truths", () => {
     // The number itself is not pinned: it changes with every run.
     expect(loadPairs(EXPECTED, DEMO).length).toBeLessThanOrEqual(marked().size);
@@ -66,7 +63,6 @@ describe("the coverage of the measurement", () => {
 describe("every photograph's state is declared", () => {
   const notASign = new Set(Object.keys(loadTriageExpectations()));
 
-  // py: test_accuracy::test_every_photo_is_marked_pending_or_declared_not_a_sign
   it("has every photograph marked, declared not a sign, or awaiting marking", () => {
     // Without the third state "forgot to mark" cannot be told from "not marked yet";
     // without the second, an unmarked sign is confused with rubbish.
@@ -76,18 +72,15 @@ describe("every photograph's state is declared", () => {
     expect(unaccounted.sort()).toEqual([]);
   });
 
-  // py: test_accuracy::test_a_photo_is_never_in_two_states_at_once
   it("never has a photograph in two states at once", () => {
     expect(intersect(marked(), notASign)).toEqual([]);
     expect(intersect(PENDING_GROUND_TRUTH, notASign)).toEqual([]);
   });
 
-  // py: test_accuracy::test_pending_list_does_not_rot
   it("empties the pending list: once a ground truth appears, the photograph leaves it", () => {
     expect(intersect(PENDING_GROUND_TRUTH, marked())).toEqual([]);
   });
 
-  // py: test_accuracy::test_every_photo_has_a_transcript_section
   it("has a verbatim transcript for every photograph", () => {
     // The transcript is the first layer of the set: without it a photograph cannot be
     // marked.
@@ -99,7 +92,6 @@ describe("every photograph's state is declared", () => {
 });
 
 describe("the threshold", () => {
-  // py: test_accuracy::test_the_threshold_still_earns_its_value
   it("still stands on what it was counted on", async () => {
     // The 0.9 threshold was not chosen but counted, and the count must hold tomorrow
     // too. If an edit to the prompt, the weights or the engine shifts the picture, the

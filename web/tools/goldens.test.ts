@@ -39,7 +39,6 @@ function testFiles(dir = join(ROOT, "web")): string[] {
 }
 
 describe("what the reference answers are made of", () => {
-  // py: test_parity::test_every_document_of_the_set_is_a_case
   it("every reading of the set is a case of the comparison", () => {
     // The comparison runs over the whole set rather than a couple of convenient
     // photographs: the model produces merged panels and odd fields that a tidy
@@ -57,7 +56,6 @@ describe("what the reference answers are made of", () => {
     expect(docs.filter((d) => !ids.has(`${d}@base`))).toEqual([]);
   });
 
-  // py: test_parity::test_the_engine_golden_holds_the_answer_not_the_innards
   it("the engine's reference answer holds the answer, not the innards", () => {
     // Otherwise the comparison would break on every rearrangement of the code while
     // saying nothing about meaning.
@@ -73,7 +71,6 @@ describe("what the reference answers are made of", () => {
       "conditions", "end", "max_duration_minutes", "note", "start", "state"]);
   });
 
-  // py: test_parity::test_the_present_golden_is_the_finished_answer
   it("the presentation's reference answer is the finished answer", () => {
     // The words are the work of presentation, and they can drift silently.
     const golden = readJson("parity/present.json");
@@ -83,7 +80,6 @@ describe("what the reference answers are made of", () => {
     expect(one.regimes.some((w: any) => w.periods.some((p: any) => p.headline))).toBe(true);
   });
 
-  // py: test_parity::test_no_photograph_ever_reaches_the_reference_answers
   it("not one photograph ever reaches the reference answers", () => {
     // Photographs with number plates never enter the repository, and this path is
     // closed to them as well.
@@ -97,7 +93,6 @@ describe("what the reference answers are made of", () => {
     }
   });
 
-  // py: test_parity::test_the_stale_answers_are_named_and_not_counted
   it("outdated answers are named aloud and not counted", () => {
     // Passing over them silently would look like "there is no such photograph",
     // when there is one.
@@ -107,7 +102,6 @@ describe("what the reference answers are made of", () => {
     expect(golden.fingerprint).toHaveLength(12);
   });
 
-  // py: test_parity::test_the_threshold_table_is_the_one_the_threshold_stands_on
   it("the threshold table is the one the threshold stands on", () => {
     // Fields disagree on nineteen photographs, the answer on three; the threshold
     // stands on the second.
@@ -123,7 +117,6 @@ describe("what the reference answers are made of", () => {
 });
 
 describe("what stayed true on this side", () => {
-  // py: test_parity::test_the_types_match_the_schema
   it("the reading's types are derived from the schema, not guessed", () => {
     // A second copy of the schema, written from memory, will one day drift from the
     // first, and the first casualty will be a field the model returned and the
@@ -147,7 +140,6 @@ describe("what stayed true on this side", () => {
     }
   });
 
-  // py: test_parity::test_the_ported_engine_touches_no_clock_of_its_own
   it("the engine keeps no clock of its own", () => {
     // `Date` is about an instant, and a sign is about a calendar: along with `Date`
     // the machine's time zone, summer time and months counted from zero would enter
@@ -161,7 +153,6 @@ describe("what stayed true on this side", () => {
     }
   });
 
-  // py: test_parity::test_the_rulings_moved_with_the_engine
   it("the developer's readings moved along with the engine", () => {
     // The engine's tests say WHY an answer is what it is: behind each stands a
     // decision of the developer or a finding on a real photograph.
@@ -173,7 +164,6 @@ describe("what stayed true on this side", () => {
     }
   });
 
-  // py: test_parity::test_the_forbidden_wording_guard_moved_with_the_words
   it("the vocabulary guard lives on the same side as the words", () => {
     // Leaving it only in Python would have meant losing the safeguard the day Python
     // left - and the wording is kept in one place for the sake of that safeguard.
@@ -186,7 +176,6 @@ describe("what stayed true on this side", () => {
 });
 
 describe("the measurement stays a tool", () => {
-  // py: test_parity::test_the_measurement_is_a_tool_and_not_part_of_the_product
   it("the measurement never reaches the page", () => {
     for (const path of appSources()) {
       const text = readFileSync(path, "utf-8");
@@ -200,7 +189,6 @@ describe("the measurement stays a tool", () => {
     expect(scripts.test, "the measurement would join the ordinary run").toContain("--exclude");
   });
 
-  // py: test_parity::test_the_measurement_reads_the_same_set_from_disk
   it("the measurement reads the same set from disk", () => {
     // The developer's reference readings, the model's answers and the photographs:
     // the area of the frame enters the confidence.
@@ -215,7 +203,6 @@ describe("the measurement stays a tool", () => {
 });
 
 describe("TypeScript writes the reference answers", () => {
-  // py: test_parity::test_the_golden_answers_are_current
   it("rewritten by this command, they match what is lying there - to the byte", async () => {
     // A failure means the product's answer changed. That is not a broken test, it is
     // the test working: look at the difference (`npm test -- parity`) and rewrite
@@ -223,7 +210,6 @@ describe("TypeScript writes the reference answers", () => {
     expect(await stale()).toEqual([]);
   }, 120_000);
 
-  // py: test_parity::test_the_case_file_is_read_by_both_sides
   it("the cases are declared in a file, not assembled on the fly by each side", () => {
     expect(readJson("parity/cases.json")).toEqual(buildCases());
     // The comparison reads the same file - otherwise the two sides would be checked
@@ -231,7 +217,6 @@ describe("TypeScript writes the reference answers", () => {
     expect(read("web/src/lib/parity.test.ts")).toContain('read("cases")');
   });
 
-  // py: test_parity::test_the_awkward_moments_are_all_covered
   it("the awkward moments are all covered and each is given a reason", () => {
     // Something real once broke on each of them: an eve, a red day, both nights of
     // the clock change, the edge of a season, midnight.
@@ -245,14 +230,12 @@ describe("TypeScript writes the reference answers", () => {
     expect(SPECIAL.filter((s) => !s.why)).toEqual([]);
   });
 
-  // py: test_parity::test_the_layers_are_declared_and_none_is_ported_yet
   it("the layers are declared, and each has a probe", () => {
     const ported: string[] = readJson("parity/PORTED.json").layers;
     expect(ported.filter((l) => !LAYERS.includes(l)), "an unknown layer").toEqual([]);
     expect(LAYERS.filter((l) => !PROBES[l]), "a layer with no probe").toEqual([]);
   });
 
-  // py: test_parity::test_rewriting_is_a_separate_command
   it("rewriting is a separate command, not a side effect of a run", () => {
     // Otherwise the reference answers get rewritten one day to "make it green", and
     // the disagreement disappears along with the red.

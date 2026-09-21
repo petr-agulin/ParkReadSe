@@ -16,7 +16,6 @@ const read = (name: string): Record<string, any> =>
   JSON.parse(readFileSync(`${ROOT}testset/expected/${name}.json`, "utf-8"));
 
 describe("the triage answer", () => {
-  // py: test_accuracy::test_extra_field_does_not_destroy_a_triage_answer
   it("an extra field does not ruin the answer; it is removed and recorded", () => {
     // Found by the measurement: on three photographs the triage answer was silently
     // not saved, and the measurement read an older seed as a fresh answer instead.
@@ -28,7 +27,6 @@ describe("the triage answer", () => {
     expect(res.repairs.some((r) => r.includes("reasoning"))).toBe(true);
   });
 
-  // py: test_accuracy::test_long_what_i_see_and_numeric_string_are_repaired
   it("a long description is shortened, a number as a string becomes a number", () => {
     const res = triage({ category: "parking_sign", what_i_see: "it ".repeat(200),
                          panels_below_main_sign: "4" });
@@ -38,7 +36,6 @@ describe("the triage answer", () => {
     expect(data.what_i_see.length).toBeLessThanOrEqual(200);
   });
 
-  // py: test_accuracy::test_bad_category_still_rejects_the_whole_triage
   it("an invented category rejects the whole answer", () => {
     // `category` decides the fate of the pipeline - that is not repaired.
     expect(ok(triage({ category: "perhaps", what_i_see: "a sign",
@@ -47,7 +44,6 @@ describe("the triage answer", () => {
 });
 
 describe("reading a sign", () => {
-  // py: test_accuracy::test_unknown_enum_value_does_not_destroy_the_parse
   it("an unknown value in an optional field does not ruin the reading", () => {
     // Photograph `009`: the model wrote `payment_method=mobile` when the schema no
     // longer had that value. The field is dropped with a repair, and the correctly

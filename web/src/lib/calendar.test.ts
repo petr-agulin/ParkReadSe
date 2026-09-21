@@ -58,7 +58,6 @@ const byName = (year: number) =>
 const between = (a: Civil, b: Civil) => days(a) - days(b);
 
 describe("Easter and the offsets from it", () => {
-  // py: test_calendar::test_easter_matches_the_published_dates
   it("Easter agrees with the published dates", () => {
     for (const [year, iso] of Object.entries(EASTER)) {
       const day = easter(Number(year));
@@ -67,7 +66,6 @@ describe("Easter and the offsets from it", () => {
     }
   });
 
-  // py: test_calendar::test_the_offsets_are_the_ones_the_law_names
   it("the offsets are the ones the law names in words, not the numbers 39 and 49", () => {
     // "fredagen närmast före påskdagen", "sjätte torsdagen efter påskdagen",
     // "sjunde söndagen": if the weekday comes out wrong, an offset was mistranscribed.
@@ -84,7 +82,6 @@ describe("Easter and the offsets from it", () => {
     }
   });
 
-  // py: test_calendar::test_the_saturdays_fall_inside_the_windows_the_law_gives
   it("the Saturday holidays fall inside the windows the law gives", () => {
     for (let year = 2026; year <= 2030; year += 1) {
       const h = byName(year);
@@ -99,7 +96,6 @@ describe("Easter and the offsets from it", () => {
     }
   });
 
-  // py: test_calendar::test_thirteen_red_days_every_year
   it("thirteen red days a year, the first of May among them", () => {
     // Twelve are listed with their dates in § 2; the thirteenth is `första maj`:
     // § 1 names it, and its date is in the name itself.
@@ -111,12 +107,10 @@ describe("Easter and the offsets from it", () => {
 });
 
 describe("agreement with the file the calendar replaced", () => {
-  // py: test_calendar::test_2026_matches_the_file_it_replaced
   it("the holidays of 2026 are the same thirteen", () => {
     expect(Object.fromEntries(holidays(2026))).toEqual(HOLIDAYS_2026);
   });
 
-  // py: test_calendar::test_every_day_of_2026_keeps_its_class
   it("every day of 2026 keeps its class", () => {
     // 1 January 2027 belongs to the reference for the same reason it sat as a
     // separate entry in the old file: without it there is nothing by which to call
@@ -129,7 +123,6 @@ describe("agreement with the file the calendar replaced", () => {
     }
   });
 
-  // py: test_calendar::test_the_2026_counts_are_unchanged
   it("the counts for 2026 are unchanged: 63 red, 57 eves, 245 weekdays", () => {
     const counts: Record<string, number> = {};
     for (const d of daysOf(2026)) counts[cal.dayClass(d)] = (counts[cal.dayClass(d)] ?? 0) + 1;
@@ -144,7 +137,6 @@ describe("agreement with the file the calendar replaced", () => {
 });
 
 describe("the order of the rules", () => {
-  // py: test_calendar::test_a_red_day_is_never_an_eve
   it("a red day never takes brackets, not even before another red one", () => {
     // Six days of 2026 that a naive order of checks gets wrong.
     for (const iso of ["2026-04-05", "2026-06-06", "2026-06-20",
@@ -153,7 +145,6 @@ describe("the order of the rules", () => {
     }
   });
 
-  // py: test_calendar::test_the_eves_on_weekdays_are_the_nine_known_dates
   it("the Monday-to-Friday eves of 2026 are the same nine", () => {
     const found: string[] = [];
     for (const d of daysOf(2026)) {
@@ -163,7 +154,6 @@ describe("the order of the rules", () => {
                            "10-30", "12-24", "12-31"]);
   });
 
-  // py: test_calendar::test_christmas_eve_midsummer_eve_and_new_years_eve_stay_eves
   it("Christmas Eve, Midsummer Eve and New Year's Eve stay eves", () => {
     // They are not official holidays, and must not be added to the list.
     for (let year = 2026; year <= 2030; year += 1) {
@@ -187,7 +177,6 @@ describe("the order of the rules", () => {
 });
 
 describe("the product's window", () => {
-  // py: test_calendar::test_the_window_is_2026_to_2030
   it("the window runs from 2026 to 2030 inclusive", () => {
     expect(isoDate(SELECTABLE_FROM)).toBe("2026-01-01");
     expect(isoDate(SELECTABLE_TO)).toBe("2030-12-31");
@@ -197,7 +186,6 @@ describe("the product's window", () => {
     expect(selectable(parseDate("2031-01-01"))).toBe(false);
   });
 
-  // py: test_calendar::test_the_horizon_from_the_end_of_the_window_still_has_a_calendar
   it("the horizon from the end of the window still finds a calendar", () => {
     // The timeline runs eight days ahead, so a reading on 28 December 2030 asks
     // about January 2031. That is exactly why a year wider is computed.
@@ -209,7 +197,6 @@ describe("the product's window", () => {
     expect(selectable(parseDate("2031-01-05"))).toBe(false);
   });
 
-  // py: test_calendar::test_outside_the_computed_range_the_class_is_unknown
   it("outside the computed range the class of the day is unknown", () => {
     // The set of holidays changes over time - before 2005 `annandag pingst` was red
     // instead of `nationaldagen` - and silence here is more honest than computation.
@@ -217,7 +204,6 @@ describe("the product's window", () => {
     expect(cls("2040-01-01")).toBe(UNKNOWN);
   });
 
-  // py: test_calendar::test_the_picker_on_screen_carries_the_same_window
   it("the moment picker on screen carries the same window", () => {
     // The window is written down twice - in the calendar and in the field. A
     // disagreement is caught here rather than by the person, whose field would let
@@ -236,7 +222,6 @@ describe("the product's window", () => {
 });
 
 describe("portability", () => {
-  // py: test_calendar::test_the_calendar_needs_no_file_at_all
   it("the calendar needs no file at all", () => {
     const source = readFileSync(`${ROOT}web/src/lib/calendar.ts`, "utf-8");
     for (const forbidden of ["node:fs", "readFile", "fetch(", ".json\""]) {

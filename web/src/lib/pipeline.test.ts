@@ -95,7 +95,6 @@ describe("the pipeline", () => {
     expect(out.flags).toContain("triage_said:other_road_sign");
   });
 
-  // py: test_api::test_a_reading_that_says_too_little_is_asked_once_more
   it("asks once more, and exactly once, when too little was read", async () => {
     // Found by the developer in the browser: `049` and `056` said "too little" on the
     // first attempt and were read in full on the second.
@@ -111,7 +110,6 @@ describe("the pipeline", () => {
     expect(out.extraction?.data?.main_sign.type, "the better answer was taken").toBe("parking");
   });
 
-  // py: test_api::test_a_good_reading_is_never_asked_twice
   it("never asks twice about a good reading", () => {
     // A second ask costs a call, and there is no reason to spend one on a reading the
     // product is satisfied with.
@@ -123,7 +121,6 @@ describe("the pipeline", () => {
     });
   });
 
-  // py: test_api::test_the_retry_happens_once_and_not_in_a_loop
   it("does not take the second answer when it is no better", async () => {
     const scant = { schema_version: 1,
                     main_sign: { type: "unknown", background_color: "blue",

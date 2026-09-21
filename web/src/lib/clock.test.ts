@@ -44,7 +44,6 @@ function regimeAt(iso: string) {
 }
 
 describe("the rule itself", () => {
-  // py: test_clock::test_the_switches_stand_where_the_eu_rule_puts_them
   it("puts the changes where the European rule puts them", () => {
     // The last Sunday of March and of October, at 01:00 UTC. On Swedish clocks that
     // is always 02:00 in spring and 03:00 in autumn; only the date moves.
@@ -63,7 +62,6 @@ describe("the rule itself", () => {
     }
   });
 
-  // py: test_clock::test_the_offset_is_plus_one_in_winter_and_plus_two_in_summer
   it("keeps the offset at one in winter and two in summer, with exact edges", () => {
     expect(offset(at("2026-01-15T12:00"))).toBe(WINTER);
     expect(offset(at("2026-07-15T12:00"))).toBe(SUMMER);
@@ -73,7 +71,6 @@ describe("the rule itself", () => {
     expect(offset(at("2026-10-25T03:00"))).toBe(WINTER);
   });
 
-  // py: test_clock::test_the_hour_that_does_not_exist_and_the_hour_that_happens_twice
   it("moves the hour that never was forward, and takes the repeated one first", () => {
     expect(isoNaive(normalise(at("2027-03-28T02:30")))).toBe("2027-03-28T03:30");
     expect(isoNaive(normalise(at("2027-03-28T01:30")))).toBe("2027-03-28T01:30");
@@ -81,14 +78,12 @@ describe("the rule itself", () => {
     expect(offset(at("2026-10-25T02:30"))).toBe(SUMMER);
   });
 
-  // py: test_clock::test_a_night_of_a_switch_is_23_or_25_hours_long
   it("makes the night of a change 23 or 25 hours long", () => {
     expect(realMinutes(at("2026-10-25T00:00"), at("2026-10-26T00:00"))).toBe(25 * 60);
     expect(realMinutes(at("2027-03-28T00:00"), at("2027-03-29T00:00"))).toBe(23 * 60);
     expect(realMinutes(at("2026-09-09T00:00"), at("2026-09-10T00:00"))).toBe(24 * 60);
   });
 
-  // py: test_clock::test_adding_real_time_lands_on_the_right_clock_face
   it("counts two hours as two hours lived, not two marks on a dial", () => {
     expect(isoNaive(add(at("2026-10-25T02:30"), 120))).toBe("2026-10-25T03:30");
     expect(isoNaive(add(at("2027-03-28T01:30"), 120))).toBe("2027-03-28T04:30");
@@ -102,7 +97,6 @@ describe("the rule itself", () => {
     expect(switchBetween(at("2026-09-09T00:00"), at("2026-09-17T00:00"))).toBeNull();
   });
 
-  // py: test_clock::test_the_module_carries_no_time_zone_database
   it("carries no time-zone database: not in the clock, nor in the dates beneath it", () => {
     // In a browser the device's time belongs to whoever owns the device, and the
     // counting has to be done on Swedish clocks. Any reliance on the platform's own
@@ -118,7 +112,6 @@ describe("the rule itself", () => {
 });
 
 describe("the three places where it bites", () => {
-  // py: test_clock::test_a_plate_limit_across_the_switch
   it("a `2 tim` limit begun on the night of a change", () => {
     const s = sign(plate({ duration_limit: { amount: 2, unit: "hours" } }, ["2 tim"]));
     let r = evaluateParkingRules(s, at("2026-10-25T02:30"), CAL).regimes[0];
@@ -129,7 +122,6 @@ describe("the three places where it bites", () => {
     expect(r.durationExpiresAt && isoNaive(r.durationExpiresAt)).toBe("2027-03-28T04:30");
   });
 
-  // py: test_clock::test_the_24_hour_rule_across_the_switch
   it("makes the day of the 24-hour rule a real one", () => {
     // Wednesday 21 October 2026: the day runs to Thursday, with no change in it.
     const plain = twentyFourHourExpiry(at("2026-10-21T20:00"), CAL);
@@ -139,7 +131,6 @@ describe("the three places where it bites", () => {
     expect(isoNaive(add(at("2026-10-24T20:00"), 24 * 60))).toBe("2026-10-25T19:00");
   });
 
-  // py: test_clock::test_the_length_of_a_segment_counts_real_hours
   it("counts the length of a segment on the timeline in real hours", () => {
     // A segment used to report the difference on the dial - and "24 h" stood where a
     // car will stand for twenty-five.
@@ -155,7 +146,6 @@ describe("the three places where it bites", () => {
 });
 
 describe("the note on screen", () => {
-  // py: test_clock::test_the_note_appears_when_the_shown_stretch_crosses_the_switch
   it("appears when the stretch shown crosses the change", () => {
     let view = regimeAt("2026-10-24T20:00");
     expect(view.clock_change_text).toBe(CLOCK_CHANGE_TEXT.back);
@@ -166,14 +156,12 @@ describe("the note on screen", () => {
     expect(view.clock_change_text).toContain("an hour shorter");
   });
 
-  // py: test_clock::test_there_is_no_note_when_nothing_crosses_the_switch
   it("is absent when nothing crosses the change", () => {
     // Including the daytime of that same Sunday, once the change is behind us.
     expect(regimeAt("2026-10-25T12:00").clock_change_text).toBeNull();
     expect(regimeAt("2026-09-09T12:00").clock_change_text).toBeNull();
   });
 
-  // py: test_clock::test_the_note_says_no_date_and_names_the_fixed_hours
   it("carries no date in it, while naming the hours", () => {
     // The change may fall on the coming night or on a Sunday within the horizon. The
     // hours, by contrast, are fixed.
