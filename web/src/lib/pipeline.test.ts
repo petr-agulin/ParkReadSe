@@ -34,7 +34,7 @@ function realPhoto(file: string): Photo {
 
 /** A real reading of a sign from the set - the same one the measurement reads. */
 function realSign(stem: string) {
-  return JSON.parse(readFileSync(`${ROOT}demo/${stem}.extract.json`, "utf-8")).response;
+  return JSON.parse(readFileSync(`${ROOT}testset/answers/${stem}.extract.json`, "utf-8")).response;
 }
 
 const reply = (content: unknown) => () => new Response(JSON.stringify({

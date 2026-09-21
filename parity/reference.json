@@ -1,5 +1,5 @@
 {
- "demo/001-p-30min": {
+ "answers/001-p-30min": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -9,7 +9,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/002-avgift-forbud-utanfor-markerad-plats": {
+ "answers/002-avgift-forbud-utanfor-markerad-plats": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -29,7 +29,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/003-p-2tim": {
+ "answers/003-p-2tim": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -39,7 +39,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/004-endast-besokande-pingstkyrkan": {
+ "answers/004-endast-besokande-pingstkyrkan": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -52,7 +52,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil": {
+ "answers/005-2tim-8-18-parentes-8-15-dubbelpil": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -67,7 +67,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/006-tillstand-07-17-ovrig-tid-avgift": {
+ "answers/006-tillstand-07-17-ovrig-tid-avgift": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -88,7 +88,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/007-gul-forbud-forhyrda-platser": {
+ "answers/007-gul-forbud-forhyrda-platser": {
   "main_sign_key": "main-zone-prohibition",
   "panel_keys": {
    "1": [
@@ -101,7 +101,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/008-rorelsehindrad-avgift": {
+ "answers/008-rorelsehindrad-avgift": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -121,7 +121,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/009-besokande-avgift": {
+ "answers/009-besokande-avgift": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -141,7 +141,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/010-forhyrda-platser-tva-pilar": {
+ "answers/010-forhyrda-platser-tva-pilar": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -161,7 +161,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/011-gul-p-avgift-klistermarken": {
+ "answers/011-gul-p-avgift-klistermarken": {
   "main_sign_key": "main-zone-parking",
   "panel_keys": {
    "1": [
@@ -171,7 +171,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/012-tillstand-7-17-ovrig-tid-avgift": {
+ "answers/012-tillstand-7-17-ovrig-tid-avgift": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -192,7 +192,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/013-rorelsehindrad-2-platser": {
+ "answers/013-rorelsehindrad-2-platser": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -211,7 +211,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/014-motorcykel-pil-skymning": {
+ "answers/014-motorcykel-pil-skymning": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -224,7 +224,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/015-motorcykel": {
+ "answers/015-motorcykel": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -234,7 +234,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/016-tillstand-ovrig-tid-5-platser": {
+ "answers/016-tillstand-ovrig-tid-5-platser": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -255,7 +255,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/017-rorelsehindrad": {
+ "answers/017-rorelsehindrad": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -265,7 +265,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/018-tillstand-utan-tidsangivelse": {
+ "answers/018-tillstand-utan-tidsangivelse": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -278,7 +278,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid": {
+ "answers/019-forbud-7-18-avgift-ovrig-tid": {
   "main_sign_key": "main-prohibition-parking",
   "panel_keys": {
    "1": [
@@ -307,7 +307,7 @@
   },
   "missing_keys": []
  },
- "demo/020-forhyrda-platser-13-och-14-avstand": {
+ "answers/020-forhyrda-platser-13-och-14-avstand": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -320,7 +320,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/021-privat-parkering-brf": {
+ "answers/021-privat-parkering-brf": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -338,7 +338,7 @@
   },
   "missing_keys": []
  },
- "demo/022-avgift-4tim-laddande-elbilar-2-platser": {
+ "answers/022-avgift-4tim-laddande-elbilar-2-platser": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -365,7 +365,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/023-avgift-4tim-laddande-elbilar": {
+ "answers/023-avgift-4tim-laddande-elbilar": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -381,7 +381,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/024-avgift-erlaggs-med-mobil": {
+ "answers/024-avgift-erlaggs-med-mobil": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -401,7 +401,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/025-30min-endast-gaster-gatukok": {
+ "answers/025-30min-endast-gaster-gatukok": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -418,7 +418,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/026-gul-zon-avgift-plus-hastighetsskylt": {
+ "answers/026-gul-zon-avgift-plus-hastighetsskylt": {
   "main_sign_key": "main-zone-parking",
   "panel_keys": {
    "1": [
@@ -434,7 +434,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/027-rorelsehindrad-0-6m-avgift-taxa-2": {
+ "answers/027-rorelsehindrad-0-6m-avgift-taxa-2": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -454,7 +454,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/028-avgift-taxa-2-fred-0-6-boende-ci": {
+ "answers/028-avgift-taxa-2-fred-0-6-boende-ci": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -475,7 +475,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/029-beskickningsfordon-0-12m": {
+ "answers/029-beskickningsfordon-0-12m": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [],
@@ -491,7 +491,7 @@
   },
   "missing_keys": []
  },
- "demo/030-avgift-8-21-fredag-0-6-galler-ej-juli-zon-a": {
+ "answers/030-avgift-8-21-fredag-0-6-galler-ej-juli-zon-a": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -515,7 +515,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/031-snedstallning-torsdag-jamna-veckor-boende-solna": {
+ "answers/031-snedstallning-torsdag-jamna-veckor-boende-solna": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -545,7 +545,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/032-rorelsehindrad-pil-hoger": {
+ "answers/032-rorelsehindrad-pil-hoger": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -558,7 +558,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/033-avgift-8-21-uppstallning-zon-e-boende-storskogen": {
+ "answers/033-avgift-8-21-uppstallning-zon-e-boende-storskogen": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -582,7 +582,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/034-avgift-tisdag-12-15-nov-maj-zon-c-boende": {
+ "answers/034-avgift-tisdag-12-15-nov-maj-zon-c-boende": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -607,7 +607,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/035-zon-c-pa-avstand": {
+ "answers/035-zon-c-pa-avstand": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -625,7 +625,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so": {
+ "answers/036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -655,7 +655,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/037-hanvisning-p-med-pil": {
+ "answers/037-hanvisning-p-med-pil": {
   "main_sign_key": "main-wayfinding-parking-house",
   "panel_keys": {
    "1": [
@@ -665,7 +665,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/038-scandic-buss-besokande-pil": {
+ "answers/038-scandic-buss-besokande-pil": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -684,7 +684,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/039-laddning-avgift-4-platser-pil": {
+ "answers/039-laddning-avgift-4-platser-pil": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -707,7 +707,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/040-servicefordon-vardagar-7-17-ovrig-tid-avgift": {
+ "answers/040-servicefordon-vardagar-7-17-ovrig-tid-avgift": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [],
@@ -730,7 +730,7 @@
   },
   "missing_keys": []
  },
- "demo/041-lastplats-forbud-7-17-ovrig-tid-avgift": {
+ "answers/041-lastplats-forbud-7-17-ovrig-tid-avgift": {
   "main_sign_key": "main-prohibition-stopping",
   "panel_keys": {
    "1": [],
@@ -758,7 +758,7 @@
   },
   "missing_keys": []
  },
- "demo/042-cykel-moped-parkering": {
+ "answers/042-cykel-moped-parkering": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -776,7 +776,7 @@
   },
   "missing_keys": []
  },
- "demo/044-motorcykel-avgift-taxa-12-fred-boende": {
+ "answers/044-motorcykel-avgift-taxa-12-fred-boende": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -801,7 +801,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/049-moped-sasong-avgift-tva-taxor": {
+ "answers/049-moped-sasong-avgift-tva-taxor": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -827,13 +827,13 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/050-aimo-park-privat-hanvisning": {
+ "answers/050-aimo-park-privat-hanvisning": {
   "main_sign_key": "main-wayfinding-parking-house",
   "panel_keys": {},
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/052-avgift-taxa-2-tisd-boende-roda-siffror": {
+ "answers/052-avgift-taxa-2-tisd-boende-roda-siffror": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -854,7 +854,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/054-buss-15min-avgift-torsd": {
+ "answers/054-buss-15min-avgift-torsd": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -875,7 +875,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/055-forbud-stannande-snotackt-pil": {
+ "answers/055-forbud-stannande-snotackt-pil": {
   "main_sign_key": "main-prohibition-stopping",
   "panel_keys": {
    "1": [
@@ -896,7 +896,7 @@
   },
   "missing_keys": []
  },
- "demo/056-natt-avgift-7-19-taxa-3-torsd-plus-forbud": {
+ "answers/056-natt-avgift-7-19-taxa-3-torsd-plus-forbud": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -916,7 +916,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/057-p-skiva-2tim-eller-gratis-biljett": {
+ "answers/057-p-skiva-2tim-eller-gratis-biljett": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -934,7 +934,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/058-natt-klass-i-22-06-roda-siffror-utanfor-markerad": {
+ "answers/058-natt-klass-i-22-06-roda-siffror-utanfor-markerad": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -964,7 +964,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/059-avstand-p-skiva-2tim-darefter-avgift": {
+ "answers/059-avstand-p-skiva-2tim-darefter-avgift": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -986,7 +986,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/060-natt-lastplats-ovrig-tid-avgift": {
+ "answers/060-natt-lastplats-ovrig-tid-avgift": {
   "main_sign_key": "main-prohibition-stopping",
   "panel_keys": {
    "1": [],
@@ -1015,7 +1015,7 @@
   },
   "missing_keys": []
  },
- "demo/061-lastplats-langt-avstand": {
+ "answers/061-lastplats-langt-avstand": {
   "main_sign_key": "main-prohibition-stopping",
   "panel_keys": {
    "1": [],
@@ -1042,7 +1042,7 @@
   },
   "missing_keys": []
  },
- "demo/062-klass-i-14-dygn-slapfordon-forbud": {
+ "answers/062-klass-i-14-dygn-slapfordon-forbud": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -1074,7 +1074,7 @@
   },
   "missing_keys": []
  },
- "demo/063-natt-p-tillstand-06-16-p-skiva-3tim": {
+ "answers/063-natt-p-tillstand-06-16-p-skiva-3tim": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -1092,7 +1092,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "demo/064-motorcykel-tisd-9-17-beskuren": {
+ "answers/064-motorcykel-tisd-9-17-beskuren": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [

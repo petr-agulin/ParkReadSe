@@ -1,5 +1,5 @@
 {
- "demo/001-p-30min::as it is": {
+ "answers/001-p-30min::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -38,7 +38,7 @@
    }
   }
  },
- "demo/001-p-30min::duplicate of the main sign": {
+ "answers/001-p-30min::duplicate of the main sign": {
   "ok": true,
   "repairs": [
    "panel 99 removed: duplicate of the main sign"
@@ -79,7 +79,7 @@
    }
   }
  },
- "demo/001-p-30min::an empty line in a panel": {
+ "answers/001-p-30min::an empty line in a panel": {
   "ok": true,
   "repairs": [
    "panel 1: empty lines removed"
@@ -120,7 +120,7 @@
    }
   }
  },
- "demo/001-p-30min::a knocked-out panel index": {
+ "answers/001-p-30min::a knocked-out panel index": {
   "ok": true,
   "repairs": [
    "panel index 7 -> 1"
@@ -161,7 +161,7 @@
    }
   }
  },
- "demo/001-p-30min::panel_count does not add up": {
+ "answers/001-p-30min::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 1"
@@ -202,7 +202,7 @@
    }
   }
  },
- "demo/001-p-30min::a value outside the enumeration": {
+ "answers/001-p-30min::a value outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
@@ -243,7 +243,7 @@
    }
   }
  },
- "demo/001-p-30min::panel colour outside the enumeration": {
+ "answers/001-p-30min::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
@@ -284,7 +284,7 @@
    }
   }
  },
- "demo/001-p-30min::sign colour outside the enumeration": {
+ "answers/001-p-30min::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "main sign colour 'grey' -> 'other' - not in the schema enumeration"
@@ -325,7 +325,7 @@
    }
   }
  },
- "demo/002-avgift-forbud-utanfor-markerad-plats::as it is": {
+ "answers/002-avgift-forbud-utanfor-markerad-plats::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [
@@ -420,7 +420,7 @@
    }
   }
  },
- "demo/002-avgift-forbud-utanfor-markerad-plats::duplicate of the main sign": {
+ "answers/002-avgift-forbud-utanfor-markerad-plats::duplicate of the main sign": {
   "ok": true,
   "repairs": [
    "panel 99 removed: duplicate of the main sign"
@@ -517,7 +517,7 @@
    }
   }
  },
- "demo/002-avgift-forbud-utanfor-markerad-plats::an empty line in a panel": {
+ "answers/002-avgift-forbud-utanfor-markerad-plats::an empty line in a panel": {
   "ok": true,
   "repairs": [
    "panel 1: empty lines removed"
@@ -614,7 +614,7 @@
    }
   }
  },
- "demo/002-avgift-forbud-utanfor-markerad-plats::a knocked-out panel index": {
+ "answers/002-avgift-forbud-utanfor-markerad-plats::a knocked-out panel index": {
   "ok": true,
   "repairs": [
    "panel index 7 -> 1"
@@ -711,7 +711,7 @@
    }
   }
  },
- "demo/002-avgift-forbud-utanfor-markerad-plats::panel_count does not add up": {
+ "answers/002-avgift-forbud-utanfor-markerad-plats::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 4"
@@ -808,7 +808,7 @@
    }
   }
  },
- "demo/002-avgift-forbud-utanfor-markerad-plats::a value outside the enumeration": {
+ "answers/002-avgift-forbud-utanfor-markerad-plats::a value outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
@@ -905,7 +905,7 @@
    }
   }
  },
- "demo/002-avgift-forbud-utanfor-markerad-plats::panel colour outside the enumeration": {
+ "answers/002-avgift-forbud-utanfor-markerad-plats::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
@@ -1002,7 +1002,7 @@
    }
   }
  },
- "demo/002-avgift-forbud-utanfor-markerad-plats::sign colour outside the enumeration": {
+ "answers/002-avgift-forbud-utanfor-markerad-plats::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "main sign colour 'grey' -> 'other' - not in the schema enumeration"
@@ -1099,7 +1099,7 @@
    }
   }
  },
- "demo/003-p-2tim::as it is": {
+ "answers/003-p-2tim::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -1139,7 +1139,7 @@
    "model_confidence": 0.99
   }
  },
- "demo/003-p-2tim::duplicate of the main sign": {
+ "answers/003-p-2tim::duplicate of the main sign": {
   "ok": true,
   "repairs": [
    "panel 99 removed: duplicate of the main sign"
@@ -1181,7 +1181,7 @@
    "model_confidence": 0.99
   }
  },
- "demo/003-p-2tim::an empty line in a panel": {
+ "answers/003-p-2tim::an empty line in a panel": {
   "ok": true,
   "repairs": [
    "panel 1: empty lines removed"
@@ -1223,7 +1223,7 @@
    "model_confidence": 0.99
   }
  },
- "demo/003-p-2tim::a knocked-out panel index": {
+ "answers/003-p-2tim::a knocked-out panel index": {
   "ok": true,
   "repairs": [
    "panel index 7 -> 1"
@@ -1265,7 +1265,7 @@
    "model_confidence": 0.99
   }
  },
- "demo/003-p-2tim::panel_count does not add up": {
+ "answers/003-p-2tim::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 1"
@@ -1307,7 +1307,7 @@
    "model_confidence": 0.99
   }
  },
- "demo/003-p-2tim::a value outside the enumeration": {
+ "answers/003-p-2tim::a value outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
@@ -1349,7 +1349,7 @@
    "model_confidence": 0.99
   }
  },
- "demo/003-p-2tim::panel colour outside the enumeration": {
+ "answers/003-p-2tim::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
@@ -1391,7 +1391,7 @@
    "model_confidence": 0.99
   }
  },
- "demo/003-p-2tim::sign colour outside the enumeration": {
+ "answers/003-p-2tim::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "main sign colour 'grey' -> 'other' - not in the schema enumeration"
@@ -1433,7 +1433,7 @@
    "model_confidence": 0.99
   }
  },
- "demo/004-endast-besokande-pingstkyrkan::as it is": {
+ "answers/004-endast-besokande-pingstkyrkan::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -1491,7 +1491,7 @@
    }
   }
  },
- "demo/004-endast-besokande-pingstkyrkan::duplicate of the main sign": {
+ "answers/004-endast-besokande-pingstkyrkan::duplicate of the main sign": {
   "ok": true,
   "repairs": [
    "panel 99 removed: duplicate of the main sign"
@@ -1551,7 +1551,7 @@
    }
   }
  },
- "demo/004-endast-besokande-pingstkyrkan::an empty line in a panel": {
+ "answers/004-endast-besokande-pingstkyrkan::an empty line in a panel": {
   "ok": true,
   "repairs": [
    "panel 1: empty lines removed"
@@ -1611,7 +1611,7 @@
    }
   }
  },
- "demo/004-endast-besokande-pingstkyrkan::a knocked-out panel index": {
+ "answers/004-endast-besokande-pingstkyrkan::a knocked-out panel index": {
   "ok": true,
   "repairs": [
    "panel index 7 -> 1"
@@ -1671,7 +1671,7 @@
    }
   }
  },
- "demo/004-endast-besokande-pingstkyrkan::panel_count does not add up": {
+ "answers/004-endast-besokande-pingstkyrkan::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 2"
@@ -1731,7 +1731,7 @@
    }
   }
  },
- "demo/004-endast-besokande-pingstkyrkan::a value outside the enumeration": {
+ "answers/004-endast-besokande-pingstkyrkan::a value outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
@@ -1791,7 +1791,7 @@
    }
   }
  },
- "demo/004-endast-besokande-pingstkyrkan::panel colour outside the enumeration": {
+ "answers/004-endast-besokande-pingstkyrkan::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
@@ -1851,7 +1851,7 @@
    }
   }
  },
- "demo/004-endast-besokande-pingstkyrkan::sign colour outside the enumeration": {
+ "answers/004-endast-besokande-pingstkyrkan::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "main sign colour 'grey' -> 'other' - not in the schema enumeration"
@@ -1911,7 +1911,7 @@
    }
   }
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil::as it is": {
+ "answers/005-2tim-8-18-parentes-8-15-dubbelpil::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -1978,7 +1978,7 @@
    "model_confidence": 0.98
   }
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil::duplicate of the main sign": {
+ "answers/005-2tim-8-18-parentes-8-15-dubbelpil::duplicate of the main sign": {
   "ok": true,
   "repairs": [
    "panel 99 removed: duplicate of the main sign"
@@ -2047,7 +2047,7 @@
    "model_confidence": 0.98
   }
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil::an empty line in a panel": {
+ "answers/005-2tim-8-18-parentes-8-15-dubbelpil::an empty line in a panel": {
   "ok": true,
   "repairs": [
    "panel 1: empty lines removed"
@@ -2116,7 +2116,7 @@
    "model_confidence": 0.98
   }
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil::a knocked-out panel index": {
+ "answers/005-2tim-8-18-parentes-8-15-dubbelpil::a knocked-out panel index": {
   "ok": true,
   "repairs": [
    "panel index 7 -> 1"
@@ -2185,7 +2185,7 @@
    "model_confidence": 0.98
   }
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil::panel_count does not add up": {
+ "answers/005-2tim-8-18-parentes-8-15-dubbelpil::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 2"
@@ -2254,7 +2254,7 @@
    "model_confidence": 0.98
   }
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil::a value outside the enumeration": {
+ "answers/005-2tim-8-18-parentes-8-15-dubbelpil::a value outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
@@ -2323,7 +2323,7 @@
    "model_confidence": 0.98
   }
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil::panel colour outside the enumeration": {
+ "answers/005-2tim-8-18-parentes-8-15-dubbelpil::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
@@ -2392,7 +2392,7 @@
    "model_confidence": 0.98
   }
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil::sign colour outside the enumeration": {
+ "answers/005-2tim-8-18-parentes-8-15-dubbelpil::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "main sign colour 'grey' -> 'other' - not in the schema enumeration"
@@ -2461,7 +2461,7 @@
    "model_confidence": 0.98
   }
  },
- "demo/006-tillstand-07-17-ovrig-tid-avgift::as it is": {
+ "answers/006-tillstand-07-17-ovrig-tid-avgift::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -2556,7 +2556,7 @@
    }
   }
  },
- "demo/006-tillstand-07-17-ovrig-tid-avgift::duplicate of the main sign": {
+ "answers/006-tillstand-07-17-ovrig-tid-avgift::duplicate of the main sign": {
   "ok": true,
   "repairs": [
    "panel 99 removed: duplicate of the main sign"
@@ -2653,7 +2653,7 @@
    }
   }
  },
- "demo/006-tillstand-07-17-ovrig-tid-avgift::an empty line in a panel": {
+ "answers/006-tillstand-07-17-ovrig-tid-avgift::an empty line in a panel": {
   "ok": true,
   "repairs": [
    "panel 1: empty lines removed"
@@ -2750,7 +2750,7 @@
    }
   }
  },
- "demo/006-tillstand-07-17-ovrig-tid-avgift::a knocked-out panel index": {
+ "answers/006-tillstand-07-17-ovrig-tid-avgift::a knocked-out panel index": {
   "ok": true,
   "repairs": [
    "panel index 7 -> 1"
@@ -2847,7 +2847,7 @@
    }
   }
  },
- "demo/006-tillstand-07-17-ovrig-tid-avgift::panel_count does not add up": {
+ "answers/006-tillstand-07-17-ovrig-tid-avgift::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 4"
@@ -2944,7 +2944,7 @@
    }
   }
  },
- "demo/006-tillstand-07-17-ovrig-tid-avgift::a value outside the enumeration": {
+ "answers/006-tillstand-07-17-ovrig-tid-avgift::a value outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
@@ -3041,7 +3041,7 @@
    }
   }
  },
- "demo/006-tillstand-07-17-ovrig-tid-avgift::panel colour outside the enumeration": {
+ "answers/006-tillstand-07-17-ovrig-tid-avgift::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
@@ -3138,7 +3138,7 @@
    }
   }
  },
- "demo/006-tillstand-07-17-ovrig-tid-avgift::sign colour outside the enumeration": {
+ "answers/006-tillstand-07-17-ovrig-tid-avgift::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "main sign colour 'grey' -> 'other' - not in the schema enumeration"
@@ -3235,7 +3235,7 @@
    }
   }
  },
- "demo/007-gul-forbud-forhyrda-platser::as it is": {
+ "answers/007-gul-forbud-forhyrda-platser::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -3293,7 +3293,7 @@
    "model_confidence": 0.98
   }
  },
- "demo/007-gul-forbud-forhyrda-platser::duplicate of the main sign": {
+ "answers/007-gul-forbud-forhyrda-platser::duplicate of the main sign": {
   "ok": true,
   "repairs": [
    "panel 99 removed: duplicate of the main sign"
@@ -3353,7 +3353,7 @@
    "model_confidence": 0.98
   }
  },
- "demo/007-gul-forbud-forhyrda-platser::an empty line in a panel": {
+ "answers/007-gul-forbud-forhyrda-platser::an empty line in a panel": {
   "ok": true,
   "repairs": [
    "panel 1: empty lines removed"
@@ -3413,7 +3413,7 @@
    "model_confidence": 0.98
   }
  },
- "demo/007-gul-forbud-forhyrda-platser::a knocked-out panel index": {
+ "answers/007-gul-forbud-forhyrda-platser::a knocked-out panel index": {
   "ok": true,
   "repairs": [
    "panel index 7 -> 1"
@@ -3473,7 +3473,7 @@
    "model_confidence": 0.98
   }
  },
- "demo/007-gul-forbud-forhyrda-platser::panel_count does not add up": {
+ "answers/007-gul-forbud-forhyrda-platser::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 2"
@@ -3533,7 +3533,7 @@
    "model_confidence": 0.98
   }
  },
- "demo/007-gul-forbud-forhyrda-platser::a value outside the enumeration": {
+ "answers/007-gul-forbud-forhyrda-platser::a value outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
@@ -3593,7 +3593,7 @@
    "model_confidence": 0.98
   }
  },
- "demo/007-gul-forbud-forhyrda-platser::panel colour outside the enumeration": {
+ "answers/007-gul-forbud-forhyrda-platser::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
@@ -3653,7 +3653,7 @@
    "model_confidence": 0.98
   }
  },
- "demo/007-gul-forbud-forhyrda-platser::sign colour outside the enumeration": {
+ "answers/007-gul-forbud-forhyrda-platser::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "main sign colour 'grey' -> 'other' - not in the schema enumeration"
@@ -3713,7 +3713,7 @@
    "model_confidence": 0.98
   }
  },
- "demo/008-rorelsehindrad-avgift::as it is": {
+ "answers/008-rorelsehindrad-avgift::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -3797,7 +3797,7 @@
    }
   }
  },
- "demo/008-rorelsehindrad-avgift::duplicate of the main sign": {
+ "answers/008-rorelsehindrad-avgift::duplicate of the main sign": {
   "ok": true,
   "repairs": [
    "panel 99 removed: duplicate of the main sign"
@@ -3883,7 +3883,7 @@
    }
   }
  },
- "demo/008-rorelsehindrad-avgift::an empty line in a panel": {
+ "answers/008-rorelsehindrad-avgift::an empty line in a panel": {
   "ok": true,
   "repairs": [
    "panel 1: empty lines removed"
@@ -3969,7 +3969,7 @@
    }
   }
  },
- "demo/008-rorelsehindrad-avgift::a knocked-out panel index": {
+ "answers/008-rorelsehindrad-avgift::a knocked-out panel index": {
   "ok": true,
   "repairs": [
    "panel index 7 -> 1"
@@ -4055,7 +4055,7 @@
    }
   }
  },
- "demo/008-rorelsehindrad-avgift::panel_count does not add up": {
+ "answers/008-rorelsehindrad-avgift::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 4"
@@ -4141,7 +4141,7 @@
    }
   }
  },
- "demo/008-rorelsehindrad-avgift::a value outside the enumeration": {
+ "answers/008-rorelsehindrad-avgift::a value outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
@@ -4227,7 +4227,7 @@
    }
   }
  },
- "demo/008-rorelsehindrad-avgift::panel colour outside the enumeration": {
+ "answers/008-rorelsehindrad-avgift::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
@@ -4313,7 +4313,7 @@
    }
   }
  },
- "demo/008-rorelsehindrad-avgift::sign colour outside the enumeration": {
+ "answers/008-rorelsehindrad-avgift::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "main sign colour 'grey' -> 'other' - not in the schema enumeration"
@@ -4399,7 +4399,7 @@
    }
   }
  },
- "demo/009-besokande-avgift::as it is": {
+ "answers/009-besokande-avgift::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -4484,7 +4484,7 @@
    }
   }
  },
- "demo/009-besokande-avgift::duplicate of the main sign": {
+ "answers/009-besokande-avgift::duplicate of the main sign": {
   "ok": true,
   "repairs": [
    "panel 99 removed: duplicate of the main sign"
@@ -4571,7 +4571,7 @@
    }
   }
  },
- "demo/009-besokande-avgift::an empty line in a panel": {
+ "answers/009-besokande-avgift::an empty line in a panel": {
   "ok": true,
   "repairs": [
    "panel 1: empty lines removed"
@@ -4658,7 +4658,7 @@
    }
   }
  },
- "demo/009-besokande-avgift::a knocked-out panel index": {
+ "answers/009-besokande-avgift::a knocked-out panel index": {
   "ok": true,
   "repairs": [
    "panel index 7 -> 1"
@@ -4745,7 +4745,7 @@
    }
   }
  },
- "demo/009-besokande-avgift::panel_count does not add up": {
+ "answers/009-besokande-avgift::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 4"
@@ -4832,7 +4832,7 @@
    }
   }
  },
- "demo/009-besokande-avgift::a value outside the enumeration": {
+ "answers/009-besokande-avgift::a value outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
@@ -4919,7 +4919,7 @@
    }
   }
  },
- "demo/009-besokande-avgift::panel colour outside the enumeration": {
+ "answers/009-besokande-avgift::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
@@ -5006,7 +5006,7 @@
    }
   }
  },
- "demo/009-besokande-avgift::sign colour outside the enumeration": {
+ "answers/009-besokande-avgift::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "main sign colour 'grey' -> 'other' - not in the schema enumeration"
@@ -5093,7 +5093,7 @@
    }
   }
  },
- "demo/010-forhyrda-platser-tva-pilar::as it is": {
+ "answers/010-forhyrda-platser-tva-pilar::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -5173,7 +5173,7 @@
    }
   }
  },
- "demo/010-forhyrda-platser-tva-pilar::duplicate of the main sign": {
+ "answers/010-forhyrda-platser-tva-pilar::duplicate of the main sign": {
   "ok": true,
   "repairs": [
    "panel 99 removed: duplicate of the main sign"
@@ -5255,7 +5255,7 @@
    }
   }
  },
- "demo/010-forhyrda-platser-tva-pilar::an empty line in a panel": {
+ "answers/010-forhyrda-platser-tva-pilar::an empty line in a panel": {
   "ok": true,
   "repairs": [
    "panel 1: empty lines removed"
@@ -5337,7 +5337,7 @@
    }
   }
  },
- "demo/010-forhyrda-platser-tva-pilar::a knocked-out panel index": {
+ "answers/010-forhyrda-platser-tva-pilar::a knocked-out panel index": {
   "ok": true,
   "repairs": [
    "panel index 7 -> 1"
@@ -5419,7 +5419,7 @@
    }
   }
  },
- "demo/010-forhyrda-platser-tva-pilar::panel_count does not add up": {
+ "answers/010-forhyrda-platser-tva-pilar::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 4"
@@ -5501,7 +5501,7 @@
    }
   }
  },
- "demo/010-forhyrda-platser-tva-pilar::a value outside the enumeration": {
+ "answers/010-forhyrda-platser-tva-pilar::a value outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
@@ -5583,7 +5583,7 @@
    }
   }
  },
- "demo/010-forhyrda-platser-tva-pilar::panel colour outside the enumeration": {
+ "answers/010-forhyrda-platser-tva-pilar::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
@@ -5665,7 +5665,7 @@
    }
   }
  },
- "demo/010-forhyrda-platser-tva-pilar::sign colour outside the enumeration": {
+ "answers/010-forhyrda-platser-tva-pilar::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "main sign colour 'grey' -> 'other' - not in the schema enumeration"
@@ -5747,7 +5747,7 @@
    }
   }
  },
- "demo/011-gul-p-avgift-klistermarken::as it is": {
+ "answers/011-gul-p-avgift-klistermarken::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [
@@ -5792,7 +5792,7 @@
    }
   }
  },
- "demo/011-gul-p-avgift-klistermarken::duplicate of the main sign": {
+ "answers/011-gul-p-avgift-klistermarken::duplicate of the main sign": {
   "ok": true,
   "repairs": [
    "panel 99 removed: duplicate of the main sign"
@@ -5839,7 +5839,7 @@
    }
   }
  },
- "demo/011-gul-p-avgift-klistermarken::an empty line in a panel": {
+ "answers/011-gul-p-avgift-klistermarken::an empty line in a panel": {
   "ok": true,
   "repairs": [
    "panel 1: empty lines removed"
@@ -5886,7 +5886,7 @@
    }
   }
  },
- "demo/011-gul-p-avgift-klistermarken::a knocked-out panel index": {
+ "answers/011-gul-p-avgift-klistermarken::a knocked-out panel index": {
   "ok": true,
   "repairs": [
    "panel index 7 -> 1"
@@ -5933,7 +5933,7 @@
    }
   }
  },
- "demo/011-gul-p-avgift-klistermarken::panel_count does not add up": {
+ "answers/011-gul-p-avgift-klistermarken::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 1"
@@ -5980,7 +5980,7 @@
    }
   }
  },
- "demo/011-gul-p-avgift-klistermarken::a value outside the enumeration": {
+ "answers/011-gul-p-avgift-klistermarken::a value outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
@@ -6027,7 +6027,7 @@
    }
   }
  },
- "demo/011-gul-p-avgift-klistermarken::panel colour outside the enumeration": {
+ "answers/011-gul-p-avgift-klistermarken::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
@@ -6074,7 +6074,7 @@
    }
   }
  },
- "demo/011-gul-p-avgift-klistermarken::sign colour outside the enumeration": {
+ "answers/011-gul-p-avgift-klistermarken::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "main sign colour 'grey' -> 'other' - not in the schema enumeration"
@@ -6121,7 +6121,7 @@
    }
   }
  },
- "demo/012-tillstand-7-17-ovrig-tid-avgift::as it is": {
+ "answers/012-tillstand-7-17-ovrig-tid-avgift::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -6215,7 +6215,7 @@
    }
   }
  },
- "demo/012-tillstand-7-17-ovrig-tid-avgift::duplicate of the main sign": {
+ "answers/012-tillstand-7-17-ovrig-tid-avgift::duplicate of the main sign": {
   "ok": true,
   "repairs": [
    "panel 99 removed: duplicate of the main sign"
@@ -6311,7 +6311,7 @@
    }
   }
  },
- "demo/012-tillstand-7-17-ovrig-tid-avgift::an empty line in a panel": {
+ "answers/012-tillstand-7-17-ovrig-tid-avgift::an empty line in a panel": {
   "ok": true,
   "repairs": [
    "panel 1: empty lines removed"
@@ -6407,7 +6407,7 @@
    }
   }
  },
- "demo/012-tillstand-7-17-ovrig-tid-avgift::a knocked-out panel index": {
+ "answers/012-tillstand-7-17-ovrig-tid-avgift::a knocked-out panel index": {
   "ok": true,
   "repairs": [
    "panel index 7 -> 1"
@@ -6503,7 +6503,7 @@
    }
   }
  },
- "demo/012-tillstand-7-17-ovrig-tid-avgift::panel_count does not add up": {
+ "answers/012-tillstand-7-17-ovrig-tid-avgift::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 4"
@@ -6599,7 +6599,7 @@
    }
   }
  },
- "demo/012-tillstand-7-17-ovrig-tid-avgift::a value outside the enumeration": {
+ "answers/012-tillstand-7-17-ovrig-tid-avgift::a value outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
@@ -6695,7 +6695,7 @@
    }
   }
  },
- "demo/012-tillstand-7-17-ovrig-tid-avgift::panel colour outside the enumeration": {
+ "answers/012-tillstand-7-17-ovrig-tid-avgift::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
@@ -6791,7 +6791,7 @@
    }
   }
  },
- "demo/012-tillstand-7-17-ovrig-tid-avgift::sign colour outside the enumeration": {
+ "answers/012-tillstand-7-17-ovrig-tid-avgift::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "main sign colour 'grey' -> 'other' - not in the schema enumeration"
@@ -6887,7 +6887,7 @@
    }
   }
  },
- "demo/013-rorelsehindrad-2-platser::as it is": {
+ "answers/013-rorelsehindrad-2-platser::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -6968,7 +6968,7 @@
    }
   }
  },
- "demo/013-rorelsehindrad-2-platser::duplicate of the main sign": {
+ "answers/013-rorelsehindrad-2-platser::duplicate of the main sign": {
   "ok": true,
   "repairs": [
    "panel 99 removed: duplicate of the main sign"
@@ -7051,7 +7051,7 @@
    }
   }
  },
- "demo/013-rorelsehindrad-2-platser::an empty line in a panel": {
+ "answers/013-rorelsehindrad-2-platser::an empty line in a panel": {
   "ok": true,
   "repairs": [
    "panel 1: empty lines removed"
@@ -7134,7 +7134,7 @@
    }
   }
  },
- "demo/013-rorelsehindrad-2-platser::a knocked-out panel index": {
+ "answers/013-rorelsehindrad-2-platser::a knocked-out panel index": {
   "ok": true,
   "repairs": [
    "panel index 7 -> 1"
@@ -7217,7 +7217,7 @@
    }
   }
  },
- "demo/013-rorelsehindrad-2-platser::panel_count does not add up": {
+ "answers/013-rorelsehindrad-2-platser::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 4"
@@ -7300,7 +7300,7 @@
    }
   }
  },
- "demo/013-rorelsehindrad-2-platser::a value outside the enumeration": {
+ "answers/013-rorelsehindrad-2-platser::a value outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
@@ -7383,7 +7383,7 @@
    }
   }
  },
- "demo/013-rorelsehindrad-2-platser::panel colour outside the enumeration": {
+ "answers/013-rorelsehindrad-2-platser::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
@@ -7466,7 +7466,7 @@
    }
   }
  },
- "demo/013-rorelsehindrad-2-platser::sign colour outside the enumeration": {
+ "answers/013-rorelsehindrad-2-platser::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "main sign colour 'grey' -> 'other' - not in the schema enumeration"
@@ -7549,7 +7549,7 @@
    }
   }
  },
- "demo/014-motorcykel-pil-skymning::as it is": {
+ "answers/014-motorcykel-pil-skymning::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -7597,7 +7597,7 @@
    }
   }
  },
- "demo/014-motorcykel-pil-skymning::duplicate of the main sign": {
+ "answers/014-motorcykel-pil-skymning::duplicate of the main sign": {
   "ok": true,
   "repairs": [
    "panel 99 removed: duplicate of the main sign"
@@ -7647,7 +7647,7 @@
    }
   }
  },
- "demo/014-motorcykel-pil-skymning::an empty line in a panel": {
+ "answers/014-motorcykel-pil-skymning::an empty line in a panel": {
   "ok": true,
   "repairs": [
    "panel 1: empty lines removed"
@@ -7697,7 +7697,7 @@
    }
   }
  },
- "demo/014-motorcykel-pil-skymning::a knocked-out panel index": {
+ "answers/014-motorcykel-pil-skymning::a knocked-out panel index": {
   "ok": true,
   "repairs": [
    "panel index 7 -> 1"
@@ -7747,7 +7747,7 @@
    }
   }
  },
- "demo/014-motorcykel-pil-skymning::panel_count does not add up": {
+ "answers/014-motorcykel-pil-skymning::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 2"
@@ -7797,7 +7797,7 @@
    }
   }
  },
- "demo/014-motorcykel-pil-skymning::a value outside the enumeration": {
+ "answers/014-motorcykel-pil-skymning::a value outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
@@ -7847,7 +7847,7 @@
    }
   }
  },
- "demo/014-motorcykel-pil-skymning::panel colour outside the enumeration": {
+ "answers/014-motorcykel-pil-skymning::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
@@ -7897,7 +7897,7 @@
    }
   }
  },
- "demo/014-motorcykel-pil-skymning::sign colour outside the enumeration": {
+ "answers/014-motorcykel-pil-skymning::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "main sign colour 'grey' -> 'other' - not in the schema enumeration"
@@ -7947,7 +7947,7 @@
    }
   }
  },
- "demo/015-motorcykel::as it is": {
+ "answers/015-motorcykel::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -7984,7 +7984,7 @@
    "model_confidence": 0.99
   }
  },
- "demo/015-motorcykel::duplicate of the main sign": {
+ "answers/015-motorcykel::duplicate of the main sign": {
   "ok": true,
   "repairs": [
    "panel 99 removed: duplicate of the main sign"
@@ -8023,7 +8023,7 @@
    "model_confidence": 0.99
   }
  },
- "demo/015-motorcykel::an empty line in a panel": {
+ "answers/015-motorcykel::an empty line in a panel": {
   "ok": true,
   "repairs": [
    "panel 1: empty lines removed"
@@ -8062,7 +8062,7 @@
    "model_confidence": 0.99
   }
  },
- "demo/015-motorcykel::a knocked-out panel index": {
+ "answers/015-motorcykel::a knocked-out panel index": {
   "ok": true,
   "repairs": [
    "panel index 7 -> 1"
@@ -8101,7 +8101,7 @@
    "model_confidence": 0.99
   }
  },
- "demo/015-motorcykel::panel_count does not add up": {
+ "answers/015-motorcykel::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 1"
@@ -8140,7 +8140,7 @@
    "model_confidence": 0.99
   }
  },
- "demo/015-motorcykel::a value outside the enumeration": {
+ "answers/015-motorcykel::a value outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
@@ -8179,7 +8179,7 @@
    "model_confidence": 0.99
   }
  },
- "demo/015-motorcykel::panel colour outside the enumeration": {
+ "answers/015-motorcykel::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
@@ -8218,7 +8218,7 @@
    "model_confidence": 0.99
   }
  },
- "demo/015-motorcykel::sign colour outside the enumeration": {
+ "answers/015-motorcykel::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "main sign colour 'grey' -> 'other' - not in the schema enumeration"
@@ -8257,7 +8257,7 @@
    "model_confidence": 0.99
   }
  },
- "demo/016-tillstand-ovrig-tid-5-platser::as it is": {
+ "answers/016-tillstand-ovrig-tid-5-platser::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -8347,7 +8347,7 @@
    }
   }
  },
- "demo/016-tillstand-ovrig-tid-5-platser::duplicate of the main sign": {
+ "answers/016-tillstand-ovrig-tid-5-platser::duplicate of the main sign": {
   "ok": true,
   "repairs": [
    "panel 99 removed: duplicate of the main sign"
@@ -8439,7 +8439,7 @@
    }
   }
  },
- "demo/016-tillstand-ovrig-tid-5-platser::an empty line in a panel": {
+ "answers/016-tillstand-ovrig-tid-5-platser::an empty line in a panel": {
   "ok": true,
   "repairs": [
    "panel 1: empty lines removed"
@@ -8531,7 +8531,7 @@
    }
   }
  },
- "demo/016-tillstand-ovrig-tid-5-platser::a knocked-out panel index": {
+ "answers/016-tillstand-ovrig-tid-5-platser::a knocked-out panel index": {
   "ok": true,
   "repairs": [
    "panel index 7 -> 1"
@@ -8623,7 +8623,7 @@
    }
   }
  },
- "demo/016-tillstand-ovrig-tid-5-platser::panel_count does not add up": {
+ "answers/016-tillstand-ovrig-tid-5-platser::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 4"
@@ -8715,7 +8715,7 @@
    }
   }
  },
- "demo/016-tillstand-ovrig-tid-5-platser::a value outside the enumeration": {
+ "answers/016-tillstand-ovrig-tid-5-platser::a value outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
@@ -8807,7 +8807,7 @@
    }
   }
  },
- "demo/016-tillstand-ovrig-tid-5-platser::panel colour outside the enumeration": {
+ "answers/016-tillstand-ovrig-tid-5-platser::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
@@ -8899,7 +8899,7 @@
    }
   }
  },
- "demo/016-tillstand-ovrig-tid-5-platser::sign colour outside the enumeration": {
+ "answers/016-tillstand-ovrig-tid-5-platser::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "main sign colour 'grey' -> 'other' - not in the schema enumeration"
@@ -8991,7 +8991,7 @@
    }
   }
  },
- "demo/017-rorelsehindrad::as it is": {
+ "answers/017-rorelsehindrad::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -9026,7 +9026,7 @@
    }
   }
  },
- "demo/017-rorelsehindrad::duplicate of the main sign": {
+ "answers/017-rorelsehindrad::duplicate of the main sign": {
   "ok": true,
   "repairs": [
    "panel 99 removed: duplicate of the main sign"
@@ -9063,7 +9063,7 @@
    }
   }
  },
- "demo/017-rorelsehindrad::an empty line in a panel": {
+ "answers/017-rorelsehindrad::an empty line in a panel": {
   "ok": true,
   "repairs": [
    "panel 1: empty lines removed"
@@ -9100,7 +9100,7 @@
    }
   }
  },
- "demo/017-rorelsehindrad::a knocked-out panel index": {
+ "answers/017-rorelsehindrad::a knocked-out panel index": {
   "ok": true,
   "repairs": [
    "panel index 7 -> 1"
@@ -9137,7 +9137,7 @@
    }
   }
  },
- "demo/017-rorelsehindrad::panel_count does not add up": {
+ "answers/017-rorelsehindrad::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 1"
@@ -9174,7 +9174,7 @@
    }
   }
  },
- "demo/017-rorelsehindrad::a value outside the enumeration": {
+ "answers/017-rorelsehindrad::a value outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
@@ -9211,7 +9211,7 @@
    }
   }
  },
- "demo/017-rorelsehindrad::panel colour outside the enumeration": {
+ "answers/017-rorelsehindrad::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
@@ -9248,7 +9248,7 @@
    }
   }
  },
- "demo/017-rorelsehindrad::sign colour outside the enumeration": {
+ "answers/017-rorelsehindrad::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "main sign colour 'grey' -> 'other' - not in the schema enumeration"
@@ -9285,7 +9285,7 @@
    }
   }
  },
- "demo/018-tillstand-utan-tidsangivelse::as it is": {
+ "answers/018-tillstand-utan-tidsangivelse::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -9337,7 +9337,7 @@
    }
   }
  },
- "demo/018-tillstand-utan-tidsangivelse::duplicate of the main sign": {
+ "answers/018-tillstand-utan-tidsangivelse::duplicate of the main sign": {
   "ok": true,
   "repairs": [
    "panel 99 removed: duplicate of the main sign"
@@ -9391,7 +9391,7 @@
    }
   }
  },
- "demo/018-tillstand-utan-tidsangivelse::an empty line in a panel": {
+ "answers/018-tillstand-utan-tidsangivelse::an empty line in a panel": {
   "ok": true,
   "repairs": [
    "panel 1: empty lines removed"
@@ -9445,7 +9445,7 @@
    }
   }
  },
- "demo/018-tillstand-utan-tidsangivelse::a knocked-out panel index": {
+ "answers/018-tillstand-utan-tidsangivelse::a knocked-out panel index": {
   "ok": true,
   "repairs": [
    "panel index 7 -> 1"
@@ -9499,7 +9499,7 @@
    }
   }
  },
- "demo/018-tillstand-utan-tidsangivelse::panel_count does not add up": {
+ "answers/018-tillstand-utan-tidsangivelse::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 2"
@@ -9553,7 +9553,7 @@
    }
   }
  },
- "demo/018-tillstand-utan-tidsangivelse::a value outside the enumeration": {
+ "answers/018-tillstand-utan-tidsangivelse::a value outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
@@ -9607,7 +9607,7 @@
    }
   }
  },
- "demo/018-tillstand-utan-tidsangivelse::panel colour outside the enumeration": {
+ "answers/018-tillstand-utan-tidsangivelse::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
@@ -9661,7 +9661,7 @@
    }
   }
  },
- "demo/018-tillstand-utan-tidsangivelse::sign colour outside the enumeration": {
+ "answers/018-tillstand-utan-tidsangivelse::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "main sign colour 'grey' -> 'other' - not in the schema enumeration"
@@ -9715,7 +9715,7 @@
    }
   }
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid::as it is": {
+ "answers/019-forbud-7-18-avgift-ovrig-tid::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -9821,7 +9821,7 @@
    }
   }
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid::duplicate of the main sign": {
+ "answers/019-forbud-7-18-avgift-ovrig-tid::duplicate of the main sign": {
   "ok": true,
   "repairs": [
    "panel 99 removed: duplicate of the main sign"
@@ -9929,7 +9929,7 @@
    }
   }
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid::an empty line in a panel": {
+ "answers/019-forbud-7-18-avgift-ovrig-tid::an empty line in a panel": {
   "ok": true,
   "repairs": [
    "panel 1: empty lines removed"
@@ -10037,7 +10037,7 @@
    }
   }
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid::a knocked-out panel index": {
+ "answers/019-forbud-7-18-avgift-ovrig-tid::a knocked-out panel index": {
   "ok": true,
   "repairs": [
    "panel index 7 -> 1"
@@ -10145,7 +10145,7 @@
    }
   }
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid::panel_count does not add up": {
+ "answers/019-forbud-7-18-avgift-ovrig-tid::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 4"
@@ -10253,7 +10253,7 @@
    }
   }
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid::a value outside the enumeration": {
+ "answers/019-forbud-7-18-avgift-ovrig-tid::a value outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
@@ -10361,7 +10361,7 @@
    }
   }
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid::panel colour outside the enumeration": {
+ "answers/019-forbud-7-18-avgift-ovrig-tid::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
@@ -10469,7 +10469,7 @@
    }
   }
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid::sign colour outside the enumeration": {
+ "answers/019-forbud-7-18-avgift-ovrig-tid::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "main sign colour 'grey' -> 'other' - not in the schema enumeration"
@@ -10577,7 +10577,7 @@
    }
   }
  },
- "demo/020-forhyrda-platser-13-och-14-avstand::as it is": {
+ "answers/020-forhyrda-platser-13-och-14-avstand::as it is": {
   "ok": true,
   "repairs": [],
   "flags": [],
@@ -10629,7 +10629,7 @@
    }
   }
  },
- "demo/020-forhyrda-platser-13-och-14-avstand::duplicate of the main sign": {
+ "answers/020-forhyrda-platser-13-och-14-avstand::duplicate of the main sign": {
   "ok": true,
   "repairs": [
    "panel 99 removed: duplicate of the main sign"
@@ -10683,7 +10683,7 @@
    }
   }
  },
- "demo/020-forhyrda-platser-13-och-14-avstand::an empty line in a panel": {
+ "answers/020-forhyrda-platser-13-och-14-avstand::an empty line in a panel": {
   "ok": true,
   "repairs": [
    "panel 1: empty lines removed"
@@ -10737,7 +10737,7 @@
    }
   }
  },
- "demo/020-forhyrda-platser-13-och-14-avstand::a knocked-out panel index": {
+ "answers/020-forhyrda-platser-13-och-14-avstand::a knocked-out panel index": {
   "ok": true,
   "repairs": [
    "panel index 7 -> 1"
@@ -10791,7 +10791,7 @@
    }
   }
  },
- "demo/020-forhyrda-platser-13-och-14-avstand::panel_count does not add up": {
+ "answers/020-forhyrda-platser-13-och-14-avstand::panel_count does not add up": {
   "ok": true,
   "repairs": [
    "panel_count 99 -> 2"
@@ -10845,7 +10845,7 @@
    }
   }
  },
- "demo/020-forhyrda-platser-13-och-14-avstand::a value outside the enumeration": {
+ "answers/020-forhyrda-platser-13-och-14-avstand::a value outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: dropped payment_method='mobile' - not in the schema enumeration"
@@ -10899,7 +10899,7 @@
    }
   }
  },
- "demo/020-forhyrda-platser-13-och-14-avstand::panel colour outside the enumeration": {
+ "answers/020-forhyrda-platser-13-och-14-avstand::panel colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "panel 1: colour 'grey' -> 'other' - not in the schema enumeration"
@@ -10953,7 +10953,7 @@
    }
   }
  },
- "demo/020-forhyrda-platser-13-och-14-avstand::sign colour outside the enumeration": {
+ "answers/020-forhyrda-platser-13-och-14-avstand::sign colour outside the enumeration": {
   "ok": true,
   "repairs": [
    "main sign colour 'grey' -> 'other' - not in the schema enumeration"

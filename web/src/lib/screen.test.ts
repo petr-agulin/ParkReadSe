@@ -38,10 +38,10 @@ const readJson = (path: string) => JSON.parse(read(path));
 /** The product's answer for a photograph of the set: the same path as in the
  *  application, without a network. */
 function answerFor(label: string, moment = DEFAULT_MOMENT): Record<string, any> {
-  const fixture = readJson(`demo/${label}.extract.json`);
-  const triageFile = `${ROOT}demo/${label}.triage.json`;
+  const fixture = readJson(`testset/answers/${label}.extract.json`);
+  const triageFile = `${ROOT}testset/answers/${label}.triage.json`;
   const seen = existsSync(triageFile)
-    ? readJson(`demo/${label}.triage.json`)?.response?.panels_below_main_sign : null;
+    ? readJson(`testset/answers/${label}.triage.json`)?.response?.panels_below_main_sign : null;
   const res = validateSign(structuredClone(fixture.response),
                            typeof seen === "number" ? seen : null);
   const doc: SignDoc = ok(res) && res.data ? res.data : fixture.response;
@@ -62,7 +62,7 @@ function answerFor(label: string, moment = DEFAULT_MOMENT): Record<string, any> 
 }
 
 /** Every photograph of the set that has a saved model answer. */
-const answered = () => readdirSync(`${ROOT}demo`)
+const answered = () => readdirSync(`${ROOT}testset/answers`)
   .filter((f) => f.endsWith(".extract.json"))
   .map((f) => f.slice(0, -".extract.json".length))
   .sort();

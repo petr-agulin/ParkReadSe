@@ -133,7 +133,10 @@ the answer gives both readings rather than picking one.
 
 The test set is **64 photos** taken by the author: 57 parking signs with reference answers,
 plus 7 frames that are not parking signs. Measurement runs on stored model responses,
-so it is deterministic and needs no key.
+so it is deterministic and needs no key. Those responses live in `testset/answers/`, one
+file per stage per photo, each marked with the fingerprint of the prompt that produced
+it; only real model answers (`origin: model`) are measured. `npm run ask --
+testset/photos/<photo>` refreshes them and spends your key.
 
 Each photo is named `NNN-short-slug.jpg`; the three-digit number is the key of its
 reference answer `testset/expected/NNN.json` and is never reused. No frame may show a
@@ -273,13 +276,13 @@ web/
 schema/            the contract between model and code
 reference/         the reference and the general-rules notes; also the whitelist
 prompts/           the prompt texts
-demo/              stored model responses — the deterministic bench
-testset/           64 photos with reference answers
+testset/           64 photos, their reference readings, and the model's saved answers
 parity/            stored answers the code is checked against
 ```
 
 Layers do not jump over each other: the engine knows nothing about the screen, the screen
-knows nothing about the model provider, and `engine.ts` imports nothing but the calendar.
+knows nothing about the model provider, and `engine.ts` imports nothing but the calendar, the clock, date arithmetic and the
+reference tables.
 
 The interface language is English. Technical values — JSON keys, sign codes — stay English
 everywhere.

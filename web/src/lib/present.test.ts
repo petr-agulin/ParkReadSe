@@ -31,10 +31,10 @@ function answers(): string {
     if (seen.has(id)) continue;
     seen.add(id);
     const [where, stem] = c.doc.split("/");
-    const path = where === "demo" ? `${ROOT}demo/${stem}.extract.json`
+    const path = where === "answers" ? `${ROOT}testset/answers/${stem}.extract.json`
                                   : `${ROOT}testset/expected/${stem}.json`;
     const raw = JSON.parse(readFileSync(path, "utf-8"));
-    const doc: SignDoc = where === "demo" ? raw.response : raw;
+    const doc: SignDoc = where === "answers" ? raw.response : raw;
     const moment = parseNaive(c.moment);
     const ev = evaluateParkingRules(doc, moment, cal);
     const a = grade(doc, { evaluation: ev });

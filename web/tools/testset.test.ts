@@ -16,7 +16,7 @@ import { FULL } from "../src/lib/completeness";
 import { fingerprint, verdictDifferences, verdictSlice } from "../src/lib/measure";
 import { GOOD_ENOUGH } from "../src/lib/present";
 import { extractPrompt } from "../src/lib/prompts";
-import { DEMO, EXPECTED, PENDING_GROUND_TRUTH, ROOT, assessAnswer, loadPairs,
+import { ANSWERS, EXPECTED, PENDING_GROUND_TRUTH, ROOT, assessAnswer, loadPairs,
          loadTriageExpectations, marked, photos } from "./testset";
 
 const intersect = <T>(a: Set<T>, b: Set<T>) => [...a].filter((x) => b.has(x)).sort();
@@ -24,7 +24,7 @@ const intersect = <T>(a: Set<T>, b: Set<T>) => [...a].filter((x) => b.has(x)).so
 describe("the coverage of the measurement", () => {
   it("keeps a hand-marked seed out of the measurement", () => {
     // A seed is the ground truth itself; measuring by it compares the ground truth
-    // with itself. The check builds its own answers rather than looking into `demo/`:
+    // with itself. The check builds its own answers rather than looking into `testset/answers/`:
     // there are no seeds there any more, and a test leaning on the working folder would
     // fall silent just when the protection is needed.
     const label = "005-2tim-8-18-parentes-8-15-dubbelpil";
@@ -48,15 +48,15 @@ describe("the coverage of the measurement", () => {
   it("pairs every saved answer with its ground truth", () => {
     // Catches a mismatch: the answer is there, the ground truth is there, but the pair
     // does not form because a name drifted in a rename.
-    const pairs = new Set(loadPairs(EXPECTED, DEMO, { onlyModel: true }).map((p) => p.label));
-    const answered = new Set(readdirSync(DEMO).filter((f) => f.endsWith(".extract.json"))
+    const pairs = new Set(loadPairs(EXPECTED, ANSWERS, { onlyModel: true }).map((p) => p.label));
+    const answered = new Set(readdirSync(ANSWERS).filter((f) => f.endsWith(".extract.json"))
                                               .map((f) => f.slice(0, -".extract.json".length)));
     expect(intersect(marked(), answered)).toEqual([...pairs].sort());
   });
 
   it("shows the coverage as a number no larger than the ground truths", () => {
     // The number itself is not pinned: it changes with every run.
-    expect(loadPairs(EXPECTED, DEMO).length).toBeLessThanOrEqual(marked().size);
+    expect(loadPairs(EXPECTED, ANSWERS).length).toBeLessThanOrEqual(marked().size);
   });
 });
 
@@ -98,7 +98,7 @@ describe("the threshold", () => {
     // test names the photograph, and the threshold has to be recounted deliberately.
     const cal = new Calendar();
     const moment = parseNaive("2026-03-02T00:00");
-    const pairs = loadPairs(EXPECTED, DEMO, { promptFingerprint: await fingerprint(extractPrompt()) });
+    const pairs = loadPairs(EXPECTED, ANSWERS, { promptFingerprint: await fingerprint(extractPrompt()) });
     // There may be no pairs if the prompt was just edited and there was no run. Passing
     // silently is not allowed here: "0 checks" looks like "everything agreed".
     expect(pairs.length, "no answers to the current prompt: it was edited without a run")

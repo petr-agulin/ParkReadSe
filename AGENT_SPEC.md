@@ -274,7 +274,7 @@ improving the reading.
 | General rules | Kept separately, marked in the answer, and never part of the computation |
 | Withholding an answer | Decided by category before the answer is formed; the confidence number sets the tone, not the gate |
 | Bad photographs | A set of test scenarios with deliberately unusable photographs: darkness, cropping, no sign, glare |
-| Reproducibility | Saved model answers in `demo/`: the same input gives the same output, so behaviour is checked by regression rather than by a single impression. The measurement runs on them without a key |
+| Reproducibility | Saved model answers in `testset/answers/`: the same input gives the same output, so behaviour is checked by regression rather than by a single impression. The measurement runs on them without a key |
 | The user's photographs | Never saved anywhere |
 
 **The principle all of this follows from:** a rule left as a request in the model's

@@ -149,7 +149,7 @@ export function pyDump(value: unknown): string {
 
 // --- the readings the comparison runs on ------------------------------------
 
-/** Every reading of the set: the model's answers from `demo/` and the developer's
+/** Every reading of the set: the model's answers from `testset/answers/` and the developer's
  *  reference readings.
  *
  *  Both kinds on purpose: the model's answers contain merged panels and odd fields
@@ -157,10 +157,10 @@ export function pyDump(value: unknown): string {
  *  both. */
 export function documents(): Record<string, SignDoc> {
   const out: Record<string, SignDoc> = {};
-  for (const file of readdirSync(`${ROOT}demo`).filter((f) => f.endsWith(".extract.json")).sort()) {
-    const doc = JSON.parse(readFileSync(`${ROOT}demo/${file}`, "utf-8")).response;
+  for (const file of readdirSync(`${ROOT}testset/answers`).filter((f) => f.endsWith(".extract.json")).sort()) {
+    const doc = JSON.parse(readFileSync(`${ROOT}testset/answers/${file}`, "utf-8")).response;
     if (doc && typeof doc === "object" && doc.main_sign) {
-      out[`demo/${file.slice(0, -".extract.json".length)}`] = doc;
+      out[`answers/${file.slice(0, -".extract.json".length)}`] = doc;
     }
   }
   for (const file of readdirSync(`${ROOT}testset/expected`).filter((f) => f.endsWith(".json")).sort()) {
@@ -177,7 +177,7 @@ export function buildCases(docs = documents()): Case[] {
     .map((name) => ({ id: `${name}@base`, doc: name, moment: BASE_MOMENT }));
   for (const special of SPECIAL) {
     for (const name of SPECIAL_DOCS) {
-      for (const full of [`demo/${name}`, `expected/${name}`]) {
+      for (const full of [`answers/${name}`, `expected/${name}`]) {
         if (full in docs) {
           cases.push({ id: `${full}@${special.label}`, doc: full, moment: special.moment });
         }
@@ -437,7 +437,7 @@ export async function probeMeasure(): Promise<Record<string, unknown>> {
   for (const file of readdirSync(`${ROOT}testset/expected`).sort()) {
     if (!file.endsWith(".json")) continue;
     const label = file.slice(0, -".json".length);
-    const fx = `${ROOT}demo/${label}.extract.json`;
+    const fx = `${ROOT}testset/answers/${label}.extract.json`;
     if (!existsSync(fx)) continue;
     const fixture = JSON.parse(readFileSync(fx, "utf-8"));
     if ((fixture.origin ?? "model") !== "model") continue;
@@ -464,7 +464,7 @@ export async function probeMeasure(): Promise<Record<string, unknown>> {
   const rows: ThresholdRow[] = [];
   const seenPixels: Record<string, number | null> = {};
   for (const { label, actual } of pairs) {
-    const triageFile = `${ROOT}demo/${label}.triage.json`;
+    const triageFile = `${ROOT}testset/answers/${label}.triage.json`;
     let panelsSeen: number | null = null;
     if (existsSync(triageFile)) {
       const seen = JSON.parse(readFileSync(triageFile, "utf-8"))?.response?.panels_below_main_sign;

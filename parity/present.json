@@ -1,5 +1,5 @@
 {
- "demo/001-p-30min@base": {
+ "answers/001-p-30min@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -173,7 +173,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/002-avgift-forbud-utanfor-markerad-plats@base": {
+ "answers/002-avgift-forbud-utanfor-markerad-plats@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -540,7 +540,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/003-p-2tim@base": {
+ "answers/003-p-2tim@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -714,7 +714,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/004-endast-besokande-pingstkyrkan@base": {
+ "answers/004-endast-besokande-pingstkyrkan@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -967,7 +967,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil@base": {
+ "answers/005-2tim-8-18-parentes-8-15-dubbelpil@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -1207,7 +1207,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil@dst-back": {
+ "answers/005-2tim-8-18-parentes-8-15-dubbelpil@dst-back": {
   "contract": 7,
   "moment": "2026-10-24T20:00",
   "day_class": "eve",
@@ -1447,7 +1447,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil@dst-forward": {
+ "answers/005-2tim-8-18-parentes-8-15-dubbelpil@dst-forward": {
   "contract": 7,
   "moment": "2027-03-27T20:00",
   "day_class": "eve",
@@ -1690,7 +1690,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil@eve": {
+ "answers/005-2tim-8-18-parentes-8-15-dubbelpil@eve": {
   "contract": 7,
   "moment": "2026-10-30T14:00",
   "day_class": "eve",
@@ -1933,7 +1933,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil@midnight": {
+ "answers/005-2tim-8-18-parentes-8-15-dubbelpil@midnight": {
   "contract": 7,
   "moment": "2026-06-10T00:00",
   "day_class": "weekday",
@@ -2173,7 +2173,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil@red": {
+ "answers/005-2tim-8-18-parentes-8-15-dubbelpil@red": {
   "contract": 7,
   "moment": "2026-12-25T10:00",
   "day_class": "red",
@@ -2416,7 +2416,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/005-2tim-8-18-parentes-8-15-dubbelpil@season-edge": {
+ "answers/005-2tim-8-18-parentes-8-15-dubbelpil@season-edge": {
   "contract": 7,
   "moment": "2026-09-30T23:30",
   "day_class": "weekday",
@@ -2656,7 +2656,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/006-tillstand-07-17-ovrig-tid-avgift@base": {
+ "answers/006-tillstand-07-17-ovrig-tid-avgift@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -3098,7 +3098,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/007-gul-forbud-forhyrda-platser@base": {
+ "answers/007-gul-forbud-forhyrda-platser@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -3356,7 +3356,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/008-rorelsehindrad-avgift@base": {
+ "answers/008-rorelsehindrad-avgift@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -3730,7 +3730,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/009-besokande-avgift@base": {
+ "answers/009-besokande-avgift@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -4103,7 +4103,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/010-forhyrda-platser-tva-pilar@base": {
+ "answers/010-forhyrda-platser-tva-pilar@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -4553,7 +4553,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/011-gul-p-avgift-klistermarken@base": {
+ "answers/011-gul-p-avgift-klistermarken@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -4737,7 +4737,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/012-tillstand-7-17-ovrig-tid-avgift@base": {
+ "answers/012-tillstand-7-17-ovrig-tid-avgift@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -5178,7 +5178,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/013-rorelsehindrad-2-platser@base": {
+ "answers/013-rorelsehindrad-2-platser@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -5550,7 +5550,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/014-motorcykel-pil-skymning@base": {
+ "answers/014-motorcykel-pil-skymning@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -5802,7 +5802,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/015-motorcykel@base": {
+ "answers/015-motorcykel@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -5996,7 +5996,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/016-tillstand-ovrig-tid-5-platser@base": {
+ "answers/016-tillstand-ovrig-tid-5-platser@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -6442,7 +6442,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/017-rorelsehindrad@base": {
+ "answers/017-rorelsehindrad@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -6636,7 +6636,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/018-tillstand-utan-tidsangivelse@base": {
+ "answers/018-tillstand-utan-tidsangivelse@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -6892,7 +6892,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid@base": {
+ "answers/019-forbud-7-18-avgift-ovrig-tid@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -7287,7 +7287,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid@dst-back": {
+ "answers/019-forbud-7-18-avgift-ovrig-tid@dst-back": {
   "contract": 7,
   "moment": "2026-10-24T20:00",
   "day_class": "eve",
@@ -7682,7 +7682,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid@dst-forward": {
+ "answers/019-forbud-7-18-avgift-ovrig-tid@dst-forward": {
   "contract": 7,
   "moment": "2027-03-27T20:00",
   "day_class": "eve",
@@ -8080,7 +8080,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid@eve": {
+ "answers/019-forbud-7-18-avgift-ovrig-tid@eve": {
   "contract": 7,
   "moment": "2026-10-30T14:00",
   "day_class": "eve",
@@ -8478,7 +8478,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid@midnight": {
+ "answers/019-forbud-7-18-avgift-ovrig-tid@midnight": {
   "contract": 7,
   "moment": "2026-06-10T00:00",
   "day_class": "weekday",
@@ -8873,7 +8873,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid@red": {
+ "answers/019-forbud-7-18-avgift-ovrig-tid@red": {
   "contract": 7,
   "moment": "2026-12-25T10:00",
   "day_class": "red",
@@ -9271,7 +9271,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/019-forbud-7-18-avgift-ovrig-tid@season-edge": {
+ "answers/019-forbud-7-18-avgift-ovrig-tid@season-edge": {
   "contract": 7,
   "moment": "2026-09-30T23:30",
   "day_class": "weekday",
@@ -9666,7 +9666,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/020-forhyrda-platser-13-och-14-avstand@base": {
+ "answers/020-forhyrda-platser-13-och-14-avstand@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -9919,7 +9919,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/021-privat-parkering-brf@base": {
+ "answers/021-privat-parkering-brf@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -10185,7 +10185,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/022-avgift-4tim-laddande-elbilar-2-platser@base": {
+ "answers/022-avgift-4tim-laddande-elbilar-2-platser@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -10679,7 +10679,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/023-avgift-4tim-laddande-elbilar@base": {
+ "answers/023-avgift-4tim-laddande-elbilar@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -10991,7 +10991,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/024-avgift-erlaggs-med-mobil@base": {
+ "answers/024-avgift-erlaggs-med-mobil@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -11356,7 +11356,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/025-30min-endast-gaster-gatukok@base": {
+ "answers/025-30min-endast-gaster-gatukok@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -11684,7 +11684,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/026-gul-zon-avgift-plus-hastighetsskylt@base": {
+ "answers/026-gul-zon-avgift-plus-hastighetsskylt@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -11998,7 +11998,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/027-rorelsehindrad-0-6m-avgift-taxa-2@base": {
+ "answers/027-rorelsehindrad-0-6m-avgift-taxa-2@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -12375,7 +12375,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/028-avgift-taxa-2-fred-0-6-boende-ci@base": {
+ "answers/028-avgift-taxa-2-fred-0-6-boende-ci@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -12764,7 +12764,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/029-beskickningsfordon-0-12m@base": {
+ "answers/029-beskickningsfordon-0-12m@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -12989,7 +12989,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/030-avgift-8-21-fredag-0-6-galler-ej-juli-zon-a@base": {
+ "answers/030-avgift-8-21-fredag-0-6-galler-ej-juli-zon-a@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -13401,7 +13401,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/031-snedstallning-torsdag-jamna-veckor-boende-solna@base": {
+ "answers/031-snedstallning-torsdag-jamna-veckor-boende-solna@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -13912,7 +13912,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/032-rorelsehindrad-pil-hoger@base": {
+ "answers/032-rorelsehindrad-pil-hoger@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -14164,7 +14164,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/033-avgift-8-21-uppstallning-zon-e-boende-storskogen@base": {
+ "answers/033-avgift-8-21-uppstallning-zon-e-boende-storskogen@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -14666,7 +14666,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/034-avgift-tisdag-12-15-nov-maj-zon-c-boende@base": {
+ "answers/034-avgift-tisdag-12-15-nov-maj-zon-c-boende@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -15107,7 +15107,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/035-zon-c-pa-avstand@base": {
+ "answers/035-zon-c-pa-avstand@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -15406,7 +15406,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so@base": {
+ "answers/036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -15980,7 +15980,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/037-hanvisning-p-med-pil@base": {
+ "answers/037-hanvisning-p-med-pil@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -16116,7 +16116,7 @@
    "text": "This sign points the way to parking; it does not itself designate spaces"
   }
  },
- "demo/038-scandic-buss-besokande-pil@base": {
+ "answers/038-scandic-buss-besokande-pil@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -16500,7 +16500,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/038-scandic-buss-besokande-pil@dst-back": {
+ "answers/038-scandic-buss-besokande-pil@dst-back": {
   "contract": 7,
   "moment": "2026-10-24T20:00",
   "day_class": "eve",
@@ -16884,7 +16884,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/038-scandic-buss-besokande-pil@dst-forward": {
+ "answers/038-scandic-buss-besokande-pil@dst-forward": {
   "contract": 7,
   "moment": "2027-03-27T20:00",
   "day_class": "eve",
@@ -17271,7 +17271,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/038-scandic-buss-besokande-pil@eve": {
+ "answers/038-scandic-buss-besokande-pil@eve": {
   "contract": 7,
   "moment": "2026-10-30T14:00",
   "day_class": "eve",
@@ -17658,7 +17658,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/038-scandic-buss-besokande-pil@midnight": {
+ "answers/038-scandic-buss-besokande-pil@midnight": {
   "contract": 7,
   "moment": "2026-06-10T00:00",
   "day_class": "weekday",
@@ -18042,7 +18042,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/038-scandic-buss-besokande-pil@red": {
+ "answers/038-scandic-buss-besokande-pil@red": {
   "contract": 7,
   "moment": "2026-12-25T10:00",
   "day_class": "red",
@@ -18429,7 +18429,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/038-scandic-buss-besokande-pil@season-edge": {
+ "answers/038-scandic-buss-besokande-pil@season-edge": {
   "contract": 7,
   "moment": "2026-09-30T23:30",
   "day_class": "weekday",
@@ -18813,7 +18813,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/039-laddning-avgift-4-platser-pil@base": {
+ "answers/039-laddning-avgift-4-platser-pil@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -19246,7 +19246,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/040-servicefordon-vardagar-7-17-ovrig-tid-avgift@base": {
+ "answers/040-servicefordon-vardagar-7-17-ovrig-tid-avgift@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -19642,7 +19642,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/041-lastplats-forbud-7-17-ovrig-tid-avgift@base": {
+ "answers/041-lastplats-forbud-7-17-ovrig-tid-avgift@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -20079,7 +20079,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/042-cykel-moped-parkering@base": {
+ "answers/042-cykel-moped-parkering@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -20355,7 +20355,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/044-motorcykel-avgift-taxa-12-fred-boende@base": {
+ "answers/044-motorcykel-avgift-taxa-12-fred-boende@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -20838,7 +20838,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/049-moped-sasong-avgift-tva-taxor@base": {
+ "answers/049-moped-sasong-avgift-tva-taxor@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -21252,7 +21252,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/049-moped-sasong-avgift-tva-taxor@dst-back": {
+ "answers/049-moped-sasong-avgift-tva-taxor@dst-back": {
   "contract": 7,
   "moment": "2026-10-24T20:00",
   "day_class": "eve",
@@ -21666,7 +21666,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/049-moped-sasong-avgift-tva-taxor@dst-forward": {
+ "answers/049-moped-sasong-avgift-tva-taxor@dst-forward": {
   "contract": 7,
   "moment": "2027-03-27T20:00",
   "day_class": "eve",
@@ -22083,7 +22083,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/049-moped-sasong-avgift-tva-taxor@eve": {
+ "answers/049-moped-sasong-avgift-tva-taxor@eve": {
   "contract": 7,
   "moment": "2026-10-30T14:00",
   "day_class": "eve",
@@ -22500,7 +22500,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/049-moped-sasong-avgift-tva-taxor@midnight": {
+ "answers/049-moped-sasong-avgift-tva-taxor@midnight": {
   "contract": 7,
   "moment": "2026-06-10T00:00",
   "day_class": "weekday",
@@ -22970,7 +22970,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/049-moped-sasong-avgift-tva-taxor@red": {
+ "answers/049-moped-sasong-avgift-tva-taxor@red": {
   "contract": 7,
   "moment": "2026-12-25T10:00",
   "day_class": "red",
@@ -23387,7 +23387,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/049-moped-sasong-avgift-tva-taxor@season-edge": {
+ "answers/049-moped-sasong-avgift-tva-taxor@season-edge": {
   "contract": 7,
   "moment": "2026-09-30T23:30",
   "day_class": "weekday",
@@ -23883,7 +23883,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/050-aimo-park-privat-hanvisning@base": {
+ "answers/050-aimo-park-privat-hanvisning@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -23964,7 +23964,7 @@
    "text": "This sign points the way to parking; it does not itself designate spaces"
   }
  },
- "demo/052-avgift-taxa-2-tisd-boende-roda-siffror@base": {
+ "answers/052-avgift-taxa-2-tisd-boende-roda-siffror@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -24302,7 +24302,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/054-buss-15min-avgift-torsd@base": {
+ "answers/054-buss-15min-avgift-torsd@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -24693,7 +24693,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/055-forbud-stannande-snotackt-pil@base": {
+ "answers/055-forbud-stannande-snotackt-pil@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -24942,7 +24942,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/056-natt-avgift-7-19-taxa-3-torsd-plus-forbud@base": {
+ "answers/056-natt-avgift-7-19-taxa-3-torsd-plus-forbud@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -25300,7 +25300,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/057-p-skiva-2tim-eller-gratis-biljett@base": {
+ "answers/057-p-skiva-2tim-eller-gratis-biljett@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -25654,7 +25654,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/058-natt-klass-i-22-06-roda-siffror-utanfor-markerad@base": {
+ "answers/058-natt-klass-i-22-06-roda-siffror-utanfor-markerad@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -26148,7 +26148,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/059-avstand-p-skiva-2tim-darefter-avgift@base": {
+ "answers/059-avstand-p-skiva-2tim-darefter-avgift@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -26511,7 +26511,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/060-natt-lastplats-ovrig-tid-avgift@base": {
+ "answers/060-natt-lastplats-ovrig-tid-avgift@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -26954,7 +26954,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/061-lastplats-langt-avstand@base": {
+ "answers/061-lastplats-langt-avstand@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -27404,7 +27404,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/062-klass-i-14-dygn-slapfordon-forbud@base": {
+ "answers/062-klass-i-14-dygn-slapfordon-forbud@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -27755,7 +27755,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/063-natt-p-tillstand-06-16-p-skiva-3tim@base": {
+ "answers/063-natt-p-tillstand-06-16-p-skiva-3tim@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -28042,7 +28042,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/064-motorcykel-tisd-9-17-beskuren@base": {
+ "answers/064-motorcykel-tisd-9-17-beskuren@base": {
   "contract": 7,
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
@@ -28421,7 +28421,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/064-motorcykel-tisd-9-17-beskuren@dst-back": {
+ "answers/064-motorcykel-tisd-9-17-beskuren@dst-back": {
   "contract": 7,
   "moment": "2026-10-24T20:00",
   "day_class": "eve",
@@ -28800,7 +28800,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/064-motorcykel-tisd-9-17-beskuren@dst-forward": {
+ "answers/064-motorcykel-tisd-9-17-beskuren@dst-forward": {
   "contract": 7,
   "moment": "2027-03-27T20:00",
   "day_class": "eve",
@@ -29182,7 +29182,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/064-motorcykel-tisd-9-17-beskuren@eve": {
+ "answers/064-motorcykel-tisd-9-17-beskuren@eve": {
   "contract": 7,
   "moment": "2026-10-30T14:00",
   "day_class": "eve",
@@ -29564,7 +29564,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/064-motorcykel-tisd-9-17-beskuren@midnight": {
+ "answers/064-motorcykel-tisd-9-17-beskuren@midnight": {
   "contract": 7,
   "moment": "2026-06-10T00:00",
   "day_class": "weekday",
@@ -29943,7 +29943,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/064-motorcykel-tisd-9-17-beskuren@red": {
+ "answers/064-motorcykel-tisd-9-17-beskuren@red": {
   "contract": 7,
   "moment": "2026-12-25T10:00",
   "day_class": "red",
@@ -30325,7 +30325,7 @@
   "uncertainties": [],
   "permits_parking": true
  },
- "demo/064-motorcykel-tisd-9-17-beskuren@season-edge": {
+ "answers/064-motorcykel-tisd-9-17-beskuren@season-edge": {
   "contract": 7,
   "moment": "2026-09-30T23:30",
   "day_class": "weekday",

@@ -93,13 +93,13 @@ describe("a disagreement reads", () => {
   });
 
   it("names the layer and the case in its report", () => {
-    const lines = report("engine", { "demo/005@base": { permits: true } },
-                         { "demo/005@base": { permits: false } });
-    expect(lines).toEqual(["engine · demo/005@base · permits: false ≠ true"]);
+    const lines = report("engine", { "answers/005@base": { permits: true } },
+                         { "answers/005@base": { permits: false } });
+    expect(lines).toEqual(["engine · answers/005@base · permits: false ≠ true"]);
   });
 
   it("counts a case that was never computed as a disagreement too", () => {
-    expect(report("engine", { "demo/005@base": {} }, {}))
-      .toEqual(["engine · demo/005@base: the case was not computed"]);
+    expect(report("engine", { "answers/005@base": {} }, {}))
+      .toEqual(["engine · answers/005@base: the case was not computed"]);
   });
 });

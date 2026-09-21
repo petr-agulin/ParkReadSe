@@ -14,7 +14,7 @@ import { compare, deadSignals, emptyReport, fingerprint, table, thresholdTable, 
          verdictDifferences, verdictSlice, type ThresholdRow } from "../src/lib/measure";
 import { GOOD_ENOUGH } from "../src/lib/present";
 import { extractPrompt } from "../src/lib/prompts";
-import { DEMO, EXPECTED, answersFromAnotherPrompt, assessAnswer, loadPairs,
+import { ANSWERS, EXPECTED, answersFromAnotherPrompt, assessAnswer, loadPairs,
          loadTriageExpectations, marked, triageAnswers } from "../tools/testset";
 
 const MOMENT = "2026-03-02T00:00";      // an ordinary Monday, outside holidays
@@ -25,9 +25,9 @@ describe("the measurement", () => {
     const cal = new Calendar();
     const moment = parseNaive(MOMENT);
     const mark = await fingerprint(extractPrompt());
-    const pairs = loadPairs(EXPECTED, DEMO, { promptFingerprint: mark });
+    const pairs = loadPairs(EXPECTED, ANSWERS, { promptFingerprint: mark });
     const totalExpected = marked().size;
-    const outdated = answersFromAnotherPrompt(EXPECTED, DEMO, mark);
+    const outdated = answersFromAnotherPrompt(EXPECTED, ANSWERS, mark);
     const out: string[] = [];
 
     // Answers obtained with a different prompt are named aloud in both sections.
@@ -58,7 +58,7 @@ describe("the measurement", () => {
     // Whether a photograph is a parking one comes from the declared list rather than
     // from having a reference reading: an unmarked sign is not rubbish.
     const notParking = loadTriageExpectations();
-    const triage = triageAnswers(DEMO);
+    const triage = triageAnswers(ANSWERS);
     if (Object.keys(triage).length) {
       const isParking = Object.fromEntries(Object.keys(triage).map((k) => [k, !(k in notParking)]));
       const t = triageReport(isParking, triage);

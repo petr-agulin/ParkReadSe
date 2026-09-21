@@ -15,7 +15,7 @@ import { ROOT, ask, expand, photoOf, providerFromEnv } from "./ask";
 
 const PHOTO = join(ROOT, "testset", "photos", "001-p-30min.jpg");
 const SIGN = JSON.parse(readFileSync(
-  join(ROOT, "demo", "001-p-30min.extract.json"), "utf-8")).response;
+  join(ROOT, "testset", "answers", "001-p-30min.extract.json"), "utf-8")).response;
 const TRIAGE_OK = { category: "parking_sign", what_i_see: "a blue P",
                     panels_below_main_sign: 1 };
 

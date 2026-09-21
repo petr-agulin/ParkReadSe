@@ -88,9 +88,9 @@ describe("the triage prompt", () => {
     // have to be obtained again. A slip in carrying the prompt text over is caught here.
     const mark = await fingerprint(triagePrompt());
     const saved = new Set(
-      readdirSync(`${ROOT}demo`)
+      readdirSync(`${ROOT}testset/answers`)
         .filter((f) => f.endsWith(".triage.json"))
-        .map((f) => JSON.parse(readFileSync(`${ROOT}demo/${f}`, "utf-8")))
+        .map((f) => JSON.parse(readFileSync(`${ROOT}testset/answers/${f}`, "utf-8")))
         .filter((d) => (d.origin ?? "model") === "model")
         .map((d) => d.prompt_fingerprint ?? "no fingerprint"));
     expect([...saved]).toEqual([mark]);

@@ -24,7 +24,7 @@ PARKREAD_PLAN.md
 Thumbs.db
 desktop.ini
 
-# NOTE: the demo set and the test photographs of signs are NOT ignored.
+# NOTE: the test photographs and the model's saved answers (testset/) are NOT ignored.
 # They are part of the project: the accuracy measurement and the reference answers
 # stand on them.
 

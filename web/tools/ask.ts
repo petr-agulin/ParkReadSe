@@ -24,7 +24,7 @@ import type { Photo, Provider } from "../src/lib/vision";
 import { refused, save, stale } from "./fixtures";
 
 export const ROOT = fileURLToPath(new URL("../../", import.meta.url));
-export const DEMO = join(ROOT, "demo");
+export const ANSWERS = join(ROOT, "testset", "answers");
 
 /** The key, the address and the model from the environment. An empty field is not a
  *  default but a refusal: quietly asking the wrong model costs more than not asking. */
@@ -87,7 +87,7 @@ export type AskDeps = {
 export async function ask(paths: string[], { refresh = false } = {},
                           deps: AskDeps = {}): Promise<number> {
   const out = deps.out ?? ((line: string) => console.log(line));
-  const dir = deps.fixturesDir ?? DEMO;
+  const dir = deps.fixturesDir ?? ANSWERS;
   const provider = deps.provider ?? providerFromEnv();
   const triage = triagePrompt();
   const extract = extractPrompt();

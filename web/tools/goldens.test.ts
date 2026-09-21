@@ -44,13 +44,13 @@ describe("what the reference answers are made of", () => {
     // photographs: the model produces merged panels and odd fields that a tidy
     // reference reading never has.
     const docs = [
-      ...readdirSync(join(ROOT, "demo")).filter((f) => f.endsWith(".extract.json"))
-        .map((f) => `demo/${f.slice(0, -".extract.json".length)}`),
+      ...readdirSync(join(ROOT, "testset", "answers")).filter((f) => f.endsWith(".extract.json"))
+        .map((f) => `answers/${f.slice(0, -".extract.json".length)}`),
       ...readdirSync(join(ROOT, "testset", "expected")).filter((f) => f.endsWith(".json"))
         .map((f) => `expected/${stem(f)}`),
     ];
     expect(docs.length).toBeGreaterThan(100);
-    expect(docs.some((d) => d.startsWith("demo/"))).toBe(true);
+    expect(docs.some((d) => d.startsWith("answers/"))).toBe(true);
     expect(docs.some((d) => d.startsWith("expected/"))).toBe(true);
     const ids = new Set(readJson("parity/cases.json").map((c: any) => c.id));
     expect(docs.filter((d) => !ids.has(`${d}@base`))).toEqual([]);
@@ -60,7 +60,7 @@ describe("what the reference answers are made of", () => {
     // Otherwise the comparison would break on every rearrangement of the code while
     // saying nothing about meaning.
     const golden = readJson("parity/engine.json");
-    const one = golden["demo/005-2tim-8-18-parentes-8-15-dubbelpil@base"];
+    const one = golden["answers/005-2tim-8-18-parentes-8-15-dubbelpil@base"];
     expect(Object.keys(one).sort())
       .toEqual(["note", "permits_parking", "regimes", "uncertainties"]);
     const regime = one.regimes[0];
@@ -193,7 +193,7 @@ describe("the measurement stays a tool", () => {
     // The developer's reference readings, the model's answers and the photographs:
     // the area of the frame enters the confidence.
     const set = read("web/tools/testset.ts");
-    for (const path of ["testset", "expected", "demo", "photos"]) {
+    for (const path of ["testset", "expected", "answers", "photos"]) {
       expect(set, path).toContain(path);
     }
     const report = read("web/measure/report.test.ts");

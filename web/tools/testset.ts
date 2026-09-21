@@ -21,7 +21,7 @@ import { ok, sign as validateSign } from "../src/lib/validation";
 
 export const ROOT = fileURLToPath(new URL("../../", import.meta.url));
 export const EXPECTED = join(ROOT, "testset", "expected");
-export const DEMO = join(ROOT, "demo");
+export const ANSWERS = join(ROOT, "testset", "answers");
 export const PHOTOS = join(ROOT, "testset", "photos");
 export const TRIAGE_EXPECTED = join(ROOT, "testset", "triage_expected.json");
 
@@ -95,7 +95,7 @@ export function loadTriageExpectations(path = TRIAGE_EXPECTED): Record<string, s
 }
 
 /** What the triage answered on each photograph — the model's real answers only. */
-export function triageAnswers(fixturesDir = DEMO): Record<string, string> {
+export function triageAnswers(fixturesDir = ANSWERS): Record<string, string> {
   const out: Record<string, string> = {};
   for (const file of readdirSync(fixturesDir).filter((f) => f.endsWith(".triage.json")).sort()) {
     const d = readJson(join(fixturesDir, file));
@@ -112,7 +112,7 @@ export type Assessed = { confidence: number; category: string; signals: Record<s
  *  photograph itself. */
 export function assessAnswer(label: string, actual: SignDoc, moment: Naive,
                              cal: Calendar): Assessed {
-  const triageFile = join(DEMO, `${label}.triage.json`);
+  const triageFile = join(ANSWERS, `${label}.triage.json`);
   const seen = existsSync(triageFile)
     ? readJson(triageFile)?.response?.panels_below_main_sign : null;
   const res = validateSign(structuredClone(actual), typeof seen === "number" ? seen : null);
