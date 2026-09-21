@@ -167,9 +167,15 @@ Node 20 or newer. There is no server and no backend.
 cd web
 npm ci
 npm run dev                  # development, https for the camera
+npm run dev:lan              # the same, reachable from a phone on your Wi-Fi
 npm run build                # output in web/dist
 npm run preview              # the built page, as a host would serve it
 ```
+
+To try it on a phone, run `npm run dev:lan` and open the "Network" address it prints on a
+phone on the same Wi-Fi. The development certificate is self-signed, so the browser warns
+once; the camera needs https. The page is visible to the whole network while it runs, so
+avoid this on public Wi-Fi.
 
 The output is self-contained and uses relative paths, so it works from the root of a domain
 or from a subfolder — copy `web/dist` to any static host. It installs from the browser as an
