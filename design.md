@@ -1,268 +1,277 @@
-# design.md — как выглядит и ведёт себя ParkRead
+# design.md — how ParkRead looks and behaves
 
-Документ для реализации: что решено, а не что вдохновляет. Правки вносятся сюда,
-а не по ходу вёрстки.
-
----
-
-## 1. Что задаёт вид
-
-**Продукт спокойный и сдержанный.** Он про уверенность: человек стоит у знака и хочет
-понять, что тот означает. Всё яркое, подвижное и «продающее» здесь мешает.
-
-**Скандинавский минимализм, а не пустота.** Много воздуха, мало линий, крупный
-читаемый текст, один акцентный цвет. Пустое место — это не «незаполненное», это способ
-показать главное.
-
-**Отказ — нормальный исход.** Когда сервис не смог прочитать знак, экран не должен
-выглядеть поломкой: те же спокойные цвета, тот же тон, ясная просьба переснять.
-Красный — для запрета на знаке, не для нашей неудачи.
-
-**Мобильный экран первый.** Одна задача на экран, действия — под большим пальцем,
-цель нажатия не меньше 44 px. Десктоп — та же вёрстка, ограниченная по ширине.
+A document for building from: what is decided, not what inspires. Changes are made
+here, not along the way in the markup.
 
 ---
 
-## 2. Токены
+## 1. What sets the look
 
-Один источник значений — `web/src/index.css`, раздел `@theme`. В разметке стоят только
-имена; ни одного цвета мимо токенов там быть не может, и это проверяется тестом.
+**The product is calm and restrained.** It is about certainty: a person stands at a
+sign and wants to know what it means. Anything bright, moving or "selling" gets in the
+way.
 
-Значения — в `oklch`: в этом пространстве светлота одинакова на глаз при разном тоне,
-поэтому «на полтона тише» получается сдвигом одного числа, а не подбором.
+**Scandinavian minimalism, not emptiness.** Plenty of air, few lines, large legible
+text, one accent colour. Empty space is not "unfilled"; it is how the main thing is
+shown.
 
-### Цвет
+**A refusal is a normal outcome.** When the service could not read a sign, the screen
+must not look broken: the same calm colours, the same tone, a clear request to take
+the photograph again. Red is for a prohibition on the sign, not for our failure.
 
-| Роль | Значение | Где |
-|---|---|---|
-| `ink` | `oklch(0.24 0.01 250)` | основной текст |
-| `ink-strong` | `oklch(0.22 0.01 250)` | крупные заголовки |
-| `ink-2` | `oklch(0.45 0.01 250)` | второстепенный текст |
-| `ink-3` | `oklch(0.525 0.01 250)` | подписи, подсказки |
-| `ink-off` | `oklch(0.42 0.01 250)` | выключенная строка |
-| `ground` | `oklch(0.99 0.002 250)` | карточка, поднятая плоскость |
-| `ground-2` | `oklch(0.97 0.003 250)` | фон экрана |
-| `inset` | `oklch(0.965 0.003 250)` | поле ввода, тихая строка |
-| `chip` | `oklch(0.94 0.004 250)` | нейтральный чип, круглая кнопка |
-| `line` | `oklch(0.94 0.004 250)` | волосяной разделитель |
-| `field` | `oklch(0.9 0.005 250)` | кант поля ввода |
-| `hero` | `oklch(0.32 0.03 250)` | тёмная карточка на главном экране |
-| `stage` | `oklch(0.2 0.01 250)` | фон под снимком и затемнение вне рамки |
-| `on-dark` | `oklch(0.99 0.002 250)` | текст на тёмном |
-| `on-dark-2` | `oklch(0.82 0.01 250)` | второстепенный текст на тёмном |
-| `accent` | `oklch(0.52 0.11 250)` | основное действие, активное |
-| `accent-press` | `oklch(0.46 0.105 250)` | нажатое |
-| `link` | `oklch(0.45 0.09 250)` | ссылка-действие |
-| `tint` / `tint-ink` | `oklch(0.94 0.02 250)` / `oklch(0.4 0.09 250)` | синий чип |
-| `plate` | `oklch(0.45 0.13 255)` | нарисованная табличка знака |
-| `ok` / `ok-bg` | `oklch(0.42 0.1 150)` / `oklch(0.94 0.03 160)` | метка «всё готово» в настройках — не цвет смысла |
-
-Акцент — **синий шведского знака**. Продукт про знаки, и цвет берётся оттуда,
-а не из палитры «как у всех».
-
-**Выключенное не делается прозрачностью.** Полупрозрачное поддерево гасит всё сразу,
-включая то, что должно остаться читаемым. Выключенная строка — это `chip` под ней
-и `ink-off` на ней.
-
-### Цвета смысла
-
-Только для состояний разбора. Нигде больше.
-
-| Состояние | Цвет | Значение |
-|---|---|---|
-| `free` | `oklch(0.42 0.1 150)` | условий нет |
-| `fee` | `oklch(0.46 0.11 70)` | платно |
-| `unsure` | `oklch(0.46 0.11 70)` | неопределённость |
-| `deny` | `oklch(0.48 0.16 25)` | знак запрещает |
-| `slash` | `oklch(0.58 0.2 27)` | перечёркивание на значке конца окна |
-| `note` / `note-ink` | `oklch(0.96 0.02 70)` / `oklch(0.38 0.05 70)` | жёлтая заметка |
-| `danger-bg` / `danger-line` | `oklch(0.965 0.02 25)` / `oklch(0.9 0.03 25)` | опасное действие |
-
-**Неопределённость носит тон осторожности, а не свой собственный.** Отдельный цвет для
-неё был задуман, но в продукте никогда не жил: на шкале уже есть красный со значением
-«стоять нельзя», и третий тон рядом с ним читался бы как ещё одна степень запрета.
-Различают неопределённость **слова**, а не краска.
-
-### Типографика
-
-Системный шрифт: `ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, …`.
-Веб-шрифт не грузим — это чужой сервер в списке того, что тянет страница, и пустой
-первый экран там, где сети нет. Проверяется тестом на собранной странице.
-
-Вид держится на шкале, а не на гарнитуре.
-
-| Роль | Размер / высота строки / трекинг | Начертание |
-|---|---|---|
-| Заголовок первого запуска | 38 / 1.1 / −0.035em | 800 |
-| Заголовок экрана | 30 / 1.14 / −0.03em | 800 |
-| Заголовок карточки | 24 / 1.15 / −0.025em | 800 |
-| Заголовок карточки, малый | 19 / −0.015em | 700 |
-| Заголовок в шапке | 17 / −0.015em | 700 |
-| Строка-значение | 17 / 1.45 | 500 |
-| Текст | 16 / 1.5 | 400–500 |
-| Подпись поля | 15 | 400–600 |
-| Сноска | 14 | 400 |
-| Секционная подпись | 13 / 0.1em, прописными | 700 |
-| Моноширинная подпись | 11 / 0.1em | 400 |
-
-**Имя кегля не может совпадать с именем цвета.** Утилиты `text-*` у сборщика
-общие для размера и для краски, поэтому размер, названный как цвет, молча
-становится краской. Проверяется тестом.
-
-Моноширинным — только цитата со знака, ключ и адрес провайдера: это чужой текст,
-и читаться он должен не как наш. Мельче 14 px в продукте ровно две ступени —
-секционная подпись 13 и моноширинная 11; прежняя формулировка «ниже 14 не бывает
-ничего, кроме моноширинной» противоречила таблице выше и исправлена.
-
-### Размеры
-
-Поля экрана 20–24, отступ карточки 20–26. Ритм: 10 внутри группы, 14 между карточками,
-20–26 между блоками. Расстановка — только `flex`/`grid` с `gap`.
-
-Скругления: карточка 30, карточка малая 24, основная кнопка 26, вторичная 22,
-поле 16, плитка 14, пилюля 100, нарисованная табличка 3 — знаки прямоугольные.
-
-Тени: карточка `0 2px 10px`, поднятая карточка `0 4px 18px`, основная кнопка
-`0 12px 28px` в цвете акцента, чип `0 1px 6px`, ручка рамки `0 2px 6px`,
-маска кадра `0 0 0 9999px` цветом `stage`.
-
-Цель нажатия от 44 px. Спуск камеры 92, переключатель 46×28, круглая кнопка 40.
+**The phone screen comes first.** One task per screen, actions under the thumb, touch
+targets no smaller than 44 px. The desktop gets the same layout, limited in width.
 
 ---
 
-## 3. Компоненты
+## 2. Tokens
 
-| Компонент | Как выглядит |
+The one source of values is `web/src/index.css`, the `@theme` section. The markup
+holds only names; no colour may bypass the tokens there, and a test checks it.
+
+Values are in `oklch`: in that space lightness looks the same to the eye across hues,
+so "half a tone quieter" is a shift of one number rather than a search.
+
+### Colour
+
+| Role | Value | Where |
+|---|---|---|
+| `ink` | `oklch(0.24 0.01 250)` | body text |
+| `ink-strong` | `oklch(0.22 0.01 250)` | large headings |
+| `ink-2` | `oklch(0.45 0.01 250)` | secondary text |
+| `ink-3` | `oklch(0.525 0.01 250)` | captions, hints |
+| `ink-off` | `oklch(0.42 0.01 250)` | disabled row |
+| `ground` | `oklch(0.99 0.002 250)` | card, raised plane |
+| `ground-2` | `oklch(0.97 0.003 250)` | screen background |
+| `inset` | `oklch(0.965 0.003 250)` | input field, quiet row |
+| `chip` | `oklch(0.94 0.004 250)` | neutral chip, round button |
+| `line` | `oklch(0.94 0.004 250)` | hairline divider |
+| `field` | `oklch(0.9 0.005 250)` | input field border |
+| `hero` | `oklch(0.32 0.03 250)` | dark band on the home screen |
+| `stage` | `oklch(0.2 0.01 250)` | background under the photograph, dimming outside the frame |
+| `on-dark` | `oklch(0.99 0.002 250)` | text on dark |
+| `on-dark-2` | `oklch(0.82 0.01 250)` | secondary text on dark |
+| `accent` | `oklch(0.52 0.11 250)` | the main action, active |
+| `accent-press` | `oklch(0.46 0.105 250)` | pressed |
+| `link` | `oklch(0.45 0.09 250)` | link-style action |
+| `tint` / `tint-ink` | `oklch(0.94 0.02 250)` / `oklch(0.4 0.09 250)` | blue chip |
+| `plate` | `oklch(0.45 0.13 255)` | the drawn sign plate |
+| `ok` / `ok-bg` | `oklch(0.42 0.1 150)` / `oklch(0.94 0.03 160)` | the "All set" mark in the settings — not a colour of meaning |
+
+The accent is **the blue of the Swedish sign**. The product is about signs, and the
+colour comes from there rather than from a palette "like everyone's".
+
+**Disabled is not done with transparency.** A semi-transparent subtree dims everything
+at once, including what must stay legible. A disabled row is `chip` beneath and
+`ink-off` on top.
+
+### Colours of meaning
+
+For the states of a reading only. Nowhere else.
+
+| State | Colour | Meaning |
+|---|---|---|
+| `free` | `oklch(0.42 0.1 150)` | no conditions |
+| `fee` | `oklch(0.46 0.11 70)` | a fee applies |
+| `unsure` | `oklch(0.46 0.11 70)` | uncertainty |
+| `deny` | `oklch(0.48 0.16 25)` | the sign prohibits |
+| `slash` | `oklch(0.58 0.2 27)` | the strike-through on the end-of-window icon |
+| `note` / `note-ink` | `oklch(0.96 0.02 70)` / `oklch(0.38 0.05 70)` | yellow note |
+| `danger-bg` / `danger-line` | `oklch(0.965 0.02 25)` / `oklch(0.9 0.03 25)` | dangerous action |
+
+**Uncertainty wears the tone of caution, not one of its own.** The scale already has
+red meaning "you may not stand", and a third tone beside it would read as one more
+degree of prohibition. Uncertainty is told apart by **words**, not by paint.
+
+### Typography
+
+The system typeface: `ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, …`.
+No web font is loaded — it would be one more server in the list of what the page
+pulls, and an empty first screen where there is no network. A test on the built page
+checks it.
+
+The look rests on the scale, not on a typeface.
+
+| Role | Size / line height / tracking | Weight |
+|---|---|---|
+| First-launch heading (`display`) | 38 / 1.1 / −0.035em | 800 |
+| Screen heading (`screen`) | 30 / 1.14 / −0.03em | 800 |
+| Card heading (`card`) | 24 / 1.15 / −0.025em | 800 |
+| Small card heading (`card-sm`) | 19 / −0.015em | 700 |
+| Header title (`nav`) | 17 / −0.015em | 700 |
+| Value row (`row`) | 17 / 1.45 | 500 |
+| Body (`body`) | 16 / 1.5 | 400–500 |
+| Field label (`label`) | 15 | 400–600 |
+| Footnote (`caption`) | 14 | 400 |
+| Section caption (`section`) | 13 / 0.1em, capitals | 700 |
+| Monospace caption (`mono`) | 11 / 0.1em | 400 |
+
+**A size name may not match a colour name.** The bundler's `text-*` utilities serve
+both size and paint, so a size named like a colour silently becomes paint. A test
+checks it.
+
+Monospace is only for a quotation from a sign, the key and the provider's address:
+that is someone else's text, and it should not read as ours. The scale has two steps
+below 14 px — the section caption at 13 and the monospace caption at 11. Two places
+still go below the scale; see the open questions.
+
+### Sizes
+
+Screen margins 20–24, card padding 20–26. Rhythm: 10 inside a group, 14 between cards,
+20–26 between blocks. Layout is `flex`/`grid` with `gap` only.
+
+Radii: card 30, small card 24, main button 26, secondary 22, field 16, tile 14,
+pill 100, the drawn plate 3 — signs are rectangular.
+
+Shadows: card `0 2px 10px`, raised card `0 4px 18px`, main button `0 12px 28px` in the
+accent colour, chip `0 1px 6px`, frame handle `0 2px 6px`, frame mask
+`0 0 0 9999px` in `stage`.
+
+Touch targets from 44 px. The camera shutter 92, the switch 46×28, the round button 40.
+
+---
+
+## 3. Components
+
+| Component | How it looks |
 |---|---|
-| Основное действие | карточка в `accent`, белый текст 21/700, подпись 15 под ним, шеврон справа |
-| Вторичная кнопка | `ground`, радиус 22, текст 16/600 `ink` |
-| Текстовое действие | 16/600 `link`, по центру, без подчёркивания |
-| Строка списка | отступ 16×18, подпись 16/600, значение 15 `ink-3`, действие справа `link` |
-| Флажок «запомнить» | обычный чекбокс в цвете `accent`; при пустом ключе отмечен, но выключен |
-| Поле настройки | подпись, под ней коробка со значением (длинное обрезается), справа `Add`/`Edit`; в правке — `Save`, `Cancel`, `Clear`, у ключа ещё `Show` |
-| Метка готовности | тонкая пилюля: «All set» — `ok` на `ok-bg`, «Configure» — `note-ink` на `note`. Ниже и мягче кнопок `Add`/`Edit`, чтобы не спорить с ними |
-| Опасное действие | такая же кнопка, как `Add`/`Edit`: `chip`, `ink-2`, тот же радиус. Отличают его слова и строка рядом, а не краска; показывается, только когда есть что удалять |
-| Заметка-уведомление | фон `note`, текст `note-ink`, радиус малой карточки — для строки о том, чего не хватает |
-| Строка «подпись → значение» | подпись 88–116 px `ink-3`, значение 17/500, по базовой линии |
-| Шкала периодов | колонка 30 px, значок-табличка 28 (20 у стыка), отрезок 4 px цветом смысла |
-| Нарисованная табличка | синий щиток `plate` с белым кантом, под ним белые полоски текста |
-| Тёмная полоса главного | во всю ширину колонки, без скруглений; знак, заголовок и две тихие строки столбиком |
-| Строка момента | подпись слева и не переносится, значение и шеврон справа, волосяная линия снизу; день и месяц сокращены («Thu. 17 Sep. at 02:01»), время не отрывается от «at»; системный выбор даты открывает значение, подпись не нажимается |
+| Main action | a card in `accent`, white text 21/700, a 15 caption beneath, a chevron on the right |
+| Secondary button | `ground`, radius 22, text 16/600 `ink` |
+| Text action | 16/600 `link`, centred, no underline |
+| List row | padding 16×18, label 16/600, value 15 `ink-3`, action on the right in `link` |
+| "Remember" checkbox | an ordinary checkbox in `accent`; with an empty key it is ticked but disabled |
+| Settings field | a label, beneath it a box with the value (a long one is cut), `Add`/`Edit` on the right; while editing — `Save`, `Cancel`, `Clear`, and `Show` for the key |
+| Readiness mark | a thin pill: "All set" — `ok` on `ok-bg`; "Configure" — `note-ink` on `note`. Lower and softer than the `Add`/`Edit` buttons, so as not to argue with them |
+| Dangerous action | the same button as `Add`/`Edit`: `chip`, `ink-2`, the same radius. Its words and the line beside it set it apart, not paint; it appears only when there is something to delete |
+| Notice | background `note`, text `note-ink`, small-card radius — for a line about what is missing |
+| "Label → value" row | label 88–116 px `ink-3`, value 17/500, on the baseline |
+| Period timeline | a 30 px column, a sign icon of 36 (20 at a join), a 4 px segment in the colour of meaning |
+| Drawn sign | a blue `plate` shield with a white border, white text strips beneath it |
+| Home screen dark band | the full width of the column, no rounding; the sign, a heading and two quiet lines in a column |
+| Moment row | label on the left, never wrapping; value and chevron on the right; a hairline beneath. Day and month shortened ("Thu. 17 Sep. at 02:01"), the time never separated from "at". The system date picker opens from the value; the label is not pressable |
+| Interface icons | drawn in-house (decision 152): six inline SVGs in `Icon.tsx`, taking their colour from the text via `currentColor` |
 
-**Составное значение — списком, а не абзацем.** Когда в значении несколько строк,
-подпись уходит на свою строку, а строки идут с левым кантом 2 px и отступом 12.
-Маркеров-точек не бывает.
+**A compound value is a list, not a paragraph.** When a value has several lines, the
+label moves onto its own line and the lines follow with a 2 px left border and a 12
+indent. No bullet points.
 
-Чего не бывает: вложенных карточек, эмодзи вместо значков, тонирования поддерева
-прозрачностью, градиентов. Последний градиент — затемнение под кнопкой поверх
-снимка — исчез вместе с ней: кнопка ушла с кадра вниз экрана, и затемнять стало
-нечего.
+What never appears: nested cards, emoji instead of icons, dimming a subtree with
+transparency, gradients.
 
-**Плитка — не карточка, и внутри карточки она уместна.** Карточка ПОДНЯТА: белая,
-скруглённая, с тенью, лежит над фоном страницы. Плитка ВДАВЛЕНА: серая заливка,
-волосяной кант, тени нет. Запрет выше — про две сложенные тени: экран от них
-становится стёганым, и перестаёт читаться, что к чему относится. Плитки внутри
-карточки этого не делают и нужны: таблички разбора в «What we read», поля
-в настройках.
-
----
-
-## 4. Экраны
-
-Семь. Каждый — состояние, а не адрес: маршрутизатора нет, экран выбирает `lib/view`.
-Высоту окна меряет одна оболочка и меряет в `svh`; экраны её занимают, но не считают.
-
-### `2f` — первый запуск, ключа ещё нет
-
-Шапка: значок `P`, «ParkRead», справа значок настроек. Посреди экрана нарисованный
-знак, под ним крупный заголовок и три тихие строки. Ниже секционная метка, синяя
-кнопка с ключом и три заверения мелким кеглем со значками.
-
-Помещается целиком, без прокрутки: экран просит одно и только одно. Камеры и галереи
-на нём нет вовсе (решение 147) — кадр, снятый без ключа, кончился бы просьбой ключа.
-
-### `3a` — главный, ключ есть
-
-Та же шапка. Тёмная полоса во всю ширину колонки, без скруглений: знак слева,
-заголовок и две строки. Под ней строка момента — подпись слева, значение и шеврон
-справа, волосяная линия снизу; системный выбор даты открывает значение, подпись
-не нажимается. Внизу одно основное действие со значком камеры и тихая ссылка
-к выбору снимка.
-
-`2f` и `3a` — два состояния одного места: знак и строки берутся из общих констант,
-и это проверяется тестом.
-
-### `3e` — настройки
-
-Шапка с «назад», заголовком и тонкой меткой готовности. Три поля — ключ, адрес
-провайдера, модель: подпись, коробка со значением, справа `Add` или `Edit`; в правке
-`Save`, `Cancel`, `Clear`, у ключа ещё `Show`. Под ключом флажок «запомнить»
-и две строки о том, куда ключ уходит. Внизу тихая кнопка «Forget key» со строкой
-рядом, под ней ссылка в помощь.
-
-Заголовков разделов нет: подпись поля говорит то же самое.
-
-### `2h` — где взять ключ
-
-Три карточки: чем провайдер обязан быть, кто этому отвечает, и четыре шага. Внизу
-жёлтая заметка о ключе. О чужих моделях — только проверяемое (решение 150): ни цены,
-ни «бесплатно», ни «лучше». Единственная в приложении ссылка наружу — пример адреса
-страницы с ключами.
-
-### `3d` — камера
-
-Шапка с «назад», заголовком и таблеткой фонарика; её нет там, где камера его не умеет.
-Под шапкой подсказка обычным текстом, не на кадре. Видоискатель вписан по размеру
-потока (решение 148), в нём рамка-подсказка — ровно та, что встанет на следующем
-экране. У нижнего края экрана: плитка «Pick photo», спуск 92 px по центру и пустое
-место той же ширины справа — оно и держит спуск посередине.
-
-### `3b` — кадрирование
-
-Шапка с «назад», заголовком и «Replace». Подсказка над снимком, живая: с приближением
-она говорит про угловые ручки. Высота у неё закреплена под две строки — иначе перенос
-пересчитывал бы сцену и сбрасывал приближение. Снимок вписан целиком, вокруг тёмное
-поле; рамка с маской и четырьмя угловыми ручками. У нижнего края строка о доле кадра
-и кнопка отправки.
-
-### `3c` — разбор
-
-Шапка с «назад»: она ведёт в камеру, как и кнопка внизу — с разбора уходят снимать
-следующий знак. Дальше: оговорка о непрочитанной панели, если она есть; карточка окна
-(их бывает несколько), и под её заголовком — на какой момент посчитан ответ; «кому
-можно»; «что прочитано» со снимком и табличками-плитками. Внизу «Scan another sign».
-
-Порядок: окно → кому можно → таблички. Доказательство идёт после ответа (решение 149);
-два блока ответа поменяны местами по слову разработчика.
+**A tile is not a card, and it belongs inside one.** A card is RAISED: white, rounded,
+with a shadow, lying above the page background. A tile is PRESSED IN: a grey fill, a
+hairline border, no shadow. The prohibition above is about two stacked shadows: they
+make a screen look quilted, and it stops being clear what belongs to what. Tiles
+inside a card do not do that, and they are needed: the reading's plates in "What we
+read", the fields in the settings.
 
 ---
 
-## 5. Движение
+## 4. Screens
 
-Только там, где иначе непонятно: смена экрана — 180 мс, появление слоя — 200 мс,
-нажатие — сжатие до 0.98. Ничего не «прилетает» и не «отскакивает». При
-`prefers-reduced-motion` — без анимаций вовсе.
+Seven. Each is a state, not an address: there is no router, and `lib/view` chooses the
+screen. The height of the window is measured by the shell alone, in `svh`; screens
+take it but do not count it.
+
+### `2f` — first launch, no key yet
+
+The header: a `P` mark, "ParkRead", a settings icon on the right. In the middle of the
+screen the drawn sign, beneath it a large heading and three quiet lines. Lower down a
+section caption, a blue button with a key, and three small assurances with icons.
+
+It fits whole, with no scrolling: the screen asks for one thing only. There is no
+camera and no gallery on it at all (decision 147) — a photograph taken without a key
+would end in a request for a key.
+
+### `3a` — home, with a key
+
+The same header. A dark band across the full width of the column, no rounding: the
+sign on the left, a heading and two lines. Beneath it the moment row. At the bottom one
+main action with a camera icon, and a quiet link to choose a photograph.
+
+`2f` and `3a` are two states of one place: the sign and the lines come from shared
+constants, and a test checks it.
+
+### `3e` — settings
+
+A header with "back", the title and a thin readiness mark. Three fields — the key, the
+provider address, the model: label, value box, `Add` or `Edit` on the right; while
+editing, `Save`, `Cancel`, `Clear`, and `Show` for the key. Under the key, the
+"remember" checkbox and two lines about where the key goes. At the bottom a quiet
+"Forget key" button with a line beside it, and a help link beneath.
+
+No section headings: each field's label says the same thing.
+
+### `2h` — where to get a key
+
+Three cards: what a provider must be, who answers that way, and four steps. At the
+bottom a yellow note about the key. About other people's models only what can be
+checked (decision 150): no price is promised, and no provider is called cheaper or
+better; the screen only names the size of a request so the person can weigh it
+against their provider's own terms. The one link out of the application is an example
+address of a key page.
+
+### `3d` — camera
+
+A header with "back", the title and a torch pill; the pill is absent where the camera
+has no torch. Under the header a hint as ordinary text, not on the frame. The
+viewfinder fits the stream's size (decision 148), with a guide frame in it — exactly
+the frame that will stand on the next screen. At the bottom edge: a "Pick photo" tile,
+the 92 px shutter in the centre, and an empty space of the same width on the right,
+which keeps the shutter in the middle.
+
+### `3b` — cropping
+
+A header with "back", the title and "Replace". A live hint above the photograph: once
+zoomed in, it speaks of the corner handles. Its height is fixed at two lines —
+otherwise a wrap would re-lay the stage and reset the zoom. The photograph fits whole,
+with a dark field around it; the frame has a mask and four corner handles. At the
+bottom edge a line about the share of the frame, and the send button.
+
+### `3c` — reading
+
+A header with "back": it leads to the camera, as the button at the bottom does — from
+a reading one goes to photograph the next sign. Then: the caveat about an unread
+panel, if there is one; the engine's note on the sign, if there is one; the window
+card (there may be several), with the moment the answer was computed for under its
+heading; "who may park"; "what was read", with the photograph and the plates as tiles.
+At the bottom, "Scan another sign".
+
+The order: window → who may park → plates. The evidence comes after the answer
+(decision 149).
 
 ---
 
-## 6. Доступность
+## 5. Motion
 
-- Контраст текста не ниже 4.5:1 против того, что за ним действительно лежит.
-  Считается по токенам и проверяется тестом: любая краска текста против любой
-  светлой поверхности, белый — против любой тёмной. Исключение названо в тесте:
-  `on-dark-2` живёт только на карточке и сцене, на синей кнопке он не проходит.
-- Цвет никогда не единственный носитель смысла: рядом с меткой всегда слово.
-- Цель нажатия от 44 px.
-- Экран переживает системный крупный шрифт: размеры в `rem`, высоты не фиксируются.
-- Каждое поле и кнопка — с подписью для скринридера.
+There is no animation in the product: screens change at once, and nothing flies in or
+bounces. If motion is ever added, it goes only where things would otherwise be
+unclear — a screen change about 180 ms, a layer appearing about 200 ms, a press shrinking
+to 0.98 — and none at all under `prefers-reduced-motion`.
 
 ---
 
-## 7. Открытые вопросы
+## 6. Accessibility
 
-| Вопрос | Рекомендация |
+- Text contrast is no lower than 4.5:1 against what actually lies behind it. It is
+  computed from the tokens and checked by a test: every text colour against every
+  light surface, white against every dark one. The exception is named in the test:
+  `on-dark-2` lives only on the card and the stage; on the blue button it does not
+  pass.
+- Colour is never the only carrier of meaning: a word always stands beside a mark.
+- Touch targets from 44 px.
+- Heights are not fixed where text lives. The size scale is in `px`, so text does not
+  follow the system's larger font setting — see the open questions.
+- Every field and button has a label for a screen reader.
+
+---
+
+## 7. Open questions
+
+| Question | Recommendation |
 |---|---|
-| Тёмная тема | Позже. Токены заведены так, чтобы её добавить сменой значений |
-| Значок приложения | Остался на прежнем синем: отдельная работа, а не перекраска |
-| Иконки в интерфейсе | **Решено 2026-09-16: рисуем сами** (решение 152). Пять inline-SVG в `Icon.tsx`; цвет берут у текста через `currentColor` |
-| Своя гарнитура | Системной хватает. Вернуться можно, но только самостоятельным файлом, без чужого сервера |
+| Dark theme | Later. The tokens are set up so it can be added by changing values |
+| App icon | Still in the previous blue: a job of its own, not a recolouring |
+| A typeface of our own | The system one is enough. It could come back, but only as a self-hosted file, with no outside server |
+| Text below the scale | The reading screen's small lines (`Completeness`, the general rules, the error box) use the bundler's default 12 px, and the drawn plate's lines are 10 px at its large and small sizes. Either the scale gains a step for them or they move onto `caption`/`section` — the developer's call |
+| The system's larger font | The scale is in `px`, so a person who set a larger text size on the phone does not get it here. Moving the scale to `rem` is the fix; it needs checking on the phone that every screen still fits |
