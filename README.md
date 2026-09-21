@@ -123,6 +123,14 @@ The test set is **64 photos** taken by the author: 57 parking signs with referen
 plus 7 frames that are not parking signs. Measurement runs on stored model responses,
 so it is deterministic and needs no key.
 
+Each photo is named `NNN-short-slug.jpg`; the three-digit number is the key of its
+reference answer `testset/expected/NNN.json` and is never reused. No frame may show a
+readable number plate, a face or personal details — this is checked before a commit,
+since a photo in git history can only be removed by rewriting it. One exception is
+deliberate: photo `019` shows a car's front plate about 20 px wide, unreadable, that no
+crop can remove; it is kept because it is the only photo with `Övrig tid` under a
+prohibition sign and the only yellow time plate.
+
 - **51 of 55 answers match** the reference. Two diverging photos narrow the answer, two read
   a parking disc as a ticket.
 - **Triage: 57 real signs, 0 wrongly rejected; 7 non-parking frames, 0 let through.**
