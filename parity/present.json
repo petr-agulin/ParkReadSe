@@ -25496,7 +25496,7 @@
        "key": "p-biljett",
        "label": "Parking ticket",
        "code": "T20",
-       "text": "The sign requires a parking ticket; no fee is stated",
+       "text": "The sign requires a parking ticket to be displayed",
        "short": "Parking ticket required",
        "continues": false
       }
@@ -25624,7 +25624,7 @@
       "notes": [
        {
         "key": "p-biljett",
-        "text": "The sign requires a parking ticket; no fee is stated",
+        "text": "The sign requires a parking ticket to be displayed",
         "known": true
        }
       ],
@@ -25639,7 +25639,7 @@
        },
        {
         "key": "p-biljett",
-        "text": "The sign requires a parking ticket; no fee is stated",
+        "text": "The sign requires a parking ticket to be displayed",
         "known": true
        }
       ],
@@ -26299,7 +26299,7 @@
        "key": "p-biljett",
        "label": "Parking ticket",
        "code": "T20",
-       "text": "The sign requires a parking ticket; no fee is stated",
+       "text": "The sign requires a parking ticket to be displayed",
        "short": "Parking ticket required",
        "continues": false
       }
@@ -26481,7 +26481,7 @@
       "notes": [
        {
         "key": "p-biljett",
-        "text": "The sign requires a parking ticket; no fee is stated",
+        "text": "The sign requires a parking ticket to be displayed",
         "known": true
        }
       ],
@@ -26496,7 +26496,7 @@
        },
        {
         "key": "p-biljett",
-        "text": "The sign requires a parking ticket; no fee is stated",
+        "text": "The sign requires a parking ticket to be displayed",
         "known": true
        }
       ],

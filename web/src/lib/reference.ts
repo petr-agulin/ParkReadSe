@@ -101,7 +101,24 @@ export type Recognised = {
   missingKeys: string[];                      // the fields are there, the entry is not
 };
 
-export const PRIVATE_LAND_PHRASE = "privat parkering";
+/** Entries the schema has no field for, matched on the plate's own text.
+ *
+ *  The regulations provide no code for these, so the text is the only handle there is.
+ *  `privat-parkering` was the first; `boende` follows because its article declares
+ *  `schema: —` outright, and the named-group plates because in the schema they arrive
+ *  as `eligibility: custom` — "nothing listed fitted" — which by the value of the field
+ *  alone cannot be told from any other plate that fitted nothing.
+ *
+ *  A test holds this table in step with the `tokens:` headers of the articles: let the
+ *  two drift and the rule stops firing while the article goes on looking as if it works. */
+export const BY_TEXT: [string, string[]][] = [
+  ["privat-parkering", ["privat parkering"]],
+  ["boende", ["boende"]],
+  ["reserved-for-named-group",
+   ["vaktmästare", "verksamhet", "personal", "regionservice", "blodbil"]],
+];
+
+export const PRIVATE_LAND_PHRASE = BY_TEXT[0][1][0];
 
 export function recognise(doc: SignDoc): Recognised {
   const main = doc.main_sign;
@@ -123,12 +140,15 @@ export function recognise(doc: SignDoc): Recognised {
     const keys: string[] = [];
     if (p.kind === "info_board") keys.push("info-board");
     if (p.kind === "operator_plate") keys.push("operator-plate");
-    // `Privat parkering` is the one entry recognised BY TEXT. The schema has no field
-    // for it and should have none: free text is not provided for by the regulations.
-    // But the consequence is an important one — the land is private, and the owner's
-    // conditions are not on the pole.
-    if ((p.lines ?? []).join(" ").toLowerCase().includes(PRIVATE_LAND_PHRASE)) {
-      keys.push("privat-parkering");
+    // The entries recognised BY TEXT rather than by a field (see `BY_TEXT`). The lines
+    // are joined first: a phrase can be broken across two of them, as `Privat` and
+    // `parkering` are on photograph `021`.
+    const joined = (p.lines ?? []).join(" ").toLowerCase();
+    const spokenFor: string[] = [];
+    for (const [key, tokens] of BY_TEXT) {
+      if (!tokens.some((token) => joined.includes(token))) continue;
+      keys.push(key);
+      spokenFor.push(...tokens.filter((token) => joined.includes(token)));
     }
     const parsed: Parsed = p.parsed ?? {};
 
@@ -178,7 +198,19 @@ export function recognise(doc: SignDoc): Recognised {
     // of an unknown class arrived as `pictogram: other` with no lines of text and fell
     // between the two nets).
     const notUnderstood = unique.length === 0 && p.kind === "sign_plate";
-    const leftovers = [...(parsed.uninterpreted ?? [])];
+    // A line the text already accounted for is no longer uninterpreted: on `097` and
+    // `114` the model named the residents' area (`Boende Solna`, `Boende GK-J`), the
+    // product read `Boende` from it, and the screen still called the whole line
+    // not interpreted.
+    //
+    // Struck only when the line carries NO DIGITS. `Boende 8-18` limits the circle by
+    // the hour, and what that means is an open question in the plan; a line with
+    // figures on it keeps its place in plain sight rather than disappearing into a
+    // word we did recognise.
+    const leftovers = [...(parsed.uninterpreted ?? [])].filter((line) => {
+      const low = line.toLowerCase();
+      return /[0-9]/.test(low) || !spokenFor.some((token) => low.includes(token));
+    });
     if (notUnderstood) leftovers.push(...(p.lines ?? []));
     if (leftovers.length || notUnderstood) uninterpreted[i] = leftovers;
   }

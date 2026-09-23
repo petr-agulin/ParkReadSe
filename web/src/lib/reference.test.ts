@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
 import { TIME_KEYS } from "./present";
-import { ELIGIBILITY_KEYS, PRIVATE_LAND_PHRASE, VEHICLE_KEYS, all, get, has,
+import { BY_TEXT, ELIGIBILITY_KEYS, VEHICLE_KEYS, all, get, has,
          recognise } from "./reference";
 import { SIGN_SCHEMA } from "./schema.data";
 import type { Panel, SignDoc } from "./sign";
@@ -186,12 +186,43 @@ describe("the reference entries are fit to be shown", () => {
     expect(motorcycle.en, "the light class belongs to the bicycle").not.toContain("class II");
   });
 
-  it("the phrase the code matches on is the one the article itself declares", () => {
+  it("names the residents' area without losing the residents", () => {
+    // Photographs `097` (`Boende Solna`) and `114` (`Boende GK-J`): the plate said who,
+    // the district said which, and the screen called the whole line not interpreted.
+    // The article declares `schema: —`, so the text is the only road to this entry.
+    const rec = recognise(doc([plate({ uninterpreted: ["Boende GK-J"] }, ["Boende GK-J"])]));
+    expect(rec.panelKeys[1]).toContain("boende");
+    expect(rec.uninterpreted[1] ?? []).toEqual([]);
+  });
+
+  it("keeps a line with figures on it in plain sight", () => {
+    // `Boende 8-18` narrows the circle BY THE HOUR, and what that means is still an
+    // open question in the plan. A line carrying figures is never struck for the sake
+    // of a word that was recognised inside it: it stays where it can be read.
+    const rec = recognise(doc([plate({ uninterpreted: ["Boende 8-18"] }, ["Boende 8-18"])]));
+    expect(rec.panelKeys[1]).toContain("boende");
+    expect(rec.uninterpreted[1]).toEqual(["Boende 8-18"]);
+  });
+
+  it("reads a plate that names a group as one rule, whatever the word", () => {
+    // `066`, `067`, `069`, `070`, `072`. In the schema they all arrive as
+    // `eligibility: custom` - "nothing listed fitted" - so the field cannot tell them
+    // from any other plate that fitted nothing. The word on the plate can.
+    for (const word of ["Personal", "Reserverad Vaktmästare", "BLODBIL", "REGIONSERVICE"]) {
+      const rec = recognise(doc([plate({ eligibility: "custom" }, [word])]));
+      expect(rec.panelKeys[1], word).toContain("reserved-for-named-group");
+    }
+  });
+
+  it("the words the code matches on are the ones the articles declare", () => {
     // Let the two drift apart and the rule quietly stops firing, while the article
-    // goes on looking as though it works.
-    const article = source("reference/signs/privat-parkering.md");
-    const tokens = article.split("---")[1].split("\n")
-      .find((line) => line.startsWith("tokens:"))!;
-    expect(tokens.toLowerCase()).toContain(PRIVATE_LAND_PHRASE);
+    // goes on looking as though it works. Checked for every entry read by its text,
+    // not only for the first one.
+    for (const [key, words] of BY_TEXT) {
+      const article = source(`reference/signs/${key}.md`);
+      const declared = article.split("---")[1].split("\n")
+        .find((line) => line.startsWith("tokens:"))!.toLowerCase();
+      for (const word of words) expect(declared, `${key}: ${word}`).toContain(word);
+    }
   });
 });
