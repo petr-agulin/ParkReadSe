@@ -10,10 +10,11 @@ import { describe, expect, it } from "vitest";
 import { Calendar, EVE, RED, UNKNOWN, WEEKDAY } from "./calendar";
 import { addDays, isoNaive, parseDate, parseNaive, weekday,
          type Civil, type Naive } from "./civil";
-import { ALLOWED, FEE_PERIOD_ELSEWHERE, NOT_STATED, PROHIBITED, UNCERTAIN,
+import { ALLOWED, DURATION_IN_DAYS, FEE_PERIOD_ELSEWHERE, GENERAL_RULE_GAP,
+         PROHIBITED, UNCERTAIN,
          evaluateParkingRules, horizonEnd, isoWeek, twentyFourHourExpiry,
          windowApplies, type Regime } from "./engine";
-import { NO_WINDOW_NOTHING_STATED, regimeView, visible } from "./present";
+import { regimeView, visible } from "./present";
 import { recognise } from "./reference";
 import type { Panel, Parsed, SignDoc, TimeWindow } from "./sign";
 
@@ -213,19 +214,26 @@ describe("prohibition wins, and windows under a prohibiting sign", () => {
     const s = sign([plate({ time_windows: [zonal()] }, ["Onsdag 9-12", "jämna veckor"])],
                    "prohibition_parking");
     const stateFrom = (moment: string, from: string) => state(first(s, from), moment)[0];
-    expect(stateFrom("2026-09-09T12:33", "2026-09-09T12:33")).toBe(NOT_STATED);
+    // Outside those bounds the prohibition has LAPSED, and a street this sign says
+    // nothing about is a street the general rules govern - among them the 24 hours
+    // (decision 155). Before that it read "nothing stated", and the reader was left
+    // to work out for themselves that they could in fact park.
+    expect(stateFrom("2026-09-09T12:33", "2026-09-09T12:33")).toBe(ALLOWED);
     expect(stateFrom("2026-10-14T10:00", "2026-10-13T12:00")).toBe(PROHIBITED);  // even week
-    expect(stateFrom("2026-10-14T13:00", "2026-10-13T12:00")).toBe(NOT_STATED);  // after 12:00
-    expect(stateFrom("2026-10-15T10:00", "2026-10-13T12:00")).toBe(NOT_STATED);  // Thursday
-    expect(stateFrom("2026-10-21T10:00", "2026-10-20T12:00")).toBe(NOT_STATED);  // odd week
+    expect(stateFrom("2026-10-14T13:00", "2026-10-13T12:00")).toBe(ALLOWED);  // after 12:00
+    expect(stateFrom("2026-10-15T10:00", "2026-10-13T12:00")).toBe(ALLOWED);  // Thursday
+    expect(stateFrom("2026-10-21T10:00", "2026-10-20T12:00")).toBe(ALLOWED);  // odd week
   });
 
-  it("a sign with nothing to say shows no window at all", () => {
+  it("a lapsed prohibition leaves the street to the general rules", () => {
     const moment = "2026-09-09T16:27";
     const silent = first(sign([plate({ time_windows: [zonal()] }, ["Onsdag 9-12"])],
                               "prohibition_parking"), moment);
-    expect(new Set(silent.periods.map((p) => p.state))).toEqual(new Set([NOT_STATED]));
-    expect(noWindow(silent, moment)).toBe(NO_WINDOW_NOTHING_STATED);
+    expect(new Set(silent.periods.map((p) => p.state))).toEqual(new Set([ALLOWED]));
+    // The window rests on the road rules, not on the pole, and the period says which:
+    // a green line the sign never promised has to name whose promise it is.
+    expect(silent.periods[0].note).toBe(GENERAL_RULE_GAP);
+    expect(noWindow(silent, moment)).toBeNull();
     // And where the sign does have something to say, the timeline stays.
     expect(noWindow(first(sign([plate({ fee: true }, ["Avgift"])]), moment), moment)).toBeNull();
   });
@@ -233,14 +241,18 @@ describe("prohibition wins, and windows under a prohibiting sign", () => {
   it("the timeline shows only what the sign states about the chosen moment", () => {
     const s = sign([plate({ time_windows: [zonal()] }, ["Onsdag 9-12", "jämna veckor"])],
                    "prohibition_parking");
-    // Monday: the sign is silent - no timeline, just a phrase.
+    // Monday: the prohibition has lapsed, so the general rules grant the window and
+    // the 24-hour rule closes it (decision 155). Before that the timeline was empty
+    // and the screen said only that nothing was stated.
     const quiet = first(s, "2026-10-12T10:00");
-    expect(visible(quiet)).toEqual([]);
-    expect(noWindow(quiet, "2026-10-12T10:00")).toBe(NO_WINDOW_NOTHING_STATED);
-    // Wednesday inside the window: the prohibition only, and nothing after it.
+    const shownQuiet = visible(quiet);
+    expect(shownQuiet.map((p) => p.state)).toEqual([ALLOWED]);
+    expect(isoNaive(shownQuiet[0].end)).toBe("2026-10-13T10:00");
+    expect(noWindow(quiet, "2026-10-12T10:00")).toBeNull();
+    // Wednesday inside the window: the prohibition comes first, and it ends on time.
     const ban = first(s, "2026-10-14T10:00");
     const shown = visible(ban);
-    expect(shown.map((p) => p.state)).toEqual([PROHIBITED]);
+    expect(shown[0].state).toBe(PROHIBITED);
     expect(isoNaive(shown[0].end)).toBe("2026-10-14T12:00");
     expect(noWindow(ban, "2026-10-14T10:00")).toBeNull();
     // A sign with something to say shows its window in full.
@@ -332,16 +344,18 @@ describe("the limit and its window", () => {
     expect(r.durationSource).toBe("plate");
   });
 
-  it("a silent period carries no limit on the stay", () => {
-    // Next to "Nothing stated on the sign" stood "47 h max" - a number counted from
-    // the start of the nearest prohibition, read as permission to stay that long.
+  it("a window the general rules grant is limited by the general rules", () => {
+    // Next to "Nothing stated on the sign" once stood "47 h max" - a number counted
+    // from the start of the nearest prohibition and read as leave to stay that long.
+    // The sign is no longer silent there (decision 155), so the danger changes shape:
+    // the limit must come from the 24-hour rule, never from the gap to the next ban.
     const s = sign([plate({ time_windows: [zonal()] }, ["Onsdag 9-12", "jämna veckor"])],
                    "prohibition_parking");
     const r = first(s, "2026-10-12T10:00");
-    expect(state(r, "2026-10-12T10:00")[0]).toBe(NOT_STATED);
+    expect(state(r, "2026-10-12T10:00")[0]).toBe(ALLOWED);
     expect(r.periods.some((p) => p.state === PROHIBITED)).toBe(true);
-    expect(r.durationExpiresAt).toBeNull();
-    expect(r.durationSource).toBeNull();
+    expect(iso(r.durationExpiresAt)).toBe("2026-10-13T10:00");
+    expect(r.durationSource).toBe("24h_default");
     // And where the sign does grant parking, a prohibition still ends it.
     const speaking = first(sign([
       plate({ prohibition: true, time_windows: [win("10:00", "14:00", "named_weekday", "thursday")] },
@@ -784,5 +798,93 @@ describe("even weeks, seasons and single days", () => {
                                        ["Torsdag 10-14", "Jämna veckor", "Augusti-Juni"])])).panelKeys[1];
     expect(keys).toContain("jamna-veckor");
     expect(keys).toContain("datumintervall");
+  });
+});
+
+describe("a plate that says WHEN, and nothing else", () => {
+  it("closes the permission outside its hours", () => {
+    // Photograph `117`: `18-08` under a blue P. Taken for a condition it says nothing
+    // whatever, and the stay ran a full day past the close of the window. A plate
+    // whose only field is its hours can mean one thing alone - when parking is
+    // permitted - and to say when is to say that at other times it is not (the
+    // developer's word, 2026-09-24).
+    const s = sign([plate({ time_windows: [win("18:00", "08:00", WEEKDAY)] }, ["18-08"])]);
+    const r = first(s, "2026-09-23T18:49");
+    expect(state(r, "2026-09-23T19:00")[0]).toBe(ALLOWED);
+    expect(state(r, "2026-09-24T09:00")[0]).toBe(PROHIBITED);
+    expect(iso(r.durationExpiresAt)).toBe("2026-09-24T08:00");
+  });
+
+  it("leaves the permission alone when the plate says anything else besides", () => {
+    // `Boende C 22-7` on `052` tells the residents when their terms hold; it does not
+    // tell everyone else the sign is shut. One more field on the plate and the hours
+    // stop being the whole of what it says.
+    const s = sign([plate({ eligibility: "residents",
+                            time_windows: [win("22:00", "07:00", WEEKDAY)] },
+                          ["Boende", "22-7"])]);
+    expect(state(first(s, "2026-09-23T12:00"), "2026-09-23T12:00")[0]).toBe(ALLOWED);
+  });
+
+  it("leaves it alone when another plate speaks for the rest of the time", () => {
+    // `040`: `Vardagar 7-17` above `Övrig tid avgift` divides the day between free and
+    // paid. Bound the permission by the first plate and the sign shuts outside office
+    // hours - which the second plate plainly denies.
+    const s = sign([plate({ time_windows: [win("07:00", "17:00", WEEKDAY)] },
+                          ["Vardagar 7-17"]),
+                    plate({ fee: true, scope_shift: "remaining_time" },
+                          ["Övrig tid", "avgift"])]);
+    expect(state(first(s, "2026-09-23T20:00"), "2026-09-23T20:00")[0]).toBe(ALLOWED);
+  });
+});
+
+describe("`Övrig tid` carrying hours of its own", () => {
+  it("is narrowed by them when the plate prints them", () => {
+    // Decision 161, photograph `125`: `Övrig tid avgift (11-17)` means "at other times,
+    // NAMELY these". Read as the whole remainder, a weekday evening became payable
+    // without one figure on the sign saying so.
+    const s = sign([
+      plate({ prohibition: true, time_windows: [win("07:00", "19:00", WEEKDAY)] },
+            ["Lastplats", "7-19"]),
+      plate({ scope_shift: "remaining_time", fee: true,
+              time_windows: [win("11:00", "17:00", EVE)] },
+            ["Övrig tid", "avgift", "(11-17)"]),
+    ]);
+    const r = first(s, "2026-09-21T20:00");
+    expect(state(r, "2026-09-21T20:00"), "Monday evening").toEqual([ALLOWED, []]);
+    expect(state(r, "2026-09-26T12:00"), "Saturday noon").toEqual([ALLOWED, ["avgift"]]);
+  });
+
+  it("keeps the whole remainder when the hours are the model's own arithmetic", () => {
+    // `019`: the plate reads `Avgift / övrig tid` and prints no hours at all - the
+    // model filled a window in by inverting the prohibition above it. Narrowing by
+    // that would have dropped the fee on Saturdays, which no line of the sign does.
+    const s = sign([
+      plate({ time_windows: [win("07:00", "18:00", WEEKDAY)], prohibition: true }, ["7-18"]),
+      plate({ fee: true, scope_shift: "remaining_time", permits_parking: true,
+              time_windows: [win("18:00", "07:00", WEEKDAY)] }, ["Avgift", "övrig tid"]),
+    ], "prohibition_parking");
+    expect(state(first(s, "2026-09-26T12:00"), "2026-09-26T12:00"))
+      .toEqual([ALLOWED, ["avgift"]]);
+  });
+});
+
+describe("a stay measured in days", () => {
+  it("is not stated at all where the days were never converted", () => {
+    // `094`: `7 dygn` arrived as seven HOURS, a sixth of the stay the sign grants.
+    // Until the schema learns the unit the limit is dropped rather than corrected:
+    // the 24-hour rule is shorter than the sign allows, and erring short is the
+    // asymmetry rule.
+    const ev = evaluate(sign([plate({ duration_limit: { amount: 7, unit: "hours" } },
+                                    ["7 dygn"])]), "2026-09-23T10:00");
+    expect(ev.uncertainties).toContain(DURATION_IN_DAYS);
+    expect(iso(ev.regimes[0].durationExpiresAt)).toBe("2026-09-24T10:00");
+  });
+
+  it("is trusted where the arithmetic was done", () => {
+    // `062`: `14 dygn` arrived as 336 hours, which is right. A rule that distrusted
+    // every plate carrying the word would have thrown that away with the rest.
+    const ev = evaluate(sign([plate({ duration_limit: { amount: 336, unit: "hours" } },
+                                    ["14 dygn"])]), "2026-09-23T10:00");
+    expect(ev.uncertainties).not.toContain(DURATION_IN_DAYS);
   });
 });

@@ -17,7 +17,8 @@ import { Calendar, EVE, RED } from "./calendar";
 import { isoDate, isoNaive, type Civil, type Naive, addDays } from "./civil";
 import { realMinutes, switchBetween } from "./clock";
 import { FULL, PARTIAL, type Assessment } from "./completeness";
-import { ALLOWED, FEE_PERIOD_ELSEWHERE, NOT_STATED, PROHIBITED, horizonEnd,
+import { ALLOWED, FEE_PERIOD_ELSEWHERE, GENERAL_RULE_GAP, NOT_STATED,
+         OUTSIDE_PERMITTED_HOURS, PROHIBITED, horizonEnd,
          type Evaluation, type Period, type Regime } from "./engine";
 import { countsTowardsRules, get as refGet, type Recognised } from "./reference";
 import type { Panel, Parsed, SignDoc, TimeWindow } from "./sign";
@@ -146,6 +147,9 @@ export const UNCERTAINTY_TEXT: Record<string, string> = {
   main_sign_unknown: "The sign at the top of the pole could not be identified",
   "24h_expiry_outside_calendar": "When the 24-hour limit would run out could not be "
                                + "worked out this far ahead",
+  duration_given_in_days: "The sign gives the longest stay in days, and this service "
+                        + "can only state it in hours - so the limit below is the "
+                        + "general one, not the sign's",
 };
 
 export type Explained = { token: string; text: string };
@@ -508,6 +512,19 @@ export function regimeView(r: Regime, horizon: Naive, cal: Calendar,
       const aside = [...(p.state === wantedState ? windowFor : []), ...plainNotes]
         .filter((t) => !p.conditions.includes(t.key));
       if (p.note === FEE_PERIOD_ELSEWHERE) aside.push(feeElsewhereTerm(r.audienceExcluded));
+      // Where the window does not come from the sign, the reader is told so: a green
+      // line that the pole never promised has to say whose promise it is.
+      if (p.note === GENERAL_RULE_GAP) {
+        aside.push({ key: GENERAL_RULE_GAP, known: true,
+                     text: "The sign says nothing about this time, so the general road "
+                         + "rules apply - among them the 24-hour limit. That rule is "
+                         + "not written on this sign." });
+      }
+      if (p.note === OUTSIDE_PERMITTED_HOURS) {
+        aside.push({ key: OUTSIDE_PERMITTED_HOURS, known: true,
+                     text: "The sign names the hours when parking is permitted, and "
+                         + "this time is not among them." });
+      }
       return periodView(p, horizon, cal,
                         last ? STAY_END_TEXT[r.durationSource ?? ""] ?? "" : "",
                         last ? STAY_END_REASON[r.durationSource ?? ""] ?? "" : "",

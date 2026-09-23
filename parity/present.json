@@ -26929,24 +26929,24 @@
       "end_day": null,
       "state": "allowed",
       "state_text": "The sign permits parking during this period",
-      "tone": "paid",
-      "headline": "Parking fee",
+      "tone": "free",
+      "headline": "Free parking",
       "minutes": 420,
       "notes": [],
       "ends_at_horizon": false,
       "stay_end_text": "This stay must end here — the sign prohibits parking from this moment",
       "stay_end_reason": "the sign prohibits parking from this moment",
-      "conditions": [
-       {
-        "key": "avgift",
-        "text": "The sign requires payment for parking during this period",
-        "known": true
-       }
-      ],
+      "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
+      "note": "general_rules_apply_outside_the_sign",
       "certain": true,
-      "aside": []
+      "aside": [
+       {
+        "key": "general_rules_apply_outside_the_sign",
+        "known": true,
+        "text": "The sign says nothing about this time, so the general road rules apply - among them the 24-hour limit. That rule is not written on this sign."
+       }
+      ]
      }
     ]
    }
@@ -28394,10 +28394,10 @@
       "end": "2026-03-03T00:00",
       "start_day": null,
       "end_day": null,
-      "state": "allowed",
-      "state_text": "The sign permits parking during this period",
-      "tone": "free",
-      "headline": "Free parking",
+      "state": "prohibited",
+      "state_text": "The sign is a no-parking sign for this period",
+      "tone": "prohibited",
+      "headline": "No parking",
       "minutes": 1440,
       "notes": [],
       "ends_at_horizon": false,
@@ -28405,13 +28405,13 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
+      "note": "outside_the_hours_the_sign_permits",
       "certain": true,
       "aside": [
        {
-        "key": "pictogram-motorcycle",
-        "text": "Motorcycles and class I mopeds only",
-        "known": true
+        "key": "outside_the_hours_the_sign_permits",
+        "known": true,
+        "text": "The sign names the hours when parking is permitted, and this time is not among them."
        }
       ]
      }
@@ -29144,35 +29144,35 @@
       "known": true
      }
     ],
-    "duration_expires_at": "2027-03-30T09:00",
-    "duration_source": "prohibition",
+    "duration_expires_at": "2027-03-31T00:00",
+    "duration_source": "24h_default",
     "periods": [
      {
       "start": "2027-03-27T20:00",
-      "end": "2027-03-30T09:00",
+      "end": "2027-03-31T00:00",
       "start_day": {
        "text": "Eve of Påskdagen (Easter Sunday)",
        "kind": "eve"
       },
       "end_day": null,
-      "state": "allowed",
-      "state_text": "The sign permits parking during this period",
-      "tone": "free",
-      "headline": "Free parking",
-      "minutes": 3600,
+      "state": "prohibited",
+      "state_text": "The sign is a no-parking sign for this period",
+      "tone": "prohibited",
+      "headline": "No parking",
+      "minutes": 4500,
       "notes": [],
       "ends_at_horizon": false,
-      "stay_end_text": "This stay must end here — the sign prohibits parking from this moment",
-      "stay_end_reason": "the sign prohibits parking from this moment",
+      "stay_end_text": "This stay must end here — general 24-hour rule, not written on the sign",
+      "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
+      "note": "outside_the_hours_the_sign_permits",
       "certain": true,
       "aside": [
        {
-        "key": "pictogram-motorcycle",
-        "text": "Motorcycles and class I mopeds only",
-        "known": true
+        "key": "outside_the_hours_the_sign_permits",
+        "known": true,
+        "text": "The sign names the hours when parking is permitted, and this time is not among them."
        }
       ]
      }
@@ -30298,10 +30298,10 @@
        "kind": "red"
       },
       "end_day": null,
-      "state": "allowed",
-      "state_text": "The sign permits parking during this period",
-      "tone": "free",
-      "headline": "Free parking",
+      "state": "prohibited",
+      "state_text": "The sign is a no-parking sign for this period",
+      "tone": "prohibited",
+      "headline": "No parking",
       "minutes": 5160,
       "notes": [],
       "ends_at_horizon": false,
@@ -30309,13 +30309,13 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
+      "note": "outside_the_hours_the_sign_permits",
       "certain": true,
       "aside": [
        {
-        "key": "pictogram-motorcycle",
-        "text": "Motorcycles and class I mopeds only",
-        "known": true
+        "key": "outside_the_hours_the_sign_permits",
+        "known": true,
+        "text": "The sign names the hours when parking is permitted, and this time is not among them."
        }
       ]
      }
@@ -57569,10 +57569,10 @@
       "end": "2026-03-03T00:00",
       "start_day": null,
       "end_day": null,
-      "state": "allowed",
-      "state_text": "The sign permits parking during this period",
-      "tone": "free",
-      "headline": "Free parking",
+      "state": "prohibited",
+      "state_text": "The sign is a no-parking sign for this period",
+      "tone": "prohibited",
+      "headline": "No parking",
       "minutes": 1440,
       "notes": [],
       "ends_at_horizon": false,
@@ -57580,13 +57580,13 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
+      "note": "outside_the_hours_the_sign_permits",
       "certain": true,
       "aside": [
        {
-        "key": "pictogram-motorcycle",
-        "text": "Motorcycles and class I mopeds only",
-        "known": true
+        "key": "outside_the_hours_the_sign_permits",
+        "known": true,
+        "text": "The sign names the hours when parking is permitted, and this time is not among them."
        }
       ]
      }
@@ -58311,35 +58311,35 @@
       "known": true
      }
     ],
-    "duration_expires_at": "2027-03-30T09:00",
-    "duration_source": "prohibition",
+    "duration_expires_at": "2027-03-31T00:00",
+    "duration_source": "24h_default",
     "periods": [
      {
       "start": "2027-03-27T20:00",
-      "end": "2027-03-30T09:00",
+      "end": "2027-03-31T00:00",
       "start_day": {
        "text": "Eve of Påskdagen (Easter Sunday)",
        "kind": "eve"
       },
       "end_day": null,
-      "state": "allowed",
-      "state_text": "The sign permits parking during this period",
-      "tone": "free",
-      "headline": "Free parking",
-      "minutes": 3600,
+      "state": "prohibited",
+      "state_text": "The sign is a no-parking sign for this period",
+      "tone": "prohibited",
+      "headline": "No parking",
+      "minutes": 4500,
       "notes": [],
       "ends_at_horizon": false,
-      "stay_end_text": "This stay must end here — the sign prohibits parking from this moment",
-      "stay_end_reason": "the sign prohibits parking from this moment",
+      "stay_end_text": "This stay must end here — general 24-hour rule, not written on the sign",
+      "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
+      "note": "outside_the_hours_the_sign_permits",
       "certain": true,
       "aside": [
        {
-        "key": "pictogram-motorcycle",
-        "text": "Motorcycles and class I mopeds only",
-        "known": true
+        "key": "outside_the_hours_the_sign_permits",
+        "known": true,
+        "text": "The sign names the hours when parking is permitted, and this time is not among them."
        }
       ]
      }
@@ -59453,10 +59453,10 @@
        "kind": "red"
       },
       "end_day": null,
-      "state": "allowed",
-      "state_text": "The sign permits parking during this period",
-      "tone": "free",
-      "headline": "Free parking",
+      "state": "prohibited",
+      "state_text": "The sign is a no-parking sign for this period",
+      "tone": "prohibited",
+      "headline": "No parking",
       "minutes": 5160,
       "notes": [],
       "ends_at_horizon": false,
@@ -59464,13 +59464,13 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
+      "note": "outside_the_hours_the_sign_permits",
       "certain": true,
       "aside": [
        {
-        "key": "pictogram-motorcycle",
-        "text": "Motorcycles and class I mopeds only",
-        "known": true
+        "key": "outside_the_hours_the_sign_permits",
+        "known": true,
+        "text": "The sign names the hours when parking is permitted, and this time is not among them."
        }
       ]
      }

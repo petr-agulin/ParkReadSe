@@ -188,7 +188,8 @@
    "hours differing by conditions 81/168: avgift, p-biljett instead of avgift, p-skiva"
   ],
   "060-natt-lastplats-ovrig-tid-avgift": [
-   "hours differing by state 6/168, of which wider 0"
+   "hours differing by state 6/168, of which wider 0",
+   "hours differing by conditions 95/168: - instead of avgift"
   ],
   "061-lastplats-langt-avstand": [
    "hours differing by state 62/168, of which wider 0",

@@ -46,6 +46,17 @@ export const NOT_STATED = "not_stated";
 // is "remaining" is written on a plate addressed to a different kind of vehicle.
 export const FEE_PERIOD_ELSEWHERE = "fee_period_belongs_to_another_audience";
 
+// A plate that says WHEN parking is permitted says, by saying it, that at other times
+// it is not: otherwise the plate would have nothing to do (the developer's word,
+// 2026-09-24, photographs `064`, `117`). The sign carries no prohibition, so the
+// period names its own reason.
+export const OUTSIDE_PERMITTED_HOURS = "outside_the_hours_the_sign_permits";
+
+// A prohibition that has LAPSED leaves something different behind: a street where this
+// sign says nothing at all, and there the general rules hold - among them the 24 hours
+// (decision 155, photographs `093`, `109`, `089`).
+export const GENERAL_RULE_GAP = "general_rules_apply_outside_the_sign";
+
 // stretches
 export const HERE = "here";
 export const ARROW_EXTENT: Record<string, string> = {
@@ -303,6 +314,37 @@ function splitByVehicle(panels: Panel[]): [string | null, string[], Panel[]][] {
   return out;
 }
 
+// `dygn` is a DAY. The schema knows minutes and hours and nothing longer, so a plate
+// reading `7 dygn` arrives as seven HOURS - a stay a sixth of the length the sign
+// grants (photographs `094`, `120`). Until the schema learns the unit, such a limit is
+// not stated at all: the 24-hour rule is wrong too, but it is the rule the reader would
+// have had with no plate at all, rather than a number invented out of a misread one.
+const DAY_WORD = /(\d+)\s*dygn/i;
+
+// Hours actually PRINTED on the plate, as opposed to hours the model worked out for
+// itself. `7-18`, `(22-10)`, `07:00-19:00`.
+const PRINTED_HOURS = /\d{1,2}([:.]\d{2})?\s*[-–]\s*\d{1,2}([:.]\d{2})?/;
+export const DURATION_IN_DAYS = "duration_given_in_days";
+
+function withoutMisreadDuration(parsed: Parsed, panel: Panel,
+                                uncertainties: string[]): Parsed {
+  const limit = parsed.duration_limit;
+  if (!limit || limit.unit !== "hours") return parsed;
+  const printed = DAY_WORD.exec((panel.lines ?? []).join(" "));
+  if (!printed) return parsed;
+  // The model sometimes does the arithmetic and sometimes does not: `14 dygn` arrived
+  // as 336 hours, which is right, and `7 dygn` as 7 hours, which is a sixth of the
+  // stay the sign grants (photographs `062`, `094`). The two are told apart by the
+  // figure itself - a limit equal to the printed NUMBER OF DAYS was never converted.
+  if (limit.amount !== Number(printed[1])) return parsed;
+  if (!uncertainties.includes(DURATION_IN_DAYS)) uncertainties.push(DURATION_IN_DAYS);
+  // Dropped rather than corrected: the 24-hour rule is shorter than the sign allows,
+  // and erring towards the shorter stay is the asymmetry rule. Correcting it belongs
+  // with the schema learning the unit (step 15f).
+  const { duration_limit: _dropped, ...rest } = parsed;
+  return rest;
+}
+
 /** The reference keys an instruction adds to a period. */
 function conditionsOf(parsed: Parsed): string[] {
   const out: string[] = [];
@@ -354,12 +396,20 @@ function buildRegime(extent: string, panels: Panel[], baseState: string,
   const shifted: Parsed[] = [];
   const prohibitions: Parsed[] = [];
   for (const p of plates) {
-    const parsed = parsedOf(p);
+    const parsed = withoutMisreadDuration(parsedOf(p), p, uncertainties);
     if (parsed.prohibition && parsed.time_windows) {
       prohibitions.push(parsed);
       continue;
     }
-    if (parsed.scope_shift === "remaining_time") shifted.push(parsed);
+    if (parsed.scope_shift === "remaining_time") {
+      // A window narrows `Övrig tid` only when the hours are ON THE PLATE. On `019`
+      // the plate reads `Avgift / övrig tid` and nothing more, and the model filled
+      // the window in itself by inverting the prohibition above - a paraphrase of
+      // "the remaining time", not a second condition. Narrowing by that would have
+      // dropped the fee on Saturdays, which no line of the sign does.
+      const printed = PRINTED_HOURS.test((p.lines ?? []).join(" "));
+      shifted.push(printed ? parsed : { ...parsed, time_windows: undefined });
+    }
     else if (parsed.time_windows) windowed.push(parsed);
     else if (conditionsOf(parsed).length || parsed.duration_limit) always.push(parsed);
   }
@@ -370,13 +420,28 @@ function buildRegime(extent: string, panels: Panel[], baseState: string,
   const scoping = [...windowed, ...prohibitions].filter((p) => !p.permits_parking);
   const scoped = baseState === PROHIBITED && scoping.some((p) => p.time_windows);
 
+  // A windowed plate carrying NO rule of its own can only be saying WHEN the
+  // permission holds - there is nothing else left for it to mean. Under a permitting
+  // sign it therefore draws bounds, exactly as a plate with hours does under a
+  // prohibiting one. On photograph `117` (`18-08`) such a plate was read as saying
+  // nothing at all, and the stay ran a full day past the close of the window.
+  // "Nothing of its own" is meant strictly: the plate's only field is its hours. A
+  // plate that also names WHO (`Boende C 22-7` on `052`) is telling the residents
+  // when their terms hold, not telling everyone when the sign permits parking at all.
+  // `Övrig tid` means the sign has spoken about the rest of the time, so nothing is
+  // left for a bare window to bound: on `040` the plate `Vardagar 7-17` divides the
+  // day between free and paid, it does not close the sign outside office hours.
+  const bounding = (baseState === PROHIBITED || shifted.length) ? [] : windowed.filter((q) =>
+    Object.entries(q).every(([field, value]) =>
+      value === undefined || field === "time_windows" || field === "uninterpreted"));
+
   // Hours taken by plates addressed to SOMEONE ELSE: they give this window no
   // conditions, but "Övrig tid" does not step across them (photograph `049`,
   // decision 121).
   const occupied = others.map(parsedOf).filter((q) => q.time_windows);
 
   const periods = timeline(now, cal, baseState, windowed, always, shifted,
-                           prohibitions, uncertainties, scoped, occupied);
+                           prohibitions, uncertainties, scoped, occupied, bounding);
 
   // Duration: a plate overrides the 24-hour default - but only where the plate
   // applies.
@@ -408,7 +473,11 @@ function buildRegime(extent: string, panels: Panel[], baseState: string,
   if (limit && edge && windowEnd && minutes(edge) < minutes(windowEnd)) {
     expires = edge;
     source = "plate";
-  } else if (baseState === ALLOWED) {
+    // The 24-hour rule governs any stay that is permitted NOW, not only one under a
+    // blue P. Where a lapsed prohibition left the street to the general rules, the
+    // general rules bring their limit with them - without this the stay ran to the
+    // next ban instead, and a Monday morning bought 47 hours.
+  } else if (baseState === ALLOWED || current?.state === ALLOWED) {
     expires = twentyFourHourExpiry(now, cal);
     source = expires ? "24h_default" : null;
     if (expires === null) uncertainties.push("24h_expiry_outside_calendar");
@@ -452,7 +521,8 @@ function buildRegime(extent: string, panels: Panel[], baseState: string,
 function timeline(now: Naive, cal: Calendar, baseState: string,
                   windowed: Parsed[], always: Parsed[], shifted: Parsed[],
                   prohibitions: Parsed[], uncertainties: string[],
-                  scoped: boolean, occupied: Parsed[]): Period[] {
+                  scoped: boolean, occupied: Parsed[],
+                  bounding: Parsed[] = []): Period[] {
   const baseConditions = sortedUnique(always.flatMap(conditionsOf));
   const marks = boundaries(now, [...windowed, ...shifted, ...prohibitions,
                                  ...always, ...occupied]);
@@ -467,13 +537,18 @@ function timeline(now: Naive, cal: Calendar, baseState: string,
     let conds = [...baseConditions];
     let unknown = false;
     let duration = baseDuration;
+    let note: string | null = null;
     // The prohibition is bounded by a window: outside it the sign is silent, until
     // something says otherwise - falling inside a window below, or a plate saying
     // "at other times".
+    // Two kinds of silence, and they end differently. A lapsed prohibition leaves the
+    // street to the general rules; a closed permission leaves parking not permitted.
     if (scoped) state = NOT_STATED;
+    if (bounding.length) state = PROHIBITED;
 
     // step 6: windows on top of the base
     let inside = false;
+    let permitted = false;
     for (const parsed of windowed) {
       const results = windowsOf(parsed).map((w) => windowApplies(w, t0, cal));
       if (results.some((r) => r === null)) unknown = true;
@@ -484,11 +559,18 @@ function timeline(now: Naive, cal: Calendar, baseState: string,
         duration = durationMinutes(parsed) ?? duration;
         // Under a prohibiting sign, falling inside the window is the prohibition.
         if (scoped && !parsed.permits_parking) state = PROHIBITED;
+        // Only a BOUNDING plate grants the permission: a fee window that happens to
+        // fall outside the bounds does not open hours the sign never opened.
+        if (bounding.includes(parsed)) permitted = true;
       }
     }
 
+    if (bounding.length) {
+      state = permitted ? ALLOWED : PROHIBITED;
+      if (!permitted) { conds = []; note = OUTSIDE_PERMITTED_HOURS; }
+    }
+
     // Time taken by a plate addressed to someone else is not "remaining" time.
-    let note: string | null = null;
     if (!inside) {
       for (const parsed of occupied) {
         if (windowsOf(parsed).some((w) => windowApplies(w, t0, cal) === true)) {
@@ -504,6 +586,16 @@ function timeline(now: Naive, cal: Calendar, baseState: string,
     // the complement: the base, or whatever the shift token named
     if (!inside) {
       for (const parsed of shifted) {
+        // `Övrig tid` alone means the whole remainder. Followed by hours of its own it
+        // means "at other times, NAMELY THESE" - the window narrows the shift instead
+        // of describing it (decision 161, photograph `125`). Read the other way, a
+        // weekday evening became payable without a single figure on the sign saying so.
+        const own = windowsOf(parsed);
+        if (own.length) {
+          const results = own.map((w) => windowApplies(w, t0, cal));
+          if (results.some((r) => r === null)) unknown = true;
+          if (!results.some((r) => r === true)) continue;
+        }
         conds = conds.concat(conditionsOf(parsed));
         // A plate may restore permission by itself (photograph `019`).
         if (parsed.permits_parking) state = ALLOWED;
@@ -526,6 +618,15 @@ function timeline(now: Naive, cal: Calendar, baseState: string,
         state = PROHIBITED;
         conds = [];
       }
+    }
+
+    // The gap a lapsed prohibition leaves. Filled only where the sign was READ: that
+    // is settled by the completeness, which refuses the answer whole before it reaches
+    // the screen, not by guessing here.
+    if (scoped && state === NOT_STATED) {
+      state = ALLOWED;
+      conds = [];
+      if (note === null) note = GENERAL_RULE_GAP;
     }
 
     if (unknown && state !== PROHIBITED) {
