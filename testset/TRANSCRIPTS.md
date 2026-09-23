@@ -1,6 +1,6 @@
 # The test set: what each sign says and what it means
 
-64 photos from `photos/`, each described in two layers:
+139 photos from `photos/`, each described in two layers:
 
 1. **What is written** — plate by plate, top to bottom, word for word. The first pass
    was made by the vision model and then checked by hand: the model cannot be measured
@@ -1224,6 +1224,845 @@ it into the frame, and the right answer is to say so, not to fill it in.
 (no parking at other times). On top of that, no parking every Tuesday 09:00–17:00. A
 stretch 0–10 metres from the sign (still readable, although cropped).
 
+---
+
+## 065 · Charging, fee, 4 spaces — the whole post
+`065-laddning-avgift-4-platser-med-automat.jpg`
+
+1. **[M]** P — blue square
+2. **[P]** charging pictogram — blue, a car with a cable and a lightning bolt
+3. **[P]** `Avgift` — blue
+4. **[P]** `4 platser` — blue
+5. **[P]** arrow left — white
+6. **[I]** a payment machine marked `7527` beside the post
+
+Note: the same sign as `039`, which is a crop of this frame. Here the whole post and the
+car park around it are in view.
+
+**Meaning (developer):** _to be filled in_
+Yes, same as 039. See that. 
+---
+
+## 066 · Reserved for the caretaker, permit required
+`066-reserverad-vaktmastare-tillstand-pil.jpg`
+
+1. **[M]** P — blue square
+2. **[P]** `Reserverad` / `Vaktmästare` — blue
+3. **[P]** `Tillstånd` / `erfordras` — blue
+4. **[P]** arrow left — white
+
+**Meaning (developer):** _to be filled in_
+"Reserverad Vaktmästare" is limiting plate "for whom the place is" - for a caretaker. That caretaker must has valid permit. Only with these conditions parking is allowed (standard 24 h rule then). Dashed green line indicating parking window is correct. 
+---
+
+## 067 · Permit required, reserved for a business, 2 spaces
+`067-tillstand-reserverad-verksamhet-2-platser.jpg`
+
+1. **[M]** P — blue square
+2. **[P]** `Tillstånd` / `erfordras` — blue
+3. **[P]** `Reserverad` / `Verksamhet` — blue
+4. **[P]** `2 platser` — blue
+
+**Meaning (developer):** _to be filled in_
+"Reserverad Verksamhet" is limiting plate "for whom the place is" - for someone doing "activities" (probably visiting a local business place or a worker, or gym). That visitor must has valid permit. Only with these conditions parking is allowed (standard 24 h rule then). Dashed green line indicating parking window is correct. 
+---
+
+## 068 · Private parking, parking forbidden
+`068-parkering-forbjuden-privat-parkering.jpg`
+
+1. **[M]** `Parkering` / `förbjuden` — yellow with a red border, a no-parking symbol on
+   the left
+2. **[P]** `Privat parkering` — blue with a white border
+
+Why it matters: **an operator's board shaped like a road sign.** The prohibition is
+spelled out in words beside the symbol, and the plate below names the owner, not a rule.
+
+**Meaning (developer):** _to be filled in_
+Essentially, no parking here. "Privat parkering" allows some parking to some people, but unlikely for general public and no other explanations given. It could be a private land, or standard street parking rules do not apply here. 
+---
+
+## 069 · Staff, a valid permit required
+`069-personal-giltigt-tillstand-securitas.jpg`
+
+1. **[M]** P — blue square
+2. **[P]** `Personal` — blue
+3. **[P]** `Giltigt` / `P-tillstånd` / `erfordras` — blue
+4. **[P]** `Securitas` / `0771767000` — orange, operator
+
+**Meaning (developer):** _to be filled in_
+"Personal" is limiting plate "for whom the place is" - the parking spaces are reserved exclusively for staff/employees who work at that specific facility or company. That visitor must has valid permit. Only with these conditions parking is allowed (standard 24 h rule then). Dashed green line indicating parking window is correct. 
+---
+
+## 070 · Regionservice, one space
+`070-regionservice-1-plats.jpg`
+
+1. **[M]** P — blue square
+2. **[P]** `REGIONSERVICE` — blue, small capitals
+3. **[P]** `1 plats` — blue
+
+Note: the sign stands some way off; the text is legible but small.
+
+**Meaning (developer):** _to be filled in_
+"REGIONSERVICE" is limiting plate "for whom the place is" - the parking area is reserved exclusively for vehicles or staff belonging to the regional public services. Only with these conditions parking is allowed (standard 24 h rule then). Dashed green line indicating parking window is correct. One parking place. 
+---
+
+## 071 · Taxi, 3 spaces
+`071-taxi-3-platser.jpg`
+
+1. **[M]** P — blue square
+2. **[P]** `TAXI` — blue
+3. **[P]** `3 platser` — blue
+
+**Meaning (developer):** _to be filled in_
+Parking for taxis only. 3 places. The app shows solid green line. I think it should be dashed green line (like in other cases of plates that limit it to certain types of visitors like service cars, care takers, activities. it should be in out engine - if general public - solid, if some special thing like taxi, activities - dashed line)
+---
+
+## 072 · Blood-donor car, one space
+`072-blodbil-1-plats.jpg`
+
+1. **[M]** P — blue square
+2. **[P]** `BLODBIL` — blue
+3. **[P]** `1 plats` — blue
+
+Why it matters: **an eligibility no reference entry knows.** A vehicle named by its
+errand, not by its type.
+
+**Meaning (developer):** _to be filled in_
+"BLODBIL" is limiting plate "for whom the place is" - the parking area is reserved exclusively for vehicles for transporting blood (to hospitals). Only with these conditions parking is allowed (standard 24 h rule then). Dashed green line indicating parking window is correct. One parking place. 
+---
+
+## 073 · 30 min, and a fee for buses with red digits
+`073-30min-00-24-buss-avgift-roda-siffror.jpg`
+
+1. **[M]** P — blue square
+2. **[P]** `30 min` / `00-24` / `(00-14)` — blue
+3. **[P]** bus pictogram, `Avgift` / `(14-24)` / `00-24` — blue, the last line in red
+   digits
+
+Why it matters: **two plates, each with its own day classes**, and red digits on the
+second. The second plate speaks of buses only.
+
+**Meaning (developer):** _to be filled in_
+Parking limit 30 minutes in the periods between 00:00 and 24:00 (whole day and night) on weekdays and 00:00 - 14:00 on Saturdays and days before holidays - this 30 minutes is free of charge. Other periods - no such 30 minute limit, and then it is a standard single P-sign. There's also special condition for busses regarding payment which acts on top of the first plate that sets 30 minutes limit (they must also respect that first plate): busses have to pay for parking in the periods between 14:00 and 24:00 on Saturdays and days before holidays and  00:00 and 24:00 (whole day and night) on Sundays and holidays. Additional consideration: we must show parking windows for general public, not for busses, because info for bussess is only about their payment; if car arrives in the period when it is paid parking for busses, we should show as free parking (as if we read cars); otherwise, we would have to show separate sections one for general public and one for busses, and we don't do it in any other cases. It's a bit tricky, so if you have objections, let me know. 
+---
+
+## 074 · Signs at a long distance
+`074-skyltar-pa-langt-avstand.jpg`
+
+1. Two blue P signs on the far side of a car park. Nothing written on them can be read.
+
+Why it matters: **the frame where the honest answer is a refusal.** A sign is in view;
+none of it is legible.
+
+**Meaning (developer):** _to be filled in_
+I scanned the sign that is nearest to the viewer and still, as a human, I cannot read the sign at all - too far, too poor quality. The app seems to not be able to read it too ("Too little of the sign was read to say what it states | confidence 48%"). However, the app draws a dashed green line for 24h free parking. Moreover, the app wrongly claims the parking sign E19 (I can't read the sign but I do see that there is no such main sign on the pole). I would say this is the questionable solutions: in such a case with too low confidence the app should boldly claim it cannot read the sign and should not provide any parking window. 
+---
+
+## 075 · Rented spaces, from across the street
+`075-forhyrda-platser-pa-avstand.jpg`
+
+1. **[M]** P — blue square
+2. **[P]** `Förhyrda platser` — blue, legible only when magnified
+3. **[P]** an operator's plate — blue, text not legible
+
+Note: cars stand along the street between the camera and the sign.
+
+**Meaning (developer):** _to be filled in_
+Same as 074, I scanned the nearest sign pole in view, and similarly - it is too blurry to claim anything. The main sign is visible - standard p-sign, but the plates cannot be read. The app identified the first plate as "P-tillstånd erfordras" and I would guess that in fact it is "Förhyrda platser" (it looks more so, although it's too blurry to be certain). the confidence level is 92% by the app, and I would argue it should be lower. The app again draws the dashed green line, which could be correct if it was "special permit required", but incorrect if it is "reserved parking spots". I would say the app should have decrease the confidence and refuse providing the parking window. Moreover, a fresh idea, if the vision model returns lowered confidence for what it read (like that first plate) - we should provide a general statement "plate could not be read reliably" instead of providing a real plate text which could be completely wrong (as I said, I would say the first plate reads "reserved spots" and not "special permit required"). 
+---
+
+## 076 · Several posts across a car park
+`076-flera-skyltar-pa-avstand-kontorshus.jpg`
+
+1. Three or four posts by an office building: a P with a disabled pictogram, a P with
+   `Avgift` / `4 tim` and further plates, a P with `1 tim`. None of the text is legible
+   from here.
+
+Why it matters: **more than one sign in the frame**, and the question of which post the
+bay in front belongs to.
+
+**Meaning (developer):** _to be filled in_
+Again, I scanned the nearest sign pole in view, and again I think the app wrongly provides the plates text. It gave the first plate as "P-tillstånd", while what I would see is either "1 tim" or "1 plats". Since I can't tell, but sure the app is wrong, the better solution would be to admit we can't read the plate! And do not draw any parking window, and lower the cofidence. 
+---
+
+## 077 · No parking, rented spaces, at dusk
+`077-gul-forbud-forhyrda-platser-skymning.jpg`
+
+1. **[M]** no-parking symbol — yellow with a red border
+2. **[P]** `Förhyrda platser` — blue, cut off by the right edge of the sign
+3. **[P]** `P-tjänst V.` / `031-51 88 10` — yellow, operator, partly hidden by the post
+
+Why it matters: **low sun behind the sign**, and part of a plate outside the frame. The
+same sign as `007`, in worse light.
+
+**Meaning (developer):** _to be filled in_
+No parking zone, parking is only on "rented spots", so not for general public. Correctly drawing "no parking here" red dashed line. All OK. 
+---
+
+## 078 · A P sign papered over with stickers
+`078-p-skylt-overklistrad.jpg`
+
+1. **[M]** P — blue square, almost covered by football stickers (`1904`, `BLÅVITT`)
+2. **[P]** a blue plate, its text unreadable under the stickers
+
+Why it matters: **the sign is there and cannot be read.** The pair to `011`, where
+stickers cover part of the text; here they cover nearly all of it.
+
+**Meaning (developer):** _to be filled in_
+Parking with Förhyrda platser. Correct outcome by the app (statement "The sign sets no parking window here: these spaces are rented, and how long a rented space may be used follows from its rental, not from this sign.")
+---
+
+## 079 · A P sign behind a tree
+`079-p-skylt-bakom-trad.jpg`
+
+1. **[M]** P — blue square, seen almost edge-on and partly hidden by foliage
+2. **[P]** two blue plates, text not legible
+
+**Meaning (developer):** _to be filled in_
+Parking with Förhyrda platser. Correct outcome by the app (statement "The sign sets no parking window here: these spaces are rented, and how long a rented space may be used follows from its rental, not from this sign."). However, the app wrote the first plate as "Förhyrda park" and I would say it's "Förhyrda platser" altught it's blurry to be certain.
+---
+
+## 080 · A P sign on the far side of a car park
+`080-p-skylt-pa-avstand-parkeringsyta.jpg`
+
+1. A blue P with plates by a building across the car park, too far away to read.
+
+**Meaning (developer):** _to be filled in_
+The sign is at distance and blurry: I can see the main P-sign and the two arrows - to the left and to the right, but I can't read two plates. The app admits it cannot read the plates, provides confidence level "Too little of the sign was read to say what it states | confidence 57%" but still draws dashed green line of free parking in parking window section, moreover it ignores two arrows pointing at opposit directions (usually, with such arrows, the app should provide two separate parking window sections, and we have only one by the app here). I would say, the app should refuse providing the parking window. 
+---
+
+## 081 · A P sign through foliage
+`081-p-skylt-pa-avstand-genom-lov.jpg`
+
+1. A blue P with plates across a car park, seen through the branches of a tree. Not
+   legible.
+
+**Meaning (developer):** _to be filled in_
+Same blurry as 080 - I would say the app should refuse providing parking window claim. 
+---
+
+## 082 · A P sign on a residential street
+`082-p-skylt-pa-avstand-bostadsgata.jpg`
+
+1. A blue P with plates on the far side of the bays. Not legible.
+
+**Meaning (developer):** _to be filled in_
+Same blurry as 081 - I would say the app should refuse providing parking window claim. 
+---
+
+## 083 · No parking, rented spaces, from across the lawn
+`083-gul-forbud-forhyrda-platser-pa-avstand.jpg`
+
+1. **[M]** no-parking symbol — yellow with a red border
+2. **[P]** `P` `Förhyrda platser` — blue
+3. **[P]** `P-Tjänst V.` / `031-51 88 10` — yellow, operator
+
+Note: legible when magnified. The same sign as `007` and `077`, from a third distance.
+
+**Meaning (developer):** _to be filled in_
+No parking, only Förhyrda platser. Correct outcome by the app, all OK. 
+---
+
+## 084 · No parking, the operator, and a speed-bump sign below
+`084-gul-forbud-p-tjanst-vast-farthinder.jpg`
+
+1. **[M]** no-parking symbol — yellow with a red border, no words
+2. **[P]** `P-tjänst Väst AB` / `031-51 88 10` — yellow, operator
+3. **not part of the stack:** a round advertising sticker (`GAIS TIPO`) on the post
+   between the plates
+4. **not part of the stack:** `Farthinder` — yellow, lower on the same post
+
+Why it matters: **an unrelated sign on the same post**, as on `026`, and a sticker stuck
+between the plates.
+
+**Meaning (developer):** _to be filled in_
+No parking. Additional plate - Farthinder - means road bump (but doesn't relate to any parking rules)
+---
+
+## 085 · A P sign with plates behind a barrier
+`085-p-med-plattor-bakom-bom.jpg`
+
+1. **[M]** P — blue square
+2. **[P]** several blue plates and one yellow one; the text is small and only partly
+   legible
+
+Note: a road barrier crosses the foreground.
+
+**Meaning (developer):** _to be filled in_
+Parking with "Särskilt P-tillstånd erfordrasText panel (T22). A special parking permit is required" (panel 1 read correctly). But second panel reads by app: "Gäller ej måndag kl 00-24" - that cannot be verified (too blurry), the app or vision model might have made a mistake there. It's better to claim the panel could not be read. 
+---
+
+## 086 · P, 1 hour, arrow left
+`086-p-1tim-pil-europark.jpg`
+
+1. **[M]** P — blue square
+2. **[P]** `1 tim` — blue
+3. **[P]** arrow left — white
+4. **[P]** `Europark` and a telephone number — blue, operator
+
+**Meaning (developer):** _to be filled in_
+Parking for 1 hour to the left of the sign. 
+---
+
+## 087 · A car park against the sun
+`087-motljus-parkering-pa-avstand.jpg`
+
+1. A post with signs across the car park, in strong backlight. Nothing on it is legible.
+
+**Meaning (developer):** _to be filled in_
+I can see a p-sign, arrow to the left and two plates that I can't read. The vision model returned some text which I am not sure is correct. We need some engine system which would differentiate between vision model text that we are sure of from the one we are not sure of, and for the latter - claim in the app the plate could not be read reliably. 
+---
+
+## 088 · Fee 8-20 (8-15), red rate, residents C-NV, Monday 8-11
+`088-avgift-8-20-rod-taxa-boende-c-nv-mandag-8-11.jpg`
+
+1. **[M]** P — blue square
+2. **[P]** `Avgift` / `8-20` / `(8-15)` — blue
+3. **[P]** `Röd taxa` — blue
+4. **[P]** `Boende` / `C-NV` — white with a black border
+5. **[P]** `Måndag` / `8-11` — yellow with a red border, a no-parking symbol on the left
+
+Why it matters: **all three day classes on one post**, a residents' permit area, and a
+cleaning prohibition on Monday morning.
+
+Note: this file did not come from the developer's phone. Its source is to be confirmed
+before the set is published.
+
+**Meaning (developer):** _to be filled in_
+Parking fee for periods between 08:00 and 20:00 on weekdays and between 08:00 and 15:00 on saturdays and days before holidays. Other time free. Payment by red taxa. Residents have special conditions for parking. No parking on Mondays between 08:00 and 11:00. Important note: the app wrongly drew the parking window when I scanned the sign on 2026-09-23 at 13:08. It drew a window of 24 hours with solid red line from 13:08 Wednesday to 13:08 Thursday. Why it is wrong: according to the avgift plate, if you start at 13:08, your fee is untill 20:00. Then, from 20:00 to 08:00 next day is free parking. Then from 08:00 to 13:08 it is again a fee. 
+---
+
+## 089 · Loading bay and a paid zone on one post
+`089-lastplats-zon-c-boende-centrala.png`
+
+_Verbatim reading not yet written._ On the post: a yellow `Lastplats` plate with hours, a
+blue `P` with `Avgift` and hours, a `Zon C` plate and a `Boende Centrala` plate.
+
+**Meaning (developer):** _to be filled in_
+Place for goods loading and unloading where parking is prohibited in the following periods: on weekdays between 06:00 and 16:00. Other times parking is allowed according to standard parking rules. on weekdays between 16:00 and 21:00 - paid parking. Residents may have separate terms.
+---
+
+## 090 · Fee, angled bays, zone E, arrow
+`090-avgift-uppstallning-zon-e-pil.png`
+
+_Verbatim reading not yet written._ A blue `P` with `Avgift` and hours, a plate showing
+how the cars stand, an arrow right, and a `Zon E` plate.
+
+**Meaning (developer):** _to be filled in_
+Parking fee in the periods between 08:00 and 21:00 on weekdays, other times free. To the right of the sign. Parking within marked bay placing vehicles as shown on the plate (perpendicular to the road edge). Zone E must relate to payment taxa. 
+---
+
+## 091 · Fee, a Thursday prohibition, residents
+`091-avgift-7-19-torsd-boende.png`
+
+_Verbatim reading not yet written._ A blue `P` with `Avgift`, hours and a rate, a yellow
+Thursday plate, and a `Boende` plate.
+
+**Meaning (developer):** _to be filled in_
+Parking fee in the periods between 07:00 and 19:00 on weekdays by taxa 5, other periods parking is free. No parking on Thursdays between 08:00 and 16:00 in the period of 1st of november to 15th of may inclusive. Residents might have a special parking condition. 
+---
+
+## 092 · Fee and residents, against a dark wall
+`092-avgift-boende-mork-vagg.png`
+
+_Verbatim reading not yet written._ A blue `P` with `Avgift`, a yellow prohibition plate
+and a `Boende` plate. The post stands against a dark facade.
+
+**Meaning (developer):** _to be filled in_
+Same as 091
+---
+
+## 093 · No parking, Wednesday, with arrows
+`093-forbud-onsdag-pilar.png`
+
+_Verbatim reading not yet written._ A round no-parking sign, below it a yellow plate
+naming Wednesday and hours, and a plate with arrows both ways.
+
+**Meaning (developer):** _to be filled in_
+No parking between November 1 and May 15. Stretches before and after the sign. The sign pole does not contain any parking allowance signs, such as e19, and our app says "The sign restricts parking only at the times written on its plate. About parking here at other times the sign states nothing: the general rules of the road apply, and they are not on this sign." (not drawing a parking window diagram). I think we need to fix our engine and correct what is written in main readme: I will explain by the example of this image: 
+- the prohibitory sign prohibits parking for certain period only; for other period - no prohibition, but no parking allowed sign either. However, that means that general parking rules apply. Those are bassically what we show in "general parking rules" (which must be edited to also include 24 hours limit, by the way). The general parking rules in Sweden say that you may park for 24 hours on a street with no signs (with all other rules, such as in the direction of travel, not obscuring traffic, and so on). I thik our app in cases like this should show a green solid line for 24 hours parking (if outside prohibitary period). 
+---
+
+## 094 · 7 days, a Thursday prohibition for the winter months
+`094-p-7-dygn-torsd-vintersasong.png`
+
+_Verbatim reading not yet written._ A blue `P` with `7 dygn`, and a yellow plate naming
+Thursday, hours and a season.
+
+**Meaning (developer):** _to be filled in_
+Free parking for 7 consequtive days allowed (7 dygn), to the left of the sign. No parking on Thursdays from November 1 to May 15. Important note: the app incorrectly considered 7 dygn as 7 hours. I scanned it on 2026-09-23 at 14:24, and the app said the parking window is untill Wednesday 23rd at 21:24. That's 7 hours, not 7 days. Must be fixed. 
+---
+
+## 095 · A short stay above a paid stay
+`095-30min-plus-avgift-taxa.png`
+
+_Verbatim reading not yet written._ A blue `P` with a `30 min` plate and hours, and below
+it `Avgift` with hours and a rate. Graffiti on the fence behind.
+
+**Meaning (developer):** _to be filled in_
+Parking only for 30 minutes in the periods betweein 07:00 and 20:00 on weekdays, and between 09:00 and 18:00 on saturdays and days before holidays, and - also some period on sundays and holidays that can't be read (blurry).  Other times - no parking. Paid parking between 07:00 and 19:00 on weekdays by taxa 5. Other times - no parking. Note: the app read the red days as 09:00 and 18:00 but that is unverified - I can't read the red from the picture. I think this plate must indicate that the reds could not be read or entire plate could not be read entirely. If so, we can as well say we can't produce the parking window, or if possible, provide the dashed green line with an honest verdict that reds are unclear. 
+---
+
+## 096 · Several posts at one kerb, Solna residents
+`096-flera-stolpar-boende-solna.png`
+
+_Verbatim reading not yet written._ Two or three posts side by side, each with a blue `P`
+and plates; one carries `Boende Solna` and an arrow.
+
+Why it matters: **more than one post in the frame**, with the question of which one rules
+the bay in front.
+
+**Meaning (developer):** _to be filled in_
+Interesting case - the picture has two separate sets of signs mounted on one pole (left branch and right branch). I scanned the entire picture, and the model seemed to return only the left branch. The app analyzed the left branch correctly: 
+- Paid parking only by taxa A, to the left of the sign, no parking  on Tuesdays between 10:00 and 14:00, in odd weeks, from August to June inclusive, residents have special permit. 
+But the right sign was not scanned and analyzed at all, although it was as well sent to the model. 
+We should probably have two readings and two windows at the same screen. Otherwise, if that's difficult, the current behavior is correct. Then I scanned separately the right branch, the app read it correctly: 
+- parking for motorcycles only, always a fee by taxa D, to the right of the sign, residents have special conditions. 
+---
+
+## 097 · Fee, rate A, Solna residents, Wednesday
+`097-avgift-taxa-a-boende-solna-onsdag.png`
+
+_Verbatim reading not yet written._ A blue `P` with `Avgift` and `Taxa A`, a `Boende
+Solna` plate, and an orange plate naming Wednesday and hours.
+
+**Meaning (developer):** _to be filled in_
+Parking is always paid by taxa A, No parking (C35) on Wednesdays between 10:00 and 14:00, in odd weeks, from August to June inclusive, residents have special conditions. The app could not interpret "Boende Solna" because of the "Solna" which is a district in Stockholm. Expected - it interprets "boende" as residents, and that's it. The app drew a dashed red line - no reason for dashed, it should be solid red (paid paring). It wrongly claimed "The sign requires a parking ticket; no fee is stated" - it does not require a parking ticket, the plate just says "Avgift", and fee is also stated as taxa A. 
+---
+
+## 098 · Fee, a rate, a Thursday prohibition, residents
+`098-avgift-7-19-tors-boende-tr.png`
+
+_Verbatim reading not yet written._ A blue `P` with `Avgift`, hours in two classes and a
+rate; an orange Thursday plate with a season; a `Boende` plate.
+
+**Meaning (developer):** _to be filled in_
+Parking with a Fee on weekdays between 07:00 and 19:00; on Saturdays and days before a holiday between 11:00 and 17:00, by taxa 4. No parking on Thursdays between 08:00 and 16:00, from 1 November to 15 May inclusive.Residents may have separate terms.The app / vision model read everything correctly - all OK. 
+---
+
+## 099 · A P sign with a yellow plate, at a distance
+`099-p-med-gul-skylt-pa-avstand.png`
+
+_Verbatim reading not yet written._ A blue `P` with a yellow plate below it, seen from
+across a street; the text is small.
+
+**Meaning (developer):** _to be filled in_
+Free parking and No parking (C35) on Wednesdays between 08:00 and 16:00, from 1 November to 15 May inclusive. App result correct - OK. 
+---
+
+## 100 · Fee and residents, by a hedge
+`100-avgift-7-19-boende-so.png`
+
+_Verbatim reading not yet written._ A blue `P` with `Avgift`, hours and a rate, and a
+`Boende` plate.
+
+**Meaning (developer):** _to be filled in_
+Parking with a Fee on weekdays between 07:00 and 19:00; on Saturdays and days before a holiday between 11:00 and 17:00, No parking  on Tuesdays between 09:00 and 14:00, Residents may have separate terms. App result is red correctly. 
+---
+
+## 101 · Motorcycles, a stretch in metres, a Tuesday prohibition
+`101-motorcykel-0-10m-avgift-tisd.png`
+
+_Verbatim reading not yet written._ A blue `P` with a motorcycle pictogram and a metre
+plate, `Avgift` with hours and a rate, and a yellow Tuesday plate.
+
+**Meaning (developer):** _to be filled in_
+Parking for motorcycles only, stretch of 0-10 meters from the sign (or at the sign), Fee (T16) on weekdays between 07:00 and 19:00; on Saturdays and days before a holiday between 11:00 and 17:00, No parking (C35) on Tuesdays between 09:00 and 14:00, Residents may have separate terms. The app read the sign correctly - OK. 
+---
+
+## 102 · A P sign beside motorway direction signs
+`102-p-bredvid-vagvisare-centrum-e4.png`
+
+_Verbatim reading not yet written._ A blue `P` with plates on one post, and next to it
+direction signs (`CENTRUM`, `E4`, `E20`) that are not part of the parking stack.
+
+Why it matters: **unrelated signs in the same frame.**
+
+**Meaning (developer):** _to be filled in_
+Parking with a Fee on weekdays between 07:00 and 19:00; on Saturdays and days before a holiday between 11:00 and 17:00, No parking (C35) on Fridays between 09:00 and 14:00, Residents may have separate terms. The app read the sign correctly - OK. 
+---
+
+## 103 · No parking and a 10 km/h limit
+`103-forbud-plus-hastighet-10.png`
+
+_Verbatim reading not yet written._ A yellow no-parking sign with a plate, and lower down
+a round `10` speed sign that is not part of the stack.
+
+**Meaning (developer):** _to be filled in_
+No parking, Förhyrda platser only. Sign reading correct. 
+---
+
+## 104 · 2 hours, fee, a Friday prohibition
+`104-2tim-avgift-fred-vid-blomsterbutik.png`
+
+_Verbatim reading not yet written._ A blue `P` with `2 tim`, `Avgift`, hours and a rate,
+and a yellow Friday plate. A florist's sign above.
+
+**Meaning (developer):** _to be filled in_
+In the period between 07:00 and 19:00 on weekdays and on Saturdays and days before a holiday between 11:00 and 17:00 - parking is with a fee by taxa 4 and is limited by 2 hours; other times, no such limit and no fee. No parking (C35) on Fridays between 08:00 and 16:00, from 1 November to 15 May inclusive. The app read correctly - OK. 
+---
+
+## 105 · A P sign with plates at a street corner
+`105-p-med-plattor-gathorn.png`
+
+_Verbatim reading not yet written._ A blue `P` with several plates, seen down a street.
+
+**Meaning (developer):** _to be filled in_
+Parking for Electric and plug-in hybrids only. In the period between 07:00 and 19:00 on weekdays and on Saturdays and days before a holiday between 11:00 and 17:00 - parking is with a fee by taxa 4 and is limited by 3 hours; other times, no such limit and no fee. No parking (C35) on Fridays between 08:00 and 16:00, from 1 November to 15 May inclusive. Residents may have separate terms. The app read the sign correctly - OK. 
+---
+
+## 106 · A P sign with a blue and a yellow plate, by a rock
+`106-p-blaa-och-gul-skylt-vid-berg.png`
+
+_Verbatim reading not yet written._ A blue `P` with a blue plate and a yellow plate, in
+front of a rock face.
+
+**Meaning (developer):** _to be filled in_
+Parking with a fee on weekdays between 07:00 and 19:00; on Saturdays and days before a holiday between 11:00 and 17:00, with taxa 4. No parking (C35) on Mondays between 08:00 and 16:00, from 1 November to 15 May inclusive. Residents may have separate terms. Sign read correctly by the app. 
+---
+
+## 107 · Disabled parking with plates
+`107-rorelsehindrad-med-plattor.png`
+
+_Verbatim reading not yet written._ A blue `P` with a wheelchair pictogram and further
+plates below.
+
+**Meaning (developer):** _to be filled in_
+parking for disabled with disabled permit only, stretch 0-10 meters, paid parking on weekdays between 07:00 and 19:00; on Saturdays and days before a holiday between 11:00 and 17:00 by taxa 4. The app read the sign correctly. Note: I scanned twice because from the first crop scan, the app saw an arrow up to the sign (it's absent). The second scan correctly didn't find it. 
+---
+
+## 108 · A P sign and a footway sign on one post
+`108-p-plus-gangbana-skylt.png`
+
+_Verbatim reading not yet written._ A blue `P` with plates, and above it another blue
+sign that is not part of the parking stack.
+
+**Meaning (developer):** _to be filled in_
+Parking with a Fee on weekdays between 07:00 and 19:00; on Saturdays and days before a holiday between 11:00 and 17:00 by taxa 3. No parking on Thursdays between 00:00 and 06:00. Residents may have separate terms.
+---
+
+## 109 · A loading bay outside a shop
+`109-lastplats-vid-butik.png`
+
+_Verbatim reading not yet written._ A yellow `Lastplats` plate with hours on a post in
+front of a shopfront.
+
+**Meaning (developer):** _to be filled in_
+The sign prohibits parking only in certain periods. Reason - in these periods this place is for goods loading and unloading (lastplats). These periods are on weekdays between 07:00 and 19:00; on Saturdays and days before a holiday between 07:00 and 19:00; on Sundays and public holidays between 07:00 and 19:00. Also no parking on Thursdays between 00:00 and 06:00. Other times outside of those periods - general parking rules apply - there is no explicit parking sign, but then it's generic (24 hours max, in the direction of travel, and so on). Important - this must be in the app's engine. There's also a stretch of 0-15 meters. Additional: I scanned the crop twice and both times the parking window has an indication "Up to the sign", although there is no an upword arrow on the pole. 
+---
+
+## 110 · Fee, 2 hours, in a narrow street
+`110-avgift-2tim-smal-gata.png`
+
+_Verbatim reading not yet written._ A blue `P` with `Avgift` and further plates, in a
+narrow street with people walking.
+
+**Meaning (developer):** _to be filled in_
+Parking is always with a fee. In certain periods, there is a limit of 30 minutes for parking - outside those periods, standard duration. Those periods for a 30 min limit are: on weekdays between 08:00 and 22:00; on Saturdays and days before a holiday between 08:00 and 22:00. Residents may have separate terms.The app read the sign correctly. 
+---
+
+## 111 · 2 hours with a yellow plate, by a rock path
+`111-2tim-gul-skylt-vid-klippa.png`
+
+_Verbatim reading not yet written._ A blue `P` with `2 tim` and a yellow plate below.
+
+**Meaning (developer):** _to be filled in_
+Parking limit is 2 hours always but No parking on Fridays between 09:00 and 12:00, in even weeks free parking. Residents may have separate terms. App read correctly. 
+---
+
+## 112 · One hour on a car park
+`112-p-1tim-parkeringsyta.png`
+
+_Verbatim reading not yet written._ A blue `P` with `1 tim` on a post at the edge of a
+car park full of cars.
+
+**Meaning (developer):** _to be filled in_
+Free parking only for 1 hour max, before and after the sign. Read correctly. 
+---
+
+## 113 · Fee every day, and a prohibition outside the marked bays
+`113-avgift-alla-dagar-utanfor-platser.png`
+
+_Verbatim reading not yet written._ A blue `P` with `Avgift` and round-the-clock hours,
+and a plate forbidding parking outside the marked bays.
+
+**Meaning (developer):** _to be filled in_
+Reserved spots parking. All days a fee from 00:00 to 24:00. A special parking permit is required. 
+---
+
+## 114 · Fee and residents, by a painted wall
+`114-avgift-taxa-boende-vid-vaggmalning.png`
+
+_Verbatim reading not yet written._ A blue `P` with `Avgift`, a rate and a `Boende`
+plate, and an orange prohibition plate below.
+
+**Meaning (developer):** _to be filled in_
+Paid parking by taxa B. No parking between 08:00 and 12:00 on the first of every month. Residents may have separate terms. Important: the app wrote "No parking (C35) on weekdays between 08:00 and 12:00" while in fact it is "the 1st of every month". Probably a vision model's fault. We need to do something with wrong text from vision model. Also one plate was reported as not interpreted because of "Boende GK-J". The Boende should mean residents - regadless of which boende. 
+---
+
+## 115 · Fee with a downward arrow
+`115-avgift-taxa-pil-ned.png`
+
+_Verbatim reading not yet written._ A blue `P` with `Avgift`, a rate and a `Boende`
+plate, and a white plate with an arrow pointing down.
+
+Why it matters: **an arrow that points at the bay below the sign**, not along the street.
+
+**Meaning (developer):** _to be filled in_
+Same as 114 only with "up to the sign" arrow. 
+---
+
+## 116 · A P sign with a yellow plate outside a restaurant
+`116-p-gul-skylt-vid-restaurang.png`
+
+_Verbatim reading not yet written._ A blue `P` with plates and a yellow plate, on a post
+in front of a restaurant.
+
+**Meaning (developer):** _to be filled in_
+Same as 114 only No parking on weekdays between 18:00 and 22:00. 
+---
+
+## 117 · A stretch in metres, and a priority-road sign below
+`117-p-0-6m-plus-huvudled.png`
+
+_Verbatim reading not yet written._ A blue `P` with a metre plate, and below it an orange
+diamond (priority road) that is not part of the parking stack.
+
+**Meaning (developer):** _to be filled in_
+Free parking, allowed only from 18:00 to 08:00 on weekdays, between 14:00 and 08:00 on Saturdays and days before a holiday, and  between 00:00 and 24:00 on Sundays and public holidays. Other times no parking. Important: i scanned the sign on 2026-09-23 at 18:49 and the app wrongly suggested parking window of 24 hours untill Thursday at 18:49. But the plate states 18:00 to 08:00 on weekdays, so the window end should be on 08:00 on Thursday, then no parking untill 18:00.  
+---
+
+## 118 · A P sign and a priority-road sign, at a distance
+`118-p-plus-huvudled-pa-avstand.png`
+
+_Verbatim reading not yet written._ The same pairing as `117`, seen from further off; the
+plate text is small.
+
+**Meaning (developer):** _to be filled in_
+Parking for a max of 30 mins in the period of on weekdays between 09:00 and 18:00; on Saturdays and days before a holiday between 09:00 and 15:00 - parking is free. Othertimes - standard parking limits. The service could not interpret "main road" sign, which made the overall result look ugly (where must be certainty now is uncertainty). Main road is not a parking sign or plate, but it has some effect: Parking on main roads in sweden are forbidden if no other park signs are present. 
+---
+
+## 119 · A small P sign above a hedge
+`119-p-liten-skylt-vid-hack.png`
+
+_Verbatim reading not yet written._ A blue `P` with a plate, on a post behind a hedge.
+
+**Meaning (developer):** _to be filled in_
+Free parking, in certain period the limit is 30 minutes, the periods are: on weekdays between 09:00 and 18:00; on Saturdays and days before a holiday between 09:00 and 14:00. Before and after the sign. App read it correctly. 
+---
+
+## 120 · 7 days, with a priority-road sign below
+`120-p-7-dygn-plus-huvudled.png`
+
+_Verbatim reading not yet written._ A blue `P` with `7 dygn`, and below it an orange
+diamond that is not part of the parking stack.
+
+**Meaning (developer):** _to be filled in_
+Free parking for 7 consequtive days in a row. No parking between 08:00 and 12:00 on each month's 3rd Tuesday. Important: The app (or vision model) made a mistake interpreting the prohibition plate. It wrote: No parking (C35) on weekdays between 08:00 and 12:00, while in fact the prohibition acts on each 3rd Tuesday of a month. Our engine must be able to calculate such cases. Additionally, same problem as in 118 - could not interpret the main road sign. Parking on main roads in sweden are forbidden if no other park signs are present. 
+---
+
+## 121 · A P sign with an arrow, at the roadside
+`121-p-med-pil-vid-vag.png`
+
+_Verbatim reading not yet written._ A blue `P` with a metre plate and an arrow, on a post
+beside a road.
+
+**Meaning (developer):** _to be filled in_
+parking only for 12 hours max, only for Electric and plug-in hybrids, only at the angle drawn on the plate, to the left of the sign. App read correctly. 
+
+---
+
+## 122 · 3 hours, arrow right
+`122-p-3tim-pil-hoger.png`
+
+_Verbatim reading not yet written._ A blue `P` with a `3 tim` plate and an arrow pointing
+right.
+
+**Meaning (developer):** _to be filled in_
+Parking for 3 hours max, free but with a parking disc, to the right of the sign and perpedicular to the road edge. Read correctly. 
+---
+
+## 123 · A P sign with plates by a square
+`123-p-med-plattor-vid-torg.png`
+
+_Verbatim reading not yet written._ A blue `P` with several plates, on a post by a square
+with market stalls.
+
+**Meaning (developer):** _to be filled in_
+Parking only for Electric and plug-in hybrids, Only within a marked bay perpendicular to the road edge, max parking of 12 hours, and free outside selected Avgift periods, which are: Fee (T16) on weekdays between 07:00 and 19:00; on Saturdays and days before a holiday between 11:00 and 17:00. To the right of the sign. App read it all correctly. 
+---
+
+## 124 · A P sign with a yellow plate in greenery
+`124-p-gul-skylt-i-gronska.png`
+
+_Verbatim reading not yet written._ A blue `P` with a yellow plate, half surrounded by
+leaves.
+
+**Meaning (developer):** _to be filled in_
+on weekdays between 07:00 and 19:00; on Saturdays and days before a holiday between 11:00 and 17:00 - parking is limited only by 1 hour and with a fee by taxa 1. No parking on Mondays between 07:00 and 17:00, from 30 September to 30 May inclusive. Other times outside of those periods - standard p-sign. 
+---
+
+## 125 · A P sign with yellow plates by a doorway
+`125-p-gula-plattor-vid-port.png`
+
+_Verbatim reading not yet written._ A blue `P` with two yellow plates and a blue one,
+outside a building entrance.
+
+**Meaning (developer):** _to be filled in_
+No parking because of the loading/unloading spot on weekdays between 07:00 and 19:00 and No parking on Tuesdays between 00:00 and 06:00. Other times outside of those periods - parking with a fee by taxa 3. I can't personally interpret (11-17) on the same plate as "övrig tid avgift". It looks like "övrig tid avgift" builds up on top of the prohibition, but then what is (11-17) on the same plate? 
+---
+
+## 126 · Fee, a rate, a Friday prohibition
+`126-avgift-7-19-fred-0-6.png`
+
+_Verbatim reading not yet written._ A blue `P` with `Avgift`, hours in two classes and a
+rate, and a yellow Friday plate.
+
+**Meaning (developer):** _to be filled in_
+In the period of weekdays between 07:00 and 19:00; on Saturdays and days before a holiday between 11:00 and 17:00 - parking with a fee by taxa 3. No parking (C35) on Tuesdays between 00:00 and 06:00. Other periods outside of those - standard p-sign. 
+---
+
+## 127 · Bicycle parking, a stretch in metres
+`127-cykel-0-12m.png`
+
+_Verbatim reading not yet written._ A blue `P` with a bicycle pictogram and a metre
+plate.
+
+**Meaning (developer):** _to be filled in_
+Free parking for bycicles and class 2 mopeds only. Stretch 0-12 m. 
+---
+
+## 128 · Disabled parking, a stretch in metres, a fee
+`128-rorelsehindrad-0-6m-avgift.png`
+
+_Verbatim reading not yet written._ A blue `P` with a wheelchair pictogram, a metre plate
+and `Avgift` with hours.
+
+Note: close in content to `027`. Worth checking whether it is the same sign before it is
+marked up.
+
+**Meaning (developer):** _to be filled in_
+Parking for disabled with disabled permit only, stretch 0-6m, on weekdays between 07:00 and 19:00; on Saturdays and days before a holiday between 11:00 and 17:00 - paid parking with taxa 4. 
+---
+
+## 129 · Charging, a crossing sign and a speed limit on one post
+`129-laddning-plus-overgangsstalle-30.png`
+
+_Verbatim reading not yet written._ A blue `P` with a charging pictogram and plates;
+lower on the post a pedestrian-crossing sign and a round `30`, neither part of the
+parking stack.
+
+Why it matters: **three unrelated signs on one post.**
+
+**Meaning (developer):** _to be filled in_
+Parking for Electric and plug-in hybrids only. On weekdays between 07:00 and 19:00; on Saturdays and days before a holiday between 11:00 and 17:00 - parking is free and limited by 3 hours. on weekdays between 07:00 and 19:00 - paid parking by taxa 5. No parking on Thursdays between 02:00 and 08:00, from 1 November to 15 May inclusive. Outside of these windows - standard p-sign. 
+---
+
+## 130 · 2 hours, fee, a Thursday prohibition, outside a shop
+`130-2tim-avgift-torsd-vid-butik.png`
+
+_Verbatim reading not yet written._ A blue `P` with `2 tim`, `Avgift` and a rate, and a
+yellow Thursday plate.
+
+**Meaning (developer):** _to be filled in_
+On weekdays between 07:00 and 19:00; on Saturdays and days before a holiday between 09:00 and 16:00 - parking is free and limited by 2 hours. on weekdays between 07:00 and 19:00 - paid parking by taxa 5. No parking on Thursdays between 02:00 and 06:00, from 1 November to 15 May inclusiveOutside of these windows - standard p-sign. 
+---
+
+## 131 · Angled bays and an arrow, in snow
+`131-p-uppstallning-pil-i-sno.png`
+
+_Verbatim reading not yet written._ A blue `P` with a plate showing how the cars stand
+and an arrow. Snow on the ground.
+
+**Meaning (developer):** _to be filled in_
+on weekdays between 07:00 and 19:00 - paid parking by taxa 5. Parking only within a marked bay perpendicular to the road edge. No parking on Mondays between 08:00 and 16:00, from 1 November to 15 May inclusive.  Residents may have separate terms. Applies to the left of the sign.
+---
+
+## 132 · Fee and residents, in snow
+`132-avgift-boende-i-sno.png`
+
+_Verbatim reading not yet written._ A blue `P` with `Avgift` and hours, an orange
+prohibition plate and a residents' plate. Banks of snow below.
+
+**Meaning (developer):** _to be filled in_
+on weekdays between 09:00 and 19:00; on Saturdays and days before a holiday between 09:00 and 17:00 - paid parking. No parking on weekdays between 00:00 and 08:00; on Saturdays and days before a holiday between 00:00 and 08:00; on Sundays and public holidays between 00:00 and 08:00 on the side of the road with even house numbers. Outside of these periods - standard p-sign. Important note - our app does not make a difference (at least in this scan) between no parking on even house numbers side of the street and odd. We need to fix that somehow to at least says so in the UI. 
+---
+
+## 133 · 24 hours for visitors, permit required, one space
+`133-24tim-besokande-tillstand-1-plats.png`
+
+_Verbatim reading not yet written._ A blue `P` with `24 tim`, `Besökande`, `Giltigt
+P-tillstånd erfordras`, `1 plats`, and an operator's plate at the bottom.
+
+**Meaning (developer):** _to be filled in_
+Parking for 24 hours max (standard rule written explicitly on the plate). Only for visitors. A special parking permit is required. 1 spot. 
+---
+
+## 134 · A P stack and a no-stopping sign on one post
+`134-p-plattor-plus-forbud-stannande.png`
+
+_Verbatim reading not yet written._ A blue `P` with plates and a downward arrow, and
+below it a no-stopping sign.
+
+Why it matters: **a prohibition below a permission on the same post.**
+
+**Meaning (developer):** _to be filled in_
+on weekdays between 09:00 and 19:00; on Saturdays and days before a holiday between 09:00 and 17:00 - paid parking. No parking (C35) on weekdays between 00:00 and 08:00; on Saturdays and days before a holiday between 00:00 and 08:00; on Sundays and public holidays between 00:00 and 08:00 on the side of the street with even house numbers. Outside of these periods - standard p-sign. Applies up to the sign, not past it.
+---
+
+## 135 · Fee and residents, by a brick wall
+`135-avgift-boende-rott-tegelhus.png`
+
+_Verbatim reading not yet written._ A blue `P` with `Avgift`, hours, an orange plate and
+a residents' plate.
+
+**Meaning (developer):** _to be filled in_
+Standard p-sign, parking only within a marked bay.
+---
+
+## 136 · Rented spaces, arrows, one space
+`136-forhyrda-platser-pilar-1-plats.png`
+
+_Verbatim reading not yet written._ A blue `P` with `Förhyrda platser`, an arrow, a
+further plate and `1 plats`. Winter light.
+
+**Meaning (developer):** _to be filled in_
+To the right - only reserved spots, no other parking. To the left - only visitors. 1 spot. 
+---
+
+## 137 · Rented spaces, the operator Securitas
+`137-forhyrda-platser-securitas.png`
+
+_Verbatim reading not yet written._ A blue `P` with `Förhyrda platser` and an operator's
+plate (`SECURITAS`) on a corrugated wall.
+
+**Meaning (developer):** _to be filled in_
+Paid parking only. To the right of the sign. 
+---
+
+## 138 · Rented spaces, 2 spaces, arrows both ways
+`138-forhyrda-platser-2-platser.png`
+
+_Verbatim reading not yet written._ A blue `P` with `Förhyrda platser`, `2 platser` and a
+plate with arrows both ways.
+
+**Meaning (developer):** _to be filled in_
+Reserved parking spots only. No other parking. To the left and right from the sign. 2 spots. 
+---
+
+## 139 · One hour every day 8-19, fee, a Thursday prohibition
+`139-p-1tim-alla-dagar-avgift-torsdag.png`
+
+1. **[M]** P — blue square
+2. **[P]** `1 tim` / `alla dagar` / `8-19` — blue
+3. **[P]** `Avgift` — blue
+4. **[P]** `Torsdag` / `8-16` — yellow with a red border, a no-parking symbol on the left
+
+Why it matters: **`alla dagar` written as a word.** The days are named instead of being
+set by how the digits are printed.
+
+**Meaning (developer):** _to be filled in_
+Only paid parking. every day between 08:00 and 19:00 only 1 hour max of parking. No parking on Thursdays between 08:00 and 16:00. Outside of these periods standard p-sign (with a fee).
 ---
 
 # Notes on the set
