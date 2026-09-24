@@ -63,7 +63,8 @@ export type CallResult = { text: string; usage: Record<string, unknown> };
 /** One call to the provider, with retries where a retry makes sense. */
 export async function call(provider: Provider, model: string, prompt: string,
                            image: Photo,
-                           pause: (ms: number) => Promise<unknown> = sleep,
+                           pause: (ms: number, why?: string, attempt?: number)
+                             => Promise<unknown> = sleep,
                            fetchImpl: typeof fetch = fetch): Promise<CallResult> {
   // These reach the person on screen, so they say what is missing in the same words
   // the settings use.
@@ -112,7 +113,12 @@ export async function call(provider: Provider, model: string, prompt: string,
       why = `HTTP ${response.status}: ${(await response.text()).slice(0, 400)}`;
       if (!RETRY_STATUS.has(response.status)) break;
     }
-    if (attempt < RETRY_PAUSE_MS.length) await pause(RETRY_PAUSE_MS[attempt]);
+    // The pause is told WHY it waits. On a live run a busy provider, a quota wall and a
+    // dropped connection looked the same - minutes of silence on one photograph - and
+    // the command that prints nothing cannot be told from one that hangs.
+    if (attempt < RETRY_PAUSE_MS.length) {
+      await pause(RETRY_PAUSE_MS[attempt], why, attempt + 1);
+    }
   }
 
   if (!response || response.status !== 200) {

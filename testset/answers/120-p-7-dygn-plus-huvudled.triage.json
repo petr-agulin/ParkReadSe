@@ -1,0 +1,17 @@
+{
+  "image": "120-p-7-dygn-plus-huvudled.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:59:14+00:00",
+  "usage": {
+    "completion_tokens": 88,
+    "prompt_tokens": 1543,
+    "total_tokens": 1631
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign with a blue P, a duration plate below it (7 dygn), and a yellow/red prohibition plate specifying parking restrictions (8-12, 3:e tisd i månaden), with a priority road sign below",
+    "panels_below_main_sign": 2
+  }
+}

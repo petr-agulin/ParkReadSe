@@ -3,15 +3,15 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:43:04+00:00",
+  "saved_at": "2026-09-24T14:24:23+00:00",
   "usage": {
-    "completion_tokens": 63,
+    "completion_tokens": 60,
     "prompt_tokens": 1533,
-    "total_tokens": 1596
+    "total_tokens": 1593
   },
   "response": {
     "category": "parking_sign",
-    "what_i_see": "A Swedish parking sign with a blue 'P' and a white auxiliary panel below it specifying a duration limit of 30 minutes.",
+    "what_i_see": "A Swedish blue parking sign mounted on a post with one additional panel below indicating a 30-minute duration limit.",
     "panels_below_main_sign": 1
   }
 }

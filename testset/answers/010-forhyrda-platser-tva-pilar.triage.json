@@ -3,15 +3,16 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:44:16+00:00",
+  "saved_at": "2026-09-24T22:21:48+00:00",
   "usage": {
-    "completion_tokens": 91,
+    "completion_tokens": 128,
     "prompt_tokens": 1533,
-    "total_tokens": 1624
+    "total_tokens": 1661
   },
   "response": {
     "category": "parking_sign",
-    "what_i_see": "A blue Swedish parking sign with four plates below it: a white plate with text 'Förhyrda platser', a white plate with a left arrow, a blue plate with text specifying pre-booked spaces and permit requi",
+    "what_i_see": "A blue parking sign with a white 'P' at the top, mounted on a pole with four additional plates below it: a blue text plate reading 'Förhyrda platser', a white plate with a black left arrow, a blue tex",
+    "model_confidence": 0.99,
     "panels_below_main_sign": 4
   }
 }

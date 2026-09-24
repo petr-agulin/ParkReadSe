@@ -37,10 +37,15 @@ const readJson = (path: string) => JSON.parse(read(path));
 
 /** The product's answer for a photograph of the set: the same path as in the
  *  application, without a network. */
-function answerFor(label: string, moment = DEFAULT_MOMENT): Record<string, any> {
-  const fixture = readJson(`testset/answers/${label}.extract.json`);
+function answerFor(label: string, moment = DEFAULT_MOMENT,
+                   from: "answers" | "expected" = "answers"): Record<string, any> {
+  // `expected` reads the hand-marked reading instead of the model's answer: for a rule
+  // that must not hang on how one run happened to read the sign.
+  const fixture = from === "answers"
+    ? readJson(`testset/answers/${label}.extract.json`)
+    : { response: readJson(`testset/expected/${label}.json`) };
   const triageFile = `${ROOT}testset/answers/${label}.triage.json`;
-  const seen = existsSync(triageFile)
+  const seen = from === "answers" && existsSync(triageFile)
     ? readJson(`testset/answers/${label}.triage.json`)?.response?.panels_below_main_sign : null;
   const res = validateSign(structuredClone(fixture.response),
                            typeof seen === "number" ? seen : null);
@@ -724,8 +729,11 @@ describe("windows by audience", () => {
   });
 
   it("never lets `Boende` on its own make the answer incomplete", () => {
+    // Held against the hand-marked reading. The model's answer of step 15f merged the
+    // `Boende` plate with the payment board beside it - a lost boundary the answer is
+    // right to call partial, but no fault of `Boende`'s.
     const d = answerFor("033-avgift-8-21-uppstallning-zon-e-boende-storskogen",
-                        "2026-09-06T21:43");
+                        "2026-09-06T21:43", "expected");
     expect(d.completeness.category, JSON.stringify(d.completeness.reasons)).toBe("full");
     for (const r of d.regimes) for (const p of r.periods) expect(p.certain).toBe(true);
   });
@@ -776,7 +784,10 @@ describe("rented spaces and private land", () => {
 describe("what the product vouches for", () => {
   it("marks the periods of an incomplete reading", () => {
     for (const label of ["021-privat-parkering-brf",          // private land
-                         "029-beskickningsfordon-0-12m",      // a plate not understood
+                         // A plate not understood. It was `029` until step 15f: its
+                         // `Beskickningsfordon` came back as `eligibility: custom`,
+                         // which now reads as a named group - understood in full.
+                         "062-klass-i-14-dygn-slapfordon-forbud",
                          "061-lastplats-langt-avstand"]) {    // not enough pixels
       const d = answerFor(label);
       expect(d.completeness.category, label).not.toBe("full");

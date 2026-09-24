@@ -3,7 +3,7 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:47:19+00:00",
+  "saved_at": "2026-09-24T18:16:31+00:00",
   "usage": {
     "completion_tokens": 71,
     "prompt_tokens": 1535,
@@ -11,7 +11,7 @@
   },
   "response": {
     "category": "parking_sign",
-    "what_i_see": "A Swedish parking sign with two plates below it, one stating who may park (Beskickningsfordon) and one stating a distance (0-12 m).",
+    "what_i_see": "A Swedish blue parking sign with two plates below it: one stating 'Beskickningsfordon' and one with '0-12 m' indicating a distance rule.",
     "panels_below_main_sign": 2
   }
 }

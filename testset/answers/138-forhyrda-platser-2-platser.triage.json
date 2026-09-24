@@ -1,0 +1,17 @@
+{
+  "image": "138-forhyrda-platser-2-platser.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T19:06:51+00:00",
+  "usage": {
+    "completion_tokens": 73,
+    "prompt_tokens": 1543,
+    "total_tokens": 1616
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish blue parking sign with three additional plates below it: one stating 'Förhyrda platser', one stating '2 platser', and one showing double-sided arrows.",
+    "panels_below_main_sign": 3
+  }
+}

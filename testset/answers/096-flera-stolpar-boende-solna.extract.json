@@ -1,0 +1,88 @@
+{
+  "image": "096-flera-stolpar-boende-solna.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:22:46+00:00",
+  "usage": {
+    "completion_tokens": 495,
+    "prompt_tokens": 5540,
+    "total_tokens": 6035
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "vehicle_class": "motorcycle",
+          "pictogram": "motorcycle"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Avgift",
+          "Taxa D"
+        ],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "fee": true,
+          "tariff_code": "Taxa D"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "Boende",
+          "Solna"
+        ],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "residents"
+        }
+      },
+      {
+        "index": 4,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "arrow": "right",
+          "pictogram": "arrow"
+        }
+      }
+    ],
+    "panel_count": 4,
+    "boundaries": {
+      "certain": true
+    },
+    "notes": "Reading the right-hand sign post in the image containing a motorcycle parking sign and Taxa D.",
+    "another_post_in_frame": true
+  }
+}

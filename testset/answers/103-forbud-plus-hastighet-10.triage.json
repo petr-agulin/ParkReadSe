@@ -1,0 +1,19 @@
+{
+  "image": "103-forbud-plus-hastighet-10.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:23:41+00:00",
+  "usage": {
+    "completion_tokens": 101,
+    "prompt_tokens": 1547,
+    "total_tokens": 1648
+  },
+  "response": {
+    "schema_version": 1,
+    "category": "parking_sign",
+    "what_i_see": "A Swedish no-parking sign mounted with supplementary plates including 'Förhyrda platser', a Europark contact plate, and a text plate regarding control fees, plus a speed limit sign at the bottom.",
+    "model_confidence": 0.95,
+    "panels_below_main_sign": 2
+  }
+}

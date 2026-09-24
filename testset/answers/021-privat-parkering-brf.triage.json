@@ -3,15 +3,15 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:45:44+00:00",
+  "saved_at": "2026-09-24T16:18:24+00:00",
   "usage": {
-    "completion_tokens": 61,
+    "completion_tokens": 76,
     "prompt_tokens": 1533,
-    "total_tokens": 1594
+    "total_tokens": 1609
   },
   "response": {
     "category": "parking_sign",
-    "what_i_see": "A blue Swedish parking sign indicating private parking for Brf Ängslyckan, with an arrow plate below it.",
+    "what_i_see": "A Swedish parking sign with a blue P, followed by a plate stating 'Privat parkering / Brf Ängslyckan' and a bottom plate showing a black arrow pointing right.",
     "panels_below_main_sign": 1
   }
 }

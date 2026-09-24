@@ -1,0 +1,132 @@
+{
+  "image": "125-p-gula-plattor-vid-port.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T19:01:40+00:00",
+  "usage": {
+    "completion_tokens": 777,
+    "prompt_tokens": 5540,
+    "total_tokens": 6317
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "prohibition_stopping",
+      "background_color": "yellow",
+      "form": "zone",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "På- och",
+          "avstig-",
+          "nings-",
+          "plats"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {}
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "7-19"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "07:00",
+              "to": "19:00",
+              "day_class": "weekday"
+            }
+          ]
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "0-10 m"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "stretch_metres": {
+            "from": 0,
+            "to": 10
+          }
+        }
+      },
+      {
+        "index": 4,
+        "kind": "sign_plate",
+        "lines": [
+          "Tisd",
+          "0-6"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "00:00",
+              "to": "06:00",
+              "day_class": "named_weekday",
+              "named_weekday": "tuesday"
+            }
+          ],
+          "prohibition": true
+        }
+      },
+      {
+        "index": 5,
+        "kind": "sign_plate",
+        "lines": [
+          "Övrig tid",
+          "Avgift",
+          "(11-17)",
+          "Taxa 3"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "11:00",
+              "to": "17:00",
+              "day_class": "eve"
+            }
+          ],
+          "fee": true,
+          "scope_shift": "remaining_time",
+          "pictogram": "parking",
+          "tariff_code": "Taxa 3",
+          "permits_parking": true
+        }
+      }
+    ],
+    "panel_count": 5,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

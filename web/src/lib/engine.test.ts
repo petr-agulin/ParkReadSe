@@ -10,12 +10,13 @@ import { describe, expect, it } from "vitest";
 import { Calendar, EVE, RED, UNKNOWN, WEEKDAY } from "./calendar";
 import { addDays, isoNaive, parseDate, parseNaive, weekday,
          type Civil, type Naive } from "./civil";
-import { ALLOWED, DURATION_IN_DAYS, FEE_PERIOD_ELSEWHERE, GENERAL_RULE_GAP,
+import { ALLOWED, EVEN_SIDE_ONLY, FEE_PERIOD_ELSEWHERE, GENERAL_RULE_GAP,
+         PRIORITY_ROAD_GAP,
          PROHIBITED, UNCERTAIN,
          evaluateParkingRules, horizonEnd, isoWeek, twentyFourHourExpiry,
          windowApplies, type Regime } from "./engine";
 import { regimeView, visible } from "./present";
-import { recognise } from "./reference";
+import { WHO_SLOT_NARROWS, recognise } from "./reference";
 import type { Panel, Parsed, SignDoc, TimeWindow } from "./sign";
 
 const CAL = new Calendar();
@@ -869,22 +870,120 @@ describe("`Övrig tid` carrying hours of its own", () => {
 });
 
 describe("a stay measured in days", () => {
-  it("is not stated at all where the days were never converted", () => {
-    // `094`: `7 dygn` arrived as seven HOURS, a sixth of the stay the sign grants.
-    // Until the schema learns the unit the limit is dropped rather than corrected:
-    // the 24-hour rule is shorter than the sign allows, and erring short is the
-    // asymmetry rule.
-    const ev = evaluate(sign([plate({ duration_limit: { amount: 7, unit: "hours" } },
-                                    ["7 dygn"])]), "2026-09-23T10:00");
-    expect(ev.uncertainties).toContain(DURATION_IN_DAYS);
-    expect(iso(ev.regimes[0].durationExpiresAt)).toBe("2026-09-24T10:00");
+  it("runs for the days the sign grants", () => {
+    // `094`: `7 dygn`, scanned on a Wednesday at 14:24. The stay ends a week later,
+    // not seven hours later. The schema knows the unit now (step 15f); a reading that
+    // still says hours is put right in `validation.ts` before it reaches here.
+    const r = first(sign([plate({ duration_limit: { amount: 7, unit: "days" } },
+                                ["7 dygn"])]), "2026-09-23T14:24");
+    expect(iso(r.durationExpiresAt)).toBe("2026-09-30T14:24");
+    expect(r.durationSource).toBe("plate");
+  });
+});
+
+describe("a window that comes round by the calendar", () => {
+  it("holds on one day of the month, not on every working day", () => {
+    // `114`: `1:a varje månad 8-12`. With no way to say it, the model wrote "weekdays",
+    // and a monthly prohibition was drawn on every working day.
+    const w: TimeWindow = { ...win("08:00", "12:00", "all_days"), day_of_month: 1 };
+    const r = first(sign([plate({ prohibition: true, time_windows: [w] }, ["1:a", "8-12"])]),
+                    "2026-09-30T12:00");
+    expect(state(r, "2026-10-01T09:00")[0]).toBe(PROHIBITED);
+    expect(state(r, "2026-10-02T09:00")[0]).toBe(ALLOWED);
   });
 
-  it("is trusted where the arithmetic was done", () => {
-    // `062`: `14 dygn` arrived as 336 hours, which is right. A rule that distrusted
-    // every plate carrying the word would have thrown that away with the rest.
-    const ev = evaluate(sign([plate({ duration_limit: { amount: 336, unit: "hours" } },
-                                    ["14 dygn"])]), "2026-09-23T10:00");
-    expect(ev.uncertainties).not.toContain(DURATION_IN_DAYS);
+  it("holds on the Nth such weekday of the month only", () => {
+    // `120`: the third Tuesday. September 2026 has Tuesdays on the 1st, 8th, 15th,
+    // 22nd and 29th, so the 15th is the one and the 22nd is not.
+    const w: TimeWindow = { ...win("08:00", "12:00", "named_weekday", "tuesday"),
+                            nth_of_month: 3 };
+    const r = first(sign([plate({ prohibition: true, time_windows: [w] }, ["8-12"])]),
+                    "2026-09-15T07:00");
+    expect(state(r, "2026-09-15T09:00")[0]).toBe(PROHIBITED);
+    expect(state(r, "2026-09-22T09:00")[0]).toBe(ALLOWED);
+  });
+});
+
+describe("a road sign on the same post", () => {
+  const ban = () => plate({ time_windows: [win("08:00", "12:00", "named_weekday", "wednesday")] },
+                          ["Onsdag 8-12"]);
+  const other = (road_sign: Parsed["road_sign"]) =>
+    ({ ...plate({ road_sign }, []), kind: "other_sign" } as Panel);
+
+  it("keeps the gap a lapsed prohibition leaves shut on a priority road", () => {
+    // `118`, `120`: on a priority road parking needs a sign that permits it, so the
+    // time a prohibition sign says nothing about is not left to the 24-hour rule.
+    const s = sign([ban(), other("priority_road")], "prohibition_parking");
+    const r = first(s, "2026-09-23T14:00");
+    expect(state(r, "2026-09-23T14:00")[0]).toBe(PROHIBITED);
+    expect(r.periods[0].note).toBe(PRIORITY_ROAD_GAP);
+  });
+
+  it("changes nothing when it is not a priority road", () => {
+    // `084` (`Farthinder`), `103` (a `10`): shown, not interpreted, and no bearing on
+    // whether parking is allowed.
+    const s = sign([ban(), other("speed_bump")], "prohibition_parking");
+    const r = first(s, "2026-09-23T14:00");
+    expect(state(r, "2026-09-23T14:00")[0]).toBe(ALLOWED);
+    expect(r.periods[0].note).toBe(GENERAL_RULE_GAP);
+  });
+});
+
+describe("a prohibition confined to one side of the street", () => {
+  const sideBan = (street_side?: Parsed["street_side"]) =>
+    plate({ prohibition: true, street_side,
+            time_windows: [win("00:00", "08:00", WEEKDAY)] }, ["0-8"]);
+
+  it("is applied, and names its side", () => {
+    // `132`, `134`: the product cannot tell which side the car is on, so it applies
+    // the prohibition - the cautious side - and says which side it belongs to.
+    const r = first(sign([sideBan("even_numbers")]), "2026-09-23T03:00");
+    expect(state(r, "2026-09-23T03:00")[0]).toBe(PROHIBITED);
+    expect(r.periods[0].note).toBe(EVEN_SIDE_ONLY);
+  });
+
+  it("names no side when another prohibition in force holds on both", () => {
+    const r = first(sign([sideBan("odd_numbers"), sideBan()]), "2026-09-23T03:00");
+    expect(state(r, "2026-09-23T03:00")[0]).toBe(PROHIBITED);
+    expect(r.periods[0].note).toBeNull();
+  });
+});
+
+describe("a circle the plate names in its own words", () => {
+  it("narrows the circle the engine counts", () => {
+    // `066`-`072`: `Personal`, `BLODBIL` arrive as `eligibility: custom`, which the
+    // engine mapped to nothing - so a bay for staff drew the solid line of a bay open
+    // to everyone. The same goes for a plate the model could place only as WHO.
+    const r = first(sign([plate({ eligibility: "custom" }, ["Personal"])]), "2026-09-23T12:00");
+    expect(r.eligibility).toContain("reserved-for-named-group");
+  });
+
+  it("does not narrow on the model's own who tag - yet", () => {
+    // Decision 173: on the first live run nine plates were tagged who and one or two
+    // named a group (`Lastplats`, `Camping förbjuden`...). The tag is kept; it narrows
+    // again only once step 15h makes it reliable. Switching it on before fails here.
+    expect(WHO_SLOT_NARROWS, "measure the who tag in 15h first").toBe(false);
+    const r = first(sign([plate({ unrecognised_slot: "who", uninterpreted: ["Lastplats"] },
+                                ["Lastplats"])]), "2026-09-23T12:00");
+    expect(r.eligibility).not.toContain("reserved-for-named-group");
+  });
+
+  it("counts taxis as the circle they are", () => {
+    const r = first(sign([plate({ vehicle_class: "taxi" }, ["TAXI"])]), "2026-09-23T12:00");
+    expect(r.eligibility).toContain("taxi");
+  });
+});
+
+describe("a named weekday under another class of day", () => {
+  it("still binds the weekday", () => {
+    // `120` as the model actually read it: `3:e tisdagen` came back with the class
+    // "weekday" beside `named_weekday: tuesday`. The Wednesday of that same third week
+    // must stay open - the plate names a Tuesday.
+    const w: TimeWindow = { ...win("08:00", "12:00", WEEKDAY), named_weekday: "tuesday",
+                            nth_of_month: 3 };
+    const r = first(sign([plate({ prohibition: true, time_windows: [w] }, ["8-12"])]),
+                    "2026-09-15T07:00");
+    expect(state(r, "2026-09-15T09:00")[0], "the third Tuesday").toBe(PROHIBITED);
+    expect(state(r, "2026-09-16T09:00")[0], "the Wednesday after it").toBe(ALLOWED);
   });
 });

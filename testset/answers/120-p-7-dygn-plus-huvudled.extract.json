@@ -1,0 +1,84 @@
+{
+  "image": "120-p-7-dygn-plus-huvudled.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:59:14+00:00",
+  "usage": {
+    "completion_tokens": 463,
+    "prompt_tokens": 5548,
+    "total_tokens": 6011
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "7 dygn"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "duration_limit": {
+            "amount": 7,
+            "unit": "days"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "8-12",
+          "3:e tisd",
+          "i månaden"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "08:00",
+              "to": "12:00",
+              "day_class": "weekday",
+              "nth_of_month": 3,
+              "named_weekday": "tuesday"
+            }
+          ],
+          "prohibition": true,
+          "pictogram": "prohibition"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "other_sign",
+        "lines": [],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "road_sign": "priority_road"
+        }
+      }
+    ],
+    "panel_count": 3,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

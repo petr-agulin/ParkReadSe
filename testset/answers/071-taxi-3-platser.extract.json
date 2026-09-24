@@ -1,0 +1,58 @@
+{
+  "image": "071-taxi-3-platser.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:12:50+00:00",
+  "usage": {
+    "completion_tokens": 280,
+    "prompt_tokens": 5538,
+    "total_tokens": 5818
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "TAXI"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "vehicle_class": "taxi"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "3 platser"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "place_count": 3
+        }
+      }
+    ],
+    "panel_count": 2,
+    "boundaries": {
+      "certain": true
+    },
+    "model_confidence": 0.99
+  }
+}

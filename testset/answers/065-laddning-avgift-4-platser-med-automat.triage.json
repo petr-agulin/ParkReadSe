@@ -1,0 +1,17 @@
+{
+  "image": "065-laddning-avgift-4-platser-med-automat.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:11:04+00:00",
+  "usage": {
+    "completion_tokens": 103,
+    "prompt_tokens": 1533,
+    "total_tokens": 1636
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign post in a parking lot, featuring a main blue 'P' sign at the top, followed below by an electric vehicle charging symbol plate, an 'Avgift' (fee) plate, a '4 platser' (count of p",
+    "panels_below_main_sign": 4
+  }
+}

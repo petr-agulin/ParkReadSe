@@ -2,12 +2,12 @@
   "image": "021-privat-parkering-brf.jpg",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:45:48+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T16:18:24+00:00",
   "usage": {
-    "completion_tokens": 364,
-    "prompt_tokens": 4798,
-    "total_tokens": 5162
+    "completion_tokens": 298,
+    "prompt_tokens": 5538,
+    "total_tokens": 5836
   },
   "response": {
     "schema_version": 1,
@@ -16,10 +16,7 @@
       "background_color": "blue",
       "form": "regular",
       "legibility": {
-        "readable": true,
-        "obstructions": [
-          "angle"
-        ]
+        "readable": true
       }
     },
     "panels": [
@@ -51,17 +48,13 @@
         },
         "parsed": {
           "arrow": "right",
-          "pictogram": "arrow",
-          "uninterpreted": [
-            "KOMMANDO BRYGGAN"
-          ]
+          "pictogram": "arrow"
         }
       }
     ],
     "panel_count": 2,
     "boundaries": {
       "certain": true
-    },
-    "notes": "Bottom panel includes an arrow pointing right and a small logo/text reading 'KOMMANDO BRYGGAN'."
+    }
   }
 }

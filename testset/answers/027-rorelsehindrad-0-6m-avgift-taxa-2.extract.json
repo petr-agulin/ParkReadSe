@@ -2,12 +2,12 @@
   "image": "027-rorelsehindrad-0-6m-avgift-taxa-2.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:47:08+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:16:12+00:00",
   "usage": {
-    "completion_tokens": 473,
-    "prompt_tokens": 4801,
-    "total_tokens": 5274
+    "completion_tokens": 476,
+    "prompt_tokens": 5541,
+    "total_tokens": 6017
   },
   "response": {
     "schema_version": 1,
@@ -63,7 +63,7 @@
         },
         "parsed": {
           "fee": true,
-          "tariff_code": "2"
+          "tariff_code": "Taxa 2"
         }
       },
       {

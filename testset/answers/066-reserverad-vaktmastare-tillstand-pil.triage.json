@@ -1,0 +1,17 @@
+{
+  "image": "066-reserverad-vaktmastare-tillstand-pil.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:11:18+00:00",
+  "usage": {
+    "completion_tokens": 74,
+    "prompt_tokens": 1533,
+    "total_tokens": 1607
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish blue parking sign with three plates below it: 'Reserverad Vaktmästare', 'Tillstånd erfordras', and a white plate with a black left arrow.",
+    "panels_below_main_sign": 3
+  }
+}

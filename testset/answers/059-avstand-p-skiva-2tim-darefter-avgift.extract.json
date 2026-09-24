@@ -2,12 +2,12 @@
   "image": "059-avstand-p-skiva-2tim-darefter-avgift.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:50:04+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:20:59+00:00",
   "usage": {
-    "completion_tokens": 614,
-    "prompt_tokens": 4780,
-    "total_tokens": 5394
+    "completion_tokens": 604,
+    "prompt_tokens": 5520,
+    "total_tokens": 6124
   },
   "response": {
     "schema_version": 1,
@@ -36,6 +36,10 @@
           "readable": true
         },
         "parsed": {
+          "duration_limit": {
+            "amount": 2,
+            "unit": "hours"
+          },
           "time_windows": [
             {
               "from": "07:00",
@@ -53,12 +57,7 @@
               "day_class": "red"
             }
           ],
-          "duration_limit": {
-            "amount": 2,
-            "unit": "hours"
-          },
-          "fee": true,
-          "payment_method": "ticket"
+          "fee": true
         }
       },
       {
@@ -82,10 +81,8 @@
       {
         "index": 3,
         "kind": "info_board",
-        "lines": [
-          "6000"
-        ],
-        "background_color": "blue",
+        "lines": [],
+        "background_color": "other",
         "legibility": {
           "readable": true
         },
@@ -97,6 +94,7 @@
     "panel_count": 3,
     "boundaries": {
       "certain": true
-    }
+    },
+    "another_post_in_frame": false
   }
 }

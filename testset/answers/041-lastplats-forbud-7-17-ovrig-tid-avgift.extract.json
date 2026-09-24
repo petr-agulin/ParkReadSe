@@ -2,12 +2,12 @@
   "image": "041-lastplats-forbud-7-17-ovrig-tid-avgift.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:48:44+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:19:37+00:00",
   "usage": {
-    "completion_tokens": 761,
-    "prompt_tokens": 4812,
-    "total_tokens": 5573
+    "completion_tokens": 743,
+    "prompt_tokens": 5552,
+    "total_tokens": 6295
   },
   "response": {
     "schema_version": 1,
@@ -31,7 +31,12 @@
         "legibility": {
           "readable": true
         },
-        "parsed": {}
+        "parsed": {
+          "uninterpreted": [
+            "Lastplats"
+          ],
+          "unrecognised_slot": "who"
+        }
       },
       {
         "index": 2,
@@ -82,6 +87,8 @@
           "readable": true
         },
         "parsed": {
+          "prohibition": true,
+          "pictogram": "prohibition",
           "time_windows": [
             {
               "from": "00:00",
@@ -89,9 +96,7 @@
               "day_class": "named_weekday",
               "named_weekday": "friday"
             }
-          ],
-          "prohibition": true,
-          "pictogram": "prohibition"
+          ]
         }
       },
       {
@@ -107,17 +112,10 @@
           "readable": true
         },
         "parsed": {
-          "time_windows": [
-            {
-              "from": "00:00",
-              "to": "24:00",
-              "day_class": "unspecified"
-            }
-          ],
           "fee": true,
           "scope_shift": "remaining_time",
-          "tariff_code": "2",
           "pictogram": "parking",
+          "tariff_code": "Taxa 2",
           "permits_parking": true
         }
       }

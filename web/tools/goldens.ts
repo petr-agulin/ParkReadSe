@@ -38,6 +38,7 @@ import { valid } from "../src/lib/schema";
 import { SIGN_SCHEMA } from "../src/lib/schema.data";
 import type { SignDoc } from "../src/lib/sign";
 import { ok as resultOk, sign as validateSign } from "../src/lib/validation";
+import { asShown } from "./testset";
 
 export const ROOT = fileURLToPath(new URL("../../", import.meta.url));
 export const DIR = `${ROOT}parity/`;
@@ -455,7 +456,7 @@ export async function probeMeasure(): Promise<Record<string, unknown>> {
   for (const { label, expected, actual } of pairs) {
     compare(expected, actual, label, rep);
     const diff = verdictDifferences(verdictSlice(expected, moment, cal),
-                                    verdictSlice(actual, moment, cal));
+                                    verdictSlice(asShown(actual), moment, cal));
     if (diff.length) diverged[label] = diff;
   }
 

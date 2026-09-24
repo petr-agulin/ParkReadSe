@@ -1,0 +1,19 @@
+{
+  "image": "139-p-1tim-alla-dagar-avgift-torsdag.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T19:07:04+00:00",
+  "usage": {
+    "completion_tokens": 93,
+    "prompt_tokens": 1555,
+    "total_tokens": 1648
+  },
+  "response": {
+    "schema_version": 1,
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign (blue square with white P) with three additional plates below it specifying rules (duration/hours, fee, and a no-parking day rule).",
+    "model_confidence": 1,
+    "panels_below_main_sign": 3
+  }
+}

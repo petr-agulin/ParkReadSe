@@ -140,8 +140,99 @@ describe("contradictions inside one reading", () => {
     const dir = `${ROOT}testset/expected/`;
     const fired = readdirSync(dir).filter((f) => f.endsWith(".json")).flatMap((f) =>
       validateSign(JSON.parse(readFileSync(dir + f, "utf-8"))).repairs
-        .filter((r) => r.includes("contradict") || r.includes("printed on the plate"))
+        .filter((r) => r.includes("contradict") || r.includes("printed on the plate")
+                   || r.includes("dygn") || r.includes("dropped obstruction")
+                   || r.includes("parking-disc symbol"))
         .map((r) => `${f}: ${r}`));
     expect(fired).toEqual([]);
+  });
+});
+
+describe("a stay given in days", () => {
+  const P062 = "062-klass-i-14-dygn-slapfordon-forbud";
+  const limitOf = (doc: Record<string, any>) =>
+    doc.panels.find((p: any) => p.parsed?.duration_limit).parsed.duration_limit;
+
+  it("is put right where the days arrived as hours", () => {
+    // `094`: `7 dygn` came back as seven HOURS, a sixth of the stay. The schema has
+    // the unit now, so the figure equal to the printed number of days is corrected
+    // rather than dropped, and the repair is written down.
+    const doc = read(P062);
+    const plate = doc.panels.find((p: any) => p.parsed?.duration_limit);
+    plate.lines = ["7 dygn"];
+    plate.parsed.duration_limit = { amount: 7, unit: "hours" };
+    const res = validateSign(doc);
+    expect(limitOf(res.data!)).toEqual({ amount: 7, unit: "days" });
+    expect(res.repairs.some((r) => r.includes("dygn"))).toBe(true);
+  });
+
+  it("is left alone where the arithmetic was done", () => {
+    // `062` itself: `14 dygn` as 336 hours is right, and must not be touched.
+    const doc = read(P062);
+    const before = JSON.stringify(limitOf(doc));
+    const res = validateSign(doc);
+    expect(JSON.stringify(limitOf(res.data!))).toBe(before);
+    expect(res.repairs.filter((r) => r.includes("dygn"))).toEqual([]);
+  });
+});
+
+describe("the second-post flag", () => {
+  it("is kept with the reading, though the screen does not show it yet", () => {
+    // Decision 172: collected now, measured in step 15g. A flag dropped on the way in
+    // would leave 15g nothing to measure.
+    const doc = read("003-p-2tim");
+    doc.another_post_in_frame = true;
+    const res = validateSign(doc);
+    expect(ok(res), res.schemaErrors.join("; ")).toBe(true);
+    expect(res.data!.another_post_in_frame).toBe(true);
+  });
+});
+
+describe("an obstruction the schema does not list", () => {
+  it("is dropped, and the reading stays", () => {
+    // Photograph `063`, at night in the rain: the model reported `rain` on the main
+    // sign and both plates, and a correctly shaped reading was refused whole, run
+    // after run. The list has no `other`, so the value goes and the repair is kept.
+    const doc = read("063-natt-p-tillstand-06-16-p-skiva-3tim");
+    doc.main_sign.legibility = { readable: true, obstructions: ["rain", "glare"] };
+    doc.panels[0].legibility = { readable: true, obstructions: ["rain"] };
+    const res = validateSign(doc);
+    expect(ok(res), res.schemaErrors.join("; ")).toBe(true);
+    expect(res.data!.main_sign.legibility!.obstructions).toEqual(["glare"]);
+    expect(res.data!.panels![0].legibility!.obstructions).toEqual([]);
+    expect(res.repairs.filter((r) => r.includes("'rain'"))).toHaveLength(2);
+  });
+
+  it("does not hide a broken answer behind the same repair", () => {
+    // A number where a word belongs is not an unlisted obstruction but a broken
+    // answer, and the schema must still refuse it - as with the colours.
+    const doc = read("063-natt-p-tillstand-06-16-p-skiva-3tim");
+    doc.main_sign.legibility = { readable: true, obstructions: [7] };
+    expect(ok(validateSign(doc))).toBe(false);
+  });
+});
+
+describe("a parking-disc symbol with no requirement beside it", () => {
+  const P063 = "063-natt-p-tillstand-06-16-p-skiva-3tim";
+
+  it("gets the requirement the symbol states", () => {
+    // `063` as the model read it on the 15f run: the disc drawn, the requirement left
+    // out, and "3 tim" said as though no disc were needed - graded full at 0.975.
+    const doc = read(P063);
+    delete doc.panels[1].parsed.payment_method;
+    doc.panels[1].parsed.pictogram = "parking_disc";
+    const res = validateSign(doc);
+    expect(res.data!.panels![1].parsed!.payment_method).toBe("parking_disc");
+    expect(res.repairs.some((r) => r.includes("parking-disc symbol"))).toBe(true);
+  });
+
+  it("leaves a method the plate does name alone", () => {
+    // `057` offers a disc OR a free ticket; the symbol does not overrule what is written.
+    const doc = read(P063);
+    doc.panels[1].parsed.pictogram = "parking_disc";
+    doc.panels[1].parsed.payment_method = "ticket";
+    const res = validateSign(doc);
+    expect(res.data!.panels![1].parsed!.payment_method).toBe("ticket");
+    expect(res.repairs.filter((r) => r.includes("parking-disc symbol"))).toEqual([]);
   });
 });

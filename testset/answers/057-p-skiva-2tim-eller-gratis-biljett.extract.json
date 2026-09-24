@@ -2,12 +2,12 @@
   "image": "057-p-skiva-2tim-eller-gratis-biljett.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:49:47+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:20:48+00:00",
   "usage": {
     "completion_tokens": 461,
-    "prompt_tokens": 4824,
-    "total_tokens": 5285
+    "prompt_tokens": 5564,
+    "total_tokens": 6025
   },
   "response": {
     "schema_version": 1,

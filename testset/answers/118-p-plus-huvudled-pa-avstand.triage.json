@@ -1,0 +1,17 @@
+{
+  "image": "118-p-plus-huvudled-pa-avstand.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:59:00+00:00",
+  "usage": {
+    "completion_tokens": 81,
+    "prompt_tokens": 1547,
+    "total_tokens": 1628
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A blue Swedish parking sign with a white P and an auxiliary plate indicating parking rules (30 min duration, 9-18 on weekdays, 9-15 on Saturdays), positioned above a priority road sign.",
+    "panels_below_main_sign": 1
+  }
+}

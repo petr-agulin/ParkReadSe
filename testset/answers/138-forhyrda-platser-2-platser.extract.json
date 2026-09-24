@@ -1,0 +1,71 @@
+{
+  "image": "138-forhyrda-platser-2-platser.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T19:06:51+00:00",
+  "usage": {
+    "completion_tokens": 360,
+    "prompt_tokens": 5548,
+    "total_tokens": 5908
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Förhyrda",
+          "platser"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "rented"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "2 platser"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "place_count": 2
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "arrow": "both_horizontal",
+          "pictogram": "arrow"
+        }
+      }
+    ],
+    "panel_count": 3,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

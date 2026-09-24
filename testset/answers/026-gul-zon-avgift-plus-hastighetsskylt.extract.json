@@ -2,12 +2,12 @@
   "image": "026-gul-zon-avgift-plus-hastighetsskylt.jpg",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:46:28+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:08:54+00:00",
   "usage": {
-    "completion_tokens": 479,
-    "prompt_tokens": 4798,
-    "total_tokens": 5277
+    "completion_tokens": 556,
+    "prompt_tokens": 5538,
+    "total_tokens": 6094
   },
   "response": {
     "schema_version": 1,
@@ -26,13 +26,12 @@
         "lines": [
           "Avgift"
         ],
-        "background_color": "yellow",
+        "background_color": "blue",
         "legibility": {
           "readable": true
         },
         "parsed": {
-          "fee": true,
-          "pictogram": "parking"
+          "fee": true
         }
       },
       {
@@ -48,8 +47,8 @@
           "readable": true
         },
         "parsed": {
-          "placement": "marked_bay_only",
           "prohibition": true,
+          "placement": "marked_bay_only",
           "pictogram": "prohibition"
         }
       },
@@ -71,12 +70,30 @@
             "phone": "031-87 54 79"
           }
         }
+      },
+      {
+        "index": 4,
+        "kind": "other_sign",
+        "lines": [
+          "30"
+        ],
+        "background_color": "white",
+        "legibility": {
+          "readable": true,
+          "obstructions": [
+            "sticker",
+            "dirt"
+          ]
+        },
+        "parsed": {
+          "road_sign": "speed_limit"
+        }
       }
     ],
-    "panel_count": 3,
+    "panel_count": 4,
     "boundaries": {
       "certain": true
     },
-    "notes": "A speed limit sign 30 is mounted below the parking sign assembly on the same pole, which is a separate traffic regulation."
+    "another_post_in_frame": true
   }
 }

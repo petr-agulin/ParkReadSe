@@ -2,12 +2,12 @@
   "image": "012-tillstand-7-17-ovrig-tid-avgift.jpg",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:44:37+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T15:14:15+00:00",
   "usage": {
-    "completion_tokens": 581,
-    "prompt_tokens": 4798,
-    "total_tokens": 5379
+    "completion_tokens": 605,
+    "prompt_tokens": 5538,
+    "total_tokens": 6143
   },
   "response": {
     "schema_version": 1,
@@ -96,6 +96,8 @@
     "panel_count": 4,
     "boundaries": {
       "certain": true
-    }
+    },
+    "model_confidence": 1,
+    "another_post_in_frame": false
   }
 }

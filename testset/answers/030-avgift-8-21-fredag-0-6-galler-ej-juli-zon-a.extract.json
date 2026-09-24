@@ -2,12 +2,12 @@
   "image": "030-avgift-8-21-fredag-0-6-galler-ej-juli-zon-a.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:47:32+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:16:37+00:00",
   "usage": {
-    "completion_tokens": 727,
-    "prompt_tokens": 4782,
-    "total_tokens": 5509
+    "completion_tokens": 725,
+    "prompt_tokens": 5522,
+    "total_tokens": 6247
   },
   "response": {
     "schema_version": 1,
@@ -94,7 +94,7 @@
           "readable": true
         },
         "parsed": {
-          "tariff_code": "Zon A"
+          "tariff_code": "A"
         }
       },
       {

@@ -3,15 +3,16 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:46:32+00:00",
+  "saved_at": "2026-09-24T18:09:12+00:00",
   "usage": {
-    "completion_tokens": 67,
+    "completion_tokens": 100,
     "prompt_tokens": 1533,
-    "total_tokens": 1600
+    "total_tokens": 1633
   },
   "response": {
     "category": "parking_sign",
-    "what_i_see": "A Swedish parking sign for electric vehicle charging with 'Avgift', '4 platser', an arrow pointing left, and a payment board at the bottom.",
+    "what_i_see": "A Swedish parking sign for electric vehicle charging with 5 plates below the main P sign: an EV symbol, 'Avgift' (fee), '4 platser' (count of places), a left arrow, and a payment board at the bottom.",
+    "model_confidence": 0.99,
     "panels_below_main_sign": 4
   }
 }

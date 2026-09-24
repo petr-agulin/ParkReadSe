@@ -2,12 +2,12 @@
   "image": "063-natt-p-tillstand-06-16-p-skiva-3tim.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:50:36+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T22:48:52+00:00",
   "usage": {
-    "completion_tokens": 552,
-    "prompt_tokens": 4800,
-    "total_tokens": 5352
+    "completion_tokens": 588,
+    "prompt_tokens": 5540,
+    "total_tokens": 6128
   },
   "response": {
     "schema_version": 1,
@@ -16,7 +16,8 @@
       "background_color": "blue",
       "form": "regular",
       "legibility": {
-        "readable": true
+        "readable": true,
+        "obstructions": []
       }
     },
     "panels": [
@@ -31,7 +32,8 @@
         ],
         "background_color": "blue",
         "legibility": {
-          "readable": true
+          "readable": true,
+          "obstructions": []
         },
         "parsed": {
           "time_windows": [
@@ -56,7 +58,8 @@
         ],
         "background_color": "blue",
         "legibility": {
-          "readable": true
+          "readable": true,
+          "obstructions": []
         },
         "parsed": {
           "duration_limit": {
@@ -80,7 +83,6 @@
               "day_class": "red"
             }
           ],
-          "payment_method": "parking_disc",
           "pictogram": "parking_disc"
         }
       }

@@ -2,12 +2,12 @@
   "image": "011-gul-p-avgift-klistermarken.jpg",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:44:28+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T22:21:51+00:00",
   "usage": {
-    "completion_tokens": 217,
-    "prompt_tokens": 4798,
-    "total_tokens": 5015
+    "completion_tokens": 262,
+    "prompt_tokens": 5538,
+    "total_tokens": 5800
   },
   "response": {
     "schema_version": 1,
@@ -45,6 +45,9 @@
     "panel_count": 1,
     "boundaries": {
       "certain": true
-    }
+    },
+    "notes": "Street sign visible at the top, not part of the parking stack.",
+    "model_confidence": 0.98,
+    "another_post_in_frame": false
   }
 }

@@ -1,0 +1,17 @@
+{
+  "image": "102-p-bredvid-vagvisare-centrum-e4.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:23:35+00:00",
+  "usage": {
+    "completion_tokens": 83,
+    "prompt_tokens": 1547,
+    "total_tokens": 1630
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign post featuring a blue P sign with four plates below it (fee/hours, a yellow cleaning/sweeping rule plate, a resident parking plate, and a digital payment sign), alongside other ",
+    "panels_below_main_sign": 3
+  }
+}

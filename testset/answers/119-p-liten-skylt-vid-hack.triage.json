@@ -1,0 +1,17 @@
+{
+  "image": "119-p-liten-skylt-vid-hack.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:59:06+00:00",
+  "usage": {
+    "completion_tokens": 73,
+    "prompt_tokens": 1528,
+    "total_tokens": 1601
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign with two plates below: the first indicating time limits (30 min, 9-18, (9-14)) and the second showing arrows.",
+    "panels_below_main_sign": 2
+  }
+}

@@ -167,8 +167,39 @@ function dropUnknownEnums(doc: Record<string, any>): string[] {
   return done;
 }
 
+/** An obstruction the schema does not list is dropped instead of taking the whole
+ *  reading down.
+ *
+ *  Found on photograph `063` - at night, in the rain: the model reported `rain` on the
+ *  main sign and on both plates, and a correctly shaped reading was refused whole, run
+ *  after run. The list has no `other` to fall back on as the colours do; until it has
+ *  one (step 15h) the value goes, and the repair is written down, so the reading pays
+ *  for it in its "no repairs" signal instead of vanishing.
+ *
+ *  Only a string is dropped, as with the colours: anything else is not an unlisted
+ *  obstruction but a broken answer, and the schema is left to say so. */
+function dropUnknownObstructions(doc: Record<string, any>): string[] {
+  const done: string[] = [];
+  const allowed: string[] = SIGN_SCHEMA.$defs.legibility.properties.obstructions.items.enum;
+  const fix = (where: string, legibility: any) => {
+    const list = legibility?.obstructions;
+    if (!Array.isArray(list)) return;
+    const unknown = list.filter((o: unknown) => typeof o === "string" && !allowed.includes(o));
+    if (!unknown.length) return;
+    legibility.obstructions = list.filter((o: unknown) => !unknown.includes(o));
+    done.push(`${where}: dropped obstruction ${unknown.map(pyRepr).join(", ")}`
+            + " - not in the schema enumeration");
+  };
+  fix("main sign", doc.main_sign?.legibility);
+  for (const panel of doc.panels ?? []) fix(`panel ${panel?.index}`, panel?.legibility);
+  return done;
+}
+
 // A stretch in metres is printed the way hours are - `0-15 m` - and is not hours.
 const METRES = /\d+\s*[-–]\s*\d+\s*m\b/gi;
+
+// A `dygn` is a whole day, and a number printed before it is a number of days.
+const DAYS_PRINTED = /(\d+)\s*dygn/i;
 
 /** Contradictions inside one reading, settled without knowing the sign (decision
  *  163). Each rule here is a failure seen on a real photograph, and was checked
@@ -184,12 +215,28 @@ const METRES = /\d+\s*[-–]\s*\d+\s*m\b/gi;
  *  round the clock and the answer showed a full paid day where the sign charges in
  *  the daytime only. The lines holding the hours move to `uninterpreted`: the plate
  *  is then plainly incomplete rather than quietly wrong, and its words stay in view
- *  for a reader who can make sense of them. */
+ *  for a reader who can make sense of them.
+ *
+ *  DAYS GIVEN AS HOURS. On `094` the plate read `7 dygn` and arrived as seven HOURS -
+ *  a sixth of the stay the sign grants - while on `062` `14 dygn` arrived as 336 hours,
+ *  which is right. A limit equal to the printed number of days was never converted,
+ *  and now that the schema knows the unit it is put right rather than dropped. */
 function contradictions(doc: Record<string, any>): string[] {
   const done: string[] = [];
   for (const panel of doc.panels ?? []) {
     const parsed = panel?.parsed;
     if (!parsed || typeof parsed !== "object" || panel.kind !== "sign_plate") continue;
+
+    // A parking-disc symbol IS the requirement to show a disc. On `063` the model drew
+    // the symbol (`pictogram: parking_disc`) and left the requirement out, and the
+    // answer said "3 tim" as though no disc were needed - graded full, at 0.975. Filled
+    // in only where no method is given: `057` offers a disc OR a free ticket, and the
+    // plate's own choice stays the plate's.
+    if (parsed.pictogram === "parking_disc" && parsed.payment_method === undefined) {
+      done.push(`panel ${panel.index}: payment_method='parking_disc' added - the plate `
+              + "shows the parking-disc symbol");
+      parsed.payment_method = "parking_disc";
+    }
 
     if (parsed.fee === true && parsed.payment_method === "ticket") {
       done.push(`panel ${panel.index}: dropped payment_method='ticket' - a ticket and `
@@ -199,6 +246,14 @@ function contradictions(doc: Record<string, any>): string[] {
 
     const lines: unknown[] = Array.isArray(panel.lines) ? panel.lines : [];
     const windows = Array.isArray(parsed.time_windows) ? parsed.time_windows : [];
+
+    const limit = parsed.duration_limit;
+    const days = DAYS_PRINTED.exec(lines.join(" "));
+    if (limit && limit.unit === "hours" && days && limit.amount === Number(days[1])) {
+      done.push(`panel ${panel.index}: duration ${limit.amount} hours -> `
+              + `${limit.amount} days - the plate says 'dygn'`);
+      parsed.duration_limit = { amount: limit.amount, unit: "days" };
+    }
     if (parsed.fee === true && !windows.length) {
       const hours = lines.filter((line): line is string =>
         typeof line === "string" && PRINTED_HOURS.test(line.replace(METRES, "")));
@@ -295,7 +350,7 @@ export function triage(doc: Record<string, any>): Result {
 export function sign(doc: Record<string, any>,
                      panelsSeen: number | null = null): Result {
   const repairs = [...repairDoc(doc), ...fixUnknownColors(doc), ...dropUnknownEnums(doc),
-                   ...contradictions(doc)];
+                   ...dropUnknownObstructions(doc), ...contradictions(doc)];
   const errs = errorsOf(doc, SIGN_SCHEMA);
   const result: Result = {
     data: errs.length ? null : (doc as SignDoc),

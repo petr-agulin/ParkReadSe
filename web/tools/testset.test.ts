@@ -17,7 +17,8 @@ import { fingerprint, verdictDifferences, verdictSlice } from "../src/lib/measur
 import { GOOD_ENOUGH } from "../src/lib/present";
 import { extractPrompt } from "../src/lib/prompts";
 import { ANSWERS, EXPECTED, PENDING_GROUND_TRUTH, ROOT, assessAnswer, loadPairs,
-         loadTriageExpectations, marked, photos } from "./testset";
+         answersFromAnotherPrompt, asShown, loadTriageExpectations, marked,
+         photos } from "./testset";
 
 const intersect = <T>(a: Set<T>, b: Set<T>) => [...a].filter((x) => b.has(x)).sort();
 
@@ -40,6 +41,22 @@ describe("the coverage of the measurement", () => {
       expect(pairs).toHaveLength(1);
       expect(everything).toHaveLength(2);
       expect(pairs[0].label).toBe(label);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it("names an answer to an older prompt aloud, and leaves it out of the count", () => {
+    // After the full run of step 15f the set holds no outdated answer at all, so the
+    // mechanism is proved on answers built here, not on the working folder.
+    const label = "005-2tim-8-18-parentes-8-15-dubbelpil";
+    const doc = JSON.parse(readFileSync(join(EXPECTED, `${label}.json`), "utf-8"));
+    const dir = mkdtempSync(join(tmpdir(), "parkread-outdated-"));
+    try {
+      writeFileSync(join(dir, `${label}.extract.json`),
+                    JSON.stringify({ response: doc, prompt_fingerprint: "older-prompt" }));
+      expect(answersFromAnotherPrompt(EXPECTED, dir, "current-prompt")).toEqual([label]);
+      expect(loadPairs(EXPECTED, dir, { promptFingerprint: "current-prompt" })).toEqual([]);
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
@@ -107,16 +124,15 @@ describe("the threshold", () => {
     const escaped: string[] = [];
     for (const { label, expected, actual } of pairs) {
       const diff = verdictDifferences(verdictSlice(expected, moment, cal),
-                                      verdictSlice(actual, moment, cal));
+                                      verdictSlice(asShown(actual), moment, cal));
       if (!diff.length) continue;
       const a = assessAnswer(label, actual, moment, cal);
       if (a.category === FULL && a.confidence >= GOOD_ENOUGH) escaped.push(label);
     }
-    // One escape is left: `059`. The model took the parking disc for a ticket beside
-    // the fee; the cross-check now notices the contradiction and drops the ticket,
-    // which costs the reading its "no repairs" signal (confidence 0.925). The disc is
-    // still missing, though, so the verdict still differs - and 0.925 still clears the
-    // threshold.
+    // One escape is left: `059`. The model misses the parking disc beside `därefter
+    // avgift` - on the 15f run it named no method at all; an earlier run wrote a ticket,
+    // which the cross-check now drops. Either way the disc is gone, nothing on the plate
+    // contradicts itself for a rule to catch, and 0.975 clears the threshold.
     expect(escaped).toEqual(["059-avstand-p-skiva-2tim-darefter-avgift"]);
   });
 });

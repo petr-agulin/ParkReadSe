@@ -1,0 +1,17 @@
+{
+  "image": "101-motorcykel-0-10m-avgift-tisd.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:23:28+00:00",
+  "usage": {
+    "completion_tokens": 70,
+    "prompt_tokens": 1540,
+    "total_tokens": 1610
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign with a main P sign and five additional plates below it detailing vehicle type, distance, fee/hours, street sweeping day rule, and resident parking.",
+    "panels_below_main_sign": 5
+  }
+}

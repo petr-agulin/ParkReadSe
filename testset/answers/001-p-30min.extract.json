@@ -2,12 +2,12 @@
   "image": "001-p-30min.jpg",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:43:08+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T14:24:23+00:00",
   "usage": {
-    "completion_tokens": 203,
-    "prompt_tokens": 4798,
-    "total_tokens": 5001
+    "completion_tokens": 215,
+    "prompt_tokens": 5538,
+    "total_tokens": 5753
   },
   "response": {
     "schema_version": 1,
@@ -41,6 +41,7 @@
     "panel_count": 1,
     "boundaries": {
       "certain": true
-    }
+    },
+    "another_post_in_frame": false
   }
 }

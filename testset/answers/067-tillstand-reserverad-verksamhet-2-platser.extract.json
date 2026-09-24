@@ -1,0 +1,74 @@
+{
+  "image": "067-tillstand-reserverad-verksamhet-2-platser.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:11:49+00:00",
+  "usage": {
+    "completion_tokens": 375,
+    "prompt_tokens": 5538,
+    "total_tokens": 5913
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Tillstånd",
+          "erfordras"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "permit_holders",
+          "permit_required": true
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Reserverad",
+          "Verksamhet"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "custom"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "2 platser"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "place_count": 2
+        }
+      }
+    ],
+    "panel_count": 3,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

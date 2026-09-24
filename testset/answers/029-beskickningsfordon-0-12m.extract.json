@@ -2,12 +2,12 @@
   "image": "029-beskickningsfordon-0-12m.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:47:23+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:16:31+00:00",
   "usage": {
     "completion_tokens": 308,
-    "prompt_tokens": 4800,
-    "total_tokens": 5108
+    "prompt_tokens": 5540,
+    "total_tokens": 5848
   },
   "response": {
     "schema_version": 1,
@@ -57,6 +57,6 @@
     "boundaries": {
       "certain": true
     },
-    "model_confidence": 0.95
+    "another_post_in_frame": false
   }
 }

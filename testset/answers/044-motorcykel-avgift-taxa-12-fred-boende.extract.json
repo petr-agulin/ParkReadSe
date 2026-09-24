@@ -2,12 +2,12 @@
   "image": "044-motorcykel-avgift-taxa-12-fred-boende.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:49:00+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:19:59+00:00",
   "usage": {
-    "completion_tokens": 652,
-    "prompt_tokens": 4812,
-    "total_tokens": 5464
+    "completion_tokens": 663,
+    "prompt_tokens": 5552,
+    "total_tokens": 6215
   },
   "response": {
     "schema_version": 1,
@@ -47,7 +47,8 @@
           "stretch_metres": {
             "from": 0,
             "to": 5
-          }
+          },
+          "arrow": "down"
         }
       },
       {
@@ -70,7 +71,8 @@
         "index": 4,
         "kind": "sign_plate",
         "lines": [
-          "Fred 0-6"
+          "Fred",
+          "0-6"
         ],
         "background_color": "yellow",
         "legibility": {

@@ -3,15 +3,16 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:48:55+00:00",
+  "saved_at": "2026-09-24T18:19:59+00:00",
   "usage": {
-    "completion_tokens": 119,
+    "completion_tokens": 93,
     "prompt_tokens": 1547,
-    "total_tokens": 1666
+    "total_tokens": 1640
   },
   "response": {
+    "schema_version": 1,
     "category": "parking_sign",
-    "what_i_see": "A Swedish blue parking sign with a P, followed by several rectangular plates underneath: a motorcycle symbol, distance '0-5 m', fee 'Avgift Taxa 12', a yellow no-parking restriction plate for Fridays ",
+    "what_i_see": "A Swedish blue parking sign with several supplemental plates below it, including a motorcycle symbol, distance, fee information, a stop/parking restriction, and a resident permit plate.",
     "model_confidence": 0.99,
     "panels_below_main_sign": 5
   }

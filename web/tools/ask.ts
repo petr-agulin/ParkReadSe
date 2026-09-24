@@ -20,7 +20,7 @@ import { fileURLToPath } from "node:url";
 import { run } from "../src/lib/pipeline";
 import { extractPrompt, triagePrompt } from "../src/lib/prompts";
 import { ok } from "../src/lib/validation";
-import type { Photo, Provider } from "../src/lib/vision";
+import { RETRY_PAUSE_MS, type Photo, type Provider } from "../src/lib/vision";
 import { refused, save, stale } from "./fixtures";
 
 export const ROOT = fileURLToPath(new URL("../../", import.meta.url));
@@ -87,6 +87,14 @@ export type AskDeps = {
 export async function ask(paths: string[], { refresh = false } = {},
                           deps: AskDeps = {}): Promise<number> {
   const out = deps.out ?? ((line: string) => console.log(line));
+  // Every wait is said aloud, with its reason. Silent, a provider over quota and a
+  // hung connection look alike - one line on screen for minutes on end.
+  const wait = deps.pause ?? ((ms: number) => new Promise((done) => setTimeout(done, ms)));
+  const announced = (ms: number, why?: string, attempt?: number) => {
+    out(`  attempt ${attempt ?? "?"} of ${RETRY_PAUSE_MS.length + 1} failed `
+        + `(${why || "no answer"}) - waiting ${Math.round(ms / 1000)} s`);
+    return wait(ms);
+  };
   const dir = deps.fixturesDir ?? ANSWERS;
   const provider = deps.provider ?? providerFromEnv();
   const triage = triagePrompt();
@@ -116,7 +124,7 @@ export async function ask(paths: string[], { refresh = false } = {},
     let outcome;
     try {
       outcome = await run(photoOf(path), provider,
-                          { fetchImpl: deps.fetchImpl, pause: deps.pause });
+                          { fetchImpl: deps.fetchImpl, pause: announced });
     } catch (e) {
       // One failure must not bring the whole run down.
       out(`  CALL FAILED: ${(e as Error).name}: ${String((e as Error).message).slice(0, 200)}`);

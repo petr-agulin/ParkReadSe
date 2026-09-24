@@ -1,0 +1,17 @@
+{
+  "image": "078-p-skylt-overklistrad.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:14:17+00:00",
+  "usage": {
+    "completion_tokens": 53,
+    "prompt_tokens": 1555,
+    "total_tokens": 1608
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign mounted on a wooden slat wall with one supplemental plate below it.",
+    "panels_below_main_sign": 1
+  }
+}

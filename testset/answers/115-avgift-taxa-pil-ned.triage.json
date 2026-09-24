@@ -1,0 +1,17 @@
+{
+  "image": "115-avgift-taxa-pil-ned.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:58:31+00:00",
+  "usage": {
+    "completion_tokens": 60,
+    "prompt_tokens": 1540,
+    "total_tokens": 1600
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish blue parking sign with four plates below it indicating fees, residents, street cleaning hours, and a downward arrow.",
+    "panels_below_main_sign": 4
+  }
+}

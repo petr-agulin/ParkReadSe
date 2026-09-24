@@ -111,6 +111,10 @@ export const SIGN_SCHEMA: Schema = {
    ],
    "minimum": 0,
    "maximum": 1
+  },
+  "another_post_in_frame": {
+   "description": "True when the photograph shows another sign post, its sign facing the camera, besides the one read. The back of a sign does not count. Only one post is read; this says the answer does not cover the other.",
+   "type": "boolean"
   }
  },
  "$defs": {
@@ -173,11 +177,12 @@ export const SIGN_SCHEMA: Schema = {
      "minimum": 1
     },
     "kind": {
-     "description": "What kind of panel this is. `sign_plate` - a plate that states a rule: only these reach the engine. `operator_plate` - a plate carrying an operator's name and telephone: in form a lawful additional plate, but it states no rule. `info_board` - a payment board with a zone code and app advertising, which is not a road sign at all. The last two are marked rather than discarded: they are visible in the photograph, and passing over them silently looks like a loss. They do not reach the user's answer.",
+     "description": "What kind of panel this is. `sign_plate` - a plate that states a rule: only these reach the engine. `operator_plate` - a plate carrying an operator's name and telephone: in form a lawful additional plate, but it states no rule. `info_board` - a payment board with a zone code and app advertising, which is not a road sign at all. The last two are marked rather than discarded: they are visible in the photograph, and passing over them silently looks like a loss. They do not reach the user's answer. `other_sign` - a road sign on the same post that is not part of the parking stack (a priority road, a speed limit, a speed bump): shown, not interpreted, except where it changes whether parking is allowed at all.",
      "enum": [
       "sign_plate",
       "operator_plate",
-      "info_board"
+      "info_board",
+      "other_sign"
      ]
     },
     "lines": {
@@ -204,7 +209,7 @@ export const SIGN_SCHEMA: Schema = {
    "additionalProperties": false,
    "properties": {
     "duration_limit": {
-     "description": "The maximum length of a single stay: `2 tim`, `30 min`.",
+     "description": "The maximum length of a single stay: `2 tim`, `30 min`, `7 dygn`. A `dygn` is a whole day of 24 hours, and goes in as `days` - not converted into hours.",
      "type": "object",
      "additionalProperties": false,
      "required": [
@@ -219,7 +224,8 @@ export const SIGN_SCHEMA: Schema = {
       "unit": {
        "enum": [
         "minutes",
-        "hours"
+        "hours",
+        "days"
        ]
       }
      }
@@ -310,6 +316,18 @@ export const SIGN_SCHEMA: Schema = {
           }
          }
         }
+       },
+       "day_of_month": {
+        "description": "The window applies only on this day of every month: `1:a varje månad` is 1. The other days of the month are not covered.",
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 31
+       },
+       "nth_of_month": {
+        "description": "Together with `named_weekday`: the window applies only on that weekday's Nth occurrence in the month. `3:e tisdagen` is 3 with `tuesday`.",
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5
        }
       }
      }
@@ -354,7 +372,8 @@ export const SIGN_SCHEMA: Schema = {
       "electric",
       "truck",
       "bus",
-      "bicycle"
+      "bicycle",
+      "taxi"
      ]
     },
     "arrow": {
@@ -455,6 +474,33 @@ export const SIGN_SCHEMA: Schema = {
     "permits_parking": {
      "description": "The plate itself shows a parking sign (`P Avgift`, `P Forhyrda platser`) and thereby restores permission within its own scope. Needed where the main sign is a prohibition: photograph 019 carries a 7-18 prohibition, and `ovrig tid` permits parking again for a fee. Without this field the prohibition would extend to the complement as well.",
      "type": "boolean"
+    },
+    "road_sign": {
+     "description": "Which road sign an `other_sign` panel is. A priority road matters: on one, parking needs a sign that permits it.",
+     "enum": [
+      "priority_road",
+      "speed_limit",
+      "speed_bump",
+      "pedestrian_crossing",
+      "other"
+     ]
+    },
+    "street_side": {
+     "description": "The plate limits its rule to one side of the street by house number: `even_numbers` or `odd_numbers`. This is about the STREET, not about weeks - even weeks are `week_parity`, and the two must never be swapped.",
+     "enum": [
+      "even_numbers",
+      "odd_numbers"
+     ]
+    },
+    "unrecognised_slot": {
+     "description": "For a plate whose words are legible but fit no field: which question they answer - who may park, when, how long, at what price, or where. The words themselves go in `uninterpreted` as usual.",
+     "enum": [
+      "who",
+      "when",
+      "how_long",
+      "how_much",
+      "where"
+     ]
     }
    }
   },

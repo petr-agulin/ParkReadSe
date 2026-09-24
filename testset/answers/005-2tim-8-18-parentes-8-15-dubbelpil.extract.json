@@ -2,12 +2,12 @@
   "image": "005-2tim-8-18-parentes-8-15-dubbelpil.jpg",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:43:40+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T14:39:35+00:00",
   "usage": {
-    "completion_tokens": 404,
-    "prompt_tokens": 4798,
-    "total_tokens": 5202
+    "completion_tokens": 392,
+    "prompt_tokens": 5538,
+    "total_tokens": 5930
   },
   "response": {
     "schema_version": 1,
@@ -68,7 +68,6 @@
     "panel_count": 2,
     "boundaries": {
       "certain": true
-    },
-    "model_confidence": 0.98
+    }
   }
 }

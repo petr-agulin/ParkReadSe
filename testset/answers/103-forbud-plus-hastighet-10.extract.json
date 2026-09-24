@@ -1,0 +1,106 @@
+{
+  "image": "103-forbud-plus-hastighet-10.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:23:41+00:00",
+  "usage": {
+    "completion_tokens": 636,
+    "prompt_tokens": 5552,
+    "total_tokens": 6188
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "prohibition_parking",
+      "background_color": "yellow",
+      "form": "zone",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Förhyrda",
+          "platser"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "rented",
+          "permits_parking": true,
+          "pictogram": "parking"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "operator_plate",
+        "lines": [
+          "Europark",
+          "0771-401020"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "operator": {
+            "name": "Europark",
+            "phone": "0771-401020"
+          }
+        }
+      },
+      {
+        "index": 3,
+        "kind": "info_board",
+        "lines": [
+          "Vid utebliven betalning av eventuell",
+          "debiterad kontrollavgift utgår en avgift",
+          "om 60 SEK för skriftlig betalnings-",
+          "påminnelse om betalansvar."
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {}
+      },
+      {
+        "index": 4,
+        "kind": "info_board",
+        "lines": [
+          "Grannsamverkan",
+          "Här bor vi tryggt"
+        ],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {}
+      },
+      {
+        "index": 5,
+        "kind": "other_sign",
+        "lines": [
+          "10"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "road_sign": "speed_limit"
+        }
+      }
+    ],
+    "panel_count": 5,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

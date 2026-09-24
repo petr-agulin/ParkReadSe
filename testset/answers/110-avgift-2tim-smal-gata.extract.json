@@ -1,0 +1,91 @@
+{
+  "image": "110-avgift-2tim-smal-gata.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:26:39+00:00",
+  "usage": {
+    "completion_tokens": 495,
+    "prompt_tokens": 5540,
+    "total_tokens": 6035
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Avgift"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "fee": true
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "30 min",
+          "8 - 22",
+          "(8 - 22)"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "duration_limit": {
+            "amount": 30,
+            "unit": "minutes"
+          },
+          "time_windows": [
+            {
+              "from": "08:00",
+              "to": "22:00",
+              "day_class": "weekday"
+            },
+            {
+              "from": "08:00",
+              "to": "22:00",
+              "day_class": "eve"
+            }
+          ]
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "Boende C4n"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "residents",
+          "uninterpreted": [
+            "C4n"
+          ]
+        }
+      }
+    ],
+    "panel_count": 3,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

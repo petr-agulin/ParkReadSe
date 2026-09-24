@@ -1,0 +1,19 @@
+{
+  "image": "111-2tim-gul-skylt-vid-klippa.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:57:57+00:00",
+  "usage": {
+    "completion_tokens": 108,
+    "prompt_tokens": 1540,
+    "total_tokens": 1648
+  },
+  "response": {
+    "schema_version": 1,
+    "category": "parking_sign",
+    "what_i_see": "Swedish blue parking sign with three supplementary plates below it: one indicating a 2-hour limit, one for residents (Boende V5), and one yellow sign indicating a no-parking rule on Fridays 9-12 durin",
+    "model_confidence": 1,
+    "panels_below_main_sign": 3
+  }
+}

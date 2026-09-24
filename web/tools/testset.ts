@@ -186,6 +186,19 @@ export type Assessed = { confidence: number; category: string; signals: Record<s
 /** The completeness and confidence of an answer — as the pipeline would count them on
  *  this photograph: with the triage's independent count of plates, and the size of the
  *  photograph itself. */
+/** The reading as the product would use it TODAY: validated, and repaired.
+ *
+ *  A saved answer was repaired by the rules there were when it was saved, not by any
+ *  added since. The VERDICT must come from the same reading the confidence is graded
+ *  on: after step 15f the repair for a disc symbol lowered `063`'s confidence while its
+ *  verdict was still taken from the unrepaired answer, and the measurement called it an
+ *  escape the product would never show. The field-by-field comparison stays on the raw
+ *  answer - that one measures what the MODEL read, and a repair is not the model's. */
+export function asShown(actual: SignDoc): SignDoc {
+  const res = validateSign(structuredClone(actual));
+  return ok(res) && res.data ? res.data : actual;
+}
+
 export function assessAnswer(label: string, actual: SignDoc, moment: Naive,
                              cal: Calendar): Assessed {
   const triageFile = join(ANSWERS, `${label}.triage.json`);

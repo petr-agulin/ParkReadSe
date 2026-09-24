@@ -3,15 +3,15 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:46:57+00:00",
+  "saved_at": "2026-09-24T22:23:17+00:00",
   "usage": {
-    "completion_tokens": 67,
+    "completion_tokens": 61,
     "prompt_tokens": 1519,
-    "total_tokens": 1586
+    "total_tokens": 1580
   },
   "response": {
     "category": "parking_sign",
-    "what_i_see": "A Swedish no-parking sign covered in snow, with two rectangular supplementary plates below it: one stating a parking restriction rule and one with a directional arrow.",
+    "what_i_see": "A Swedish no-parking sign with two auxiliary plates below it: one specifying snow clearance rules and one with a directional arrow.",
     "panels_below_main_sign": 2
   }
 }

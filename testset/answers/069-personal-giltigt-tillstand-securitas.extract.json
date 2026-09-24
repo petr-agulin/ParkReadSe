@@ -1,0 +1,78 @@
+{
+  "image": "069-personal-giltigt-tillstand-securitas.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:12:31+00:00",
+  "usage": {
+    "completion_tokens": 416,
+    "prompt_tokens": 5538,
+    "total_tokens": 5954
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Personal"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "custom"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Giltigt",
+          "P-tillstånd",
+          "erfordras"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "permit_holders",
+          "permit_required": true
+        }
+      },
+      {
+        "index": 3,
+        "kind": "operator_plate",
+        "lines": [
+          "Securitas",
+          "0771767000"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "operator": {
+            "name": "Securitas",
+            "phone": "0771767000"
+          }
+        }
+      }
+    ],
+    "panel_count": 3,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

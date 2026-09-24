@@ -1,0 +1,57 @@
+{
+  "image": "072-blodbil-1-plats.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:13:08+00:00",
+  "usage": {
+    "completion_tokens": 267,
+    "prompt_tokens": 5538,
+    "total_tokens": 5805
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "BLODBIL"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "custom"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "1 plats"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "place_count": 1
+        }
+      }
+    ],
+    "panel_count": 2,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

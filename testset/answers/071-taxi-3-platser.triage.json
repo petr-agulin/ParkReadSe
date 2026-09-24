@@ -1,0 +1,17 @@
+{
+  "image": "071-taxi-3-platser.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:12:50+00:00",
+  "usage": {
+    "completion_tokens": 69,
+    "prompt_tokens": 1533,
+    "total_tokens": 1602
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A blue Swedish parking sign with a white 'P', with two additional plates below it: one stating 'TAXI' and another stating '3 platser'.",
+    "panels_below_main_sign": 2
+  }
+}

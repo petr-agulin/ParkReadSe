@@ -1,0 +1,77 @@
+{
+  "image": "086-p-1tim-pil-europark.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:15:29+00:00",
+  "usage": {
+    "completion_tokens": 412,
+    "prompt_tokens": 5538,
+    "total_tokens": 5950
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "1 tim"
+        ],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "duration_limit": {
+            "amount": 1,
+            "unit": "hours"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "arrow": "left",
+          "pictogram": "arrow"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "operator_plate",
+        "lines": [
+          "Europark",
+          "0771-4010 20"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "operator": {
+            "name": "Europark",
+            "phone": "0771-4010 20"
+          }
+        }
+      }
+    ],
+    "panel_count": 3,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

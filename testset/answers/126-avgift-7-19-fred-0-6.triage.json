@@ -1,0 +1,17 @@
+{
+  "image": "126-avgift-7-19-fred-0-6.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T19:02:05+00:00",
+  "usage": {
+    "completion_tokens": 93,
+    "prompt_tokens": 1547,
+    "total_tokens": 1640
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign (blue P) with three plates below it: a blue fee plate (Avgift 7-19 (11-17) Taxa 3), a yellow parking restriction plate (Tisd 0-6), and a white payment board.",
+    "panels_below_main_sign": 2
+  }
+}

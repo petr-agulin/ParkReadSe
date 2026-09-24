@@ -3,15 +3,17 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:49:19+00:00",
+  "saved_at": "2026-09-24T18:20:16+00:00",
   "usage": {
-    "completion_tokens": 57,
+    "completion_tokens": 113,
     "prompt_tokens": 1509,
-    "total_tokens": 1566
+    "total_tokens": 1622
   },
   "response": {
+    "schema_version": 1,
     "category": "parking_sign",
-    "what_i_see": "A Swedish parking sign with three plates below it stating fees, parking prohibition hours, and resident parking rules.",
+    "what_i_see": "A Swedish blue parking sign with three supplementary plates below it: one stating fee information (Avgift Taxa 2), one yellow plate with a parking restriction (Tisd 0-6), and one plate specifying resi",
+    "model_confidence": 0.99,
     "panels_below_main_sign": 3
   }
 }

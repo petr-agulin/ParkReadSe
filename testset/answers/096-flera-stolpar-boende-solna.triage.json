@@ -1,0 +1,17 @@
+{
+  "image": "096-flera-stolpar-boende-solna.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:22:46+00:00",
+  "usage": {
+    "completion_tokens": 120,
+    "prompt_tokens": 1535,
+    "total_tokens": 1655
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "Two Swedish parking sign posts in front of a building. The left post has a main 'P' sign followed by plates for fee (Avgift Taxa A), resident parking (Boende Solna), a parking prohibition with time/da",
+    "panels_below_main_sign": 5
+  }
+}

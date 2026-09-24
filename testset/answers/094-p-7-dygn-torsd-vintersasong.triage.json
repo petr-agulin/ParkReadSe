@@ -1,0 +1,17 @@
+{
+  "image": "094-p-7-dygn-torsd-vintersasong.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:22:28+00:00",
+  "usage": {
+    "completion_tokens": 82,
+    "prompt_tokens": 1543,
+    "total_tokens": 1625
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign with a blue P main sign and three additional plates below it: one blue plate stating '7 dygn', one yellow/red restriction plate with times and dates, and one grey plate with a d",
+    "panels_below_main_sign": 3
+  }
+}

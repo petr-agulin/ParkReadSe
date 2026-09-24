@@ -1,0 +1,17 @@
+{
+  "image": "108-p-plus-gangbana-skylt.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:24:29+00:00",
+  "usage": {
+    "completion_tokens": 141,
+    "prompt_tokens": 1540,
+    "total_tokens": 1681
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign post mounted on a sidewalk next to a brick building. At the top of the post is a road sign (not a parking sign, showing arrows and a bicycle), followed by a blue parking sign (P",
+    "panels_below_main_sign": 3
+  }
+}

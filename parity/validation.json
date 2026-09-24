@@ -35,7 +35,8 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": false
   }
  },
  "answers/001-p-30min::duplicate of the main sign": {
@@ -76,7 +77,8 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": false
   }
  },
  "answers/001-p-30min::an empty line in a panel": {
@@ -117,7 +119,8 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": false
   }
  },
  "answers/001-p-30min::a knocked-out panel index": {
@@ -158,7 +161,8 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": false
   }
  },
  "answers/001-p-30min::panel_count does not add up": {
@@ -199,7 +203,8 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": false
   }
  },
  "answers/001-p-30min::a value outside the enumeration": {
@@ -240,7 +245,8 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": false
   }
  },
  "answers/001-p-30min::panel colour outside the enumeration": {
@@ -281,7 +287,8 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": false
   }
  },
  "answers/001-p-30min::sign colour outside the enumeration": {
@@ -322,7 +329,8 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": false
   }
  },
  "answers/002-avgift-forbud-utanfor-markerad-plats::as it is": {
@@ -400,10 +408,9 @@
      "kind": "info_board",
      "lines": [
       "Områdeskod 31370",
-      "Mölndals Parkerings AB",
+      "MÖLNDALS PARKERING",
       "easypark",
-      "Parkster",
-      "PARKERING GÖTEBORG"
+      "Parkster"
      ],
      "background_color": "other",
      "legibility": {
@@ -497,10 +504,9 @@
      "kind": "info_board",
      "lines": [
       "Områdeskod 31370",
-      "Mölndals Parkerings AB",
+      "MÖLNDALS PARKERING",
       "easypark",
-      "Parkster",
-      "PARKERING GÖTEBORG"
+      "Parkster"
      ],
      "background_color": "other",
      "legibility": {
@@ -594,10 +600,9 @@
      "kind": "info_board",
      "lines": [
       "Områdeskod 31370",
-      "Mölndals Parkerings AB",
+      "MÖLNDALS PARKERING",
       "easypark",
-      "Parkster",
-      "PARKERING GÖTEBORG"
+      "Parkster"
      ],
      "background_color": "other",
      "legibility": {
@@ -691,10 +696,9 @@
      "kind": "info_board",
      "lines": [
       "Områdeskod 31370",
-      "Mölndals Parkerings AB",
+      "MÖLNDALS PARKERING",
       "easypark",
-      "Parkster",
-      "PARKERING GÖTEBORG"
+      "Parkster"
      ],
      "background_color": "other",
      "legibility": {
@@ -788,10 +792,9 @@
      "kind": "info_board",
      "lines": [
       "Områdeskod 31370",
-      "Mölndals Parkerings AB",
+      "MÖLNDALS PARKERING",
       "easypark",
-      "Parkster",
-      "PARKERING GÖTEBORG"
+      "Parkster"
      ],
      "background_color": "other",
      "legibility": {
@@ -885,10 +888,9 @@
      "kind": "info_board",
      "lines": [
       "Områdeskod 31370",
-      "Mölndals Parkerings AB",
+      "MÖLNDALS PARKERING",
       "easypark",
-      "Parkster",
-      "PARKERING GÖTEBORG"
+      "Parkster"
      ],
      "background_color": "other",
      "legibility": {
@@ -982,10 +984,9 @@
      "kind": "info_board",
      "lines": [
       "Områdeskod 31370",
-      "Mölndals Parkerings AB",
+      "MÖLNDALS PARKERING",
       "easypark",
-      "Parkster",
-      "PARKERING GÖTEBORG"
+      "Parkster"
      ],
      "background_color": "other",
      "legibility": {
@@ -1079,10 +1080,9 @@
      "kind": "info_board",
      "lines": [
       "Områdeskod 31370",
-      "Mölndals Parkerings AB",
+      "MÖLNDALS PARKERING",
       "easypark",
-      "Parkster",
-      "PARKERING GÖTEBORG"
+      "Parkster"
      ],
      "background_color": "other",
      "legibility": {
@@ -1135,8 +1135,7 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.99
+   }
   }
  },
  "answers/003-p-2tim::duplicate of the main sign": {
@@ -1177,8 +1176,7 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.99
+   }
   }
  },
  "answers/003-p-2tim::an empty line in a panel": {
@@ -1219,8 +1217,7 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.99
+   }
   }
  },
  "answers/003-p-2tim::a knocked-out panel index": {
@@ -1261,8 +1258,7 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.99
+   }
   }
  },
  "answers/003-p-2tim::panel_count does not add up": {
@@ -1303,8 +1299,7 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.99
+   }
   }
  },
  "answers/003-p-2tim::a value outside the enumeration": {
@@ -1345,8 +1340,7 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.99
+   }
   }
  },
  "answers/003-p-2tim::panel colour outside the enumeration": {
@@ -1387,8 +1381,7 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.99
+   }
   }
  },
  "answers/003-p-2tim::sign colour outside the enumeration": {
@@ -1429,8 +1422,7 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.99
+   }
   }
  },
  "answers/004-endast-besokande-pingstkyrkan::as it is": {
@@ -1974,8 +1966,7 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.98
+   }
   }
  },
  "answers/005-2tim-8-18-parentes-8-15-dubbelpil::duplicate of the main sign": {
@@ -2043,8 +2034,7 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.98
+   }
   }
  },
  "answers/005-2tim-8-18-parentes-8-15-dubbelpil::an empty line in a panel": {
@@ -2112,8 +2102,7 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.98
+   }
   }
  },
  "answers/005-2tim-8-18-parentes-8-15-dubbelpil::a knocked-out panel index": {
@@ -2181,8 +2170,7 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.98
+   }
   }
  },
  "answers/005-2tim-8-18-parentes-8-15-dubbelpil::panel_count does not add up": {
@@ -2250,8 +2238,7 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.98
+   }
   }
  },
  "answers/005-2tim-8-18-parentes-8-15-dubbelpil::a value outside the enumeration": {
@@ -2319,8 +2306,7 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.98
+   }
   }
  },
  "answers/005-2tim-8-18-parentes-8-15-dubbelpil::panel colour outside the enumeration": {
@@ -2388,8 +2374,7 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.98
+   }
   }
  },
  "answers/005-2tim-8-18-parentes-8-15-dubbelpil::sign colour outside the enumeration": {
@@ -2457,8 +2442,7 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.98
+   }
   }
  },
  "answers/006-tillstand-07-17-ovrig-tid-avgift::as it is": {
@@ -3263,8 +3247,8 @@
      },
      "parsed": {
       "eligibility": "rented",
-      "pictogram": "parking",
-      "permits_parking": true
+      "permits_parking": true,
+      "pictogram": "parking"
      }
     },
     {
@@ -3289,8 +3273,7 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.98
+   }
   }
  },
  "answers/007-gul-forbud-forhyrda-platser::duplicate of the main sign": {
@@ -3323,8 +3306,8 @@
      },
      "parsed": {
       "eligibility": "rented",
-      "pictogram": "parking",
-      "permits_parking": true
+      "permits_parking": true,
+      "pictogram": "parking"
      }
     },
     {
@@ -3349,8 +3332,7 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.98
+   }
   }
  },
  "answers/007-gul-forbud-forhyrda-platser::an empty line in a panel": {
@@ -3383,8 +3365,8 @@
      },
      "parsed": {
       "eligibility": "rented",
-      "pictogram": "parking",
-      "permits_parking": true
+      "permits_parking": true,
+      "pictogram": "parking"
      }
     },
     {
@@ -3409,8 +3391,7 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.98
+   }
   }
  },
  "answers/007-gul-forbud-forhyrda-platser::a knocked-out panel index": {
@@ -3443,8 +3424,8 @@
      },
      "parsed": {
       "eligibility": "rented",
-      "pictogram": "parking",
-      "permits_parking": true
+      "permits_parking": true,
+      "pictogram": "parking"
      }
     },
     {
@@ -3469,8 +3450,7 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.98
+   }
   }
  },
  "answers/007-gul-forbud-forhyrda-platser::panel_count does not add up": {
@@ -3503,8 +3483,8 @@
      },
      "parsed": {
       "eligibility": "rented",
-      "pictogram": "parking",
-      "permits_parking": true
+      "permits_parking": true,
+      "pictogram": "parking"
      }
     },
     {
@@ -3529,8 +3509,7 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.98
+   }
   }
  },
  "answers/007-gul-forbud-forhyrda-platser::a value outside the enumeration": {
@@ -3563,8 +3542,8 @@
      },
      "parsed": {
       "eligibility": "rented",
-      "pictogram": "parking",
-      "permits_parking": true
+      "permits_parking": true,
+      "pictogram": "parking"
      }
     },
     {
@@ -3589,8 +3568,7 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.98
+   }
   }
  },
  "answers/007-gul-forbud-forhyrda-platser::panel colour outside the enumeration": {
@@ -3623,8 +3601,8 @@
      },
      "parsed": {
       "eligibility": "rented",
-      "pictogram": "parking",
-      "permits_parking": true
+      "permits_parking": true,
+      "pictogram": "parking"
      }
     },
     {
@@ -3649,8 +3627,7 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.98
+   }
   }
  },
  "answers/007-gul-forbud-forhyrda-platser::sign colour outside the enumeration": {
@@ -3683,8 +3660,8 @@
      },
      "parsed": {
       "eligibility": "rented",
-      "pictogram": "parking",
-      "permits_parking": true
+      "permits_parking": true,
+      "pictogram": "parking"
      }
     },
     {
@@ -3709,8 +3686,7 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   },
-   "model_confidence": 0.98
+   }
   }
  },
  "answers/008-rorelsehindrad-avgift::as it is": {
@@ -3757,44 +3733,35 @@
     },
     {
      "index": 3,
-     "kind": "operator_plate",
+     "kind": "info_board",
      "lines": [
-      "P-tjänst"
+      "P-tjänst",
+      "Parkster",
+      "App-parkering",
+      "utan serviceavgift.",
+      "PARKERA",
+      "MED OSS!",
+      "PARKERA"
      ],
-     "background_color": "white",
+     "background_color": "other",
      "legibility": {
       "readable": true
      },
      "parsed": {
+      "area_code": "17813",
       "operator": {
        "name": "P-tjänst"
       }
      }
-    },
-    {
-     "index": 4,
-     "kind": "info_board",
-     "lines": [
-      "Parkster",
-      "App-parkering",
-      "utan serviceavgift.",
-      "easypark",
-      "PARKERA",
-      "MED OSS!"
-     ],
-     "background_color": "white",
-     "legibility": {
-      "readable": true
-     },
-     "parsed": {
-      "area_code": "17813"
-     }
     }
    ],
-   "panel_count": 4,
+   "panel_count": 3,
    "boundaries": {
     "certain": true
-   }
+   },
+   "notes": "Bottom info board combines Parkster and EasyPark information with area code 17813.",
+   "model_confidence": 0.98,
+   "another_post_in_frame": false
   }
  },
  "answers/008-rorelsehindrad-avgift::duplicate of the main sign": {
@@ -3843,44 +3810,35 @@
     },
     {
      "index": 3,
-     "kind": "operator_plate",
+     "kind": "info_board",
      "lines": [
-      "P-tjänst"
+      "P-tjänst",
+      "Parkster",
+      "App-parkering",
+      "utan serviceavgift.",
+      "PARKERA",
+      "MED OSS!",
+      "PARKERA"
      ],
-     "background_color": "white",
+     "background_color": "other",
      "legibility": {
       "readable": true
      },
      "parsed": {
+      "area_code": "17813",
       "operator": {
        "name": "P-tjänst"
       }
      }
-    },
-    {
-     "index": 4,
-     "kind": "info_board",
-     "lines": [
-      "Parkster",
-      "App-parkering",
-      "utan serviceavgift.",
-      "easypark",
-      "PARKERA",
-      "MED OSS!"
-     ],
-     "background_color": "white",
-     "legibility": {
-      "readable": true
-     },
-     "parsed": {
-      "area_code": "17813"
-     }
     }
    ],
-   "panel_count": 4,
+   "panel_count": 3,
    "boundaries": {
     "certain": true
-   }
+   },
+   "notes": "Bottom info board combines Parkster and EasyPark information with area code 17813.",
+   "model_confidence": 0.98,
+   "another_post_in_frame": false
   }
  },
  "answers/008-rorelsehindrad-avgift::an empty line in a panel": {
@@ -3929,44 +3887,35 @@
     },
     {
      "index": 3,
-     "kind": "operator_plate",
+     "kind": "info_board",
      "lines": [
-      "P-tjänst"
+      "P-tjänst",
+      "Parkster",
+      "App-parkering",
+      "utan serviceavgift.",
+      "PARKERA",
+      "MED OSS!",
+      "PARKERA"
      ],
-     "background_color": "white",
+     "background_color": "other",
      "legibility": {
       "readable": true
      },
      "parsed": {
+      "area_code": "17813",
       "operator": {
        "name": "P-tjänst"
       }
      }
-    },
-    {
-     "index": 4,
-     "kind": "info_board",
-     "lines": [
-      "Parkster",
-      "App-parkering",
-      "utan serviceavgift.",
-      "easypark",
-      "PARKERA",
-      "MED OSS!"
-     ],
-     "background_color": "white",
-     "legibility": {
-      "readable": true
-     },
-     "parsed": {
-      "area_code": "17813"
-     }
     }
    ],
-   "panel_count": 4,
+   "panel_count": 3,
    "boundaries": {
     "certain": true
-   }
+   },
+   "notes": "Bottom info board combines Parkster and EasyPark information with area code 17813.",
+   "model_confidence": 0.98,
+   "another_post_in_frame": false
   }
  },
  "answers/008-rorelsehindrad-avgift::a knocked-out panel index": {
@@ -4015,50 +3964,41 @@
     },
     {
      "index": 3,
-     "kind": "operator_plate",
+     "kind": "info_board",
      "lines": [
-      "P-tjänst"
+      "P-tjänst",
+      "Parkster",
+      "App-parkering",
+      "utan serviceavgift.",
+      "PARKERA",
+      "MED OSS!",
+      "PARKERA"
      ],
-     "background_color": "white",
+     "background_color": "other",
      "legibility": {
       "readable": true
      },
      "parsed": {
+      "area_code": "17813",
       "operator": {
        "name": "P-tjänst"
       }
      }
-    },
-    {
-     "index": 4,
-     "kind": "info_board",
-     "lines": [
-      "Parkster",
-      "App-parkering",
-      "utan serviceavgift.",
-      "easypark",
-      "PARKERA",
-      "MED OSS!"
-     ],
-     "background_color": "white",
-     "legibility": {
-      "readable": true
-     },
-     "parsed": {
-      "area_code": "17813"
-     }
     }
    ],
-   "panel_count": 4,
+   "panel_count": 3,
    "boundaries": {
     "certain": true
-   }
+   },
+   "notes": "Bottom info board combines Parkster and EasyPark information with area code 17813.",
+   "model_confidence": 0.98,
+   "another_post_in_frame": false
   }
  },
  "answers/008-rorelsehindrad-avgift::panel_count does not add up": {
   "ok": true,
   "repairs": [
-   "panel_count 99 -> 4"
+   "panel_count 99 -> 3"
   ],
   "flags": [],
   "data": {
@@ -4101,44 +4041,35 @@
     },
     {
      "index": 3,
-     "kind": "operator_plate",
+     "kind": "info_board",
      "lines": [
-      "P-tjänst"
+      "P-tjänst",
+      "Parkster",
+      "App-parkering",
+      "utan serviceavgift.",
+      "PARKERA",
+      "MED OSS!",
+      "PARKERA"
      ],
-     "background_color": "white",
+     "background_color": "other",
      "legibility": {
       "readable": true
      },
      "parsed": {
+      "area_code": "17813",
       "operator": {
        "name": "P-tjänst"
       }
      }
-    },
-    {
-     "index": 4,
-     "kind": "info_board",
-     "lines": [
-      "Parkster",
-      "App-parkering",
-      "utan serviceavgift.",
-      "easypark",
-      "PARKERA",
-      "MED OSS!"
-     ],
-     "background_color": "white",
-     "legibility": {
-      "readable": true
-     },
-     "parsed": {
-      "area_code": "17813"
-     }
     }
    ],
-   "panel_count": 4,
+   "panel_count": 3,
    "boundaries": {
     "certain": true
-   }
+   },
+   "notes": "Bottom info board combines Parkster and EasyPark information with area code 17813.",
+   "model_confidence": 0.98,
+   "another_post_in_frame": false
   }
  },
  "answers/008-rorelsehindrad-avgift::a value outside the enumeration": {
@@ -4187,44 +4118,35 @@
     },
     {
      "index": 3,
-     "kind": "operator_plate",
+     "kind": "info_board",
      "lines": [
-      "P-tjänst"
+      "P-tjänst",
+      "Parkster",
+      "App-parkering",
+      "utan serviceavgift.",
+      "PARKERA",
+      "MED OSS!",
+      "PARKERA"
      ],
-     "background_color": "white",
+     "background_color": "other",
      "legibility": {
       "readable": true
      },
      "parsed": {
+      "area_code": "17813",
       "operator": {
        "name": "P-tjänst"
       }
      }
-    },
-    {
-     "index": 4,
-     "kind": "info_board",
-     "lines": [
-      "Parkster",
-      "App-parkering",
-      "utan serviceavgift.",
-      "easypark",
-      "PARKERA",
-      "MED OSS!"
-     ],
-     "background_color": "white",
-     "legibility": {
-      "readable": true
-     },
-     "parsed": {
-      "area_code": "17813"
-     }
     }
    ],
-   "panel_count": 4,
+   "panel_count": 3,
    "boundaries": {
     "certain": true
-   }
+   },
+   "notes": "Bottom info board combines Parkster and EasyPark information with area code 17813.",
+   "model_confidence": 0.98,
+   "another_post_in_frame": false
   }
  },
  "answers/008-rorelsehindrad-avgift::panel colour outside the enumeration": {
@@ -4273,44 +4195,35 @@
     },
     {
      "index": 3,
-     "kind": "operator_plate",
+     "kind": "info_board",
      "lines": [
-      "P-tjänst"
+      "P-tjänst",
+      "Parkster",
+      "App-parkering",
+      "utan serviceavgift.",
+      "PARKERA",
+      "MED OSS!",
+      "PARKERA"
      ],
-     "background_color": "white",
+     "background_color": "other",
      "legibility": {
       "readable": true
      },
      "parsed": {
+      "area_code": "17813",
       "operator": {
        "name": "P-tjänst"
       }
      }
-    },
-    {
-     "index": 4,
-     "kind": "info_board",
-     "lines": [
-      "Parkster",
-      "App-parkering",
-      "utan serviceavgift.",
-      "easypark",
-      "PARKERA",
-      "MED OSS!"
-     ],
-     "background_color": "white",
-     "legibility": {
-      "readable": true
-     },
-     "parsed": {
-      "area_code": "17813"
-     }
     }
    ],
-   "panel_count": 4,
+   "panel_count": 3,
    "boundaries": {
     "certain": true
-   }
+   },
+   "notes": "Bottom info board combines Parkster and EasyPark information with area code 17813.",
+   "model_confidence": 0.98,
+   "another_post_in_frame": false
   }
  },
  "answers/008-rorelsehindrad-avgift::sign colour outside the enumeration": {
@@ -4359,44 +4272,35 @@
     },
     {
      "index": 3,
-     "kind": "operator_plate",
+     "kind": "info_board",
      "lines": [
-      "P-tjänst"
+      "P-tjänst",
+      "Parkster",
+      "App-parkering",
+      "utan serviceavgift.",
+      "PARKERA",
+      "MED OSS!",
+      "PARKERA"
      ],
-     "background_color": "white",
+     "background_color": "other",
      "legibility": {
       "readable": true
      },
      "parsed": {
+      "area_code": "17813",
       "operator": {
        "name": "P-tjänst"
       }
      }
-    },
-    {
-     "index": 4,
-     "kind": "info_board",
-     "lines": [
-      "Parkster",
-      "App-parkering",
-      "utan serviceavgift.",
-      "easypark",
-      "PARKERA",
-      "MED OSS!"
-     ],
-     "background_color": "white",
-     "legibility": {
-      "readable": true
-     },
-     "parsed": {
-      "area_code": "17813"
-     }
     }
    ],
-   "panel_count": 4,
+   "panel_count": 3,
    "boundaries": {
     "certain": true
-   }
+   },
+   "notes": "Bottom info board combines Parkster and EasyPark information with area code 17813.",
+   "model_confidence": 0.98,
+   "another_post_in_frame": false
   }
  },
  "answers/009-besokande-avgift::as it is": {
@@ -4466,8 +4370,7 @@
       "EASYPARK",
       "PARKERA",
       "MED OSS!",
-      "SMS-PARKERA",
-      "Parkster",
+      "PARKERA",
       "App-parkering",
       "utan serviceavgift."
      ],
@@ -4553,8 +4456,7 @@
       "EASYPARK",
       "PARKERA",
       "MED OSS!",
-      "SMS-PARKERA",
-      "Parkster",
+      "PARKERA",
       "App-parkering",
       "utan serviceavgift."
      ],
@@ -4640,8 +4542,7 @@
       "EASYPARK",
       "PARKERA",
       "MED OSS!",
-      "SMS-PARKERA",
-      "Parkster",
+      "PARKERA",
       "App-parkering",
       "utan serviceavgift."
      ],
@@ -4727,8 +4628,7 @@
       "EASYPARK",
       "PARKERA",
       "MED OSS!",
-      "SMS-PARKERA",
-      "Parkster",
+      "PARKERA",
       "App-parkering",
       "utan serviceavgift."
      ],
@@ -4814,8 +4714,7 @@
       "EASYPARK",
       "PARKERA",
       "MED OSS!",
-      "SMS-PARKERA",
-      "Parkster",
+      "PARKERA",
       "App-parkering",
       "utan serviceavgift."
      ],
@@ -4901,8 +4800,7 @@
       "EASYPARK",
       "PARKERA",
       "MED OSS!",
-      "SMS-PARKERA",
-      "Parkster",
+      "PARKERA",
       "App-parkering",
       "utan serviceavgift."
      ],
@@ -4988,8 +4886,7 @@
       "EASYPARK",
       "PARKERA",
       "MED OSS!",
-      "SMS-PARKERA",
-      "Parkster",
+      "PARKERA",
       "App-parkering",
       "utan serviceavgift."
      ],
@@ -5075,8 +4972,7 @@
       "EASYPARK",
       "PARKERA",
       "MED OSS!",
-      "SMS-PARKERA",
-      "Parkster",
+      "PARKERA",
       "App-parkering",
       "utan serviceavgift."
      ],
@@ -5132,7 +5028,8 @@
       "readable": true
      },
      "parsed": {
-      "arrow": "left"
+      "arrow": "left",
+      "pictogram": "arrow"
      }
     },
     {
@@ -5163,14 +5060,16 @@
       "readable": true
      },
      "parsed": {
-      "arrow": "right"
+      "arrow": "right",
+      "pictogram": "arrow"
      }
     }
    ],
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/010-forhyrda-platser-tva-pilar::duplicate of the main sign": {
@@ -5214,7 +5113,8 @@
       "readable": true
      },
      "parsed": {
-      "arrow": "left"
+      "arrow": "left",
+      "pictogram": "arrow"
      }
     },
     {
@@ -5245,14 +5145,16 @@
       "readable": true
      },
      "parsed": {
-      "arrow": "right"
+      "arrow": "right",
+      "pictogram": "arrow"
      }
     }
    ],
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/010-forhyrda-platser-tva-pilar::an empty line in a panel": {
@@ -5296,7 +5198,8 @@
       "readable": true
      },
      "parsed": {
-      "arrow": "left"
+      "arrow": "left",
+      "pictogram": "arrow"
      }
     },
     {
@@ -5327,14 +5230,16 @@
       "readable": true
      },
      "parsed": {
-      "arrow": "right"
+      "arrow": "right",
+      "pictogram": "arrow"
      }
     }
    ],
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/010-forhyrda-platser-tva-pilar::a knocked-out panel index": {
@@ -5378,7 +5283,8 @@
       "readable": true
      },
      "parsed": {
-      "arrow": "left"
+      "arrow": "left",
+      "pictogram": "arrow"
      }
     },
     {
@@ -5409,14 +5315,16 @@
       "readable": true
      },
      "parsed": {
-      "arrow": "right"
+      "arrow": "right",
+      "pictogram": "arrow"
      }
     }
    ],
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/010-forhyrda-platser-tva-pilar::panel_count does not add up": {
@@ -5460,7 +5368,8 @@
       "readable": true
      },
      "parsed": {
-      "arrow": "left"
+      "arrow": "left",
+      "pictogram": "arrow"
      }
     },
     {
@@ -5491,14 +5400,16 @@
       "readable": true
      },
      "parsed": {
-      "arrow": "right"
+      "arrow": "right",
+      "pictogram": "arrow"
      }
     }
    ],
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/010-forhyrda-platser-tva-pilar::a value outside the enumeration": {
@@ -5542,7 +5453,8 @@
       "readable": true
      },
      "parsed": {
-      "arrow": "left"
+      "arrow": "left",
+      "pictogram": "arrow"
      }
     },
     {
@@ -5573,14 +5485,16 @@
       "readable": true
      },
      "parsed": {
-      "arrow": "right"
+      "arrow": "right",
+      "pictogram": "arrow"
      }
     }
    ],
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/010-forhyrda-platser-tva-pilar::panel colour outside the enumeration": {
@@ -5624,7 +5538,8 @@
       "readable": true
      },
      "parsed": {
-      "arrow": "left"
+      "arrow": "left",
+      "pictogram": "arrow"
      }
     },
     {
@@ -5655,14 +5570,16 @@
       "readable": true
      },
      "parsed": {
-      "arrow": "right"
+      "arrow": "right",
+      "pictogram": "arrow"
      }
     }
    ],
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/010-forhyrda-platser-tva-pilar::sign colour outside the enumeration": {
@@ -5706,7 +5623,8 @@
       "readable": true
      },
      "parsed": {
-      "arrow": "left"
+      "arrow": "left",
+      "pictogram": "arrow"
      }
     },
     {
@@ -5737,14 +5655,16 @@
       "readable": true
      },
      "parsed": {
-      "arrow": "right"
+      "arrow": "right",
+      "pictogram": "arrow"
      }
     }
    ],
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/011-gul-p-avgift-klistermarken::as it is": {
@@ -5789,7 +5709,10 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   }
+   },
+   "notes": "Street sign visible at the top, not part of the parking stack.",
+   "model_confidence": 0.98,
+   "another_post_in_frame": false
   }
  },
  "answers/011-gul-p-avgift-klistermarken::duplicate of the main sign": {
@@ -5836,7 +5759,10 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   }
+   },
+   "notes": "Street sign visible at the top, not part of the parking stack.",
+   "model_confidence": 0.98,
+   "another_post_in_frame": false
   }
  },
  "answers/011-gul-p-avgift-klistermarken::an empty line in a panel": {
@@ -5883,7 +5809,10 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   }
+   },
+   "notes": "Street sign visible at the top, not part of the parking stack.",
+   "model_confidence": 0.98,
+   "another_post_in_frame": false
   }
  },
  "answers/011-gul-p-avgift-klistermarken::a knocked-out panel index": {
@@ -5930,7 +5859,10 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   }
+   },
+   "notes": "Street sign visible at the top, not part of the parking stack.",
+   "model_confidence": 0.98,
+   "another_post_in_frame": false
   }
  },
  "answers/011-gul-p-avgift-klistermarken::panel_count does not add up": {
@@ -5977,7 +5909,10 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   }
+   },
+   "notes": "Street sign visible at the top, not part of the parking stack.",
+   "model_confidence": 0.98,
+   "another_post_in_frame": false
   }
  },
  "answers/011-gul-p-avgift-klistermarken::a value outside the enumeration": {
@@ -6024,7 +5959,10 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   }
+   },
+   "notes": "Street sign visible at the top, not part of the parking stack.",
+   "model_confidence": 0.98,
+   "another_post_in_frame": false
   }
  },
  "answers/011-gul-p-avgift-klistermarken::panel colour outside the enumeration": {
@@ -6071,7 +6009,10 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   }
+   },
+   "notes": "Street sign visible at the top, not part of the parking stack.",
+   "model_confidence": 0.98,
+   "another_post_in_frame": false
   }
  },
  "answers/011-gul-p-avgift-klistermarken::sign colour outside the enumeration": {
@@ -6118,7 +6059,10 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   }
+   },
+   "notes": "Street sign visible at the top, not part of the parking stack.",
+   "model_confidence": 0.98,
+   "another_post_in_frame": false
   }
  },
  "answers/012-tillstand-7-17-ovrig-tid-avgift::as it is": {
@@ -6212,7 +6156,9 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "model_confidence": 1,
+   "another_post_in_frame": false
   }
  },
  "answers/012-tillstand-7-17-ovrig-tid-avgift::duplicate of the main sign": {
@@ -6308,7 +6254,9 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "model_confidence": 1,
+   "another_post_in_frame": false
   }
  },
  "answers/012-tillstand-7-17-ovrig-tid-avgift::an empty line in a panel": {
@@ -6404,7 +6352,9 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "model_confidence": 1,
+   "another_post_in_frame": false
   }
  },
  "answers/012-tillstand-7-17-ovrig-tid-avgift::a knocked-out panel index": {
@@ -6500,7 +6450,9 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "model_confidence": 1,
+   "another_post_in_frame": false
   }
  },
  "answers/012-tillstand-7-17-ovrig-tid-avgift::panel_count does not add up": {
@@ -6596,7 +6548,9 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "model_confidence": 1,
+   "another_post_in_frame": false
   }
  },
  "answers/012-tillstand-7-17-ovrig-tid-avgift::a value outside the enumeration": {
@@ -6692,7 +6646,9 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "model_confidence": 1,
+   "another_post_in_frame": false
   }
  },
  "answers/012-tillstand-7-17-ovrig-tid-avgift::panel colour outside the enumeration": {
@@ -6788,7 +6744,9 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "model_confidence": 1,
+   "another_post_in_frame": false
   }
  },
  "answers/012-tillstand-7-17-ovrig-tid-avgift::sign colour outside the enumeration": {
@@ -6884,7 +6842,9 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "model_confidence": 1,
+   "another_post_in_frame": false
   }
  },
  "answers/013-rorelsehindrad-2-platser::as it is": {
@@ -6965,7 +6925,8 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": false
   }
  },
  "answers/013-rorelsehindrad-2-platser::duplicate of the main sign": {
@@ -7048,7 +7009,8 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": false
   }
  },
  "answers/013-rorelsehindrad-2-platser::an empty line in a panel": {
@@ -7131,7 +7093,8 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": false
   }
  },
  "answers/013-rorelsehindrad-2-platser::a knocked-out panel index": {
@@ -7214,7 +7177,8 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": false
   }
  },
  "answers/013-rorelsehindrad-2-platser::panel_count does not add up": {
@@ -7297,7 +7261,8 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": false
   }
  },
  "answers/013-rorelsehindrad-2-platser::a value outside the enumeration": {
@@ -7380,7 +7345,8 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": false
   }
  },
  "answers/013-rorelsehindrad-2-platser::panel colour outside the enumeration": {
@@ -7463,7 +7429,8 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": false
   }
  },
  "answers/013-rorelsehindrad-2-platser::sign colour outside the enumeration": {
@@ -7546,7 +7513,8 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": false
   }
  },
  "answers/014-motorcykel-pil-skymning::as it is": {
@@ -7979,9 +7947,7 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   },
-   "notes": "Swedish parking sign allowing parking, with a plate restricting parking to motorcycles.",
-   "model_confidence": 0.99
+   }
   }
  },
  "answers/015-motorcykel::duplicate of the main sign": {
@@ -8018,9 +7984,7 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   },
-   "notes": "Swedish parking sign allowing parking, with a plate restricting parking to motorcycles.",
-   "model_confidence": 0.99
+   }
   }
  },
  "answers/015-motorcykel::an empty line in a panel": {
@@ -8057,9 +8021,7 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   },
-   "notes": "Swedish parking sign allowing parking, with a plate restricting parking to motorcycles.",
-   "model_confidence": 0.99
+   }
   }
  },
  "answers/015-motorcykel::a knocked-out panel index": {
@@ -8096,9 +8058,7 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   },
-   "notes": "Swedish parking sign allowing parking, with a plate restricting parking to motorcycles.",
-   "model_confidence": 0.99
+   }
   }
  },
  "answers/015-motorcykel::panel_count does not add up": {
@@ -8135,9 +8095,7 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   },
-   "notes": "Swedish parking sign allowing parking, with a plate restricting parking to motorcycles.",
-   "model_confidence": 0.99
+   }
   }
  },
  "answers/015-motorcykel::a value outside the enumeration": {
@@ -8174,9 +8132,7 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   },
-   "notes": "Swedish parking sign allowing parking, with a plate restricting parking to motorcycles.",
-   "model_confidence": 0.99
+   }
   }
  },
  "answers/015-motorcykel::panel colour outside the enumeration": {
@@ -8213,9 +8169,7 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   },
-   "notes": "Swedish parking sign allowing parking, with a plate restricting parking to motorcycles.",
-   "model_confidence": 0.99
+   }
   }
  },
  "answers/015-motorcykel::sign colour outside the enumeration": {
@@ -8252,9 +8206,7 @@
    "panel_count": 1,
    "boundaries": {
     "certain": true
-   },
-   "notes": "Swedish parking sign allowing parking, with a plate restricting parking to motorcycles.",
-   "model_confidence": 0.99
+   }
   }
  },
  "answers/016-tillstand-ovrig-tid-5-platser::as it is": {
@@ -8344,7 +8296,8 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "model_confidence": 1
   }
  },
  "answers/016-tillstand-ovrig-tid-5-platser::duplicate of the main sign": {
@@ -8436,7 +8389,8 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "model_confidence": 1
   }
  },
  "answers/016-tillstand-ovrig-tid-5-platser::an empty line in a panel": {
@@ -8528,7 +8482,8 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "model_confidence": 1
   }
  },
  "answers/016-tillstand-ovrig-tid-5-platser::a knocked-out panel index": {
@@ -8620,7 +8575,8 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "model_confidence": 1
   }
  },
  "answers/016-tillstand-ovrig-tid-5-platser::panel_count does not add up": {
@@ -8712,7 +8668,8 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "model_confidence": 1
   }
  },
  "answers/016-tillstand-ovrig-tid-5-platser::a value outside the enumeration": {
@@ -8804,7 +8761,8 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "model_confidence": 1
   }
  },
  "answers/016-tillstand-ovrig-tid-5-platser::panel colour outside the enumeration": {
@@ -8896,7 +8854,8 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "model_confidence": 1
   }
  },
  "answers/016-tillstand-ovrig-tid-5-platser::sign colour outside the enumeration": {
@@ -8988,7 +8947,8 @@
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "model_confidence": 1
   }
  },
  "answers/017-rorelsehindrad::as it is": {
@@ -9763,35 +9723,28 @@
       "readable": true
      },
      "parsed": {
-      "time_windows": [
-       {
-        "from": "18:00",
-        "to": "07:00",
-        "day_class": "weekday"
-       }
-      ],
       "fee": true,
       "scope_shift": "remaining_time",
-      "pictogram": "parking",
-      "permits_parking": true
+      "permits_parking": true,
+      "pictogram": "parking"
      }
     },
     {
      "index": 3,
      "kind": "operator_plate",
      "lines": [
-      "Zone Boka/Köp 31108"
+      "P",
+      "31108"
      ],
      "background_color": "blue",
      "legibility": {
       "readable": true
      },
      "parsed": {
-      "pictogram": "parking",
+      "area_code": "31108",
       "operator": {
-       "name": "Mölndals Parkerings AB"
-      },
-      "area_code": "31108"
+       "name": "Mölndals Parkering"
+      }
      }
     },
     {
@@ -9799,26 +9752,21 @@
      "kind": "info_board",
      "lines": [
       "EASYPARK",
-      "PARKSTER",
+      "Parkster",
       "PARKERING"
      ],
-     "background_color": "white",
+     "background_color": "other",
      "legibility": {
       "readable": true
      },
-     "parsed": {
-      "uninterpreted": [
-       "EASYPARK",
-       "PARKSTER",
-       "PARKERING"
-      ]
-     }
+     "parsed": {}
     }
    ],
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/019-forbud-7-18-avgift-ovrig-tid::duplicate of the main sign": {
@@ -9871,35 +9819,28 @@
       "readable": true
      },
      "parsed": {
-      "time_windows": [
-       {
-        "from": "18:00",
-        "to": "07:00",
-        "day_class": "weekday"
-       }
-      ],
       "fee": true,
       "scope_shift": "remaining_time",
-      "pictogram": "parking",
-      "permits_parking": true
+      "permits_parking": true,
+      "pictogram": "parking"
      }
     },
     {
      "index": 3,
      "kind": "operator_plate",
      "lines": [
-      "Zone Boka/Köp 31108"
+      "P",
+      "31108"
      ],
      "background_color": "blue",
      "legibility": {
       "readable": true
      },
      "parsed": {
-      "pictogram": "parking",
+      "area_code": "31108",
       "operator": {
-       "name": "Mölndals Parkerings AB"
-      },
-      "area_code": "31108"
+       "name": "Mölndals Parkering"
+      }
      }
     },
     {
@@ -9907,26 +9848,21 @@
      "kind": "info_board",
      "lines": [
       "EASYPARK",
-      "PARKSTER",
+      "Parkster",
       "PARKERING"
      ],
-     "background_color": "white",
+     "background_color": "other",
      "legibility": {
       "readable": true
      },
-     "parsed": {
-      "uninterpreted": [
-       "EASYPARK",
-       "PARKSTER",
-       "PARKERING"
-      ]
-     }
+     "parsed": {}
     }
    ],
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/019-forbud-7-18-avgift-ovrig-tid::an empty line in a panel": {
@@ -9979,35 +9915,28 @@
       "readable": true
      },
      "parsed": {
-      "time_windows": [
-       {
-        "from": "18:00",
-        "to": "07:00",
-        "day_class": "weekday"
-       }
-      ],
       "fee": true,
       "scope_shift": "remaining_time",
-      "pictogram": "parking",
-      "permits_parking": true
+      "permits_parking": true,
+      "pictogram": "parking"
      }
     },
     {
      "index": 3,
      "kind": "operator_plate",
      "lines": [
-      "Zone Boka/Köp 31108"
+      "P",
+      "31108"
      ],
      "background_color": "blue",
      "legibility": {
       "readable": true
      },
      "parsed": {
-      "pictogram": "parking",
+      "area_code": "31108",
       "operator": {
-       "name": "Mölndals Parkerings AB"
-      },
-      "area_code": "31108"
+       "name": "Mölndals Parkering"
+      }
      }
     },
     {
@@ -10015,26 +9944,21 @@
      "kind": "info_board",
      "lines": [
       "EASYPARK",
-      "PARKSTER",
+      "Parkster",
       "PARKERING"
      ],
-     "background_color": "white",
+     "background_color": "other",
      "legibility": {
       "readable": true
      },
-     "parsed": {
-      "uninterpreted": [
-       "EASYPARK",
-       "PARKSTER",
-       "PARKERING"
-      ]
-     }
+     "parsed": {}
     }
    ],
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/019-forbud-7-18-avgift-ovrig-tid::a knocked-out panel index": {
@@ -10087,35 +10011,28 @@
       "readable": true
      },
      "parsed": {
-      "time_windows": [
-       {
-        "from": "18:00",
-        "to": "07:00",
-        "day_class": "weekday"
-       }
-      ],
       "fee": true,
       "scope_shift": "remaining_time",
-      "pictogram": "parking",
-      "permits_parking": true
+      "permits_parking": true,
+      "pictogram": "parking"
      }
     },
     {
      "index": 3,
      "kind": "operator_plate",
      "lines": [
-      "Zone Boka/Köp 31108"
+      "P",
+      "31108"
      ],
      "background_color": "blue",
      "legibility": {
       "readable": true
      },
      "parsed": {
-      "pictogram": "parking",
+      "area_code": "31108",
       "operator": {
-       "name": "Mölndals Parkerings AB"
-      },
-      "area_code": "31108"
+       "name": "Mölndals Parkering"
+      }
      }
     },
     {
@@ -10123,26 +10040,21 @@
      "kind": "info_board",
      "lines": [
       "EASYPARK",
-      "PARKSTER",
+      "Parkster",
       "PARKERING"
      ],
-     "background_color": "white",
+     "background_color": "other",
      "legibility": {
       "readable": true
      },
-     "parsed": {
-      "uninterpreted": [
-       "EASYPARK",
-       "PARKSTER",
-       "PARKERING"
-      ]
-     }
+     "parsed": {}
     }
    ],
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/019-forbud-7-18-avgift-ovrig-tid::panel_count does not add up": {
@@ -10195,35 +10107,28 @@
       "readable": true
      },
      "parsed": {
-      "time_windows": [
-       {
-        "from": "18:00",
-        "to": "07:00",
-        "day_class": "weekday"
-       }
-      ],
       "fee": true,
       "scope_shift": "remaining_time",
-      "pictogram": "parking",
-      "permits_parking": true
+      "permits_parking": true,
+      "pictogram": "parking"
      }
     },
     {
      "index": 3,
      "kind": "operator_plate",
      "lines": [
-      "Zone Boka/Köp 31108"
+      "P",
+      "31108"
      ],
      "background_color": "blue",
      "legibility": {
       "readable": true
      },
      "parsed": {
-      "pictogram": "parking",
+      "area_code": "31108",
       "operator": {
-       "name": "Mölndals Parkerings AB"
-      },
-      "area_code": "31108"
+       "name": "Mölndals Parkering"
+      }
      }
     },
     {
@@ -10231,26 +10136,21 @@
      "kind": "info_board",
      "lines": [
       "EASYPARK",
-      "PARKSTER",
+      "Parkster",
       "PARKERING"
      ],
-     "background_color": "white",
+     "background_color": "other",
      "legibility": {
       "readable": true
      },
-     "parsed": {
-      "uninterpreted": [
-       "EASYPARK",
-       "PARKSTER",
-       "PARKERING"
-      ]
-     }
+     "parsed": {}
     }
    ],
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/019-forbud-7-18-avgift-ovrig-tid::a value outside the enumeration": {
@@ -10303,35 +10203,28 @@
       "readable": true
      },
      "parsed": {
-      "time_windows": [
-       {
-        "from": "18:00",
-        "to": "07:00",
-        "day_class": "weekday"
-       }
-      ],
       "fee": true,
       "scope_shift": "remaining_time",
-      "pictogram": "parking",
-      "permits_parking": true
+      "permits_parking": true,
+      "pictogram": "parking"
      }
     },
     {
      "index": 3,
      "kind": "operator_plate",
      "lines": [
-      "Zone Boka/Köp 31108"
+      "P",
+      "31108"
      ],
      "background_color": "blue",
      "legibility": {
       "readable": true
      },
      "parsed": {
-      "pictogram": "parking",
+      "area_code": "31108",
       "operator": {
-       "name": "Mölndals Parkerings AB"
-      },
-      "area_code": "31108"
+       "name": "Mölndals Parkering"
+      }
      }
     },
     {
@@ -10339,26 +10232,21 @@
      "kind": "info_board",
      "lines": [
       "EASYPARK",
-      "PARKSTER",
+      "Parkster",
       "PARKERING"
      ],
-     "background_color": "white",
+     "background_color": "other",
      "legibility": {
       "readable": true
      },
-     "parsed": {
-      "uninterpreted": [
-       "EASYPARK",
-       "PARKSTER",
-       "PARKERING"
-      ]
-     }
+     "parsed": {}
     }
    ],
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/019-forbud-7-18-avgift-ovrig-tid::panel colour outside the enumeration": {
@@ -10411,35 +10299,28 @@
       "readable": true
      },
      "parsed": {
-      "time_windows": [
-       {
-        "from": "18:00",
-        "to": "07:00",
-        "day_class": "weekday"
-       }
-      ],
       "fee": true,
       "scope_shift": "remaining_time",
-      "pictogram": "parking",
-      "permits_parking": true
+      "permits_parking": true,
+      "pictogram": "parking"
      }
     },
     {
      "index": 3,
      "kind": "operator_plate",
      "lines": [
-      "Zone Boka/Köp 31108"
+      "P",
+      "31108"
      ],
      "background_color": "blue",
      "legibility": {
       "readable": true
      },
      "parsed": {
-      "pictogram": "parking",
+      "area_code": "31108",
       "operator": {
-       "name": "Mölndals Parkerings AB"
-      },
-      "area_code": "31108"
+       "name": "Mölndals Parkering"
+      }
      }
     },
     {
@@ -10447,26 +10328,21 @@
      "kind": "info_board",
      "lines": [
       "EASYPARK",
-      "PARKSTER",
+      "Parkster",
       "PARKERING"
      ],
-     "background_color": "white",
+     "background_color": "other",
      "legibility": {
       "readable": true
      },
-     "parsed": {
-      "uninterpreted": [
-       "EASYPARK",
-       "PARKSTER",
-       "PARKERING"
-      ]
-     }
+     "parsed": {}
     }
    ],
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/019-forbud-7-18-avgift-ovrig-tid::sign colour outside the enumeration": {
@@ -10519,35 +10395,28 @@
       "readable": true
      },
      "parsed": {
-      "time_windows": [
-       {
-        "from": "18:00",
-        "to": "07:00",
-        "day_class": "weekday"
-       }
-      ],
       "fee": true,
       "scope_shift": "remaining_time",
-      "pictogram": "parking",
-      "permits_parking": true
+      "permits_parking": true,
+      "pictogram": "parking"
      }
     },
     {
      "index": 3,
      "kind": "operator_plate",
      "lines": [
-      "Zone Boka/Köp 31108"
+      "P",
+      "31108"
      ],
      "background_color": "blue",
      "legibility": {
       "readable": true
      },
      "parsed": {
-      "pictogram": "parking",
+      "area_code": "31108",
       "operator": {
-       "name": "Mölndals Parkerings AB"
-      },
-      "area_code": "31108"
+       "name": "Mölndals Parkering"
+      }
      }
     },
     {
@@ -10555,26 +10424,21 @@
      "kind": "info_board",
      "lines": [
       "EASYPARK",
-      "PARKSTER",
+      "Parkster",
       "PARKERING"
      ],
-     "background_color": "white",
+     "background_color": "other",
      "legibility": {
       "readable": true
      },
-     "parsed": {
-      "uninterpreted": [
-       "EASYPARK",
-       "PARKSTER",
-       "PARKERING"
-      ]
-     }
+     "parsed": {}
     }
    ],
    "panel_count": 4,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/020-forhyrda-platser-13-och-14-avstand::as it is": {
@@ -10613,7 +10477,7 @@
      "index": 2,
      "kind": "sign_plate",
      "lines": [],
-     "background_color": "blue",
+     "background_color": "white",
      "legibility": {
       "readable": true
      },
@@ -10626,7 +10490,8 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/020-forhyrda-platser-13-och-14-avstand::duplicate of the main sign": {
@@ -10667,7 +10532,7 @@
      "index": 2,
      "kind": "sign_plate",
      "lines": [],
-     "background_color": "blue",
+     "background_color": "white",
      "legibility": {
       "readable": true
      },
@@ -10680,7 +10545,8 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/020-forhyrda-platser-13-och-14-avstand::an empty line in a panel": {
@@ -10721,7 +10587,7 @@
      "index": 2,
      "kind": "sign_plate",
      "lines": [],
-     "background_color": "blue",
+     "background_color": "white",
      "legibility": {
       "readable": true
      },
@@ -10734,7 +10600,8 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/020-forhyrda-platser-13-och-14-avstand::a knocked-out panel index": {
@@ -10775,7 +10642,7 @@
      "index": 2,
      "kind": "sign_plate",
      "lines": [],
-     "background_color": "blue",
+     "background_color": "white",
      "legibility": {
       "readable": true
      },
@@ -10788,7 +10655,8 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/020-forhyrda-platser-13-och-14-avstand::panel_count does not add up": {
@@ -10829,7 +10697,7 @@
      "index": 2,
      "kind": "sign_plate",
      "lines": [],
-     "background_color": "blue",
+     "background_color": "white",
      "legibility": {
       "readable": true
      },
@@ -10842,7 +10710,8 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/020-forhyrda-platser-13-och-14-avstand::a value outside the enumeration": {
@@ -10883,7 +10752,7 @@
      "index": 2,
      "kind": "sign_plate",
      "lines": [],
-     "background_color": "blue",
+     "background_color": "white",
      "legibility": {
       "readable": true
      },
@@ -10896,7 +10765,8 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/020-forhyrda-platser-13-och-14-avstand::panel colour outside the enumeration": {
@@ -10937,7 +10807,7 @@
      "index": 2,
      "kind": "sign_plate",
      "lines": [],
-     "background_color": "blue",
+     "background_color": "white",
      "legibility": {
       "readable": true
      },
@@ -10950,7 +10820,8 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  },
  "answers/020-forhyrda-platser-13-och-14-avstand::sign colour outside the enumeration": {
@@ -10991,7 +10862,7 @@
      "index": 2,
      "kind": "sign_plate",
      "lines": [],
-     "background_color": "blue",
+     "background_color": "white",
      "legibility": {
       "readable": true
      },
@@ -11004,7 +10875,8 @@
    "panel_count": 2,
    "boundaries": {
     "certain": true
-   }
+   },
+   "another_post_in_frame": true
   }
  }
 }

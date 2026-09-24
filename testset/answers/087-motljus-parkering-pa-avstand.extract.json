@@ -1,0 +1,34 @@
+{
+  "image": "087-motljus-parkering-pa-avstand.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:15:52+00:00",
+  "usage": {
+    "completion_tokens": 147,
+    "prompt_tokens": 5538,
+    "total_tokens": 5685
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "unknown",
+      "background_color": "unreadable",
+      "form": "unknown",
+      "legibility": {
+        "readable": false,
+        "obstructions": [
+          "distance",
+          "glare"
+        ]
+      }
+    },
+    "panels": [],
+    "panel_count": 0,
+    "boundaries": {
+      "certain": false
+    },
+    "notes": "Sign is too far away to read panels accurately.",
+    "model_confidence": 0.1
+  }
+}

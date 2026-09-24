@@ -2,12 +2,12 @@
   "image": "032-rorelsehindrad-pil-hoger.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:47:47+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:17:03+00:00",
   "usage": {
     "completion_tokens": 268,
-    "prompt_tokens": 4800,
-    "total_tokens": 5068
+    "prompt_tokens": 5540,
+    "total_tokens": 5808
   },
   "response": {
     "schema_version": 1,

@@ -75,6 +75,11 @@ export const ELIGIBILITY_KEYS: Record<string, string> = {
   permit_holders: "sarskilt-p-tillstand",
   disabled_permit: "pictogram-wheelchair",
   residents: "boende",
+  // `custom` means a circle of drivers none of the listed values fits - which is what
+  // a named group IS. It stayed unmapped until there was an entry able to say so
+  // (step 15a); unmapped, the engine never learnt that the circle had narrowed, and a
+  // bay for `Personal` drew the solid line of a bay open to everyone.
+  custom: "reserved-for-named-group",
 };
 
 export const VEHICLE_KEYS: Record<string, string> = {
@@ -86,6 +91,7 @@ export const VEHICLE_KEYS: Record<string, string> = {
   // `T8-8`: bicycles and class II mopeds. A class I moped goes with the motorcycles —
   // the one kind of vehicle divided between two pictograms.
   bicycle: "pictogram-bicycle",
+  taxi: "taxi",
 };
 
 const PAYMENT: Record<string, string> = { ticket: "p-biljett", parking_disc: "p-skiva" };
@@ -120,6 +126,16 @@ export const BY_TEXT: [string, string[]][] = [
 
 export const PRIVATE_LAND_PHRASE = BY_TEXT[0][1][0];
 
+/** Whether the model's "who" tag on an unrecognised plate narrows the circle.
+ *
+ *  Off (decision 173). On the first live run the model tagged nine plates "who" and
+ *  one or two of them named a group: `Lastplats` three times, `Camping förbjuden`, a
+ *  ban on trailers. Its list of kinds had no place for an action or for what a place
+ *  is for, and the model filled the gap with the nearest wrong kind - the way it once
+ *  wrote "weekday" for "the 1st of every month". The tag is still saved; it narrows
+ *  again once step 15h gives those kinds a place and the tag is measured reliable. */
+export const WHO_SLOT_NARROWS = false;
+
 export function recognise(doc: SignDoc): Recognised {
   const main = doc.main_sign;
   const wayfinding = main.type.startsWith("wayfinding");
@@ -140,6 +156,11 @@ export function recognise(doc: SignDoc): Recognised {
     const keys: string[] = [];
     if (p.kind === "info_board") keys.push("info-board");
     if (p.kind === "operator_plate") keys.push("operator-plate");
+    // A road sign on the same post, outside the parking stack. The priority road has
+    // an entry of its own because it changes whether parking is allowed at all.
+    if (p.kind === "other_sign") {
+      keys.push(p.parsed?.road_sign === "priority_road" ? "priority-road" : "other-road-sign");
+    }
     // The entries recognised BY TEXT rather than by a field (see `BY_TEXT`). The lines
     // are joined first: a phrase can be broken across two of them, as `Privat` and
     // `parkering` are on photograph `021`.
@@ -159,6 +180,16 @@ export function recognise(doc: SignDoc): Recognised {
         ? "utanfor-markerad-plats" : "main-prohibition-parking");
     }
     if (parsed.scope_shift === "remaining_time") keys.push("ovrig-tid");
+    if (parsed.street_side) {
+      keys.push(parsed.street_side === "even_numbers" ? "jamna-husnummer" : "udda-husnummer");
+    }
+    // A legible plate the model could place only as WHO: its words are not
+    // interpreted, but that it names a circle would be enough to narrow (decision
+    // 162). Held back (decision 173) - see `WHO_SLOT_NARROWS`.
+    if (WHO_SLOT_NARROWS && parsed.unrecognised_slot === "who"
+        && !parsed.eligibility && !parsed.vehicle_class) {
+      keys.push("reserved-for-named-group");
+    }
     for (const [value, table] of [
       [parsed.eligibility, ELIGIBILITY_KEYS],
       [parsed.vehicle_class, VEHICLE_KEYS],

@@ -1,0 +1,17 @@
+{
+  "image": "117-p-0-6m-plus-huvudled.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:58:52+00:00",
+  "usage": {
+    "completion_tokens": 57,
+    "prompt_tokens": 1543,
+    "total_tokens": 1600
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish blue parking sign with time restriction panels integrated into it, followed by a priority road sign below.",
+    "panels_below_main_sign": 0
+  }
+}

@@ -2,12 +2,12 @@
   "image": "018-tillstand-utan-tidsangivelse.jpg",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:45:24+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T22:23:14+00:00",
   "usage": {
     "completion_tokens": 291,
-    "prompt_tokens": 4782,
-    "total_tokens": 5073
+    "prompt_tokens": 5522,
+    "total_tokens": 5813
   },
   "response": {
     "schema_version": 1,

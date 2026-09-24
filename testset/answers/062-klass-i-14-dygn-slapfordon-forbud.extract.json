@@ -2,12 +2,12 @@
   "image": "062-klass-i-14-dygn-slapfordon-forbud.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:50:27+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:21:26+00:00",
   "usage": {
-    "completion_tokens": 554,
-    "prompt_tokens": 4800,
-    "total_tokens": 5354
+    "completion_tokens": 603,
+    "prompt_tokens": 5540,
+    "total_tokens": 6143
   },
   "response": {
     "schema_version": 1,
@@ -45,8 +45,8 @@
         },
         "parsed": {
           "duration_limit": {
-            "amount": 336,
-            "unit": "hours"
+            "amount": 14,
+            "unit": "days"
           }
         }
       },
@@ -64,10 +64,14 @@
           "readable": true
         },
         "parsed": {
+          "prohibition": true,
+          "operator": {
+            "name": "Tanums kommun"
+          },
           "uninterpreted": [
-            "Uppställning av släpfordon förbjuden",
-            "Tanums kommun"
-          ]
+            "Uppställning av släpfordon förbjuden"
+          ],
+          "unrecognised_slot": "who"
         }
       },
       {
@@ -83,18 +87,20 @@
           "readable": true
         },
         "parsed": {
+          "prohibition": true,
+          "pictogram": "prohibition",
           "uninterpreted": [
             "Camping förbjuden",
             "Camping verboten",
             "No camping"
-          ]
+          ],
+          "unrecognised_slot": "who"
         }
       }
     ],
     "panel_count": 4,
     "boundaries": {
       "certain": true
-    },
-    "model_confidence": 0.95
+    }
   }
 }

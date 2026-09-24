@@ -1,0 +1,17 @@
+{
+  "image": "073-30min-00-24-buss-avgift-roda-siffror.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:13:18+00:00",
+  "usage": {
+    "completion_tokens": 60,
+    "prompt_tokens": 1533,
+    "total_tokens": 1593
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish blue parking sign with a P and two supplementary panels below it specifying time limits, fees, and vehicle applicability.",
+    "panels_below_main_sign": 2
+  }
+}

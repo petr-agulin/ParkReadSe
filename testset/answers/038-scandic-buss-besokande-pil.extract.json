@@ -2,12 +2,12 @@
   "image": "038-scandic-buss-besokande-pil.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:48:35+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:19:18+00:00",
   "usage": {
-    "completion_tokens": 434,
-    "prompt_tokens": 4800,
-    "total_tokens": 5234
+    "completion_tokens": 454,
+    "prompt_tokens": 5540,
+    "total_tokens": 5994
   },
   "response": {
     "schema_version": 1,
@@ -31,7 +31,10 @@
           "readable": true
         },
         "parsed": {
-          "eligibility": "visitors"
+          "uninterpreted": [
+            "Scandic"
+          ],
+          "unrecognised_slot": "who"
         }
       },
       {

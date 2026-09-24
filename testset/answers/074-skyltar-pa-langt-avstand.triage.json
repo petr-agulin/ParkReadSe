@@ -1,0 +1,17 @@
+{
+  "image": "074-skyltar-pa-langt-avstand.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:13:26+00:00",
+  "usage": {
+    "completion_tokens": 56,
+    "prompt_tokens": 1533,
+    "total_tokens": 1589
+  },
+  "response": {
+    "category": "not_a_sign",
+    "what_i_see": "An outdoor parking lot and apartment building scene with street signs too far away to read clearly.",
+    "panels_below_main_sign": 0
+  }
+}

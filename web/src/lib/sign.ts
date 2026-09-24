@@ -26,12 +26,14 @@ export type TimeWindow = {
   named_weekday?: Weekday;
   week_parity?: "even" | "odd";
   dates?: Dates;
+  day_of_month?: number;              // `1:a varje månad` - this day of every month
+  nth_of_month?: number;              // with `named_weekday`: its Nth in the month
 };
 
-export type DurationLimit = { amount: number; unit: "minutes" | "hours" };
+export type DurationLimit = { amount: number; unit: "minutes" | "hours" | "days" };
 
 export type VehicleClass =
-  | "motorcycle" | "car_only" | "electric" | "truck" | "bus" | "bicycle";
+  | "motorcycle" | "car_only" | "electric" | "truck" | "bus" | "bicycle" | "taxi";
 
 export type Eligibility =
   | "residents" | "visitors" | "rented" | "permit_holders" | "disabled_permit" | "custom";
@@ -59,14 +61,22 @@ export type Parsed = {
   area_code?: string;
   uninterpreted?: string[];
   permits_parking?: boolean;
+  road_sign?: "priority_road" | "speed_limit" | "speed_bump" | "pedestrian_crossing"
+            | "other";
+  street_side?: "even_numbers" | "odd_numbers";
+  unrecognised_slot?: "who" | "when" | "how_long" | "how_much" | "where";
 };
+
+// Taken from the schema: `readable`, and the obstructions it lists. An earlier copy
+// here had a `reason` the schema never allowed, and lacked `obstructions`.
+export type Legibility = { readable?: boolean; obstructions?: string[] };
 
 export type Panel = {
   index?: number;
-  kind?: "sign_plate" | "operator_plate" | "info_board";
+  kind?: "sign_plate" | "operator_plate" | "info_board" | "other_sign";
   lines?: string[];
   background_color?: string | null;
-  legibility?: { readable?: boolean; reason?: string };
+  legibility?: Legibility;
   parsed?: Parsed;
 };
 
@@ -75,7 +85,7 @@ export type MainSign = {
       | "wayfinding_parking_house" | "wayfinding_park_and_ride" | "unknown";
   background_color?: string | null;
   form?: string;
-  legibility?: { readable?: boolean; reason?: string };
+  legibility?: Legibility;
 };
 
 export type SignDoc = {
@@ -86,4 +96,5 @@ export type SignDoc = {
   boundaries?: { certain?: boolean };
   notes?: string;
   model_confidence?: number;
+  another_post_in_frame?: boolean;
 };

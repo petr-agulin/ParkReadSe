@@ -1,0 +1,80 @@
+{
+  "image": "077-gul-forbud-forhyrda-platser-skymning.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:14:10+00:00",
+  "usage": {
+    "completion_tokens": 459,
+    "prompt_tokens": 5538,
+    "total_tokens": 5997
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "prohibition_parking",
+      "background_color": "yellow",
+      "form": "zone",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "sticker",
+          "angle"
+        ]
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Förhyrda",
+          "platser"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true,
+          "obstructions": [
+            "sticker",
+            "angle"
+          ]
+        },
+        "parsed": {
+          "eligibility": "rented",
+          "pictogram": "parking",
+          "permits_parking": true
+        }
+      },
+      {
+        "index": 2,
+        "kind": "operator_plate",
+        "lines": [
+          "P-tj**st V.",
+          "031-51 88 10"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true,
+          "obstructions": [
+            "sticker",
+            "damage",
+            "angle"
+          ]
+        },
+        "parsed": {
+          "operator": {
+            "name": "P-tjänst V.",
+            "phone": "031-51 88 10"
+          }
+        }
+      }
+    ],
+    "panel_count": 2,
+    "boundaries": {
+      "certain": true
+    },
+    "notes": "Operator plate has some damage/stickers obscuring letters.",
+    "model_confidence": 0.95,
+    "another_post_in_frame": false
+  }
+}

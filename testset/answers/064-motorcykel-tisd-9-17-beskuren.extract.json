@@ -2,12 +2,12 @@
   "image": "064-motorcykel-tisd-9-17-beskuren.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:50:44+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:21:41+00:00",
   "usage": {
-    "completion_tokens": 645,
-    "prompt_tokens": 4800,
-    "total_tokens": 5445
+    "completion_tokens": 669,
+    "prompt_tokens": 5540,
+    "total_tokens": 6209
   },
   "response": {
     "schema_version": 1,
@@ -107,6 +107,8 @@
     "panel_count": 4,
     "boundaries": {
       "certain": true
-    }
+    },
+    "notes": "Bottom panel is partially visible",
+    "model_confidence": 0.95
   }
 }

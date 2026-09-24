@@ -1,0 +1,18 @@
+{
+  "image": "114-avgift-taxa-boende-vid-vaggmalning.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:58:27+00:00",
+  "usage": {
+    "completion_tokens": 80,
+    "prompt_tokens": 1543,
+    "total_tokens": 1623
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign assembly consisting of a main blue P sign with three additional supplementary plates below it detailing fees, resident parking rules, and a sweeping restriction.",
+    "model_confidence": 0.99,
+    "panels_below_main_sign": 3
+  }
+}

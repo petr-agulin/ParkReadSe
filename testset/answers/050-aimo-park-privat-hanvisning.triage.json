@@ -3,16 +3,17 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:49:11+00:00",
+  "saved_at": "2026-09-24T18:20:11+00:00",
   "usage": {
-    "completion_tokens": 101,
+    "completion_tokens": 98,
     "prompt_tokens": 1540,
-    "total_tokens": 1641
+    "total_tokens": 1638
   },
   "response": {
+    "schema_version": 1,
     "category": "parking_sign",
-    "what_i_see": "A blue parking sign mounted on a brick wall featuring a white 'P', an arrow, the text 'aimo park', and 'Torsgatan 12', with no separate plates below it.",
-    "model_confidence": 0.98,
+    "what_i_see": "A blue parking sign mounted on a brick wall, featuring a white 'P', an arrow, the text 'Torsgatan 12', and the 'aimo park' logo.",
+    "model_confidence": 0.95,
     "panels_below_main_sign": 0
   }
 }

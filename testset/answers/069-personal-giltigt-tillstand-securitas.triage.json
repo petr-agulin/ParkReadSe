@@ -1,0 +1,17 @@
+{
+  "image": "069-personal-giltigt-tillstand-securitas.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:12:31+00:00",
+  "usage": {
+    "completion_tokens": 97,
+    "prompt_tokens": 1533,
+    "total_tokens": 1630
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A blue Swedish parking sign with three plates below it. The first two blue plates specify 'Personal' and 'Giltigt P-tillstånd erfordras' (who may park, which is a rule). The bottom orange plate names ",
+    "panels_below_main_sign": 2
+  }
+}

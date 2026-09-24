@@ -26,7 +26,7 @@ FOUR RULES THAT ARE EASY TO GET WRONG:
    plate into two. This is the single most important thing on the sign: the same words
    grouped differently mean different rules.
 
-4. THREE KINDS OF PANEL, and only the first one carries rules:
+4. FOUR KINDS OF PANEL, and only the first one carries rules:
    - "sign_plate" — states a rule: hours, duration, fee, who may park, arrows, places.
    - "operator_plate" — a plate whose content is just a company name and a phone
      number ("Mölndals Parkerings AB 031-87 54 79", "P-tjänst V.", "Västia Parkering",
@@ -34,8 +34,12 @@ FOUR RULES THAT ARE EASY TO GET WRONG:
      states no rule.
    - "info_board" — a payment machine board: area code, app logos, QR codes, adverts
      for EasyPark, Parkster and the like. Not a road sign at all.
-   Report all three so nothing is silently dropped, but never mark an operator plate
-   or a payment board as "sign_plate".
+   - "other_sign" — a road sign on the same post that is not part of the parking
+     stack: a yellow priority-road diamond, a round speed limit, "Farthinder", a
+     pedestrian crossing. Say which in "parsed.road_sign". A priority road matters: on
+     one, parking needs a sign that permits it.
+   Report all four so nothing is silently dropped, but never mark any of the last
+   three as "sign_plate".
 
 HOW TO FILL THE FIELDS:
 
@@ -51,12 +55,17 @@ HOW TO FILL THE FIELDS:
   make it "custom"), "rented" for "Förhyrda platser", "permit_holders" when a permit
   is the only thing named. When a plate says both — "Förhyrd plats" AND "Särskilt
   P-tillstånd erfordras" — the renting is the circle and the permit is merely how it
-  is proved, so answer "rented". Use "custom" only when nothing listed fits.
+  is proved, so answer "rented". "Boende" followed by the name of an area —
+  "Boende Solna", "Boende GK-J" — is still "residents": the area says which
+  residents, not that they are someone else. A plate naming a group of people none of
+  the values fits — "Personal", "Reserverad Vaktmästare", "Blodbil", "Regionservice" —
+  is "custom". Use "custom" only when nothing listed fits.
   A restriction on the VEHICLE ("Endast laddande elbilar") is not eligibility:
   that goes to "vehicle_class", and "eligibility" stays out.
 - "vehicle_class": set it ONLY when the sign narrows the circle — a motorcycle
-  pictogram, "Bil", an electric-car pictogram. A plain P sign narrows nothing, so leave
-  the field out. Never infer "car" from the absence of a pictogram.
+  pictogram, "Bil", an electric-car pictogram, "TAXI" (that is "taxi"). A plain P sign
+  narrows nothing, so leave the field out. Never infer "car" from the absence of a
+  pictogram.
   A bicycle drawn on a plate is "bicycle" — in Sweden that symbol (T8-8) covers
   bicycles and class II mopeds together. A class I moped belongs with "motorcycle".
   If the pictogram shows a vehicle that is in NEITHER list — a horse, a tractor —
@@ -112,7 +121,15 @@ HOW TO FILL THE FIELDS:
   than the second is correct. A single day is a range whose from equals its to:
   "Gäller ej 15/6 15/8" is two one-day ranges, not one range from June to August —
   read the plate, and do not assume a dash that is not printed.
+  A window that comes round by the MONTH has fields of its own: "1:a varje månad" is
+  "day_of_month": 1 (with "day_class": "all_days"); "3:e tisdagen" is
+  "nth_of_month": 3 with "named_weekday": "tuesday". Never answer "weekday" for these:
+  that turns a prohibition once a month into one on every working day.
   Miss any of this and the sign is read as applying far more often than it does.
+- "street_side": a plate that limits its rule to one side of the street by HOUSE
+  NUMBER — even or odd numbers — is "even_numbers" or "odd_numbers". That is about the
+  street, not the calendar: even WEEKS are "week_parity", and putting a side of the
+  street there turns a rule for one pavement into one for every second week.
 - "placement": "as_shown" when the plate is a PICTURE of how to stand — cars drawn at
   an angle, nose-in, or up on the pavement. "marked_bay_only" only for the written
   rule about parking outside a marked bay. A drawing of slanted cars is "as_shown",
@@ -125,6 +142,16 @@ HOW TO FILL THE FIELDS:
 - "payment_method": only "ticket" or "parking_disc" — something you must display in
   the car. How the fee is paid (app, SMS, coin machine) is out of scope: leave it out.
 - times are "HH:MM" on a 24-hour clock: write "7-17" as "07:00" and "17:00".
+- "duration_limit": a "dygn" is a whole day. "7 dygn" is {"amount": 7, "unit": "days"}
+  — do not convert it into hours yourself.
+- "unrecognised_slot": for a plate whose words you can read but that fit no field,
+  say which question they answer — "who" may park, "when", "how_long", "how_much" or
+  "where" — and put the words in "uninterpreted" as usual. Only for words you can
+  actually read: an illegible plate is "legibility.readable": false instead.
+- "another_post_in_frame": true when the photograph shows a second sign post whose
+  sign FACES THE CAMERA, besides the one you read. The back of a sign does not count:
+  it cannot be read from here and usually serves the other direction. Read one post
+  only, and say that the other is there.
 - "boundaries.certain": false if you cannot tell where one plate ends and the next
   begins. Saying so is useful; guessing is not.
 - WHEN THE SIGN IS FAR AWAY OR SMALL IN THE FRAME, report LESS, not more. Give the

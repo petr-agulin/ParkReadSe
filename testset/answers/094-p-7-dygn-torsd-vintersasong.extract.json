@@ -1,0 +1,94 @@
+{
+  "image": "094-p-7-dygn-torsd-vintersasong.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:22:28+00:00",
+  "usage": {
+    "completion_tokens": 530,
+    "prompt_tokens": 5548,
+    "total_tokens": 6078
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "7 dygn"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "duration_limit": {
+            "amount": 7,
+            "unit": "days"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Torsd",
+          "8-16",
+          "1/11-15/5"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "08:00",
+              "to": "16:00",
+              "day_class": "named_weekday",
+              "named_weekday": "thursday",
+              "dates": {
+                "mode": "only",
+                "ranges": [
+                  {
+                    "from": "11-01",
+                    "to": "05-15"
+                  }
+                ]
+              }
+            }
+          ],
+          "prohibition": true,
+          "pictogram": "prohibition"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "arrow": "left",
+          "pictogram": "arrow"
+        }
+      }
+    ],
+    "panel_count": 3,
+    "boundaries": {
+      "certain": true
+    },
+    "another_post_in_frame": true
+  }
+}

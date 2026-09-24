@@ -1,0 +1,17 @@
+{
+  "image": "081-p-skylt-pa-avstand-genom-lov.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:14:39+00:00",
+  "usage": {
+    "completion_tokens": 68,
+    "prompt_tokens": 1555,
+    "total_tokens": 1623
+  },
+  "response": {
+    "category": "not_a_sign",
+    "what_i_see": "An outdoor street scene featuring apartment buildings, parked cars, and trees in the foreground, with a tiny blue parking sign visible far away in the background.",
+    "panels_below_main_sign": 0
+  }
+}

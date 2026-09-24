@@ -1,0 +1,17 @@
+{
+  "image": "124-p-gul-skylt-i-gronska.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T19:01:16+00:00",
+  "usage": {
+    "completion_tokens": 96,
+    "prompt_tokens": 1544,
+    "total_tokens": 1640
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish blue parking sign with two plates below it: one specifying a 1-hour time limit, fee (Avgift) with hours (7-19, parentheses, Taxa 1), and a bottom white plate with a parking restriction/no-pa",
+    "panels_below_main_sign": 2
+  }
+}

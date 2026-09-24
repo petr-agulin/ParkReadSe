@@ -2,12 +2,12 @@
   "image": "049-moped-sasong-avgift-tva-taxor.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:49:08+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:20:04+00:00",
   "usage": {
-    "completion_tokens": 726,
-    "prompt_tokens": 4800,
-    "total_tokens": 5526
+    "completion_tokens": 724,
+    "prompt_tokens": 5540,
+    "total_tokens": 6264
   },
   "response": {
     "schema_version": 1,
@@ -36,8 +36,8 @@
           "time_windows": [
             {
               "from": "00:00",
-              "to": "23:59",
-              "day_class": "all_days",
+              "to": "24:00",
+              "day_class": "weekday",
               "dates": {
                 "mode": "only",
                 "ranges": [

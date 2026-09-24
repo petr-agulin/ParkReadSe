@@ -1,0 +1,18 @@
+{
+  "image": "132-avgift-boende-i-sno.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T19:04:51+00:00",
+  "usage": {
+    "completion_tokens": 112,
+    "prompt_tokens": 1543,
+    "total_tokens": 1655
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A blue parking sign with three panels below it: the first specifies a fee and hours (Avgift 9-19 (9-17)), the second is an orange panel indicating stopping restrictions/hours (0-8), and the bottom one",
+    "model_confidence": 0.98,
+    "panels_below_main_sign": 2
+  }
+}

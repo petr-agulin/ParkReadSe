@@ -2,12 +2,12 @@
   "image": "025-30min-endast-gaster-gatukok.jpg",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:46:20+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T16:28:39+00:00",
   "usage": {
-    "completion_tokens": 440,
-    "prompt_tokens": 4798,
-    "total_tokens": 5238
+    "completion_tokens": 436,
+    "prompt_tokens": 5538,
+    "total_tokens": 5974
   },
   "response": {
     "schema_version": 1,
@@ -67,8 +67,7 @@
           "readable": true
         },
         "parsed": {
-          "arrow": "left",
-          "pictogram": "arrow"
+          "arrow": "left"
         }
       }
     ],
@@ -76,6 +75,6 @@
     "boundaries": {
       "certain": true
     },
-    "notes": "A bird is sitting on top of the main parking sign."
+    "notes": "A bird (jackdaw/crow) is sitting on top of the main sign."
   }
 }

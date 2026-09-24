@@ -1,0 +1,93 @@
+{
+  "image": "139-p-1tim-alla-dagar-avgift-torsdag.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T19:07:04+00:00",
+  "usage": {
+    "completion_tokens": 513,
+    "prompt_tokens": 5560,
+    "total_tokens": 6073
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "1 tim",
+          "alla dagar",
+          "8-19"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "duration_limit": {
+            "amount": 1,
+            "unit": "hours"
+          },
+          "time_windows": [
+            {
+              "from": "08:00",
+              "to": "19:00",
+              "day_class": "all_days"
+            }
+          ]
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Avgift"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "fee": true
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "Torsdag",
+          "8-16"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "08:00",
+              "to": "16:00",
+              "day_class": "named_weekday",
+              "named_weekday": "thursday"
+            }
+          ],
+          "prohibition": true,
+          "pictogram": "prohibition"
+        }
+      }
+    ],
+    "panel_count": 3,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

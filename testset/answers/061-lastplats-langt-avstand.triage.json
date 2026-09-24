@@ -3,16 +3,15 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:50:15+00:00",
+  "saved_at": "2026-09-24T18:21:22+00:00",
   "usage": {
-    "completion_tokens": 77,
+    "completion_tokens": 58,
     "prompt_tokens": 1533,
-    "total_tokens": 1610
+    "total_tokens": 1591
   },
   "response": {
     "category": "parking_sign",
-    "what_i_see": "A vertical stack of yellow and blue parking and stopping regulation signs against a cloudy sky background.",
-    "model_confidence": 0.95,
+    "what_i_see": "A Swedish parking/stopping sign assembly with multiple yellow and blue supplemental plates indicating rules, hours, and conditions.",
     "panels_below_main_sign": 4
   }
 }

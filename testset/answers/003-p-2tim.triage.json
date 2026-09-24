@@ -3,15 +3,16 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:43:20+00:00",
+  "saved_at": "2026-09-24T14:33:37+00:00",
   "usage": {
-    "completion_tokens": 54,
+    "completion_tokens": 78,
     "prompt_tokens": 1533,
-    "total_tokens": 1587
+    "total_tokens": 1611
   },
   "response": {
     "category": "parking_sign",
-    "what_i_see": "A Swedish blue parking sign with one plate below it indicating a 2-hour limit.",
+    "what_i_see": "A Swedish blue parking sign with a white 'P' and one supplementary plate below it indicating a duration limit of 2 hours ('2 tim').",
+    "model_confidence": 1,
     "panels_below_main_sign": 1
   }
 }

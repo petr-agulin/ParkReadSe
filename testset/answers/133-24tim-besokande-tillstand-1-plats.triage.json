@@ -1,0 +1,17 @@
+{
+  "image": "133-24tim-besokande-tillstand-1-plats.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T19:05:01+00:00",
+  "usage": {
+    "completion_tokens": 96,
+    "prompt_tokens": 1543,
+    "total_tokens": 1639
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign with five additional plates below it: '24 tim', 'Besökande', 'Giltigt P-tillstånd erfordras', '1 plats', and a company info plate 'Umevakt 090-703900'.",
+    "panels_below_main_sign": 4
+  }
+}

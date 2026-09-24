@@ -3,15 +3,16 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:47:11+00:00",
+  "saved_at": "2026-09-24T18:16:21+00:00",
   "usage": {
-    "completion_tokens": 87,
+    "completion_tokens": 110,
     "prompt_tokens": 1530,
-    "total_tokens": 1617
+    "total_tokens": 1640
   },
   "response": {
     "category": "parking_sign",
-    "what_i_see": "A blue parking sign with four plates below it: a fee plate (Avgift Taxa 2), a no-parking rule plate (Fred 0-6), a resident parking permission plate (Boende Ci), and a digital payment information plate",
+    "what_i_see": "A blue Swedish parking sign 'P' with four plates below it: a blue fee plate ('Avgift Taxa 2'), a yellow no-parking restriction plate ('Fred 0-6'), a white resident parking plate ('Boende Ci'), and a w",
+    "model_confidence": 0.95,
     "panels_below_main_sign": 3
   }
 }

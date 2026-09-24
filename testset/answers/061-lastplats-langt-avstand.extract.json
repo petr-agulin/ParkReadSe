@@ -2,12 +2,12 @@
   "image": "061-lastplats-langt-avstand.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:50:20+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:21:22+00:00",
   "usage": {
-    "completion_tokens": 804,
-    "prompt_tokens": 4798,
-    "total_tokens": 5602
+    "completion_tokens": 753,
+    "prompt_tokens": 5538,
+    "total_tokens": 6291
   },
   "response": {
     "schema_version": 1,
@@ -24,14 +24,19 @@
         "index": 1,
         "kind": "sign_plate",
         "lines": [
-          "last-"
+          "last-",
+          "plats"
         ],
         "background_color": "yellow",
         "legibility": {
           "readable": true
         },
         "parsed": {
-          "pictogram": "prohibition"
+          "eligibility": "custom",
+          "uninterpreted": [
+            "lastplats"
+          ],
+          "unrecognised_slot": "who"
         }
       },
       {
@@ -75,30 +80,17 @@
         "index": 4,
         "kind": "sign_plate",
         "lines": [
-          "Fred 0-6",
-          "Lörd 0-6"
+          "Fordon",
+          "över 3,5 t",
+          "ej tillåtet"
         ],
         "background_color": "yellow",
         "legibility": {
           "readable": true
         },
         "parsed": {
-          "time_windows": [
-            {
-              "from": "00:00",
-              "to": "06:00",
-              "day_class": "named_weekday",
-              "named_weekday": "friday"
-            },
-            {
-              "from": "00:00",
-              "to": "06:00",
-              "day_class": "named_weekday",
-              "named_weekday": "saturday"
-            }
-          ],
-          "prohibition": true,
-          "pictogram": "parking"
+          "vehicle_class": "truck",
+          "prohibition": true
         }
       },
       {
@@ -108,21 +100,24 @@
           "Övrig tid",
           "3 tim",
           "P-skiva",
-          "30 min"
+          "24h-vakt"
         ],
         "background_color": "blue",
         "legibility": {
           "readable": true
         },
         "parsed": {
+          "scope_shift": "remaining_time",
           "duration_limit": {
             "amount": 3,
             "unit": "hours"
           },
           "payment_method": "parking_disc",
-          "scope_shift": "remaining_time",
-          "pictogram": "parking",
-          "permits_parking": true
+          "permits_parking": true,
+          "uninterpreted": [
+            "24h-vakt"
+          ],
+          "unrecognised_slot": "who"
         }
       }
     ],

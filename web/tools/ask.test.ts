@@ -132,3 +132,31 @@ describe("the command's arguments", () => {
     expect(good.visionModel).toBe("m");
   });
 });
+
+describe("a run that has to wait", () => {
+  it("says why it waits, and for how long, instead of falling silent", async () => {
+    // A live run in step 15f sat on one photograph for minutes with nothing on screen:
+    // a busy provider, a quota wall and a dropped connection cannot be told apart by
+    // silence. Every wait is now announced with its reason.
+    let calls = 0;
+    const fetchImpl = (async () => {
+      calls += 1;
+      if (calls === 1) return new Response("high demand", { status: 503 });
+      const body = calls === 2 ? TRIAGE_OK : SIGN;
+      return new Response(JSON.stringify({
+        choices: [{ message: { content: JSON.stringify(body) } }],
+        usage: { total_tokens: 11 },
+      }), { status: 200 });
+    }) as unknown as typeof fetch;
+    const lines: string[] = [];
+    const waited: number[] = [];
+    expect(await ask([PHOTO], {}, { fetchImpl, fixturesDir: dir, provider,
+                                    pause: async (ms: number) => { waited.push(ms); },
+                                    out: (line: string) => lines.push(line) })).toBe(0);
+    const said = lines.find((line) => line.includes("attempt 1 of 4 failed"));
+    expect(said, lines.join("\n")).toContain("HTTP 503");
+    expect(said).toContain("waiting 20 s");
+    // And the wait still happens: saying it must not replace doing it.
+    expect(waited).toEqual([20_000]);
+  });
+});

@@ -3,15 +3,15 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:47:03+00:00",
+  "saved_at": "2026-09-24T18:16:12+00:00",
   "usage": {
-    "completion_tokens": 82,
+    "completion_tokens": 77,
     "prompt_tokens": 1536,
-    "total_tokens": 1618
+    "total_tokens": 1613
   },
   "response": {
     "category": "parking_sign",
-    "what_i_see": "A Swedish parking sign for reserved parking with multiple plates below: a wheelchair symbol plate, a distance plate (0-6 m), a fee plate (Avgift Taxa 2), and a payment information plate at the bottom.",
+    "what_i_see": "A Swedish parking sign with a wheelchair symbol for disabled parking, a distance plate (0-6 m), a fee plate (Avgift Taxa 2), and a digital payment sign at the bottom.",
     "panels_below_main_sign": 3
   }
 }

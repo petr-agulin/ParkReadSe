@@ -3,15 +3,15 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:47:35+00:00",
+  "saved_at": "2026-09-24T18:16:53+00:00",
   "usage": {
-    "completion_tokens": 117,
+    "completion_tokens": 108,
     "prompt_tokens": 1533,
-    "total_tokens": 1650
+    "total_tokens": 1641
   },
   "response": {
     "category": "parking_sign",
-    "what_i_see": "A blue parking sign with a white P at the top, followed by a blue auxiliary plate showing diagonal parking, an 'Avgift Taxa A' fee plate, a yellow parking restriction plate for Thursdays 10-14 on even",
+    "what_i_see": "A Swedish blue parking sign followed by six plates below it: a parking orientation/layout plate, a fee plate (\"Avgift Taxa A\"), a yellow prohibition/sweeping restriction plate with days and times, a r",
     "panels_below_main_sign": 5
   }
 }

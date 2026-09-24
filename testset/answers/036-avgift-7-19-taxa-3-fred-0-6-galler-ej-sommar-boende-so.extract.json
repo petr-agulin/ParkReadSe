@@ -2,12 +2,12 @@
   "image": "036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:48:20+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:18:37+00:00",
   "usage": {
-    "completion_tokens": 926,
-    "prompt_tokens": 4800,
-    "total_tokens": 5726
+    "completion_tokens": 923,
+    "prompt_tokens": 5540,
+    "total_tokens": 6463
   },
   "response": {
     "schema_version": 1,
@@ -67,8 +67,7 @@
         "index": 3,
         "kind": "sign_plate",
         "lines": [
-          "Fred",
-          "0-6",
+          "Fred 0-6",
           "Gäller ej",
           "15/6 15/8"
         ],
@@ -135,7 +134,7 @@
         "kind": "info_board",
         "lines": [
           "Betala digitalt",
-          "parkering.stockholm.betala"
+          "parkering.stockholm/betala"
         ],
         "background_color": "white",
         "legibility": {

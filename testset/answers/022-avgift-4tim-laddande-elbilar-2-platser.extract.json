@@ -2,12 +2,12 @@
   "image": "022-avgift-4tim-laddande-elbilar-2-platser.jpg",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:45:57+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T16:20:52+00:00",
   "usage": {
-    "completion_tokens": 663,
-    "prompt_tokens": 4800,
-    "total_tokens": 5463
+    "completion_tokens": 779,
+    "prompt_tokens": 5540,
+    "total_tokens": 6319
   },
   "response": {
     "schema_version": 1,
@@ -90,31 +90,46 @@
           "readable": true
         },
         "parsed": {
-          "arrow": "right",
-          "pictogram": "arrow"
+          "arrow": "right"
         }
       },
       {
         "index": 6,
-        "kind": "info_board",
+        "kind": "operator_plate",
         "lines": [
-          "Områdeskod 31308"
+          "Mölndals Parkerings AB"
         ],
-        "background_color": "other",
+        "background_color": "white",
         "legibility": {
           "readable": true
         },
         "parsed": {
-          "area_code": "31308",
           "operator": {
             "name": "Mölndals Parkerings AB"
           }
         }
+      },
+      {
+        "index": 7,
+        "kind": "info_board",
+        "lines": [
+          "Områdeskod 31308"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "area_code": "31308"
+        }
       }
     ],
-    "panel_count": 6,
+    "panel_count": 7,
     "boundaries": {
       "certain": true
-    }
+    },
+    "notes": "Bottom info board combines operator details, area code, and payment app advertisements.",
+    "model_confidence": 0.98,
+    "another_post_in_frame": false
   }
 }

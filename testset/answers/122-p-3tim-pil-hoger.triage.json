@@ -1,0 +1,17 @@
+{
+  "image": "122-p-3tim-pil-hoger.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:59:53+00:00",
+  "usage": {
+    "completion_tokens": 82,
+    "prompt_tokens": 1540,
+    "total_tokens": 1622
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish blue parking sign with three additional plates below it: a duration plate indicating 3 hours with a parking disc symbol, a blue plate with four white vertical bars, and a white plate with a ",
+    "panels_below_main_sign": 3
+  }
+}

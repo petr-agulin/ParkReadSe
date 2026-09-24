@@ -1,0 +1,91 @@
+{
+  "image": "073-30min-00-24-buss-avgift-roda-siffror.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:13:18+00:00",
+  "usage": {
+    "completion_tokens": 533,
+    "prompt_tokens": 5538,
+    "total_tokens": 6071
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "30 min",
+          "00-24",
+          "(00-14)"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "duration_limit": {
+            "amount": 30,
+            "unit": "minutes"
+          },
+          "time_windows": [
+            {
+              "from": "00:00",
+              "to": "24:00",
+              "day_class": "weekday"
+            },
+            {
+              "from": "00:00",
+              "to": "14:00",
+              "day_class": "eve"
+            }
+          ]
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Avgift",
+          "(14-24)",
+          "00-24"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "fee": true,
+          "time_windows": [
+            {
+              "from": "14:00",
+              "to": "24:00",
+              "day_class": "eve"
+            },
+            {
+              "from": "00:00",
+              "to": "24:00",
+              "day_class": "weekday"
+            }
+          ],
+          "vehicle_class": "bus",
+          "pictogram": "bus"
+        }
+      }
+    ],
+    "panel_count": 2,
+    "boundaries": {
+      "certain": true
+    },
+    "another_post_in_frame": true
+  }
+}

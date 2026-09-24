@@ -1,0 +1,113 @@
+{
+  "image": "088-avgift-8-20-rod-taxa-boende-c-nv-mandag-8-11.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:16:06+00:00",
+  "usage": {
+    "completion_tokens": 647,
+    "prompt_tokens": 5560,
+    "total_tokens": 6207
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Avgift",
+          "8-20",
+          "(8-15)"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "08:00",
+              "to": "20:00",
+              "day_class": "weekday"
+            },
+            {
+              "from": "08:00",
+              "to": "15:00",
+              "day_class": "eve"
+            }
+          ],
+          "fee": true
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Röd taxa"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "uninterpreted": [
+            "Röd taxa"
+          ],
+          "unrecognised_slot": "how_much"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "Boende",
+          "C-NV"
+        ],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "residents"
+        }
+      },
+      {
+        "index": 4,
+        "kind": "sign_plate",
+        "lines": [
+          "Måndag",
+          "8-11"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "08:00",
+              "to": "11:00",
+              "day_class": "named_weekday",
+              "named_weekday": "monday"
+            }
+          ],
+          "prohibition": true,
+          "pictogram": "prohibition"
+        }
+      }
+    ],
+    "panel_count": 4,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

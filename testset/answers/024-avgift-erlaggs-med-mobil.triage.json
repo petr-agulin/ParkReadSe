@@ -3,15 +3,15 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:46:08+00:00",
+  "saved_at": "2026-09-24T16:25:42+00:00",
   "usage": {
-    "completion_tokens": 80,
+    "completion_tokens": 92,
     "prompt_tokens": 1533,
-    "total_tokens": 1613
+    "total_tokens": 1625
   },
   "response": {
     "category": "parking_sign",
-    "what_i_see": "A Swedish blue parking sign with a white 'P', followed below by three rule plates (fee/payment method indication, bidirectional arrows, and a company contact plate), plus an EasyPark payment board at ",
+    "what_i_see": "A blue Swedish parking sign 'P' with four plates below it: a fee plate ('Avgift erläggs med'), an arrow plate pointing both left and right, a company info plate ('Västia Parkering'), and a payment boa",
     "panels_below_main_sign": 2
   }
 }

@@ -2,12 +2,12 @@
   "image": "009-besokande-avgift.jpg",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:44:12+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T14:46:23+00:00",
   "usage": {
-    "completion_tokens": 493,
-    "prompt_tokens": 4798,
-    "total_tokens": 5291
+    "completion_tokens": 485,
+    "prompt_tokens": 5538,
+    "total_tokens": 6023
   },
   "response": {
     "schema_version": 1,
@@ -72,8 +72,7 @@
           "EASYPARK",
           "PARKERA",
           "MED OSS!",
-          "SMS-PARKERA",
-          "Parkster",
+          "PARKERA",
           "App-parkering",
           "utan serviceavgift."
         ],

@@ -1,0 +1,117 @@
+{
+  "image": "136-forhyrda-platser-pilar-1-plats.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T19:05:46+00:00",
+  "usage": {
+    "completion_tokens": 639,
+    "prompt_tokens": 5533,
+    "total_tokens": 6172
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Förhyrda",
+          "platser"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "rented"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "arrow": "right",
+          "pictogram": "arrow"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "Besökande"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "visitors"
+        }
+      },
+      {
+        "index": 4,
+        "kind": "sign_plate",
+        "lines": [
+          "Brf",
+          "Karbinen"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "unrecognised_slot": "who",
+          "uninterpreted": [
+            "Brf",
+            "Karbinen"
+          ]
+        }
+      },
+      {
+        "index": 5,
+        "kind": "sign_plate",
+        "lines": [
+          "1 plats"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "place_count": 1
+        }
+      },
+      {
+        "index": 6,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "arrow": "left",
+          "pictogram": "arrow"
+        }
+      }
+    ],
+    "panel_count": 6,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

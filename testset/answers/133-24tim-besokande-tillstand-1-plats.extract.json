@@ -1,0 +1,109 @@
+{
+  "image": "133-24tim-besokande-tillstand-1-plats.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T19:05:01+00:00",
+  "usage": {
+    "completion_tokens": 610,
+    "prompt_tokens": 5548,
+    "total_tokens": 6158
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "24 tim"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "duration_limit": {
+            "amount": 24,
+            "unit": "hours"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Besökande"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "visitors"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "Giltigt",
+          "P-tillstånd",
+          "erfordras"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "permit_holders",
+          "permit_required": true
+        }
+      },
+      {
+        "index": 4,
+        "kind": "sign_plate",
+        "lines": [
+          "1 plats"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "place_count": 1
+        }
+      },
+      {
+        "index": 5,
+        "kind": "operator_plate",
+        "lines": [
+          "Umevakt",
+          "090-70 39 00"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "operator": {
+            "name": "Umevakt",
+            "phone": "090-70 39 00"
+          }
+        }
+      }
+    ],
+    "panel_count": 5,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

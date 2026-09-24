@@ -1,0 +1,17 @@
+{
+  "image": "097-avgift-taxa-a-boende-solna-onsdag.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T22:23:24+00:00",
+  "usage": {
+    "completion_tokens": 74,
+    "prompt_tokens": 1543,
+    "total_tokens": 1617
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish blue parking sign with several plates below it, including fee information, resident parking, a street cleaning restriction sign, a ticket machine pointer, and a payment app sign at the botto",
+    "panels_below_main_sign": 4
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "image": "130-2tim-avgift-torsd-vid-butik.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T19:04:23+00:00",
+  "usage": {
+    "completion_tokens": 68,
+    "prompt_tokens": 1511,
+    "total_tokens": 1579
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish blue parking sign with three rule plates below it regarding parking duration, fee, and sweeping/cleaning restrictions, plus a payment information sign at the bottom.",
+    "panels_below_main_sign": 3
+  }
+}

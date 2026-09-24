@@ -1,0 +1,106 @@
+{
+  "image": "113-avgift-alla-dagar-utanfor-platser.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:58:16+00:00",
+  "usage": {
+    "completion_tokens": 603,
+    "prompt_tokens": 5549,
+    "total_tokens": 6152
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Avgift",
+          "alla dagar",
+          "0-24"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "fee": true,
+          "time_windows": [
+            {
+              "from": "00:00",
+              "to": "24:00",
+              "day_class": "all_days"
+            }
+          ]
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Tillstånd",
+          "461"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "permit_holders",
+          "permit_required": true,
+          "uninterpreted": [
+            "461"
+          ],
+          "unrecognised_slot": "who"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "Förhyrda",
+          "platser"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "rented"
+        }
+      },
+      {
+        "index": 4,
+        "kind": "operator_plate",
+        "lines": [
+          "Parkering",
+          "Malmö",
+          "040-6056944"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "operator": {
+            "name": "Parkering Malmö",
+            "phone": "040-6056944"
+          }
+        }
+      }
+    ],
+    "panel_count": 4,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "image": "121-p-med-pil-vid-vag.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:59:30+00:00",
+  "usage": {
+    "completion_tokens": 446,
+    "prompt_tokens": 5545,
+    "total_tokens": 5991
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "placement": "as_shown",
+          "pictogram": "arrow"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "vehicle_class": "electric",
+          "pictogram": "electric_car"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "12 tim"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "duration_limit": {
+            "amount": 12,
+            "unit": "hours"
+          }
+        }
+      },
+      {
+        "index": 4,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "arrow": "left"
+        }
+      }
+    ],
+    "panel_count": 4,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

@@ -14,7 +14,7 @@ import { evaluateParkingRules } from "./engine";
 import { OFFLINE_NOTE } from "./offline";
 import { CLOCK_CHANGE_TEXT, NOT_READ_RELIABLY, NO_WINDOW_TOO_LITTLE_READ,
          PERIOD_HEADLINE, REASON_TEXT, STATE_TEXT,
-         UNCERTAINTY_TEXT, toJson } from "./present";
+         SHOW_ANOTHER_POST, UNCERTAINTY_TEXT, timePhrase, toJson } from "./present";
 import { recognise } from "./reference";
 import type { SignDoc } from "./sign";
 
@@ -195,5 +195,67 @@ describe("a window addressed to a named circle", () => {
     // that merely ADDS - `Boende` - narrows no circle and must not break the line.
     expect(periods({ fee: true })[0].restricted).toBe(false);
     expect(periods({ eligibility: "residents" })[0].restricted).toBe(false);
+  });
+});
+
+describe("the fields step 15f added, in words", () => {
+  const cal = new Calendar();
+  const moment = parseNaive("2026-09-23T12:00");
+  const answer = (doc: SignDoc) => {
+    const ev = evaluateParkingRules(doc, moment, cal);
+    const a = grade(doc, { evaluation: ev });
+    return toJson({ doc, recognised: recognise(doc), assessment: a,
+                    evaluation: applyAsymmetry(ev, a) }, moment, cal) as any;
+  };
+  const doc = (panels: Record<string, unknown>[], extra: Record<string, unknown> = {}) => ({
+    schema_version: 1,
+    main_sign: { type: "parking", background_color: "blue", form: "regular",
+                 legibility: { readable: true } },
+    panels: panels.map((p, i) => ({ background_color: "blue", legibility: { readable: true },
+                                    lines: [], ...p, index: i + 1 })),
+    panel_count: panels.length, ...extra,
+  } as unknown as SignDoc);
+
+  it("says a monthly window is monthly", () => {
+    // `114` and `120` were told "on weekdays", a daily ban for a monthly one.
+    expect(timePhrase({ time_windows: [{ from: "08:00", to: "12:00", day_class: "all_days",
+                                         day_of_month: 1 }] }))
+      .toBe("on the 1st of every month between 08:00 and 12:00");
+    expect(timePhrase({ time_windows: [{ from: "08:00", to: "12:00",
+                                         day_class: "named_weekday",
+                                         named_weekday: "tuesday", nth_of_month: 3 }] }))
+      .toBe("on the 3rd Tuesday of every month between 08:00 and 12:00");
+  });
+
+  it("shows a road sign on the post as a sign, not as a plate it failed to read", () => {
+    // `118`: the priority-road diamond came back as a plate that could not be
+    // interpreted, and took the confidence of the whole reading down with it.
+    const d = answer(doc([
+      { kind: "sign_plate", lines: ["2 tim"], parsed: { duration_limit: { amount: 2, unit: "hours" } } },
+      { kind: "other_sign", parsed: { road_sign: "priority_road" } },
+    ]));
+    const road = d.what_we_saw.panels[1];
+    expect(road.carries_rule).toBe(false);
+    expect(road.meanings[0].key).toBe("priority-road");
+    expect(d.completeness.category).toBe("full");
+  });
+
+  it("holds the second-post line back until the flag is measured", () => {
+    // `096` is what the line is for, but on the first live run the model set the flag
+    // on 18 of 127 photographs, most with no second post at all (decision 172). The
+    // line stays off the screen until step 15g shows the flag can be trusted; switching
+    // it on before that fails here.
+    expect(SHOW_ANOTHER_POST, "measure the flag in 15g before showing it").toBe(false);
+    const two = answer(doc([{ kind: "sign_plate", lines: ["2 tim"],
+                              parsed: { duration_limit: { amount: 2, unit: "hours" } } }],
+                           { another_post_in_frame: true }));
+    expect(two.uncertainties.map((u: any) => u.text).join(" ")).not.toContain("Another sign post");
+  });
+
+  it("does not claim there is no sign at all when triage turns a photograph away", () => {
+    // Triage files a sign too far away to read with photographs showing no sign, and
+    // the screen said "no road sign at all" of `074` and `080`, which are full of them.
+    expect(REASON_TEXT["triage:not_a_sign"]).not.toMatch(/no road sign at all/i);
+    expect(REASON_TEXT["triage:not_a_sign"]).toMatch(/too far/);
   });
 });

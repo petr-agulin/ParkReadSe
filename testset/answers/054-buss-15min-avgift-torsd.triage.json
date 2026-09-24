@@ -3,16 +3,15 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:49:28+00:00",
+  "saved_at": "2026-09-24T18:20:38+00:00",
   "usage": {
-    "completion_tokens": 109,
+    "completion_tokens": 73,
     "prompt_tokens": 1544,
-    "total_tokens": 1653
+    "total_tokens": 1617
   },
   "response": {
     "category": "parking_sign",
-    "what_i_see": "A Swedish parking sign with a blue P main sign, followed below by a bus symbol plate, a plate with 15 min / Avgift / Taxa 2, a yellow plate with Torsd 0-6 indicating day/hours, and a payment instructi",
-    "model_confidence": 0.98,
+    "what_i_see": "A Swedish blue parking sign with several supplemental plates below it, including a bus symbol, a duration/fee plate, a yellow day/time restriction plate, and a payment instruction plate.",
     "panels_below_main_sign": 4
   }
 }

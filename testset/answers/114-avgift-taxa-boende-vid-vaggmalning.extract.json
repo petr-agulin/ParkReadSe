@@ -1,0 +1,85 @@
+{
+  "image": "114-avgift-taxa-boende-vid-vaggmalning.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:58:27+00:00",
+  "usage": {
+    "completion_tokens": 461,
+    "prompt_tokens": 5548,
+    "total_tokens": 6009
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Avgift",
+          "Taxa B"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "fee": true,
+          "tariff_code": "B"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Boende",
+          "GK-J"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "residents"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "Gäller",
+          "den 1:a",
+          "varje månad"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "prohibition": true,
+          "pictogram": "prohibition",
+          "time_windows": [
+            {
+              "from": "08:00",
+              "to": "12:00",
+              "day_class": "all_days",
+              "day_of_month": 1
+            }
+          ]
+        }
+      }
+    ],
+    "panel_count": 3,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

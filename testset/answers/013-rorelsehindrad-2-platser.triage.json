@@ -3,15 +3,15 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:44:40+00:00",
+  "saved_at": "2026-09-24T22:21:55+00:00",
   "usage": {
-    "completion_tokens": 68,
+    "completion_tokens": 112,
     "prompt_tokens": 1515,
-    "total_tokens": 1583
+    "total_tokens": 1627
   },
   "response": {
     "category": "parking_sign",
-    "what_i_see": "A Swedish parking sign for reserved disabled parking with 2 spaces, accompanied by a Mölndals Parkerings AB company plate and a left arrow plate below.",
+    "what_i_see": "A Swedish parking sign post showing a blue main parking sign with a white P, followed by four plates below: a wheelchair symbol for disabled parking, a plate indicating 2 spaces ('2 platser'), a compa",
     "panels_below_main_sign": 3
   }
 }

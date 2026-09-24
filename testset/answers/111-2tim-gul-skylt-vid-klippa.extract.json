@@ -1,0 +1,85 @@
+{
+  "image": "111-2tim-gul-skylt-vid-klippa.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:57:57+00:00",
+  "usage": {
+    "completion_tokens": 464,
+    "prompt_tokens": 5545,
+    "total_tokens": 6009
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "2 tim"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "duration_limit": {
+            "amount": 2,
+            "unit": "hours"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Boende V5"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "residents"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "Fred 9-12",
+          "Jämn vecka"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "prohibition": true,
+          "time_windows": [
+            {
+              "from": "09:00",
+              "to": "12:00",
+              "day_class": "named_weekday",
+              "named_weekday": "friday",
+              "week_parity": "even"
+            }
+          ],
+          "pictogram": "prohibition"
+        }
+      }
+    ],
+    "panel_count": 3,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

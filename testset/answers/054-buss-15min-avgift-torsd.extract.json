@@ -2,12 +2,12 @@
   "image": "054-buss-15min-avgift-torsd.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:49:32+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:20:38+00:00",
   "usage": {
-    "completion_tokens": 558,
-    "prompt_tokens": 4809,
-    "total_tokens": 5367
+    "completion_tokens": 585,
+    "prompt_tokens": 5549,
+    "total_tokens": 6134
   },
   "response": {
     "schema_version": 1,
@@ -50,7 +50,8 @@
             "amount": 15,
             "unit": "minutes"
           },
-          "fee": true
+          "fee": true,
+          "tariff_code": "Taxa 2"
         }
       },
       {
@@ -74,7 +75,7 @@
             }
           ],
           "prohibition": true,
-          "pictogram": "other"
+          "pictogram": "prohibition"
         }
       },
       {
@@ -95,6 +96,7 @@
     "panel_count": 4,
     "boundaries": {
       "certain": true
-    }
+    },
+    "another_post_in_frame": false
   }
 }

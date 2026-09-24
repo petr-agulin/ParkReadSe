@@ -1,0 +1,66 @@
+{
+  "image": "075-forhyrda-platser-pa-avstand.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:13:36+00:00",
+  "usage": {
+    "completion_tokens": 369,
+    "prompt_tokens": 5538,
+    "total_tokens": 5907
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Förhyrda",
+          "platser"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "rented"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "operator_plate",
+        "lines": [
+          "Parkering AB",
+          "Parkering är",
+          "övervakad",
+          "031-87 54 79"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "operator": {
+            "phone": "031-87 54 79"
+          }
+        }
+      }
+    ],
+    "panel_count": 2,
+    "boundaries": {
+      "certain": true
+    },
+    "notes": "Sign post in the foreground with parking sign and two blue panels.",
+    "model_confidence": 0.95,
+    "another_post_in_frame": true
+  }
+}

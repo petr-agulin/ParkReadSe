@@ -26,7 +26,7 @@ import { Calendar, RED, UNKNOWN, WEEKDAY } from "./calendar";
 import { add as clockAdd } from "./clock";
 import { addDays, addMinutes, compare, minutes, weekday,
          type Civil, type Naive } from "./civil";
-import { ELIGIBILITY_KEYS, VEHICLE_KEYS } from "./reference";
+import { ELIGIBILITY_KEYS, VEHICLE_KEYS, WHO_SLOT_NARROWS } from "./reference";
 import type { Panel, Parsed, SignDoc, TimeWindow } from "./sign";
 
 export const HORIZON_DAYS = 8;        // how far ahead the timeline of periods runs
@@ -56,6 +56,15 @@ export const OUTSIDE_PERMITTED_HOURS = "outside_the_hours_the_sign_permits";
 // sign says nothing at all, and there the general rules hold - among them the 24 hours
 // (decision 155, photographs `093`, `109`, `089`).
 export const GENERAL_RULE_GAP = "general_rules_apply_outside_the_sign";
+
+// On a priority road the general rules give no leave to park, so the same gap stays
+// shut (the developer's word, photographs `118`, `120`).
+export const PRIORITY_ROAD_GAP = "priority_road_needs_a_permitting_sign";
+
+// A prohibition confined to one side of the street by house number. The product does
+// not know which side the car is on, so the prohibition is applied, and says so.
+export const EVEN_SIDE_ONLY = "prohibition_on_even_numbered_side_only";
+export const ODD_SIDE_ONLY = "prohibition_on_odd_numbered_side_only";
 
 // stretches
 export const HERE = "here";
@@ -171,9 +180,22 @@ export function windowApplies(win: TimeWindow, moment: Naive, cal: Calendar): bo
     if ((dc === WEEKDAY || dc === "eve" || dc === RED) && day !== dc) return false;
   }
 
+  // A named weekday binds whatever class of day came with it. On `120` the model gave
+  // `3:e tisdagen` the class "weekday" together with `named_weekday: tuesday`; read by
+  // the class alone, the ban fell on every working day of the month's third week.
+  if (dc !== "named_weekday" && win.named_weekday
+      && WEEKDAY_NAMES[weekday(d)] !== win.named_weekday) return false;
+
   // The week parity and the range of dates narrow the window once more.
   if (!weekParityMatches(win, d)) return false;
   if (!datesMatch(win, d)) return false;
+  // A window that comes round by the calendar, not by the week: `1:a varje månad`
+  // (photograph `114`), `3:e tisdagen` (`120`). With no way to say either, the model
+  // wrote "weekdays", and a monthly prohibition became one on every working day.
+  if (win.day_of_month !== undefined && d.d !== win.day_of_month) return false;
+  if (win.nth_of_month !== undefined && Math.ceil(d.d / 7) !== win.nth_of_month) {
+    return false;
+  }
 
   return inClockWindow(win, moment);
 }
@@ -275,7 +297,8 @@ function boundaries(now: Naive, instructions: Parsed[]): Naive[] {
 function durationMinutes(parsed: Parsed): number | null {
   const d = parsed.duration_limit;
   if (!d) return null;
-  return Math.trunc(d.amount * (d.unit === "hours" ? 60 : 1));
+  const per = d.unit === "days" ? DAY_MINUTES : d.unit === "hours" ? 60 : 1;
+  return Math.trunc(d.amount * per);
 }
 
 /** Whether a plate carries a rule of its own - a fee, a limit, a permit, a
@@ -314,36 +337,9 @@ function splitByVehicle(panels: Panel[]): [string | null, string[], Panel[]][] {
   return out;
 }
 
-// `dygn` is a DAY. The schema knows minutes and hours and nothing longer, so a plate
-// reading `7 dygn` arrives as seven HOURS - a stay a sixth of the length the sign
-// grants (photographs `094`, `120`). Until the schema learns the unit, such a limit is
-// not stated at all: the 24-hour rule is wrong too, but it is the rule the reader would
-// have had with no plate at all, rather than a number invented out of a misread one.
-const DAY_WORD = /(\d+)\s*dygn/i;
-
 // Hours actually PRINTED on the plate, as opposed to hours the model worked out for
 // itself. `7-18`, `(22-10)`, `07:00-19:00`.
 export const PRINTED_HOURS = /\d{1,2}([:.]\d{2})?\s*[-–]\s*\d{1,2}([:.]\d{2})?/;
-export const DURATION_IN_DAYS = "duration_given_in_days";
-
-function withoutMisreadDuration(parsed: Parsed, panel: Panel,
-                                uncertainties: string[]): Parsed {
-  const limit = parsed.duration_limit;
-  if (!limit || limit.unit !== "hours") return parsed;
-  const printed = DAY_WORD.exec((panel.lines ?? []).join(" "));
-  if (!printed) return parsed;
-  // The model sometimes does the arithmetic and sometimes does not: `14 dygn` arrived
-  // as 336 hours, which is right, and `7 dygn` as 7 hours, which is a sixth of the
-  // stay the sign grants (photographs `062`, `094`). The two are told apart by the
-  // figure itself - a limit equal to the printed NUMBER OF DAYS was never converted.
-  if (limit.amount !== Number(printed[1])) return parsed;
-  if (!uncertainties.includes(DURATION_IN_DAYS)) uncertainties.push(DURATION_IN_DAYS);
-  // Dropped rather than corrected: the 24-hour rule is shorter than the sign allows,
-  // and erring towards the shorter stay is the asymmetry rule. Correcting it belongs
-  // with the schema learning the unit (step 15f).
-  const { duration_limit: _dropped, ...rest } = parsed;
-  return rest;
-}
 
 /** The reference keys an instruction adds to a period. */
 function conditionsOf(parsed: Parsed): string[] {
@@ -358,7 +354,7 @@ function conditionsOf(parsed: Parsed): string[] {
 function buildRegime(extent: string, panels: Panel[], baseState: string,
                      now: Naive, cal: Calendar, uncertainties: string[],
                      audience: string | null, audienceExcluded: string[],
-                     others: Panel[]): Regime {
+                     others: Panel[], onPriorityRoad = false): Regime {
   const plates = panels.filter((p) => p.kind === "sign_plate");
 
   // step 4: a condition of eligibility is a caption to the regime
@@ -370,7 +366,11 @@ function buildRegime(extent: string, panels: Panel[], baseState: string,
     const vehicle = addressedClass(parsed)
       ? undefined
       : (parsed.vehicle_class ? VEHICLE_KEYS[parsed.vehicle_class] : undefined);
-    const who = parsed.eligibility ? ELIGIBILITY_KEYS[parsed.eligibility] : undefined;
+    // A plate the model could place only as WHO narrows like a named group (decision
+    // 162); a vehicle on it would already have said who.
+    const who = parsed.eligibility ? ELIGIBILITY_KEYS[parsed.eligibility]
+      : WHO_SLOT_NARROWS && parsed.unrecognised_slot === "who" && !parsed.vehicle_class
+        ? ELIGIBILITY_KEYS.custom : undefined;
     for (const key of [vehicle, who]) {
       if (key && !eligibility.includes(key)) eligibility.push(key);
     }
@@ -396,7 +396,7 @@ function buildRegime(extent: string, panels: Panel[], baseState: string,
   const shifted: Parsed[] = [];
   const prohibitions: Parsed[] = [];
   for (const p of plates) {
-    const parsed = withoutMisreadDuration(parsedOf(p), p, uncertainties);
+    const parsed = parsedOf(p);
     if (parsed.prohibition && parsed.time_windows) {
       prohibitions.push(parsed);
       continue;
@@ -441,7 +441,8 @@ function buildRegime(extent: string, panels: Panel[], baseState: string,
   const occupied = others.map(parsedOf).filter((q) => q.time_windows);
 
   const periods = timeline(now, cal, baseState, windowed, always, shifted,
-                           prohibitions, uncertainties, scoped, occupied, bounding);
+                           prohibitions, uncertainties, scoped, occupied, bounding,
+                           onPriorityRoad);
 
   // Duration: a plate overrides the 24-hour default - but only where the plate
   // applies.
@@ -522,7 +523,7 @@ function timeline(now: Naive, cal: Calendar, baseState: string,
                   windowed: Parsed[], always: Parsed[], shifted: Parsed[],
                   prohibitions: Parsed[], uncertainties: string[],
                   scoped: boolean, occupied: Parsed[],
-                  bounding: Parsed[] = []): Period[] {
+                  bounding: Parsed[] = [], onPriorityRoad = false): Period[] {
   const baseConditions = sortedUnique(always.flatMap(conditionsOf));
   const marks = boundaries(now, [...windowed, ...shifted, ...prohibitions,
                                  ...always, ...occupied]);
@@ -611,22 +612,29 @@ function timeline(now: Naive, cal: Calendar, baseState: string,
     }
 
     // step 7: a prohibition overrides permission
+    let sides: (string | undefined)[] = [];
     for (const parsed of prohibitions) {
       const results = windowsOf(parsed).map((w) => windowApplies(w, t0, cal));
       if (results.some((r) => r === null)) unknown = true;
       if (results.some((r) => r === true)) {
         state = PROHIBITED;
         conds = [];
+        sides = [...sides, parsed.street_side];
       }
+    }
+    // The side is named only when EVERY prohibition in force is confined to it: one
+    // that holds on both sides leaves nothing for the note to qualify.
+    if (sides.length && sides.every((side) => side === sides[0]) && sides[0]) {
+      note = sides[0] === "even_numbers" ? EVEN_SIDE_ONLY : ODD_SIDE_ONLY;
     }
 
     // The gap a lapsed prohibition leaves. Filled only where the sign was READ: that
     // is settled by the completeness, which refuses the answer whole before it reaches
     // the screen, not by guessing here.
     if (scoped && state === NOT_STATED) {
-      state = ALLOWED;
+      state = onPriorityRoad ? PROHIBITED : ALLOWED;
       conds = [];
-      if (note === null) note = GENERAL_RULE_GAP;
+      if (note === null) note = onPriorityRoad ? PRIORITY_ROAD_GAP : GENERAL_RULE_GAP;
     }
 
     if (unknown && state !== PROHIBITED) {
@@ -700,6 +708,8 @@ export function evaluateParkingRules(sign: SignDoc, moment: Naive,
   }
 
   const baseState = BASE_PROHIBITED.has(main.type) ? PROHIBITED : ALLOWED;
+  const onPriorityRoad = (sign.panels ?? []).some(
+    (p) => p.kind === "other_sign" && p.parsed?.road_sign === "priority_road");
   if (main.type === "unknown") uncertainties.push("main_sign_unknown");
   if (!cal.covers(dateOf(moment))) uncertainties.push("date_outside_calendar");
 
@@ -710,7 +720,7 @@ export function evaluateParkingRules(sign: SignDoc, moment: Naive,
     for (const [audience, excluded, group] of splitByVehicle(panels)) {
       const others = panels.filter((p) => !group.includes(p));
       regimes.push(buildRegime(extent, group, baseState, moment, cal, uncertainties,
-                               audience, excluded, others));
+                               audience, excluded, others, onPriorityRoad));
     }
   }
   // The regimes are built from the same plates, so the caveats repeat.

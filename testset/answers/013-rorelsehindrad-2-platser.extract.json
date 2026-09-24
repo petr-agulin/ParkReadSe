@@ -2,12 +2,12 @@
   "image": "013-rorelsehindrad-2-platser.jpg",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:44:45+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T22:21:55+00:00",
   "usage": {
-    "completion_tokens": 493,
-    "prompt_tokens": 4780,
-    "total_tokens": 5273
+    "completion_tokens": 505,
+    "prompt_tokens": 5520,
+    "total_tokens": 6025
   },
   "response": {
     "schema_version": 1,
@@ -83,6 +83,7 @@
     "panel_count": 4,
     "boundaries": {
       "certain": true
-    }
+    },
+    "another_post_in_frame": false
   }
 }

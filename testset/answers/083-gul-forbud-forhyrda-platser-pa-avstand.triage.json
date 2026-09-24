@@ -1,0 +1,17 @@
+{
+  "image": "083-gul-forbud-forhyrda-platser-pa-avstand.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:15:00+00:00",
+  "usage": {
+    "completion_tokens": 59,
+    "prompt_tokens": 1555,
+    "total_tokens": 1614
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking prohibition sign with two auxiliary plates below it, located in front of an apartment building and a tree.",
+    "panels_below_main_sign": 2
+  }
+}

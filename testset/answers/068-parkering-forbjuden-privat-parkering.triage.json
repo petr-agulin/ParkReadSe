@@ -1,0 +1,17 @@
+{
+  "image": "068-parkering-forbjuden-privat-parkering.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:12:26+00:00",
+  "usage": {
+    "completion_tokens": 69,
+    "prompt_tokens": 1533,
+    "total_tokens": 1602
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign showing a 'Parkering förbjuden' (No parking) main sign with a blue plate below it reading 'Privat parkering'.",
+    "panels_below_main_sign": 0
+  }
+}

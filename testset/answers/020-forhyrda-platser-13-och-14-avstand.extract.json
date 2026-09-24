@@ -2,12 +2,12 @@
   "image": "020-forhyrda-platser-13-och-14-avstand.jpg",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:45:40+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T16:17:14+00:00",
   "usage": {
-    "completion_tokens": 291,
-    "prompt_tokens": 4798,
-    "total_tokens": 5089
+    "completion_tokens": 303,
+    "prompt_tokens": 5538,
+    "total_tokens": 5841
   },
   "response": {
     "schema_version": 1,
@@ -41,7 +41,7 @@
         "index": 2,
         "kind": "sign_plate",
         "lines": [],
-        "background_color": "blue",
+        "background_color": "white",
         "legibility": {
           "readable": true
         },
@@ -54,6 +54,7 @@
     "panel_count": 2,
     "boundaries": {
       "certain": true
-    }
+    },
+    "another_post_in_frame": true
   }
 }

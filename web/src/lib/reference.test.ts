@@ -151,8 +151,9 @@ describe("the reference entries are fit to be shown", () => {
     const parsed = (SIGN_SCHEMA as Record<string, any>).$defs.parsed.properties;
     for (const [field, table] of [["vehicle_class", VEHICLE_KEYS],
                                   ["eligibility", ELIGIBILITY_KEYS]] as const) {
-      // `custom` is deliberately unmapped: it means "none of the listed ones fitted".
-      const values = (parsed[field].enum as string[]).filter((v) => v !== "custom");
+      // `custom` included: it was left unmapped until step 15a gave the reference an
+      // entry for a group the plate names in its own words, which is what it means.
+      const values = parsed[field].enum as string[];
       expect(values.filter((v) => !(v in table)), field).toEqual([]);
       for (const v of values) expect(get(table[v]), `${field}: ${v}`).not.toBeNull();
     }
@@ -163,7 +164,7 @@ describe("the reference entries are fit to be shown", () => {
     // in both. The bus was entered into the schema and forgotten in the engine -
     // photograph `038`.
     const engine = source("web/src/lib/engine.ts");
-    expect(engine).toContain('import { ELIGIBILITY_KEYS, VEHICLE_KEYS } from "./reference"');
+    expect(engine).toMatch(/import \{ ELIGIBILITY_KEYS, VEHICLE_KEYS[^}]*\} from "\.\/reference"/);
     expect(engine, "the engine has started its own copy of the table again")
       .not.toContain('"motorcycle": "pictogram-motorcycle"');
   });

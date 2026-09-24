@@ -3,15 +3,15 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:45:52+00:00",
+  "saved_at": "2026-09-24T16:20:52+00:00",
   "usage": {
-    "completion_tokens": 91,
+    "completion_tokens": 87,
     "prompt_tokens": 1535,
-    "total_tokens": 1626
+    "total_tokens": 1622
   },
   "response": {
     "category": "parking_sign",
-    "what_i_see": "A Swedish parking sign post featuring a main blue P sign, followed by auxiliary blue plates stating 'Avgift', '4 tim', 'Endast laddande elbilar', '2 platser', an arrow plate pointing right, and a bott",
+    "what_i_see": "A Swedish parking sign post featuring a main blue 'P' sign at the top, followed by five supplementary plates stating rules (fee, duration, electric vehicles only, number of spaces, and a directional a",
     "panels_below_main_sign": 5
   }
 }

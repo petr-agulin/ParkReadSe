@@ -1,0 +1,47 @@
+{
+  "image": "078-p-skylt-overklistrad.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:14:17+00:00",
+  "usage": {
+    "completion_tokens": 231,
+    "prompt_tokens": 5560,
+    "total_tokens": 5791
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "wayfinding_parking_house",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "sticker"
+        ]
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "blue",
+        "legibility": {
+          "readable": false,
+          "obstructions": [
+            "sticker",
+            "distance"
+          ]
+        },
+        "parsed": {}
+      }
+    ],
+    "panel_count": 1,
+    "boundaries": {
+      "certain": true
+    },
+    "notes": "Top sign is wayfinding pointing to a parking garage, covered with stickers. One unreadable panel below."
+  }
+}

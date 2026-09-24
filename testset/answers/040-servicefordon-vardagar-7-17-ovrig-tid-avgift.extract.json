@@ -2,12 +2,12 @@
   "image": "040-servicefordon-vardagar-7-17-ovrig-tid-avgift.jpg",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:46:44+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:10:11+00:00",
   "usage": {
-    "completion_tokens": 509,
-    "prompt_tokens": 4820,
-    "total_tokens": 5329
+    "completion_tokens": 518,
+    "prompt_tokens": 5560,
+    "total_tokens": 6078
   },
   "response": {
     "schema_version": 1,
@@ -81,7 +81,8 @@
           "readable": true
         },
         "parsed": {
-          "arrow": "left"
+          "arrow": "left",
+          "pictogram": "arrow"
         }
       }
     ],
@@ -89,6 +90,6 @@
     "boundaries": {
       "certain": true
     },
-    "model_confidence": 0.98
+    "another_post_in_frame": true
   }
 }

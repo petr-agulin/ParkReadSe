@@ -2,12 +2,12 @@
   "image": "031-snedstallning-torsdag-jamna-veckor-boende-solna.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:47:40+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:16:53+00:00",
   "usage": {
-    "completion_tokens": 808,
-    "prompt_tokens": 4798,
-    "total_tokens": 5606
+    "completion_tokens": 789,
+    "prompt_tokens": 5538,
+    "total_tokens": 6327
   },
   "response": {
     "schema_version": 1,
@@ -29,7 +29,8 @@
           "readable": true
         },
         "parsed": {
-          "placement": "as_shown"
+          "placement": "as_shown",
+          "pictogram": "arrow"
         }
       },
       {
@@ -45,7 +46,7 @@
         },
         "parsed": {
           "fee": true,
-          "tariff_code": "Taxa A"
+          "tariff_code": "A"
         }
       },
       {
@@ -70,11 +71,11 @@
               "named_weekday": "thursday",
               "week_parity": "even",
               "dates": {
-                "mode": "only",
+                "mode": "except",
                 "ranges": [
                   {
-                    "from": "08-01",
-                    "to": "06-30"
+                    "from": "07-01",
+                    "to": "07-31"
                   }
                 ]
               }
@@ -115,11 +116,7 @@
         "index": 6,
         "kind": "info_board",
         "lines": [
-          "Områdeskod 8010",
-          "MOBILL",
-          "Parkster",
-          "EASYPARK",
-          "APP"
+          "Områdeskod 8010"
         ],
         "background_color": "white",
         "legibility": {

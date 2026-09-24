@@ -1,0 +1,19 @@
+{
+  "image": "095-30min-plus-avgift-taxa.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:22:33+00:00",
+  "usage": {
+    "completion_tokens": 78,
+    "prompt_tokens": 1540,
+    "total_tokens": 1618
+  },
+  "response": {
+    "schema_version": 1,
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign with four plates below it specifying duration, hours, fees, and exceptions.",
+    "model_confidence": 0.98,
+    "panels_below_main_sign": 4
+  }
+}

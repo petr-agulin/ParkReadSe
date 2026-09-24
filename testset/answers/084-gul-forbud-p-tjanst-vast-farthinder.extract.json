@@ -1,0 +1,77 @@
+{
+  "image": "084-gul-forbud-p-tjanst-vast-farthinder.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:15:13+00:00",
+  "usage": {
+    "completion_tokens": 435,
+    "prompt_tokens": 5560,
+    "total_tokens": 5995
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "prohibition_parking",
+      "background_color": "yellow",
+      "form": "zone",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "operator_plate",
+        "lines": [
+          "P-tjänst Väst AB",
+          "031-51 88 10"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "operator": {
+            "name": "P-tjänst Väst AB",
+            "phone": "031-51 88 10"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "kind": "other_sign",
+        "lines": [
+          "Brandväg",
+          "får ej blockeras"
+        ],
+        "background_color": "other",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "road_sign": "other"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "other_sign",
+        "lines": [
+          "Farthinder"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "road_sign": "speed_bump"
+        }
+      }
+    ],
+    "panel_count": 3,
+    "boundaries": {
+      "certain": true
+    },
+    "another_post_in_frame": false
+  }
+}

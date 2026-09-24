@@ -1,0 +1,130 @@
+{
+  "image": "101-motorcykel-0-10m-avgift-tisd.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:23:28+00:00",
+  "usage": {
+    "completion_tokens": 776,
+    "prompt_tokens": 5545,
+    "total_tokens": 6321
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "vehicle_class": "motorcycle",
+          "pictogram": "motorcycle"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "0-10m"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "stretch_metres": {
+            "from": 0,
+            "to": 10
+          }
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "Avgift",
+          "7-19",
+          "(11-17)",
+          "Taxa 14"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "07:00",
+              "to": "19:00",
+              "day_class": "weekday"
+            },
+            {
+              "from": "11:00",
+              "to": "17:00",
+              "day_class": "eve"
+            }
+          ],
+          "fee": true,
+          "tariff_code": "14"
+        }
+      },
+      {
+        "index": 4,
+        "kind": "sign_plate",
+        "lines": [
+          "Tisd",
+          "9-14"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "09:00",
+              "to": "14:00",
+              "day_class": "named_weekday",
+              "named_weekday": "tuesday"
+            }
+          ],
+          "prohibition": true
+        }
+      },
+      {
+        "index": 5,
+        "kind": "sign_plate",
+        "lines": [
+          "Boende",
+          "51E"
+        ],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "residents",
+          "vehicle_class": "motorcycle",
+          "pictogram": "motorcycle",
+          "area_code": "51E"
+        }
+      }
+    ],
+    "panel_count": 5,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

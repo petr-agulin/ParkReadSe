@@ -1,0 +1,98 @@
+{
+  "image": "115-avgift-taxa-pil-ned.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:58:31+00:00",
+  "usage": {
+    "completion_tokens": 538,
+    "prompt_tokens": 5545,
+    "total_tokens": 6083
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Avgift",
+          "Taxa B"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "fee": true,
+          "tariff_code": "B"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Boende",
+          "GK-J"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "residents"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [
+          "8-12",
+          "Gäller",
+          "den 1:a",
+          "varje månad"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "08:00",
+              "to": "12:00",
+              "day_class": "weekday",
+              "day_of_month": 1
+            }
+          ],
+          "prohibition": true
+        }
+      },
+      {
+        "index": 4,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "arrow": "down",
+          "pictogram": "arrow"
+        }
+      }
+    ],
+    "panel_count": 4,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

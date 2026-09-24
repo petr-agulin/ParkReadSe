@@ -1,0 +1,74 @@
+{
+  "image": "122-p-3tim-pil-hoger.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:59:53+00:00",
+  "usage": {
+    "completion_tokens": 390,
+    "prompt_tokens": 5545,
+    "total_tokens": 5935
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "3 tim"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "duration_limit": {
+            "amount": 3,
+            "unit": "hours"
+          },
+          "payment_method": "parking_disc",
+          "pictogram": "parking_disc"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "placement": "as_shown",
+          "pictogram": "other"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "arrow": "right",
+          "pictogram": "arrow"
+        }
+      }
+    ],
+    "panel_count": 3,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

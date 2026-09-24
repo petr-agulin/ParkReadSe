@@ -2,12 +2,12 @@
   "image": "042-cykel-moped-parkering.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:48:51+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:19:55+00:00",
   "usage": {
-    "completion_tokens": 368,
-    "prompt_tokens": 4786,
-    "total_tokens": 5154
+    "completion_tokens": 364,
+    "prompt_tokens": 5526,
+    "total_tokens": 5890
   },
   "response": {
     "schema_version": 1,
@@ -18,7 +18,8 @@
       "legibility": {
         "readable": true,
         "obstructions": [
-          "shadow"
+          "shadow",
+          "distance"
         ]
       }
     },
@@ -40,25 +41,20 @@
         "index": 2,
         "kind": "sign_plate",
         "lines": [
-          "0 m"
+          "0 * m"
         ],
         "background_color": "blue",
         "legibility": {
           "readable": true,
           "obstructions": [
-            "sticker",
             "shadow"
           ]
         },
         "parsed": {
-          "stretch_metres": {
-            "from": 0,
-            "to": 0
-          },
-          "arrow": "both_horizontal",
-          "pictogram": "arrow",
+          "placement": "as_shown",
+          "pictogram": "other",
           "uninterpreted": [
-            "0"
+            "0 * m"
           ]
         }
       }
@@ -67,6 +63,7 @@
     "boundaries": {
       "certain": true
     },
+    "notes": "Bottom panel shows a parking orientation pictogram for bicycles/mopeds.",
     "model_confidence": 0.95
   }
 }

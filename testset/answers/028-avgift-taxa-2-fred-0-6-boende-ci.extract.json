@@ -2,12 +2,12 @@
   "image": "028-avgift-taxa-2-fred-0-6-boende-ci.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:47:16+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:16:21+00:00",
   "usage": {
-    "completion_tokens": 549,
-    "prompt_tokens": 4795,
-    "total_tokens": 5344
+    "completion_tokens": 560,
+    "prompt_tokens": 5535,
+    "total_tokens": 6095
   },
   "response": {
     "schema_version": 1,
@@ -65,7 +65,7 @@
         "kind": "sign_plate",
         "lines": [
           "Boende",
-          "C1"
+          "Ci"
         ],
         "background_color": "white",
         "legibility": {
@@ -94,6 +94,7 @@
     "panel_count": 4,
     "boundaries": {
       "certain": true
-    }
+    },
+    "another_post_in_frame": false
   }
 }

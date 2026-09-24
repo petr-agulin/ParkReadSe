@@ -1,0 +1,17 @@
+{
+  "image": "125-p-gula-plattor-vid-port.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T19:01:40+00:00",
+  "usage": {
+    "completion_tokens": 82,
+    "prompt_tokens": 1535,
+    "total_tokens": 1617
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish no-stopping sign (På- och avstigningsplats with no-stopping symbol) mounted above multiple supplementary plates indicating times, distance, a sweeping day restriction, and a parking sign at ",
+    "panels_below_main_sign": 5
+  }
+}

@@ -3,15 +3,15 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:46:16+00:00",
+  "saved_at": "2026-09-24T16:28:39+00:00",
   "usage": {
-    "completion_tokens": 76,
+    "completion_tokens": 74,
     "prompt_tokens": 1533,
-    "total_tokens": 1609
+    "total_tokens": 1607
   },
   "response": {
     "category": "parking_sign",
-    "what_i_see": "A Swedish parking sign with a blue 'P' at the top, followed by three plates below stating distance, 30 min duration for guests of Franks Gatukök, and a left arrow.",
+    "what_i_see": "A blue Swedish parking sign with a white 'P', followed by three additional plates below stating parking rules: a distance plate, a time limit and user restriction plate, and an arrow plate.",
     "panels_below_main_sign": 3
   }
 }

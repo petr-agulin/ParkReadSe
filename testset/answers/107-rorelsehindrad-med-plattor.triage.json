@@ -1,0 +1,19 @@
+{
+  "image": "107-rorelsehindrad-med-plattor.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:24:11+00:00",
+  "usage": {
+    "completion_tokens": 132,
+    "prompt_tokens": 1571,
+    "total_tokens": 1703
+  },
+  "response": {
+    "schema_version": 1,
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign (blue square with a white P) at the top, followed vertically by four additional plates below: a wheelchair accessibility symbol plate, a distance plate '0-6 m', a fee and hours ",
+    "model_confidence": 0.99,
+    "panels_below_main_sign": 3
+  }
+}

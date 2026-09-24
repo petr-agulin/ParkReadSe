@@ -1,0 +1,19 @@
+{
+  "image": "106-p-blaa-och-gul-skylt-vid-berg.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:23:59+00:00",
+  "usage": {
+    "completion_tokens": 95,
+    "prompt_tokens": 1528,
+    "total_tokens": 1623
+  },
+  "response": {
+    "schema_version": 1,
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking sign assembly showing a blue P sign with a dead-end street indicator above it, and four plates below it indicating parking fees, hours, and resident parking rules.",
+    "model_confidence": 0.99,
+    "panels_below_main_sign": 4
+  }
+}

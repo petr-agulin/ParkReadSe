@@ -17,8 +17,9 @@ import { Calendar, EVE, RED } from "./calendar";
 import { isoDate, isoNaive, type Civil, type Naive, addDays } from "./civil";
 import { realMinutes, switchBetween } from "./clock";
 import { FULL, INSUFFICIENT, PARTIAL, type Assessment } from "./completeness";
-import { ALLOWED, FEE_PERIOD_ELSEWHERE, GENERAL_RULE_GAP, NOT_STATED,
-         OUTSIDE_PERMITTED_HOURS, PROHIBITED, horizonEnd,
+import { ALLOWED, EVEN_SIDE_ONLY, FEE_PERIOD_ELSEWHERE, GENERAL_RULE_GAP, NOT_STATED,
+         ODD_SIDE_ONLY, OUTSIDE_PERMITTED_HOURS, PRIORITY_ROAD_GAP, PROHIBITED,
+         horizonEnd,
          type Evaluation, type Period, type Regime } from "./engine";
 import { countsTowardsRules, get as refGet, type Recognised } from "./reference";
 import type { Panel, Parsed, SignDoc, TimeWindow } from "./sign";
@@ -82,6 +83,7 @@ export const AUDIENCE_NOUN: Record<string, string> = {
   "pictogram-electric-car": "electric cars",
   "pictogram-bicycle": "bicycles and class II mopeds",
   "bil-personbil": "cars",
+  taxi: "taxis",
 };
 
 export const STAY_END_REASON: Record<string, string> = {
@@ -95,6 +97,11 @@ export const STAY_END_TEXT: Record<string, string> = {
   prohibition: "This stay must end here — the sign prohibits parking from this moment",
   "24h_default": "This stay must end here — general 24-hour rule, not written on the sign",
 };
+
+// Whether the answer says a second sign post was left unread. Off until the flag is
+// measured (decision 172): a warning wrong on most of the screens that carry it teaches
+// the reader to ignore warnings.
+export const SHOW_ANOTHER_POST = false;
 
 // The threshold was calibrated by measurement over the set of photographs, not chosen.
 export const GOOD_ENOUGH = 0.9;
@@ -118,7 +125,11 @@ export const REASON_TEXT: Record<string, string> = {
   main_sign_unknown: "The sign at the top of the pole could not be identified",
   main_sign_unreadable: "The sign at the top of the pole could not be read",
   "triage:other_road_sign": "The photograph shows a road sign, but not one about parking",
-  "triage:not_a_sign": "The photograph shows no road sign at all",
+  // Triage has no label of its own for a sign too far away to read, so such a photograph
+  // is filed with those that show no sign at all (`074`, `076`, `080`-`082`). The words
+  // must be true of both: "no road sign at all" was said of photographs full of signs.
+  "triage:not_a_sign": "No parking sign in this photograph can be read: there is none, "
+                     + "or it is too far away or too small",
   schema_invalid: "The sign could not be read into a form the service can work "
                 + "with, so there is nothing here to go on",
   panel_count_disagreement: "Confidence is lower: it is not certain where one "
@@ -147,9 +158,9 @@ export const UNCERTAINTY_TEXT: Record<string, string> = {
   main_sign_unknown: "The sign at the top of the pole could not be identified",
   "24h_expiry_outside_calendar": "When the 24-hour limit would run out could not be "
                                + "worked out this far ahead",
-  duration_given_in_days: "The sign gives the longest stay in days, and this service "
-                        + "can only state it in hours - so the limit below is the "
-                        + "general one, not the sign's",
+  another_post_not_read: "Another sign post is in this photograph and was not read - "
+                       + "only one post is read at a time, so photograph the other "
+                       + "separately",
 };
 
 export type Explained = { token: string; text: string };
@@ -545,6 +556,19 @@ export function regimeView(r: Regime, horizon: Naive, cal: Calendar,
                      text: "The sign names the hours when parking is permitted, and "
                          + "this time is not among them." });
       }
+      if (p.note === PRIORITY_ROAD_GAP) {
+        aside.push({ key: PRIORITY_ROAD_GAP, known: true,
+                     text: "The sign says nothing about this time, and this is a "
+                         + "priority road: parking there needs a sign that permits it." });
+      }
+      // The product cannot tell which side of the street the car is on, so the
+      // prohibition is applied - and the side it belongs to is named.
+      if (p.note === EVEN_SIDE_ONLY || p.note === ODD_SIDE_ONLY) {
+        const side = p.note === EVEN_SIDE_ONLY ? "even" : "odd";
+        aside.push({ key: p.note, known: true,
+                     text: `This prohibition holds only on the side of the street with `
+                         + `${side} house numbers.` });
+      }
       return periodView(p, horizon, cal,
                         last ? STAY_END_TEXT[r.durationSource ?? ""] ?? "" : "",
                         last ? STAY_END_REASON[r.durationSource ?? ""] ?? "" : "",
@@ -685,13 +709,26 @@ function datesPhrase(windows: TimeWindow[]): string {
 
 /** What distinguishes windows, apart from their dates. */
 const windowKey = (w: TimeWindow) =>
-  [w.day_class, w.named_weekday, w.from, w.to, w.week_parity].join("|");
+  [w.day_class, w.named_weekday, w.from, w.to, w.week_parity, w.day_of_month,
+   w.nth_of_month].join("|");
+
+const ORDINAL = ["", "1st", "2nd", "3rd", "4th", "5th"];
+const ordinal = (n: number): string => ORDINAL[n] ?? `${n}th`;
 
 function windowPhrase(w: TimeWindow, dates: string): string {
   const day = w.day_class;
-  const part = day === "named_weekday" && w.named_weekday
-    ? "on " + w.named_weekday[0].toUpperCase() + w.named_weekday.slice(1) + "s"
-    : (DAY_PHRASE[day ?? ""] ?? "on weekdays");
+  const weekdayName = w.named_weekday
+    ? w.named_weekday[0].toUpperCase() + w.named_weekday.slice(1) : "";
+  // A window that comes round by the calendar says so before anything else: read as
+  // "on weekdays", `1:a varje månad` told a reader a monthly ban held every working
+  // day (photographs `114`, `120`).
+  const part = w.day_of_month !== undefined
+    ? `on the ${ordinal(w.day_of_month)} of every month`
+    : w.nth_of_month !== undefined && weekdayName
+      ? `on the ${ordinal(w.nth_of_month)} ${weekdayName} of every month`
+      : day === "named_weekday" && weekdayName
+        ? "on " + weekdayName + "s"
+        : (DAY_PHRASE[day ?? ""] ?? "on weekdays");
 
   const out = [`${part} between ${w.from} and ${w.to}`];
   if (w.week_parity) out.push(`in ${w.week_parity} weeks`);
@@ -766,7 +803,10 @@ export function panelView(panel: Panel, keys: string[]): Record<string, unknown>
 
   let meanings: Meaning[];
   if (!carriesRule) {
-    const key = kind === "info_board" ? "info-board" : "operator-plate";
+    const key = kind === "info_board" ? "info-board"
+      : kind === "other_sign"
+        ? (panel.parsed?.road_sign === "priority_road" ? "priority-road" : "other-road-sign")
+        : "operator-plate";
     const entry = refGet(key);
     meanings = [{ key, label: entry ? entry.label : "Info board", code: "",
                   text: "", short: "", continues: false }];
@@ -940,6 +980,14 @@ export function toJson(analysis: Analysis, moment: Naive, cal: Calendar): Record
       (r) => regimeView(r, horizonEnd(moment), cal, mainKey, unknownPlates,
                         privateLand, certain)));
     body.uncertainties = ev.uncertainties.map((u) => explain(u, UNCERTAINTY_TEXT));
+    // One post is read per photograph (AGENTS.md section 8). With a second one in the
+    // frame, the answer is meant to say it covers only one (decision 160, photograph
+    // `096`). Held back for now: on the first live run the model set the flag on 18 of
+    // 127 photographs, most with no second post to speak of. The flag is still saved;
+    // the line returns once step 15g measures it against ground truth (decision 172).
+    if (SHOW_ANOTHER_POST && analysis.doc?.another_post_in_frame) {
+      body.uncertainties.push(explain("another_post_not_read", UNCERTAINTY_TEXT));
+    }
     body.permits_parking = ev.permitsParking;
     if (ev.note) body.note = explain(ev.note, NOTE_TEXT);
   }

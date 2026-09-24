@@ -435,6 +435,356 @@
   "moment": "2026-09-30T23:30"
  },
  {
+  "id": "answers/065-laddning-avgift-4-platser-med-automat@base",
+  "doc": "answers/065-laddning-avgift-4-platser-med-automat",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/066-reserverad-vaktmastare-tillstand-pil@base",
+  "doc": "answers/066-reserverad-vaktmastare-tillstand-pil",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/067-tillstand-reserverad-verksamhet-2-platser@base",
+  "doc": "answers/067-tillstand-reserverad-verksamhet-2-platser",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/068-parkering-forbjuden-privat-parkering@base",
+  "doc": "answers/068-parkering-forbjuden-privat-parkering",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/069-personal-giltigt-tillstand-securitas@base",
+  "doc": "answers/069-personal-giltigt-tillstand-securitas",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/070-regionservice-1-plats@base",
+  "doc": "answers/070-regionservice-1-plats",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/071-taxi-3-platser@base",
+  "doc": "answers/071-taxi-3-platser",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/072-blodbil-1-plats@base",
+  "doc": "answers/072-blodbil-1-plats",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/073-30min-00-24-buss-avgift-roda-siffror@base",
+  "doc": "answers/073-30min-00-24-buss-avgift-roda-siffror",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/075-forhyrda-platser-pa-avstand@base",
+  "doc": "answers/075-forhyrda-platser-pa-avstand",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/077-gul-forbud-forhyrda-platser-skymning@base",
+  "doc": "answers/077-gul-forbud-forhyrda-platser-skymning",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/078-p-skylt-overklistrad@base",
+  "doc": "answers/078-p-skylt-overklistrad",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/079-p-skylt-bakom-trad@base",
+  "doc": "answers/079-p-skylt-bakom-trad",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/083-gul-forbud-forhyrda-platser-pa-avstand@base",
+  "doc": "answers/083-gul-forbud-forhyrda-platser-pa-avstand",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/084-gul-forbud-p-tjanst-vast-farthinder@base",
+  "doc": "answers/084-gul-forbud-p-tjanst-vast-farthinder",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/085-p-med-plattor-bakom-bom@base",
+  "doc": "answers/085-p-med-plattor-bakom-bom",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/086-p-1tim-pil-europark@base",
+  "doc": "answers/086-p-1tim-pil-europark",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/087-motljus-parkering-pa-avstand@base",
+  "doc": "answers/087-motljus-parkering-pa-avstand",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/088-avgift-8-20-rod-taxa-boende-c-nv-mandag-8-11@base",
+  "doc": "answers/088-avgift-8-20-rod-taxa-boende-c-nv-mandag-8-11",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/089-lastplats-zon-c-boende-centrala@base",
+  "doc": "answers/089-lastplats-zon-c-boende-centrala",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/090-avgift-uppstallning-zon-e-pil@base",
+  "doc": "answers/090-avgift-uppstallning-zon-e-pil",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/091-avgift-7-19-torsd-boende@base",
+  "doc": "answers/091-avgift-7-19-torsd-boende",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/092-avgift-boende-mork-vagg@base",
+  "doc": "answers/092-avgift-boende-mork-vagg",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/093-forbud-onsdag-pilar@base",
+  "doc": "answers/093-forbud-onsdag-pilar",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/094-p-7-dygn-torsd-vintersasong@base",
+  "doc": "answers/094-p-7-dygn-torsd-vintersasong",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/095-30min-plus-avgift-taxa@base",
+  "doc": "answers/095-30min-plus-avgift-taxa",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/096-flera-stolpar-boende-solna@base",
+  "doc": "answers/096-flera-stolpar-boende-solna",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/097-avgift-taxa-a-boende-solna-onsdag@base",
+  "doc": "answers/097-avgift-taxa-a-boende-solna-onsdag",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/098-avgift-7-19-tors-boende-tr@base",
+  "doc": "answers/098-avgift-7-19-tors-boende-tr",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/099-p-med-gul-skylt-pa-avstand@base",
+  "doc": "answers/099-p-med-gul-skylt-pa-avstand",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/100-avgift-7-19-boende-so@base",
+  "doc": "answers/100-avgift-7-19-boende-so",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/101-motorcykel-0-10m-avgift-tisd@base",
+  "doc": "answers/101-motorcykel-0-10m-avgift-tisd",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/102-p-bredvid-vagvisare-centrum-e4@base",
+  "doc": "answers/102-p-bredvid-vagvisare-centrum-e4",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/103-forbud-plus-hastighet-10@base",
+  "doc": "answers/103-forbud-plus-hastighet-10",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/104-2tim-avgift-fred-vid-blomsterbutik@base",
+  "doc": "answers/104-2tim-avgift-fred-vid-blomsterbutik",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/105-p-med-plattor-gathorn@base",
+  "doc": "answers/105-p-med-plattor-gathorn",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/106-p-blaa-och-gul-skylt-vid-berg@base",
+  "doc": "answers/106-p-blaa-och-gul-skylt-vid-berg",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/107-rorelsehindrad-med-plattor@base",
+  "doc": "answers/107-rorelsehindrad-med-plattor",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/108-p-plus-gangbana-skylt@base",
+  "doc": "answers/108-p-plus-gangbana-skylt",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/109-lastplats-vid-butik@base",
+  "doc": "answers/109-lastplats-vid-butik",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/110-avgift-2tim-smal-gata@base",
+  "doc": "answers/110-avgift-2tim-smal-gata",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/111-2tim-gul-skylt-vid-klippa@base",
+  "doc": "answers/111-2tim-gul-skylt-vid-klippa",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/112-p-1tim-parkeringsyta@base",
+  "doc": "answers/112-p-1tim-parkeringsyta",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/113-avgift-alla-dagar-utanfor-platser@base",
+  "doc": "answers/113-avgift-alla-dagar-utanfor-platser",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/114-avgift-taxa-boende-vid-vaggmalning@base",
+  "doc": "answers/114-avgift-taxa-boende-vid-vaggmalning",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/115-avgift-taxa-pil-ned@base",
+  "doc": "answers/115-avgift-taxa-pil-ned",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/116-p-gul-skylt-vid-restaurang@base",
+  "doc": "answers/116-p-gul-skylt-vid-restaurang",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/117-p-0-6m-plus-huvudled@base",
+  "doc": "answers/117-p-0-6m-plus-huvudled",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/118-p-plus-huvudled-pa-avstand@base",
+  "doc": "answers/118-p-plus-huvudled-pa-avstand",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/119-p-liten-skylt-vid-hack@base",
+  "doc": "answers/119-p-liten-skylt-vid-hack",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/120-p-7-dygn-plus-huvudled@base",
+  "doc": "answers/120-p-7-dygn-plus-huvudled",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/121-p-med-pil-vid-vag@base",
+  "doc": "answers/121-p-med-pil-vid-vag",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/122-p-3tim-pil-hoger@base",
+  "doc": "answers/122-p-3tim-pil-hoger",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/123-p-med-plattor-vid-torg@base",
+  "doc": "answers/123-p-med-plattor-vid-torg",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/124-p-gul-skylt-i-gronska@base",
+  "doc": "answers/124-p-gul-skylt-i-gronska",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/125-p-gula-plattor-vid-port@base",
+  "doc": "answers/125-p-gula-plattor-vid-port",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/126-avgift-7-19-fred-0-6@base",
+  "doc": "answers/126-avgift-7-19-fred-0-6",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/127-cykel-0-12m@base",
+  "doc": "answers/127-cykel-0-12m",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/128-rorelsehindrad-0-6m-avgift@base",
+  "doc": "answers/128-rorelsehindrad-0-6m-avgift",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/129-laddning-plus-overgangsstalle-30@base",
+  "doc": "answers/129-laddning-plus-overgangsstalle-30",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/130-2tim-avgift-torsd-vid-butik@base",
+  "doc": "answers/130-2tim-avgift-torsd-vid-butik",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/131-p-uppstallning-pil-i-sno@base",
+  "doc": "answers/131-p-uppstallning-pil-i-sno",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/132-avgift-boende-i-sno@base",
+  "doc": "answers/132-avgift-boende-i-sno",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/133-24tim-besokande-tillstand-1-plats@base",
+  "doc": "answers/133-24tim-besokande-tillstand-1-plats",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/134-p-plattor-plus-forbud-stannande@base",
+  "doc": "answers/134-p-plattor-plus-forbud-stannande",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/135-avgift-boende-rott-tegelhus@base",
+  "doc": "answers/135-avgift-boende-rott-tegelhus",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/136-forhyrda-platser-pilar-1-plats@base",
+  "doc": "answers/136-forhyrda-platser-pilar-1-plats",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/137-forhyrda-platser-securitas@base",
+  "doc": "answers/137-forhyrda-platser-securitas",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/138-forhyrda-platser-2-platser@base",
+  "doc": "answers/138-forhyrda-platser-2-platser",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "answers/139-p-1tim-alla-dagar-avgift-torsdag@base",
+  "doc": "answers/139-p-1tim-alla-dagar-avgift-torsdag",
+  "moment": "2026-03-02T00:00"
+ },
+ {
   "id": "expected/001-p-30min@base",
   "doc": "expected/001-p-30min",
   "moment": "2026-03-02T00:00"

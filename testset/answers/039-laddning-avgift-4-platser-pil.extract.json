@@ -2,12 +2,12 @@
   "image": "039-laddning-avgift-4-platser-pil.jpg",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:46:36+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:09:12+00:00",
   "usage": {
     "completion_tokens": 521,
-    "prompt_tokens": 4798,
-    "total_tokens": 5319
+    "prompt_tokens": 5538,
+    "total_tokens": 6059
   },
   "response": {
     "schema_version": 1,

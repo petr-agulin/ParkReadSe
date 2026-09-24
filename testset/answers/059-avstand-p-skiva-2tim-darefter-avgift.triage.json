@@ -3,16 +3,15 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:49:59+00:00",
+  "saved_at": "2026-09-24T18:20:59+00:00",
   "usage": {
-    "completion_tokens": 99,
+    "completion_tokens": 112,
     "prompt_tokens": 1515,
-    "total_tokens": 1614
+    "total_tokens": 1627
   },
   "response": {
     "category": "parking_sign",
-    "what_i_see": "A Swedish blue parking sign with three plates below it: a blue rule plate with hours and fees, a company name plate with a phone number, and a payment board with area code and app logos.",
-    "model_confidence": 0.98,
+    "what_i_see": "A Swedish parking sign with a main blue P sign and three plates below: the first specifies parking hours (07-20) and a fee rule ('2 tim därefter avgift'), the second is a company name and phone number",
     "panels_below_main_sign": 1
   }
 }

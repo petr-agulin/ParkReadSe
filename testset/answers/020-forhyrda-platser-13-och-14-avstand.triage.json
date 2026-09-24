@@ -3,16 +3,17 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:45:36+00:00",
+  "saved_at": "2026-09-24T16:17:14+00:00",
   "usage": {
-    "completion_tokens": 102,
+    "completion_tokens": 86,
     "prompt_tokens": 1533,
-    "total_tokens": 1635
+    "total_tokens": 1619
   },
   "response": {
+    "schema_version": 1,
     "category": "parking_sign",
-    "what_i_see": "A Swedish blue parking sign with a white 'P' and two additional plates below it specifying reserved parking (Förhyrda platser, Gäller plats 13 och 14) and an arrow.",
-    "model_confidence": 0.98,
+    "what_i_see": "A blue parking sign with two additional plates below it, specifying reserved spaces and an arrow, set in front of a modern apartment building.",
+    "model_confidence": 0.99,
     "panels_below_main_sign": 2
   }
 }

@@ -2,12 +2,12 @@
   "image": "004-endast-besokande-pingstkyrkan.jpg",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:43:32+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T14:36:59+00:00",
   "usage": {
     "completion_tokens": 340,
-    "prompt_tokens": 4822,
-    "total_tokens": 5162
+    "prompt_tokens": 5562,
+    "total_tokens": 5902
   },
   "response": {
     "schema_version": 1,

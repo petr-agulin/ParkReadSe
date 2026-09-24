@@ -3,15 +3,15 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:50:07+00:00",
+  "saved_at": "2026-09-24T18:21:05+00:00",
   "usage": {
-    "completion_tokens": 97,
+    "completion_tokens": 54,
     "prompt_tokens": 1557,
-    "total_tokens": 1654
+    "total_tokens": 1611
   },
   "response": {
     "category": "parking_sign",
-    "what_i_see": "A Swedish loading zone sign (Lastplats) with a prohibition of stopping, followed by additional plates indicating hours (7-19), distance (0-15 m), day/time restrictions (Torsd. 0-6), and a blue parking",
+    "what_i_see": "A tall Swedish loading zone and parking sign post with several rule plates below the main sign.",
     "panels_below_main_sign": 4
   }
 }

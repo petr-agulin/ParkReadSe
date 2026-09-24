@@ -1,48 +1,48 @@
 {
- "photos": 55,
+ "photos": 57,
  "fields": {
   "main_sign.background_color": [
-   54,
-   55
+   55,
+   57
   ],
   "main_sign.form": [
-   53,
-   55
+   54,
+   57
   ],
   "main_sign.type": [
-   53,
-   55
+   55,
+   57
   ],
   "panel.background_color": [
-   138,
-   144
+   143,
+   148
   ],
   "panel.lines": [
-   129,
-   144
+   133,
+   148
   ],
   "panel.rule_bearing": [
    153,
    153
   ],
   "panel_count": [
-   49,
-   55
+   52,
+   57
   ],
   "panels.content": [
-   43,
-   55
+   45,
+   57
   ],
   "panels.order": [
-   43,
-   55
+   45,
+   57
   ],
   "parsed.arrow": [
-   21,
-   22
+   23,
+   24
   ],
   "parsed.duration_limit": [
-   11,
+   10,
    11
   ],
   "parsed.eligibility": [
@@ -51,10 +51,10 @@
   ],
   "parsed.fee": [
    31,
-   34
+   33
   ],
   "parsed.payment_method": [
-   1,
+   0,
    3
   ],
   "parsed.permit_required": [
@@ -70,12 +70,12 @@
    4
   ],
   "parsed.placement": [
-   5,
-   6
+   6,
+   7
   ],
   "parsed.prohibition": [
    14,
-   18
+   20
   ],
   "parsed.scope_shift": [
    6,
@@ -83,41 +83,39 @@
   ],
   "parsed.stretch_metres": [
    6,
-   10
+   9
   ],
   "parsed.time_windows": [
    26,
-   38
+   37
   ],
   "parsed.vehicle_class": [
-   12,
-   13
+   13,
+   14
   ]
  },
  "mistakes": [
   "019-forbud-7-18-avgift-ovrig-tid: panel 1 field prohibition = True instead of None",
-  "019-forbud-7-18-avgift-ovrig-tid: panel 2 field time_windows = [{'from': '18:00', 'to': '07:00', 'day_class': 'weekday'}] instead of None",
-  "028-avgift-taxa-2-fred-0-6-boende-ci: panel 3 read as ['Boende', 'C1'] instead of ['Boende', 'Ci']",
-  "028-avgift-taxa-2-fred-0-6-boende-ci: plate order ['avgift taxa 2', 'fred 0-6', 'boende c1'] instead of ['avgift taxa 2', 'fred 0-6', 'boende ci']",
-  "028-avgift-taxa-2-fred-0-6-boende-ci: the content of the plates disagrees",
+  "031-snedstallning-torsdag-jamna-veckor-boende-solna: plate order ['arrow', 'avgift taxa a', 'torsdag 10-14 jämna veckor augusti-juni', 'boende solna', 'both_horizontal'] instead of ['?', 'avgift taxa a', 'torsdag 10-14 jämna veckor augusti-juni', 'boende solna', 'both_horizontal']",
+  "031-snedstallning-torsdag-jamna-veckor-boende-solna: the content of the plates disagrees",
   "033-avgift-8-21-uppstallning-zon-e-boende-storskogen: 4 plates instead of 5",
-  "033-avgift-8-21-uppstallning-zon-e-boende-storskogen: panel 2 field placement = 'marked_bay_only' instead of 'as_shown'",
   "033-avgift-8-21-uppstallning-zon-e-boende-storskogen: panel 4 field eligibility = 'residents' instead of None",
-  "033-avgift-8-21-uppstallning-zon-e-boende-storskogen: panel 4 read as ['Zon E', 'Boende', 'Storskogen'] instead of ['Zon E']",
-  "033-avgift-8-21-uppstallning-zon-e-boende-storskogen: plate order ['avgift 8-21', 'other', 'left', 'zon e boende storskogen'] instead of ['avgift 8-21', '?', 'left', 'zon e', 'boende storskogen']",
+  "033-avgift-8-21-uppstallning-zon-e-boende-storskogen: panel 4 read as ['Zon E', 'Boende', 'Storskogen', 'Kod: 8415', 'Betala digitalt'] instead of ['Zon E']",
+  "033-avgift-8-21-uppstallning-zon-e-boende-storskogen: plate order ['avgift 8-21', 'car', 'left', 'zon e boende storskogen kod: 8415 betala digitalt'] instead of ['avgift 8-21', '?', 'left', 'zon e', 'boende storskogen']",
   "033-avgift-8-21-uppstallning-zon-e-boende-storskogen: the content of the plates disagrees",
-  "035-zon-c-pa-avstand: panel 2 field fee = True instead of None",
   "035-zon-c-pa-avstand: panel 2 field time_windows = [{'from': '09:00', 'to': '18:00', 'day_class': 'weekday'}, {'from': '09:00', 'to': '15:00', 'day_class': 'eve'}] instead of None",
   "035-zon-c-pa-avstand: panel 2 read as ['9-18', '(9-15)'] instead of ['Zon C']",
-  "035-zon-c-pa-avstand: panel 3 read as ['Zon C'] instead of []",
-  "035-zon-c-pa-avstand: plate order ['avgift', '9-18 (9-15)', 'zon c'] instead of ['avgift', 'zon c', '?']",
+  "035-zon-c-pa-avstand: panel 3 field eligibility = 'residents' instead of None",
+  "035-zon-c-pa-avstand: panel 3 read as ['Zon C', 'Endast', 'boendeparkering'] instead of []",
+  "035-zon-c-pa-avstand: plate order ['avgift', '9-18 (9-15)', 'zon c endast boendeparkering'] instead of ['avgift', 'zon c', '?']",
+  "035-zon-c-pa-avstand: sign colour green instead of blue",
+  "035-zon-c-pa-avstand: sign form zone instead of regular",
   "035-zon-c-pa-avstand: the content of the plates disagrees",
   "036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so: plate order ['avgift 7-19 (11-17) taxa 3', 'other', 'fred 0-6 gäller ej 15/6 15/8', 'right', 'boende sö'] instead of ['avgift 7-19 (11-17) taxa 3', '?', 'fred 0-6 gäller ej 15/6 15/8', 'right', 'boende sö']",
   "036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so: the content of the plates disagrees",
   "037-hanvisning-p-med-pil: 1 plates instead of 0",
   "037-hanvisning-p-med-pil: plate order ['right'] instead of []",
   "037-hanvisning-p-med-pil: the content of the plates disagrees",
-  "038-scandic-buss-besokande-pil: panel 1 field eligibility = 'visitors' instead of None",
   "041-lastplats-forbud-7-17-ovrig-tid-avgift: 5 plates instead of 4",
   "041-lastplats-forbud-7-17-ovrig-tid-avgift: panel 1 field time_windows = None instead of [{'from': '07:00', 'to': '17:00', 'day_class': 'weekday'}]",
   "041-lastplats-forbud-7-17-ovrig-tid-avgift: panel 1 read as ['Last-', 'plats'] instead of ['7-17']",
@@ -137,23 +135,23 @@
   "041-lastplats-forbud-7-17-ovrig-tid-avgift: plate order ['last- plats', '7-17', '0-15 m', 'fred 0-6', 'övrig tid avgift taxa 2'] instead of ['7-17', '0-15 m', 'fred 0-6', 'övrig tid avgift taxa 2']",
   "041-lastplats-forbud-7-17-ovrig-tid-avgift: sign form zone instead of regular",
   "041-lastplats-forbud-7-17-ovrig-tid-avgift: the content of the plates disagrees",
-  "042-cykel-moped-parkering: panel 2 field arrow = 'both_horizontal' instead of None",
-  "042-cykel-moped-parkering: panel 2 field stretch_metres = {'from': 0, 'to': 0} instead of None",
-  "042-cykel-moped-parkering: panel 2 read as ['0 m'] instead of []",
-  "042-cykel-moped-parkering: plate order ['bicycle', '0 m'] instead of ['bicycle', 'other']",
+  "042-cykel-moped-parkering: panel 2 field placement = 'as_shown' instead of None",
+  "042-cykel-moped-parkering: panel 2 read as ['0 * m'] instead of []",
+  "042-cykel-moped-parkering: plate order ['bicycle', '0 * m'] instead of ['bicycle', 'other']",
   "042-cykel-moped-parkering: the content of the plates disagrees",
+  "044-motorcykel-avgift-taxa-12-fred-boende: panel 2 field arrow = 'down' instead of None",
   "044-motorcykel-avgift-taxa-12-fred-boende: panel 5 field vehicle_class = 'motorcycle' instead of None",
-  "049-moped-sasong-avgift-tva-taxor: panel 1 field time_windows = [{'from': '00:00', 'to': '23:59', 'day_class': 'all_days', 'dates': {'mode': 'only', 'ranges': [{'from': '04-01', 'to': '09-30'}]}}] instead of [{'from': '00:00', 'to': '24:00', 'day_class': 'all_days', 'dates': {'mode': 'only', 'ranges': [{'from': '04-01', 'to': '09-30'}]}}]",
+  "049-moped-sasong-avgift-tva-taxor: panel 1 field time_windows = [{'from': '00:00', 'to': '24:00', 'day_class': 'weekday', 'dates': {'mode': 'only', 'ranges': [{'from': '04-01', 'to': '09-30'}]}}] instead of [{'from': '00:00', 'to': '24:00', 'day_class': 'all_days', 'dates': {'mode': 'only', 'ranges': [{'from': '04-01', 'to': '09-30'}]}}]",
   "052-avgift-taxa-2-tisd-boende-roda-siffror: panel 3 field time_windows = [{'from': '22:00', 'to': '07:00', 'day_class': 'weekday'}, {'from': '22:00', 'to': '10:00', 'day_class': 'eve'}, {'from': '22:00', 'to': '10:00', 'day_class': 'red'}] instead of None",
-  "052-avgift-taxa-2-tisd-boende-roda-siffror: panel 3 read as ['Boende', 'C', '22-7', '(22-10)', '22-10'] instead of ['Boende', 'Ci', '22-7', '(22-10)', '22-10']",
-  "052-avgift-taxa-2-tisd-boende-roda-siffror: plate order ['avgift taxa 2', 'tisd 0-6', 'boende c 22-7 (22-10) 22-10'] instead of ['avgift taxa 2', 'tisd 0-6', 'boende ci 22-7 (22-10) 22-10']",
+  "052-avgift-taxa-2-tisd-boende-roda-siffror: panel 3 read as ['Boende', 'Cj', '22-7', '(22-10)', '22-10'] instead of ['Boende', 'Ci', '22-7', '(22-10)', '22-10']",
+  "052-avgift-taxa-2-tisd-boende-roda-siffror: plate order ['avgift taxa 2', 'tisd 0-6', 'boende cj 22-7 (22-10) 22-10'] instead of ['avgift taxa 2', 'tisd 0-6', 'boende ci 22-7 (22-10) 22-10']",
   "052-avgift-taxa-2-tisd-boende-roda-siffror: the content of the plates disagrees",
-  "056-natt-avgift-7-19-taxa-3-torsd-plus-forbud: 3 plates instead of 2",
-  "056-natt-avgift-7-19-taxa-3-torsd-plus-forbud: plate order ['avgift 7-19 (11-17) taxa 3', 'torsd 0-6', 'prohibition'] instead of ['avgift 7-19 (11-17) taxa 3', 'torsd 0-6']",
-  "056-natt-avgift-7-19-taxa-3-torsd-plus-forbud: the content of the plates disagrees",
+  "055-forbud-stannande-snotackt-pil: panel 1 read as ['Parkeringen', 'skall vara', 'utrymd', 'fr.o.m.', '2026-01-07'] instead of []",
+  "055-forbud-stannande-snotackt-pil: plate order ['parkeringen skall vara utrymd fr.o.m. 2026-01-07', 'right'] instead of ['?', 'right']",
+  "055-forbud-stannande-snotackt-pil: the content of the plates disagrees",
   "057-p-skiva-2tim-eller-gratis-biljett: main sign parking instead of unknown",
   "057-p-skiva-2tim-eller-gratis-biljett: panel 2 field payment_method = 'ticket' instead of 'parking_disc'",
-  "059-avstand-p-skiva-2tim-darefter-avgift: panel 1 field payment_method = 'ticket' instead of 'parking_disc'",
+  "059-avstand-p-skiva-2tim-darefter-avgift: panel 1 field payment_method = None instead of 'parking_disc'",
   "059-avstand-p-skiva-2tim-darefter-avgift: panel 1 read as ['07-20', '(08-17)', '9-16', '2 tim', 'därefter', 'avgift'] instead of ['07-20', '(08-17)', '09-16', '2 tim', 'därefter', 'avgift']",
   "059-avstand-p-skiva-2tim-darefter-avgift: plate order ['07-20 (08-17) 9-16 2 tim därefter avgift'] instead of ['07-20 (08-17) 09-16 2 tim därefter avgift']",
   "059-avstand-p-skiva-2tim-darefter-avgift: the content of the plates disagrees",
@@ -170,30 +168,39 @@
   "060-natt-lastplats-ovrig-tid-avgift: panel 4 field scope_shift = None instead of 'remaining_time'",
   "060-natt-lastplats-ovrig-tid-avgift: panel 4 field time_windows = [{'from': '00:00', 'to': '06:00', 'day_class': 'named_weekday', 'named_weekday': 'thursday'}] instead of None",
   "060-natt-lastplats-ovrig-tid-avgift: panel 4 read as ['Torsd.', '0-6'] instead of ['Övrig tid', 'avgift']",
-  "060-natt-lastplats-ovrig-tid-avgift: plate order ['last- plats', '7-19', '0-15 m', 'torsd. 0-6', 'övrig tid avgift (10-17) taxe 3'] instead of ['7-19', '?', '?', 'övrig tid avgift']",
+  "060-natt-lastplats-ovrig-tid-avgift: plate order ['last- plats', '7-19', '0-15 m', 'torsd. 0-6', 'övrig tid avgift (10-17) taxa 3'] instead of ['7-19', '?', '?', 'övrig tid avgift']",
   "060-natt-lastplats-ovrig-tid-avgift: the content of the plates disagrees",
   "061-lastplats-langt-avstand: 5 plates instead of 0",
   "061-lastplats-langt-avstand: main sign prohibition_stopping instead of unknown",
-  "061-lastplats-langt-avstand: plate order ['last-', '7-17', '0-40 m', 'fred 0-6 lörd 0-6', 'övrig tid 3 tim p-skiva 30 min'] instead of []",
+  "061-lastplats-langt-avstand: plate order ['last- plats', '7-17', '0-40 m', 'fordon över 3,5 t ej tillåtet', 'övrig tid 3 tim p-skiva 24h-vakt'] instead of []",
   "061-lastplats-langt-avstand: sign colour yellow instead of blue",
   "061-lastplats-langt-avstand: sign form zone instead of regular",
   "061-lastplats-langt-avstand: the content of the plates disagrees",
+  "062-klass-i-14-dygn-slapfordon-forbud: panel 2 field duration_limit = {'amount': 14, 'unit': 'days'} instead of {'amount': 336, 'unit': 'hours'}",
+  "062-klass-i-14-dygn-slapfordon-forbud: panel 3 field prohibition = True instead of None",
+  "062-klass-i-14-dygn-slapfordon-forbud: panel 4 field prohibition = True instead of None",
+  "063-natt-p-tillstand-06-16-p-skiva-3tim: panel 2 field payment_method = None instead of 'parking_disc'",
   "064-motorcykel-tisd-9-17-beskuren: panel 3 field time_windows = [{'from': '00:00', 'to': '23:59', 'day_class': 'all_days', 'dates': {'mode': 'only', 'ranges': [{'from': '04-01', 'to': '11-30'}]}}] instead of [{'from': '00:00', 'to': '24:00', 'day_class': 'all_days', 'dates': {'mode': 'only', 'ranges': [{'from': '04-01', 'to': '11-30'}]}}]"
  ],
  "diverged": {
+  "035-zon-c-pa-avstand": [
+   "who may park: ['boende'] instead of -",
+   "hours differing by state 117/168, of which wider 0"
+  ],
   "057-p-skiva-2tim-eller-gratis-biljett": [
    "hours differing by conditions 112/168: avgift, p-biljett instead of avgift, p-skiva"
   ],
   "059-avstand-p-skiva-2tim-darefter-avgift": [
-   "hours differing by conditions 81/168: avgift, p-biljett instead of avgift, p-skiva"
+   "hours differing by conditions 81/168: avgift instead of avgift, p-skiva"
   ],
   "060-natt-lastplats-ovrig-tid-avgift": [
    "hours differing by state 6/168, of which wider 0",
    "hours differing by conditions 95/168: - instead of avgift"
   ],
   "061-lastplats-langt-avstand": [
-   "hours differing by state 62/168, of which wider 0",
-   "hours differing by conditions 106/168: p-skiva instead of -"
+   "who may park: ['reserved-for-named-group', 'reserved-for-named-group'] instead of -",
+   "hours differing by state 50/168, of which wider 0",
+   "hours differing by conditions 118/168: p-skiva instead of -"
   ]
  },
  "pixels": {
@@ -210,6 +217,7 @@
   "011-gul-p-avgift-klistermarken": 737280,
   "012-tillstand-7-17-ovrig-tid-avgift": 737280,
   "013-rorelsehindrad-2-platser": 634880,
+  "014-motorcykel-pil-skymning": 737280,
   "015-motorcykel": 737280,
   "016-tillstand-ovrig-tid-5-platser": 737280,
   "017-rorelsehindrad": 737280,
@@ -243,6 +251,7 @@
   "050-aimo-park-privat-hanvisning": 277656,
   "052-avgift-taxa-2-tisd-boende-roda-siffror": 427700,
   "054-buss-15min-avgift-torsd": 496264,
+  "055-forbud-stannande-snotackt-pil": 261370,
   "056-natt-avgift-7-19-taxa-3-torsd-plus-forbud": 205800,
   "057-p-skiva-2tim-eller-gratis-biljett": 136704,
   "058-natt-klass-i-22-06-roda-siffror-utanfor-markerad": 251236,
@@ -253,14 +262,11 @@
   "063-natt-p-tillstand-06-16-p-skiva-3tim": 150360,
   "064-motorcykel-tisd-9-17-beskuren": 69540
  },
- "fingerprint": "6f17821fa578",
- "excluded": [
-  "014-motorcykel-pil-skymning",
-  "055-forbud-stannande-snotackt-pil"
- ],
+ "fingerprint": "a1b96992540a",
+ "excluded": [],
  "rows": [
   [
-   0.7,
+   0.694,
    "insufficient",
    true,
    "061-lastplats-langt-avstand"
@@ -275,7 +281,13 @@
    0.775,
    "partial",
    false,
-   "021-privat-parkering-brf"
+   "033-avgift-8-21-uppstallning-zon-e-boende-storskogen"
+  ],
+  [
+   0.775,
+   "partial",
+   false,
+   "038-scandic-buss-besokande-pil"
   ],
   [
    0.775,
@@ -284,10 +296,16 @@
    "041-lastplats-forbud-7-17-ovrig-tid-avgift"
   ],
   [
-   0.875,
-   "full",
+   0.795,
+   "partial",
    false,
-   "011-gul-p-avgift-klistermarken"
+   "055-forbud-stannande-snotackt-pil"
+  ],
+  [
+   0.875,
+   "partial",
+   false,
+   "021-privat-parkering-brf"
   ],
   [
    0.875,
@@ -299,19 +317,13 @@
    0.875,
    "full",
    false,
-   "035-zon-c-pa-avstand"
+   "030-avgift-8-21-fredag-0-6-galler-ej-juli-zon-a"
   ],
   [
    0.875,
    "partial",
    false,
    "037-hanvisning-p-med-pil"
-  ],
-  [
-   0.875,
-   "full",
-   false,
-   "038-scandic-buss-besokande-pil"
   ],
   [
    0.875,
@@ -338,16 +350,16 @@
    "057-p-skiva-2tim-eller-gratis-biljett"
   ],
   [
-   0.898,
+   0.875,
    "partial",
    false,
-   "029-beskickningsfordon-0-12m"
+   "062-klass-i-14-dygn-slapfordon-forbud"
   ],
   [
-   0.898,
+   0.895,
    "full",
-   false,
-   "033-avgift-8-21-uppstallning-zon-e-boende-storskogen"
+   true,
+   "035-zon-c-pa-avstand"
   ],
   [
    0.898,
@@ -359,25 +371,19 @@
    0.898,
    "partial",
    false,
-   "062-klass-i-14-dygn-slapfordon-forbud"
+   "050-aimo-park-privat-hanvisning"
   ],
   [
    0.899,
-   "partial",
+   "full",
    false,
-   "040-servicefordon-vardagar-7-17-ovrig-tid-avgift"
-  ],
-  [
-   0.9,
-   "partial",
-   false,
-   "050-aimo-park-privat-hanvisning"
+   "011-gul-p-avgift-klistermarken"
   ],
   [
    0.925,
    "full",
-   true,
-   "059-avstand-p-skiva-2tim-darefter-avgift"
+   false,
+   "063-natt-p-tillstand-06-16-p-skiva-3tim"
   ],
   [
    0.975,
@@ -395,7 +401,19 @@
    0.975,
    "full",
    false,
+   "003-p-2tim"
+  ],
+  [
+   0.975,
+   "full",
+   false,
    "004-endast-besokande-pingstkyrkan"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "005-2tim-8-18-parentes-8-15-dubbelpil"
   ],
   [
    0.975,
@@ -407,7 +425,7 @@
    0.975,
    "full",
    false,
-   "008-rorelsehindrad-avgift"
+   "007-gul-forbud-forhyrda-platser"
   ],
   [
    0.975,
@@ -425,19 +443,19 @@
    0.975,
    "full",
    false,
-   "012-tillstand-7-17-ovrig-tid-avgift"
-  ],
-  [
-   0.975,
-   "full",
-   false,
    "013-rorelsehindrad-2-platser"
   ],
   [
    0.975,
    "full",
    false,
-   "016-tillstand-ovrig-tid-5-platser"
+   "014-motorcykel-pil-skymning"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "015-motorcykel"
   ],
   [
    0.975,
@@ -462,12 +480,6 @@
    "full",
    false,
    "020-forhyrda-platser-13-och-14-avstand"
-  ],
-  [
-   0.975,
-   "full",
-   false,
-   "022-avgift-4tim-laddande-elbilar-2-platser"
   ],
   [
    0.975,
@@ -503,7 +515,7 @@
    0.975,
    "full",
    false,
-   "030-avgift-8-21-fredag-0-6-galler-ej-juli-zon-a"
+   "029-beskickningsfordon-0-12m"
   ],
   [
    0.975,
@@ -521,6 +533,12 @@
    0.975,
    "full",
    false,
+   "034-avgift-tisdag-12-15-nov-maj-zon-c-boende"
+  ],
+  [
+   0.975,
+   "full",
+   false,
    "036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so"
   ],
   [
@@ -533,13 +551,13 @@
    0.975,
    "full",
    false,
-   "044-motorcykel-avgift-taxa-12-fred-boende"
+   "040-servicefordon-vardagar-7-17-ovrig-tid-avgift"
   ],
   [
    0.975,
    "full",
    false,
-   "052-avgift-taxa-2-tisd-boende-roda-siffror"
+   "044-motorcykel-avgift-taxa-12-fred-boende"
   ],
   [
    0.975,
@@ -550,45 +568,45 @@
   [
    0.975,
    "full",
-   false,
-   "063-natt-p-tillstand-06-16-p-skiva-3tim"
-  ],
-  [
-   0.975,
-   "full",
-   false,
-   "064-motorcykel-tisd-9-17-beskuren"
+   true,
+   "059-avstand-p-skiva-2tim-darefter-avgift"
   ],
   [
    0.998,
    "full",
    false,
-   "034-avgift-tisdag-12-15-nov-maj-zon-c-boende"
+   "052-avgift-taxa-2-tisd-boende-roda-siffror"
+  ],
+  [
+   0.998,
+   "full",
+   false,
+   "064-motorcykel-tisd-9-17-beskuren"
   ],
   [
    0.999,
    "full",
    false,
-   "005-2tim-8-18-parentes-8-15-dubbelpil"
+   "008-rorelsehindrad-avgift"
   ],
   [
    0.999,
    "full",
    false,
-   "007-gul-forbud-forhyrda-platser"
+   "022-avgift-4tim-laddande-elbilar-2-platser"
   ],
   [
    1.0,
    "full",
    false,
-   "003-p-2tim"
+   "012-tillstand-7-17-ovrig-tid-avgift"
   ],
   [
    1.0,
    "full",
    false,
-   "015-motorcykel"
+   "016-tillstand-ovrig-tid-5-platser"
   ]
  ],
- "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 10 | 2 | 45 | 2 |\n| 0.875 | 10 | 2 | 45 | 2 |\n| 0.900 | 19 | 3 | 36 | 1 |\n| 0.920 | 19 | 3 | 36 | 1 |\n| 0.950 | 20 | 4 | 35 | 0 |"
+ "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 11 | 2 | 46 | 3 |\n| 0.875 | 11 | 2 | 46 | 3 |\n| 0.900 | 19 | 4 | 38 | 1 |\n| 0.920 | 19 | 4 | 38 | 1 |\n| 0.950 | 20 | 4 | 37 | 1 |"
 }

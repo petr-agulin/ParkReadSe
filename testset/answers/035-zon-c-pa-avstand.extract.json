@@ -2,19 +2,19 @@
   "image": "035-zon-c-pa-avstand.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:48:11+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:17:58+00:00",
   "usage": {
-    "completion_tokens": 448,
-    "prompt_tokens": 4812,
-    "total_tokens": 5260
+    "completion_tokens": 494,
+    "prompt_tokens": 5552,
+    "total_tokens": 6046
   },
   "response": {
     "schema_version": 1,
     "main_sign": {
       "type": "parking",
-      "background_color": "blue",
-      "form": "regular",
+      "background_color": "green",
+      "form": "zone",
       "legibility": {
         "readable": true
       }
@@ -57,28 +57,32 @@
               "to": "15:00",
               "day_class": "eve"
             }
-          ],
-          "fee": true
+          ]
         }
       },
       {
         "index": 3,
         "kind": "sign_plate",
         "lines": [
-          "Zon C"
+          "Zon C",
+          "Endast",
+          "boendeparkering"
         ],
         "background_color": "white",
         "legibility": {
           "readable": true
         },
         "parsed": {
-          "tariff_code": "Zon C"
+          "eligibility": "residents"
         }
       }
     ],
     "panel_count": 3,
     "boundaries": {
       "certain": true
-    }
+    },
+    "notes": "Green zone parking sign with fee and resident restriction.",
+    "model_confidence": 0.9,
+    "another_post_in_frame": false
   }
 }

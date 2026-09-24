@@ -2,12 +2,12 @@
   "image": "024-avgift-erlaggs-med-mobil.jpg",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:46:12+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T16:25:42+00:00",
   "usage": {
-    "completion_tokens": 582,
-    "prompt_tokens": 4798,
-    "total_tokens": 5380
+    "completion_tokens": 583,
+    "prompt_tokens": 5538,
+    "total_tokens": 6121
   },
   "response": {
     "schema_version": 1,
@@ -74,7 +74,7 @@
         "kind": "info_board",
         "lines": [
           "9464",
-          "easypark",
+          "EASYPARK",
           "PARKERA MED",
           "EASYPARK-APPEN",
           "Ladda ned appen gratis!",

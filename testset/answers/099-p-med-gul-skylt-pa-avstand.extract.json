@@ -1,0 +1,63 @@
+{
+  "image": "099-p-med-gul-skylt-pa-avstand.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:23:17+00:00",
+  "usage": {
+    "completion_tokens": 333,
+    "prompt_tokens": 5545,
+    "total_tokens": 5878
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Onsd",
+          "8-16",
+          "1/11-15/5"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "time_windows": [
+            {
+              "from": "08:00",
+              "to": "16:00",
+              "day_class": "named_weekday",
+              "named_weekday": "wednesday",
+              "dates": {
+                "mode": "only",
+                "ranges": [
+                  {
+                    "from": "11-01",
+                    "to": "05-15"
+                  }
+                ]
+              }
+            }
+          ],
+          "prohibition": true,
+          "pictogram": "prohibition"
+        }
+      }
+    ],
+    "panel_count": 1,
+    "boundaries": {
+      "certain": true
+    }
+  }
+}

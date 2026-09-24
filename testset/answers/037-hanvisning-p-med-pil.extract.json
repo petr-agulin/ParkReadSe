@@ -2,12 +2,12 @@
   "image": "037-hanvisning-p-med-pil.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:48:27+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:19:05+00:00",
   "usage": {
-    "completion_tokens": 178,
-    "prompt_tokens": 4780,
-    "total_tokens": 4958
+    "completion_tokens": 187,
+    "prompt_tokens": 5520,
+    "total_tokens": 5707
   },
   "response": {
     "schema_version": 1,
@@ -29,7 +29,8 @@
           "readable": true
         },
         "parsed": {
-          "arrow": "right"
+          "arrow": "right",
+          "pictogram": "arrow"
         }
       }
     ],

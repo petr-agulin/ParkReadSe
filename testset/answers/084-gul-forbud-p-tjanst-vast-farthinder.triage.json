@@ -1,0 +1,19 @@
+{
+  "image": "084-gul-forbud-p-tjanst-vast-farthinder.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:15:13+00:00",
+  "usage": {
+    "completion_tokens": 99,
+    "prompt_tokens": 1555,
+    "total_tokens": 1654
+  },
+  "response": {
+    "schema_version": 1,
+    "category": "parking_sign",
+    "what_i_see": "A Swedish parking prohibition sign (no stopping/parking) with multiple plates below it, including a company name plate, a red warning plate, and a yellow text plate saying 'Farthinder'.",
+    "model_confidence": 0.95,
+    "panels_below_main_sign": 1
+  }
+}

@@ -3,16 +3,16 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:47:27+00:00",
+  "saved_at": "2026-09-24T18:16:37+00:00",
   "usage": {
-    "completion_tokens": 120,
+    "completion_tokens": 139,
     "prompt_tokens": 1517,
-    "total_tokens": 1637
+    "total_tokens": 1656
   },
   "response": {
     "category": "parking_sign",
-    "what_i_see": "A Swedish blue parking sign 'P' at the top, followed by a fee/hours sign 'Avgift 8-21 (10-17)', a yellow/red no-parking sign plate for Fridays with an exception, a white plate 'Zon A', and a bottom pa",
-    "model_confidence": 0.99,
-    "panels_below_main_sign": 3
+    "what_i_see": "A Swedish parking sign with a main blue P sign and four plates below it. The first plate indicates fee and hours (Avgift 8-21 (10-17)). The second plate indicates a no-parking rule for Fridays (Fredag",
+    "model_confidence": 0.98,
+    "panels_below_main_sign": 2
   }
 }

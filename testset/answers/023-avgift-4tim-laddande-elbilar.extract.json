@@ -2,12 +2,12 @@
   "image": "023-avgift-4tim-laddande-elbilar.jpg",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:46:04+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T16:23:57+00:00",
   "usage": {
-    "completion_tokens": 378,
-    "prompt_tokens": 4798,
-    "total_tokens": 5176
+    "completion_tokens": 390,
+    "prompt_tokens": 5538,
+    "total_tokens": 5928
   },
   "response": {
     "schema_version": 1,
@@ -71,6 +71,7 @@
     "panel_count": 3,
     "boundaries": {
       "certain": true
-    }
+    },
+    "another_post_in_frame": true
   }
 }

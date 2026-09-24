@@ -1,0 +1,17 @@
+{
+  "image": "080-p-skylt-pa-avstand-parkeringsyta.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:14:35+00:00",
+  "usage": {
+    "completion_tokens": 65,
+    "prompt_tokens": 1555,
+    "total_tokens": 1620
+  },
+  "response": {
+    "category": "not_a_sign",
+    "what_i_see": "An outdoor parking lot with buildings, cars, trees, and distant road signs, but no clear primary parking sign is featured close up.",
+    "panels_below_main_sign": 0
+  }
+}

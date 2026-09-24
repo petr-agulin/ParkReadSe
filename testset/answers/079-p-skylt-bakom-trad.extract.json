@@ -1,0 +1,32 @@
+{
+  "image": "079-p-skylt-bakom-trad.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:14:32+00:00",
+  "usage": {
+    "completion_tokens": 135,
+    "prompt_tokens": 5560,
+    "total_tokens": 5695
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": false,
+        "obstructions": [
+          "distance"
+        ]
+      }
+    },
+    "panels": [],
+    "panel_count": 0,
+    "boundaries": {
+      "certain": false
+    },
+    "notes": "The main parking sign is too far away to read any panels beneath it clearly."
+  }
+}

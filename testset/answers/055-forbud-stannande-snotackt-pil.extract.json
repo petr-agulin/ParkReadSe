@@ -2,12 +2,12 @@
   "image": "055-forbud-stannande-snotackt-pil.jpg",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "e4a19b5f21c5",
-  "saved_at": "2026-09-06T12:09:37+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T22:23:17+00:00",
   "usage": {
-    "completion_tokens": 442,
-    "prompt_tokens": 4736,
-    "total_tokens": 5178
+    "completion_tokens": 449,
+    "prompt_tokens": 5524,
+    "total_tokens": 5973
   },
   "response": {
     "schema_version": 1,
@@ -31,7 +31,7 @@
           "skall vara",
           "utrymd",
           "fr.o.m.",
-          "226-01/07"
+          "2026-01-07"
         ],
         "background_color": "yellow",
         "legibility": {
@@ -41,14 +41,10 @@
           ]
         },
         "parsed": {
-          "prohibition": true,
           "uninterpreted": [
-            "Parkeringen",
-            "skall vara",
-            "utrymd",
-            "fr.o.m.",
-            "226-01/07"
-          ]
+            "Parkeringen skall vara utrymd fr.o.m. 2026-01-07"
+          ],
+          "unrecognised_slot": "when"
         }
       },
       {
@@ -69,7 +65,8 @@
     "boundaries": {
       "certain": true
     },
-    "notes": "Top sign has two crossed red bars (stopping prohibition C39), partially covered by snow. First panel is a yellow text warning plate, second is a yellow right-pointing arrow.",
-    "model_confidence": 0.95
+    "notes": "Main sign is a stopping prohibition (C39, two bars visible) covered partly by snow. Panel 1 has text about parking evacuation from a specific date. Panel 2 has a right arrow.",
+    "model_confidence": 0.9,
+    "another_post_in_frame": true
   }
 }

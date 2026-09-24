@@ -2,12 +2,12 @@
   "image": "058-natt-klass-i-22-06-roda-siffror-utanfor-markerad.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:49:56+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:20:55+00:00",
   "usage": {
-    "completion_tokens": 855,
-    "prompt_tokens": 4812,
-    "total_tokens": 5667
+    "completion_tokens": 911,
+    "prompt_tokens": 5552,
+    "total_tokens": 6463
   },
   "response": {
     "schema_version": 1,
@@ -48,6 +48,8 @@
           "readable": true
         },
         "parsed": {
+          "vehicle_class": "car_only",
+          "pictogram": "car",
           "time_windows": [
             {
               "from": "22:00",
@@ -64,9 +66,7 @@
               "to": "06:00",
               "day_class": "red"
             }
-          ],
-          "vehicle_class": "car_only",
-          "pictogram": "car"
+          ]
         }
       },
       {
@@ -110,6 +110,7 @@
         "kind": "info_board",
         "lines": [
           "MOBILL",
+          "MKB Kampen",
           "801"
         ],
         "background_color": "white",
@@ -117,21 +118,29 @@
           "readable": true
         },
         "parsed": {
-          "area_code": "801"
+          "area_code": "801",
+          "operator": {
+            "name": "MOBILL"
+          }
         }
       },
       {
         "index": 6,
         "kind": "info_board",
         "lines": [
+          "e",
+          "PARK",
           "801"
         ],
-        "background_color": "other",
+        "background_color": "blue",
         "legibility": {
           "readable": true
         },
         "parsed": {
-          "area_code": "801"
+          "area_code": "801",
+          "operator": {
+            "name": "ePARK"
+          }
         }
       }
     ],

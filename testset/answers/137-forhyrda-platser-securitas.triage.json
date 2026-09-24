@@ -1,0 +1,17 @@
+{
+  "image": "137-forhyrda-platser-securitas.png",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T19:06:45+00:00",
+  "usage": {
+    "completion_tokens": 75,
+    "prompt_tokens": 1544,
+    "total_tokens": 1619
+  },
+  "response": {
+    "category": "parking_sign",
+    "what_i_see": "A Swedish blue parking sign with four plates below it: an SMS parking/fee plate, an arrow plate, a Securitas company plate, and a Parkster payment board at the bottom.",
+    "panels_below_main_sign": 2
+  }
+}

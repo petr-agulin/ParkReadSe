@@ -1,0 +1,17 @@
+{
+  "image": "082-p-skylt-pa-avstand-bostadsgata.jpg",
+  "stage": "triage",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "b3b2a8c24219",
+  "saved_at": "2026-09-24T18:14:47+00:00",
+  "usage": {
+    "completion_tokens": 55,
+    "prompt_tokens": 1555,
+    "total_tokens": 1610
+  },
+  "response": {
+    "category": "not_a_sign",
+    "what_i_see": "A parking lot with several parked cars in front of apartment buildings under a blue sky.",
+    "panels_below_main_sign": 0
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "image": "066-reserverad-vaktmastare-tillstand-pil.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:11:18+00:00",
+  "usage": {
+    "completion_tokens": 388,
+    "prompt_tokens": 5538,
+    "total_tokens": 5926
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Reserverad",
+          "Vaktmästare"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "custom"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "sign_plate",
+        "lines": [
+          "Tillstånd",
+          "erfordras"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "permit_required": true,
+          "eligibility": "permit_holders"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
+        "lines": [],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "arrow": "left",
+          "pictogram": "arrow"
+        }
+      }
+    ],
+    "panel_count": 3,
+    "boundaries": {
+      "certain": true
+    },
+    "another_post_in_frame": false
+  }
+}

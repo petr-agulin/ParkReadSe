@@ -3,15 +3,16 @@
   "stage": "triage",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "b3b2a8c24219",
-  "saved_at": "2026-09-07T10:46:24+00:00",
+  "saved_at": "2026-09-24T18:08:54+00:00",
   "usage": {
-    "completion_tokens": 127,
+    "completion_tokens": 120,
     "prompt_tokens": 1533,
-    "total_tokens": 1660
+    "total_tokens": 1653
   },
   "response": {
+    "schema_version": 1,
     "category": "parking_sign",
-    "what_i_see": "A Swedish parking sign assembly showing a main blue P sign with 'Avgift' (fee), followed below by a yellow supplementary plate stating 'Utanför markerad plats' (no parking outside marked spaces), and ",
+    "what_i_see": "A Swedish parking sign with a main P sign indicating a fee (Avgift). Below it, there is a yellow plate stating 'Utanför markerad plats' (no-parking rule outside marked spaces), and another plate with ",
     "model_confidence": 0.95,
     "panels_below_main_sign": 1
   }

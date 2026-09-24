@@ -15,7 +15,7 @@ import { compare, deadSignals, emptyReport, fingerprint, table, thresholdTable, 
 import { GOOD_ENOUGH } from "../src/lib/present";
 import { extractPrompt } from "../src/lib/prompts";
 import { ANSWERS, EXPECTED, answersFromAnotherPrompt, assessAnswer, loadPairs,
-         loadTriageExpectations, marked, triageAnswers } from "../tools/testset";
+         asShown, loadTriageExpectations, marked, triageAnswers } from "../tools/testset";
 
 const MOMENT = "2026-03-02T00:00";      // an ordinary Monday, outside holidays
 const percent = (x: number) => `${Math.round(x * 100)}%`;
@@ -74,7 +74,7 @@ describe("the measurement", () => {
     const seen = new Map<string, Set<number>>();
     for (const { label, expected, actual } of pairs) {
       const diff = verdictDifferences(verdictSlice(expected, moment, cal),
-                                      verdictSlice(actual, moment, cal));
+                                      verdictSlice(asShown(actual), moment, cal));
       const a = assessAnswer(label, actual, moment, cal);
       for (const [k, v] of Object.entries(a.signals)) {
         if (!seen.has(k)) seen.set(k, new Set());

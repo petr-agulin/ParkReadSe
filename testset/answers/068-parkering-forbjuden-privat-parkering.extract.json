@@ -1,0 +1,48 @@
+{
+  "image": "068-parkering-forbjuden-privat-parkering.jpg",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:12:26+00:00",
+  "usage": {
+    "completion_tokens": 250,
+    "prompt_tokens": 5538,
+    "total_tokens": 5788
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "prohibition_parking",
+      "background_color": "yellow",
+      "form": "zone",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Privat",
+          "parkering"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "eligibility": "custom",
+          "permits_parking": true
+        }
+      }
+    ],
+    "panel_count": 1,
+    "boundaries": {
+      "certain": true
+    },
+    "notes": "Main sign is a yellow zone parking prohibition sign, followed by a blue panel allowing private parking.",
+    "model_confidence": 1,
+    "another_post_in_frame": false
+  }
+}

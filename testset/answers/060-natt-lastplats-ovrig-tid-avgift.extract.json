@@ -2,12 +2,12 @@
   "image": "060-natt-lastplats-ovrig-tid-avgift.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
-  "prompt_fingerprint": "6f17821fa578",
-  "saved_at": "2026-09-07T10:50:12+00:00",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T18:21:05+00:00",
   "usage": {
-    "completion_tokens": 788,
-    "prompt_tokens": 4822,
-    "total_tokens": 5610
+    "completion_tokens": 795,
+    "prompt_tokens": 5562,
+    "total_tokens": 6357
   },
   "response": {
     "schema_version": 1,
@@ -32,7 +32,9 @@
           "readable": true
         },
         "parsed": {
-          "pictogram": "prohibition"
+          "uninterpreted": [
+            "Lastplats"
+          ]
         }
       },
       {
@@ -84,6 +86,7 @@
           "readable": true
         },
         "parsed": {
+          "prohibition": true,
           "time_windows": [
             {
               "from": "00:00",
@@ -92,7 +95,6 @@
               "named_weekday": "thursday"
             }
           ],
-          "prohibition": true,
           "pictogram": "prohibition"
         }
       },
@@ -103,7 +105,7 @@
           "Övrig tid",
           "Avgift",
           "(10-17)",
-          "Taxe 3"
+          "Taxa 3"
         ],
         "background_color": "blue",
         "legibility": {
@@ -119,9 +121,9 @@
           ],
           "fee": true,
           "scope_shift": "remaining_time",
-          "tariff_code": "Taxe 3",
-          "pictogram": "parking",
-          "permits_parking": true
+          "tariff_code": "Taxa 3",
+          "permits_parking": true,
+          "pictogram": "parking"
         }
       }
     ],

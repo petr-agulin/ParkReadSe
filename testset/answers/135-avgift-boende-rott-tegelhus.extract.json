@@ -1,0 +1,66 @@
+{
+  "image": "135-avgift-boende-rott-tegelhus.png",
+  "stage": "extract",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_fingerprint": "a1b96992540a",
+  "saved_at": "2026-09-24T19:05:28+00:00",
+  "usage": {
+    "completion_tokens": 355,
+    "prompt_tokens": 5545,
+    "total_tokens": 5900
+  },
+  "response": {
+    "schema_version": 1,
+    "main_sign": {
+      "type": "parking",
+      "background_color": "blue",
+      "form": "regular",
+      "legibility": {
+        "readable": true
+      }
+    },
+    "panels": [
+      {
+        "index": 1,
+        "kind": "sign_plate",
+        "lines": [
+          "Ej",
+          "markerade",
+          "platser"
+        ],
+        "background_color": "yellow",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "prohibition": true,
+          "placement": "marked_bay_only",
+          "pictogram": "prohibition"
+        }
+      },
+      {
+        "index": 2,
+        "kind": "operator_plate",
+        "lines": [
+          "SECURITAS",
+          "0771-10 10 11"
+        ],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "operator": {
+            "name": "SECURITAS",
+            "phone": "0771-10 10 11"
+          }
+        }
+      }
+    ],
+    "panel_count": 2,
+    "boundaries": {
+      "certain": true
+    },
+    "model_confidence": 1
+  }
+}
