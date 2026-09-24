@@ -374,6 +374,12 @@
    "050-aimo-park-privat-hanvisning"
   ],
   [
+   0.925,
+   "full",
+   true,
+   "059-avstand-p-skiva-2tim-darefter-avgift"
+  ],
+  [
    0.975,
    "full",
    false,
@@ -544,12 +550,6 @@
   [
    0.975,
    "full",
-   true,
-   "059-avstand-p-skiva-2tim-darefter-avgift"
-  ],
-  [
-   0.975,
-   "full",
    false,
    "063-natt-p-tillstand-06-16-p-skiva-3tim"
   ],
@@ -590,5 +590,5 @@
    "015-motorcykel"
   ]
  ],
- "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 10 | 2 | 45 | 2 |\n| 0.875 | 10 | 2 | 45 | 2 |\n| 0.900 | 19 | 3 | 36 | 1 |\n| 0.920 | 19 | 3 | 36 | 1 |\n| 0.950 | 19 | 3 | 36 | 1 |"
+ "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 10 | 2 | 45 | 2 |\n| 0.875 | 10 | 2 | 45 | 2 |\n| 0.900 | 19 | 3 | 36 | 1 |\n| 0.920 | 19 | 3 | 36 | 1 |\n| 0.950 | 20 | 4 | 35 | 0 |"
 }

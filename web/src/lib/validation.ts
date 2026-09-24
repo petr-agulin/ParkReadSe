@@ -11,6 +11,7 @@
 // the second source of errors, so each one joins the list, and the list feeds the
 // `no_repairs_needed` confidence signal.
 
+import { PRINTED_HOURS } from "./engine";
 import { validate } from "./schema";
 import { SIGN_SCHEMA, TRIAGE_SCHEMA } from "./schema.data";
 import type { Panel, SignDoc } from "./sign";
@@ -166,6 +167,52 @@ function dropUnknownEnums(doc: Record<string, any>): string[] {
   return done;
 }
 
+// A stretch in metres is printed the way hours are - `0-15 m` - and is not hours.
+const METRES = /\d+\s*[-–]\s*\d+\s*m\b/gi;
+
+/** Contradictions inside one reading, settled without knowing the sign (decision
+ *  163). Each rule here is a failure seen on a real photograph, and was checked
+ *  against the 57 hand-marked readings, where it never fires.
+ *
+ *  A TICKET AND A FEE ON ONE PLATE. `P-biljett` means parking is free but a ticket
+ *  must be shown; a fee means it is paid. On photograph `059` the model took a
+ *  parking disc for a ticket beside `därefter avgift`, and on `097` it put a ticket
+ *  beside `Avgift / Taxa A`. The fee is what the plate spells out, so the ticket goes.
+ *
+ *  HOURS ON A FEE PLATE THAT THE FEE DOES NOT CARRY. On `088` the plate read
+ *  `Avgift / 8-20 / (8-15)` and arrived as a fee with no hours at all, so the fee ran
+ *  round the clock and the answer showed a full paid day where the sign charges in
+ *  the daytime only. The lines holding the hours move to `uninterpreted`: the plate
+ *  is then plainly incomplete rather than quietly wrong, and its words stay in view
+ *  for a reader who can make sense of them. */
+function contradictions(doc: Record<string, any>): string[] {
+  const done: string[] = [];
+  for (const panel of doc.panels ?? []) {
+    const parsed = panel?.parsed;
+    if (!parsed || typeof parsed !== "object" || panel.kind !== "sign_plate") continue;
+
+    if (parsed.fee === true && parsed.payment_method === "ticket") {
+      done.push(`panel ${panel.index}: dropped payment_method='ticket' - a ticket and `
+              + "a fee on one plate contradict each other");
+      delete parsed.payment_method;
+    }
+
+    const lines: unknown[] = Array.isArray(panel.lines) ? panel.lines : [];
+    const windows = Array.isArray(parsed.time_windows) ? parsed.time_windows : [];
+    if (parsed.fee === true && !windows.length) {
+      const hours = lines.filter((line): line is string =>
+        typeof line === "string" && PRINTED_HOURS.test(line.replace(METRES, "")));
+      if (hours.length) {
+        const kept = Array.isArray(parsed.uninterpreted) ? parsed.uninterpreted : [];
+        parsed.uninterpreted = [...kept, ...hours.filter((h) => !kept.includes(h))];
+        done.push(`panel ${panel.index}: hours ${hours.map(pyRepr).join(", ")} are `
+                + "printed on the plate but the fee carries none - kept as uninterpreted");
+      }
+    }
+  }
+  return done;
+}
+
 /** A value written the way Python would write it: a string in single quotes. */
 function pyRepr(value: unknown): string {
   if (typeof value === "string") return `'${value.replace(/'/g, "\\'")}'`;
@@ -247,7 +294,8 @@ export function triage(doc: Record<string, any>): Result {
  *  look at the same photograph, and a disagreement means a boundary was lost. */
 export function sign(doc: Record<string, any>,
                      panelsSeen: number | null = null): Result {
-  const repairs = [...repairDoc(doc), ...fixUnknownColors(doc), ...dropUnknownEnums(doc)];
+  const repairs = [...repairDoc(doc), ...fixUnknownColors(doc), ...dropUnknownEnums(doc),
+                   ...contradictions(doc)];
   const errs = errorsOf(doc, SIGN_SCHEMA);
   const result: Result = {
     data: errs.length ? null : (doc as SignDoc),

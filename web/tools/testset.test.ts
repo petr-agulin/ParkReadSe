@@ -112,8 +112,11 @@ describe("the threshold", () => {
       const a = assessAnswer(label, actual, moment, cal);
       if (a.category === FULL && a.confidence >= GOOD_ENOUGH) escaped.push(label);
     }
-    // One escape is left: `059`. Confidence 0.998, and the threshold does not catch it —
-    // the reading is internally consistent; it simply read the wrong set of conditions.
+    // One escape is left: `059`. The model took the parking disc for a ticket beside
+    // the fee; the cross-check now notices the contradiction and drops the ticket,
+    // which costs the reading its "no repairs" signal (confidence 0.925). The disc is
+    // still missing, though, so the verdict still differs - and 0.925 still clears the
+    // threshold.
     expect(escaped).toEqual(["059-avstand-p-skiva-2tim-darefter-avgift"]);
   });
 });

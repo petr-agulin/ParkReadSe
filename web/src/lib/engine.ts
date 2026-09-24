@@ -323,7 +323,7 @@ const DAY_WORD = /(\d+)\s*dygn/i;
 
 // Hours actually PRINTED on the plate, as opposed to hours the model worked out for
 // itself. `7-18`, `(22-10)`, `07:00-19:00`.
-const PRINTED_HOURS = /\d{1,2}([:.]\d{2})?\s*[-–]\s*\d{1,2}([:.]\d{2})?/;
+export const PRINTED_HOURS = /\d{1,2}([:.]\d{2})?\s*[-–]\s*\d{1,2}([:.]\d{2})?/;
 export const DURATION_IN_DAYS = "duration_given_in_days";
 
 function withoutMisreadDuration(parsed: Parsed, panel: Panel,
