@@ -38,6 +38,12 @@ describe("the reference", () => {
     expect(has("no-such-key")).toBe(false);
   });
 
+  it("the README counts the entries right", () => {
+    // Step 15a added an entry and the README went on saying 50. Held here, next to the
+    // entries themselves, so the next one cannot slip past the same way.
+    expect(Number(/(\d+) sign entries/.exec(source("README.md"))?.[1])).toBe(all().length);
+  });
+
   it("a key the reference does not have is a key there is nothing to interpret with", () => {
     // The boundary of competence: the product names what it did not understand and
     // invents nothing.

@@ -149,7 +149,7 @@ Touch targets from 44 px. The camera shutter 92, the switch 46×28, the round bu
 | Dangerous action | the same button as `Add`/`Edit`: `chip`, `ink-2`, the same radius. Its words and the line beside it set it apart, not paint; it appears only when there is something to delete |
 | Notice | background `note`, text `note-ink`, small-card radius — for a line about what is missing |
 | "Label → value" row | label 88–116 px `ink-3`, value 17/500, on the baseline |
-| Period timeline | a 30 px column, a sign icon of 36 (20 at a join), a 4 px segment in the colour of meaning |
+| Period timeline | a 30 px column, a sign icon of 36 (20 at a join), a 4 px segment in the colour of meaning. Solid where the stretch is open to anyone and fully read; dashed where it is a prohibition, was not read in full, or is meant for a named group only. With no periods at all — a refused reading — the timeline gives way to a line of text asking for a closer photograph |
 | Drawn sign | a blue `plate` shield with a white border, white text strips beneath it |
 | "Not a parking rule" tag | on a plate that sets no rule, under its meaning: `chip` background, `ink-2` text 12, radius 4, as wide as its words |
 | Home screen dark band | the full width of the column, no rounding; the sign, a heading and two quiet lines in a column |

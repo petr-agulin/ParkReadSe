@@ -24,8 +24,9 @@ is the driver's.
 
 ## The problem
 
-In Sweden you may only park in marked places, and the sign is rarely just a **P**. Under
-it hangs a stack of supplementary plates (*tilläggstavlor*): fee windows, time windows, a
+In Sweden a street with no signs is open for parking under the general traffic rules — on
+weekdays for at most 24 hours in a row. Where there is a sign, it is rarely just a **P**.
+Under it hangs a stack of supplementary plates (*tilläggstavlor*): fee windows, time windows, a
 maximum duration, permit or parking-disc requirements, residents-only parking, cleaning
 days, arrows for which stretch of kerb is meant.
 
@@ -64,14 +65,20 @@ a "show" link, outside the reading.
 Under the heading, colour-coded in one line: how complete the reading is and the computed
 confidence. Green means every panel was read, amber means an answer with a caveat, red
 means no answer. An unread panel is stated plainly — and no period below is then presented
-as permitted.
+as permitted. A plate that could not be read reliably is named but not quoted, and when too
+little of the sign was read, no window is drawn at all: a guess would look like an answer.
 
 **Who can park here.** Whom the sign designates the spaces for. It names the category and
 stops there.
 
 **Your parking window.** A timeline from the moment you chose: when each period starts,
 what the sign says about it, how long the limit leaves you. Arrows splitting the sign into
-stretches give one timeline each, labelled with the side.
+stretches give one timeline each, labelled with the side. A line is solid where the stretch
+is open to anyone and fully read, and broken where it is a prohibition, was not read in
+full, or is meant for a named group only — taxis, rented spaces, visitors. Hours named on a
+plate are the only hours that plate permits. Where a prohibition's hours are over and the
+sign says nothing more, the general 24-hour rule applies, and the window says it is not
+from the sign.
 
 Every line is an assertion about the **sign**, never about you. That vocabulary is enforced
 by tests over the strings the product can display.
@@ -104,8 +111,8 @@ one input among them, and not the decisive one.
 | Source | What it is | How it is used |
 |---|---|---|
 | **JSON schema** | A closed list of fields the model must fill | The only thing that reaches the rules engine |
-| **Reference (Markdown)** | 50 sign entries: code to plain-language explanation | Supplies the explanation text and acts as a **whitelist** |
-| **General rules (Markdown)** | 11 short notes about rules that are *not* on the sign | Shown as marked reference only. Never enters a computation |
+| **Reference (Markdown)** | 51 sign entries: code to plain-language explanation | Supplies the explanation text and acts as a **whitelist** |
+| **General rules (Markdown)** | 12 short notes about rules that are *not* on the sign | Shown as marked reference only. The notes never enter a computation; the one rule the engine does apply, the 24 hours, is computed in code |
 
 Anything outside the reference is marked unrecognised: the plate's text is shown verbatim
 with an honest "this service does not interpret this wording", and the confidence drops,

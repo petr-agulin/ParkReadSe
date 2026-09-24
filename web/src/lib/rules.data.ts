@@ -19,6 +19,7 @@ export const GENERAL_RULES: GeneralRule[] = [
   {"key": "lights-in-the-dark", "text": "Show parking and tail lights when parked at the roadside in the dark", "source": "Körkortsboken på Engelska 2026"},
   {"key": "rail-and-tunnels", "text": "Do not stop at level crossings, in tunnels or on motorways", "source": "Körkortsboken på Engelska 2026"},
   {"key": "side-of-road", "text": "Park on the right-hand side, in the direction of travel", "source": "Körkortsboken på Engelska 2026"},
+  {"key": "twenty-four-hours", "text": "On weekdays, park for at most 24 hours in a row in the same place", "source": "Transportstyrelsen, «Stanna och parkera»"},
   {"key": "vehicle-eligibility", "text": "Some vehicles may not use an ordinary parking space at all", "source": "Körkortsboken på Engelska 2026"},
   {"key": "visibility-and-terrain", "text": "Do not park where you block the view or sit over a crest", "source": "Körkortsboken på Engelska 2026"},
   {"key": "what-counts-as-parking", "text": "Any stop counts as parking, with four exceptions", "source": "Körkortsboken på Engelska 2026"},

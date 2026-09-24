@@ -40,6 +40,14 @@ describe("general rules", () => {
     }
   });
 
+  it("the README counts them right", () => {
+    // A number in a document nobody rechecks quietly stops being true: in step 15a an
+    // entry was added to the sign reference and the README went on stating the old
+    // count. A missing sentence fails too - `Number(undefined)` is not a count.
+    const readme = readFileSync(`${ROOT}README.md`, "utf-8");
+    expect(Number(/(\d+) short notes about rules/.exec(readme)?.[1])).toBe(articles.length);
+  });
+
   it("keys do not repeat", () => {
     const keys = GENERAL_RULES.map((rule) => rule.key);
     expect(new Set(keys).size).toBe(keys.length);
