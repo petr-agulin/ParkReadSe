@@ -31,6 +31,11 @@ export type Period = {
    *  is incomplete, or the sign refers to conditions outside itself; the line is
    *  dotted then. */
   certain: boolean;
+  /** Whether the window holds for a NAMED CIRCLE only rather than for whoever is
+   *  reading — a taxi bay, a bay for staff. The line is broken then too, and for a
+   *  different reason from `certain`: here the product vouches for the rule, it is
+   *  simply not addressed to everyone. */
+  restricted: boolean;
   /** The lines under the stretch: the circle of those who may stand, and the notes of
    *  the stretch. Counted by the backend. */
   aside: Term[];
@@ -95,6 +100,10 @@ export type Panel = {
   /** The finished caption "this was not interpreted", or null. Counted by the
    *  backend. */
   not_interpreted_text: string | null;
+  /** The plate could not be read reliably, so `text` is empty and its words are not
+   *  shown. Either the model called the plate illegible, or the whole reading failed
+   *  the pixel budget. */
+  unreliable: boolean;
   fields: Field[];
   title: string;
   text: string;

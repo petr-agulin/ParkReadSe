@@ -98,7 +98,7 @@ export default function WhatWeSaw({
             <Plate panel={{
               index: 0, kind: "main_sign", lines: [], background_color: null,
               carries_rule: true, reference_keys: [], uninterpreted: [],
-              not_interpreted_text: null, fields: [], title: "", text: "",
+              not_interpreted_text: null, unreliable: false, fields: [], title: "", text: "",
               meanings: [primary],
             }} />
           )}

@@ -12,7 +12,8 @@ import { parseNaive } from "./civil";
 import { applyAsymmetry, grade } from "./completeness";
 import { evaluateParkingRules } from "./engine";
 import { OFFLINE_NOTE } from "./offline";
-import { CLOCK_CHANGE_TEXT, PERIOD_HEADLINE, REASON_TEXT, STATE_TEXT,
+import { CLOCK_CHANGE_TEXT, NOT_READ_RELIABLY, NO_WINDOW_TOO_LITTLE_READ,
+         PERIOD_HEADLINE, REASON_TEXT, STATE_TEXT,
          UNCERTAINTY_TEXT, toJson } from "./present";
 import { recognise } from "./reference";
 import type { SignDoc } from "./sign";
@@ -85,5 +86,114 @@ describe("the vocabulary of wordings", () => {
     for (const text of Object.values(STATE_TEXT)) {
       expect(text.toLowerCase()).toContain("the sign");
     }
+  });
+});
+
+describe("a reading too thin to answer from", () => {
+  const cal = new Calendar();
+  const moment = parseNaive("2026-03-02T12:00");
+
+  const answer = (doc: SignDoc, imagePixels: number | null = null) => {
+    const ev = evaluateParkingRules(doc, moment, cal);
+    const a = grade(doc, { evaluation: ev, imagePixels });
+    return toJson({ doc, recognised: recognise(doc), assessment: a,
+                    evaluation: applyAsymmetry(ev, a) }, moment, cal) as any;
+  };
+
+  const doc = (panels: Record<string, unknown>[]): SignDoc => ({
+    schema_version: 1,
+    main_sign: { type: "parking", background_color: "blue", form: "regular",
+                 legibility: { readable: true } },
+    panels: panels.map((p, i) => ({ ...p, index: i + 1 })),
+    panel_count: panels.length,
+  } as unknown as SignDoc);
+
+  const wordy = doc([{
+    kind: "sign_plate", background_color: "blue", legibility: { readable: true },
+    lines: ["Avgift 8-20", "Endast for boende med tillstand", "Ovrig tid 4 tim"],
+    parsed: { fee: true },
+  }]);
+
+  it("draws no timeline at all, and says why", () => {
+    // `074` and `080`: the screen said "too little of the sign was read" and drew a
+    // full day of free parking beneath the words. A refusal that still answers is no
+    // refusal. The pixel budget decides it without waiting on the model to admit
+    // anything (decision 156).
+    const thin = answer(wordy, 60 * 60);
+    expect(thin.completeness.category).toBe("insufficient");
+    expect(thin.has_answer).toBe(false);
+    expect(thin.regimes[0].periods).toEqual([]);
+    expect(thin.regimes[0].no_window_text).toBe(NO_WINDOW_TOO_LITTLE_READ);
+  });
+
+  it("keeps the window when the photograph is big enough to carry the words", () => {
+    // The gate must cost nothing on a good photograph: the same sign, more pixels.
+    const fat = answer(wordy, 1600 * 1200);
+    expect(fat.completeness.category).not.toBe("insufficient");
+    expect(fat.regimes[0].periods.length).toBeGreaterThan(0);
+    expect(fat.regimes[0].no_window_text).toBeNull();
+  });
+
+  it("does not quote the plates of a reading it refused", () => {
+    // The harm is not the refusal, it is the words: printed beside it they read as
+    // something that WAS read. On `075` the product quoted a plate off a sign the
+    // developer could not make out at all.
+    const thin = answer(wordy, 60 * 60);
+    expect(thin.what_we_saw.panels[0].text).toBe("");
+    expect(thin.what_we_saw.panels[0].unreliable).toBe(true);
+    expect(thin.what_we_saw.panels[0].not_interpreted_text).toBe(NOT_READ_RELIABLY);
+    // And the words come back when the reading stands.
+    expect(answer(wordy, 1600 * 1200).what_we_saw.panels[0].text.length)
+      .toBeGreaterThan(0);
+  });
+
+  it("does not quote a single plate the model called illegible", () => {
+    // Per plate, and at any category: `079`, `085`, `114`. The reading as a whole may
+    // be sound while one plate of it is not.
+    const mixed = answer(doc([
+      { kind: "sign_plate", background_color: "blue", legibility: { readable: true },
+        lines: ["Avgift"], parsed: { fee: true } },
+      { kind: "sign_plate", background_color: "blue", legibility: { readable: false },
+        lines: ["Forhyrda platser"], parsed: { eligibility: "rented" } },
+    ]), 1600 * 1200);
+    expect(mixed.what_we_saw.panels[0].text).toBe("Avgift");
+    expect(mixed.what_we_saw.panels[0].unreliable).toBe(false);
+    expect(mixed.what_we_saw.panels[1].text).toBe("");
+    expect(mixed.what_we_saw.panels[1].unreliable).toBe(true);
+  });
+});
+
+describe("a window addressed to a named circle", () => {
+  const cal = new Calendar();
+  const moment = parseNaive("2026-03-02T12:00");
+
+  const periods = (parsed: Record<string, unknown>) => {
+    const doc = {
+      schema_version: 1,
+      main_sign: { type: "parking", background_color: "blue", form: "regular",
+                   legibility: { readable: true } },
+      panels: [{ index: 1, kind: "sign_plate", background_color: "blue",
+                 legibility: { readable: true }, lines: ["TAXI"], parsed }],
+      panel_count: 1,
+    } as unknown as SignDoc;
+    const ev = evaluateParkingRules(doc, moment, cal);
+    const a = grade(doc, { evaluation: ev });
+    return (toJson({ doc, recognised: recognise(doc), assessment: a,
+                     evaluation: applyAsymmetry(ev, a) }, moment, cal) as any)
+      .regimes[0].periods;
+  };
+
+  it("is drawn broken, because it is not addressed to whoever is reading", () => {
+    // Photograph `071`: a taxi bay drew a solid line, which answers "you may park
+    // here" to a driver who is not a taxi. The developer's rule (2026-09-22): a
+    // narrowed circle breaks the line, an open one does not.
+    expect(periods({ eligibility: "rented" })[0].restricted).toBe(true);
+  });
+
+  it("is drawn solid where the sign narrows nobody", () => {
+    // `097`: paid parking open to everyone was drawn broken for no reason. A plate
+    // that merely ADDS - `Boende` - narrows no circle and must not break the line.
+    expect(periods({ fee: true })[0].restricted).toBe(false);
+    expect(periods({ eligibility: "residents" })[0].restricted).toBe(false);
   });
 });

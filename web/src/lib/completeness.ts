@@ -232,10 +232,17 @@ export function grade(sign: SignDoc | null, options: GradeOptions = {}): Assessm
   // price of silence is the product's most expensive mistake by its own table of
   // risks.
   let category: string;
-  if (tooLittle(sign)) {
+  if (tooLittle(sign) || fits < TEXT_PLAUSIBLE_ENOUGH) {
+    // The pixel budget is a REFUSAL, not a weight (decision 156). More text is claimed
+    // than the frame can carry, so the words on the plates are evidence of nothing -
+    // and, unlike the model's own admission of illegibility, this signal does not
+    // depend on the model admitting anything at all.
+    //
+    // Measured over the 57 answered photographs of the set: two fall below the share
+    // and both disagree with their ground truth, while every photograph that agrees
+    // sits at the top of the scale. The gate refuses nothing that was right.
     category = INSUFFICIENT;
-  } else if (unreadIdx.length || uninterpretedIdx.length || !isCorroborated
-             || fits < TEXT_PLAUSIBLE_ENOUGH) {
+  } else if (unreadIdx.length || uninterpretedIdx.length || !isCorroborated) {
     // A plate that was not understood is precisely PARTIAL: part of the sign never
     // reached the product. A sign without a single rule-bearing plate is PARTIAL too,
     // from the other side: there is nothing to understand, because there is no
@@ -277,6 +284,19 @@ function round(value: number, digits: number): number {
  *  list of conditions is marked - "at other times there are no restrictions" on an
  *  incomplete reading is a claim founded on the absence of data. */
 export function applyAsymmetry(evaluation: Evaluation, assessment: Assessment): Evaluation {
+  // Too little was read to speak about time at all. Until now the answer passed
+  // through untouched here, so the screen said "too little of the sign was read" and
+  // drew a full timeline underneath it - on photographs `074` and `080` a green line
+  // promising a day of free parking beneath a sign nobody could read. A refusal that
+  // still answers is not a refusal.
+  if (assessment.category === INSUFFICIENT) {
+    return {
+      ...evaluation,
+      regimes: evaluation.regimes.map((r) => ({
+        ...r, periods: [], durationExpiresAt: null, durationSource: null,
+      })),
+    };
+  }
   if (assessment.category !== PARTIAL) return evaluation;
 
   const out: Evaluation = {

@@ -315,9 +315,15 @@ describe("whether the pixels can carry the text that was read", () => {
   // On an 82x179 photograph the model returned four plates of fluent Swedish and not
   // one note about conditions. The product measures the resolution itself.
 
-  it("more text than the pixels can carry is not a full reading", () => {
+  it("more text than the pixels can carry is not a reading at all", () => {
+    // It used to be PARTIAL: the answer stood, with the confidence lowered. Decision
+    // 156 makes it a refusal, because the words on such a plate are evidence of
+    // nothing - and unlike the model's own admission of illegibility, this signal
+    // does not wait on the model to admit anything. Measured over the 57 answered
+    // photographs: two fall below the share, both disagree with their ground truth,
+    // and nothing that agrees is refused.
     const a = grade(wordy(), { imagePixels: 82 * 179 });
-    expect(a.category).toBe(PARTIAL);
+    expect(a.category).toBe(INSUFFICIENT);
     expect(a.reasons).toContain("text_exceeds_the_pixels");
     expect(a.signals.text_fits_the_pixels).toBeLessThan(0.5);
   });

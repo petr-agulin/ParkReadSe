@@ -261,13 +261,13 @@
  "rows": [
   [
    0.7,
-   "partial",
+   "insufficient",
    true,
    "061-lastplats-langt-avstand"
   ],
   [
    0.717,
-   "partial",
+   "insufficient",
    true,
    "060-natt-lastplats-ovrig-tid-avgift"
   ],

@@ -16,7 +16,7 @@
 import { Calendar, EVE, RED } from "./calendar";
 import { isoDate, isoNaive, type Civil, type Naive, addDays } from "./civil";
 import { realMinutes, switchBetween } from "./clock";
-import { FULL, PARTIAL, type Assessment } from "./completeness";
+import { FULL, INSUFFICIENT, PARTIAL, type Assessment } from "./completeness";
 import { ALLOWED, FEE_PERIOD_ELSEWHERE, GENERAL_RULE_GAP, NOT_STATED,
          OUTSIDE_PERMITTED_HOURS, PROHIBITED, horizonEnd,
          type Evaluation, type Period, type Regime } from "./engine";
@@ -308,7 +308,8 @@ export function headline(p: Period, tone: string): string {
 }
 
 function periodView(p: Period, horizon: Naive, cal: Calendar, stayEnd: string,
-                    reason: string, certain: boolean, aside: Term[]): Record<string, unknown> {
+                    reason: string, certain: boolean, aside: Term[],
+                    restricted = false): Record<string, unknown> {
   const tone = periodTone(p);
   return {
     start: isoNaive(p.start),
@@ -336,6 +337,13 @@ function periodView(p: Period, horizon: Naive, cal: Calendar, stayEnd: string,
     max_duration_minutes: p.maxDurationMinutes,
     note: p.note,
     certain,
+    // The window holds for a named circle only, not for whoever is reading. The
+    // timeline draws it broken for that reason - a solid line answers "you may park
+    // here", and to a driver who is not a taxi that answer is false (photograph
+    // `071`). Kept apart from `certain`, which says something else entirely: there
+    // the product does not vouch for the rule, here it vouches for it and the rule
+    // is simply not addressed to everyone.
+    restricted,
     aside,
   };
 }
@@ -378,6 +386,9 @@ export const TIMED_PROHIBITION_TEXT: Record<string, string> = {
 const RENTED = "forhyrda-platser";
 export const PRIVATE_LAND = "privat-parkering";
 
+export const NOT_READ_RELIABLY =
+  "This plate could not be read reliably, so its words are not shown.";
+
 const NO_WINDOW_RENTED =
   "The sign sets no parking window here: these spaces are rented, and how "
   + "long a rented space may be used follows from its rental, not from this sign.";
@@ -386,6 +397,11 @@ export const NO_WINDOW_NOTHING_STATED =
   "The sign restricts parking only at the times written on its plate. About "
   + "parking here at other times the sign states nothing: the general rules of "
   + "the road apply, and they are not on this sign.";
+
+export const NO_WINDOW_TOO_LITTLE_READ =
+  "Too little of this sign was read to say when parking is allowed here. No "
+  + "window is shown rather than a guess: photograph the sign again, closer, or "
+  + "read it yourself.";
 
 // A note about the clocks changing. There is deliberately no date in the text: the
 // change may fall on the coming night or on the Sunday after. The hours, by
@@ -405,6 +421,10 @@ function clockChange(periods: Period[]): string | null {
 
 /** Is there any point drawing a timeline - or would its content mislead? */
 function noWindow(r: Regime, circle: Term[]): string | null {
+  // No periods at all means the reading was refused (see `applyAsymmetry`). The card
+  // must still say something: an empty space where the window stood reads as an
+  // oversight rather than as an answer.
+  if (!r.periods.length) return NO_WINDOW_TOO_LITTLE_READ;
   // The sign is silent about the moment ASKED - that is enough: between "now" and
   // the prohibition it permits nothing, and drawing a window there would be
   // promising something of our own.
@@ -528,7 +548,8 @@ export function regimeView(r: Regime, horizon: Naive, cal: Calendar,
       return periodView(p, horizon, cal,
                         last ? STAY_END_TEXT[r.durationSource ?? ""] ?? "" : "",
                         last ? STAY_END_REASON[r.durationSource ?? ""] ?? "" : "",
-                        certain && !privateLand, aside);
+                        certain && !privateLand, aside,
+                        p.state === wantedState && windowFor.length > 0);
     }),
   };
 }
@@ -771,9 +792,21 @@ export type Sighting = {
   recognised: Recognised | null;
 };
 
+/** A plate whose words are not evidence of anything.
+ *
+ *  Two ways in. The model may say outright that the plate is illegible; or the whole
+ *  reading may have failed the pixel budget, in which case no plate on it is worth
+ *  quoting whatever the model believes (decision 156). On `075` and `076` the product
+ *  printed `P-tillstand erfordras` off a sign the developer could not read at all -
+ *  words invented downstream of a photograph that never carried them. Naming the
+ *  plate and refusing to quote it is the honest half of what we know. */
+function unreliable(panel: Panel, refused: boolean): boolean {
+  return refused || panel.legibility?.readable === false;
+}
+
 /** Block 1: what the service saw. ALL panels are shown, including those that state
  *  no rule: they are visible in the photograph, and their absence looks like a loss. */
-function whatWeSaw(s: Sighting): Record<string, unknown> {
+function whatWeSaw(s: Sighting, refused = false): Record<string, unknown> {
   if (!s.doc) {
     return { main_sign: null, main_sign_fields: [], primary_sign: null, panels: [] };
   }
@@ -784,17 +817,20 @@ function whatWeSaw(s: Sighting): Record<string, unknown> {
     const leftovers = rec
       ? (index in rec.uninterpreted ? rec.uninterpreted[index] : null)
       : null;
+    const bad = unreliable(p, refused);
     return {
       index,
       kind: p.kind,
-      lines: p.lines ?? [],
+      lines: bad ? [] : (p.lines ?? []),
       background_color: p.background_color ?? null,
       carries_rule: p.kind === "sign_plate",
       reference_keys: keys,
       uninterpreted: leftovers ?? [],
-      not_interpreted_text: notInterpreted(keys, leftovers),
+      not_interpreted_text: bad ? NOT_READ_RELIABLY : notInterpreted(keys, leftovers),
       fields: panelFields(p, keys),
       ...panelView(p, keys),
+      // Last word, so it overrides the quote `panelView` built from the same lines.
+      ...(bad ? { text: "", unreliable: true } : { unreliable: false }),
     };
   });
 
@@ -879,7 +915,8 @@ export function toJson(analysis: Analysis, moment: Naive, cal: Calendar): Record
     day_class: cal.dayClass(dateOf(moment)),
     completeness: completenessView(a),
     has_answer: hasAnswerHere,
-    what_we_saw: whatWeSaw({ doc: analysis.doc, recognised: analysis.recognised }),
+    what_we_saw: whatWeSaw({ doc: analysis.doc, recognised: analysis.recognised },
+                           a.category === INSUFFICIENT),
     stopped_at: analysis.stoppedAt ?? null,
     reason: analysis.reason ?? null,
     flags: analysis.flags ?? [],

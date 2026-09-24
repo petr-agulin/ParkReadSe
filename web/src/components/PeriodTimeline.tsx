@@ -66,7 +66,8 @@ const DAY_NOTE = "text-xs font-semibold leading-tight text-ink-2";
 // stop reading as continuous.
 function Rail({ p }: { p?: Period }) {
   if (!p) return <span className="flex-1" />;
-  const dashed = p.tone === "prohibited" || p.tone === "not_stated" || p.certain === false;
+  const dashed = p.tone === "prohibited" || p.tone === "not_stated"
+    || p.certain === false || p.restricted;
   return dashed ? (
     <span className={`w-0 flex-1 border-l-[3px] border-dashed ${DASH[p.tone] ?? "border-deny"}`} />
   ) : (
@@ -129,7 +130,8 @@ function Connector({ at, note, above, below }: {
 function Segment({ p, extra }: { p: Period; extra: Term[] }) {
   // A dash means "the sign does not answer for this time": a prohibition says so
   // through its own window, silence by having nothing to say.
-  const dashed = p.tone === "prohibited" || p.tone === "not_stated" || p.certain === false;
+  const dashed = p.tone === "prohibited" || p.tone === "not_stated"
+    || p.certain === false || p.restricted;
   return (
     <div className="flex items-stretch gap-3">
       <div className={`${COLUMN} flex justify-center`}>

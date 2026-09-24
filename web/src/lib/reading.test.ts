@@ -13,7 +13,7 @@ const meaning = (over: Partial<Meaning> = {}): Meaning => ({
 const panel = (over: Partial<Panel> = {}): Panel => ({
   index: 1, kind: "sign_plate", lines: [], background_color: "blue",
   carries_rule: true, reference_keys: [], uninterpreted: [],
-  not_interpreted_text: null, fields: [], title: "", text: "Avgift",
+  not_interpreted_text: null, unreliable: false, fields: [], title: "", text: "Avgift",
   meanings: [meaning()], ...over,
 });
 
@@ -81,7 +81,7 @@ describe("a plate as a card", () => {
 
 const period = (over: Partial<Period> = {}): Period => ({
   start: "2026-09-17T10:00", end: "2026-09-17T12:00", state: "allowed",
-  state_text: "Parking allowed", ends_at_horizon: false, certain: true,
+  state_text: "Parking allowed", ends_at_horizon: false, certain: true, restricted: false,
   aside: [], stay_end_text: "", stay_end_reason: "", tone: "free",
   start_day: null, end_day: null, headline: "Free parking", minutes: 120,
   notes: [], conditions: [], max_duration_minutes: null, note: null, ...over,
