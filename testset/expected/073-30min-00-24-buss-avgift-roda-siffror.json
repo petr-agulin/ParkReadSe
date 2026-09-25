@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "30 min",
+        "00-24",
+        "(00-14)"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "duration_limit": {
+          "amount": 30,
+          "unit": "minutes"
+        },
+        "time_windows": [
+          {
+            "from": "00:00",
+            "to": "24:00",
+            "day_class": "weekday"
+          },
+          {
+            "from": "00:00",
+            "to": "14:00",
+            "day_class": "eve"
+          }
+        ]
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Avgift",
+        "(14-24)",
+        "00-24"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "vehicle_class": "bus",
+        "pictogram": "bus",
+        "fee": true,
+        "time_windows": [
+          {
+            "from": "14:00",
+            "to": "24:00",
+            "day_class": "eve"
+          },
+          {
+            "from": "00:00",
+            "to": "24:00",
+            "day_class": "red"
+          }
+        ]
+      },
+      "index": 2
+    }
+  ],
+  "panel_count": 2,
+  "boundaries": {
+    "certain": true
+  }
+}

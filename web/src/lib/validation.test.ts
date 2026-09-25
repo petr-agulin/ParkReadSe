@@ -142,7 +142,7 @@ describe("contradictions inside one reading", () => {
       validateSign(JSON.parse(readFileSync(dir + f, "utf-8"))).repairs
         .filter((r) => r.includes("contradict") || r.includes("printed on the plate")
                    || r.includes("dygn") || r.includes("dropped obstruction")
-                   || r.includes("parking-disc symbol"))
+                   || r.includes("parking-disc symbol") || r.includes("Privat parkering"))
         .map((r) => `${f}: ${r}`));
     expect(fired).toEqual([]);
   });
@@ -234,5 +234,20 @@ describe("a parking-disc symbol with no requirement beside it", () => {
     const res = validateSign(doc);
     expect(res.data!.panels![1].parsed!.payment_method).toBe("ticket");
     expect(res.repairs.filter((r) => r.includes("parking-disc symbol"))).toEqual([]);
+  });
+});
+
+describe("a plate reading \"Privat parkering\"", () => {
+  it("opens no exception, and stays the sign plate it is", () => {
+    // `068` as the model read it: under a no-parking board, "Privat parkering" became
+    // parking for a named group, and the answer drew them a window. For the public
+    // it is no parking, with private parking as the reason (the developer, 2026-09-25).
+    const doc = read("068-parkering-forbjuden-privat-parkering");
+    doc.panels[0] = { ...doc.panels[0], kind: "sign_plate",
+                      parsed: { eligibility: "custom", permits_parking: true } };
+    const res = validateSign(doc);
+    expect(res.data!.panels![0].kind).toBe("sign_plate");
+    expect(res.data!.panels![0].parsed).toEqual({});
+    expect(res.repairs.some((r) => r.includes("Privat parkering"))).toBe(true);
   });
 });

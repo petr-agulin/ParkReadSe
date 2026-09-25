@@ -12,32 +12,50 @@
     {
       "kind": "sign_plate",
       "lines": [
-        "Privat",
-        "parkering",
-        "Brf Ängslyckan"
+        "Tillstånd",
+        "erfordras"
       ],
       "background_color": "blue",
       "legibility": {
         "readable": true
       },
-      "parsed": {},
+      "parsed": {
+        "eligibility": "permit_holders",
+        "permit_required": true
+      },
       "index": 1
     },
     {
       "kind": "sign_plate",
-      "lines": [],
-      "background_color": "white",
+      "lines": [
+        "Reserverad",
+        "Verksamhet"
+      ],
+      "background_color": "blue",
       "legibility": {
         "readable": true
       },
       "parsed": {
-        "arrow": "right",
-        "pictogram": "arrow"
+        "eligibility": "custom"
       },
       "index": 2
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "2 platser"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "place_count": 2
+      },
+      "index": 3
     }
   ],
-  "panel_count": 2,
+  "panel_count": 3,
   "boundaries": {
     "certain": true
   }

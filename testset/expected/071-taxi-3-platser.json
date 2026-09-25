@@ -12,27 +12,28 @@
     {
       "kind": "sign_plate",
       "lines": [
-        "Privat",
-        "parkering",
-        "Brf Ängslyckan"
+        "TAXI"
       ],
       "background_color": "blue",
       "legibility": {
         "readable": true
       },
-      "parsed": {},
+      "parsed": {
+        "vehicle_class": "taxi"
+      },
       "index": 1
     },
     {
       "kind": "sign_plate",
-      "lines": [],
-      "background_color": "white",
+      "lines": [
+        "3 platser"
+      ],
+      "background_color": "blue",
       "legibility": {
         "readable": true
       },
       "parsed": {
-        "arrow": "right",
-        "pictogram": "arrow"
+        "place_count": 3
       },
       "index": 2
     }

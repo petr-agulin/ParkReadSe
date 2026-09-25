@@ -31,21 +31,6 @@ export const TRIAGE_EXPECTED = join(ROOT, "testset", "triage_expected.json");
 // truth" and "ground truth forgotten" are different things, told apart only by naming
 // what is expected.
 export const PENDING_GROUND_TRUTH = new Set<string>([
-  "065-laddning-avgift-4-platser-med-automat",
-  "066-reserverad-vaktmastare-tillstand-pil",
-  "067-tillstand-reserverad-verksamhet-2-platser",
-  "068-parkering-forbjuden-privat-parkering",
-  "069-personal-giltigt-tillstand-securitas",
-  "070-regionservice-1-plats",
-  "071-taxi-3-platser",
-  "072-blodbil-1-plats",
-  "073-30min-00-24-buss-avgift-roda-siffror",
-  "074-skyltar-pa-langt-avstand",
-  "075-forhyrda-platser-pa-avstand",
-  "076-flera-skyltar-pa-avstand-kontorshus",
-  "077-gul-forbud-forhyrda-platser-skymning",
-  "078-p-skylt-overklistrad",
-  "079-p-skylt-bakom-trad",
   "080-p-skylt-pa-avstand-parkeringsyta",
   "081-p-skylt-pa-avstand-genom-lov",
   "082-p-skylt-pa-avstand-bostadsgata",
@@ -168,6 +153,15 @@ export function answersFromAnotherPrompt(expectedDir: string, fixturesDir: strin
  *  "not written yet" and "never to be written" are different things. */
 export function loadTriageExpectations(path = TRIAGE_EXPECTED): Record<string, string> {
   return existsSync(path) ? readJson(path).photos ?? {} : {};
+}
+
+export const UNREADABLE = join(ROOT, "testset", "unreadable.json");
+
+/** Parking signs nobody can read in the photograph (decision 176). A state of their
+ *  own: they are parking signs, so they do not belong with the photographs triage
+ *  should call something else, and there is nothing to read for a ground truth. */
+export function loadUnreadable(path = UNREADABLE): Set<string> {
+  return new Set(existsSync(path) ? readJson(path).photos ?? [] : []);
 }
 
 /** What the triage answered on each photograph — the model's real answers only. */

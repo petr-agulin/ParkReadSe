@@ -480,8 +480,8 @@
   "moment": "2026-03-02T00:00"
  },
  {
-  "id": "answers/075-forhyrda-platser-pa-avstand@base",
-  "doc": "answers/075-forhyrda-platser-pa-avstand",
+  "id": "answers/075-p-med-olasliga-plattor-pa-avstand@base",
+  "doc": "answers/075-p-med-olasliga-plattor-pa-avstand",
   "moment": "2026-03-02T00:00"
  },
  {
@@ -1218,5 +1218,70 @@
   "id": "expected/064-motorcykel-tisd-9-17-beskuren@season-edge",
   "doc": "expected/064-motorcykel-tisd-9-17-beskuren",
   "moment": "2026-09-30T23:30"
+ },
+ {
+  "id": "expected/065-laddning-avgift-4-platser-med-automat@base",
+  "doc": "expected/065-laddning-avgift-4-platser-med-automat",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/066-reserverad-vaktmastare-tillstand-pil@base",
+  "doc": "expected/066-reserverad-vaktmastare-tillstand-pil",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/067-tillstand-reserverad-verksamhet-2-platser@base",
+  "doc": "expected/067-tillstand-reserverad-verksamhet-2-platser",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/068-parkering-forbjuden-privat-parkering@base",
+  "doc": "expected/068-parkering-forbjuden-privat-parkering",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/069-personal-giltigt-tillstand-securitas@base",
+  "doc": "expected/069-personal-giltigt-tillstand-securitas",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/070-regionservice-1-plats@base",
+  "doc": "expected/070-regionservice-1-plats",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/071-taxi-3-platser@base",
+  "doc": "expected/071-taxi-3-platser",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/072-blodbil-1-plats@base",
+  "doc": "expected/072-blodbil-1-plats",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/073-30min-00-24-buss-avgift-roda-siffror@base",
+  "doc": "expected/073-30min-00-24-buss-avgift-roda-siffror",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/075-p-med-olasliga-plattor-pa-avstand@base",
+  "doc": "expected/075-p-med-olasliga-plattor-pa-avstand",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/077-gul-forbud-forhyrda-platser-skymning@base",
+  "doc": "expected/077-gul-forbud-forhyrda-platser-skymning",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/078-p-skylt-overklistrad@base",
+  "doc": "expected/078-p-skylt-overklistrad",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/079-p-skylt-bakom-trad@base",
+  "doc": "expected/079-p-skylt-bakom-trad",
+  "moment": "2026-03-02T00:00"
  }
 ]

@@ -1244,7 +1244,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "answers/075-forhyrda-platser-pa-avstand": {
+ "answers/075-p-med-olasliga-plattor-pa-avstand": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -2780,7 +2780,6 @@
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
-    "operator-plate",
     "privat-parkering"
    ],
    "2": [
@@ -3491,6 +3490,192 @@
    ]
   },
   "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/065-laddning-avgift-4-platser-med-automat": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "pictogram-electric-car"
+   ],
+   "2": [
+    "avgift"
+   ],
+   "3": [
+    "place-count"
+   ],
+   "4": [
+    "arrow-left"
+   ],
+   "5": [
+    "info-board",
+    "omradeskod"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/066-reserverad-vaktmastare-tillstand-pil": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "reserved-for-named-group"
+   ],
+   "2": [
+    "sarskilt-p-tillstand"
+   ],
+   "3": [
+    "arrow-left"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/067-tillstand-reserverad-verksamhet-2-platser": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "sarskilt-p-tillstand"
+   ],
+   "2": [
+    "reserved-for-named-group"
+   ],
+   "3": [
+    "place-count"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/068-parkering-forbjuden-privat-parkering": {
+  "main_sign_key": "main-prohibition-parking",
+  "panel_keys": {
+   "1": [
+    "privat-parkering"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/069-personal-giltigt-tillstand-securitas": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "reserved-for-named-group"
+   ],
+   "2": [
+    "sarskilt-p-tillstand"
+   ],
+   "3": [
+    "operator-plate"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/070-regionservice-1-plats": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "reserved-for-named-group"
+   ],
+   "2": [
+    "place-count"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/071-taxi-3-platser": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "taxi"
+   ],
+   "2": [
+    "place-count"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/072-blodbil-1-plats": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "reserved-for-named-group"
+   ],
+   "2": [
+    "place-count"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/073-30min-00-24-buss-avgift-roda-siffror": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "duration-limit",
+    "window-weekday",
+    "window-eve"
+   ],
+   "2": [
+    "avgift",
+    "pictogram-bus",
+    "window-eve",
+    "window-red"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/075-p-med-olasliga-plattor-pa-avstand": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [],
+   "2": []
+  },
+  "uninterpreted": {
+   "1": [],
+   "2": []
+  },
+  "missing_keys": []
+ },
+ "expected/077-gul-forbud-forhyrda-platser-skymning": {
+  "main_sign_key": "main-zone-prohibition",
+  "panel_keys": {
+   "1": [
+    "forhyrda-platser"
+   ],
+   "2": [
+    "operator-plate"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/078-p-skylt-overklistrad": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "forhyrda-platser"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/079-p-skylt-bakom-trad": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "forhyrda-platser"
+   ],
+   "2": []
+  },
+  "uninterpreted": {
+   "2": []
+  },
   "missing_keys": []
  }
 }

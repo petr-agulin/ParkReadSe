@@ -12,16 +12,33 @@
     {
       "kind": "sign_plate",
       "lines": [
-        "Privat",
-        "parkering",
-        "Brf Ängslyckan"
+        "Reserverad",
+        "Vaktmästare"
       ],
       "background_color": "blue",
       "legibility": {
         "readable": true
       },
-      "parsed": {},
+      "parsed": {
+        "eligibility": "custom"
+      },
       "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Tillstånd",
+        "erfordras"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "eligibility": "permit_holders",
+        "permit_required": true
+      },
+      "index": 2
     },
     {
       "kind": "sign_plate",
@@ -31,13 +48,13 @@
         "readable": true
       },
       "parsed": {
-        "arrow": "right",
+        "arrow": "left",
         "pictogram": "arrow"
       },
-      "index": 2
+      "index": 3
     }
   ],
-  "panel_count": 2,
+  "panel_count": 3,
   "boundaries": {
     "certain": true
   }

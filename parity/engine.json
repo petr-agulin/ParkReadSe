@@ -6780,7 +6780,7 @@
    }
   ]
  },
- "answers/075-forhyrda-platser-pa-avstand@base": {
+ "answers/075-p-med-olasliga-plattor-pa-avstand@base": {
   "permits_parking": true,
   "uncertainties": [],
   "note": null,
@@ -15583,7 +15583,7 @@
   "note": null,
   "regimes": [
    {
-    "extent": "here",
+    "extent": "right",
     "audience": null,
     "audience_excluded": [],
     "eligibility": [],
@@ -19098,6 +19098,440 @@
      {
       "start": "2026-10-06T17:00",
       "end": "2026-10-08T00:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/065-laddning-avgift-4-platser-med-automat@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "left",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [
+     "pictogram-electric-car"
+    ],
+    "place_notes": [
+     "place-count"
+    ],
+    "duration_expires_at": "2026-03-03T00:00",
+    "duration_source": "24h_default",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/066-reserverad-vaktmastare-tillstand-pil@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "left",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [
+     "reserved-for-named-group",
+     "sarskilt-p-tillstand"
+    ],
+    "place_notes": [],
+    "duration_expires_at": "2026-03-03T00:00",
+    "duration_source": "24h_default",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [
+       "sarskilt-p-tillstand"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/067-tillstand-reserverad-verksamhet-2-platser@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [
+     "sarskilt-p-tillstand",
+     "reserved-for-named-group"
+    ],
+    "place_notes": [
+     "place-count"
+    ],
+    "duration_expires_at": "2026-03-03T00:00",
+    "duration_source": "24h_default",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [
+       "sarskilt-p-tillstand"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/068-parkering-forbjuden-privat-parkering@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [],
+    "place_notes": [],
+    "duration_expires_at": null,
+    "duration_source": null,
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-10T00:00",
+      "state": "prohibited",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/069-personal-giltigt-tillstand-securitas@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [
+     "reserved-for-named-group",
+     "sarskilt-p-tillstand"
+    ],
+    "place_notes": [],
+    "duration_expires_at": "2026-03-03T00:00",
+    "duration_source": "24h_default",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [
+       "sarskilt-p-tillstand"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/070-regionservice-1-plats@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [
+     "reserved-for-named-group"
+    ],
+    "place_notes": [
+     "place-count"
+    ],
+    "duration_expires_at": "2026-03-03T00:00",
+    "duration_source": "24h_default",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/071-taxi-3-platser@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [
+     "taxi"
+    ],
+    "place_notes": [
+     "place-count"
+    ],
+    "duration_expires_at": "2026-03-03T00:00",
+    "duration_source": "24h_default",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/072-blodbil-1-plats@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [
+     "reserved-for-named-group"
+    ],
+    "place_notes": [
+     "place-count"
+    ],
+    "duration_expires_at": "2026-03-03T00:00",
+    "duration_source": "24h_default",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/073-30min-00-24-buss-avgift-roda-siffror@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "audience": null,
+    "audience_excluded": [
+     "pictogram-bus"
+    ],
+    "eligibility": [],
+    "place_notes": [],
+    "duration_expires_at": "2026-03-02T00:30",
+    "duration_source": "plate",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-07T14:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": 30,
+      "note": null
+     },
+     {
+      "start": "2026-03-07T14:00",
+      "end": "2026-03-09T00:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-09T00:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": 30,
+      "note": null
+     }
+    ]
+   },
+   {
+    "extent": "here",
+    "audience": "pictogram-bus",
+    "audience_excluded": [],
+    "eligibility": [],
+    "place_notes": [],
+    "duration_expires_at": "2026-03-02T00:30",
+    "duration_source": "plate",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-07T14:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": 30,
+      "note": null
+     },
+     {
+      "start": "2026-03-07T14:00",
+      "end": "2026-03-09T00:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-09T00:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": 30,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/075-p-med-olasliga-plattor-pa-avstand@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [],
+    "place_notes": [],
+    "duration_expires_at": "2026-03-03T00:00",
+    "duration_source": "24h_default",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/077-gul-forbud-forhyrda-platser-skymning@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [
+     "forhyrda-platser"
+    ],
+    "place_notes": [],
+    "duration_expires_at": null,
+    "duration_source": null,
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-10T00:00",
+      "state": "prohibited",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/078-p-skylt-overklistrad@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [
+     "forhyrda-platser"
+    ],
+    "place_notes": [],
+    "duration_expires_at": "2026-03-03T00:00",
+    "duration_source": "24h_default",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/079-p-skylt-bakom-trad@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [
+     "forhyrda-platser"
+    ],
+    "place_notes": [],
+    "duration_expires_at": "2026-03-03T00:00",
+    "duration_source": "24h_default",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-10T00:00",
       "state": "allowed",
       "conditions": [],
       "max_duration_minutes": null,

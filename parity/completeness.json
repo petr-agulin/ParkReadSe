@@ -2023,7 +2023,7 @@
   "may_hide_prohibition": false,
   "uninterpreted_plates": []
  },
- "answers/075-forhyrda-platser-pa-avstand@base": {
+ "answers/075-p-med-olasliga-plattor-pa-avstand@base": {
   "category": "full",
   "confidence": 0.998,
   "signals": {
@@ -5173,6 +5173,291 @@
   },
   "reasons": [],
   "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/065-laddning-avgift-4-platser-med-automat@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/066-reserverad-vaktmastare-tillstand-pil@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/067-tillstand-reserverad-verksamhet-2-platser@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/068-parkering-forbjuden-privat-parkering@base": {
+  "category": "partial",
+  "confidence": 0.875,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 0.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [
+   "main_sign_uncorroborated"
+  ],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/069-personal-giltigt-tillstand-securitas@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/070-regionservice-1-plats@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/071-taxi-3-platser@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/072-blodbil-1-plats@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/073-30min-00-24-buss-avgift-roda-siffror@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/075-p-med-olasliga-plattor-pa-avstand@base": {
+  "category": "insufficient",
+  "confidence": 0.675,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 0.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 0.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [
+   "unread_panels:1,2",
+   "main_sign_uncorroborated"
+  ],
+  "unread_panels": [
+   1,
+   2
+  ],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/077-gul-forbud-forhyrda-platser-skymning@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/078-p-skylt-overklistrad@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/079-p-skylt-bakom-trad@base": {
+  "category": "partial",
+  "confidence": 0.875,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 0.5,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [
+   "unread_panels:2"
+  ],
+  "unread_panels": [
+   2
+  ],
   "may_hide_prohibition": false,
   "uninterpreted_plates": []
  }

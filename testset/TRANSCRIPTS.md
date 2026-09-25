@@ -1358,8 +1358,8 @@ none of it is legible.
 I scanned the sign that is nearest to the viewer and still, as a human, I cannot read the sign at all - too far, too poor quality. The app seems to not be able to read it too ("Too little of the sign was read to say what it states | confidence 48%"). However, the app draws a dashed green line for 24h free parking. Moreover, the app wrongly claims the parking sign E19 (I can't read the sign but I do see that there is no such main sign on the pole). I would say this is the questionable solutions: in such a case with too low confidence the app should boldly claim it cannot read the sign and should not provide any parking window. 
 ---
 
-## 075 · Rented spaces, from across the street
-`075-forhyrda-platser-pa-avstand.jpg`
+## 075 · A P sign whose plates are too far away to read
+`075-p-med-olasliga-plattor-pa-avstand.jpg`
 
 1. **[M]** P — blue square
 2. **[P]** `Förhyrda platser` — blue, legible only when magnified

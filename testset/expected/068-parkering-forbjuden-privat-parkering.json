@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "main_sign": {
-    "type": "parking",
-    "background_color": "blue",
+    "type": "prohibition_parking",
+    "background_color": "yellow",
     "form": "regular",
     "legibility": {
       "readable": true
@@ -13,8 +13,7 @@
       "kind": "sign_plate",
       "lines": [
         "Privat",
-        "parkering",
-        "Brf Ängslyckan"
+        "parkering"
       ],
       "background_color": "blue",
       "legibility": {
@@ -22,22 +21,9 @@
       },
       "parsed": {},
       "index": 1
-    },
-    {
-      "kind": "sign_plate",
-      "lines": [],
-      "background_color": "white",
-      "legibility": {
-        "readable": true
-      },
-      "parsed": {
-        "arrow": "right",
-        "pictogram": "arrow"
-      },
-      "index": 2
     }
   ],
-  "panel_count": 2,
+  "panel_count": 1,
   "boundaries": {
     "certain": true
   }

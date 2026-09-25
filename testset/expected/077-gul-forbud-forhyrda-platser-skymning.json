@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "prohibition_parking",
+    "background_color": "yellow",
+    "form": "zone",
+    "legibility": {
+      "readable": true,
+      "obstructions": [
+        "sticker"
+      ]
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Förhyrda platser"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "sticker"
+        ]
+      },
+      "parsed": {
+        "eligibility": "rented",
+        "permits_parking": true,
+        "pictogram": "parking"
+      },
+      "index": 1
+    },
+    {
+      "kind": "operator_plate",
+      "lines": [
+        "P-tjänst V.",
+        "031-51 88 10"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "sticker"
+        ]
+      },
+      "parsed": {
+        "operator": {
+          "name": "P-tjänst V.",
+          "phone": "031-51 88 10"
+        }
+      },
+      "index": 2
+    }
+  ],
+  "panel_count": 2,
+  "boundaries": {
+    "certain": true
+  }
+}

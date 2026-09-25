@@ -1,73 +1,73 @@
 {
- "photos": 57,
+ "photos": 70,
  "fields": {
   "main_sign.background_color": [
-   55,
-   57
+   68,
+   70
   ],
   "main_sign.form": [
-   54,
-   57
+   66,
+   70
   ],
   "main_sign.type": [
-   55,
-   57
+   67,
+   70
   ],
   "panel.background_color": [
-   143,
-   148
+   166,
+   172
   ],
   "panel.lines": [
-   133,
-   148
+   154,
+   172
   ],
   "panel.rule_bearing": [
-   153,
-   153
+   176,
+   177
   ],
   "panel_count": [
-   52,
-   57
+   62,
+   70
   ],
   "panels.content": [
-   45,
-   57
+   54,
+   70
   ],
   "panels.order": [
-   45,
-   57
+   54,
+   70
   ],
   "parsed.arrow": [
-   23,
-   24
+   24,
+   26
   ],
   "parsed.duration_limit": [
-   10,
-   11
+   11,
+   12
   ],
   "parsed.eligibility": [
-   26,
-   28
+   35,
+   40
   ],
   "parsed.fee": [
-   31,
-   33
+   33,
+   35
   ],
   "parsed.payment_method": [
    0,
    3
   ],
   "parsed.permit_required": [
-   6,
-   6
+   9,
+   9
   ],
   "parsed.permits_parking": [
-   2,
-   4
+   3,
+   6
   ],
   "parsed.place_count": [
-   4,
-   4
+   9,
+   9
   ],
   "parsed.placement": [
    6,
@@ -86,16 +86,22 @@
    9
   ],
   "parsed.time_windows": [
-   26,
-   37
+   27,
+   39
   ],
   "parsed.vehicle_class": [
-   13,
-   14
+   16,
+   17
   ]
  },
  "mistakes": [
   "019-forbud-7-18-avgift-ovrig-tid: panel 1 field prohibition = True instead of None",
+  "021-privat-parkering-brf: 1 plates instead of 2",
+  "021-privat-parkering-brf: panel 1 marked operator_plate instead of sign_plate - this changes which rules apply",
+  "021-privat-parkering-brf: panel 2 field arrow = 'right' instead of None",
+  "021-privat-parkering-brf: panel 2 read as [] instead of ['Privat', 'parkering', 'Brf Ängslyckan']",
+  "021-privat-parkering-brf: plate order ['right'] instead of ['privat parkering brf ängslyckan', 'right']",
+  "021-privat-parkering-brf: the content of the plates disagrees",
   "031-snedstallning-torsdag-jamna-veckor-boende-solna: plate order ['arrow', 'avgift taxa a', 'torsdag 10-14 jämna veckor augusti-juni', 'boende solna', 'both_horizontal'] instead of ['?', 'avgift taxa a', 'torsdag 10-14 jämna veckor augusti-juni', 'boende solna', 'both_horizontal']",
   "031-snedstallning-torsdag-jamna-veckor-boende-solna: the content of the plates disagrees",
   "033-avgift-8-21-uppstallning-zon-e-boende-storskogen: 4 plates instead of 5",
@@ -180,7 +186,24 @@
   "062-klass-i-14-dygn-slapfordon-forbud: panel 3 field prohibition = True instead of None",
   "062-klass-i-14-dygn-slapfordon-forbud: panel 4 field prohibition = True instead of None",
   "063-natt-p-tillstand-06-16-p-skiva-3tim: panel 2 field payment_method = None instead of 'parking_disc'",
-  "064-motorcykel-tisd-9-17-beskuren: panel 3 field time_windows = [{'from': '00:00', 'to': '23:59', 'day_class': 'all_days', 'dates': {'mode': 'only', 'ranges': [{'from': '04-01', 'to': '11-30'}]}}] instead of [{'from': '00:00', 'to': '24:00', 'day_class': 'all_days', 'dates': {'mode': 'only', 'ranges': [{'from': '04-01', 'to': '11-30'}]}}]"
+  "064-motorcykel-tisd-9-17-beskuren: panel 3 field time_windows = [{'from': '00:00', 'to': '23:59', 'day_class': 'all_days', 'dates': {'mode': 'only', 'ranges': [{'from': '04-01', 'to': '11-30'}]}}] instead of [{'from': '00:00', 'to': '24:00', 'day_class': 'all_days', 'dates': {'mode': 'only', 'ranges': [{'from': '04-01', 'to': '11-30'}]}}]",
+  "068-parkering-forbjuden-privat-parkering: panel 1 field eligibility = 'custom' instead of None",
+  "068-parkering-forbjuden-privat-parkering: panel 1 field permits_parking = True instead of None",
+  "068-parkering-forbjuden-privat-parkering: sign form zone instead of regular",
+  "073-30min-00-24-buss-avgift-roda-siffror: panel 2 field time_windows = [{'from': '14:00', 'to': '24:00', 'day_class': 'eve'}, {'from': '00:00', 'to': '24:00', 'day_class': 'weekday'}] instead of [{'from': '14:00', 'to': '24:00', 'day_class': 'eve'}, {'from': '00:00', 'to': '24:00', 'day_class': 'red'}]",
+  "075-p-med-olasliga-plattor-pa-avstand: 1 plates instead of 2",
+  "075-p-med-olasliga-plattor-pa-avstand: panel 1 field eligibility = 'rented' instead of None",
+  "075-p-med-olasliga-plattor-pa-avstand: panel 1 read as ['Förhyrda', 'platser'] instead of []",
+  "075-p-med-olasliga-plattor-pa-avstand: plate order ['förhyrda platser'] instead of ['?', '?']",
+  "075-p-med-olasliga-plattor-pa-avstand: the content of the plates disagrees",
+  "078-p-skylt-overklistrad: main sign wayfinding_parking_house instead of parking",
+  "078-p-skylt-overklistrad: panel 1 field eligibility = None instead of 'rented'",
+  "078-p-skylt-overklistrad: panel 1 read as [] instead of ['Förhyrda platser']",
+  "078-p-skylt-overklistrad: plate order ['?'] instead of ['förhyrda platser']",
+  "078-p-skylt-overklistrad: the content of the plates disagrees",
+  "079-p-skylt-bakom-trad: 0 plates instead of 2",
+  "079-p-skylt-bakom-trad: plate order [] instead of ['förhyrda platser', '?']",
+  "079-p-skylt-bakom-trad: the content of the plates disagrees"
  ],
  "diverged": {
   "035-zon-c-pa-avstand": [
@@ -201,6 +224,17 @@
    "who may park: ['reserved-for-named-group', 'reserved-for-named-group'] instead of -",
    "hours differing by state 50/168, of which wider 0",
    "hours differing by conditions 118/168: p-skiva instead of -"
+  ],
+  "075-p-med-olasliga-plattor-pa-avstand": [
+   "who may park: ['forhyrda-platser'] instead of -"
+  ],
+  "078-p-skylt-overklistrad": [
+   "parking here: False instead of True",
+   "who may park: - instead of ['forhyrda-platser']",
+   "hours differing by state 168/168, of which wider 0"
+  ],
+  "079-p-skylt-bakom-trad": [
+   "who may park: - instead of ['forhyrda-platser']"
   ]
  },
  "pixels": {
@@ -260,11 +294,36 @@
   "061-lastplats-langt-avstand": 14678,
   "062-klass-i-14-dygn-slapfordon-forbud": 107387,
   "063-natt-p-tillstand-06-16-p-skiva-3tim": 150360,
-  "064-motorcykel-tisd-9-17-beskuren": 69540
+  "064-motorcykel-tisd-9-17-beskuren": 69540,
+  "065-laddning-avgift-4-platser-med-automat": 737280,
+  "066-reserverad-vaktmastare-tillstand-pil": 737280,
+  "067-tillstand-reserverad-verksamhet-2-platser": 737280,
+  "068-parkering-forbjuden-privat-parkering": 737280,
+  "069-personal-giltigt-tillstand-securitas": 737280,
+  "070-regionservice-1-plats": 737280,
+  "071-taxi-3-platser": 737280,
+  "072-blodbil-1-plats": 737280,
+  "073-30min-00-24-buss-avgift-roda-siffror": 737280,
+  "075-p-med-olasliga-plattor-pa-avstand": 737280,
+  "077-gul-forbud-forhyrda-platser-skymning": 737280,
+  "078-p-skylt-overklistrad": 921600,
+  "079-p-skylt-bakom-trad": 921600
  },
  "fingerprint": "a1b96992540a",
  "excluded": [],
  "rows": [
+  [
+   0.575,
+   "insufficient",
+   true,
+   "078-p-skylt-overklistrad"
+  ],
+  [
+   0.675,
+   "insufficient",
+   true,
+   "079-p-skylt-bakom-trad"
+  ],
   [
    0.694,
    "insufficient",
@@ -276,6 +335,12 @@
    "insufficient",
    true,
    "060-natt-lastplats-ovrig-tid-avgift"
+  ],
+  [
+   0.75,
+   "partial",
+   false,
+   "068-parkering-forbjuden-privat-parkering"
   ],
   [
    0.775,
@@ -372,6 +437,12 @@
    "partial",
    false,
    "050-aimo-park-privat-hanvisning"
+  ],
+  [
+   0.898,
+   "full",
+   true,
+   "075-p-med-olasliga-plattor-pa-avstand"
   ],
   [
    0.899,
@@ -572,6 +643,36 @@
    "059-avstand-p-skiva-2tim-darefter-avgift"
   ],
   [
+   0.975,
+   "full",
+   false,
+   "066-reserverad-vaktmastare-tillstand-pil"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "067-tillstand-reserverad-verksamhet-2-platser"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "069-personal-giltigt-tillstand-securitas"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "072-blodbil-1-plats"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "073-30min-00-24-buss-avgift-roda-siffror"
+  ],
+  [
    0.998,
    "full",
    false,
@@ -582,6 +683,18 @@
    "full",
    false,
    "064-motorcykel-tisd-9-17-beskuren"
+  ],
+  [
+   0.998,
+   "full",
+   false,
+   "070-regionservice-1-plats"
+  ],
+  [
+   0.998,
+   "full",
+   false,
+   "077-gul-forbud-forhyrda-platser-skymning"
   ],
   [
    0.999,
@@ -596,6 +709,12 @@
    "022-avgift-4tim-laddande-elbilar-2-platser"
   ],
   [
+   0.999,
+   "full",
+   false,
+   "065-laddning-avgift-4-platser-med-automat"
+  ],
+  [
    1.0,
    "full",
    false,
@@ -606,7 +725,13 @@
    "full",
    false,
    "016-tillstand-ovrig-tid-5-platser"
+  ],
+  [
+   1.0,
+   "full",
+   false,
+   "071-taxi-3-platser"
   ]
  ],
- "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 11 | 2 | 46 | 3 |\n| 0.875 | 11 | 2 | 46 | 3 |\n| 0.900 | 19 | 4 | 38 | 1 |\n| 0.920 | 19 | 4 | 38 | 1 |\n| 0.950 | 20 | 4 | 37 | 1 |"
+ "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 14 | 4 | 56 | 4 |\n| 0.875 | 14 | 4 | 56 | 4 |\n| 0.900 | 23 | 7 | 47 | 1 |\n| 0.920 | 23 | 7 | 47 | 1 |\n| 0.950 | 24 | 7 | 46 | 1 |"
 }

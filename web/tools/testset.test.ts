@@ -12,13 +12,13 @@ import { describe, expect, it } from "vitest";
 
 import { Calendar } from "../src/lib/calendar";
 import { parseNaive } from "../src/lib/civil";
-import { FULL } from "../src/lib/completeness";
+import { FULL, INSUFFICIENT } from "../src/lib/completeness";
 import { fingerprint, verdictDifferences, verdictSlice } from "../src/lib/measure";
 import { GOOD_ENOUGH } from "../src/lib/present";
 import { extractPrompt } from "../src/lib/prompts";
 import { ANSWERS, EXPECTED, PENDING_GROUND_TRUTH, ROOT, assessAnswer, loadPairs,
-         answersFromAnotherPrompt, asShown, loadTriageExpectations, marked,
-         photos } from "./testset";
+         answersFromAnotherPrompt, asShown, loadTriageExpectations, loadUnreadable,
+         marked, photos, triageAnswers } from "./testset";
 
 const intersect = <T>(a: Set<T>, b: Set<T>) => [...a].filter((x) => b.has(x)).sort();
 
@@ -79,12 +79,16 @@ describe("the coverage of the measurement", () => {
 
 describe("every photograph's state is declared", () => {
   const notASign = new Set(Object.keys(loadTriageExpectations()));
+  const unreadable = loadUnreadable();
 
-  it("has every photograph marked, declared not a sign, or awaiting marking", () => {
-    // Without the third state "forgot to mark" cannot be told from "not marked yet";
-    // without the second, an unmarked sign is confused with rubbish.
+  it("has every photograph marked, declared not a sign, declared unreadable, or awaiting marking", () => {
+    // Without the pending state "forgot to mark" cannot be told from "not marked yet";
+    // without "not a sign", an unmarked sign is confused with rubbish; without
+    // "unreadable", a parking sign nobody can read would have to pose as one of those
+    // (decision 176).
     const done = marked();
     const unaccounted = [...photos()].filter((p) => !done.has(p) && !notASign.has(p)
+                                                    && !unreadable.has(p)
                                                     && !PENDING_GROUND_TRUTH.has(p));
     expect(unaccounted.sort()).toEqual([]);
   });
@@ -92,6 +96,28 @@ describe("every photograph's state is declared", () => {
   it("never has a photograph in two states at once", () => {
     expect(intersect(marked(), notASign)).toEqual([]);
     expect(intersect(PENDING_GROUND_TRUTH, notASign)).toEqual([]);
+    expect(intersect(unreadable, marked())).toEqual([]);
+    expect(intersect(unreadable, notASign)).toEqual([]);
+    expect(intersect(unreadable, PENDING_GROUND_TRUTH)).toEqual([]);
+  });
+
+  it("gets a refusal on every photograph nobody can read", () => {
+    // The right answer to an unreadable sign is no answer, whichever way it comes:
+    // triage turning the photograph away, or a reading graded insufficient, which
+    // draws no window. A window here would be a guess dressed as a reading.
+    expect(unreadable.size, "the list of unreadable photographs is empty").toBeGreaterThan(0);
+    const triage = triageAnswers();
+    const cal = new Calendar();
+    const moment = parseNaive("2026-03-02T00:00");
+    const answered: string[] = [];
+    for (const label of unreadable) {
+      if (triage[label] && triage[label] !== "parking_sign") { answered.push(`${label}: refused`); continue; }
+      const file = join(ANSWERS, `${label}.extract.json`);
+      const category = assessAnswer(label, JSON.parse(readFileSync(file, "utf-8")).response,
+                                    moment, cal).category;
+      answered.push(`${label}: ${category === INSUFFICIENT ? "refused" : category}`);
+    }
+    expect(answered.filter((line) => !line.endsWith(": refused"))).toEqual([]);
   });
 
   it("empties the pending list: once a ground truth appears, the photograph leaves it", () => {

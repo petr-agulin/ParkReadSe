@@ -12,6 +12,7 @@
 // `no_repairs_needed` confidence signal.
 
 import { PRINTED_HOURS } from "./engine";
+import { PRIVATE_LAND_PHRASE } from "./reference";
 import { validate } from "./schema";
 import { SIGN_SCHEMA, TRIAGE_SCHEMA } from "./schema.data";
 import type { Panel, SignDoc } from "./sign";
@@ -226,6 +227,21 @@ function contradictions(doc: Record<string, any>): string[] {
   for (const panel of doc.panels ?? []) {
     const parsed = panel?.parsed;
     if (!parsed || typeof parsed !== "object" || panel.kind !== "sign_plate") continue;
+
+    // "Privat parkering" is a sign plate that only informs: the land is private, and
+    // the sign above means what it always means (decision 53). It opens no exception.
+    // On `068` the model read it as one - parking for a named group under a
+    // no-parking board - and the answer drew a window the sign never promised. What
+    // drew the window was the exception, not the kind of plate, so the exception is
+    // what goes; the plate stays a sign plate and keeps its meaning from the reference.
+    if ((panel.lines ?? []).join(" ").toLowerCase().includes(PRIVATE_LAND_PHRASE)
+        && (parsed.eligibility !== undefined || parsed.permits_parking !== undefined)) {
+      done.push(`panel ${panel.index}: 'Privat parkering' opens no exception - `
+              + "dropped eligibility and permits_parking");
+      delete parsed.eligibility;
+      delete parsed.permits_parking;
+      continue;
+    }
 
     // A parking-disc symbol IS the requirement to show a disc. On `063` the model drew
     // the symbol (`pictogram: parking_disc`) and left the requirement out, and the

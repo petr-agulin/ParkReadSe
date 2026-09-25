@@ -12,27 +12,28 @@
     {
       "kind": "sign_plate",
       "lines": [
-        "Privat",
-        "parkering",
-        "Brf Ängslyckan"
+        "BLODBIL"
       ],
       "background_color": "blue",
       "legibility": {
         "readable": true
       },
-      "parsed": {},
+      "parsed": {
+        "eligibility": "custom"
+      },
       "index": 1
     },
     {
       "kind": "sign_plate",
-      "lines": [],
-      "background_color": "white",
+      "lines": [
+        "1 plats"
+      ],
+      "background_color": "blue",
       "legibility": {
         "readable": true
       },
       "parsed": {
-        "arrow": "right",
-        "pictogram": "arrow"
+        "place_count": 1
       },
       "index": 2
     }

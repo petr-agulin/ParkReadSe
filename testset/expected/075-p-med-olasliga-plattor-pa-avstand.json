@@ -11,14 +11,14 @@
   "panels": [
     {
       "kind": "sign_plate",
-      "lines": [
-        "Privat",
-        "parkering",
-        "Brf Ängslyckan"
-      ],
+      "lines": [],
       "background_color": "blue",
       "legibility": {
-        "readable": true
+        "readable": false,
+        "obstructions": [
+          "distance",
+          "blur"
+        ]
       },
       "parsed": {},
       "index": 1
@@ -26,14 +26,15 @@
     {
       "kind": "sign_plate",
       "lines": [],
-      "background_color": "white",
+      "background_color": "blue",
       "legibility": {
-        "readable": true
+        "readable": false,
+        "obstructions": [
+          "distance",
+          "blur"
+        ]
       },
-      "parsed": {
-        "arrow": "right",
-        "pictogram": "arrow"
-      },
+      "parsed": {},
       "index": 2
     }
   ],
