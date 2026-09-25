@@ -358,6 +358,12 @@
    "078-p-skylt-overklistrad"
   ],
   [
+   0.592,
+   "insufficient",
+   false,
+   "085-p-med-plattor-bakom-bom"
+  ],
+  [
    0.675,
    "insufficient",
    true,
@@ -464,12 +470,6 @@
    "partial",
    false,
    "062-klass-i-14-dygn-slapfordon-forbud"
-  ],
-  [
-   0.875,
-   "full",
-   false,
-   "085-p-med-plattor-bakom-bom"
   ],
   [
    0.875,
@@ -838,5 +838,5 @@
    "071-taxi-3-platser"
   ]
  ],
- "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 18 | 4 | 64 | 4 |\n| 0.875 | 18 | 4 | 64 | 4 |\n| 0.900 | 30 | 7 | 52 | 1 |\n| 0.920 | 30 | 7 | 52 | 1 |\n| 0.950 | 31 | 7 | 51 | 1 |"
+ "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 19 | 4 | 63 | 4 |\n| 0.875 | 19 | 4 | 63 | 4 |\n| 0.900 | 30 | 7 | 52 | 1 |\n| 0.920 | 30 | 7 | 52 | 1 |\n| 0.950 | 31 | 7 | 51 | 1 |"
 }

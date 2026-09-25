@@ -142,7 +142,8 @@ describe("contradictions inside one reading", () => {
       validateSign(JSON.parse(readFileSync(dir + f, "utf-8"))).repairs
         .filter((r) => r.includes("contradict") || r.includes("printed on the plate")
                    || r.includes("dygn") || r.includes("dropped obstruction")
-                   || r.includes("parking-disc symbol") || r.includes("Privat parkering"))
+                   || r.includes("parking-disc symbol") || r.includes("Privat parkering")
+                   || r.includes("operator plate"))
         .map((r) => `${f}: ${r}`));
     expect(fired).toEqual([]);
   });
@@ -240,8 +241,8 @@ describe("a parking-disc symbol with no requirement beside it", () => {
 describe("a plate reading \"Privat parkering\"", () => {
   it("opens no exception, and stays the sign plate it is", () => {
     // `068` as the model read it: under a no-parking board, "Privat parkering" became
-    // parking for a named group, and the answer drew them a window. For the public
-    // it is no parking, with private parking as the reason (the developer, 2026-09-25).
+    // parking for a named group, and the answer drew them a window. The plate only
+    // informs; the ban is the board's own (decisions 53, 177).
     const doc = read("068-parkering-forbjuden-privat-parkering");
     doc.panels[0] = { ...doc.panels[0], kind: "sign_plate",
                       parsed: { eligibility: "custom", permits_parking: true } };
@@ -249,5 +250,26 @@ describe("a plate reading \"Privat parkering\"", () => {
     expect(res.data!.panels![0].kind).toBe("sign_plate");
     expect(res.data!.panels![0].parsed).toEqual({});
     expect(res.repairs.some((r) => r.includes("Privat parkering"))).toBe(true);
+  });
+});
+
+describe("an illegible plate filed as an operator plate", () => {
+  it("is counted as an unread sign plate", () => {
+    // `085` as the model read it: two plates it could not read, both filed as operator
+    // plates. An operator plate is known by its words alone (decision 182).
+    const doc = read("085-p-med-plattor-bakom-bom");
+    for (const i of [1, 2]) doc.panels[i] = { ...doc.panels[i], kind: "operator_plate" };
+    const res = validateSign(doc);
+    expect(res.data!.panels!.map((p) => p.kind)).toEqual(["sign_plate", "sign_plate", "sign_plate"]);
+    expect(res.data!.panels![1].parsed).toEqual({});
+    expect(res.repairs.filter((r) => r.includes("operator plate"))).toHaveLength(2);
+  });
+
+  it("leaves a legible operator plate, and an illegible payment board, as they are", () => {
+    // A board is known by its look; a legible operator plate by its words.
+    const plates = validateSign(read("002-avgift-forbud-utanfor-markerad-plats")).data!.panels!;
+    expect(plates.find((p) => p.index === 3)!.kind).toBe("operator_plate");
+    const board = validateSign(read("089-lastplats-zon-c-boende-centrala")).data!.panels!;
+    expect(board[board.length - 1].kind).toBe("info_board");
   });
 });

@@ -225,6 +225,20 @@ const DAYS_PRINTED = /(\d+)\s*dygn/i;
 function contradictions(doc: Record<string, any>): string[] {
   const done: string[] = [];
   for (const panel of doc.panels ?? []) {
+    // An operator plate is known by its words alone - a company and a telephone
+    // (decision 179) - so a plate nobody could read cannot be known to be one. On `085`
+    // the model called two plates illegible and filed both as operator plates, one of
+    // them yellow with a no-parking symbol; plates that state no rule cost the reading
+    // nothing, and it was graded full at 0.975. The guess leans the dangerous way, so
+    // the plate goes back to being an unread sign plate (decision 182). A payment board
+    // is left alone: it is known by its look.
+    if (panel?.kind === "operator_plate" && panel.legibility?.readable === false) {
+      done.push(`panel ${panel.index}: an illegible plate cannot be known for an operator `
+              + "plate - counted as an unread sign plate");
+      panel.kind = "sign_plate";
+      panel.parsed = {};
+    }
+
     const parsed = panel?.parsed;
     if (!parsed || typeof parsed !== "object" || panel.kind !== "sign_plate") continue;
 

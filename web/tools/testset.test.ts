@@ -120,6 +120,19 @@ describe("every photograph's state is declared", () => {
     expect(answered.filter((line) => !line.endsWith(": refused"))).toEqual([]);
   });
 
+  it("does not grade 085 full: its two illegible plates are not operator plates", () => {
+    // The model filed both illegible plates as operator plates, which state no rule and
+    // so cost the reading nothing - full, at 0.975. One of them is yellow with a
+    // no-parking symbol. An operator plate is known only by its words (decision 182).
+    const label = "085-p-med-plattor-bakom-bom";
+    const answer = JSON.parse(readFileSync(join(ANSWERS, `${label}.extract.json`), "utf-8")).response;
+    expect(answer.panels.filter((p: any) => p.kind === "operator_plate"
+                                           && p.legibility?.readable === false),
+           "the saved answer no longer shows the case").toHaveLength(2);
+    expect(assessAnswer(label, answer, parseNaive("2026-03-02T00:00"), new Calendar()).category)
+      .not.toBe(FULL);
+  });
+
   it("empties the pending list: once a ground truth appears, the photograph leaves it", () => {
     expect(intersect(PENDING_GROUND_TRUTH, marked())).toEqual([]);
   });
