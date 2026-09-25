@@ -1,7 +1,7 @@
 ---
 key: avgift-erlaggs-med-mobil
 tokens: Avgift erläggs med + пиктограмма телефона
-category: not_interpreted
+category: info
 label: Text panel
 code: T22
 schema: — (в вычисления не входит)

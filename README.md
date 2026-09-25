@@ -123,8 +123,9 @@ its key; `general_rules/` holds the notes, each marked "this is not on the sign"
 `sources/` holds working notes on the official material (where the Transportstyrelsen
 catalogue and the textbook disagree, the catalogue wins). An entry's header is plain
 `key: value` lines: `key`, `tokens` (what is written on the sign), `category` (`main_sign`,
-`rule`, `info` — recognised but sets no rule, or `not_interpreted` — shown verbatim with no
-meaning), `label`, `code`, `schema` (the schema field it maps to), `en` (the interface text
+`rule`, `info` — part of what the sign says about parking, though the engine sets no rule
+by it, or `no_rule` — not about the parking rules at all, and the plate is tagged "Not a
+parking rule"), `label`, `code`, `schema` (the schema field it maps to), `en` (the interface text
 itself), `short` and `source`. The body below the header is a note for the developer and
 never reaches the screen. The answer is assembled from the `en` strings, which is why a
 forbidden phrasing cannot arrive from the model. After editing, `npm run emit` regenerates

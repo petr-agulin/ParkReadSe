@@ -35,8 +35,10 @@ function Plate({ panel }: { panel: Panel }) {
           <span key={i} className="text-body text-ink-3">{line}</span>
         ))}
         {/* The mark "this is not a rule" is a tag, not a line of the plate's meaning:
-            an operator's board is not a road sign. `self-start` keeps the tag to the
-            width of its words; in this column it would otherwise stretch across. */}
+            the plate is not about the parking rules at all - an operator plate, a
+            payment board, another road sign. Which plates those are, the reference
+            decides (decision 180). `self-start` keeps the tag to the width of its words; in
+            this column it would otherwise stretch across. */}
         {!panel.carries_rule && (
           <span className="mt-1 self-start rounded bg-chip px-1.5 py-0.5 text-xs
                            text-ink-2">

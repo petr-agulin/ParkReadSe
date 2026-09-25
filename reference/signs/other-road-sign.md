@@ -1,7 +1,7 @@
 ---
 key: other-road-sign
 tokens: Farthinder, ограничение скорости, пешеходный переход
-category: not_interpreted
+category: no_rule
 label: Road sign
 schema: panel.kind=other_sign
 en: The same post carries another road sign, which is not about parking

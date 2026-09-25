@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
 import { TIME_KEYS } from "./present";
-import { BY_TEXT, ELIGIBILITY_KEYS, VEHICLE_KEYS, all, get, has,
+import { BY_TEXT, CATEGORIES, ELIGIBILITY_KEYS, carriesRule, VEHICLE_KEYS, all, get, has,
          recognise } from "./reference";
 import { SIGN_SCHEMA } from "./schema.data";
 import type { Panel, SignDoc } from "./sign";
@@ -42,6 +42,21 @@ describe("the reference", () => {
     // Step 15a added an entry and the README went on saying 50. Held here, next to the
     // entries themselves, so the next one cannot slip past the same way.
     expect(Number(/(\d+) sign entries/.exec(source("README.md"))?.[1])).toBe(all().length);
+  });
+
+  it("gives every entry one of the four categories", () => {
+    // The tag "Not a parking rule" is read off the category (decision 180): an entry
+    // with a category nobody knows would neither count as a rule nor be tagged.
+    const known: readonly string[] = CATEGORIES;
+    expect(all().filter((e) => !known.includes(e.category)).map((e) => `${e.key}: ${e.category}`))
+      .toEqual([]);
+  });
+
+  it("never calls a plate that matched no entry \"not a rule\"", () => {
+    // Nothing matched means nothing is known about the plate - not that it is known
+    // to change nothing (decision 180).
+    expect(carriesRule([], null)).toBe(true);
+    expect(carriesRule(["operator-plate"], null)).toBe(false);
   });
 
   it("a key the reference does not have is a key there is nothing to interpret with", () => {

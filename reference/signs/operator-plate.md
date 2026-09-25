@@ -1,7 +1,7 @@
 ---
 key: operator-plate
 tokens: название оператора и телефон
-category: not_interpreted
+category: no_rule
 label: Operator plate
 schema: parsed.operator
 en: The sign names the parking operator

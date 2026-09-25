@@ -1,7 +1,7 @@
 ---
 key: info-board
 tokens: Områdeskod, реклама парковочных приложений, QR-коды
-category: not_interpreted
+category: no_rule
 label: Info board
 schema: panel.kind=info_board
 en: The pole also carries an operator payment board, which is not a road sign

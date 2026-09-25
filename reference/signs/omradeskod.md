@@ -1,7 +1,7 @@
 ---
 key: omradeskod
 tokens: Områdeskod 31370
-category: not_interpreted
+category: no_rule
 label: Info board
 schema: parsed.area_code
 en: The board states an area code used by parking apps

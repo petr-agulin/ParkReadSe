@@ -235,9 +235,39 @@ describe("the fields step 15f added, in words", () => {
       { kind: "other_sign", parsed: { road_sign: "priority_road" } },
     ]));
     const road = d.what_we_saw.panels[1];
-    expect(road.carries_rule).toBe(false);
+    // Not tagged "Not a parking rule": the engine decides by it whether parking is
+    // allowed at all (decision 180).
+    expect(road.carries_rule).toBe(true);
     expect(road.meanings[0].key).toBe("priority-road");
     expect(d.completeness.category).toBe("full");
+  });
+
+  it("tags a plate \"Not a parking rule\" only when it is not about the rules at all", () => {
+    // Decided by the reference, not by the kind the model gave the plate (decision
+    // 180): every entry the plate matched is `no_rule`, and no words are left over.
+    // A tariff is not tagged: the product does not say how much the fee is, but a
+    // reader takes the plate for part of the rules (decision 181).
+    const plates: [string, Record<string, unknown>, boolean][] = [
+      ["an operator plate", { kind: "operator_plate", lines: ["Mölndals Parkerings AB", "031-87 54 79"],
+        parsed: { operator: { name: "Mölndals Parkerings AB", phone: "031-87 54 79" } } }, true],
+      ["a payment board", { kind: "info_board", lines: ["Områdeskod 31370"],
+        parsed: { area_code: "31370" } }, true],
+      ["an app area code on a plate", { kind: "sign_plate", lines: ["Områdeskod 31370"],
+        parsed: { area_code: "31370" } }, true],
+      ["a tariff number alone", { kind: "sign_plate", lines: ["Taxa 3"],
+        parsed: { tariff_code: "3" } }, false],
+      ["a fee with its tariff", { kind: "sign_plate", lines: ["Avgift", "Taxa 3"],
+        parsed: { fee: true, tariff_code: "3" } }, false],
+      ["private land", { kind: "sign_plate", lines: ["Privat", "parkering"], parsed: {} }, false],
+      ["a priority road", { kind: "other_sign", parsed: { road_sign: "priority_road" } }, false],
+      ["a plate nobody understood", { kind: "sign_plate", lines: ["Camping förbjuden"],
+        parsed: {} }, false],
+      ["a tariff with words left over", { kind: "sign_plate", lines: ["Taxa 3", "Gäller ej lastbil"],
+        parsed: { tariff_code: "3", uninterpreted: ["Gäller ej lastbil"] } }, false],
+    ];
+    const seen = answer(doc(plates.map(([, p]) => p))).what_we_saw.panels;
+    expect(plates.map(([name], i) => `${name}: ${seen[i].carries_rule ? "no tag" : "tagged"}`))
+      .toEqual(plates.map(([name, , tagged]) => `${name}: ${tagged ? "tagged" : "no tag"}`));
   });
 
   it("holds the second-post line back until the flag is measured", () => {

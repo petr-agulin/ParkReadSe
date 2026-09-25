@@ -94,6 +94,9 @@ export type Panel = {
   kind: string;
   lines: string[];
   background_color: string | null;
+  /** The plate is part of the parking rules. False puts the tag "Not a parking rule"
+   *  on it: decided by the categories of its reference entries, not by its kind
+   *  (decision 180). */
   carries_rule: boolean;
   reference_keys: string[];
   uninterpreted: string[];

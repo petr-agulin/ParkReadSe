@@ -21,7 +21,7 @@ import { ALLOWED, EVEN_SIDE_ONLY, FEE_PERIOD_ELSEWHERE, GENERAL_RULE_GAP, NOT_ST
          ODD_SIDE_ONLY, OUTSIDE_PERMITTED_HOURS, PRIORITY_ROAD_GAP, PROHIBITED,
          horizonEnd,
          type Evaluation, type Period, type Regime } from "./engine";
-import { countsTowardsRules, get as refGet, type Recognised } from "./reference";
+import { carriesRule, countsTowardsRules, get as refGet, type Recognised } from "./reference";
 import type { Panel, Parsed, SignDoc, TimeWindow } from "./sign";
 
 export const CONTRACT = 7;
@@ -796,13 +796,13 @@ export function joinLines(lines: string[]): string {
   return out;
 }
 
-export function panelView(panel: Panel, keys: string[]): Record<string, unknown> {
+export function panelView(panel: Panel, keys: string[],
+                          leftovers: string[] | null = null): Record<string, unknown> {
   const kind = panel.kind;
   const text = joinLines(panel.lines ?? []);
-  const carriesRule = kind === "sign_plate";
 
   let meanings: Meaning[];
-  if (!carriesRule) {
+  if (kind !== "sign_plate") {
     const key = kind === "info_board" ? "info-board"
       : kind === "other_sign"
         ? (panel.parsed?.road_sign === "priority_road" ? "priority-road" : "other-road-sign")
@@ -824,7 +824,7 @@ export function panelView(panel: Panel, keys: string[]): Record<string, unknown>
     meanings = items;
   }
 
-  return { title: "Panel", text, meanings, carries_rule: carriesRule };
+  return { title: "Panel", text, meanings, carries_rule: carriesRule(keys, leftovers) };
 }
 
 export type Sighting = {
@@ -863,12 +863,11 @@ function whatWeSaw(s: Sighting, refused = false): Record<string, unknown> {
       kind: p.kind,
       lines: bad ? [] : (p.lines ?? []),
       background_color: p.background_color ?? null,
-      carries_rule: p.kind === "sign_plate",
       reference_keys: keys,
       uninterpreted: leftovers ?? [],
       not_interpreted_text: bad ? NOT_READ_RELIABLY : notInterpreted(keys, leftovers),
       fields: panelFields(p, keys),
-      ...panelView(p, keys),
+      ...panelView(p, keys, leftovers),
       // Last word, so it overrides the quote `panelView` built from the same lines.
       ...(bad ? { text: "", unreliable: true } : { unreliable: false }),
     };

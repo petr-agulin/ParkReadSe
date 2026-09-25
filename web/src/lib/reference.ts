@@ -20,6 +20,29 @@ export function get(key: string): Entry | null {
   return ENTRIES[key] ?? null;
 }
 
+/** The four categories of an entry. `info` is part of what the sign says about
+ *  parking, though the engine sets no rule by it: private land draws the line dashed,
+ *  a priority road decides whether parking is allowed at all, a tariff says how much
+ *  the fee is - which the product does not tell, but a reader takes it for part of
+ *  the rules (decision 181). `no_rule` is not about the parking rules at all - the
+ *  operator's name, the payment board, another road sign - and its plate is tagged
+ *  "Not a parking rule" (decision 180). */
+export const CATEGORIES = ["main_sign", "rule", "info", "no_rule"] as const;
+export const NO_RULE = "no_rule";
+
+/** Whether a plate is part of the parking rules - the reverse of the tag "Not a
+ *  parking rule" (decision 180). Decided by the reference, not by the kind the model
+ *  gave the plate: by kind, a priority-road sign was tagged although the engine
+ *  decides by it whether parking is allowed at all.
+ *
+ *  The tag needs all three: the plate matched some entry, every entry it matched is
+ *  `no_rule`, and no words are left over. Words nobody understood are never "not a
+ *  rule" - they may be a ban. */
+export function carriesRule(keys: string[], leftovers: string[] | null): boolean {
+  if (leftovers !== null || keys.length === 0) return true;
+  return keys.some((k) => get(k)?.category !== NO_RULE);
+}
+
 export function has(key: string): boolean {
   return key in ENTRIES;
 }

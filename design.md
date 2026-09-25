@@ -151,7 +151,7 @@ Touch targets from 44 px. The camera shutter 92, the switch 46×28, the round bu
 | "Label → value" row | label 88–116 px `ink-3`, value 17/500, on the baseline |
 | Period timeline | a 30 px column, a sign icon of 36 (20 at a join), a 4 px segment in the colour of meaning. Solid where the stretch is open to anyone and fully read; dashed where it is a prohibition, was not read in full, or is meant for a named group only. With no periods at all — a refused reading — the timeline gives way to a line of text asking for a closer photograph |
 | Drawn sign | a blue `plate` shield with a white border, white text strips beneath it |
-| "Not a parking rule" tag | on a plate that sets no rule, under its meaning: `chip` background, `ink-2` text 12, radius 4, as wide as its words |
+| "Not a parking rule" tag | on a plate that is not about the parking rules at all (every reference entry it matched is `no_rule`, and no word was left not understood), under its meaning: `chip` background, `ink-2` text 12, radius 4, as wide as its words |
 | Home screen dark band | the full width of the column, no rounding; the sign, a heading and two quiet lines in a column |
 | Moment row | label on the left, never wrapping; value and chevron on the right; a hairline beneath. Day and month shortened ("Thu. 17 Sep. at 02:01"), the time never separated from "at". The system date picker opens from the value; the label is not pressable |
 | Interface icons | drawn in-house (decision 152): six inline SVGs in `Icon.tsx`, taking their colour from the text via `currentColor` |

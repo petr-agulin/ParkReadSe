@@ -1,7 +1,7 @@
 ---
 key: taxa
 tokens: Taxa 3, Taxa 13
-category: not_interpreted
+category: info
 label: Fee
 code: T16
 schema: parsed.tariff_code
