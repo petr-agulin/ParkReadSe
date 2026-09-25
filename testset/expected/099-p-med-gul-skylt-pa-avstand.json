@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true,
+      "obstructions": [
+        "distance"
+      ]
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Onsd",
+        "8-16",
+        "1/11-15/5"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "distance"
+        ]
+      },
+      "parsed": {
+        "prohibition": true,
+        "time_windows": [
+          {
+            "from": "08:00",
+            "to": "16:00",
+            "day_class": "named_weekday",
+            "named_weekday": "wednesday",
+            "dates": {
+              "mode": "only",
+              "ranges": [
+                {
+                  "from": "11-01",
+                  "to": "05-15"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "index": 1
+    }
+  ],
+  "panel_count": 1,
+  "boundaries": {
+    "certain": true
+  }
+}

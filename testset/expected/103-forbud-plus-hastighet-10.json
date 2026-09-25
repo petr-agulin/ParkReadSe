@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "prohibition_parking",
+    "background_color": "yellow",
+    "form": "zone",
+    "legibility": {
+      "readable": true,
+      "obstructions": [
+        "sticker"
+      ]
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Förhyrda",
+        "platser"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "eligibility": "rented",
+        "permits_parking": true,
+        "pictogram": "parking"
+      },
+      "index": 1
+    },
+    {
+      "kind": "operator_plate",
+      "lines": [
+        "Europark",
+        "0771-401020"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "operator": {
+          "name": "Europark",
+          "phone": "0771-401020"
+        }
+      },
+      "index": 2
+    },
+    {
+      "kind": "operator_plate",
+      "lines": [
+        "Vid utebliven betalning av eventuell",
+        "debiterad kontrollavgift utgår en avgift",
+        "om 60 SEK för skriftlig betalnings-",
+        "påminnelse om betalansvar."
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {},
+      "index": 3
+    },
+    {
+      "kind": "other_sign",
+      "lines": [
+        "Grannsamverkan"
+      ],
+      "background_color": "white",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "road_sign": "other"
+      },
+      "index": 4
+    },
+    {
+      "kind": "other_sign",
+      "lines": [
+        "10"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "sticker"
+        ]
+      },
+      "parsed": {
+        "road_sign": "speed_limit"
+      },
+      "index": 5
+    }
+  ],
+  "panel_count": 5,
+  "boundaries": {
+    "certain": true
+  }
+}

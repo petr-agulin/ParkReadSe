@@ -2646,7 +2646,7 @@
   "may_hide_prohibition": false,
   "uninterpreted_plates": []
  },
- "answers/108-p-plus-gangbana-skylt@base": {
+ "answers/108-p-under-cykelskylt@base": {
   "category": "full",
   "confidence": 0.999,
   "signals": {
@@ -5710,6 +5710,325 @@
   "uninterpreted_plates": []
  },
  "expected/094-p-7-dygn-torsd-vintersasong@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/095-30min-plus-avgift-taxa@base": {
+  "category": "partial",
+  "confidence": 0.908,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 0.666667,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [
+   "unread_panels:1"
+  ],
+  "unread_panels": [
+   1
+  ],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/096-flera-stolpar-boende-solna@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/097-avgift-taxa-a-boende-solna-onsdag@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/098-avgift-7-19-tors-boende-tr@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/099-p-med-gul-skylt-pa-avstand@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/100-avgift-7-19-boende-so@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/101-motorcykel-0-10m-avgift-tisd@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/102-p-bredvid-vagvisare-centrum-e4@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/103-forbud-plus-hastighet-10@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/104-2tim-avgift-fred-vid-blomsterbutik@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/105-p-med-plattor-gathorn@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/106-p-blaa-och-gul-skylt-vid-berg@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/107-rorelsehindrad-med-plattor@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/108-p-under-cykelskylt@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/109-lastplats-vid-butik@base": {
   "category": "full",
   "confidence": 0.975,
   "signals": {

@@ -625,8 +625,8 @@
   "moment": "2026-03-02T00:00"
  },
  {
-  "id": "answers/108-p-plus-gangbana-skylt@base",
-  "doc": "answers/108-p-plus-gangbana-skylt",
+  "id": "answers/108-p-under-cykelskylt@base",
+  "doc": "answers/108-p-under-cykelskylt",
   "moment": "2026-03-02T00:00"
  },
  {
@@ -1342,6 +1342,81 @@
  {
   "id": "expected/094-p-7-dygn-torsd-vintersasong@base",
   "doc": "expected/094-p-7-dygn-torsd-vintersasong",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/095-30min-plus-avgift-taxa@base",
+  "doc": "expected/095-30min-plus-avgift-taxa",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/096-flera-stolpar-boende-solna@base",
+  "doc": "expected/096-flera-stolpar-boende-solna",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/097-avgift-taxa-a-boende-solna-onsdag@base",
+  "doc": "expected/097-avgift-taxa-a-boende-solna-onsdag",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/098-avgift-7-19-tors-boende-tr@base",
+  "doc": "expected/098-avgift-7-19-tors-boende-tr",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/099-p-med-gul-skylt-pa-avstand@base",
+  "doc": "expected/099-p-med-gul-skylt-pa-avstand",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/100-avgift-7-19-boende-so@base",
+  "doc": "expected/100-avgift-7-19-boende-so",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/101-motorcykel-0-10m-avgift-tisd@base",
+  "doc": "expected/101-motorcykel-0-10m-avgift-tisd",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/102-p-bredvid-vagvisare-centrum-e4@base",
+  "doc": "expected/102-p-bredvid-vagvisare-centrum-e4",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/103-forbud-plus-hastighet-10@base",
+  "doc": "expected/103-forbud-plus-hastighet-10",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/104-2tim-avgift-fred-vid-blomsterbutik@base",
+  "doc": "expected/104-2tim-avgift-fred-vid-blomsterbutik",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/105-p-med-plattor-gathorn@base",
+  "doc": "expected/105-p-med-plattor-gathorn",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/106-p-blaa-och-gul-skylt-vid-berg@base",
+  "doc": "expected/106-p-blaa-och-gul-skylt-vid-berg",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/107-rorelsehindrad-med-plattor@base",
+  "doc": "expected/107-rorelsehindrad-med-plattor",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/108-p-under-cykelskylt@base",
+  "doc": "expected/108-p-under-cykelskylt",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/109-lastplats-vid-butik@base",
+  "doc": "expected/109-lastplats-vid-butik",
   "moment": "2026-03-02T00:00"
  }
 ]

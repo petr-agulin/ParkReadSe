@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "vehicle_class": "electric",
+        "pictogram": "electric_car"
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "3 tim",
+        "Avgift",
+        "7-19",
+        "(11-17)",
+        "Taxa 4"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "duration_limit": {
+          "amount": 3,
+          "unit": "hours"
+        },
+        "fee": true,
+        "tariff_code": "Taxa 4",
+        "time_windows": [
+          {
+            "from": "07:00",
+            "to": "19:00",
+            "day_class": "weekday"
+          },
+          {
+            "from": "11:00",
+            "to": "17:00",
+            "day_class": "eve"
+          }
+        ]
+      },
+      "index": 2
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Fred",
+        "8-16",
+        "1/11-15/5"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "prohibition": true,
+        "time_windows": [
+          {
+            "from": "08:00",
+            "to": "16:00",
+            "day_class": "named_weekday",
+            "named_weekday": "friday",
+            "dates": {
+              "mode": "only",
+              "ranges": [
+                {
+                  "from": "11-01",
+                  "to": "05-15"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "index": 3
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Boende",
+        "Mi",
+        "3 tim",
+        "7-19",
+        "(11-17)"
+      ],
+      "background_color": "white",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "eligibility": "residents",
+        "duration_limit": {
+          "amount": 3,
+          "unit": "hours"
+        },
+        "time_windows": [
+          {
+            "from": "07:00",
+            "to": "19:00",
+            "day_class": "weekday"
+          },
+          {
+            "from": "11:00",
+            "to": "17:00",
+            "day_class": "eve"
+          }
+        ]
+      },
+      "index": 4
+    }
+  ],
+  "panel_count": 4,
+  "boundaries": {
+    "certain": true
+  }
+}

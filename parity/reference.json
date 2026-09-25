@@ -1810,7 +1810,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "answers/108-p-plus-gangbana-skylt": {
+ "answers/108-p-under-cykelskylt": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -3898,6 +3898,355 @@
    ],
    "3": [
     "arrow-left"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/095-30min-plus-avgift-taxa": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [],
+   "2": [
+    "taxa",
+    "avgift",
+    "window-weekday"
+   ],
+   "3": [
+    "main-prohibition-parking",
+    "ovrig-tid"
+   ],
+   "4": [
+    "info-board"
+   ]
+  },
+  "uninterpreted": {
+   "1": []
+  },
+  "missing_keys": []
+ },
+ "expected/096-flera-stolpar-boende-solna": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "taxa",
+    "avgift"
+   ],
+   "2": [
+    "boende"
+   ],
+   "3": [
+    "main-prohibition-parking",
+    "named-weekday",
+    "udda-veckor",
+    "datumintervall"
+   ],
+   "4": [
+    "info-board"
+   ],
+   "5": [
+    "arrow-left"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/097-avgift-taxa-a-boende-solna-onsdag": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "taxa",
+    "avgift"
+   ],
+   "2": [
+    "boende"
+   ],
+   "3": [
+    "main-prohibition-parking",
+    "named-weekday",
+    "udda-veckor",
+    "datumintervall"
+   ],
+   "4": [],
+   "5": [
+    "info-board"
+   ]
+  },
+  "uninterpreted": {
+   "4": [
+    "Biljettautomat",
+    "Biljett-",
+    "automat"
+   ]
+  },
+  "missing_keys": []
+ },
+ "expected/098-avgift-7-19-tors-boende-tr": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "taxa",
+    "avgift",
+    "window-weekday",
+    "window-eve"
+   ],
+   "2": [
+    "main-prohibition-parking",
+    "named-weekday",
+    "datumintervall"
+   ],
+   "3": [
+    "boende"
+   ],
+   "4": [
+    "info-board"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/099-p-med-gul-skylt-pa-avstand": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "main-prohibition-parking",
+    "named-weekday",
+    "datumintervall"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/100-avgift-7-19-boende-so": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "taxa",
+    "avgift",
+    "window-weekday",
+    "window-eve"
+   ],
+   "2": [
+    "main-prohibition-parking",
+    "named-weekday"
+   ],
+   "3": [
+    "boende"
+   ],
+   "4": [
+    "info-board"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/101-motorcykel-0-10m-avgift-tisd": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "pictogram-motorcycle"
+   ],
+   "2": [
+    "stretch-metres"
+   ],
+   "3": [
+    "taxa",
+    "avgift",
+    "window-weekday",
+    "window-eve"
+   ],
+   "4": [
+    "main-prohibition-parking",
+    "named-weekday"
+   ],
+   "5": [
+    "boende"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/102-p-bredvid-vagvisare-centrum-e4": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "taxa",
+    "avgift",
+    "window-weekday",
+    "window-eve"
+   ],
+   "2": [
+    "main-prohibition-parking",
+    "named-weekday"
+   ],
+   "3": [
+    "boende"
+   ],
+   "4": [
+    "info-board"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/103-forbud-plus-hastighet-10": {
+  "main_sign_key": "main-zone-prohibition",
+  "panel_keys": {
+   "1": [
+    "forhyrda-platser"
+   ],
+   "2": [
+    "operator-plate"
+   ],
+   "3": [
+    "operator-plate"
+   ],
+   "4": [
+    "other-road-sign"
+   ],
+   "5": [
+    "other-road-sign"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/104-2tim-avgift-fred-vid-blomsterbutik": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "duration-limit",
+    "taxa",
+    "avgift",
+    "window-weekday",
+    "window-eve"
+   ],
+   "2": [
+    "main-prohibition-parking",
+    "named-weekday",
+    "datumintervall"
+   ],
+   "3": [
+    "info-board"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/105-p-med-plattor-gathorn": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "pictogram-electric-car"
+   ],
+   "2": [
+    "duration-limit",
+    "taxa",
+    "avgift",
+    "window-weekday",
+    "window-eve"
+   ],
+   "3": [
+    "main-prohibition-parking",
+    "named-weekday",
+    "datumintervall"
+   ],
+   "4": [
+    "boende",
+    "duration-limit",
+    "window-weekday",
+    "window-eve"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/106-p-blaa-och-gul-skylt-vid-berg": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "other-road-sign"
+   ],
+   "2": [
+    "taxa",
+    "avgift",
+    "window-weekday",
+    "window-eve"
+   ],
+   "3": [
+    "main-prohibition-parking",
+    "named-weekday",
+    "datumintervall"
+   ],
+   "4": [
+    "boende"
+   ],
+   "5": [
+    "info-board"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/107-rorelsehindrad-med-plattor": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "pictogram-wheelchair"
+   ],
+   "2": [
+    "stretch-metres"
+   ],
+   "3": [
+    "taxa",
+    "avgift",
+    "window-weekday",
+    "window-eve"
+   ],
+   "4": [
+    "info-board"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/108-p-under-cykelskylt": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "other-road-sign"
+   ],
+   "2": [
+    "taxa",
+    "avgift",
+    "window-weekday",
+    "window-eve"
+   ],
+   "3": [
+    "main-prohibition-parking",
+    "named-weekday"
+   ],
+   "4": [
+    "boende"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/109-lastplats-vid-butik": {
+  "main_sign_key": "main-prohibition-stopping",
+  "panel_keys": {
+   "1": [
+    "window-weekday",
+    "window-eve",
+    "window-red"
+   ],
+   "2": [
+    "stretch-metres"
+   ],
+   "3": [
+    "main-prohibition-parking",
+    "named-weekday"
    ]
   },
   "uninterpreted": {},

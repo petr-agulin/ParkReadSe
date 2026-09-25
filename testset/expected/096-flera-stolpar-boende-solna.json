@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Avgift",
+        "Taxa A"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "fee": true,
+        "tariff_code": "Taxa A"
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Boende",
+        "Solna"
+      ],
+      "background_color": "white",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "eligibility": "residents"
+      },
+      "index": 2
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Tisdag",
+        "10-14",
+        "Udda veckor",
+        "Augusti-Juni"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "prohibition": true,
+        "time_windows": [
+          {
+            "from": "10:00",
+            "to": "14:00",
+            "day_class": "named_weekday",
+            "named_weekday": "tuesday",
+            "week_parity": "odd",
+            "dates": {
+              "mode": "only",
+              "ranges": [
+                {
+                  "from": "08-01",
+                  "to": "06-30"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "index": 3
+    },
+    {
+      "kind": "info_board",
+      "lines": [],
+      "background_color": "other",
+      "legibility": {
+        "readable": false,
+        "obstructions": [
+          "blur"
+        ]
+      },
+      "parsed": {},
+      "index": 4
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "white",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "arrow": "left",
+        "pictogram": "arrow"
+      },
+      "index": 5
+    }
+  ],
+  "panel_count": 5,
+  "boundaries": {
+    "certain": true
+  },
+  "another_post_in_frame": true
+}

@@ -172,6 +172,10 @@ describe("the threshold", () => {
     // avgift` - on the 15f run it named no method at all; an earlier run wrote a ticket,
     // which the cross-check now drops. Either way the disc is gone, nothing on the plate
     // contradicts itself for a rule to catch, and 0.975 clears the threshold.
-    expect(escaped).toEqual(["059-avstand-p-skiva-2tim-darefter-avgift"]);
+    // `097` joined with its ground truth (step 15g): the model reads "Biljett-automat"
+    // as a ticket to display, where the plate names the machine. The prompt learns the
+    // difference in step 15h, with the next run.
+    expect(escaped).toEqual(["059-avstand-p-skiva-2tim-darefter-avgift",
+                             "097-avgift-taxa-a-boende-solna-onsdag"]);
   });
 });

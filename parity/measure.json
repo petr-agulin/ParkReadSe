@@ -1,69 +1,69 @@
 {
- "photos": 82,
+ "photos": 97,
  "fields": {
   "main_sign.background_color": [
-   79,
-   82
+   94,
+   97
   ],
   "main_sign.form": [
-   76,
-   82
+   91,
+   97
   ],
   "main_sign.type": [
-   78,
-   82
+   93,
+   97
   ],
   "panel.background_color": [
-   191,
-   200
+   235,
+   245
   ],
   "panel.lines": [
-   180,
-   200
+   215,
+   245
   ],
   "panel.rule_bearing": [
-   204,
-   207
+   247,
+   250
   ],
   "panel_count": [
-   71,
-   82
+   85,
+   97
   ],
   "panels.content": [
-   61,
-   82
+   70,
+   97
   ],
   "panels.order": [
-   61,
-   82
+   70,
+   97
   ],
   "parsed.arrow": [
    28,
-   30
+   32
   ],
   "parsed.duration_limit": [
-   13,
-   14
+   16,
+   18
   ],
   "parsed.eligibility": [
-   41,
-   46
+   51,
+   58
   ],
   "parsed.fee": [
-   38,
-   40
+   49,
+   53
   ],
   "parsed.payment_method": [
    0,
-   3
+   4
   ],
   "parsed.permit_required": [
    10,
    10
   ],
   "parsed.permits_parking": [
-   5,
-   8
+   6,
+   9
   ],
   "parsed.place_count": [
    9,
@@ -74,24 +74,24 @@
    8
   ],
   "parsed.prohibition": [
-   18,
-   24
+   29,
+   37
   ],
   "parsed.scope_shift": [
-   6,
-   8
-  ],
-  "parsed.stretch_metres": [
-   6,
+   7,
    9
   ],
+  "parsed.stretch_metres": [
+   8,
+   13
+  ],
   "parsed.time_windows": [
-   38,
-   50
+   59,
+   76
   ],
   "parsed.vehicle_class": [
-   16,
-   17
+   18,
+   22
   ]
  },
  "mistakes": [
@@ -224,7 +224,50 @@
   "091-avgift-7-19-torsd-boende: the content of the plates disagrees",
   "092-avgift-boende-mork-vagg: panel 3 read as ['Boende', 'BI'] instead of ['Boende', 'Bl']",
   "092-avgift-boende-mork-vagg: plate order ['avgift 7-19 taxa 5', 'månd 8-16 1/11-15/5', 'boende bi'] instead of ['avgift 7-19 taxa 5', 'månd 8-16 1/11-15/5', 'boende bl']",
-  "092-avgift-boende-mork-vagg: the content of the plates disagrees"
+  "092-avgift-boende-mork-vagg: the content of the plates disagrees",
+  "095-30min-plus-avgift-taxa: panel 1 field duration_limit = {'amount': 30, 'unit': 'minutes'} instead of None",
+  "095-30min-plus-avgift-taxa: panel 1 field time_windows = [{'from': '07:00', 'to': '20:00', 'day_class': 'weekday'}, {'from': '09:00', 'to': '18:00', 'day_class': 'eve'}] instead of None",
+  "095-30min-plus-avgift-taxa: panel 1 read as ['30 min', '7-20', '(9-18)'] instead of []",
+  "095-30min-plus-avgift-taxa: plate order ['30 min 7-20 (9-18)', 'avgift 7-19 taxa 5', 'övrig tid'] instead of ['?', 'avgift 7-19 taxa 5', 'övrig tid']",
+  "095-30min-plus-avgift-taxa: the content of the plates disagrees",
+  "096-flera-stolpar-boende-solna: panel 1 field fee = None instead of True",
+  "096-flera-stolpar-boende-solna: panel 1 field vehicle_class = 'motorcycle' instead of None",
+  "096-flera-stolpar-boende-solna: panel 1 read as [] instead of ['Avgift', 'Taxa A']",
+  "096-flera-stolpar-boende-solna: panel 2 field eligibility = None instead of 'residents'",
+  "096-flera-stolpar-boende-solna: panel 2 field fee = True instead of None",
+  "096-flera-stolpar-boende-solna: panel 2 read as ['Avgift', 'Taxa D'] instead of ['Boende', 'Solna']",
+  "096-flera-stolpar-boende-solna: panel 3 field eligibility = 'residents' instead of None",
+  "096-flera-stolpar-boende-solna: panel 3 field prohibition = None instead of True",
+  "096-flera-stolpar-boende-solna: panel 3 field time_windows = None instead of [{'from': '10:00', 'to': '14:00', 'day_class': 'named_weekday', 'named_weekday': 'tuesday', 'week_parity': 'odd', 'dates': {'mode': 'only', 'ranges': [{'from': '08-01', 'to': '06-30'}]}}]",
+  "096-flera-stolpar-boende-solna: panel 3 read as ['Boende', 'Solna'] instead of ['Tisdag', '10-14', 'Udda veckor', 'Augusti-Juni']",
+  "096-flera-stolpar-boende-solna: panel 4 field arrow = 'right' instead of 'left'",
+  "096-flera-stolpar-boende-solna: plate order ['motorcycle', 'avgift taxa d', 'boende solna', 'right'] instead of ['avgift taxa a', 'boende solna', 'tisdag 10-14 udda veckor augusti-juni', 'left']",
+  "096-flera-stolpar-boende-solna: the content of the plates disagrees",
+  "097-avgift-taxa-a-boende-solna-onsdag: panel 4 field payment_method = 'ticket' instead of None",
+  "097-avgift-taxa-a-boende-solna-onsdag: panel 4 read as ['Biljett', 'automat'] instead of ['Biljett-', 'automat']",
+  "097-avgift-taxa-a-boende-solna-onsdag: plate order ['avgift taxa a', 'boende solna', 'onsdag 10-14 udda veckor augusti-juni', 'biljett automat'] instead of ['avgift taxa a', 'boende solna', 'onsdag 10-14 udda veckor augusti-juni', 'biljett- automat']",
+  "097-avgift-taxa-a-boende-solna-onsdag: the content of the plates disagrees",
+  "101-motorcykel-0-10m-avgift-tisd: panel 5 field vehicle_class = 'motorcycle' instead of None",
+  "101-motorcykel-0-10m-avgift-tisd: panel 5 read as ['Boende', '51E'] instead of ['Boende', 'StE']",
+  "101-motorcykel-0-10m-avgift-tisd: plate order ['motorcycle', '0-10m', 'avgift 7-19 (11-17) taxa 14', 'tisd 9-14', 'boende 51e'] instead of ['motorcycle', '0-10m', 'avgift 7-19 (11-17) taxa 14', 'tisd 9-14', 'boende ste']",
+  "101-motorcykel-0-10m-avgift-tisd: the content of the plates disagrees",
+  "105-p-med-plattor-gathorn: panel 4 field arrow = 'left' instead of None",
+  "105-p-med-plattor-gathorn: panel 4 field vehicle_class = 'electric' instead of None",
+  "105-p-med-plattor-gathorn: panel 4 read as ['Boende', '3 tim', '7-19', '(11-17)'] instead of ['Boende', 'Mi', '3 tim', '7-19', '(11-17)']",
+  "105-p-med-plattor-gathorn: plate order ['electric_car', '3 tim avgift 7-19 (11-17) taxa 4', 'fred 8-16 1/11-15/5', 'boende 3 tim 7-19 (11-17)'] instead of ['electric_car', '3 tim avgift 7-19 (11-17) taxa 4', 'fred 8-16 1/11-15/5', 'boende mi 3 tim 7-19 (11-17)']",
+  "105-p-med-plattor-gathorn: the content of the plates disagrees",
+  "109-lastplats-vid-butik: 4 plates instead of 3",
+  "109-lastplats-vid-butik: panel 1 field time_windows = None instead of [{'from': '07:00', 'to': '19:00', 'day_class': 'weekday'}, {'from': '07:00', 'to': '19:00', 'day_class': 'eve'}, {'from': '07:00', 'to': '19:00', 'day_class': 'red'}]",
+  "109-lastplats-vid-butik: panel 1 read as ['Last-', 'plats'] instead of ['7-19', '(7-19)', '7-19']",
+  "109-lastplats-vid-butik: panel 2 field stretch_metres = None instead of {'from': 0, 'to': 15}",
+  "109-lastplats-vid-butik: panel 2 field time_windows = [{'from': '07:00', 'to': '19:00', 'day_class': 'weekday'}, {'from': '07:00', 'to': '19:00', 'day_class': 'eve'}, {'from': '07:00', 'to': '19:00', 'day_class': 'red'}] instead of None",
+  "109-lastplats-vid-butik: panel 2 read as ['7-19', '(7-19)', '7-19'] instead of ['0-15 m']",
+  "109-lastplats-vid-butik: panel 3 field prohibition = None instead of True",
+  "109-lastplats-vid-butik: panel 3 field stretch_metres = {'from': 0, 'to': 15} instead of None",
+  "109-lastplats-vid-butik: panel 3 field time_windows = None instead of [{'from': '00:00', 'to': '06:00', 'day_class': 'named_weekday', 'named_weekday': 'thursday'}]",
+  "109-lastplats-vid-butik: panel 3 read as ['0-15 m'] instead of ['Torsd', '0-6']",
+  "109-lastplats-vid-butik: plate order ['last- plats', '7-19 (7-19) 7-19', '0-15 m', 'torsd 0-6'] instead of ['7-19 (7-19) 7-19', '0-15 m', 'torsd 0-6']",
+  "109-lastplats-vid-butik: the content of the plates disagrees"
  ],
  "diverged": {
   "035-zon-c-pa-avstand": [
@@ -256,6 +299,15 @@
   ],
   "079-p-skylt-bakom-trad": [
    "who may park: - instead of ['forhyrda-platser']"
+  ],
+  "096-flera-stolpar-boende-solna": [
+   "who may park: ['boende', 'pictogram-motorcycle'] instead of ['boende']"
+  ],
+  "097-avgift-taxa-a-boende-solna-onsdag": [
+   "hours differing by conditions 168/168: avgift, p-biljett instead of avgift"
+  ],
+  "105-p-med-plattor-gathorn": [
+   "who may park: ['pictogram-electric-car'] instead of ['boende', 'pictogram-electric-car']"
   ]
  },
  "pixels": {
@@ -340,7 +392,22 @@
   "091-avgift-7-19-torsd-boende": 323606,
   "092-avgift-boende-mork-vagg": 536731,
   "093-forbud-onsdag-pilar": 489144,
-  "094-p-7-dygn-torsd-vintersasong": 464868
+  "094-p-7-dygn-torsd-vintersasong": 464868,
+  "095-30min-plus-avgift-taxa": 470880,
+  "096-flera-stolpar-boende-solna": 507895,
+  "097-avgift-taxa-a-boende-solna-onsdag": 461671,
+  "098-avgift-7-19-tors-boende-tr": 355540,
+  "099-p-med-gul-skylt-pa-avstand": 392448,
+  "100-avgift-7-19-boende-so": 385024,
+  "101-motorcykel-0-10m-avgift-tisd": 263172,
+  "102-p-bredvid-vagvisare-centrum-e4": 653305,
+  "103-forbud-plus-hastighet-10": 703404,
+  "104-2tim-avgift-fred-vid-blomsterbutik": 446524,
+  "105-p-med-plattor-gathorn": 679936,
+  "106-p-blaa-och-gul-skylt-vid-berg": 519851,
+  "107-rorelsehindrad-med-plattor": 546742,
+  "108-p-under-cykelskylt": 509388,
+  "109-lastplats-vid-butik": 507314
  },
  "fingerprint": "a1b96992540a",
  "excluded": [],
@@ -418,6 +485,12 @@
    "055-forbud-stannande-snotackt-pil"
   ],
   [
+   0.798,
+   "partial",
+   false,
+   "109-lastplats-vid-butik"
+  ],
+  [
    0.875,
    "partial",
    false,
@@ -490,6 +563,36 @@
    "091-avgift-7-19-torsd-boende"
   ],
   [
+   0.875,
+   "full",
+   false,
+   "095-30min-plus-avgift-taxa"
+  ],
+  [
+   0.875,
+   "full",
+   true,
+   "096-flera-stolpar-boende-solna"
+  ],
+  [
+   0.875,
+   "partial",
+   false,
+   "098-avgift-7-19-tors-boende-tr"
+  ],
+  [
+   0.875,
+   "full",
+   false,
+   "103-forbud-plus-hastighet-10"
+  ],
+  [
+   0.875,
+   "full",
+   true,
+   "105-p-med-plattor-gathorn"
+  ],
+  [
    0.895,
    "full",
    true,
@@ -518,6 +621,12 @@
    "full",
    false,
    "083-gul-forbud-forhyrda-platser-pa-avstand"
+  ],
+  [
+   0.898,
+   "full",
+   false,
+   "106-p-blaa-och-gul-skylt-vid-berg"
   ],
   [
    0.899,
@@ -766,6 +875,36 @@
    "094-p-7-dygn-torsd-vintersasong"
   ],
   [
+   0.975,
+   "full",
+   true,
+   "097-avgift-taxa-a-boende-solna-onsdag"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "099-p-med-gul-skylt-pa-avstand"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "100-avgift-7-19-boende-so"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "101-motorcykel-0-10m-avgift-tisd"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "107-rorelsehindrad-med-plattor"
+  ],
+  [
    0.998,
    "full",
    false,
@@ -796,6 +935,12 @@
    "092-avgift-boende-mork-vagg"
   ],
   [
+   0.998,
+   "full",
+   false,
+   "104-2tim-avgift-fred-vid-blomsterbutik"
+  ],
+  [
    0.999,
    "full",
    false,
@@ -820,6 +965,18 @@
    "093-forbud-onsdag-pilar"
   ],
   [
+   0.999,
+   "full",
+   false,
+   "102-p-bredvid-vagvisare-centrum-e4"
+  ],
+  [
+   0.999,
+   "full",
+   false,
+   "108-p-under-cykelskylt"
+  ],
+  [
    1.0,
    "full",
    false,
@@ -838,5 +995,5 @@
    "071-taxi-3-platser"
   ]
  ],
- "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 19 | 4 | 63 | 4 |\n| 0.875 | 19 | 4 | 63 | 4 |\n| 0.900 | 30 | 7 | 52 | 1 |\n| 0.920 | 30 | 7 | 52 | 1 |\n| 0.950 | 31 | 7 | 51 | 1 |"
+ "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 21 | 4 | 76 | 7 |\n| 0.875 | 21 | 4 | 76 | 7 |\n| 0.900 | 37 | 9 | 60 | 2 |\n| 0.920 | 37 | 9 | 60 | 2 |\n| 0.950 | 38 | 9 | 59 | 2 |"
 }

@@ -105,13 +105,14 @@ describe("what the reference answers are made of", () => {
   });
 
   it("the threshold table is the one the threshold stands on", () => {
-    // Fields disagree on nineteen photographs, the answer on three; the threshold
-    // stands on the second.
+    // Fields disagree on many photographs, the answer on few; the threshold stands on
+    // the second.
     const golden = readJson("parity/measure.json");
     expect(golden.threshold_table).toContain("| 0.900 |");
-    // Disagreeing answers are a map of "photograph -> how it disagreed".
+    // Disagreeing answers are a map of "photograph -> how it disagreed". A share, not a
+    // count: the bound was ten when the set had 57 photographs, and the set grows.
     const diverged = Object.keys(golden.diverged).length;
-    expect(diverged, "few answers disagree - as it should be").toBeLessThan(10);
+    expect(diverged / golden.photos, "few answers disagree - as it should be").toBeLessThan(0.15);
     const fieldsOff = Object.values(golden.fields as Record<string, [number, number]>)
       .filter(([hits, total]) => hits < total).length;
     expect(fieldsOff, "fields must disagree more often than the answer").toBeGreaterThan(diverged);

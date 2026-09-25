@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "vehicle_class": "motorcycle",
+        "pictogram": "motorcycle"
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "0-10m"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "stretch_metres": {
+          "from": 0,
+          "to": 10
+        }
+      },
+      "index": 2
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Avgift",
+        "7-19",
+        "(11-17)",
+        "Taxa 14"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "fee": true,
+        "tariff_code": "Taxa 14",
+        "time_windows": [
+          {
+            "from": "07:00",
+            "to": "19:00",
+            "day_class": "weekday"
+          },
+          {
+            "from": "11:00",
+            "to": "17:00",
+            "day_class": "eve"
+          }
+        ]
+      },
+      "index": 3
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Tisd",
+        "9-14"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "prohibition": true,
+        "time_windows": [
+          {
+            "from": "09:00",
+            "to": "14:00",
+            "day_class": "named_weekday",
+            "named_weekday": "tuesday"
+          }
+        ]
+      },
+      "index": 4
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Boende",
+        "StE"
+      ],
+      "background_color": "white",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "eligibility": "residents",
+        "pictogram": "motorcycle"
+      },
+      "index": 5
+    }
+  ],
+  "panel_count": 5,
+  "boundaries": {
+    "certain": true
+  }
+}
