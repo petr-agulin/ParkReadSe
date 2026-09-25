@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "prohibition_stopping",
+    "background_color": "yellow",
+    "form": "regular",
+    "legibility": {
+      "readable": true,
+      "obstructions": [
+        "blur"
+      ]
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Last-",
+        "plats"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "blur"
+        ]
+      },
+      "parsed": {
+        "uninterpreted": [
+          "Lastplats"
+        ]
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "6-16"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "blur"
+        ]
+      },
+      "parsed": {
+        "time_windows": [
+          {
+            "from": "06:00",
+            "to": "16:00",
+            "day_class": "weekday"
+          }
+        ]
+      },
+      "index": 2
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Avgift",
+        "16-21"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "blur"
+        ]
+      },
+      "parsed": {
+        "permits_parking": true,
+        "pictogram": "parking",
+        "fee": true,
+        "time_windows": [
+          {
+            "from": "16:00",
+            "to": "21:00",
+            "day_class": "weekday"
+          }
+        ]
+      },
+      "index": 3
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Zon C"
+      ],
+      "background_color": "white",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "blur"
+        ]
+      },
+      "parsed": {
+        "tariff_code": "Zon C"
+      },
+      "index": 4
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Boende",
+        "Centrala"
+      ],
+      "background_color": "white",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "blur"
+        ]
+      },
+      "parsed": {
+        "eligibility": "residents"
+      },
+      "index": 5
+    },
+    {
+      "kind": "info_board",
+      "lines": [],
+      "background_color": "white",
+      "legibility": {
+        "readable": false,
+        "obstructions": [
+          "blur"
+        ]
+      },
+      "parsed": {},
+      "index": 6
+    }
+  ],
+  "panel_count": 6,
+  "boundaries": {
+    "certain": true
+  }
+}

@@ -1283,5 +1283,65 @@
   "id": "expected/079-p-skylt-bakom-trad@base",
   "doc": "expected/079-p-skylt-bakom-trad",
   "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/083-gul-forbud-forhyrda-platser-pa-avstand@base",
+  "doc": "expected/083-gul-forbud-forhyrda-platser-pa-avstand",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/084-gul-forbud-p-tjanst-vast-farthinder@base",
+  "doc": "expected/084-gul-forbud-p-tjanst-vast-farthinder",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/085-p-med-plattor-bakom-bom@base",
+  "doc": "expected/085-p-med-plattor-bakom-bom",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/086-p-1tim-pil-europark@base",
+  "doc": "expected/086-p-1tim-pil-europark",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/087-motljus-parkering-pa-avstand@base",
+  "doc": "expected/087-motljus-parkering-pa-avstand",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/088-avgift-8-20-rod-taxa-boende-c-nv-mandag-8-11@base",
+  "doc": "expected/088-avgift-8-20-rod-taxa-boende-c-nv-mandag-8-11",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/089-lastplats-zon-c-boende-centrala@base",
+  "doc": "expected/089-lastplats-zon-c-boende-centrala",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/090-avgift-uppstallning-zon-e-pil@base",
+  "doc": "expected/090-avgift-uppstallning-zon-e-pil",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/091-avgift-7-19-torsd-boende@base",
+  "doc": "expected/091-avgift-7-19-torsd-boende",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/092-avgift-boende-mork-vagg@base",
+  "doc": "expected/092-avgift-boende-mork-vagg",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/093-forbud-onsdag-pilar@base",
+  "doc": "expected/093-forbud-onsdag-pilar",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/094-p-7-dygn-torsd-vintersasong@base",
+  "doc": "expected/094-p-7-dygn-torsd-vintersasong",
+  "moment": "2026-03-02T00:00"
  }
 ]

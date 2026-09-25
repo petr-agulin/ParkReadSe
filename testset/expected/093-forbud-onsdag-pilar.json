@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "prohibition_parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Onsdag",
+        "8-16",
+        "1/11-15/5"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "time_windows": [
+          {
+            "from": "08:00",
+            "to": "16:00",
+            "day_class": "named_weekday",
+            "named_weekday": "wednesday",
+            "dates": {
+              "mode": "only",
+              "ranges": [
+                {
+                  "from": "11-01",
+                  "to": "05-15"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "arrow": "both_vertical",
+        "pictogram": "arrow"
+      },
+      "index": 2
+    }
+  ],
+  "panel_count": 2,
+  "boundaries": {
+    "certain": true
+  }
+}

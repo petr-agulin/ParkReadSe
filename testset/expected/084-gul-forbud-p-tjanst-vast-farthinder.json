@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "prohibition_parking",
+    "background_color": "yellow",
+    "form": "zone",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "operator_plate",
+      "lines": [
+        "P-tjänst Väst AB",
+        "031-51 88 10"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "operator": {
+          "name": "P-tjänst Väst AB",
+          "phone": "031-51 88 10"
+        }
+      },
+      "index": 1
+    },
+    {
+      "kind": "other_sign",
+      "lines": [
+        "Farthinder"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "road_sign": "speed_bump"
+      },
+      "index": 2
+    }
+  ],
+  "panel_count": 2,
+  "boundaries": {
+    "certain": true
+  }
+}

@@ -88937,5 +88937,4034 @@
   ],
   "uncertainties": [],
   "permits_parking": true
+ },
+ "expected/083-gul-forbud-forhyrda-platser-pa-avstand@base": {
+  "contract": 7,
+  "moment": "2026-03-02T00:00",
+  "day_class": "weekday",
+  "completeness": {
+   "category": "full",
+   "category_text": "Every plate on the sign was read",
+   "tone": "good",
+   "confidence": 0.975,
+   "signals": {
+    "schema_valid": 1.0,
+    "main_sign_identified": 1.0,
+    "main_sign_readable": 1.0,
+    "panels_read_share": 1.0,
+    "plates_interpreted": 1.0,
+    "panel_count_agreement": 1.0,
+    "main_sign_corroborated": 1.0,
+    "text_fits_the_pixels": 1.0,
+    "no_repairs_needed": 1.0,
+    "day_class_known": 1.0,
+    "model_confidence": 0.5
+   },
+   "reasons": [],
+   "unread_panels": [],
+   "may_hide_prohibition": false
+  },
+  "has_answer": true,
+  "what_we_saw": {
+   "main_sign": {
+    "type": "prohibition_parking",
+    "background_color": "yellow",
+    "form": "zone",
+    "legibility": {
+     "readable": true,
+     "obstructions": [
+      "distance"
+     ]
+    }
+   },
+   "main_sign_fields": [
+    {
+     "name": "type",
+     "value": "prohibition_parking"
+    },
+    {
+     "name": "form",
+     "value": "zone"
+    },
+    {
+     "name": "background_color",
+     "value": "yellow"
+    },
+    {
+     "name": "legibility",
+     "value": "readable; distance"
+    }
+   ],
+   "primary_sign": {
+    "key": "main-zone-prohibition",
+    "label": "Zone sign",
+    "code": "E20",
+    "text": "The sign marks the start of an area where parking is prohibited",
+    "short": "Start of a no-parking area",
+    "continues": false
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Förhyrda platser"
+     ],
+     "background_color": "blue",
+     "reference_keys": [
+      "forhyrda-platser"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "1"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "blue"
+      },
+      {
+       "name": "lines",
+       "value": "Förhyrda platser"
+      },
+      {
+       "name": "parsed.eligibility",
+       "value": "rented"
+      },
+      {
+       "name": "parsed.pictogram",
+       "value": "parking"
+      },
+      {
+       "name": "parsed.permits_parking",
+       "value": "yes"
+      },
+      {
+       "name": "legibility",
+       "value": "readable; distance"
+      },
+      {
+       "name": "reference_keys",
+       "value": "forhyrda-platser"
+      }
+     ],
+     "title": "Panel",
+     "text": "Förhyrda platser",
+     "meanings": [
+      {
+       "key": "forhyrda-platser",
+       "label": "Text panel",
+       "code": "T22",
+       "text": "The sign designates these spaces as rented",
+       "short": "Rented spaces",
+       "continues": false
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 2,
+     "kind": "operator_plate",
+     "lines": [
+      "P-Tjänst V.",
+      "031-51 88 10"
+     ],
+     "background_color": "yellow",
+     "reference_keys": [
+      "operator-plate"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "2"
+      },
+      {
+       "name": "kind",
+       "value": "operator_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "yellow"
+      },
+      {
+       "name": "lines",
+       "value": "P-Tjänst V., 031-51 88 10"
+      },
+      {
+       "name": "parsed.operator",
+       "value": "name: P-Tjänst V., phone: 031-51 88 10"
+      },
+      {
+       "name": "legibility",
+       "value": "readable; distance"
+      },
+      {
+       "name": "reference_keys",
+       "value": "operator-plate"
+      }
+     ],
+     "title": "Panel",
+     "text": "P-Tjänst V. 031-51 88 10",
+     "meanings": [
+      {
+       "key": "operator-plate",
+       "label": "Operator plate",
+       "code": "",
+       "text": "",
+       "short": "",
+       "continues": false
+      }
+     ],
+     "carries_rule": false,
+     "unreliable": false
+    }
+   ]
+  },
+  "stopped_at": null,
+  "reason": null,
+  "flags": [],
+  "triage": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "extent_text": "The sign carries no arrow, so it covers the spaces here, at the sign",
+    "extent_short": "Here at the sign",
+    "audience": null,
+    "audience_short": null,
+    "eligibility": [
+     {
+      "key": "forhyrda-platser",
+      "text": "The sign designates these spaces as rented",
+      "known": true
+     }
+    ],
+    "who_can_park": [
+     {
+      "key": "forhyrda-platser",
+      "text": "The sign designates these spaces as rented",
+      "known": true
+     }
+    ],
+    "notes": [],
+    "window_for": [
+     {
+      "key": "forhyrda-platser",
+      "text": "The sign names an exception: Rented spaces",
+      "known": true
+     }
+    ],
+    "no_window_text": null,
+    "clock_change_text": null,
+    "place_notes": [],
+    "duration_expires_at": null,
+    "duration_source": null,
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-10T00:00",
+      "start_day": null,
+      "end_day": null,
+      "state": "prohibited",
+      "state_text": "The sign is a no-parking sign for this period",
+      "tone": "prohibited",
+      "headline": "No parking",
+      "minutes": 11520,
+      "notes": [],
+      "ends_at_horizon": true,
+      "stay_end_text": "",
+      "stay_end_reason": "",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null,
+      "certain": true,
+      "restricted": true,
+      "aside": [
+       {
+        "key": "forhyrda-platser",
+        "text": "The sign names an exception: Rented spaces",
+        "known": true
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "uncertainties": [],
+  "permits_parking": true
+ },
+ "expected/084-gul-forbud-p-tjanst-vast-farthinder@base": {
+  "contract": 7,
+  "moment": "2026-03-02T00:00",
+  "day_class": "weekday",
+  "completeness": {
+   "category": "partial",
+   "category_text": "The sign carries no plate stating a parking rule, so what follows rests on the symbol at the top of the pole alone",
+   "tone": "caution",
+   "confidence": 0.875,
+   "signals": {
+    "schema_valid": 1.0,
+    "main_sign_identified": 1.0,
+    "main_sign_readable": 1.0,
+    "panels_read_share": 1.0,
+    "plates_interpreted": 1.0,
+    "panel_count_agreement": 1.0,
+    "main_sign_corroborated": 0.0,
+    "text_fits_the_pixels": 1.0,
+    "no_repairs_needed": 1.0,
+    "day_class_known": 1.0,
+    "model_confidence": 0.5
+   },
+   "reasons": [
+    {
+     "token": "main_sign_uncorroborated",
+     "text": "No plate on this sign states a parking rule, so the reading rests on the symbol at the top of the pole alone — a sign pointing the way to a car park elsewhere looks much the same"
+    }
+   ],
+   "unread_panels": [],
+   "may_hide_prohibition": false
+  },
+  "has_answer": true,
+  "what_we_saw": {
+   "main_sign": {
+    "type": "prohibition_parking",
+    "background_color": "yellow",
+    "form": "zone",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "main_sign_fields": [
+    {
+     "name": "type",
+     "value": "prohibition_parking"
+    },
+    {
+     "name": "form",
+     "value": "zone"
+    },
+    {
+     "name": "background_color",
+     "value": "yellow"
+    },
+    {
+     "name": "legibility",
+     "value": "readable"
+    }
+   ],
+   "primary_sign": {
+    "key": "main-zone-prohibition",
+    "label": "Zone sign",
+    "code": "E20",
+    "text": "The sign marks the start of an area where parking is prohibited",
+    "short": "Start of a no-parking area",
+    "continues": false
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "operator_plate",
+     "lines": [
+      "P-tjänst Väst AB",
+      "031-51 88 10"
+     ],
+     "background_color": "yellow",
+     "reference_keys": [
+      "operator-plate"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "1"
+      },
+      {
+       "name": "kind",
+       "value": "operator_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "yellow"
+      },
+      {
+       "name": "lines",
+       "value": "P-tjänst Väst AB, 031-51 88 10"
+      },
+      {
+       "name": "parsed.operator",
+       "value": "name: P-tjänst Väst AB, phone: 031-51 88 10"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "operator-plate"
+      }
+     ],
+     "title": "Panel",
+     "text": "P-tjänst Väst AB 031-51 88 10",
+     "meanings": [
+      {
+       "key": "operator-plate",
+       "label": "Operator plate",
+       "code": "",
+       "text": "",
+       "short": "",
+       "continues": false
+      }
+     ],
+     "carries_rule": false,
+     "unreliable": false
+    },
+    {
+     "index": 2,
+     "kind": "other_sign",
+     "lines": [
+      "Farthinder"
+     ],
+     "background_color": "yellow",
+     "reference_keys": [
+      "other-road-sign"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "2"
+      },
+      {
+       "name": "kind",
+       "value": "other_sign"
+      },
+      {
+       "name": "background_color",
+       "value": "yellow"
+      },
+      {
+       "name": "lines",
+       "value": "Farthinder"
+      },
+      {
+       "name": "parsed.road_sign",
+       "value": "speed_bump"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "other-road-sign"
+      }
+     ],
+     "title": "Panel",
+     "text": "Farthinder",
+     "meanings": [
+      {
+       "key": "other-road-sign",
+       "label": "Road sign",
+       "code": "",
+       "text": "",
+       "short": "",
+       "continues": false
+      }
+     ],
+     "carries_rule": false,
+     "unreliable": false
+    }
+   ]
+  },
+  "stopped_at": null,
+  "reason": null,
+  "flags": [],
+  "triage": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "extent_text": "The sign carries no arrow, so it covers the spaces here, at the sign",
+    "extent_short": "Here at the sign",
+    "audience": null,
+    "audience_short": null,
+    "eligibility": [],
+    "who_can_park": [
+     {
+      "key": "main-zone-prohibition",
+      "text": "The sign marks the start of an area where parking is prohibited",
+      "known": true
+     }
+    ],
+    "notes": [],
+    "window_for": [],
+    "no_window_text": null,
+    "clock_change_text": null,
+    "place_notes": [],
+    "duration_expires_at": null,
+    "duration_source": null,
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-10T00:00",
+      "start_day": null,
+      "end_day": null,
+      "state": "prohibited",
+      "state_text": "The sign is a no-parking sign for this period",
+      "tone": "prohibited",
+      "headline": "No parking",
+      "minutes": 11520,
+      "notes": [],
+      "ends_at_horizon": true,
+      "stay_end_text": "",
+      "stay_end_reason": "",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null,
+      "certain": false,
+      "restricted": false,
+      "aside": []
+     }
+    ]
+   }
+  ],
+  "uncertainties": [],
+  "permits_parking": true
+ },
+ "expected/085-p-med-plattor-bakom-bom@base": {
+  "contract": 7,
+  "moment": "2026-03-02T00:00",
+  "day_class": "weekday",
+  "completeness": {
+   "category": "insufficient",
+   "category_text": "Too little of the sign was read to say what it states",
+   "tone": "bad",
+   "confidence": 0.842,
+   "signals": {
+    "schema_valid": 1.0,
+    "main_sign_identified": 1.0,
+    "main_sign_readable": 1.0,
+    "panels_read_share": 0.3333333333333333,
+    "plates_interpreted": 1.0,
+    "panel_count_agreement": 1.0,
+    "main_sign_corroborated": 1.0,
+    "text_fits_the_pixels": 1.0,
+    "no_repairs_needed": 1.0,
+    "day_class_known": 1.0,
+    "model_confidence": 0.5
+   },
+   "reasons": [
+    {
+     "token": "unread_panels:2,3",
+     "text": "Plates 2,3 on the sign could not be read"
+    }
+   ],
+   "unread_panels": [
+    2,
+    3
+   ],
+   "may_hide_prohibition": true
+  },
+  "has_answer": false,
+  "what_we_saw": {
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true,
+     "obstructions": [
+      "distance"
+     ]
+    }
+   },
+   "main_sign_fields": [
+    {
+     "name": "type",
+     "value": "parking"
+    },
+    {
+     "name": "form",
+     "value": "regular"
+    },
+    {
+     "name": "background_color",
+     "value": "blue"
+    },
+    {
+     "name": "legibility",
+     "value": "readable; distance"
+    }
+   ],
+   "primary_sign": {
+    "key": "main-parking",
+    "label": "Parking",
+    "code": "E19",
+    "text": "The sign permits parking for all vehicles, subject to the general parking rules",
+    "short": "Parking permitted, general rules still apply",
+    "continues": false
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "blue",
+     "reference_keys": [
+      "sarskilt-p-tillstand"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": "This plate could not be read reliably, so its words are not shown.",
+     "fields": [
+      {
+       "name": "index",
+       "value": "1"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "blue"
+      },
+      {
+       "name": "lines",
+       "value": "Särskilt, P-tillstånd, erfordras"
+      },
+      {
+       "name": "parsed.permit_required",
+       "value": "yes"
+      },
+      {
+       "name": "parsed.eligibility",
+       "value": "permit_holders"
+      },
+      {
+       "name": "legibility",
+       "value": "readable; distance, blur"
+      },
+      {
+       "name": "reference_keys",
+       "value": "sarskilt-p-tillstand"
+      }
+     ],
+     "title": "Panel",
+     "text": "",
+     "meanings": [
+      {
+       "key": "sarskilt-p-tillstand",
+       "label": "Text panel",
+       "code": "T22",
+       "text": "The sign requires a special parking permit",
+       "short": "A special parking permit is required",
+       "continues": false
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": true
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "yellow",
+     "reference_keys": [],
+     "uninterpreted": [],
+     "not_interpreted_text": "This plate could not be read reliably, so its words are not shown.",
+     "fields": [
+      {
+       "name": "index",
+       "value": "2"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "yellow"
+      },
+      {
+       "name": "lines",
+       "value": "(no text)"
+      },
+      {
+       "name": "legibility",
+       "value": "not readable; distance, blur"
+      }
+     ],
+     "title": "Panel",
+     "text": "",
+     "meanings": [],
+     "carries_rule": true,
+     "unreliable": true
+    },
+    {
+     "index": 3,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "blue",
+     "reference_keys": [],
+     "uninterpreted": [],
+     "not_interpreted_text": "This plate could not be read reliably, so its words are not shown.",
+     "fields": [
+      {
+       "name": "index",
+       "value": "3"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "blue"
+      },
+      {
+       "name": "lines",
+       "value": "(no text)"
+      },
+      {
+       "name": "legibility",
+       "value": "not readable; distance, blur"
+      }
+     ],
+     "title": "Panel",
+     "text": "",
+     "meanings": [],
+     "carries_rule": true,
+     "unreliable": true
+    }
+   ]
+  },
+  "stopped_at": null,
+  "reason": null,
+  "flags": [],
+  "triage": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "extent_text": "The sign carries no arrow, so it covers the spaces here, at the sign",
+    "extent_short": "Here at the sign",
+    "audience": null,
+    "audience_short": null,
+    "eligibility": [
+     {
+      "key": "sarskilt-p-tillstand",
+      "text": "The sign requires a special parking permit",
+      "known": true
+     }
+    ],
+    "who_can_park": [
+     {
+      "key": "sarskilt-p-tillstand",
+      "text": "The sign requires a special parking permit",
+      "known": true
+     }
+    ],
+    "notes": [],
+    "window_for": [
+     {
+      "key": "sarskilt-p-tillstand",
+      "text": "A special parking permit is required",
+      "known": true
+     }
+    ],
+    "no_window_text": "Too little of this sign was read to say when parking is allowed here. No window is shown rather than a guess: photograph the sign again, closer, or read it yourself.",
+    "clock_change_text": null,
+    "place_notes": [],
+    "duration_expires_at": null,
+    "duration_source": null,
+    "periods": []
+   }
+  ],
+  "uncertainties": [],
+  "permits_parking": true
+ },
+ "expected/086-p-1tim-pil-europark@base": {
+  "contract": 7,
+  "moment": "2026-03-02T00:00",
+  "day_class": "weekday",
+  "completeness": {
+   "category": "full",
+   "category_text": "Every plate on the sign was read",
+   "tone": "good",
+   "confidence": 0.975,
+   "signals": {
+    "schema_valid": 1.0,
+    "main_sign_identified": 1.0,
+    "main_sign_readable": 1.0,
+    "panels_read_share": 1.0,
+    "plates_interpreted": 1.0,
+    "panel_count_agreement": 1.0,
+    "main_sign_corroborated": 1.0,
+    "text_fits_the_pixels": 1.0,
+    "no_repairs_needed": 1.0,
+    "day_class_known": 1.0,
+    "model_confidence": 0.5
+   },
+   "reasons": [],
+   "unread_panels": [],
+   "may_hide_prohibition": false
+  },
+  "has_answer": true,
+  "what_we_saw": {
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true,
+     "obstructions": [
+      "distance"
+     ]
+    }
+   },
+   "main_sign_fields": [
+    {
+     "name": "type",
+     "value": "parking"
+    },
+    {
+     "name": "form",
+     "value": "regular"
+    },
+    {
+     "name": "background_color",
+     "value": "blue"
+    },
+    {
+     "name": "legibility",
+     "value": "readable; distance"
+    }
+   ],
+   "primary_sign": {
+    "key": "main-parking",
+    "label": "Parking",
+    "code": "E19",
+    "text": "The sign permits parking for all vehicles, subject to the general parking rules",
+    "short": "Parking permitted, general rules still apply",
+    "continues": false
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "1 tim"
+     ],
+     "background_color": "blue",
+     "reference_keys": [
+      "duration-limit"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "1"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "blue"
+      },
+      {
+       "name": "lines",
+       "value": "1 tim"
+      },
+      {
+       "name": "parsed.duration_limit",
+       "value": "1 hours"
+      },
+      {
+       "name": "legibility",
+       "value": "readable; distance"
+      },
+      {
+       "name": "reference_keys",
+       "value": "duration-limit"
+      }
+     ],
+     "title": "Panel",
+     "text": "1 tim",
+     "meanings": [
+      {
+       "key": "duration-limit",
+       "label": "Duration of parking permitted",
+       "code": "T18",
+       "text": "The sign limits parking to a maximum continuous stay",
+       "short": "Maximum continuous stay",
+       "continues": false
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "reference_keys": [
+      "arrow-left"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "2"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "white"
+      },
+      {
+       "name": "lines",
+       "value": "(no text)"
+      },
+      {
+       "name": "parsed.arrow",
+       "value": "left"
+      },
+      {
+       "name": "parsed.pictogram",
+       "value": "arrow"
+      },
+      {
+       "name": "legibility",
+       "value": "readable; distance"
+      },
+      {
+       "name": "reference_keys",
+       "value": "arrow-left"
+      }
+     ],
+     "title": "Panel",
+     "text": "",
+     "meanings": [
+      {
+       "key": "arrow-left",
+       "label": "Extent",
+       "code": "T11",
+       "text": "The sign applies to the left of this point",
+       "short": "Applies to the left of the sign",
+       "continues": false
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 3,
+     "kind": "operator_plate",
+     "lines": [
+      "Europark"
+     ],
+     "background_color": "blue",
+     "reference_keys": [
+      "operator-plate"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "3"
+      },
+      {
+       "name": "kind",
+       "value": "operator_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "blue"
+      },
+      {
+       "name": "lines",
+       "value": "Europark"
+      },
+      {
+       "name": "parsed.operator",
+       "value": "name: Europark"
+      },
+      {
+       "name": "legibility",
+       "value": "readable; distance, blur"
+      },
+      {
+       "name": "reference_keys",
+       "value": "operator-plate"
+      }
+     ],
+     "title": "Panel",
+     "text": "Europark",
+     "meanings": [
+      {
+       "key": "operator-plate",
+       "label": "Operator plate",
+       "code": "",
+       "text": "",
+       "short": "",
+       "continues": false
+      }
+     ],
+     "carries_rule": false,
+     "unreliable": false
+    }
+   ]
+  },
+  "stopped_at": null,
+  "reason": null,
+  "flags": [],
+  "triage": null,
+  "regimes": [
+   {
+    "extent": "left",
+    "extent_text": "The sign's arrow points left: it covers the stretch to the left of the sign",
+    "extent_short": "To the left of the sign",
+    "audience": null,
+    "audience_short": null,
+    "eligibility": [],
+    "who_can_park": [
+     {
+      "key": "main-parking",
+      "text": "The sign permits parking for all vehicles, subject to the general parking rules",
+      "known": true
+     }
+    ],
+    "notes": [],
+    "window_for": [],
+    "no_window_text": null,
+    "clock_change_text": null,
+    "place_notes": [],
+    "duration_expires_at": "2026-03-02T01:00",
+    "duration_source": "plate",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-02T01:00",
+      "start_day": null,
+      "end_day": null,
+      "state": "allowed",
+      "state_text": "The sign permits parking during this period",
+      "tone": "free",
+      "headline": "Free parking",
+      "minutes": 60,
+      "notes": [],
+      "ends_at_horizon": false,
+      "stay_end_text": "This stay must end here — the limit stated on the sign",
+      "stay_end_reason": "the limit stated on the sign",
+      "conditions": [],
+      "max_duration_minutes": 60,
+      "note": null,
+      "certain": true,
+      "restricted": false,
+      "aside": []
+     }
+    ]
+   }
+  ],
+  "uncertainties": [],
+  "permits_parking": true
+ },
+ "expected/087-motljus-parkering-pa-avstand@base": {
+  "contract": 7,
+  "moment": "2026-03-02T00:00",
+  "day_class": "weekday",
+  "completeness": {
+   "category": "insufficient",
+   "category_text": "Too little of the sign was read to say what it states",
+   "tone": "bad",
+   "confidence": 0.742,
+   "signals": {
+    "schema_valid": 1.0,
+    "main_sign_identified": 1.0,
+    "main_sign_readable": 1.0,
+    "panels_read_share": 0.3333333333333333,
+    "plates_interpreted": 1.0,
+    "panel_count_agreement": 1.0,
+    "main_sign_corroborated": 0.0,
+    "text_fits_the_pixels": 1.0,
+    "no_repairs_needed": 1.0,
+    "day_class_known": 1.0,
+    "model_confidence": 0.5
+   },
+   "reasons": [
+    {
+     "token": "unread_panels:1,2",
+     "text": "Plates 1,2 on the sign could not be read"
+    },
+    {
+     "token": "main_sign_uncorroborated",
+     "text": "No plate on this sign states a parking rule, so the reading rests on the symbol at the top of the pole alone — a sign pointing the way to a car park elsewhere looks much the same"
+    }
+   ],
+   "unread_panels": [
+    1,
+    2
+   ],
+   "may_hide_prohibition": false
+  },
+  "has_answer": false,
+  "what_we_saw": {
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true,
+     "obstructions": [
+      "glare",
+      "distance"
+     ]
+    }
+   },
+   "main_sign_fields": [
+    {
+     "name": "type",
+     "value": "parking"
+    },
+    {
+     "name": "form",
+     "value": "regular"
+    },
+    {
+     "name": "background_color",
+     "value": "blue"
+    },
+    {
+     "name": "legibility",
+     "value": "readable; glare, distance"
+    }
+   ],
+   "primary_sign": {
+    "key": "main-parking",
+    "label": "Parking",
+    "code": "E19",
+    "text": "The sign permits parking for all vehicles, subject to the general parking rules",
+    "short": "Parking permitted, general rules still apply",
+    "continues": false
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "blue",
+     "reference_keys": [],
+     "uninterpreted": [],
+     "not_interpreted_text": "This plate could not be read reliably, so its words are not shown.",
+     "fields": [
+      {
+       "name": "index",
+       "value": "1"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "blue"
+      },
+      {
+       "name": "lines",
+       "value": "(no text)"
+      },
+      {
+       "name": "legibility",
+       "value": "not readable; glare, distance"
+      }
+     ],
+     "title": "Panel",
+     "text": "",
+     "meanings": [],
+     "carries_rule": true,
+     "unreliable": true
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "blue",
+     "reference_keys": [],
+     "uninterpreted": [],
+     "not_interpreted_text": "This plate could not be read reliably, so its words are not shown.",
+     "fields": [
+      {
+       "name": "index",
+       "value": "2"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "blue"
+      },
+      {
+       "name": "lines",
+       "value": "(no text)"
+      },
+      {
+       "name": "legibility",
+       "value": "not readable; glare, distance"
+      }
+     ],
+     "title": "Panel",
+     "text": "",
+     "meanings": [],
+     "carries_rule": true,
+     "unreliable": true
+    },
+    {
+     "index": 3,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "reference_keys": [
+      "arrow-left"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": "This plate could not be read reliably, so its words are not shown.",
+     "fields": [
+      {
+       "name": "index",
+       "value": "3"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "white"
+      },
+      {
+       "name": "lines",
+       "value": "(no text)"
+      },
+      {
+       "name": "parsed.arrow",
+       "value": "left"
+      },
+      {
+       "name": "parsed.pictogram",
+       "value": "arrow"
+      },
+      {
+       "name": "legibility",
+       "value": "readable; glare, distance"
+      },
+      {
+       "name": "reference_keys",
+       "value": "arrow-left"
+      }
+     ],
+     "title": "Panel",
+     "text": "",
+     "meanings": [
+      {
+       "key": "arrow-left",
+       "label": "Extent",
+       "code": "T11",
+       "text": "The sign applies to the left of this point",
+       "short": "Applies to the left of the sign",
+       "continues": false
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": true
+    }
+   ]
+  },
+  "stopped_at": null,
+  "reason": null,
+  "flags": [],
+  "triage": null,
+  "regimes": [
+   {
+    "extent": "left",
+    "extent_text": "The sign's arrow points left: it covers the stretch to the left of the sign",
+    "extent_short": "To the left of the sign",
+    "audience": null,
+    "audience_short": null,
+    "eligibility": [],
+    "who_can_park": [
+     {
+      "key": "main-parking",
+      "text": "The sign permits parking for all vehicles, subject to the general parking rules",
+      "known": true
+     }
+    ],
+    "notes": [],
+    "window_for": [],
+    "no_window_text": "Too little of this sign was read to say when parking is allowed here. No window is shown rather than a guess: photograph the sign again, closer, or read it yourself.",
+    "clock_change_text": null,
+    "place_notes": [],
+    "duration_expires_at": null,
+    "duration_source": null,
+    "periods": []
+   }
+  ],
+  "uncertainties": [],
+  "permits_parking": true
+ },
+ "expected/088-avgift-8-20-rod-taxa-boende-c-nv-mandag-8-11@base": {
+  "contract": 7,
+  "moment": "2026-03-02T00:00",
+  "day_class": "weekday",
+  "completeness": {
+   "category": "full",
+   "category_text": "Every plate on the sign was read",
+   "tone": "good",
+   "confidence": 0.975,
+   "signals": {
+    "schema_valid": 1.0,
+    "main_sign_identified": 1.0,
+    "main_sign_readable": 1.0,
+    "panels_read_share": 1.0,
+    "plates_interpreted": 1.0,
+    "panel_count_agreement": 1.0,
+    "main_sign_corroborated": 1.0,
+    "text_fits_the_pixels": 1.0,
+    "no_repairs_needed": 1.0,
+    "day_class_known": 1.0,
+    "model_confidence": 0.5
+   },
+   "reasons": [],
+   "unread_panels": [],
+   "may_hide_prohibition": false
+  },
+  "has_answer": true,
+  "what_we_saw": {
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "main_sign_fields": [
+    {
+     "name": "type",
+     "value": "parking"
+    },
+    {
+     "name": "form",
+     "value": "regular"
+    },
+    {
+     "name": "background_color",
+     "value": "blue"
+    },
+    {
+     "name": "legibility",
+     "value": "readable"
+    }
+   ],
+   "primary_sign": {
+    "key": "main-parking",
+    "label": "Parking",
+    "code": "E19",
+    "text": "The sign permits parking for all vehicles, subject to the general parking rules",
+    "short": "Parking permitted, general rules still apply",
+    "continues": false
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Avgift",
+      "8-20",
+      "(8-15)"
+     ],
+     "background_color": "blue",
+     "reference_keys": [
+      "avgift",
+      "window-weekday",
+      "window-eve"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "1"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "blue"
+      },
+      {
+       "name": "lines",
+       "value": "Avgift, 8-20, (8-15)"
+      },
+      {
+       "name": "parsed.time_windows",
+       "value": "08:00–20:00 (weekday), 08:00–15:00 (eve)"
+      },
+      {
+       "name": "parsed.fee",
+       "value": "yes"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "avgift, window-weekday, window-eve"
+      }
+     ],
+     "title": "Panel",
+     "text": "Avgift 8-20 (8-15)",
+     "meanings": [
+      {
+       "key": "avgift",
+       "label": "Fee",
+       "code": "T16",
+       "text": "The sign requires payment for parking during this period",
+       "short": "on weekdays between 08:00 and 20:00; on Saturdays and days before a holiday between 08:00 and 15:00",
+       "continues": true
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "Röd taxa"
+     ],
+     "background_color": "blue",
+     "reference_keys": [
+      "taxa"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "2"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "blue"
+      },
+      {
+       "name": "lines",
+       "value": "Röd taxa"
+      },
+      {
+       "name": "parsed.tariff_code",
+       "value": "Röd taxa"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "taxa"
+      }
+     ],
+     "title": "Panel",
+     "text": "Röd taxa",
+     "meanings": [
+      {
+       "key": "taxa",
+       "label": "Fee",
+       "code": "T16",
+       "text": "The sign states a municipal tariff number",
+       "short": "Municipal tariff number",
+       "continues": false
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 3,
+     "kind": "sign_plate",
+     "lines": [
+      "Boende",
+      "C-NV"
+     ],
+     "background_color": "white",
+     "reference_keys": [
+      "boende"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "3"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "white"
+      },
+      {
+       "name": "lines",
+       "value": "Boende, C-NV"
+      },
+      {
+       "name": "parsed.eligibility",
+       "value": "residents"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "boende"
+      }
+     ],
+     "title": "Panel",
+     "text": "Boende C-NV",
+     "meanings": [
+      {
+       "key": "boende",
+       "label": "Residents",
+       "code": "T19",
+       "text": "The sign notes that residents may have separate parking terms",
+       "short": "Residents may have separate terms",
+       "continues": false
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 4,
+     "kind": "sign_plate",
+     "lines": [
+      "Måndag",
+      "8-11"
+     ],
+     "background_color": "yellow",
+     "reference_keys": [
+      "main-prohibition-parking",
+      "named-weekday"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "4"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "yellow"
+      },
+      {
+       "name": "lines",
+       "value": "Måndag, 8-11"
+      },
+      {
+       "name": "parsed.time_windows",
+       "value": "08:00–11:00 (named_weekday)"
+      },
+      {
+       "name": "parsed.prohibition",
+       "value": "yes"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "main-prohibition-parking, named-weekday"
+      }
+     ],
+     "title": "Panel",
+     "text": "Måndag 8-11",
+     "meanings": [
+      {
+       "key": "main-prohibition-parking",
+       "label": "No parking",
+       "code": "C35",
+       "text": "The sign prohibits parking",
+       "short": "on Mondays between 08:00 and 11:00",
+       "continues": true
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    }
+   ]
+  },
+  "stopped_at": null,
+  "reason": null,
+  "flags": [],
+  "triage": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "extent_text": "The sign carries no arrow, so it covers the spaces here, at the sign",
+    "extent_short": "Here at the sign",
+    "audience": null,
+    "audience_short": null,
+    "eligibility": [
+     {
+      "key": "boende",
+      "text": "The sign notes that residents may have separate parking terms",
+      "known": true
+     }
+    ],
+    "who_can_park": [
+     {
+      "key": "main-parking",
+      "text": "The sign permits parking for all vehicles, subject to the general parking rules",
+      "known": true
+     },
+     {
+      "key": "boende",
+      "text": "The sign notes that residents may have separate parking terms",
+      "known": true
+     }
+    ],
+    "notes": [
+     {
+      "key": "boende",
+      "text": "The sign notes that residents may have separate parking terms",
+      "known": true
+     }
+    ],
+    "window_for": [],
+    "no_window_text": null,
+    "clock_change_text": null,
+    "place_notes": [],
+    "duration_expires_at": "2026-03-02T08:00",
+    "duration_source": "prohibition",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-02T08:00",
+      "start_day": null,
+      "end_day": null,
+      "state": "allowed",
+      "state_text": "The sign permits parking during this period",
+      "tone": "free",
+      "headline": "Free parking",
+      "minutes": 480,
+      "notes": [],
+      "ends_at_horizon": false,
+      "stay_end_text": "This stay must end here — the sign prohibits parking from this moment",
+      "stay_end_reason": "the sign prohibits parking from this moment",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null,
+      "certain": true,
+      "restricted": false,
+      "aside": [
+       {
+        "key": "boende",
+        "text": "The sign notes that residents may have separate parking terms",
+        "known": true
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "uncertainties": [],
+  "permits_parking": true
+ },
+ "expected/089-lastplats-zon-c-boende-centrala@base": {
+  "contract": 7,
+  "moment": "2026-03-02T00:00",
+  "day_class": "weekday",
+  "completeness": {
+   "category": "full",
+   "category_text": "Every plate on the sign was read",
+   "tone": "good",
+   "confidence": 0.975,
+   "signals": {
+    "schema_valid": 1.0,
+    "main_sign_identified": 1.0,
+    "main_sign_readable": 1.0,
+    "panels_read_share": 1.0,
+    "plates_interpreted": 1.0,
+    "panel_count_agreement": 1.0,
+    "main_sign_corroborated": 1.0,
+    "text_fits_the_pixels": 1.0,
+    "no_repairs_needed": 1.0,
+    "day_class_known": 1.0,
+    "model_confidence": 0.5
+   },
+   "reasons": [],
+   "unread_panels": [],
+   "may_hide_prohibition": false
+  },
+  "has_answer": true,
+  "what_we_saw": {
+   "main_sign": {
+    "type": "prohibition_stopping",
+    "background_color": "yellow",
+    "form": "regular",
+    "legibility": {
+     "readable": true,
+     "obstructions": [
+      "blur"
+     ]
+    }
+   },
+   "main_sign_fields": [
+    {
+     "name": "type",
+     "value": "prohibition_stopping"
+    },
+    {
+     "name": "form",
+     "value": "regular"
+    },
+    {
+     "name": "background_color",
+     "value": "yellow"
+    },
+    {
+     "name": "legibility",
+     "value": "readable; blur"
+    }
+   ],
+   "primary_sign": {
+    "key": "main-prohibition-stopping",
+    "label": "No stopping or parking",
+    "code": "C39",
+    "text": "The sign prohibits stopping and parking",
+    "short": "Stopping and parking prohibited",
+    "continues": false
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Last-",
+      "plats"
+     ],
+     "background_color": "yellow",
+     "reference_keys": [],
+     "uninterpreted": [
+      "Lastplats",
+      "Last-",
+      "plats"
+     ],
+     "not_interpreted_text": "Not interpreted — shown above exactly as printed",
+     "fields": [
+      {
+       "name": "index",
+       "value": "1"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "yellow"
+      },
+      {
+       "name": "lines",
+       "value": "Last-, plats"
+      },
+      {
+       "name": "parsed.uninterpreted",
+       "value": "Lastplats"
+      },
+      {
+       "name": "legibility",
+       "value": "readable; blur"
+      }
+     ],
+     "title": "Panel",
+     "text": "Lastplats",
+     "meanings": [],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "6-16"
+     ],
+     "background_color": "yellow",
+     "reference_keys": [
+      "window-weekday"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "2"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "yellow"
+      },
+      {
+       "name": "lines",
+       "value": "6-16"
+      },
+      {
+       "name": "parsed.time_windows",
+       "value": "06:00–16:00 (weekday)"
+      },
+      {
+       "name": "legibility",
+       "value": "readable; blur"
+      },
+      {
+       "name": "reference_keys",
+       "value": "window-weekday"
+      }
+     ],
+     "title": "Panel",
+     "text": "6-16",
+     "meanings": [
+      {
+       "key": "time-window",
+       "label": "Hours",
+       "code": "T6",
+       "text": "",
+       "short": "on weekdays between 06:00 and 16:00",
+       "continues": true
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 3,
+     "kind": "sign_plate",
+     "lines": [
+      "Avgift",
+      "16-21"
+     ],
+     "background_color": "blue",
+     "reference_keys": [
+      "avgift",
+      "window-weekday"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "3"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "blue"
+      },
+      {
+       "name": "lines",
+       "value": "Avgift, 16-21"
+      },
+      {
+       "name": "parsed.time_windows",
+       "value": "16:00–21:00 (weekday)"
+      },
+      {
+       "name": "parsed.fee",
+       "value": "yes"
+      },
+      {
+       "name": "parsed.pictogram",
+       "value": "parking"
+      },
+      {
+       "name": "parsed.permits_parking",
+       "value": "yes"
+      },
+      {
+       "name": "legibility",
+       "value": "readable; blur"
+      },
+      {
+       "name": "reference_keys",
+       "value": "avgift, window-weekday"
+      }
+     ],
+     "title": "Panel",
+     "text": "Avgift 16-21",
+     "meanings": [
+      {
+       "key": "avgift",
+       "label": "Fee",
+       "code": "T16",
+       "text": "The sign requires payment for parking during this period",
+       "short": "on weekdays between 16:00 and 21:00",
+       "continues": true
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 4,
+     "kind": "sign_plate",
+     "lines": [
+      "Zon C"
+     ],
+     "background_color": "white",
+     "reference_keys": [
+      "taxa"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "4"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "white"
+      },
+      {
+       "name": "lines",
+       "value": "Zon C"
+      },
+      {
+       "name": "parsed.tariff_code",
+       "value": "Zon C"
+      },
+      {
+       "name": "legibility",
+       "value": "readable; blur"
+      },
+      {
+       "name": "reference_keys",
+       "value": "taxa"
+      }
+     ],
+     "title": "Panel",
+     "text": "Zon C",
+     "meanings": [
+      {
+       "key": "taxa",
+       "label": "Fee",
+       "code": "T16",
+       "text": "The sign states a municipal tariff number",
+       "short": "Municipal tariff number",
+       "continues": false
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 5,
+     "kind": "sign_plate",
+     "lines": [
+      "Boende",
+      "Centrala"
+     ],
+     "background_color": "white",
+     "reference_keys": [
+      "boende"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "5"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "white"
+      },
+      {
+       "name": "lines",
+       "value": "Boende, Centrala"
+      },
+      {
+       "name": "parsed.eligibility",
+       "value": "residents"
+      },
+      {
+       "name": "legibility",
+       "value": "readable; blur"
+      },
+      {
+       "name": "reference_keys",
+       "value": "boende"
+      }
+     ],
+     "title": "Panel",
+     "text": "Boende Centrala",
+     "meanings": [
+      {
+       "key": "boende",
+       "label": "Residents",
+       "code": "T19",
+       "text": "The sign notes that residents may have separate parking terms",
+       "short": "Residents may have separate terms",
+       "continues": false
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 6,
+     "kind": "info_board",
+     "lines": [],
+     "background_color": "white",
+     "reference_keys": [
+      "info-board"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": "This plate could not be read reliably, so its words are not shown.",
+     "fields": [
+      {
+       "name": "index",
+       "value": "6"
+      },
+      {
+       "name": "kind",
+       "value": "info_board"
+      },
+      {
+       "name": "background_color",
+       "value": "white"
+      },
+      {
+       "name": "lines",
+       "value": "(no text)"
+      },
+      {
+       "name": "legibility",
+       "value": "not readable; blur"
+      },
+      {
+       "name": "reference_keys",
+       "value": "info-board"
+      }
+     ],
+     "title": "Panel",
+     "text": "",
+     "meanings": [
+      {
+       "key": "info-board",
+       "label": "Info board",
+       "code": "",
+       "text": "",
+       "short": "",
+       "continues": false
+      }
+     ],
+     "carries_rule": false,
+     "unreliable": true
+    }
+   ]
+  },
+  "stopped_at": null,
+  "reason": null,
+  "flags": [],
+  "triage": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "extent_text": "The sign carries no arrow, so it covers the spaces here, at the sign",
+    "extent_short": "Here at the sign",
+    "audience": null,
+    "audience_short": null,
+    "eligibility": [
+     {
+      "key": "boende",
+      "text": "The sign notes that residents may have separate parking terms",
+      "known": true
+     }
+    ],
+    "who_can_park": [
+     {
+      "key": "main-prohibition-stopping",
+      "text": "The sign prohibits stopping and parking only during the hours it names — outside them the general parking rules apply",
+      "known": true
+     },
+     {
+      "key": "boende",
+      "text": "The sign notes that residents may have separate parking terms",
+      "known": true
+     }
+    ],
+    "notes": [
+     {
+      "key": "boende",
+      "text": "The sign notes that residents may have separate parking terms",
+      "known": true
+     }
+    ],
+    "window_for": [],
+    "no_window_text": null,
+    "clock_change_text": null,
+    "place_notes": [],
+    "duration_expires_at": "2026-03-02T06:00",
+    "duration_source": "prohibition",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-02T06:00",
+      "start_day": null,
+      "end_day": null,
+      "state": "allowed",
+      "state_text": "The sign permits parking during this period",
+      "tone": "free",
+      "headline": "Free parking",
+      "minutes": 360,
+      "notes": [],
+      "ends_at_horizon": false,
+      "stay_end_text": "This stay must end here — the sign prohibits parking from this moment",
+      "stay_end_reason": "the sign prohibits parking from this moment",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": "general_rules_apply_outside_the_sign",
+      "certain": true,
+      "restricted": false,
+      "aside": [
+       {
+        "key": "boende",
+        "text": "The sign notes that residents may have separate parking terms",
+        "known": true
+       },
+       {
+        "key": "general_rules_apply_outside_the_sign",
+        "known": true,
+        "text": "The sign says nothing about this time, so the general road rules apply - among them the 24-hour limit. That rule is not written on this sign."
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "uncertainties": [],
+  "permits_parking": true
+ },
+ "expected/090-avgift-uppstallning-zon-e-pil@base": {
+  "contract": 7,
+  "moment": "2026-03-02T00:00",
+  "day_class": "weekday",
+  "completeness": {
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.935,
+   "signals": {
+    "schema_valid": 1.0,
+    "main_sign_identified": 1.0,
+    "main_sign_readable": 1.0,
+    "panels_read_share": 0.8,
+    "plates_interpreted": 1.0,
+    "panel_count_agreement": 1.0,
+    "main_sign_corroborated": 1.0,
+    "text_fits_the_pixels": 1.0,
+    "no_repairs_needed": 1.0,
+    "day_class_known": 1.0,
+    "model_confidence": 0.5
+   },
+   "reasons": [
+    {
+     "token": "unread_panels:5",
+     "text": "Plates 5 on the sign could not be read"
+    }
+   ],
+   "unread_panels": [
+    5
+   ],
+   "may_hide_prohibition": false
+  },
+  "has_answer": true,
+  "what_we_saw": {
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "main_sign_fields": [
+    {
+     "name": "type",
+     "value": "parking"
+    },
+    {
+     "name": "form",
+     "value": "regular"
+    },
+    {
+     "name": "background_color",
+     "value": "blue"
+    },
+    {
+     "name": "legibility",
+     "value": "readable"
+    }
+   ],
+   "primary_sign": {
+    "key": "main-parking",
+    "label": "Parking",
+    "code": "E19",
+    "text": "The sign permits parking for all vehicles, subject to the general parking rules",
+    "short": "Parking permitted, general rules still apply",
+    "continues": false
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Avgift",
+      "8-21"
+     ],
+     "background_color": "blue",
+     "reference_keys": [
+      "avgift",
+      "window-weekday"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "1"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "blue"
+      },
+      {
+       "name": "lines",
+       "value": "Avgift, 8-21"
+      },
+      {
+       "name": "parsed.time_windows",
+       "value": "08:00–21:00 (weekday)"
+      },
+      {
+       "name": "parsed.fee",
+       "value": "yes"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "avgift, window-weekday"
+      }
+     ],
+     "title": "Panel",
+     "text": "Avgift 8-21",
+     "meanings": [
+      {
+       "key": "avgift",
+       "label": "Fee",
+       "code": "T16",
+       "text": "The sign requires payment for parking during this period",
+       "short": "on weekdays between 08:00 and 21:00",
+       "continues": true
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "blue",
+     "reference_keys": [
+      "placement-as-shown"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "2"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "blue"
+      },
+      {
+       "name": "lines",
+       "value": "(no text)"
+      },
+      {
+       "name": "parsed.placement",
+       "value": "as_shown"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "placement-as-shown"
+      }
+     ],
+     "title": "Panel",
+     "text": "",
+     "meanings": [
+      {
+       "key": "placement-as-shown",
+       "label": "Positioning of vehicles",
+       "code": "T21",
+       "text": "The sign requires the vehicle to be positioned as drawn on the plate — for example at an angle to the kerb",
+       "short": "Position the vehicle at the angle drawn on the plate",
+       "continues": false
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 3,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "reference_keys": [
+      "arrow-right"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "3"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "white"
+      },
+      {
+       "name": "lines",
+       "value": "(no text)"
+      },
+      {
+       "name": "parsed.arrow",
+       "value": "right"
+      },
+      {
+       "name": "parsed.pictogram",
+       "value": "arrow"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "arrow-right"
+      }
+     ],
+     "title": "Panel",
+     "text": "",
+     "meanings": [
+      {
+       "key": "arrow-right",
+       "label": "Extent",
+       "code": "T11",
+       "text": "The sign applies to the right of this point",
+       "short": "Applies to the right of the sign",
+       "continues": false
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 4,
+     "kind": "sign_plate",
+     "lines": [
+      "Zon E"
+     ],
+     "background_color": "white",
+     "reference_keys": [
+      "taxa"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "4"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "white"
+      },
+      {
+       "name": "lines",
+       "value": "Zon E"
+      },
+      {
+       "name": "parsed.tariff_code",
+       "value": "Zon E"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "taxa"
+      }
+     ],
+     "title": "Panel",
+     "text": "Zon E",
+     "meanings": [
+      {
+       "key": "taxa",
+       "label": "Fee",
+       "code": "T16",
+       "text": "The sign states a municipal tariff number",
+       "short": "Municipal tariff number",
+       "continues": false
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 5,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "blue",
+     "reference_keys": [],
+     "uninterpreted": [],
+     "not_interpreted_text": "This plate could not be read reliably, so its words are not shown.",
+     "fields": [
+      {
+       "name": "index",
+       "value": "5"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "blue"
+      },
+      {
+       "name": "lines",
+       "value": "(no text)"
+      },
+      {
+       "name": "legibility",
+       "value": "not readable; cropped"
+      }
+     ],
+     "title": "Panel",
+     "text": "",
+     "meanings": [],
+     "carries_rule": true,
+     "unreliable": true
+    }
+   ]
+  },
+  "stopped_at": null,
+  "reason": null,
+  "flags": [],
+  "triage": null,
+  "regimes": [
+   {
+    "extent": "right",
+    "extent_text": "The sign's arrow points right: it covers the stretch to the right of the sign",
+    "extent_short": "To the right of the sign",
+    "audience": null,
+    "audience_short": null,
+    "eligibility": [],
+    "who_can_park": [
+     {
+      "key": "main-parking",
+      "text": "The sign permits parking for all vehicles, subject to the general parking rules",
+      "known": true
+     }
+    ],
+    "notes": [],
+    "window_for": [],
+    "no_window_text": null,
+    "clock_change_text": null,
+    "place_notes": [
+     {
+      "key": "placement-as-shown",
+      "text": "The sign requires the vehicle to be positioned as drawn on the plate — for example at an angle to the kerb",
+      "known": true
+     }
+    ],
+    "duration_expires_at": "2026-03-03T00:00",
+    "duration_source": "24h_default",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-02T08:00",
+      "start_day": null,
+      "end_day": null,
+      "state": "allowed",
+      "state_text": "The sign permits parking during this period",
+      "tone": "free",
+      "headline": "Free parking",
+      "minutes": 480,
+      "notes": [],
+      "ends_at_horizon": false,
+      "stay_end_text": "",
+      "stay_end_reason": "",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
+      "restricted": false,
+      "aside": []
+     },
+     {
+      "start": "2026-03-02T08:00",
+      "end": "2026-03-02T21:00",
+      "start_day": null,
+      "end_day": null,
+      "state": "allowed",
+      "state_text": "The sign permits parking during this period",
+      "tone": "paid",
+      "headline": "Parking fee",
+      "minutes": 780,
+      "notes": [],
+      "ends_at_horizon": false,
+      "stay_end_text": "",
+      "stay_end_reason": "",
+      "conditions": [
+       {
+        "key": "avgift",
+        "text": "The sign requires payment for parking during this period",
+        "known": true
+       }
+      ],
+      "max_duration_minutes": null,
+      "note": null,
+      "certain": false,
+      "restricted": false,
+      "aside": []
+     },
+     {
+      "start": "2026-03-02T21:00",
+      "end": "2026-03-03T00:00",
+      "start_day": null,
+      "end_day": null,
+      "state": "allowed",
+      "state_text": "The sign permits parking during this period",
+      "tone": "free",
+      "headline": "Free parking",
+      "minutes": 180,
+      "notes": [],
+      "ends_at_horizon": false,
+      "stay_end_text": "This stay must end here — general 24-hour rule, not written on the sign",
+      "stay_end_reason": "general 24-hour rule, not written on the sign",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
+      "restricted": false,
+      "aside": []
+     }
+    ]
+   }
+  ],
+  "uncertainties": [],
+  "permits_parking": true
+ },
+ "expected/091-avgift-7-19-torsd-boende@base": {
+  "contract": 7,
+  "moment": "2026-03-02T00:00",
+  "day_class": "weekday",
+  "completeness": {
+   "category": "full",
+   "category_text": "Every plate on the sign was read",
+   "tone": "good",
+   "confidence": 0.975,
+   "signals": {
+    "schema_valid": 1.0,
+    "main_sign_identified": 1.0,
+    "main_sign_readable": 1.0,
+    "panels_read_share": 1.0,
+    "plates_interpreted": 1.0,
+    "panel_count_agreement": 1.0,
+    "main_sign_corroborated": 1.0,
+    "text_fits_the_pixels": 1.0,
+    "no_repairs_needed": 1.0,
+    "day_class_known": 1.0,
+    "model_confidence": 0.5
+   },
+   "reasons": [],
+   "unread_panels": [],
+   "may_hide_prohibition": false
+  },
+  "has_answer": true,
+  "what_we_saw": {
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "main_sign_fields": [
+    {
+     "name": "type",
+     "value": "parking"
+    },
+    {
+     "name": "form",
+     "value": "regular"
+    },
+    {
+     "name": "background_color",
+     "value": "blue"
+    },
+    {
+     "name": "legibility",
+     "value": "readable"
+    }
+   ],
+   "primary_sign": {
+    "key": "main-parking",
+    "label": "Parking",
+    "code": "E19",
+    "text": "The sign permits parking for all vehicles, subject to the general parking rules",
+    "short": "Parking permitted, general rules still apply",
+    "continues": false
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Avgift",
+      "7-19",
+      "Taxa 5"
+     ],
+     "background_color": "blue",
+     "reference_keys": [
+      "taxa",
+      "avgift",
+      "window-weekday"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "1"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "blue"
+      },
+      {
+       "name": "lines",
+       "value": "Avgift, 7-19, Taxa 5"
+      },
+      {
+       "name": "parsed.time_windows",
+       "value": "07:00–19:00 (weekday)"
+      },
+      {
+       "name": "parsed.fee",
+       "value": "yes"
+      },
+      {
+       "name": "parsed.tariff_code",
+       "value": "Taxa 5"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "taxa, avgift, window-weekday"
+      }
+     ],
+     "title": "Panel",
+     "text": "Avgift 7-19 Taxa 5",
+     "meanings": [
+      {
+       "key": "taxa",
+       "label": "Fee",
+       "code": "T16",
+       "text": "The sign states a municipal tariff number; The sign requires payment for parking during this period",
+       "short": "on weekdays between 07:00 and 19:00",
+       "continues": true
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "Torsd",
+      "8-16",
+      "1/11-15/5"
+     ],
+     "background_color": "yellow",
+     "reference_keys": [
+      "main-prohibition-parking",
+      "named-weekday",
+      "datumintervall"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "2"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "yellow"
+      },
+      {
+       "name": "lines",
+       "value": "Torsd, 8-16, 1/11-15/5"
+      },
+      {
+       "name": "parsed.time_windows",
+       "value": "08:00–16:00 (named_weekday)"
+      },
+      {
+       "name": "parsed.prohibition",
+       "value": "yes"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "main-prohibition-parking, named-weekday, datumintervall"
+      }
+     ],
+     "title": "Panel",
+     "text": "Torsd 8-16 1/11-15/5",
+     "meanings": [
+      {
+       "key": "main-prohibition-parking",
+       "label": "No parking",
+       "code": "C35",
+       "text": "The sign prohibits parking",
+       "short": "on Thursdays between 08:00 and 16:00, from 1 November to 15 May inclusive",
+       "continues": true
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 3,
+     "kind": "sign_plate",
+     "lines": [
+      "Boende",
+      "Bl"
+     ],
+     "background_color": "white",
+     "reference_keys": [
+      "boende"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "3"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "white"
+      },
+      {
+       "name": "lines",
+       "value": "Boende, Bl"
+      },
+      {
+       "name": "parsed.eligibility",
+       "value": "residents"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "boende"
+      }
+     ],
+     "title": "Panel",
+     "text": "Boende Bl",
+     "meanings": [
+      {
+       "key": "boende",
+       "label": "Residents",
+       "code": "T19",
+       "text": "The sign notes that residents may have separate parking terms",
+       "short": "Residents may have separate terms",
+       "continues": false
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 4,
+     "kind": "info_board",
+     "lines": [
+      "Betala digitalt"
+     ],
+     "background_color": "white",
+     "reference_keys": [
+      "info-board"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "4"
+      },
+      {
+       "name": "kind",
+       "value": "info_board"
+      },
+      {
+       "name": "background_color",
+       "value": "white"
+      },
+      {
+       "name": "lines",
+       "value": "Betala digitalt"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "info-board"
+      }
+     ],
+     "title": "Panel",
+     "text": "Betala digitalt",
+     "meanings": [
+      {
+       "key": "info-board",
+       "label": "Info board",
+       "code": "",
+       "text": "",
+       "short": "",
+       "continues": false
+      }
+     ],
+     "carries_rule": false,
+     "unreliable": false
+    }
+   ]
+  },
+  "stopped_at": null,
+  "reason": null,
+  "flags": [],
+  "triage": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "extent_text": "The sign carries no arrow, so it covers the spaces here, at the sign",
+    "extent_short": "Here at the sign",
+    "audience": null,
+    "audience_short": null,
+    "eligibility": [
+     {
+      "key": "boende",
+      "text": "The sign notes that residents may have separate parking terms",
+      "known": true
+     }
+    ],
+    "who_can_park": [
+     {
+      "key": "main-parking",
+      "text": "The sign permits parking for all vehicles, subject to the general parking rules",
+      "known": true
+     },
+     {
+      "key": "boende",
+      "text": "The sign notes that residents may have separate parking terms",
+      "known": true
+     }
+    ],
+    "notes": [
+     {
+      "key": "boende",
+      "text": "The sign notes that residents may have separate parking terms",
+      "known": true
+     }
+    ],
+    "window_for": [],
+    "no_window_text": null,
+    "clock_change_text": null,
+    "place_notes": [],
+    "duration_expires_at": "2026-03-03T00:00",
+    "duration_source": "24h_default",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-02T07:00",
+      "start_day": null,
+      "end_day": null,
+      "state": "allowed",
+      "state_text": "The sign permits parking during this period",
+      "tone": "free",
+      "headline": "Free parking",
+      "minutes": 420,
+      "notes": [],
+      "ends_at_horizon": false,
+      "stay_end_text": "",
+      "stay_end_reason": "",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null,
+      "certain": true,
+      "restricted": false,
+      "aside": [
+       {
+        "key": "boende",
+        "text": "The sign notes that residents may have separate parking terms",
+        "known": true
+       }
+      ]
+     },
+     {
+      "start": "2026-03-02T07:00",
+      "end": "2026-03-02T19:00",
+      "start_day": null,
+      "end_day": null,
+      "state": "allowed",
+      "state_text": "The sign permits parking during this period",
+      "tone": "paid",
+      "headline": "Parking fee",
+      "minutes": 720,
+      "notes": [],
+      "ends_at_horizon": false,
+      "stay_end_text": "",
+      "stay_end_reason": "",
+      "conditions": [
+       {
+        "key": "avgift",
+        "text": "The sign requires payment for parking during this period",
+        "known": true
+       }
+      ],
+      "max_duration_minutes": null,
+      "note": null,
+      "certain": true,
+      "restricted": false,
+      "aside": [
+       {
+        "key": "boende",
+        "text": "The sign notes that residents may have separate parking terms",
+        "known": true
+       }
+      ]
+     },
+     {
+      "start": "2026-03-02T19:00",
+      "end": "2026-03-03T00:00",
+      "start_day": null,
+      "end_day": null,
+      "state": "allowed",
+      "state_text": "The sign permits parking during this period",
+      "tone": "free",
+      "headline": "Free parking",
+      "minutes": 300,
+      "notes": [],
+      "ends_at_horizon": false,
+      "stay_end_text": "This stay must end here — general 24-hour rule, not written on the sign",
+      "stay_end_reason": "general 24-hour rule, not written on the sign",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null,
+      "certain": true,
+      "restricted": false,
+      "aside": [
+       {
+        "key": "boende",
+        "text": "The sign notes that residents may have separate parking terms",
+        "known": true
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "uncertainties": [],
+  "permits_parking": true
+ },
+ "expected/092-avgift-boende-mork-vagg@base": {
+  "contract": 7,
+  "moment": "2026-03-02T00:00",
+  "day_class": "weekday",
+  "completeness": {
+   "category": "full",
+   "category_text": "Every plate on the sign was read",
+   "tone": "good",
+   "confidence": 0.975,
+   "signals": {
+    "schema_valid": 1.0,
+    "main_sign_identified": 1.0,
+    "main_sign_readable": 1.0,
+    "panels_read_share": 1.0,
+    "plates_interpreted": 1.0,
+    "panel_count_agreement": 1.0,
+    "main_sign_corroborated": 1.0,
+    "text_fits_the_pixels": 1.0,
+    "no_repairs_needed": 1.0,
+    "day_class_known": 1.0,
+    "model_confidence": 0.5
+   },
+   "reasons": [],
+   "unread_panels": [],
+   "may_hide_prohibition": false
+  },
+  "has_answer": true,
+  "what_we_saw": {
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "main_sign_fields": [
+    {
+     "name": "type",
+     "value": "parking"
+    },
+    {
+     "name": "form",
+     "value": "regular"
+    },
+    {
+     "name": "background_color",
+     "value": "blue"
+    },
+    {
+     "name": "legibility",
+     "value": "readable"
+    }
+   ],
+   "primary_sign": {
+    "key": "main-parking",
+    "label": "Parking",
+    "code": "E19",
+    "text": "The sign permits parking for all vehicles, subject to the general parking rules",
+    "short": "Parking permitted, general rules still apply",
+    "continues": false
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Avgift",
+      "7-19",
+      "Taxa 5"
+     ],
+     "background_color": "blue",
+     "reference_keys": [
+      "taxa",
+      "avgift",
+      "window-weekday"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "1"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "blue"
+      },
+      {
+       "name": "lines",
+       "value": "Avgift, 7-19, Taxa 5"
+      },
+      {
+       "name": "parsed.time_windows",
+       "value": "07:00–19:00 (weekday)"
+      },
+      {
+       "name": "parsed.fee",
+       "value": "yes"
+      },
+      {
+       "name": "parsed.tariff_code",
+       "value": "Taxa 5"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "taxa, avgift, window-weekday"
+      }
+     ],
+     "title": "Panel",
+     "text": "Avgift 7-19 Taxa 5",
+     "meanings": [
+      {
+       "key": "taxa",
+       "label": "Fee",
+       "code": "T16",
+       "text": "The sign states a municipal tariff number; The sign requires payment for parking during this period",
+       "short": "on weekdays between 07:00 and 19:00",
+       "continues": true
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "Månd",
+      "8-16",
+      "1/11-15/5"
+     ],
+     "background_color": "yellow",
+     "reference_keys": [
+      "main-prohibition-parking",
+      "named-weekday",
+      "datumintervall"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "2"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "yellow"
+      },
+      {
+       "name": "lines",
+       "value": "Månd, 8-16, 1/11-15/5"
+      },
+      {
+       "name": "parsed.time_windows",
+       "value": "08:00–16:00 (named_weekday)"
+      },
+      {
+       "name": "parsed.prohibition",
+       "value": "yes"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "main-prohibition-parking, named-weekday, datumintervall"
+      }
+     ],
+     "title": "Panel",
+     "text": "Månd 8-16 1/11-15/5",
+     "meanings": [
+      {
+       "key": "main-prohibition-parking",
+       "label": "No parking",
+       "code": "C35",
+       "text": "The sign prohibits parking",
+       "short": "on Mondays between 08:00 and 16:00, from 1 November to 15 May inclusive",
+       "continues": true
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 3,
+     "kind": "sign_plate",
+     "lines": [
+      "Boende",
+      "Bl"
+     ],
+     "background_color": "white",
+     "reference_keys": [
+      "boende"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "3"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "white"
+      },
+      {
+       "name": "lines",
+       "value": "Boende, Bl"
+      },
+      {
+       "name": "parsed.eligibility",
+       "value": "residents"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "boende"
+      }
+     ],
+     "title": "Panel",
+     "text": "Boende Bl",
+     "meanings": [
+      {
+       "key": "boende",
+       "label": "Residents",
+       "code": "T19",
+       "text": "The sign notes that residents may have separate parking terms",
+       "short": "Residents may have separate terms",
+       "continues": false
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 4,
+     "kind": "info_board",
+     "lines": [
+      "Betala digitalt"
+     ],
+     "background_color": "white",
+     "reference_keys": [
+      "info-board"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "4"
+      },
+      {
+       "name": "kind",
+       "value": "info_board"
+      },
+      {
+       "name": "background_color",
+       "value": "white"
+      },
+      {
+       "name": "lines",
+       "value": "Betala digitalt"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "info-board"
+      }
+     ],
+     "title": "Panel",
+     "text": "Betala digitalt",
+     "meanings": [
+      {
+       "key": "info-board",
+       "label": "Info board",
+       "code": "",
+       "text": "",
+       "short": "",
+       "continues": false
+      }
+     ],
+     "carries_rule": false,
+     "unreliable": false
+    }
+   ]
+  },
+  "stopped_at": null,
+  "reason": null,
+  "flags": [],
+  "triage": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "extent_text": "The sign carries no arrow, so it covers the spaces here, at the sign",
+    "extent_short": "Here at the sign",
+    "audience": null,
+    "audience_short": null,
+    "eligibility": [
+     {
+      "key": "boende",
+      "text": "The sign notes that residents may have separate parking terms",
+      "known": true
+     }
+    ],
+    "who_can_park": [
+     {
+      "key": "main-parking",
+      "text": "The sign permits parking for all vehicles, subject to the general parking rules",
+      "known": true
+     },
+     {
+      "key": "boende",
+      "text": "The sign notes that residents may have separate parking terms",
+      "known": true
+     }
+    ],
+    "notes": [
+     {
+      "key": "boende",
+      "text": "The sign notes that residents may have separate parking terms",
+      "known": true
+     }
+    ],
+    "window_for": [],
+    "no_window_text": null,
+    "clock_change_text": null,
+    "place_notes": [],
+    "duration_expires_at": "2026-03-02T08:00",
+    "duration_source": "prohibition",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-02T07:00",
+      "start_day": null,
+      "end_day": null,
+      "state": "allowed",
+      "state_text": "The sign permits parking during this period",
+      "tone": "free",
+      "headline": "Free parking",
+      "minutes": 420,
+      "notes": [],
+      "ends_at_horizon": false,
+      "stay_end_text": "",
+      "stay_end_reason": "",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null,
+      "certain": true,
+      "restricted": false,
+      "aside": [
+       {
+        "key": "boende",
+        "text": "The sign notes that residents may have separate parking terms",
+        "known": true
+       }
+      ]
+     },
+     {
+      "start": "2026-03-02T07:00",
+      "end": "2026-03-02T08:00",
+      "start_day": null,
+      "end_day": null,
+      "state": "allowed",
+      "state_text": "The sign permits parking during this period",
+      "tone": "paid",
+      "headline": "Parking fee",
+      "minutes": 60,
+      "notes": [],
+      "ends_at_horizon": false,
+      "stay_end_text": "This stay must end here — the sign prohibits parking from this moment",
+      "stay_end_reason": "the sign prohibits parking from this moment",
+      "conditions": [
+       {
+        "key": "avgift",
+        "text": "The sign requires payment for parking during this period",
+        "known": true
+       }
+      ],
+      "max_duration_minutes": null,
+      "note": null,
+      "certain": true,
+      "restricted": false,
+      "aside": [
+       {
+        "key": "boende",
+        "text": "The sign notes that residents may have separate parking terms",
+        "known": true
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "uncertainties": [],
+  "permits_parking": true
+ },
+ "expected/093-forbud-onsdag-pilar@base": {
+  "contract": 7,
+  "moment": "2026-03-02T00:00",
+  "day_class": "weekday",
+  "completeness": {
+   "category": "full",
+   "category_text": "Every plate on the sign was read",
+   "tone": "good",
+   "confidence": 0.975,
+   "signals": {
+    "schema_valid": 1.0,
+    "main_sign_identified": 1.0,
+    "main_sign_readable": 1.0,
+    "panels_read_share": 1.0,
+    "plates_interpreted": 1.0,
+    "panel_count_agreement": 1.0,
+    "main_sign_corroborated": 1.0,
+    "text_fits_the_pixels": 1.0,
+    "no_repairs_needed": 1.0,
+    "day_class_known": 1.0,
+    "model_confidence": 0.5
+   },
+   "reasons": [],
+   "unread_panels": [],
+   "may_hide_prohibition": false
+  },
+  "has_answer": true,
+  "what_we_saw": {
+   "main_sign": {
+    "type": "prohibition_parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "main_sign_fields": [
+    {
+     "name": "type",
+     "value": "prohibition_parking"
+    },
+    {
+     "name": "form",
+     "value": "regular"
+    },
+    {
+     "name": "background_color",
+     "value": "blue"
+    },
+    {
+     "name": "legibility",
+     "value": "readable"
+    }
+   ],
+   "primary_sign": {
+    "key": "main-prohibition-parking",
+    "label": "No parking",
+    "code": "C35",
+    "text": "The sign prohibits parking",
+    "short": "Parking prohibited",
+    "continues": false
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "Onsdag",
+      "8-16",
+      "1/11-15/5"
+     ],
+     "background_color": "yellow",
+     "reference_keys": [
+      "named-weekday",
+      "datumintervall"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "1"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "yellow"
+      },
+      {
+       "name": "lines",
+       "value": "Onsdag, 8-16, 1/11-15/5"
+      },
+      {
+       "name": "parsed.time_windows",
+       "value": "08:00–16:00 (named_weekday)"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "named-weekday, datumintervall"
+      }
+     ],
+     "title": "Panel",
+     "text": "Onsdag 8-16 1/11-15/5",
+     "meanings": [
+      {
+       "key": "time-window",
+       "label": "Hours",
+       "code": "T6",
+       "text": "",
+       "short": "on Wednesdays between 08:00 and 16:00, from 1 November to 15 May inclusive",
+       "continues": true
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "yellow",
+     "reference_keys": [
+      "arrow-both-vertical"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "2"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "yellow"
+      },
+      {
+       "name": "lines",
+       "value": "(no text)"
+      },
+      {
+       "name": "parsed.arrow",
+       "value": "both_vertical"
+      },
+      {
+       "name": "parsed.pictogram",
+       "value": "arrow"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "arrow-both-vertical"
+      }
+     ],
+     "title": "Panel",
+     "text": "",
+     "meanings": [
+      {
+       "key": "arrow-both-vertical",
+       "label": "Extent",
+       "code": "T11",
+       "text": "The sign applies in both directions from this point",
+       "short": "Applies both ahead of the sign and up to it",
+       "continues": false
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    }
+   ]
+  },
+  "stopped_at": null,
+  "reason": null,
+  "flags": [],
+  "triage": null,
+  "regimes": [
+   {
+    "extent": "both_directions",
+    "extent_text": "The sign's arrows point up and down: it covers the stretch both ahead of the sign and up to it",
+    "extent_short": "Both ahead of the sign and up to it",
+    "audience": null,
+    "audience_short": null,
+    "eligibility": [],
+    "who_can_park": [
+     {
+      "key": "main-prohibition-parking",
+      "text": "The sign prohibits parking only during the hours it names — outside them the general parking rules apply",
+      "known": true
+     }
+    ],
+    "notes": [],
+    "window_for": [],
+    "no_window_text": null,
+    "clock_change_text": null,
+    "place_notes": [],
+    "duration_expires_at": "2026-03-03T00:00",
+    "duration_source": "24h_default",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-03T00:00",
+      "start_day": null,
+      "end_day": null,
+      "state": "allowed",
+      "state_text": "The sign permits parking during this period",
+      "tone": "free",
+      "headline": "Free parking",
+      "minutes": 1440,
+      "notes": [],
+      "ends_at_horizon": false,
+      "stay_end_text": "This stay must end here — general 24-hour rule, not written on the sign",
+      "stay_end_reason": "general 24-hour rule, not written on the sign",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": "general_rules_apply_outside_the_sign",
+      "certain": true,
+      "restricted": false,
+      "aside": [
+       {
+        "key": "general_rules_apply_outside_the_sign",
+        "known": true,
+        "text": "The sign says nothing about this time, so the general road rules apply - among them the 24-hour limit. That rule is not written on this sign."
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "uncertainties": [],
+  "permits_parking": true
+ },
+ "expected/094-p-7-dygn-torsd-vintersasong@base": {
+  "contract": 7,
+  "moment": "2026-03-02T00:00",
+  "day_class": "weekday",
+  "completeness": {
+   "category": "full",
+   "category_text": "Every plate on the sign was read",
+   "tone": "good",
+   "confidence": 0.975,
+   "signals": {
+    "schema_valid": 1.0,
+    "main_sign_identified": 1.0,
+    "main_sign_readable": 1.0,
+    "panels_read_share": 1.0,
+    "plates_interpreted": 1.0,
+    "panel_count_agreement": 1.0,
+    "main_sign_corroborated": 1.0,
+    "text_fits_the_pixels": 1.0,
+    "no_repairs_needed": 1.0,
+    "day_class_known": 1.0,
+    "model_confidence": 0.5
+   },
+   "reasons": [],
+   "unread_panels": [],
+   "may_hide_prohibition": false
+  },
+  "has_answer": true,
+  "what_we_saw": {
+   "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+     "readable": true
+    }
+   },
+   "main_sign_fields": [
+    {
+     "name": "type",
+     "value": "parking"
+    },
+    {
+     "name": "form",
+     "value": "regular"
+    },
+    {
+     "name": "background_color",
+     "value": "blue"
+    },
+    {
+     "name": "legibility",
+     "value": "readable"
+    }
+   ],
+   "primary_sign": {
+    "key": "main-parking",
+    "label": "Parking",
+    "code": "E19",
+    "text": "The sign permits parking for all vehicles, subject to the general parking rules",
+    "short": "Parking permitted, general rules still apply",
+    "continues": false
+   },
+   "panels": [
+    {
+     "index": 1,
+     "kind": "sign_plate",
+     "lines": [
+      "7 dygn"
+     ],
+     "background_color": "blue",
+     "reference_keys": [
+      "duration-limit"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "1"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "blue"
+      },
+      {
+       "name": "lines",
+       "value": "7 dygn"
+      },
+      {
+       "name": "parsed.duration_limit",
+       "value": "7 days"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "duration-limit"
+      }
+     ],
+     "title": "Panel",
+     "text": "7 dygn",
+     "meanings": [
+      {
+       "key": "duration-limit",
+       "label": "Duration of parking permitted",
+       "code": "T18",
+       "text": "The sign limits parking to a maximum continuous stay",
+       "short": "Maximum continuous stay",
+       "continues": false
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 2,
+     "kind": "sign_plate",
+     "lines": [
+      "Torsd",
+      "8-16",
+      "1/11-15/5"
+     ],
+     "background_color": "yellow",
+     "reference_keys": [
+      "main-prohibition-parking",
+      "named-weekday",
+      "datumintervall"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "2"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "yellow"
+      },
+      {
+       "name": "lines",
+       "value": "Torsd, 8-16, 1/11-15/5"
+      },
+      {
+       "name": "parsed.time_windows",
+       "value": "08:00–16:00 (named_weekday)"
+      },
+      {
+       "name": "parsed.prohibition",
+       "value": "yes"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "main-prohibition-parking, named-weekday, datumintervall"
+      }
+     ],
+     "title": "Panel",
+     "text": "Torsd 8-16 1/11-15/5",
+     "meanings": [
+      {
+       "key": "main-prohibition-parking",
+       "label": "No parking",
+       "code": "C35",
+       "text": "The sign prohibits parking",
+       "short": "on Thursdays between 08:00 and 16:00, from 1 November to 15 May inclusive",
+       "continues": true
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    },
+    {
+     "index": 3,
+     "kind": "sign_plate",
+     "lines": [],
+     "background_color": "white",
+     "reference_keys": [
+      "arrow-left"
+     ],
+     "uninterpreted": [],
+     "not_interpreted_text": null,
+     "fields": [
+      {
+       "name": "index",
+       "value": "3"
+      },
+      {
+       "name": "kind",
+       "value": "sign_plate"
+      },
+      {
+       "name": "background_color",
+       "value": "white"
+      },
+      {
+       "name": "lines",
+       "value": "(no text)"
+      },
+      {
+       "name": "parsed.arrow",
+       "value": "left"
+      },
+      {
+       "name": "parsed.pictogram",
+       "value": "arrow"
+      },
+      {
+       "name": "legibility",
+       "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "arrow-left"
+      }
+     ],
+     "title": "Panel",
+     "text": "",
+     "meanings": [
+      {
+       "key": "arrow-left",
+       "label": "Extent",
+       "code": "T11",
+       "text": "The sign applies to the left of this point",
+       "short": "Applies to the left of the sign",
+       "continues": false
+      }
+     ],
+     "carries_rule": true,
+     "unreliable": false
+    }
+   ]
+  },
+  "stopped_at": null,
+  "reason": null,
+  "flags": [],
+  "triage": null,
+  "regimes": [
+   {
+    "extent": "left",
+    "extent_text": "The sign's arrow points left: it covers the stretch to the left of the sign",
+    "extent_short": "To the left of the sign",
+    "audience": null,
+    "audience_short": null,
+    "eligibility": [],
+    "who_can_park": [
+     {
+      "key": "main-parking",
+      "text": "The sign permits parking for all vehicles, subject to the general parking rules",
+      "known": true
+     }
+    ],
+    "notes": [],
+    "window_for": [],
+    "no_window_text": null,
+    "clock_change_text": null,
+    "place_notes": [],
+    "duration_expires_at": "2026-03-03T00:00",
+    "duration_source": "24h_default",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-03T00:00",
+      "start_day": null,
+      "end_day": null,
+      "state": "allowed",
+      "state_text": "The sign permits parking during this period",
+      "tone": "free",
+      "headline": "Free parking",
+      "minutes": 1440,
+      "notes": [],
+      "ends_at_horizon": false,
+      "stay_end_text": "This stay must end here — general 24-hour rule, not written on the sign",
+      "stay_end_reason": "general 24-hour rule, not written on the sign",
+      "conditions": [],
+      "max_duration_minutes": 10080,
+      "note": null,
+      "certain": true,
+      "restricted": false,
+      "aside": []
+     }
+    ]
+   }
+  ],
+  "uncertainties": [],
+  "permits_parking": true
  }
 }

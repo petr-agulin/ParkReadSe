@@ -5460,5 +5460,274 @@
   ],
   "may_hide_prohibition": false,
   "uninterpreted_plates": []
+ },
+ "expected/083-gul-forbud-forhyrda-platser-pa-avstand@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/084-gul-forbud-p-tjanst-vast-farthinder@base": {
+  "category": "partial",
+  "confidence": 0.875,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 0.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [
+   "main_sign_uncorroborated"
+  ],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/085-p-med-plattor-bakom-bom@base": {
+  "category": "insufficient",
+  "confidence": 0.842,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 0.333333,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [
+   "unread_panels:2,3"
+  ],
+  "unread_panels": [
+   2,
+   3
+  ],
+  "may_hide_prohibition": true,
+  "uninterpreted_plates": []
+ },
+ "expected/086-p-1tim-pil-europark@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/087-motljus-parkering-pa-avstand@base": {
+  "category": "insufficient",
+  "confidence": 0.742,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 0.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 0.333333,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [
+   "unread_panels:1,2",
+   "main_sign_uncorroborated"
+  ],
+  "unread_panels": [
+   1,
+   2
+  ],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/088-avgift-8-20-rod-taxa-boende-c-nv-mandag-8-11@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/089-lastplats-zon-c-boende-centrala@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/090-avgift-uppstallning-zon-e-pil@base": {
+  "category": "partial",
+  "confidence": 0.935,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 0.8,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [
+   "unread_panels:5"
+  ],
+  "unread_panels": [
+   5
+  ],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/091-avgift-7-19-torsd-boende@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/092-avgift-boende-mork-vagg@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/093-forbud-onsdag-pilar@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/094-p-7-dygn-torsd-vintersasong@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
  }
 }

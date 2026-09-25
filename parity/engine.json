@@ -19540,5 +19540,1041 @@
     ]
    }
   ]
+ },
+ "expected/083-gul-forbud-forhyrda-platser-pa-avstand@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [
+     "forhyrda-platser"
+    ],
+    "place_notes": [],
+    "duration_expires_at": null,
+    "duration_source": null,
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-10T00:00",
+      "state": "prohibited",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/084-gul-forbud-p-tjanst-vast-farthinder@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [],
+    "place_notes": [],
+    "duration_expires_at": null,
+    "duration_source": null,
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-10T00:00",
+      "state": "prohibited",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/085-p-med-plattor-bakom-bom@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [
+     "sarskilt-p-tillstand"
+    ],
+    "place_notes": [],
+    "duration_expires_at": "2026-03-03T00:00",
+    "duration_source": "24h_default",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [
+       "sarskilt-p-tillstand"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/086-p-1tim-pil-europark@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "left",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [],
+    "place_notes": [],
+    "duration_expires_at": "2026-03-02T01:00",
+    "duration_source": "plate",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": 60,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/087-motljus-parkering-pa-avstand@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "left",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [],
+    "place_notes": [],
+    "duration_expires_at": "2026-03-03T00:00",
+    "duration_source": "24h_default",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/088-avgift-8-20-rod-taxa-boende-c-nv-mandag-8-11@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [
+     "boende"
+    ],
+    "place_notes": [],
+    "duration_expires_at": "2026-03-02T08:00",
+    "duration_source": "prohibition",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-02T08:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-02T08:00",
+      "end": "2026-03-02T11:00",
+      "state": "prohibited",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-02T11:00",
+      "end": "2026-03-02T20:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-02T20:00",
+      "end": "2026-03-03T08:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-03T08:00",
+      "end": "2026-03-03T20:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-03T20:00",
+      "end": "2026-03-04T08:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-04T08:00",
+      "end": "2026-03-04T20:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-04T20:00",
+      "end": "2026-03-05T08:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-05T08:00",
+      "end": "2026-03-05T20:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-05T20:00",
+      "end": "2026-03-06T08:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-06T08:00",
+      "end": "2026-03-06T20:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-06T20:00",
+      "end": "2026-03-07T08:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-07T08:00",
+      "end": "2026-03-07T15:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-07T15:00",
+      "end": "2026-03-09T08:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-09T08:00",
+      "end": "2026-03-09T11:00",
+      "state": "prohibited",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-09T11:00",
+      "end": "2026-03-09T20:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-09T20:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/089-lastplats-zon-c-boende-centrala@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [
+     "boende"
+    ],
+    "place_notes": [],
+    "duration_expires_at": "2026-03-02T06:00",
+    "duration_source": "prohibition",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-02T06:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": "general_rules_apply_outside_the_sign"
+     },
+     {
+      "start": "2026-03-02T06:00",
+      "end": "2026-03-02T16:00",
+      "state": "prohibited",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-02T16:00",
+      "end": "2026-03-02T21:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-02T21:00",
+      "end": "2026-03-03T06:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": "general_rules_apply_outside_the_sign"
+     },
+     {
+      "start": "2026-03-03T06:00",
+      "end": "2026-03-03T16:00",
+      "state": "prohibited",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-03T16:00",
+      "end": "2026-03-03T21:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-03T21:00",
+      "end": "2026-03-04T06:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": "general_rules_apply_outside_the_sign"
+     },
+     {
+      "start": "2026-03-04T06:00",
+      "end": "2026-03-04T16:00",
+      "state": "prohibited",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-04T16:00",
+      "end": "2026-03-04T21:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-04T21:00",
+      "end": "2026-03-05T06:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": "general_rules_apply_outside_the_sign"
+     },
+     {
+      "start": "2026-03-05T06:00",
+      "end": "2026-03-05T16:00",
+      "state": "prohibited",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-05T16:00",
+      "end": "2026-03-05T21:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-05T21:00",
+      "end": "2026-03-06T06:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": "general_rules_apply_outside_the_sign"
+     },
+     {
+      "start": "2026-03-06T06:00",
+      "end": "2026-03-06T16:00",
+      "state": "prohibited",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-06T16:00",
+      "end": "2026-03-06T21:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-06T21:00",
+      "end": "2026-03-09T06:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": "general_rules_apply_outside_the_sign"
+     },
+     {
+      "start": "2026-03-09T06:00",
+      "end": "2026-03-09T16:00",
+      "state": "prohibited",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-09T16:00",
+      "end": "2026-03-09T21:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-09T21:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": "general_rules_apply_outside_the_sign"
+     }
+    ]
+   }
+  ]
+ },
+ "expected/090-avgift-uppstallning-zon-e-pil@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "right",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [],
+    "place_notes": [
+     "placement-as-shown"
+    ],
+    "duration_expires_at": "2026-03-03T00:00",
+    "duration_source": "24h_default",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-02T08:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-02T08:00",
+      "end": "2026-03-02T21:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-02T21:00",
+      "end": "2026-03-03T08:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-03T08:00",
+      "end": "2026-03-03T21:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-03T21:00",
+      "end": "2026-03-04T08:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-04T08:00",
+      "end": "2026-03-04T21:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-04T21:00",
+      "end": "2026-03-05T08:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-05T08:00",
+      "end": "2026-03-05T21:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-05T21:00",
+      "end": "2026-03-06T08:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-06T08:00",
+      "end": "2026-03-06T21:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-06T21:00",
+      "end": "2026-03-09T08:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-09T08:00",
+      "end": "2026-03-09T21:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-09T21:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/091-avgift-7-19-torsd-boende@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [
+     "boende"
+    ],
+    "place_notes": [],
+    "duration_expires_at": "2026-03-03T00:00",
+    "duration_source": "24h_default",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-02T07:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-02T07:00",
+      "end": "2026-03-02T19:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-02T19:00",
+      "end": "2026-03-03T07:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-03T07:00",
+      "end": "2026-03-03T19:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-03T19:00",
+      "end": "2026-03-04T07:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-04T07:00",
+      "end": "2026-03-04T19:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-04T19:00",
+      "end": "2026-03-05T07:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-05T07:00",
+      "end": "2026-03-05T08:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-05T08:00",
+      "end": "2026-03-05T16:00",
+      "state": "prohibited",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-05T16:00",
+      "end": "2026-03-05T19:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-05T19:00",
+      "end": "2026-03-06T07:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-06T07:00",
+      "end": "2026-03-06T19:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-06T19:00",
+      "end": "2026-03-09T07:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-09T07:00",
+      "end": "2026-03-09T19:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-09T19:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/092-avgift-boende-mork-vagg@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "here",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [
+     "boende"
+    ],
+    "place_notes": [],
+    "duration_expires_at": "2026-03-02T08:00",
+    "duration_source": "prohibition",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-02T07:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-02T07:00",
+      "end": "2026-03-02T08:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-02T08:00",
+      "end": "2026-03-02T16:00",
+      "state": "prohibited",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-02T16:00",
+      "end": "2026-03-02T19:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-02T19:00",
+      "end": "2026-03-03T07:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-03T07:00",
+      "end": "2026-03-03T19:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-03T19:00",
+      "end": "2026-03-04T07:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-04T07:00",
+      "end": "2026-03-04T19:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-04T19:00",
+      "end": "2026-03-05T07:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-05T07:00",
+      "end": "2026-03-05T19:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-05T19:00",
+      "end": "2026-03-06T07:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-06T07:00",
+      "end": "2026-03-06T19:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-06T19:00",
+      "end": "2026-03-09T07:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-09T07:00",
+      "end": "2026-03-09T08:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-09T08:00",
+      "end": "2026-03-09T16:00",
+      "state": "prohibited",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-09T16:00",
+      "end": "2026-03-09T19:00",
+      "state": "allowed",
+      "conditions": [
+       "avgift"
+      ],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-09T19:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     }
+    ]
+   }
+  ]
+ },
+ "expected/093-forbud-onsdag-pilar@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "both_directions",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [],
+    "place_notes": [],
+    "duration_expires_at": "2026-03-03T00:00",
+    "duration_source": "24h_default",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-04T08:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": "general_rules_apply_outside_the_sign"
+     },
+     {
+      "start": "2026-03-04T08:00",
+      "end": "2026-03-04T16:00",
+      "state": "prohibited",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": null
+     },
+     {
+      "start": "2026-03-04T16:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": null,
+      "note": "general_rules_apply_outside_the_sign"
+     }
+    ]
+   }
+  ]
+ },
+ "expected/094-p-7-dygn-torsd-vintersasong@base": {
+  "permits_parking": true,
+  "uncertainties": [],
+  "note": null,
+  "regimes": [
+   {
+    "extent": "left",
+    "audience": null,
+    "audience_excluded": [],
+    "eligibility": [],
+    "place_notes": [],
+    "duration_expires_at": "2026-03-03T00:00",
+    "duration_source": "24h_default",
+    "periods": [
+     {
+      "start": "2026-03-02T00:00",
+      "end": "2026-03-05T08:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": 10080,
+      "note": null
+     },
+     {
+      "start": "2026-03-05T08:00",
+      "end": "2026-03-05T16:00",
+      "state": "prohibited",
+      "conditions": [],
+      "max_duration_minutes": 10080,
+      "note": null
+     },
+     {
+      "start": "2026-03-05T16:00",
+      "end": "2026-03-10T00:00",
+      "state": "allowed",
+      "conditions": [],
+      "max_duration_minutes": 10080,
+      "note": null
+     }
+    ]
+   }
+  ]
  }
 }

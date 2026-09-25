@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true,
+      "obstructions": [
+        "distance"
+      ]
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Särskilt",
+        "P-tillstånd",
+        "erfordras"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true,
+        "obstructions": [
+          "distance",
+          "blur"
+        ]
+      },
+      "parsed": {
+        "eligibility": "permit_holders",
+        "permit_required": true
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": false,
+        "obstructions": [
+          "distance",
+          "blur"
+        ]
+      },
+      "parsed": {},
+      "index": 2
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "blue",
+      "legibility": {
+        "readable": false,
+        "obstructions": [
+          "distance",
+          "blur"
+        ]
+      },
+      "parsed": {},
+      "index": 3
+    }
+  ],
+  "panel_count": 3,
+  "boundaries": {
+    "certain": true
+  }
+}

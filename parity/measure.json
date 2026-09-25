@@ -1,81 +1,81 @@
 {
- "photos": 70,
+ "photos": 82,
  "fields": {
   "main_sign.background_color": [
-   68,
-   70
+   79,
+   82
   ],
   "main_sign.form": [
-   66,
-   70
+   76,
+   82
   ],
   "main_sign.type": [
-   67,
-   70
+   78,
+   82
   ],
   "panel.background_color": [
-   166,
-   172
+   191,
+   200
   ],
   "panel.lines": [
-   154,
-   172
+   180,
+   200
   ],
   "panel.rule_bearing": [
-   176,
-   177
+   204,
+   207
   ],
   "panel_count": [
-   62,
-   70
+   71,
+   82
   ],
   "panels.content": [
-   54,
-   70
+   61,
+   82
   ],
   "panels.order": [
-   54,
-   70
+   61,
+   82
   ],
   "parsed.arrow": [
-   24,
-   26
+   28,
+   30
   ],
   "parsed.duration_limit": [
-   11,
-   12
+   13,
+   14
   ],
   "parsed.eligibility": [
-   35,
-   40
+   41,
+   46
   ],
   "parsed.fee": [
-   33,
-   35
+   38,
+   40
   ],
   "parsed.payment_method": [
    0,
    3
   ],
   "parsed.permit_required": [
-   9,
-   9
+   10,
+   10
   ],
   "parsed.permits_parking": [
-   3,
-   6
+   5,
+   8
   ],
   "parsed.place_count": [
    9,
    9
   ],
   "parsed.placement": [
-   6,
-   7
+   7,
+   8
   ],
   "parsed.prohibition": [
-   14,
-   20
+   18,
+   24
   ],
   "parsed.scope_shift": [
    6,
@@ -86,8 +86,8 @@
    9
   ],
   "parsed.time_windows": [
-   27,
-   39
+   38,
+   50
   ],
   "parsed.vehicle_class": [
    16,
@@ -203,7 +203,28 @@
   "078-p-skylt-overklistrad: the content of the plates disagrees",
   "079-p-skylt-bakom-trad: 0 plates instead of 2",
   "079-p-skylt-bakom-trad: plate order [] instead of ['förhyrda platser', '?']",
-  "079-p-skylt-bakom-trad: the content of the plates disagrees"
+  "079-p-skylt-bakom-trad: the content of the plates disagrees",
+  "085-p-med-plattor-bakom-bom: 1 plates instead of 3",
+  "085-p-med-plattor-bakom-bom: panel 2 marked operator_plate instead of sign_plate - this changes which rules apply",
+  "085-p-med-plattor-bakom-bom: panel 3 marked operator_plate instead of sign_plate - this changes which rules apply",
+  "085-p-med-plattor-bakom-bom: plate order ['särskilt p-tillstånd erfordras'] instead of ['särskilt p-tillstånd erfordras', '?', '?']",
+  "085-p-med-plattor-bakom-bom: the content of the plates disagrees",
+  "087-motljus-parkering-pa-avstand: 0 plates instead of 3",
+  "087-motljus-parkering-pa-avstand: main sign unknown instead of parking",
+  "087-motljus-parkering-pa-avstand: plate order [] instead of ['?', '?', 'left']",
+  "087-motljus-parkering-pa-avstand: sign colour unreadable instead of blue",
+  "087-motljus-parkering-pa-avstand: sign form unknown instead of regular",
+  "087-motljus-parkering-pa-avstand: the content of the plates disagrees",
+  "089-lastplats-zon-c-boende-centrala: sign form zone instead of regular",
+  "090-avgift-uppstallning-zon-e-pil: 4 plates instead of 5",
+  "090-avgift-uppstallning-zon-e-pil: plate order ['avgift 8-21', 'other', 'right', 'zon e'] instead of ['avgift 8-21', '?', 'right', 'zon e', '?']",
+  "090-avgift-uppstallning-zon-e-pil: the content of the plates disagrees",
+  "091-avgift-7-19-torsd-boende: panel 3 read as ['Boende', 'BI'] instead of ['Boende', 'Bl']",
+  "091-avgift-7-19-torsd-boende: plate order ['avgift 7-19 taxa 5', 'torsd 8-16 1/11-15/5', 'boende bi'] instead of ['avgift 7-19 taxa 5', 'torsd 8-16 1/11-15/5', 'boende bl']",
+  "091-avgift-7-19-torsd-boende: the content of the plates disagrees",
+  "092-avgift-boende-mork-vagg: panel 3 read as ['Boende', 'BI'] instead of ['Boende', 'Bl']",
+  "092-avgift-boende-mork-vagg: plate order ['avgift 7-19 taxa 5', 'månd 8-16 1/11-15/5', 'boende bi'] instead of ['avgift 7-19 taxa 5', 'månd 8-16 1/11-15/5', 'boende bl']",
+  "092-avgift-boende-mork-vagg: the content of the plates disagrees"
  ],
  "diverged": {
   "035-zon-c-pa-avstand": [
@@ -307,11 +328,29 @@
   "075-p-med-olasliga-plattor-pa-avstand": 737280,
   "077-gul-forbud-forhyrda-platser-skymning": 737280,
   "078-p-skylt-overklistrad": 921600,
-  "079-p-skylt-bakom-trad": 921600
+  "079-p-skylt-bakom-trad": 921600,
+  "083-gul-forbud-forhyrda-platser-pa-avstand": 921600,
+  "084-gul-forbud-p-tjanst-vast-farthinder": 921600,
+  "085-p-med-plattor-bakom-bom": 737280,
+  "086-p-1tim-pil-europark": 737280,
+  "087-motljus-parkering-pa-avstand": 737280,
+  "088-avgift-8-20-rod-taxa-boende-c-nv-mandag-8-11": 5760000,
+  "089-lastplats-zon-c-boende-centrala": 109212,
+  "090-avgift-uppstallning-zon-e-pil": 392110,
+  "091-avgift-7-19-torsd-boende": 323606,
+  "092-avgift-boende-mork-vagg": 536731,
+  "093-forbud-onsdag-pilar": 489144,
+  "094-p-7-dygn-torsd-vintersasong": 464868
  },
  "fingerprint": "a1b96992540a",
  "excluded": [],
  "rows": [
+  [
+   0.505,
+   "insufficient",
+   false,
+   "087-motljus-parkering-pa-avstand"
+  ],
   [
    0.575,
    "insufficient",
@@ -359,6 +398,12 @@
    "partial",
    false,
    "041-lastplats-forbud-7-17-ovrig-tid-avgift"
+  ],
+  [
+   0.775,
+   "partial",
+   false,
+   "084-gul-forbud-p-tjanst-vast-farthinder"
   ],
   [
    0.795,
@@ -421,6 +466,30 @@
    "062-klass-i-14-dygn-slapfordon-forbud"
   ],
   [
+   0.875,
+   "full",
+   false,
+   "085-p-med-plattor-bakom-bom"
+  ],
+  [
+   0.875,
+   "partial",
+   false,
+   "088-avgift-8-20-rod-taxa-boende-c-nv-mandag-8-11"
+  ],
+  [
+   0.875,
+   "partial",
+   false,
+   "089-lastplats-zon-c-boende-centrala"
+  ],
+  [
+   0.875,
+   "full",
+   false,
+   "091-avgift-7-19-torsd-boende"
+  ],
+  [
    0.895,
    "full",
    true,
@@ -443,6 +512,12 @@
    "full",
    true,
    "075-p-med-olasliga-plattor-pa-avstand"
+  ],
+  [
+   0.898,
+   "full",
+   false,
+   "083-gul-forbud-forhyrda-platser-pa-avstand"
   ],
   [
    0.899,
@@ -673,6 +748,24 @@
    "073-30min-00-24-buss-avgift-roda-siffror"
   ],
   [
+   0.975,
+   "full",
+   false,
+   "086-p-1tim-pil-europark"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "090-avgift-uppstallning-zon-e-pil"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "094-p-7-dygn-torsd-vintersasong"
+  ],
+  [
    0.998,
    "full",
    false,
@@ -697,6 +790,12 @@
    "077-gul-forbud-forhyrda-platser-skymning"
   ],
   [
+   0.998,
+   "full",
+   false,
+   "092-avgift-boende-mork-vagg"
+  ],
+  [
    0.999,
    "full",
    false,
@@ -713,6 +812,12 @@
    "full",
    false,
    "065-laddning-avgift-4-platser-med-automat"
+  ],
+  [
+   0.999,
+   "full",
+   false,
+   "093-forbud-onsdag-pilar"
   ],
   [
    1.0,
@@ -733,5 +838,5 @@
    "071-taxi-3-platser"
   ]
  ],
- "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 14 | 4 | 56 | 4 |\n| 0.875 | 14 | 4 | 56 | 4 |\n| 0.900 | 23 | 7 | 47 | 1 |\n| 0.920 | 23 | 7 | 47 | 1 |\n| 0.950 | 24 | 7 | 46 | 1 |"
+ "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 18 | 4 | 64 | 4 |\n| 0.875 | 18 | 4 | 64 | 4 |\n| 0.900 | 30 | 7 | 52 | 1 |\n| 0.920 | 30 | 7 | 52 | 1 |\n| 0.950 | 31 | 7 | 51 | 1 |"
 }

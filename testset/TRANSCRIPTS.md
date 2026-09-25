@@ -1535,8 +1535,13 @@ Parking fee for periods between 08:00 and 20:00 on weekdays and between 08:00 an
 ## 089 · Loading bay and a paid zone on one post
 `089-lastplats-zon-c-boende-centrala.png`
 
-_Verbatim reading not yet written._ On the post: a yellow `Lastplats` plate with hours, a
-blue `P` with `Avgift` and hours, a `Zon C` plate and a `Boende Centrala` plate.
+1. **[P]** `Last-` / `plats` — yellow, ABOVE the main sign
+2. **[M]** no stopping — yellow, two crossed bars
+3. **[P]** `6-16` — yellow
+4. **[P]** `P` `Avgift` / `16-21` — blue
+5. **[P]** `Zon C` — white
+6. **[P]** `Boende` / `Centrala` — white
+7. **[I]** a small white board of fine print — not legible
 
 **Meaning (developer):** _to be filled in_
 Place for goods loading and unloading where parking is prohibited in the following periods: on weekdays between 06:00 and 16:00. Other times parking is allowed according to standard parking rules. on weekdays between 16:00 and 21:00 - paid parking. Residents may have separate terms.
@@ -1545,8 +1550,12 @@ Place for goods loading and unloading where parking is prohibited in the followi
 ## 090 · Fee, angled bays, zone E, arrow
 `090-avgift-uppstallning-zon-e-pil.png`
 
-_Verbatim reading not yet written._ A blue `P` with `Avgift` and hours, a plate showing
-how the cars stand, an arrow right, and a `Zon E` plate.
+1. **[M]** P — blue square
+2. **[P]** `Avgift` / `8-21` — blue
+3. **[P]** cars drawn side by side (how to stand) — blue
+4. **[P]** arrow right — white
+5. **[P]** `Zon E` — white
+6. **[P]** the top of one more blue plate, hidden behind a parked car
 
 **Meaning (developer):** _to be filled in_
 Parking fee in the periods between 08:00 and 21:00 on weekdays, other times free. To the right of the sign. Parking within marked bay placing vehicles as shown on the plate (perpendicular to the road edge). Zone E must relate to payment taxa. 
@@ -1555,8 +1564,11 @@ Parking fee in the periods between 08:00 and 21:00 on weekdays, other times free
 ## 091 · Fee, a Thursday prohibition, residents
 `091-avgift-7-19-torsd-boende.png`
 
-_Verbatim reading not yet written._ A blue `P` with `Avgift`, hours and a rate, a yellow
-Thursday plate, and a `Boende` plate.
+1. **[M]** P — blue square
+2. **[P]** `Avgift` / `7-19` / `Taxa 5` — blue
+3. **[P]** `Torsd` / `8-16` / `1/11-15/5` — yellow with a red border, a no-parking symbol on the left
+4. **[P]** `Boende` / `Bl` — white
+5. **[I]** `Betala digitalt` — white, with the city’s crest
 
 **Meaning (developer):** _to be filled in_
 Parking fee in the periods between 07:00 and 19:00 on weekdays by taxa 5, other periods parking is free. No parking on Thursdays between 08:00 and 16:00 in the period of 1st of november to 15th of may inclusive. Residents might have a special parking condition. 
@@ -1565,8 +1577,13 @@ Parking fee in the periods between 07:00 and 19:00 on weekdays by taxa 5, other 
 ## 092 · Fee and residents, against a dark wall
 `092-avgift-boende-mork-vagg.png`
 
-_Verbatim reading not yet written._ A blue `P` with `Avgift`, a yellow prohibition plate
-and a `Boende` plate. The post stands against a dark facade.
+1. **[M]** P — blue square
+2. **[P]** `Avgift` / `7-19` / `Taxa 5` — blue
+3. **[P]** `Månd` / `8-16` / `1/11-15/5` — yellow with a red border, a no-parking symbol on the left
+4. **[P]** `Boende` / `Bl` — white
+5. **[I]** `Betala digitalt` — white, with the city’s crest
+
+Note: the prohibition plate reads Monday, not Thursday as on `091`.
 
 **Meaning (developer):** _to be filled in_
 Same as 091
@@ -1575,8 +1592,9 @@ Same as 091
 ## 093 · No parking, Wednesday, with arrows
 `093-forbud-onsdag-pilar.png`
 
-_Verbatim reading not yet written._ A round no-parking sign, below it a yellow plate
-naming Wednesday and hours, and a plate with arrows both ways.
+1. **[M]** no parking — round
+2. **[P]** `Onsdag` / `8-16` / `1/11-15/5` — yellow
+3. **[P]** arrows up and down — yellow
 
 **Meaning (developer):** _to be filled in_
 No parking between November 1 and May 15. Stretches before and after the sign. The sign pole does not contain any parking allowance signs, such as e19, and our app says "The sign restricts parking only at the times written on its plate. About parking here at other times the sign states nothing: the general rules of the road apply, and they are not on this sign." (not drawing a parking window diagram). I think we need to fix our engine and correct what is written in main readme: I will explain by the example of this image: 
@@ -1586,8 +1604,12 @@ No parking between November 1 and May 15. Stretches before and after the sign. T
 ## 094 · 7 days, a Thursday prohibition for the winter months
 `094-p-7-dygn-torsd-vintersasong.png`
 
-_Verbatim reading not yet written._ A blue `P` with `7 dygn`, and a yellow plate naming
-Thursday, hours and a season.
+1. **[M]** P — blue square
+2. **[P]** `7 dygn` — blue
+3. **[P]** `Torsd` / `8-16` / `1/11-15/5` — yellow with a red border, a no-parking symbol on the left
+4. **[P]** arrow left — white
+
+Note: the round sign behind the post shows its back; it serves the other direction.
 
 **Meaning (developer):** _to be filled in_
 Free parking for 7 consequtive days allowed (7 dygn), to the left of the sign. No parking on Thursdays from November 1 to May 15. Important note: the app incorrectly considered 7 dygn as 7 hours. I scanned it on 2026-09-23 at 14:24, and the app said the parking window is untill Wednesday 23rd at 21:24. That's 7 hours, not 7 days. Must be fixed. 

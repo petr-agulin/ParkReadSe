@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Avgift",
+        "8-21"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "fee": true,
+        "time_windows": [
+          {
+            "from": "08:00",
+            "to": "21:00",
+            "day_class": "weekday"
+          }
+        ]
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "placement": "as_shown"
+      },
+      "index": 2
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "white",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "arrow": "right",
+        "pictogram": "arrow"
+      },
+      "index": 3
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Zon E"
+      ],
+      "background_color": "white",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "tariff_code": "Zon E"
+      },
+      "index": 4
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "blue",
+      "legibility": {
+        "readable": false,
+        "obstructions": [
+          "cropped"
+        ]
+      },
+      "parsed": {},
+      "index": 5
+    }
+  ],
+  "panel_count": 5,
+  "boundaries": {
+    "certain": true
+  }
+}

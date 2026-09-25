@@ -2,6 +2,9 @@
   "_": "Parking signs that nobody can read in the photograph - too far away, too small. They are parking signs, so they do not belong in triage_expected.json, which lists photographs that are not; and there is nothing to read, so they can have no ground-truth reading either. The right answer is a refusal, and it counts whichever way the product refuses: triage turning the photograph away, or a reading graded insufficient, with no window drawn (decision 176).",
   "photos": [
     "074-skyltar-pa-langt-avstand",
-    "076-flera-skyltar-pa-avstand-kontorshus"
+    "076-flera-skyltar-pa-avstand-kontorshus",
+    "080-p-skylt-pa-avstand-parkeringsyta",
+    "081-p-skylt-pa-avstand-genom-lov",
+    "082-p-skylt-pa-avstand-bostadsgata"
   ]
 }

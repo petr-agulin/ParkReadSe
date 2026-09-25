@@ -3677,5 +3677,230 @@
    "2": []
   },
   "missing_keys": []
+ },
+ "expected/083-gul-forbud-forhyrda-platser-pa-avstand": {
+  "main_sign_key": "main-zone-prohibition",
+  "panel_keys": {
+   "1": [
+    "forhyrda-platser"
+   ],
+   "2": [
+    "operator-plate"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/084-gul-forbud-p-tjanst-vast-farthinder": {
+  "main_sign_key": "main-zone-prohibition",
+  "panel_keys": {
+   "1": [
+    "operator-plate"
+   ],
+   "2": [
+    "other-road-sign"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/085-p-med-plattor-bakom-bom": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "sarskilt-p-tillstand"
+   ],
+   "2": [],
+   "3": []
+  },
+  "uninterpreted": {
+   "2": [],
+   "3": []
+  },
+  "missing_keys": []
+ },
+ "expected/086-p-1tim-pil-europark": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "duration-limit"
+   ],
+   "2": [
+    "arrow-left"
+   ],
+   "3": [
+    "operator-plate"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/087-motljus-parkering-pa-avstand": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [],
+   "2": [],
+   "3": [
+    "arrow-left"
+   ]
+  },
+  "uninterpreted": {
+   "1": [],
+   "2": []
+  },
+  "missing_keys": []
+ },
+ "expected/088-avgift-8-20-rod-taxa-boende-c-nv-mandag-8-11": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "avgift",
+    "window-weekday",
+    "window-eve"
+   ],
+   "2": [
+    "taxa"
+   ],
+   "3": [
+    "boende"
+   ],
+   "4": [
+    "main-prohibition-parking",
+    "named-weekday"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/089-lastplats-zon-c-boende-centrala": {
+  "main_sign_key": "main-prohibition-stopping",
+  "panel_keys": {
+   "1": [],
+   "2": [
+    "window-weekday"
+   ],
+   "3": [
+    "avgift",
+    "window-weekday"
+   ],
+   "4": [
+    "taxa"
+   ],
+   "5": [
+    "boende"
+   ],
+   "6": [
+    "info-board"
+   ]
+  },
+  "uninterpreted": {
+   "1": [
+    "Lastplats",
+    "Last-",
+    "plats"
+   ]
+  },
+  "missing_keys": []
+ },
+ "expected/090-avgift-uppstallning-zon-e-pil": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "avgift",
+    "window-weekday"
+   ],
+   "2": [
+    "placement-as-shown"
+   ],
+   "3": [
+    "arrow-right"
+   ],
+   "4": [
+    "taxa"
+   ],
+   "5": []
+  },
+  "uninterpreted": {
+   "5": []
+  },
+  "missing_keys": []
+ },
+ "expected/091-avgift-7-19-torsd-boende": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "taxa",
+    "avgift",
+    "window-weekday"
+   ],
+   "2": [
+    "main-prohibition-parking",
+    "named-weekday",
+    "datumintervall"
+   ],
+   "3": [
+    "boende"
+   ],
+   "4": [
+    "info-board"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/092-avgift-boende-mork-vagg": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "taxa",
+    "avgift",
+    "window-weekday"
+   ],
+   "2": [
+    "main-prohibition-parking",
+    "named-weekday",
+    "datumintervall"
+   ],
+   "3": [
+    "boende"
+   ],
+   "4": [
+    "info-board"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/093-forbud-onsdag-pilar": {
+  "main_sign_key": "main-prohibition-parking",
+  "panel_keys": {
+   "1": [
+    "named-weekday",
+    "datumintervall"
+   ],
+   "2": [
+    "arrow-both-vertical"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/094-p-7-dygn-torsd-vintersasong": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "duration-limit"
+   ],
+   "2": [
+    "main-prohibition-parking",
+    "named-weekday",
+    "datumintervall"
+   ],
+   "3": [
+    "arrow-left"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
  }
 }

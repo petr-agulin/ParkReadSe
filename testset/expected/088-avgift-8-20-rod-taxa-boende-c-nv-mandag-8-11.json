@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Avgift",
+        "8-20",
+        "(8-15)"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "fee": true,
+        "time_windows": [
+          {
+            "from": "08:00",
+            "to": "20:00",
+            "day_class": "weekday"
+          },
+          {
+            "from": "08:00",
+            "to": "15:00",
+            "day_class": "eve"
+          }
+        ]
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Röd taxa"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "tariff_code": "Röd taxa"
+      },
+      "index": 2
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Boende",
+        "C-NV"
+      ],
+      "background_color": "white",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "eligibility": "residents"
+      },
+      "index": 3
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Måndag",
+        "8-11"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "prohibition": true,
+        "time_windows": [
+          {
+            "from": "08:00",
+            "to": "11:00",
+            "day_class": "named_weekday",
+            "named_weekday": "monday"
+          }
+        ]
+      },
+      "index": 4
+    }
+  ],
+  "panel_count": 4,
+  "boundaries": {
+    "certain": true
+  }
+}
