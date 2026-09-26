@@ -597,6 +597,14 @@ function timeline(now: Naive, cal: Calendar, baseState: string,
           if (results.some((r) => r === null)) unknown = true;
           if (!results.some((r) => r === true)) continue;
         }
+        // A yellow `Övrig tid` with a no-parking symbol closes the rest of the time
+        // (photograph `095`, decision 183). Read only for permission, it was dropped
+        // and the night came out as free parking.
+        if (parsed.prohibition) {
+          state = PROHIBITED;
+          conds = [];
+          continue;
+        }
         conds = conds.concat(conditionsOf(parsed));
         // A plate may restore permission by itself (photograph `019`).
         if (parsed.permits_parking) state = ALLOWED;

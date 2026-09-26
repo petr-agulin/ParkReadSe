@@ -307,6 +307,28 @@ describe("prohibition wins, and windows under a prohibiting sign", () => {
     expect(state(r, "2026-03-02T20:00")).toEqual([ALLOWED, ["avgift"]]);
     expect(state(r, "2026-03-07T12:00")).toEqual([ALLOWED, ["avgift"]]);
   });
+
+  it("a yellow `övrig tid` with a no-parking symbol closes the rest of the time", () => {
+    // Photograph `095` as the model read it: 30 minutes on weekdays 7-20 and on the
+    // eve 9-18, a fee on weekdays 7-19, and no parking at other times (decision 183).
+    // The rest of the time is what the 30-minute plate leaves (the developer,
+    // 2026-09-26): 19-20 on a weekday is a free half hour, not a ban.
+    const r = first(sign([
+      plate({ duration_limit: { amount: 30, unit: "minutes" },
+              time_windows: [win("07:00", "20:00", WEEKDAY), win("09:00", "18:00", EVE)] },
+            ["30 min", "7-20", "(9-18)"]),
+      plate({ fee: true, time_windows: [win("07:00", "19:00", WEEKDAY)] },
+            ["Avgift", "7-19", "Taxa 5"]),
+      plate({ prohibition: true, scope_shift: "remaining_time" }, ["Övrig", "tid"],
+            "sign_plate", "yellow"),
+    ]), "2026-03-02T12:00");
+    expect(state(r, "2026-03-02T12:00")).toEqual([ALLOWED, ["avgift"]]);
+    expect(state(r, "2026-03-02T19:30")[0]).toBe(ALLOWED);
+    expect(state(r, "2026-03-02T21:00")).toEqual([PROHIBITED, []]);
+    expect(state(r, "2026-03-03T03:00")).toEqual([PROHIBITED, []]);
+    expect(state(r, "2026-03-07T12:00")[0], "the eve's hours").toBe(ALLOWED);
+    expect(state(r, "2026-03-07T19:00")).toEqual([PROHIBITED, []]);
+  });
 });
 
 describe("the limit and its window", () => {

@@ -300,6 +300,9 @@
   "079-p-skylt-bakom-trad": [
    "who may park: - instead of ['forhyrda-platser']"
   ],
+  "095-30min-plus-avgift-taxa": [
+   "hours differing by state 14/168, of which wider 14"
+  ],
   "096-flera-stolpar-boende-solna": [
    "who may park: ['boende', 'pictogram-motorcycle'] instead of ['boende']"
   ],
@@ -565,7 +568,7 @@
   [
    0.875,
    "full",
-   false,
+   true,
    "095-30min-plus-avgift-taxa"
   ],
   [
@@ -995,5 +998,5 @@
    "071-taxi-3-platser"
   ]
  ],
- "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 21 | 4 | 76 | 7 |\n| 0.875 | 21 | 4 | 76 | 7 |\n| 0.900 | 37 | 9 | 60 | 2 |\n| 0.920 | 37 | 9 | 60 | 2 |\n| 0.950 | 38 | 9 | 59 | 2 |"
+ "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 21 | 4 | 76 | 8 |\n| 0.875 | 21 | 4 | 76 | 8 |\n| 0.900 | 37 | 10 | 60 | 2 |\n| 0.920 | 37 | 10 | 60 | 2 |\n| 0.950 | 38 | 10 | 59 | 2 |"
 }
