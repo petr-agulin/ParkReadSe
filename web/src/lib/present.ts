@@ -16,7 +16,7 @@
 import { Calendar, EVE, RED } from "./calendar";
 import { isoDate, isoNaive, type Civil, type Naive, addDays } from "./civil";
 import { realMinutes, switchBetween } from "./clock";
-import { FULL, INSUFFICIENT, PARTIAL, type Assessment } from "./completeness";
+import { FULL, PARTIAL, type Assessment } from "./completeness";
 import { ALLOWED, EVEN_SIDE_ONLY, FEE_PERIOD_ELSEWHERE, GENERAL_RULE_GAP, NOT_STATED,
          ODD_SIDE_ONLY, OUTSIDE_PERMITTED_HOURS, PRIORITY_ROAD_GAP, PROHIBITED,
          horizonEnd,
@@ -954,8 +954,11 @@ export function toJson(analysis: Analysis, moment: Naive, cal: Calendar): Record
     day_class: cal.dayClass(dateOf(moment)),
     completeness: completenessView(a),
     has_answer: hasAnswerHere,
+    // Every word is withheld only when the pixel budget failed (decision 156): then
+    // nothing on the plates is evidence. A reading refused because ONE plate was
+    // illegible (decision 183) still quotes the plates that were read.
     what_we_saw: whatWeSaw({ doc: analysis.doc, recognised: analysis.recognised },
-                           a.category === INSUFFICIENT),
+                           a.reasons.includes("text_exceeds_the_pixels")),
     stopped_at: analysis.stoppedAt ?? null,
     reason: analysis.reason ?? null,
     flags: analysis.flags ?? [],

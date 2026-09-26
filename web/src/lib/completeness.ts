@@ -132,7 +132,14 @@ function mayProhibit(panel: Panel): boolean {
 }
 
 /** Was so little read that there is nothing to speak of? The condition lives here so
- *  the pipeline can ask it BEFORE computing completeness in full. */
+ *  the pipeline can ask it BEFORE computing completeness in full.
+ *
+ *  One sign plate the model calls illegible is enough (decision 183, replacing the
+ *  partial answer of decision 30 for this case). A plate nobody read names no rule,
+ *  so nothing says it does not matter - and a single red line can turn a whole plate
+ *  round on a Sunday (photograph `095`). A payment board or another road sign does
+ *  not count: they are known by their look. A plate that merely came back empty is
+ *  still weighed by the share: it may be a symbol the model did not name. */
 export function tooLittle(sign: SignDoc): boolean {
   const main = sign.main_sign;
   const plates = platesOf(sign);
@@ -140,6 +147,7 @@ export function tooLittle(sign: SignDoc): boolean {
   const readShare = plates.length ? (plates.length - unread.length) / plates.length : 1.0;
   return main.type === "unknown"
       || !(main.legibility?.readable ?? true)
+      || plates.some((p) => !(p.legibility?.readable ?? true))
       || readShare < 0.5;
 }
 

@@ -59,6 +59,15 @@ function blank(s: SignDoc, index: number, color: string): SignDoc {
   return out;
 }
 
+/** A plate that came back EMPTY: the model called it readable and gave neither text
+ *  nor a field. It is weighed by the share and keeps decision 30's partial answer - an
+ *  illegible plate (`blank`) refuses the whole reading instead (decision 183). */
+function emptied(s: SignDoc, index: number, color: string): SignDoc {
+  const out = blank(s, index, color);
+  out.panels!.find((x) => x.index === index)!.legibility = { readable: true };
+  return out;
+}
+
 /** A `P` with an arrow and nothing else - in the reading, indistinguishable from a
  *  sign pointing the way to a car park. */
 function pointer(): SignDoc {
@@ -105,10 +114,30 @@ describe("the four categories", () => {
     expect(a.confidence).toBe(0);
   });
 
-  it("one plate of three unread is partial", () => {
-    const a = grade(blank(sign(), 2, "blue"));
+  it("one plate of three that came back empty is partial", () => {
+    const a = grade(emptied(sign(), 2, "blue"));
     expect(a.category).toBe(PARTIAL);
     expect(a.unreadPanels).toEqual([2]);
+  });
+
+  it("one plate the model calls illegible refuses the whole reading", () => {
+    // A plate nobody read names no rule, so nothing says it does not matter; a red
+    // line on a blue plate can turn a Sunday round (photograph `095`, decision 183).
+    for (const color of ["blue", "yellow", "white"]) {
+      const a = grade(blank(sign(), 2, color));
+      expect(a.category, color).toBe(INSUFFICIENT);
+      expect(a.reasons, "and says which plate").toContain("unread_panels:2");
+    }
+  });
+
+  it("an illegible payment board or road sign does not refuse", () => {
+    // They are known by their look, not by their words: nothing on them can be a rule.
+    for (const kind of ["info_board", "other_sign"] as const) {
+      const s = sign();
+      s.panels!.push({ index: 9, kind, lines: [], background_color: "white",
+                       legibility: { readable: false }, parsed: {} });
+      expect(grade(s).category, kind).toBe(FULL);
+    }
   });
 
   it("most of the plates unread is insufficient", () => {
@@ -134,26 +163,27 @@ describe("the four categories", () => {
   it("one and the same photograph yields different categories", () => {
     const base = sign();
     expect(grade(base).category).toBe(FULL);
-    expect(grade(blank(base, 2, "blue")).category).toBe(PARTIAL);
+    expect(grade(emptied(base, 2, "blue")).category).toBe(PARTIAL);
+    expect(grade(blank(base, 2, "blue")).category).toBe(INSUFFICIENT);
     expect(grade(blank(blank(base, 1, "blue"), 2, "blue")).category).toBe(INSUFFICIENT);
   });
 });
 
-describe("the colour of an unread plate", () => {
+describe("the colour of a plate that came back empty", () => {
   it("a yellow one may turn out to be a prohibition", () => {
-    const a = grade(blank(sign(), 3, "yellow"));
+    const a = grade(emptied(sign(), 3, "yellow"));
     expect(a.category).toBe(PARTIAL);
     expect(a.mayHideProhibition).toBe(true);
   });
 
   it("a blue one implies no prohibition", () => {
-    const a = grade(blank(sign(), 2, "blue"));
+    const a = grade(emptied(sign(), 2, "blue"));
     expect(a.category).toBe(PARTIAL);
     expect(a.mayHideProhibition).toBe(false);
   });
 
   it("an unreadable colour is the worst case", () => {
-    expect(grade(blank(sign(), 2, "unreadable")).mayHideProhibition).toBe(true);
+    expect(grade(emptied(sign(), 2, "unreadable")).mayHideProhibition).toBe(true);
   });
 });
 
@@ -164,8 +194,8 @@ describe("the asymmetry rule", () => {
     expect(states(applyAsymmetry(ev, grade(s)))).toEqual(states(ev));
   });
 
-  it("a yellow unread plate forbids presenting any period as permitting", () => {
-    const s = blank(sign(), 3, "yellow");
+  it("a yellow empty plate forbids presenting any period as permitting", () => {
+    const s = emptied(sign(), 3, "yellow");
     const ev = evaluateParkingRules(s, NOW, CAL);
     expect(states(ev), "before the rule there is permission").toContain(ALLOWED);
     const out = applyAsymmetry(ev, grade(s));
@@ -176,10 +206,10 @@ describe("the asymmetry rule", () => {
     expect(out.uncertainties).toContain(MAY_PROHIBIT);
   });
 
-  it("a blue unread plate keeps the answer but marks the empty periods", () => {
+  it("a blue empty plate keeps the answer but marks the empty periods", () => {
     // "At other times there are no restrictions" on an incomplete reading is a claim
     // founded on the absence of data. Such a period is marked.
-    const s = blank(sign(), 2, "blue");
+    const s = emptied(sign(), 2, "blue");
     const out = applyAsymmetry(evaluateParkingRules(s, NOW, CAL), grade(s));
     const allowed = out.regimes[0].periods.filter((p) => p.state === ALLOWED);
     expect(allowed.length, "the answer survives").toBeGreaterThan(0);
@@ -191,7 +221,7 @@ describe("the asymmetry rule", () => {
   it("the asymmetry never widens", () => {
     // The rule may only remove permitting periods; on no data may it add one.
     for (const color of ["yellow", "blue", "white", "unreadable"]) {
-      const s = blank(sign(), 2, color);
+      const s = emptied(sign(), 2, color);
       const ev = evaluateParkingRules(s, NOW, CAL);
       const out = applyAsymmetry(ev, grade(s));
       const before = states(ev).filter((x) => x === ALLOWED).length;
@@ -204,7 +234,7 @@ describe("the asymmetry rule", () => {
 describe("confidence", () => {
   it("falls as data is lost", () => {
     const full = grade(sign()).confidence;
-    const partial = grade(blank(sign(), 2, "blue")).confidence;
+    const partial = grade(emptied(sign(), 2, "blue")).confidence;
     const disagreement = grade(sign(), { flags: ["panel_count_disagreement:4!=3"] }).confidence;
     expect(full).toBeGreaterThan(partial);
     expect(partial).toBeGreaterThan(0);
@@ -213,7 +243,7 @@ describe("confidence", () => {
 
   it("the number works inside the category, not instead of it", () => {
     // High confidence from the model does not turn a partial reading into a full one.
-    const s = blank(sign(), 2, "blue");
+    const s = emptied(sign(), 2, "blue");
     s.model_confidence = 1.0;
     expect(grade(s).category).toBe(PARTIAL);
   });
@@ -307,7 +337,7 @@ describe("corroborating the main sign with plates", () => {
     expect(uncorroborated).not.toContain("not read");
     expect(uncorroborated.toLowerCase()).toContain("no plate");
     // And where a plate really was not read, the caption is the ordinary one.
-    expect(caption(blank(sign(), 2, "blue"))).toContain("not read");
+    expect(caption(emptied(sign(), 2, "blue"))).toContain("not read");
   });
 });
 

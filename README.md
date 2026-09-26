@@ -64,9 +64,10 @@ a "show" link, outside the reading.
 
 Under the heading, colour-coded in one line: how complete the reading is and the computed
 confidence. Green means every panel was read, amber means an answer with a caveat, red
-means no answer. An unread panel is stated plainly — and no period below is then presented
-as permitted. A plate that could not be read reliably is named but not quoted, and when too
-little of the sign was read, no window is drawn at all: a guess would look like an answer.
+means no answer. A plate that could not be read is named but not quoted, and no window is
+drawn: nothing on an unread plate says it does not matter, and a guess would look like an
+answer. The plates that were read are still shown. A panel that came back empty gives an
+answer with a caveat, and no period below is then presented as permitted.
 
 **Who can park here.** Whom the sign designates the spaces for. It names the category and
 stops there.

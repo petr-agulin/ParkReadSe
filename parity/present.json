@@ -70554,9 +70554,9 @@
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
   "completeness": {
-   "category": "partial",
-   "category_text": "Part of the sign was not read; what follows is incomplete",
-   "tone": "caution",
+   "category": "insufficient",
+   "category_text": "Too little of the sign was read to say what it states",
+   "tone": "bad",
    "confidence": 0.908,
    "signals": {
     "schema_valid": 1.0,
@@ -70582,7 +70582,7 @@
    ],
    "may_hide_prohibition": false
   },
-  "has_answer": true,
+  "has_answer": false,
   "what_we_saw": {
    "main_sign": {
     "type": "parking",
@@ -70792,40 +70792,12 @@
     ],
     "notes": [],
     "window_for": [],
-    "no_window_text": null,
+    "no_window_text": "Too little of this sign was read to say when parking is allowed here. No window is shown rather than a guess: photograph the sign again, closer, or read it yourself.",
     "clock_change_text": null,
     "place_notes": [],
-    "duration_expires_at": "2026-03-03T00:00",
-    "duration_source": "24h_default",
-    "periods": [
-     {
-      "start": "2026-03-02T00:00",
-      "end": "2026-03-03T00:00",
-      "start_day": null,
-      "end_day": null,
-      "state": "allowed",
-      "state_text": "The sign permits parking during this period",
-      "tone": "paid",
-      "headline": "Parking fee",
-      "minutes": 1440,
-      "notes": [],
-      "ends_at_horizon": false,
-      "stay_end_text": "This stay must end here — general 24-hour rule, not written on the sign",
-      "stay_end_reason": "general 24-hour rule, not written on the sign",
-      "conditions": [
-       {
-        "key": "avgift",
-        "text": "The sign requires payment for parking during this period",
-        "known": true
-       }
-      ],
-      "max_duration_minutes": null,
-      "note": null,
-      "certain": false,
-      "restricted": false,
-      "aside": []
-     }
-    ]
+    "duration_expires_at": null,
+    "duration_source": null,
+    "periods": []
    }
   ],
   "uncertainties": [],
@@ -75382,9 +75354,9 @@
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
   "completeness": {
-   "category": "partial",
-   "category_text": "Part of the sign was not read; what follows is incomplete",
-   "tone": "caution",
+   "category": "insufficient",
+   "category_text": "Too little of the sign was read to say what it states",
+   "tone": "bad",
    "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
@@ -75410,7 +75382,7 @@
    ],
    "may_hide_prohibition": false
   },
-  "has_answer": true,
+  "has_answer": false,
   "what_we_saw": {
    "main_sign": {
     "type": "parking",
@@ -75581,40 +75553,12 @@
       "known": true
      }
     ],
-    "no_window_text": null,
+    "no_window_text": "Too little of this sign was read to say when parking is allowed here. No window is shown rather than a guess: photograph the sign again, closer, or read it yourself.",
     "clock_change_text": null,
     "place_notes": [],
-    "duration_expires_at": "2026-03-03T00:00",
-    "duration_source": "24h_default",
-    "periods": [
-     {
-      "start": "2026-03-02T00:00",
-      "end": "2026-03-03T00:00",
-      "start_day": null,
-      "end_day": null,
-      "state": "allowed",
-      "state_text": "The sign permits parking during this period",
-      "tone": "free",
-      "headline": "Free parking",
-      "minutes": 1440,
-      "notes": [],
-      "ends_at_horizon": false,
-      "stay_end_text": "This stay must end here — general 24-hour rule, not written on the sign",
-      "stay_end_reason": "general 24-hour rule, not written on the sign",
-      "conditions": [],
-      "max_duration_minutes": null,
-      "note": "conditions_may_be_incomplete",
-      "certain": false,
-      "restricted": true,
-      "aside": [
-       {
-        "key": "pictogram-bicycle",
-        "text": "Bicycles and class II mopeds only",
-        "known": true
-       }
-      ]
-     }
-    ]
+    "duration_expires_at": null,
+    "duration_source": null,
+    "periods": []
    }
   ],
   "uncertainties": [],
@@ -79962,9 +79906,9 @@
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
   "completeness": {
-   "category": "partial",
-   "category_text": "Part of the sign was not read; what follows is incomplete",
-   "tone": "caution",
+   "category": "insufficient",
+   "category_text": "Too little of the sign was read to say what it states",
+   "tone": "bad",
    "confidence": 0.775,
    "signals": {
     "schema_valid": 1.0,
@@ -79994,7 +79938,7 @@
    ],
    "may_hide_prohibition": true
   },
-  "has_answer": true,
+  "has_answer": false,
   "what_we_saw": {
    "main_sign": {
     "type": "prohibition_stopping",
@@ -80149,42 +80093,15 @@
     ],
     "notes": [],
     "window_for": [],
-    "no_window_text": null,
+    "no_window_text": "Too little of this sign was read to say when parking is allowed here. No window is shown rather than a guess: photograph the sign again, closer, or read it yourself.",
     "clock_change_text": null,
     "place_notes": [],
     "duration_expires_at": null,
     "duration_source": null,
-    "periods": [
-     {
-      "start": "2026-03-02T00:00",
-      "end": "2026-03-10T00:00",
-      "start_day": null,
-      "end_day": null,
-      "state": "prohibited",
-      "state_text": "The sign is a no-parking sign for this period",
-      "tone": "prohibited",
-      "headline": "No parking",
-      "minutes": 11520,
-      "notes": [],
-      "ends_at_horizon": true,
-      "stay_end_text": "",
-      "stay_end_reason": "",
-      "conditions": [],
-      "max_duration_minutes": null,
-      "note": null,
-      "certain": false,
-      "restricted": false,
-      "aside": []
-     }
-    ]
+    "periods": []
    }
   ],
-  "uncertainties": [
-   {
-    "token": "unread_panel_may_prohibit",
-    "text": ""
-   }
-  ],
+  "uncertainties": [],
   "permits_parking": true
  },
  "expected/056-natt-avgift-7-19-taxa-3-torsd-plus-forbud@base": {
@@ -80559,13 +80476,15 @@
     {
      "index": 1,
      "kind": "sign_plate",
-     "lines": [],
+     "lines": [
+      "Avgift"
+     ],
      "background_color": "blue",
      "reference_keys": [
       "avgift"
      ],
      "uninterpreted": [],
-     "not_interpreted_text": "This plate could not be read reliably, so its words are not shown.",
+     "not_interpreted_text": null,
      "fields": [
       {
        "name": "index",
@@ -80597,7 +80516,7 @@
       }
      ],
      "title": "Panel",
-     "text": "",
+     "text": "Avgift",
      "meanings": [
       {
        "key": "avgift",
@@ -80609,12 +80528,19 @@
       }
      ],
      "carries_rule": true,
-     "unreliable": true
+     "unreliable": false
     },
     {
      "index": 2,
      "kind": "sign_plate",
-     "lines": [],
+     "lines": [
+      "2tim",
+      "eller",
+      "gratis",
+      "biljett",
+      "alla dagar",
+      "07-23"
+     ],
      "background_color": "blue",
      "reference_keys": [
       "duration-limit",
@@ -80622,7 +80548,7 @@
       "alla-dagar"
      ],
      "uninterpreted": [],
-     "not_interpreted_text": "This plate could not be read reliably, so its words are not shown.",
+     "not_interpreted_text": null,
      "fields": [
       {
        "name": "index",
@@ -80662,7 +80588,7 @@
       }
      ],
      "title": "Panel",
-     "text": "",
+     "text": "2tim eller gratis biljett alla dagar 07-23",
      "meanings": [
       {
        "key": "duration-limit",
@@ -80682,7 +80608,7 @@
       }
      ],
      "carries_rule": true,
-     "unreliable": true
+     "unreliable": false
     },
     {
      "index": 3,
@@ -80693,7 +80619,7 @@
       "arrow-right"
      ],
      "uninterpreted": [],
-     "not_interpreted_text": "This plate could not be read reliably, so its words are not shown.",
+     "not_interpreted_text": null,
      "fields": [
       {
        "name": "index",
@@ -80741,7 +80667,7 @@
       }
      ],
      "carries_rule": true,
-     "unreliable": true
+     "unreliable": false
     }
    ]
   },
@@ -81625,9 +81551,9 @@
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
   "completeness": {
-   "category": "partial",
-   "category_text": "Part of the sign was not read; what follows is incomplete",
-   "tone": "caution",
+   "category": "insufficient",
+   "category_text": "Too little of the sign was read to say what it states",
+   "tone": "bad",
    "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
@@ -81654,7 +81580,7 @@
    ],
    "may_hide_prohibition": true
   },
-  "has_answer": true,
+  "has_answer": false,
   "what_we_saw": {
    "main_sign": {
     "type": "prohibition_stopping",
@@ -81922,48 +81848,15 @@
     ],
     "notes": [],
     "window_for": [],
-    "no_window_text": null,
+    "no_window_text": "Too little of this sign was read to say when parking is allowed here. No window is shown rather than a guess: photograph the sign again, closer, or read it yourself.",
     "clock_change_text": null,
     "place_notes": [],
-    "duration_expires_at": "2026-03-02T07:00",
-    "duration_source": "prohibition",
-    "periods": [
-     {
-      "start": "2026-03-02T00:00",
-      "end": "2026-03-02T07:00",
-      "start_day": null,
-      "end_day": null,
-      "state": "uncertain",
-      "state_text": "The sign's conditions for this period could not be read in full",
-      "tone": "uncertain",
-      "headline": "Conditions could not be read in full",
-      "minutes": 420,
-      "notes": [],
-      "ends_at_horizon": false,
-      "stay_end_text": "This stay must end here — the sign prohibits parking from this moment",
-      "stay_end_reason": "the sign prohibits parking from this moment",
-      "conditions": [
-       {
-        "key": "avgift",
-        "text": "The sign requires payment for parking during this period",
-        "known": true
-       }
-      ],
-      "max_duration_minutes": null,
-      "note": "unread_panel_may_prohibit",
-      "certain": false,
-      "restricted": false,
-      "aside": []
-     }
-    ]
+    "duration_expires_at": null,
+    "duration_source": null,
+    "periods": []
    }
   ],
-  "uncertainties": [
-   {
-    "token": "unread_panel_may_prohibit",
-    "text": ""
-   }
-  ],
+  "uncertainties": [],
   "permits_parking": true
  },
  "expected/061-lastplats-langt-avstand@base": {
@@ -88703,9 +88596,9 @@
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
   "completeness": {
-   "category": "partial",
-   "category_text": "Part of the sign was not read; what follows is incomplete",
-   "tone": "caution",
+   "category": "insufficient",
+   "category_text": "Too little of the sign was read to say what it states",
+   "tone": "bad",
    "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
@@ -88731,7 +88624,7 @@
    ],
    "may_hide_prohibition": false
   },
-  "has_answer": true,
+  "has_answer": false,
   "what_we_saw": {
    "main_sign": {
     "type": "parking",
@@ -88899,40 +88792,12 @@
       "known": true
      }
     ],
-    "no_window_text": "The sign sets no parking window here: these spaces are rented, and how long a rented space may be used follows from its rental, not from this sign.",
+    "no_window_text": "Too little of this sign was read to say when parking is allowed here. No window is shown rather than a guess: photograph the sign again, closer, or read it yourself.",
     "clock_change_text": null,
     "place_notes": [],
-    "duration_expires_at": "2026-03-03T00:00",
-    "duration_source": "24h_default",
-    "periods": [
-     {
-      "start": "2026-03-02T00:00",
-      "end": "2026-03-03T00:00",
-      "start_day": null,
-      "end_day": null,
-      "state": "allowed",
-      "state_text": "The sign permits parking during this period",
-      "tone": "free",
-      "headline": "Free parking",
-      "minutes": 1440,
-      "notes": [],
-      "ends_at_horizon": false,
-      "stay_end_text": "This stay must end here — general 24-hour rule, not written on the sign",
-      "stay_end_reason": "general 24-hour rule, not written on the sign",
-      "conditions": [],
-      "max_duration_minutes": null,
-      "note": "conditions_may_be_incomplete",
-      "certain": false,
-      "restricted": true,
-      "aside": [
-       {
-        "key": "forhyrda-platser",
-        "text": "Rented spaces",
-        "known": true
-       }
-      ]
-     }
-    ]
+    "duration_expires_at": null,
+    "duration_source": null,
+    "periods": []
    }
   ],
   "uncertainties": [],
@@ -89517,13 +89382,17 @@
     {
      "index": 1,
      "kind": "sign_plate",
-     "lines": [],
+     "lines": [
+      "Särskilt",
+      "P-tillstånd",
+      "erfordras"
+     ],
      "background_color": "blue",
      "reference_keys": [
       "sarskilt-p-tillstand"
      ],
      "uninterpreted": [],
-     "not_interpreted_text": "This plate could not be read reliably, so its words are not shown.",
+     "not_interpreted_text": null,
      "fields": [
       {
        "name": "index",
@@ -89559,7 +89428,7 @@
       }
      ],
      "title": "Panel",
-     "text": "",
+     "text": "Särskilt P-tillstånd erfordras",
      "meanings": [
       {
        "key": "sarskilt-p-tillstand",
@@ -89571,7 +89440,7 @@
       }
      ],
      "carries_rule": true,
-     "unreliable": true
+     "unreliable": false
     },
     {
      "index": 2,
@@ -90146,7 +90015,7 @@
       "arrow-left"
      ],
      "uninterpreted": [],
-     "not_interpreted_text": "This plate could not be read reliably, so its words are not shown.",
+     "not_interpreted_text": null,
      "fields": [
       {
        "name": "index",
@@ -90194,7 +90063,7 @@
       }
      ],
      "carries_rule": true,
-     "unreliable": true
+     "unreliable": false
     }
    ]
   },
@@ -91111,9 +90980,9 @@
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
   "completeness": {
-   "category": "partial",
-   "category_text": "Part of the sign was not read; what follows is incomplete",
-   "tone": "caution",
+   "category": "insufficient",
+   "category_text": "Too little of the sign was read to say what it states",
+   "tone": "bad",
    "confidence": 0.935,
    "signals": {
     "schema_valid": 1.0,
@@ -91139,7 +91008,7 @@
    ],
    "may_hide_prohibition": false
   },
-  "has_answer": true,
+  "has_answer": false,
   "what_we_saw": {
    "main_sign": {
     "type": "parking",
@@ -91469,7 +91338,7 @@
     ],
     "notes": [],
     "window_for": [],
-    "no_window_text": null,
+    "no_window_text": "Too little of this sign was read to say when parking is allowed here. No window is shown rather than a guess: photograph the sign again, closer, or read it yourself.",
     "clock_change_text": null,
     "place_notes": [
      {
@@ -91478,79 +91347,9 @@
       "known": true
      }
     ],
-    "duration_expires_at": "2026-03-03T00:00",
-    "duration_source": "24h_default",
-    "periods": [
-     {
-      "start": "2026-03-02T00:00",
-      "end": "2026-03-02T08:00",
-      "start_day": null,
-      "end_day": null,
-      "state": "allowed",
-      "state_text": "The sign permits parking during this period",
-      "tone": "free",
-      "headline": "Free parking",
-      "minutes": 480,
-      "notes": [],
-      "ends_at_horizon": false,
-      "stay_end_text": "",
-      "stay_end_reason": "",
-      "conditions": [],
-      "max_duration_minutes": null,
-      "note": "conditions_may_be_incomplete",
-      "certain": false,
-      "restricted": false,
-      "aside": []
-     },
-     {
-      "start": "2026-03-02T08:00",
-      "end": "2026-03-02T21:00",
-      "start_day": null,
-      "end_day": null,
-      "state": "allowed",
-      "state_text": "The sign permits parking during this period",
-      "tone": "paid",
-      "headline": "Parking fee",
-      "minutes": 780,
-      "notes": [],
-      "ends_at_horizon": false,
-      "stay_end_text": "",
-      "stay_end_reason": "",
-      "conditions": [
-       {
-        "key": "avgift",
-        "text": "The sign requires payment for parking during this period",
-        "known": true
-       }
-      ],
-      "max_duration_minutes": null,
-      "note": null,
-      "certain": false,
-      "restricted": false,
-      "aside": []
-     },
-     {
-      "start": "2026-03-02T21:00",
-      "end": "2026-03-03T00:00",
-      "start_day": null,
-      "end_day": null,
-      "state": "allowed",
-      "state_text": "The sign permits parking during this period",
-      "tone": "free",
-      "headline": "Free parking",
-      "minutes": 180,
-      "notes": [],
-      "ends_at_horizon": false,
-      "stay_end_text": "This stay must end here — general 24-hour rule, not written on the sign",
-      "stay_end_reason": "general 24-hour rule, not written on the sign",
-      "conditions": [],
-      "max_duration_minutes": null,
-      "note": "conditions_may_be_incomplete",
-      "certain": false,
-      "restricted": false,
-      "aside": []
-     }
-    ]
+    "duration_expires_at": null,
+    "duration_source": null,
+    "periods": []
    }
   ],
   "uncertainties": [],
@@ -92972,9 +92771,9 @@
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
   "completeness": {
-   "category": "partial",
-   "category_text": "Part of the sign was not read; what follows is incomplete",
-   "tone": "caution",
+   "category": "insufficient",
+   "category_text": "Too little of the sign was read to say what it states",
+   "tone": "bad",
    "confidence": 0.908,
    "signals": {
     "schema_valid": 1.0,
@@ -93000,7 +92799,7 @@
    ],
    "may_hide_prohibition": false
   },
-  "has_answer": true,
+  "has_answer": false,
   "what_we_saw": {
    "main_sign": {
     "type": "parking",
@@ -93289,61 +93088,12 @@
     ],
     "notes": [],
     "window_for": [],
-    "no_window_text": null,
+    "no_window_text": "Too little of this sign was read to say when parking is allowed here. No window is shown rather than a guess: photograph the sign again, closer, or read it yourself.",
     "clock_change_text": null,
     "place_notes": [],
-    "duration_expires_at": "2026-03-02T19:00",
-    "duration_source": "prohibition",
-    "periods": [
-     {
-      "start": "2026-03-02T00:00",
-      "end": "2026-03-02T07:00",
-      "start_day": null,
-      "end_day": null,
-      "state": "prohibited",
-      "state_text": "The sign is a no-parking sign for this period",
-      "tone": "prohibited",
-      "headline": "No parking",
-      "minutes": 420,
-      "notes": [],
-      "ends_at_horizon": false,
-      "stay_end_text": "",
-      "stay_end_reason": "",
-      "conditions": [],
-      "max_duration_minutes": null,
-      "note": null,
-      "certain": false,
-      "restricted": false,
-      "aside": []
-     },
-     {
-      "start": "2026-03-02T07:00",
-      "end": "2026-03-02T19:00",
-      "start_day": null,
-      "end_day": null,
-      "state": "allowed",
-      "state_text": "The sign permits parking during this period",
-      "tone": "paid",
-      "headline": "Parking fee",
-      "minutes": 720,
-      "notes": [],
-      "ends_at_horizon": false,
-      "stay_end_text": "This stay must end here — the sign prohibits parking from this moment",
-      "stay_end_reason": "the sign prohibits parking from this moment",
-      "conditions": [
-       {
-        "key": "avgift",
-        "text": "The sign requires payment for parking during this period",
-        "known": true
-       }
-      ],
-      "max_duration_minutes": null,
-      "note": null,
-      "certain": false,
-      "restricted": false,
-      "aside": []
-     }
-    ]
+    "duration_expires_at": null,
+    "duration_source": null,
+    "periods": []
    }
   ],
   "uncertainties": [],

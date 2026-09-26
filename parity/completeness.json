@@ -4287,7 +4287,7 @@
   "uninterpreted_plates": []
  },
  "expected/035-zon-c-pa-avstand@base": {
-  "category": "partial",
+  "category": "insufficient",
   "confidence": 0.908,
   "signals": {
    "day_class_known": 1.0,
@@ -4566,7 +4566,7 @@
   "uninterpreted_plates": []
  },
  "expected/042-cykel-moped-parkering@base": {
-  "category": "partial",
+  "category": "insufficient",
   "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
@@ -4824,7 +4824,7 @@
   "uninterpreted_plates": []
  },
  "expected/055-forbud-stannande-snotackt-pil@base": {
-  "category": "partial",
+  "category": "insufficient",
   "confidence": 0.775,
   "signals": {
    "day_class_known": 1.0,
@@ -4937,7 +4937,7 @@
   "uninterpreted_plates": []
  },
  "expected/060-natt-lastplats-ovrig-tid-avgift@base": {
-  "category": "partial",
+  "category": "insufficient",
   "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
@@ -5437,7 +5437,7 @@
   "uninterpreted_plates": []
  },
  "expected/079-p-skylt-bakom-trad@base": {
-  "category": "partial",
+  "category": "insufficient",
   "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
@@ -5622,7 +5622,7 @@
   "uninterpreted_plates": []
  },
  "expected/090-avgift-uppstallning-zon-e-pil@base": {
-  "category": "partial",
+  "category": "insufficient",
   "confidence": 0.935,
   "signals": {
    "day_class_known": 1.0,
@@ -5731,7 +5731,7 @@
   "uninterpreted_plates": []
  },
  "expected/095-30min-plus-avgift-taxa@base": {
-  "category": "partial",
+  "category": "insufficient",
   "confidence": 0.908,
   "signals": {
    "day_class_known": 1.0,

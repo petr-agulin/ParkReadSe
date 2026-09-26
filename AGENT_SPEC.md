@@ -25,8 +25,8 @@ once to extract — and on each call it can read nothing, write nothing, and req
 an image goes in, a label or JSON comes out.
 
 There is one exception to "twice", and it is also decided by code: if the extraction comes
-back saying too little — the main sign unknown or unreadable, or fewer than half the plates
-read — the same question is asked **once more**, and never in a loop. The second answer is
+back saying too little — the main sign unknown or unreadable, a plate unreadable, or fewer
+than half the plates read — the same question is asked **once more**, and never in a loop. The second answer is
 kept only if it is better. So a single photograph costs two calls, or three at most.
 
 **Two calls do not create a branch the model controls.** Triage returns the **value of a
@@ -162,11 +162,12 @@ that triage let through.
 **What withholds an answer is the category, not the confidence number.** The category is
 set by *what is missing*:
 
-- **insufficient** — the main sign is unknown or unreadable, or fewer than half the plates
-  were read. No reading is offered.
-- **partial** — a plate went unread, or was read but not found in the reference, or no
-  plate states a parking rule at all, or the frame was too small to hold the text claimed.
-  A reading is offered, narrowed by the asymmetry rule.
+- **insufficient** — the main sign is unknown or unreadable, a plate that may carry a rule
+  is unreadable, fewer than half the plates were read, or the frame was too small to hold
+  the text claimed. No reading is offered; the plates that were read are still shown,
+  except when the frame was too small, where no word on them is evidence.
+- **partial** — a plate came back empty, or was read but not found in the reference, or no
+  plate states a parking rule at all. A reading is offered, narrowed by the asymmetry rule.
 - **full** — every plate was read and understood.
 
 An answer is produced for **full** and **partial**, and withheld for **insufficient** and
@@ -238,8 +239,13 @@ one answer. When something is missing there are exactly two outcomes:
 2. **A refusal** — if what is missing bears on the main rule. What was recognised is shown,
    with a specific request to retake the photograph.
 
+An unreadable plate is not a secondary detail. It names no rule, so nothing says it does not
+matter — a red line on a time plate turns a Sunday round — and the reading is refused. A
+payment board or another road sign is known by its look, and an unreadable one refuses
+nothing.
+
 **The asymmetry rule governs a partial reading: narrowing is allowed, widening is not.** If
-an unread panel could be a prohibition — its background yellow, or its colour unreadable,
+a panel that came back empty could be a prohibition — its background yellow, or its colour unreadable,
 since prohibition signs in Sweden are yellow — then no period is presented as permitting.
 Otherwise a period with no conditions is marked, because "at other times there are no
 restrictions" would be a claim founded on absent data.
