@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "vehicle_class": "bicycle",
+        "pictogram": "bicycle"
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "0-12 m"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "stretch_metres": {
+          "from": 0,
+          "to": 12
+        }
+      },
+      "index": 2
+    }
+  ],
+  "panel_count": 2,
+  "boundaries": {
+    "certain": true
+  }
+}

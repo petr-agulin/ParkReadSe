@@ -1,5 +1,5 @@
 {
-  "image": "137-forhyrda-platser-securitas.png",
+  "image": "137-sms-avgift-pil-securitas.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "a1b96992540a",

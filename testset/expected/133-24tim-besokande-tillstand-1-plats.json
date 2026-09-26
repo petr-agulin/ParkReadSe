@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "24 tim"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "duration_limit": {
+          "amount": 24,
+          "unit": "hours"
+        }
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Besökande"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "eligibility": "visitors"
+      },
+      "index": 2
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Giltigt",
+        "P-tillstånd",
+        "erfordras"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "eligibility": "permit_holders",
+        "permit_required": true
+      },
+      "index": 3
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "1 plats"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "place_count": 1
+      },
+      "index": 4
+    },
+    {
+      "kind": "operator_plate",
+      "lines": [
+        "Umevakt",
+        "090-703900"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "operator": {
+          "name": "Umevakt",
+          "phone": "090-703900"
+        }
+      },
+      "index": 5
+    }
+  ],
+  "panel_count": 5,
+  "boundaries": {
+    "certain": true
+  }
+}

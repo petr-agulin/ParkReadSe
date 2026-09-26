@@ -497,12 +497,12 @@
       "file": "124-p-gul-skylt-i-gronska.png",
       "pixels": 498435
     },
-    "125-p-gula-plattor-vid-port": {
-      "file": "125-p-gula-plattor-vid-port.png",
+    "125-pa-och-avstigningsplats-ovrig-tid-avgift": {
+      "file": "125-pa-och-avstigningsplats-ovrig-tid-avgift.png",
       "pixels": 404235
     },
-    "126-avgift-7-19-fred-0-6": {
-      "file": "126-avgift-7-19-fred-0-6.png",
+    "126-avgift-7-19-tisd-0-6": {
+      "file": "126-avgift-7-19-tisd-0-6.png",
       "pixels": 323312
     },
     "127-cykel-0-12m": {
@@ -521,32 +521,32 @@
       "file": "130-2tim-avgift-torsd-vid-butik.png",
       "pixels": 456190
     },
-    "131-p-uppstallning-pil-i-sno": {
-      "file": "131-p-uppstallning-pil-i-sno.png",
+    "131-avgift-uppstallning-mand-boende-pil": {
+      "file": "131-avgift-uppstallning-mand-boende-pil.png",
       "pixels": 524267
     },
-    "132-avgift-boende-i-sno": {
-      "file": "132-avgift-boende-i-sno.png",
+    "132-avgift-9-19-jamnt-datum-0-8-i-sno": {
+      "file": "132-avgift-9-19-jamnt-datum-0-8-i-sno.png",
       "pixels": 466128
     },
     "133-24tim-besokande-tillstand-1-plats": {
       "file": "133-24tim-besokande-tillstand-1-plats.png",
       "pixels": 388596
     },
-    "134-p-plattor-plus-forbud-stannande": {
-      "file": "134-p-plattor-plus-forbud-stannande.png",
+    "134-avgift-jamnt-datum-pil-ned-rokforbud": {
+      "file": "134-avgift-jamnt-datum-pil-ned-rokforbud.png",
       "pixels": 464980
     },
-    "135-avgift-boende-rott-tegelhus": {
-      "file": "135-avgift-boende-rott-tegelhus.png",
+    "135-p-ej-markerade-platser-securitas": {
+      "file": "135-p-ej-markerade-platser-securitas.png",
       "pixels": 525707
     },
     "136-forhyrda-platser-pilar-1-plats": {
       "file": "136-forhyrda-platser-pilar-1-plats.png",
       "pixels": 385149
     },
-    "137-forhyrda-platser-securitas": {
-      "file": "137-forhyrda-platser-securitas.png",
+    "137-sms-avgift-pil-securitas": {
+      "file": "137-sms-avgift-pil-securitas.png",
       "pixels": 421192
     },
     "138-forhyrda-platser-2-platser": {

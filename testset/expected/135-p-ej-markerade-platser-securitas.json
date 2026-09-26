@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Ej",
+        "markerade",
+        "platser"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "prohibition": true,
+        "placement": "marked_bay_only",
+        "pictogram": "prohibition"
+      },
+      "index": 1
+    },
+    {
+      "kind": "operator_plate",
+      "lines": [
+        "SECURITAS",
+        "0771-10 10 11"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "operator": {
+          "name": "SECURITAS",
+          "phone": "0771-10 10 11"
+        }
+      },
+      "index": 2
+    }
+  ],
+  "panel_count": 2,
+  "boundaries": {
+    "certain": true
+  }
+}

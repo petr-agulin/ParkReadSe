@@ -3003,7 +3003,7 @@
   "may_hide_prohibition": false,
   "uninterpreted_plates": []
  },
- "answers/125-p-gula-plattor-vid-port@base": {
+ "answers/125-pa-och-avstigningsplats-ovrig-tid-avgift@base": {
   "category": "full",
   "confidence": 0.975,
   "signals": {
@@ -3024,7 +3024,7 @@
   "may_hide_prohibition": false,
   "uninterpreted_plates": []
  },
- "answers/126-avgift-7-19-fred-0-6@base": {
+ "answers/126-avgift-7-19-tisd-0-6@base": {
   "category": "full",
   "confidence": 0.975,
   "signals": {
@@ -3129,7 +3129,7 @@
   "may_hide_prohibition": false,
   "uninterpreted_plates": []
  },
- "answers/131-p-uppstallning-pil-i-sno@base": {
+ "answers/131-avgift-uppstallning-mand-boende-pil@base": {
   "category": "full",
   "confidence": 0.975,
   "signals": {
@@ -3150,7 +3150,7 @@
   "may_hide_prohibition": false,
   "uninterpreted_plates": []
  },
- "answers/132-avgift-boende-i-sno@base": {
+ "answers/132-avgift-9-19-jamnt-datum-0-8-i-sno@base": {
   "category": "full",
   "confidence": 0.975,
   "signals": {
@@ -3192,7 +3192,7 @@
   "may_hide_prohibition": false,
   "uninterpreted_plates": []
  },
- "answers/134-p-plattor-plus-forbud-stannande@base": {
+ "answers/134-avgift-jamnt-datum-pil-ned-rokforbud@base": {
   "category": "full",
   "confidence": 0.975,
   "signals": {
@@ -3213,7 +3213,7 @@
   "may_hide_prohibition": false,
   "uninterpreted_plates": []
  },
- "answers/135-avgift-boende-rott-tegelhus@base": {
+ "answers/135-p-ej-markerade-platser-securitas@base": {
   "category": "full",
   "confidence": 1.0,
   "signals": {
@@ -3255,7 +3255,7 @@
   "may_hide_prohibition": false,
   "uninterpreted_plates": []
  },
- "answers/137-forhyrda-platser-securitas@base": {
+ "answers/137-sms-avgift-pil-securitas@base": {
   "category": "full",
   "confidence": 0.975,
   "signals": {
@@ -6344,6 +6344,321 @@
   "uninterpreted_plates": []
  },
  "expected/124-p-gul-skylt-i-gronska@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/125-pa-och-avstigningsplats-ovrig-tid-avgift@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/126-avgift-7-19-tisd-0-6@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/127-cykel-0-12m@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/128-rorelsehindrad-0-6m-avgift@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/129-laddning-plus-overgangsstalle-30@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/130-2tim-avgift-torsd-vid-butik@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/131-avgift-uppstallning-mand-boende-pil@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/132-avgift-9-19-jamnt-datum-0-8-i-sno@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/133-24tim-besokande-tillstand-1-plats@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/134-avgift-jamnt-datum-pil-ned-rokforbud@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/135-p-ej-markerade-platser-securitas@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/136-forhyrda-platser-pilar-1-plats@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/137-sms-avgift-pil-securitas@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/138-forhyrda-platser-2-platser@base": {
+  "category": "full",
+  "confidence": 0.975,
+  "signals": {
+   "day_class_known": 1.0,
+   "main_sign_corroborated": 1.0,
+   "main_sign_identified": 1.0,
+   "main_sign_readable": 1.0,
+   "model_confidence": 0.5,
+   "no_repairs_needed": 1.0,
+   "panel_count_agreement": 1.0,
+   "panels_read_share": 1.0,
+   "plates_interpreted": 1.0,
+   "schema_valid": 1.0,
+   "text_fits_the_pixels": 1.0
+  },
+  "reasons": [],
+  "unread_panels": [],
+  "may_hide_prohibition": false,
+  "uninterpreted_plates": []
+ },
+ "expected/139-p-1tim-alla-dagar-avgift-torsdag@base": {
   "category": "full",
   "confidence": 0.975,
   "signals": {

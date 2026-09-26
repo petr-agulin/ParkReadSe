@@ -1,13 +1,13 @@
 {
-  "image": "134-p-plattor-plus-forbud-stannande.png",
+  "image": "131-avgift-uppstallning-mand-boende-pil.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "a1b96992540a",
-  "saved_at": "2026-09-24T19:05:12+00:00",
+  "saved_at": "2026-09-24T19:04:40+00:00",
   "usage": {
-    "completion_tokens": 817,
-    "prompt_tokens": 5548,
-    "total_tokens": 6365
+    "completion_tokens": 824,
+    "prompt_tokens": 5576,
+    "total_tokens": 6400
   },
   "response": {
     "schema_version": 1,
@@ -25,8 +25,8 @@
         "kind": "sign_plate",
         "lines": [
           "Avgift",
-          "9-19",
-          "(9-17)"
+          "7-19",
+          "Taxa 5"
         ],
         "background_color": "blue",
         "legibility": {
@@ -35,26 +35,35 @@
         "parsed": {
           "time_windows": [
             {
-              "from": "09:00",
+              "from": "07:00",
               "to": "19:00",
               "day_class": "weekday"
-            },
-            {
-              "from": "09:00",
-              "to": "17:00",
-              "day_class": "eve"
             }
           ],
-          "fee": true
+          "fee": true,
+          "tariff_code": "5"
         }
       },
       {
         "index": 2,
         "kind": "sign_plate",
+        "lines": [],
+        "background_color": "blue",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {
+          "placement": "as_shown",
+          "pictogram": "other"
+        }
+      },
+      {
+        "index": 3,
+        "kind": "sign_plate",
         "lines": [
-          "0-8",
-          "(0-8)",
-          "0-8"
+          "Månd",
+          "8-16",
+          "1/11-15/5"
         ],
         "background_color": "yellow",
         "legibility": {
@@ -63,38 +72,23 @@
         "parsed": {
           "time_windows": [
             {
-              "from": "00:00",
-              "to": "08:00",
-              "day_class": "weekday"
-            },
-            {
-              "from": "00:00",
-              "to": "08:00",
-              "day_class": "eve"
-            },
-            {
-              "from": "00:00",
-              "to": "08:00",
-              "day_class": "red"
+              "from": "08:00",
+              "to": "16:00",
+              "day_class": "named_weekday",
+              "named_weekday": "monday",
+              "dates": {
+                "mode": "only",
+                "ranges": [
+                  {
+                    "from": "11-01",
+                    "to": "05-15"
+                  }
+                ]
+              }
             }
           ],
           "prohibition": true,
           "pictogram": "prohibition"
-        }
-      },
-      {
-        "index": 3,
-        "kind": "info_board",
-        "lines": [
-          "607"
-        ],
-        "background_color": "blue",
-        "legibility": {
-          "readable": true
-        },
-        "parsed": {
-          "area_code": "607",
-          "pictogram": "payment"
         }
       },
       {
@@ -106,31 +100,42 @@
           "readable": true
         },
         "parsed": {
-          "arrow": "down",
-          "pictogram": "arrow"
+          "arrow": "left"
         }
       },
       {
         "index": 5,
-        "kind": "other_sign",
+        "kind": "sign_plate",
         "lines": [
-          "Rökning förbjuden",
-          "gäller hela",
-          "utomhuset"
+          "Boende",
+          "Hä"
         ],
         "background_color": "white",
         "legibility": {
           "readable": true
         },
         "parsed": {
-          "road_sign": "other"
+          "eligibility": "residents"
         }
+      },
+      {
+        "index": 6,
+        "kind": "info_board",
+        "lines": [
+          "Betala via",
+          "Betala P eller",
+          "i p-automat"
+        ],
+        "background_color": "white",
+        "legibility": {
+          "readable": true
+        },
+        "parsed": {}
       }
     ],
-    "panel_count": 5,
+    "panel_count": 6,
     "boundaries": {
       "certain": true
-    },
-    "another_post_in_frame": false
+    }
   }
 }

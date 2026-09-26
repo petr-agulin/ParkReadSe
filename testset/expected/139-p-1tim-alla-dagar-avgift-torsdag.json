@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true,
+      "obstructions": [
+        "glare"
+      ]
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "1 tim",
+        "alla dagar",
+        "8-19"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "duration_limit": {
+          "amount": 1,
+          "unit": "hours"
+        },
+        "time_windows": [
+          {
+            "from": "08:00",
+            "to": "19:00",
+            "day_class": "all_days"
+          }
+        ]
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Avgift"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "fee": true
+      },
+      "index": 2
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Torsdag",
+        "8-16"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "prohibition": true,
+        "time_windows": [
+          {
+            "from": "08:00",
+            "to": "16:00",
+            "day_class": "named_weekday",
+            "named_weekday": "thursday"
+          }
+        ]
+      },
+      "index": 3
+    }
+  ],
+  "panel_count": 3,
+  "boundaries": {
+    "certain": true
+  }
+}

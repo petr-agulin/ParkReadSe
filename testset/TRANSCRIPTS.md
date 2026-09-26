@@ -2021,21 +2021,26 @@ Parking only for Electric and plug-in hybrids, Only within a marked bay perpendi
 on weekdays between 07:00 and 19:00; on Saturdays and days before a holiday between 11:00 and 17:00 - parking is limited only by 1 hour and with a fee by taxa 1. No parking on Mondays between 07:00 and 17:00, from 30 September to 30 May inclusive. Other times outside of those periods - standard p-sign. 
 ---
 
-## 125 · A P sign with yellow plates by a doorway
-`125-p-gula-plattor-vid-port.png`
+## 125 · A drop-off place, and a fee at other times
+`125-pa-och-avstigningsplats-ovrig-tid-avgift.png`
 
-_Verbatim reading not yet written._ A blue `P` with two yellow plates and a blue one,
-outside a building entrance.
+1. **[M]** `På- och` / `avstig-` / `nings-` / `plats` and a no-parking circle — ONE yellow board
+2. **[P]** `7-19` — yellow
+3. **[P]** `0-10 m` — yellow
+4. **[P]** `Tisd` / `0-6` — yellow with a red border, a no-parking symbol on the left
+5. **[P]** `P` `Övrig tid` / `Avgift` / `(11-17)` / `Taxa 3` — blue
 
 **Meaning (developer):** _to be filled in_
 No parking because of the loading/unloading spot on weekdays between 07:00 and 19:00 and No parking on Tuesdays between 00:00 and 06:00. Other times outside of those periods - parking with a fee by taxa 3. I can't personally interpret (11-17) on the same plate as "övrig tid avgift". It looks like "övrig tid avgift" builds up on top of the prohibition, but then what is (11-17) on the same plate? 
 ---
 
-## 126 · Fee, a rate, a Friday prohibition
-`126-avgift-7-19-fred-0-6.png`
+## 126 · Fee, a rate, a Tuesday prohibition
+`126-avgift-7-19-tisd-0-6.png`
 
-_Verbatim reading not yet written._ A blue `P` with `Avgift`, hours in two classes and a
-rate, and a yellow Friday plate.
+1. **[M]** P — blue square
+2. **[P]** `Avgift` / `7-19` / `(11-17)` / `Taxa 3` — blue
+3. **[P]** `Tisd` / `0-6` — yellow with a red border, a no-parking symbol on the left
+4. **[I]** `Betala digitalt` — white, with the city’s crest
 
 **Meaning (developer):** _to be filled in_
 In the period of weekdays between 07:00 and 19:00; on Saturdays and days before a holiday between 11:00 and 17:00 - parking with a fee by taxa 3. No parking (C35) on Tuesdays between 00:00 and 06:00. Other periods outside of those - standard p-sign. 
@@ -2044,8 +2049,9 @@ In the period of weekdays between 07:00 and 19:00; on Saturdays and days before 
 ## 127 · Bicycle parking, a stretch in metres
 `127-cykel-0-12m.png`
 
-_Verbatim reading not yet written._ A blue `P` with a bicycle pictogram and a metre
-plate.
+1. **[M]** P — blue square
+2. **[P]** bicycle pictogram — blue
+3. **[P]** `0-12 m` — blue
 
 **Meaning (developer):** _to be filled in_
 Free parking for bycicles and class 2 mopeds only. Stretch 0-12 m. 
@@ -2054,11 +2060,13 @@ Free parking for bycicles and class 2 mopeds only. Stretch 0-12 m.
 ## 128 · Disabled parking, a stretch in metres, a fee
 `128-rorelsehindrad-0-6m-avgift.png`
 
-_Verbatim reading not yet written._ A blue `P` with a wheelchair pictogram, a metre plate
-and `Avgift` with hours.
+1. **[M]** P — blue square
+2. **[P]** wheelchair pictogram — blue
+3. **[P]** `0-6 m` — blue
+4. **[P]** `Avgift` / `7-19` / `(11-17)` / `Taxa 4` — blue, a sticker over `Ta`
+5. **[I]** `Betala digitalt` — white, with the city’s crest
 
-Note: close in content to `027`. Worth checking whether it is the same sign before it is
-marked up.
+Note: not the sign of `027`, which reads `Avgift` / `Taxa 2` with no hours.
 
 **Meaning (developer):** _to be filled in_
 Parking for disabled with disabled permit only, stretch 0-6m, on weekdays between 07:00 and 19:00; on Saturdays and days before a holiday between 11:00 and 17:00 - paid parking with taxa 4. 
@@ -2067,11 +2075,13 @@ Parking for disabled with disabled permit only, stretch 0-6m, on weekdays betwee
 ## 129 · Charging, a crossing sign and a speed limit on one post
 `129-laddning-plus-overgangsstalle-30.png`
 
-_Verbatim reading not yet written._ A blue `P` with a charging pictogram and plates;
-lower on the post a pedestrian-crossing sign and a round `30`, neither part of the
-parking stack.
+1. **[M]** P — blue square
+2. **[P]** electric car with a plug — blue
+3. **[P]** `3 tim` / `7-19` / `(11-17)` — blue
+4. **[P]** `Avgift` / `7-19` / `Taxa 5` — blue
+5. **[P]** `Torsd` / `2-8` / `1/11-15/5` — yellow with a red border, a no-parking symbol on the left
 
-Why it matters: **three unrelated signs on one post.**
+**not part of the stack:** a pedestrian-crossing sign and a round `30`, each on a pole of its own.
 
 **Meaning (developer):** _to be filled in_
 Parking for Electric and plug-in hybrids only. On weekdays between 07:00 and 19:00; on Saturdays and days before a holiday between 11:00 and 17:00 - parking is free and limited by 3 hours. on weekdays between 07:00 and 19:00 - paid parking by taxa 5. No parking on Thursdays between 02:00 and 08:00, from 1 November to 15 May inclusive. Outside of these windows - standard p-sign. 
@@ -2080,28 +2090,38 @@ Parking for Electric and plug-in hybrids only. On weekdays between 07:00 and 19:
 ## 130 · 2 hours, fee, a Thursday prohibition, outside a shop
 `130-2tim-avgift-torsd-vid-butik.png`
 
-_Verbatim reading not yet written._ A blue `P` with `2 tim`, `Avgift` and a rate, and a
-yellow Thursday plate.
+1. **[M]** P — blue square
+2. **[P]** `2 tim` / `7-19` / `(9-16)` — blue
+3. **[P]** `Avgift` / `7-19` / `Taxa 5` — blue
+4. **[P]** `Torsd` / `2-6` / `1/11-15/5` — yellow with a red border, a no-parking symbol on the left, a sticker by `6`
+5. **[I]** a white payment board of fine print — not legible
 
 **Meaning (developer):** _to be filled in_
 On weekdays between 07:00 and 19:00; on Saturdays and days before a holiday between 09:00 and 16:00 - parking is free and limited by 2 hours. on weekdays between 07:00 and 19:00 - paid parking by taxa 5. No parking on Thursdays between 02:00 and 06:00, from 1 November to 15 May inclusiveOutside of these windows - standard p-sign. 
 ---
 
-## 131 · Angled bays and an arrow, in snow
-`131-p-uppstallning-pil-i-sno.png`
+## 131 · Fee, straight bays, a Monday prohibition, residents, an arrow
+`131-avgift-uppstallning-mand-boende-pil.png`
 
-_Verbatim reading not yet written._ A blue `P` with a plate showing how the cars stand
-and an arrow. Snow on the ground.
+1. **[M]** P — blue square
+2. **[P]** `Avgift` / `7-19` / `Taxa 5` — blue
+3. **[P]** cars drawn side by side (how to stand) — blue
+4. **[P]** `Månd` / `8-16` / `1/11-15/5` — yellow with a red border, a no-parking symbol on the left
+5. **[P]** arrow left — white
+6. **[P]** `Boende` / `Hä` — white
+7. **[I]** a white payment board of fine print — not legible
 
 **Meaning (developer):** _to be filled in_
 on weekdays between 07:00 and 19:00 - paid parking by taxa 5. Parking only within a marked bay perpendicular to the road edge. No parking on Mondays between 08:00 and 16:00, from 1 November to 15 May inclusive.  Residents may have separate terms. Applies to the left of the sign.
 ---
 
-## 132 · Fee and residents, in snow
-`132-avgift-boende-i-sno.png`
+## 132 · Fee, and an even-date ban at night, in snow
+`132-avgift-9-19-jamnt-datum-0-8-i-sno.png`
 
-_Verbatim reading not yet written._ A blue `P` with `Avgift` and hours, an orange
-prohibition plate and a residents' plate. Banks of snow below.
+1. **[M]** P — blue square
+2. **[P]** `Avgift` / `9-19` / `(9-17)` — blue
+3. **[P]** `0-8` / `(0-8)` / `0-8`, the last line in red — orange with a red border; on the left a no-parking circle with two bars inside (C37, no parking on even dates)
+4. **[P]** a payment-machine symbol / `607` — blue
 
 **Meaning (developer):** _to be filled in_
 on weekdays between 09:00 and 19:00; on Saturdays and days before a holiday between 09:00 and 17:00 - paid parking. No parking on weekdays between 00:00 and 08:00; on Saturdays and days before a holiday between 00:00 and 08:00; on Sundays and public holidays between 00:00 and 08:00 on the side of the road with even house numbers. Outside of these periods - standard p-sign. Important note - our app does not make a difference (at least in this scan) between no parking on even house numbers side of the street and odd. We need to fix that somehow to at least says so in the UI. 
@@ -2110,30 +2130,39 @@ on weekdays between 09:00 and 19:00; on Saturdays and days before a holiday betw
 ## 133 · 24 hours for visitors, permit required, one space
 `133-24tim-besokande-tillstand-1-plats.png`
 
-_Verbatim reading not yet written._ A blue `P` with `24 tim`, `Besökande`, `Giltigt
-P-tillstånd erfordras`, `1 plats`, and an operator's plate at the bottom.
+1. **[M]** P — blue square
+2. **[P]** `24 tim` — blue
+3. **[P]** `Besökande` — blue
+4. **[P]** `Giltigt` / `P-tillstånd` / `erfordras` — blue
+5. **[P]** `1 plats` — blue
+6. **[P]** `Umevakt` / `090-703900` — blue, operator
 
 **Meaning (developer):** _to be filled in_
 Parking for 24 hours max (standard rule written explicitly on the plate). Only for visitors. A special parking permit is required. 1 spot. 
 ---
 
-## 134 · A P stack and a no-stopping sign on one post
-`134-p-plattor-plus-forbud-stannande.png`
+## 134 · Fee, an even-date ban, a down arrow, and a no-smoking sign
+`134-avgift-jamnt-datum-pil-ned-rokforbud.png`
 
-_Verbatim reading not yet written._ A blue `P` with plates and a downward arrow, and
-below it a no-stopping sign.
+1. **[M]** P — blue square
+2. **[P]** `Avgift` / `9-19` / `(9-17)` — blue
+3. **[P]** `0-8` / `(0-8)` / `0-8`, the last line in red — orange with a red border; on the left a no-parking circle with two bars inside (C37, no parking on even dates)
+4. **[P]** a payment-machine symbol / `607` — blue
+5. **[P]** arrow down — white
+6. **not part of the stack:** a no-smoking sign, `Rökning förbjuden` and fine print — white
 
-Why it matters: **a prohibition below a permission on the same post.**
+Note: there is no no-stopping sign on this post.
 
 **Meaning (developer):** _to be filled in_
 on weekdays between 09:00 and 19:00; on Saturdays and days before a holiday between 09:00 and 17:00 - paid parking. No parking (C35) on weekdays between 00:00 and 08:00; on Saturdays and days before a holiday between 00:00 and 08:00; on Sundays and public holidays between 00:00 and 08:00 on the side of the street with even house numbers. Outside of these periods - standard p-sign. Applies up to the sign, not past it.
 ---
 
-## 135 · Fee and residents, by a brick wall
-`135-avgift-boende-rott-tegelhus.png`
+## 135 · Parking only in marked spaces, the operator Securitas
+`135-p-ej-markerade-platser-securitas.png`
 
-_Verbatim reading not yet written._ A blue `P` with `Avgift`, hours, an orange plate and
-a residents' plate.
+1. **[M]** P — blue square
+2. **[P]** `Ej` / `markerade` / `platser` — yellow with a red border, a no-parking symbol on the left
+3. **[P]** `SECURITAS` / `0771-10 10 11` — blue, operator
 
 **Meaning (developer):** _to be filled in_
 Standard p-sign, parking only within a marked bay.
@@ -2142,18 +2171,26 @@ Standard p-sign, parking only within a marked bay.
 ## 136 · Rented spaces, arrows, one space
 `136-forhyrda-platser-pilar-1-plats.png`
 
-_Verbatim reading not yet written._ A blue `P` with `Förhyrda platser`, an arrow, a
-further plate and `1 plats`. Winter light.
+1. **[M]** P — blue square
+2. **[P]** `Förhyrda` / `platser` — blue
+3. **[P]** arrow right — white
+4. **[P]** `Besökande` — blue
+5. **[P]** `Brf` / `Karbinen` — blue
+6. **[P]** `1 plats` — blue
+7. **[P]** arrow left — white
 
 **Meaning (developer):** _to be filled in_
 To the right - only reserved spots, no other parking. To the left - only visitors. 1 spot. 
 ---
 
-## 137 · Rented spaces, the operator Securitas
-`137-forhyrda-platser-securitas.png`
+## 137 · Fee by SMS, an arrow, the operator Securitas
+`137-sms-avgift-pil-securitas.png`
 
-_Verbatim reading not yet written._ A blue `P` with `Förhyrda platser` and an operator's
-plate (`SECURITAS`) on a corrugated wall.
+1. **[M]** P — blue square
+2. **[P]** a telephone symbol / `SMS-parkering` / `Avgift` — blue
+3. **[P]** arrow right — white
+4. **[P]** `SECURITAS` / `0771-10 10 11` — blue, operator
+5. **[I]** area code `90143`, a Parkster advert — green and white
 
 **Meaning (developer):** _to be filled in_
 Paid parking only. To the right of the sign. 
@@ -2162,8 +2199,10 @@ Paid parking only. To the right of the sign.
 ## 138 · Rented spaces, 2 spaces, arrows both ways
 `138-forhyrda-platser-2-platser.png`
 
-_Verbatim reading not yet written._ A blue `P` with `Förhyrda platser`, `2 platser` and a
-plate with arrows both ways.
+1. **[M]** P — blue square
+2. **[P]** `Förhyrda` / `platser` — blue
+3. **[P]** `2 platser` — blue
+4. **[P]** arrows left and right — white
 
 **Meaning (developer):** _to be filled in_
 Reserved parking spots only. No other parking. To the left and right from the sign. 2 spots. 

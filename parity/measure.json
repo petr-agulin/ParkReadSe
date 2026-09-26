@@ -1,97 +1,97 @@
 {
- "photos": 112,
+ "photos": 127,
  "fields": {
   "main_sign.background_color": [
-   109,
-   112
+   124,
+   127
   ],
   "main_sign.form": [
-   106,
-   112
+   120,
+   127
   ],
   "main_sign.type": [
-   108,
-   112
+   122,
+   127
   ],
   "panel.background_color": [
-   276,
-   286
+   321,
+   333
   ],
   "panel.lines": [
-   252,
-   286
+   294,
+   333
   ],
   "panel.rule_bearing": [
-   285,
-   288
+   333,
+   338
   ],
   "panel_count": [
-   100,
-   112
+   112,
+   127
   ],
   "panels.content": [
-   79,
-   112
+   90,
+   127
   ],
   "panels.order": [
-   79,
-   112
+   90,
+   127
   ],
   "parsed.arrow": [
-   34,
-   38
+   39,
+   44
   ],
   "parsed.duration_limit": [
-   26,
-   28
+   30,
+   32
   ],
   "parsed.eligibility": [
-   58,
-   65
+   65,
+   73
   ],
   "parsed.fee": [
-   56,
-   60
+   65,
+   70
   ],
   "parsed.payment_method": [
    1,
    5
   ],
   "parsed.permit_required": [
-   11,
-   11
+   12,
+   12
   ],
   "parsed.permits_parking": [
    6,
-   9
-  ],
-  "parsed.place_count": [
-   9,
    10
   ],
+  "parsed.place_count": [
+   12,
+   13
+  ],
   "parsed.placement": [
-   9,
-   11
+   11,
+   13
   ],
   "parsed.prohibition": [
-   34,
-   43
+   42,
+   53
   ],
   "parsed.scope_shift": [
    7,
-   9
+   10
   ],
   "parsed.stretch_metres": [
-   8,
-   13
+   10,
+   17
   ],
   "parsed.time_windows": [
-   70,
-   89
+   87,
+   110
   ],
   "parsed.vehicle_class": [
-   20,
-   24
+   22,
+   26
   ]
  },
  "mistakes": [
@@ -288,7 +288,40 @@
   "123-p-med-plattor-vid-torg: panel 2 field placement = None instead of 'as_shown'",
   "123-p-med-plattor-vid-torg: panel 4 read as ['Avgift', '7 - 19', '(11 - 17)', 'Taxa 1'] instead of ['Avgift', '7-19', '(11-17)', 'Taxa 1']",
   "123-p-med-plattor-vid-torg: plate order ['electric_car', 'other', '12 tim', 'avgift 7 - 19 (11 - 17) taxa 1', 'right'] instead of ['electric_car', '?', '12 tim', 'avgift 7-19 (11-17) taxa 1', 'right']",
-  "123-p-med-plattor-vid-torg: the content of the plates disagrees"
+  "123-p-med-plattor-vid-torg: the content of the plates disagrees",
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift: 5 plates instead of 4",
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift: main sign prohibition_stopping instead of prohibition_parking",
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift: panel 1 field time_windows = None instead of [{'from': '07:00', 'to': '19:00', 'day_class': 'weekday'}]",
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift: panel 1 read as ['På- och', 'avstig-', 'nings-', 'plats'] instead of ['7-19']",
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift: panel 2 field stretch_metres = None instead of {'from': 0, 'to': 10}",
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift: panel 2 field time_windows = [{'from': '07:00', 'to': '19:00', 'day_class': 'weekday'}] instead of None",
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift: panel 2 read as ['7-19'] instead of ['0-10 m']",
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift: panel 3 field prohibition = None instead of True",
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift: panel 3 field stretch_metres = {'from': 0, 'to': 10} instead of None",
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift: panel 3 field time_windows = None instead of [{'from': '00:00', 'to': '06:00', 'day_class': 'named_weekday', 'named_weekday': 'tuesday'}]",
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift: panel 3 read as ['0-10 m'] instead of ['Tisd', '0-6']",
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift: panel 4 field fee = None instead of True",
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift: panel 4 field permits_parking = None instead of True",
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift: panel 4 field prohibition = True instead of None",
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift: panel 4 field scope_shift = None instead of 'remaining_time'",
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift: panel 4 field time_windows = [{'from': '00:00', 'to': '06:00', 'day_class': 'named_weekday', 'named_weekday': 'tuesday'}] instead of [{'from': '11:00', 'to': '17:00', 'day_class': 'eve'}]",
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift: panel 4 read as ['Tisd', '0-6'] instead of ['Övrig tid', 'Avgift', '(11-17)', 'Taxa 3']",
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift: plate order ['på- och avstig- nings- plats', '7-19', '0-10 m', 'tisd 0-6', 'övrig tid avgift (11-17) taxa 3'] instead of ['7-19', '0-10 m', 'tisd 0-6', 'övrig tid avgift (11-17) taxa 3']",
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift: sign form zone instead of regular",
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift: the content of the plates disagrees",
+  "131-avgift-uppstallning-mand-boende-pil: plate order ['avgift 7-19 taxa 5', 'other', 'månd 8-16 1/11-15/5', 'left', 'boende hä'] instead of ['avgift 7-19 taxa 5', '?', 'månd 8-16 1/11-15/5', 'left', 'boende hä']",
+  "131-avgift-uppstallning-mand-boende-pil: the content of the plates disagrees",
+  "132-avgift-9-19-jamnt-datum-0-8-i-sno: 2 plates instead of 3",
+  "132-avgift-9-19-jamnt-datum-0-8-i-sno: panel 3 marked info_board instead of sign_plate - this changes which rules apply",
+  "132-avgift-9-19-jamnt-datum-0-8-i-sno: plate order ['avgift 9-19 (9-17)', '0-8 (0-8) 0-8'] instead of ['avgift 9-19 (9-17)', '0-8 (0-8) 0-8', '607']",
+  "132-avgift-9-19-jamnt-datum-0-8-i-sno: the content of the plates disagrees",
+  "134-avgift-jamnt-datum-pil-ned-rokforbud: 3 plates instead of 4",
+  "134-avgift-jamnt-datum-pil-ned-rokforbud: panel 3 marked info_board instead of sign_plate - this changes which rules apply",
+  "134-avgift-jamnt-datum-pil-ned-rokforbud: panel 4 field arrow = 'down' instead of None",
+  "134-avgift-jamnt-datum-pil-ned-rokforbud: panel 4 read as [] instead of ['607']",
+  "134-avgift-jamnt-datum-pil-ned-rokforbud: plate order ['avgift 9-19 (9-17)', '0-8 (0-8) 0-8', 'down'] instead of ['avgift 9-19 (9-17)', '0-8 (0-8) 0-8', '607', 'down']",
+  "134-avgift-jamnt-datum-pil-ned-rokforbud: the content of the plates disagrees",
+  "136-forhyrda-platser-pilar-1-plats: panel 4 field eligibility = None instead of 'visitors'"
  ],
  "diverged": {
   "035-zon-c-pa-avstand": [
@@ -446,7 +479,22 @@
   "121-p-med-pil-vid-vag": 554506,
   "122-p-3tim-pil-hoger": 536832,
   "123-p-med-plattor-vid-torg": 327660,
-  "124-p-gul-skylt-i-gronska": 498435
+  "124-p-gul-skylt-i-gronska": 498435,
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift": 404235,
+  "126-avgift-7-19-tisd-0-6": 323312,
+  "127-cykel-0-12m": 319081,
+  "128-rorelsehindrad-0-6m-avgift": 362967,
+  "129-laddning-plus-overgangsstalle-30": 256376,
+  "130-2tim-avgift-torsd-vid-butik": 456190,
+  "131-avgift-uppstallning-mand-boende-pil": 524267,
+  "132-avgift-9-19-jamnt-datum-0-8-i-sno": 466128,
+  "133-24tim-besokande-tillstand-1-plats": 388596,
+  "134-avgift-jamnt-datum-pil-ned-rokforbud": 464980,
+  "135-p-ej-markerade-platser-securitas": 525707,
+  "136-forhyrda-platser-pilar-1-plats": 385149,
+  "137-sms-avgift-pil-securitas": 421192,
+  "138-forhyrda-platser-2-platser": 353541,
+  "139-p-1tim-alla-dagar-avgift-torsdag": 155992
  },
  "fingerprint": "a1b96992540a",
  "excluded": [],
@@ -648,6 +696,30 @@
    "full",
    false,
    "117-p-18-8-plus-huvudled"
+  ],
+  [
+   0.875,
+   "partial",
+   false,
+   "125-pa-och-avstigningsplats-ovrig-tid-avgift"
+  ],
+  [
+   0.875,
+   "full",
+   false,
+   "128-rorelsehindrad-0-6m-avgift"
+  ],
+  [
+   0.875,
+   "full",
+   false,
+   "134-avgift-jamnt-datum-pil-ned-rokforbud"
+  ],
+  [
+   0.875,
+   "partial",
+   false,
+   "136-forhyrda-platser-pilar-1-plats"
   ],
   [
    0.895,
@@ -1028,6 +1100,66 @@
    "124-p-gul-skylt-i-gronska"
   ],
   [
+   0.975,
+   "full",
+   false,
+   "126-avgift-7-19-tisd-0-6"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "127-cykel-0-12m"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "129-laddning-plus-overgangsstalle-30"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "130-2tim-avgift-torsd-vid-butik"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "131-avgift-uppstallning-mand-boende-pil"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "132-avgift-9-19-jamnt-datum-0-8-i-sno"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "133-24tim-besokande-tillstand-1-plats"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "137-sms-avgift-pil-securitas"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "138-forhyrda-platser-2-platser"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "139-p-1tim-alla-dagar-avgift-torsdag"
+  ],
+  [
    0.998,
    "full",
    false,
@@ -1122,7 +1254,13 @@
    "full",
    false,
    "071-taxi-3-platser"
+  ],
+  [
+   1.0,
+   "full",
+   false,
+   "135-p-ej-markerade-platser-securitas"
   ]
  ],
- "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 23 | 4 | 89 | 8 |\n| 0.875 | 23 | 4 | 89 | 8 |\n| 0.900 | 40 | 10 | 72 | 2 |\n| 0.920 | 40 | 10 | 72 | 2 |\n| 0.950 | 42 | 10 | 70 | 2 |"
+ "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 25 | 4 | 102 | 8 |\n| 0.875 | 25 | 4 | 102 | 8 |\n| 0.900 | 44 | 10 | 83 | 2 |\n| 0.920 | 44 | 10 | 83 | 2 |\n| 0.950 | 46 | 10 | 81 | 2 |"
 }

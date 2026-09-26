@@ -710,13 +710,13 @@
   "moment": "2026-03-02T00:00"
  },
  {
-  "id": "answers/125-p-gula-plattor-vid-port@base",
-  "doc": "answers/125-p-gula-plattor-vid-port",
+  "id": "answers/125-pa-och-avstigningsplats-ovrig-tid-avgift@base",
+  "doc": "answers/125-pa-och-avstigningsplats-ovrig-tid-avgift",
   "moment": "2026-03-02T00:00"
  },
  {
-  "id": "answers/126-avgift-7-19-fred-0-6@base",
-  "doc": "answers/126-avgift-7-19-fred-0-6",
+  "id": "answers/126-avgift-7-19-tisd-0-6@base",
+  "doc": "answers/126-avgift-7-19-tisd-0-6",
   "moment": "2026-03-02T00:00"
  },
  {
@@ -740,13 +740,13 @@
   "moment": "2026-03-02T00:00"
  },
  {
-  "id": "answers/131-p-uppstallning-pil-i-sno@base",
-  "doc": "answers/131-p-uppstallning-pil-i-sno",
+  "id": "answers/131-avgift-uppstallning-mand-boende-pil@base",
+  "doc": "answers/131-avgift-uppstallning-mand-boende-pil",
   "moment": "2026-03-02T00:00"
  },
  {
-  "id": "answers/132-avgift-boende-i-sno@base",
-  "doc": "answers/132-avgift-boende-i-sno",
+  "id": "answers/132-avgift-9-19-jamnt-datum-0-8-i-sno@base",
+  "doc": "answers/132-avgift-9-19-jamnt-datum-0-8-i-sno",
   "moment": "2026-03-02T00:00"
  },
  {
@@ -755,13 +755,13 @@
   "moment": "2026-03-02T00:00"
  },
  {
-  "id": "answers/134-p-plattor-plus-forbud-stannande@base",
-  "doc": "answers/134-p-plattor-plus-forbud-stannande",
+  "id": "answers/134-avgift-jamnt-datum-pil-ned-rokforbud@base",
+  "doc": "answers/134-avgift-jamnt-datum-pil-ned-rokforbud",
   "moment": "2026-03-02T00:00"
  },
  {
-  "id": "answers/135-avgift-boende-rott-tegelhus@base",
-  "doc": "answers/135-avgift-boende-rott-tegelhus",
+  "id": "answers/135-p-ej-markerade-platser-securitas@base",
+  "doc": "answers/135-p-ej-markerade-platser-securitas",
   "moment": "2026-03-02T00:00"
  },
  {
@@ -770,8 +770,8 @@
   "moment": "2026-03-02T00:00"
  },
  {
-  "id": "answers/137-forhyrda-platser-securitas@base",
-  "doc": "answers/137-forhyrda-platser-securitas",
+  "id": "answers/137-sms-avgift-pil-securitas@base",
+  "doc": "answers/137-sms-avgift-pil-securitas",
   "moment": "2026-03-02T00:00"
  },
  {
@@ -1492,6 +1492,81 @@
  {
   "id": "expected/124-p-gul-skylt-i-gronska@base",
   "doc": "expected/124-p-gul-skylt-i-gronska",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/125-pa-och-avstigningsplats-ovrig-tid-avgift@base",
+  "doc": "expected/125-pa-och-avstigningsplats-ovrig-tid-avgift",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/126-avgift-7-19-tisd-0-6@base",
+  "doc": "expected/126-avgift-7-19-tisd-0-6",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/127-cykel-0-12m@base",
+  "doc": "expected/127-cykel-0-12m",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/128-rorelsehindrad-0-6m-avgift@base",
+  "doc": "expected/128-rorelsehindrad-0-6m-avgift",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/129-laddning-plus-overgangsstalle-30@base",
+  "doc": "expected/129-laddning-plus-overgangsstalle-30",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/130-2tim-avgift-torsd-vid-butik@base",
+  "doc": "expected/130-2tim-avgift-torsd-vid-butik",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/131-avgift-uppstallning-mand-boende-pil@base",
+  "doc": "expected/131-avgift-uppstallning-mand-boende-pil",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/132-avgift-9-19-jamnt-datum-0-8-i-sno@base",
+  "doc": "expected/132-avgift-9-19-jamnt-datum-0-8-i-sno",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/133-24tim-besokande-tillstand-1-plats@base",
+  "doc": "expected/133-24tim-besokande-tillstand-1-plats",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/134-avgift-jamnt-datum-pil-ned-rokforbud@base",
+  "doc": "expected/134-avgift-jamnt-datum-pil-ned-rokforbud",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/135-p-ej-markerade-platser-securitas@base",
+  "doc": "expected/135-p-ej-markerade-platser-securitas",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/136-forhyrda-platser-pilar-1-plats@base",
+  "doc": "expected/136-forhyrda-platser-pilar-1-plats",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/137-sms-avgift-pil-securitas@base",
+  "doc": "expected/137-sms-avgift-pil-securitas",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/138-forhyrda-platser-2-platser@base",
+  "doc": "expected/138-forhyrda-platser-2-platser",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/139-p-1tim-alla-dagar-avgift-torsdag@base",
+  "doc": "expected/139-p-1tim-alla-dagar-avgift-torsdag",
   "moment": "2026-03-02T00:00"
  }
 ]

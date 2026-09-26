@@ -2138,7 +2138,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "answers/125-p-gula-plattor-vid-port": {
+ "answers/125-pa-och-avstigningsplats-ovrig-tid-avgift": {
   "main_sign_key": "main-prohibition-stopping",
   "panel_keys": {
    "1": [],
@@ -2169,7 +2169,7 @@
   },
   "missing_keys": []
  },
- "answers/126-avgift-7-19-fred-0-6": {
+ "answers/126-avgift-7-19-tisd-0-6": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -2274,7 +2274,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "answers/131-p-uppstallning-pil-i-sno": {
+ "answers/131-avgift-uppstallning-mand-boende-pil": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -2303,7 +2303,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "answers/132-avgift-boende-i-sno": {
+ "answers/132-avgift-9-19-jamnt-datum-0-8-i-sno": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -2347,7 +2347,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "answers/134-p-plattor-plus-forbud-stannande": {
+ "answers/134-avgift-jamnt-datum-pil-ned-rokforbud": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -2375,7 +2375,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "answers/135-avgift-boende-rott-tegelhus": {
+ "answers/135-p-ej-markerade-platser-securitas": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -2418,7 +2418,7 @@
   },
   "missing_keys": []
  },
- "answers/137-forhyrda-platser-securitas": {
+ "answers/137-sms-avgift-pil-securitas": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -4518,6 +4518,325 @@
     "main-prohibition-parking",
     "named-weekday",
     "datumintervall"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/125-pa-och-avstigningsplats-ovrig-tid-avgift": {
+  "main_sign_key": "main-prohibition-parking",
+  "panel_keys": {
+   "1": [
+    "window-weekday"
+   ],
+   "2": [
+    "stretch-metres"
+   ],
+   "3": [
+    "main-prohibition-parking",
+    "named-weekday"
+   ],
+   "4": [
+    "taxa",
+    "avgift",
+    "ovrig-tid",
+    "window-eve"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/126-avgift-7-19-tisd-0-6": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "taxa",
+    "avgift",
+    "window-weekday",
+    "window-eve"
+   ],
+   "2": [
+    "main-prohibition-parking",
+    "named-weekday"
+   ],
+   "3": [
+    "info-board"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/127-cykel-0-12m": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "pictogram-bicycle"
+   ],
+   "2": [
+    "stretch-metres"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/128-rorelsehindrad-0-6m-avgift": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "pictogram-wheelchair"
+   ],
+   "2": [
+    "stretch-metres"
+   ],
+   "3": [
+    "taxa",
+    "avgift",
+    "window-weekday",
+    "window-eve"
+   ],
+   "4": [
+    "info-board"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/129-laddning-plus-overgangsstalle-30": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "pictogram-electric-car"
+   ],
+   "2": [
+    "duration-limit",
+    "window-weekday",
+    "window-eve"
+   ],
+   "3": [
+    "taxa",
+    "avgift",
+    "window-weekday"
+   ],
+   "4": [
+    "main-prohibition-parking",
+    "named-weekday",
+    "datumintervall"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/130-2tim-avgift-torsd-vid-butik": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "duration-limit",
+    "window-weekday",
+    "window-eve"
+   ],
+   "2": [
+    "taxa",
+    "avgift",
+    "window-weekday"
+   ],
+   "3": [
+    "main-prohibition-parking",
+    "named-weekday",
+    "datumintervall"
+   ],
+   "4": [
+    "info-board"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/131-avgift-uppstallning-mand-boende-pil": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "taxa",
+    "avgift",
+    "window-weekday"
+   ],
+   "2": [
+    "placement-as-shown"
+   ],
+   "3": [
+    "main-prohibition-parking",
+    "named-weekday",
+    "datumintervall"
+   ],
+   "4": [
+    "arrow-left"
+   ],
+   "5": [
+    "boende"
+   ],
+   "6": [
+    "info-board"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/132-avgift-9-19-jamnt-datum-0-8-i-sno": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "avgift",
+    "window-weekday",
+    "window-eve"
+   ],
+   "2": [
+    "main-prohibition-parking",
+    "window-weekday",
+    "window-eve",
+    "window-red"
+   ],
+   "3": [
+    "omradeskod"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/133-24tim-besokande-tillstand-1-plats": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "duration-limit"
+   ],
+   "2": [
+    "besokande"
+   ],
+   "3": [
+    "sarskilt-p-tillstand"
+   ],
+   "4": [
+    "place-count"
+   ],
+   "5": [
+    "operator-plate"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/134-avgift-jamnt-datum-pil-ned-rokforbud": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "avgift",
+    "window-weekday",
+    "window-eve"
+   ],
+   "2": [
+    "main-prohibition-parking",
+    "window-weekday",
+    "window-eve",
+    "window-red"
+   ],
+   "3": [
+    "omradeskod"
+   ],
+   "4": [
+    "arrow-down"
+   ],
+   "5": [
+    "other-road-sign"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/135-p-ej-markerade-platser-securitas": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "utanfor-markerad-plats"
+   ],
+   "2": [
+    "operator-plate"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/136-forhyrda-platser-pilar-1-plats": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "forhyrda-platser"
+   ],
+   "2": [
+    "arrow-right"
+   ],
+   "3": [
+    "besokande"
+   ],
+   "4": [
+    "besokande"
+   ],
+   "5": [
+    "place-count"
+   ],
+   "6": [
+    "arrow-left"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/137-sms-avgift-pil-securitas": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "avgift"
+   ],
+   "2": [
+    "arrow-right"
+   ],
+   "3": [
+    "operator-plate"
+   ],
+   "4": [
+    "info-board",
+    "omradeskod"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/138-forhyrda-platser-2-platser": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "forhyrda-platser"
+   ],
+   "2": [
+    "place-count"
+   ],
+   "3": [
+    "arrow-both-horizontal"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/139-p-1tim-alla-dagar-avgift-torsdag": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "duration-limit",
+    "alla-dagar"
+   ],
+   "2": [
+    "avgift"
+   ],
+   "3": [
+    "main-prohibition-parking",
+    "named-weekday"
    ]
   },
   "uninterpreted": {},

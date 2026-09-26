@@ -1,5 +1,5 @@
 {
-  "image": "135-avgift-boende-rott-tegelhus.png",
+  "image": "135-p-ej-markerade-platser-securitas.png",
   "stage": "extract",
   "model": "gemini-3.5-flash-lite",
   "prompt_fingerprint": "a1b96992540a",

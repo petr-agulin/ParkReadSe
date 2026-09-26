@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Avgift",
+        "7-19",
+        "Taxa 5"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "fee": true,
+        "tariff_code": "Taxa 5",
+        "time_windows": [
+          {
+            "from": "07:00",
+            "to": "19:00",
+            "day_class": "weekday"
+          }
+        ]
+      },
+      "index": 1
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "placement": "as_shown"
+      },
+      "index": 2
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Månd",
+        "8-16",
+        "1/11-15/5"
+      ],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "prohibition": true,
+        "time_windows": [
+          {
+            "from": "08:00",
+            "to": "16:00",
+            "day_class": "named_weekday",
+            "named_weekday": "monday",
+            "dates": {
+              "mode": "only",
+              "ranges": [
+                {
+                  "from": "11-01",
+                  "to": "05-15"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "index": 3
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [],
+      "background_color": "white",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "arrow": "left",
+        "pictogram": "arrow"
+      },
+      "index": 4
+    },
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "Boende",
+        "Hä"
+      ],
+      "background_color": "white",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "eligibility": "residents"
+      },
+      "index": 5
+    },
+    {
+      "kind": "info_board",
+      "lines": [],
+      "background_color": "white",
+      "legibility": {
+        "readable": false,
+        "obstructions": [
+          "blur"
+        ]
+      },
+      "parsed": {},
+      "index": 6
+    }
+  ],
+  "panel_count": 6,
+  "boundaries": {
+    "certain": true
+  }
+}
