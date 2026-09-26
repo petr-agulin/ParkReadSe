@@ -2235,16 +2235,62 @@ sign. The exception is explained in the main `README.md`.
 
 ## What the set covers
 
-The hard cases the set was built to include, and where they are:
+The hard cases the set was built to include, and where they are. The lists are drawn
+from the ground truths of all 127 marked photographs, not written from memory.
 
-- **all three day classes:** brackets on `005`, `030`, `036`, `052`, `056`, `058`, `059`,
-  `063`; red digits on `052`, `058`, `063`;
-- **prohibition plates with a day** (street cleaning and similar): `028`, `030`, `031`,
-  `034`, `036`, `044`, `049`, `052`, `054`, `056`, `064`;
-- **`Avgift` with an explicit window:** `030`, `033`, `036`, `056`;
-- **a parking disc:** `057`, `059`, `063`;
-- **poor frames:** distance (`020`, `035`, `059`, `060`, `061`), snow and a finger
-  (`055`), night (`056`, `058`, `060`, `063`), a cropped plate (`064`), stickers (`011`);
+- **the day classes:** brackets (the eve) `005`, `030`, `036`, `056`, `058`, `059`,
+  `063`, `073`, `088`, `098`, `100`, `101`, `102`, `104`, `105`, `106`, `107`, `108`,
+  `109`, `110`, `117`, `118`, `119`, `123`, `124`, `125`, `126`, `128`, `129`, `130`,
+  `132`, `134`; red digits (Sundays and holidays) `058`, `059`, `063`, `073`, `109`,
+  `117`, `132`, `134`; `alla dagar` written as a word `049`, `057`, `064`, `113`, `139`;
+- **prohibition plates with a named day** (street cleaning and similar): `028`, `030`,
+  `031`, `034`, `036`, `041`, `044`, `049`, `052`, `054`, `056`, `064`, `088`, `091`,
+  `092`, `094`, `096`, `097`, `098`, `099`, `100`, `101`, `102`, `104`, `105`, `106`,
+  `108`, `109`, `111`, `124`, `125`, `126`, `129`, `130`, `131`, `139`;
+- **calendars beyond the week:** by the month (the 1st, the 16th, the 3rd Tuesday)
+  `114`, `115`, `116`, `120`; even or odd weeks `031`, `096`, `097`, `111`; a season or
+  excepted dates `030`, `031`, `034`, `036`, `049`, `064`, `091`, `092`, `093`, `094`,
+  `096`, `097`, `098`, `099`, `104`, `105`, `106`, `124`, `129`, `130`, `131`; even
+  dates (date parking, recorded as every day until step 15h) `132`, `134`;
+- **`Avgift` with an explicit window:** `030`, `033`, `036`, `049`, `056`, `059`, `073`,
+  `088`, `089`, `090`, `091`, `092`, `095`, `098`, `100`, `101`, `102`, `104`, `105`,
+  `106`, `107`, `108`, `113`, `123`, `124`, `125`, `126`, `128`, `129`, `130`, `131`,
+  `132`, `134`;
+- **`Övrig tid`:** `006`, `012`, `016`, `019`, `040`, `041`, `049`, `060`, `095`, `125`;
+- **a parking disc:** `057`, `059`, `063`, `122`;
+- **a stay in days (`dygn`):** `094`, `120`;
+- **the main sign:** a no-parking sign `007`, `019`, `068`, `077`, `083`, `084`, `093`,
+  `103`, `125`; a no-stopping sign (loading places among them) `041`, `055`, `060`,
+  `089`, `109`; a zone sign (E20) `007`, `011`, `026`, `077`, `083`, `084`, `103`; a
+  plate that opens parking under a prohibition `007`, `019`, `041`, `060`, `077`, `083`,
+  `089`, `103`, `125`; a sign pointing the way to a car park `037`, `050`; a main sign
+  that cannot be made out `057`, `061`;
+- **who may park:** residents `028`, `031`, `033`, `034`, `036`, `044`, `052`, `088`,
+  `089`, `091`, `092`, `096`, `097`, `098`, `100`, `101`, `102`, `105`, `106`, `108`,
+  `110`, `111`, `114`, `115`, `116`, `131`; rented spaces `007`, `010`, `020`, `077`,
+  `078`, `079`, `083`, `103`, `113`, `136`, `138`; a permit `006`, `010`, `012`, `016`,
+  `018`, `063`, `066`, `067`, `069`, `085`, `113`, `133`; visitors `004`, `009`, `025`,
+  `038`, `133`, `136`; a named group `029`, `040`, `066`, `067`, `069`, `070`, `072`; a
+  disabled permit `008`, `013`, `017`, `027`, `032`, `107`, `128`; a class of vehicle
+  `014`, `015`, `022`, `023`, `038`, `039`, `042`, `044`, `049`, `054`, `058`, `062`,
+  `064`, `065`, `071`, `073`, `101`, `105`, `121`, `123`, `127`, `129`; private land
+  `021`, `068`;
+- **where:** two arrows, or one pointing both ways `005`, `006`, `010`, `012`, `016`,
+  `024`, `031`, `093`, `112`, `119`, `136`, `138`; an arrow down `115`, `134`; a stretch
+  in metres `025`, `027`, `029`, `041`, `044`, `049`, `064`, `101`, `107`, `109`, `125`,
+  `127`, `128`; how to stand, drawn `031`, `033`, `036`, `090`, `121`, `122`, `123`,
+  `131`; only within a marked bay `002`, `026`, `058`, `135`;
+- **what is on the post but not a parking rule:** an operator plate `002`, `004`, `006`,
+  `007`, `012`, `013`, `024`, `026`, `058`, `059`, `069`, `077`, `083`, `084`, `086`,
+  `103`, `113`, `133`, `135`, `137`; a priority-road sign `117`, `118`, `120`; another
+  road sign `084`, `103`, `106`, `108`, `134`; a second parking post the reader might
+  mean `096`;
+- **poor frames:** distance `020`, `035`, `059`, `060`, `061`, `075`, `083`, `085`,
+  `086`, `087`, `099`, `112`, `118`, `134`; night `056`, `058`, `060`, `063`, `139`;
+  stickers `001`, `002`, `003`, `011`, `042`, `077`, `078`, `103`, `110`, `128`, `130`;
+  a plate cut off `057`, `064`, `090`; snow `055`; a plate nobody can read `035`, `042`,
+  `055`, `060`, `075`, `079`, `085`, `087`, `090`, `095`; a whole sign nobody can read
+  (a refusal is the right answer) `074`, `076`, `080`, `081`, `082`;
 - **frames that are not parking signs**, for measuring triage: `043`, `045`, `046`,
   `047`, `048`, `051`, `053` — including one with no sign at all (`045`).
 
