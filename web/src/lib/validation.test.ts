@@ -143,7 +143,7 @@ describe("contradictions inside one reading", () => {
         .filter((r) => r.includes("contradict") || r.includes("printed on the plate")
                    || r.includes("dygn") || r.includes("dropped obstruction")
                    || r.includes("parking-disc symbol") || r.includes("Privat parkering")
-                   || r.includes("operator plate"))
+                   || r.includes("operator plate") || r.includes("yellow plate with hours"))
         .map((r) => `${f}: ${r}`));
     expect(fired).toEqual([]);
   });
@@ -250,6 +250,28 @@ describe("a plate reading \"Privat parkering\"", () => {
     expect(res.data!.panels![0].kind).toBe("sign_plate");
     expect(res.data!.panels![0].parsed).toEqual({});
     expect(res.repairs.some((r) => r.includes("Privat parkering"))).toBe(true);
+  });
+});
+
+describe("a yellow plate with hours under a P", () => {
+  it("is a ban on those hours, even when the model lost the symbol", () => {
+    // `116` as the model read it: the hours of the 16th kept, the symbol dropped
+    // (decision 184).
+    const doc = read("116-p-gul-skylt-vid-restaurang");
+    delete doc.panels[2].parsed.prohibition;
+    const res = validateSign(doc);
+    expect(res.data!.panels![2].parsed!.prohibition).toBe(true);
+    expect(res.repairs.filter((r) => r.includes("yellow plate with hours"))).toHaveLength(1);
+  });
+
+  it("leaves a blue plate with hours, and a yellow one under a prohibition, alone", () => {
+    // Under a P a blue plate of hours bounds the permission; under a round no-parking
+    // sign a yellow plate of hours bounds the ban (`019`) - neither is a ban of its own.
+    const blue = read("117-p-18-8-plus-huvudled");
+    expect(validateSign(blue).data!.panels![0].parsed!.prohibition).toBeUndefined();
+    const scoped = read("019-forbud-7-18-avgift-ovrig-tid");
+    expect(scoped.panels[0].background_color).toBe("yellow");
+    expect(validateSign(scoped).data!.panels![0].parsed!.prohibition).toBeUndefined();
   });
 });
 

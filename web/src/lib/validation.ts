@@ -257,6 +257,19 @@ function contradictions(doc: Record<string, any>): string[] {
       continue;
     }
 
+    // Under a blue P, a yellow plate with hours is a ban on those hours - the prompt
+    // says so outright. On `116` the model kept the hours of `18-22 Gäller den 16:e
+    // varje månad` and dropped its no-parking symbol; a plate of bare hours under a P
+    // BOUNDS the permission (decision 113), so the answer became "parking only 18-22 on
+    // the 16th" - wrong in every hour of the week, and graded full (decision 184).
+    if (doc.main_sign?.type === "parking" && panel.background_color === "yellow"
+        && Array.isArray(parsed.time_windows) && parsed.time_windows.length
+        && !parsed.prohibition) {
+      done.push(`panel ${panel.index}: prohibition added - a yellow plate with hours `
+              + "under a P sign is a ban on those hours");
+      parsed.prohibition = true;
+    }
+
     // A parking-disc symbol IS the requirement to show a disc. On `063` the model drew
     // the symbol (`pictogram: parking_disc`) and left the requirement out, and the
     // answer said "3 tim" as though no disc were needed - graded full, at 0.975. Filled
