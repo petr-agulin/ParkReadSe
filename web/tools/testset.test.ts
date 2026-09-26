@@ -175,7 +175,11 @@ describe("the threshold", () => {
     // `097` joined with its ground truth (step 15g): the model reads "Biljett-automat"
     // as a ticket to display, where the plate names the machine. The prompt learns the
     // difference in step 15h, with the next run.
+    // `116` joined the same way: the model kept the hours of the yellow plate
+    // ("18-22 on the 16th") and dropped its no-parking symbol, so the hours became the
+    // only ones parking is allowed. Cautious, but every hour of the week is wrong.
     expect(escaped).toEqual(["059-avstand-p-skiva-2tim-darefter-avgift",
-                             "097-avgift-taxa-a-boende-solna-onsdag"]);
+                             "097-avgift-taxa-a-boende-solna-onsdag",
+                             "116-p-gul-skylt-vid-restaurang"]);
   });
 });

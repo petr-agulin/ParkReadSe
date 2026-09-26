@@ -635,8 +635,8 @@
   "moment": "2026-03-02T00:00"
  },
  {
-  "id": "answers/110-avgift-2tim-smal-gata@base",
-  "doc": "answers/110-avgift-2tim-smal-gata",
+  "id": "answers/110-avgift-30min-smal-gata@base",
+  "doc": "answers/110-avgift-30min-smal-gata",
   "moment": "2026-03-02T00:00"
  },
  {
@@ -650,8 +650,8 @@
   "moment": "2026-03-02T00:00"
  },
  {
-  "id": "answers/113-avgift-alla-dagar-utanfor-platser@base",
-  "doc": "answers/113-avgift-alla-dagar-utanfor-platser",
+  "id": "answers/113-avgift-alla-dagar-tillstand-forhyrda@base",
+  "doc": "answers/113-avgift-alla-dagar-tillstand-forhyrda",
   "moment": "2026-03-02T00:00"
  },
  {
@@ -670,8 +670,8 @@
   "moment": "2026-03-02T00:00"
  },
  {
-  "id": "answers/117-p-0-6m-plus-huvudled@base",
-  "doc": "answers/117-p-0-6m-plus-huvudled",
+  "id": "answers/117-p-18-8-plus-huvudled@base",
+  "doc": "answers/117-p-18-8-plus-huvudled",
   "moment": "2026-03-02T00:00"
  },
  {
@@ -1417,6 +1417,81 @@
  {
   "id": "expected/109-lastplats-vid-butik@base",
   "doc": "expected/109-lastplats-vid-butik",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/110-avgift-30min-smal-gata@base",
+  "doc": "expected/110-avgift-30min-smal-gata",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/111-2tim-gul-skylt-vid-klippa@base",
+  "doc": "expected/111-2tim-gul-skylt-vid-klippa",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/112-p-1tim-parkeringsyta@base",
+  "doc": "expected/112-p-1tim-parkeringsyta",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/113-avgift-alla-dagar-tillstand-forhyrda@base",
+  "doc": "expected/113-avgift-alla-dagar-tillstand-forhyrda",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/114-avgift-taxa-boende-vid-vaggmalning@base",
+  "doc": "expected/114-avgift-taxa-boende-vid-vaggmalning",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/115-avgift-taxa-pil-ned@base",
+  "doc": "expected/115-avgift-taxa-pil-ned",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/116-p-gul-skylt-vid-restaurang@base",
+  "doc": "expected/116-p-gul-skylt-vid-restaurang",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/117-p-18-8-plus-huvudled@base",
+  "doc": "expected/117-p-18-8-plus-huvudled",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/118-p-plus-huvudled-pa-avstand@base",
+  "doc": "expected/118-p-plus-huvudled-pa-avstand",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/119-p-liten-skylt-vid-hack@base",
+  "doc": "expected/119-p-liten-skylt-vid-hack",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/120-p-7-dygn-plus-huvudled@base",
+  "doc": "expected/120-p-7-dygn-plus-huvudled",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/121-p-med-pil-vid-vag@base",
+  "doc": "expected/121-p-med-pil-vid-vag",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/122-p-3tim-pil-hoger@base",
+  "doc": "expected/122-p-3tim-pil-hoger",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/123-p-med-plattor-vid-torg@base",
+  "doc": "expected/123-p-med-plattor-vid-torg",
+  "moment": "2026-03-02T00:00"
+ },
+ {
+  "id": "expected/124-p-gul-skylt-i-gronska@base",
+  "doc": "expected/124-p-gul-skylt-i-gronska",
   "moment": "2026-03-02T00:00"
  }
 ]

@@ -31,21 +31,6 @@ export const TRIAGE_EXPECTED = join(ROOT, "testset", "triage_expected.json");
 // truth" and "ground truth forgotten" are different things, told apart only by naming
 // what is expected.
 export const PENDING_GROUND_TRUTH = new Set<string>([
-  "110-avgift-2tim-smal-gata",
-  "111-2tim-gul-skylt-vid-klippa",
-  "112-p-1tim-parkeringsyta",
-  "113-avgift-alla-dagar-utanfor-platser",
-  "114-avgift-taxa-boende-vid-vaggmalning",
-  "115-avgift-taxa-pil-ned",
-  "116-p-gul-skylt-vid-restaurang",
-  "117-p-0-6m-plus-huvudled",
-  "118-p-plus-huvudled-pa-avstand",
-  "119-p-liten-skylt-vid-hack",
-  "120-p-7-dygn-plus-huvudled",
-  "121-p-med-pil-vid-vag",
-  "122-p-3tim-pil-hoger",
-  "123-p-med-plattor-vid-torg",
-  "124-p-gul-skylt-i-gronska",
   "125-p-gula-plattor-vid-port",
   "126-avgift-7-19-fred-0-6",
   "127-cykel-0-12m",

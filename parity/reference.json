@@ -1860,7 +1860,7 @@
   },
   "missing_keys": []
  },
- "answers/110-avgift-2tim-smal-gata": {
+ "answers/110-avgift-30min-smal-gata": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -1913,7 +1913,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "answers/113-avgift-alla-dagar-utanfor-platser": {
+ "answers/113-avgift-alla-dagar-tillstand-forhyrda": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -1993,7 +1993,7 @@
   "uninterpreted": {},
   "missing_keys": []
  },
- "answers/117-p-0-6m-plus-huvudled": {
+ "answers/117-p-18-8-plus-huvudled": {
   "main_sign_key": "main-parking",
   "panel_keys": {
    "1": [
@@ -4247,6 +4247,277 @@
    "3": [
     "main-prohibition-parking",
     "named-weekday"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/110-avgift-30min-smal-gata": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "avgift"
+   ],
+   "2": [
+    "duration-limit",
+    "window-weekday",
+    "window-eve"
+   ],
+   "3": [
+    "boende"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/111-2tim-gul-skylt-vid-klippa": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "duration-limit"
+   ],
+   "2": [
+    "boende"
+   ],
+   "3": [
+    "main-prohibition-parking",
+    "named-weekday",
+    "jamna-veckor"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/112-p-1tim-parkeringsyta": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "duration-limit"
+   ],
+   "2": [
+    "arrow-both-vertical"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/113-avgift-alla-dagar-tillstand-forhyrda": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "avgift",
+    "alla-dagar"
+   ],
+   "2": [
+    "sarskilt-p-tillstand"
+   ],
+   "3": [
+    "forhyrda-platser"
+   ],
+   "4": [
+    "operator-plate"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/114-avgift-taxa-boende-vid-vaggmalning": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "taxa",
+    "avgift"
+   ],
+   "2": [
+    "boende"
+   ],
+   "3": [
+    "main-prohibition-parking",
+    "alla-dagar"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/115-avgift-taxa-pil-ned": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "taxa",
+    "avgift"
+   ],
+   "2": [
+    "boende"
+   ],
+   "3": [
+    "main-prohibition-parking",
+    "alla-dagar"
+   ],
+   "4": [
+    "arrow-down"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/116-p-gul-skylt-vid-restaurang": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "taxa",
+    "avgift"
+   ],
+   "2": [
+    "boende"
+   ],
+   "3": [
+    "main-prohibition-parking",
+    "alla-dagar"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/117-p-18-8-plus-huvudled": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "window-weekday",
+    "window-eve",
+    "window-red"
+   ],
+   "2": [
+    "priority-road"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/118-p-plus-huvudled-pa-avstand": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "duration-limit",
+    "window-weekday",
+    "window-eve"
+   ],
+   "2": [
+    "priority-road"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/119-p-liten-skylt-vid-hack": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "duration-limit",
+    "window-weekday",
+    "window-eve"
+   ],
+   "2": [
+    "arrow-both-vertical"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/120-p-7-dygn-plus-huvudled": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "duration-limit"
+   ],
+   "2": [
+    "main-prohibition-parking",
+    "named-weekday"
+   ],
+   "3": [
+    "priority-road"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/121-p-med-pil-vid-vag": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "placement-as-shown"
+   ],
+   "2": [
+    "pictogram-electric-car"
+   ],
+   "3": [
+    "duration-limit"
+   ],
+   "4": [
+    "arrow-left"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/122-p-3tim-pil-hoger": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "duration-limit",
+    "p-skiva"
+   ],
+   "2": [
+    "placement-as-shown"
+   ],
+   "3": [
+    "arrow-right"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/123-p-med-plattor-vid-torg": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "pictogram-electric-car"
+   ],
+   "2": [
+    "placement-as-shown"
+   ],
+   "3": [
+    "duration-limit"
+   ],
+   "4": [
+    "taxa",
+    "avgift",
+    "window-weekday",
+    "window-eve"
+   ],
+   "5": [
+    "arrow-right"
+   ],
+   "6": [
+    "info-board"
+   ]
+  },
+  "uninterpreted": {},
+  "missing_keys": []
+ },
+ "expected/124-p-gul-skylt-i-gronska": {
+  "main_sign_key": "main-parking",
+  "panel_keys": {
+   "1": [
+    "duration-limit",
+    "taxa",
+    "avgift",
+    "window-weekday",
+    "window-eve"
+   ],
+   "2": [
+    "main-prohibition-parking",
+    "named-weekday",
+    "datumintervall"
    ]
   },
   "uninterpreted": {},

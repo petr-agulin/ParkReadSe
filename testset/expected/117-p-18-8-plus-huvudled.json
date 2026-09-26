@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "main_sign": {
+    "type": "parking",
+    "background_color": "blue",
+    "form": "regular",
+    "legibility": {
+      "readable": true
+    }
+  },
+  "panels": [
+    {
+      "kind": "sign_plate",
+      "lines": [
+        "18-8",
+        "(14-8)",
+        "0-24"
+      ],
+      "background_color": "blue",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "time_windows": [
+          {
+            "from": "18:00",
+            "to": "08:00",
+            "day_class": "weekday"
+          },
+          {
+            "from": "14:00",
+            "to": "08:00",
+            "day_class": "eve"
+          },
+          {
+            "from": "00:00",
+            "to": "24:00",
+            "day_class": "red"
+          }
+        ]
+      },
+      "index": 1
+    },
+    {
+      "kind": "other_sign",
+      "lines": [],
+      "background_color": "yellow",
+      "legibility": {
+        "readable": true
+      },
+      "parsed": {
+        "road_sign": "priority_road"
+      },
+      "index": 2
+    }
+  ],
+  "panel_count": 2,
+  "boundaries": {
+    "certain": true
+  }
+}

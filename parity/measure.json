@@ -1,65 +1,65 @@
 {
- "photos": 97,
+ "photos": 112,
  "fields": {
   "main_sign.background_color": [
-   94,
-   97
+   109,
+   112
   ],
   "main_sign.form": [
-   91,
-   97
+   106,
+   112
   ],
   "main_sign.type": [
-   93,
-   97
+   108,
+   112
   ],
   "panel.background_color": [
-   235,
-   245
+   276,
+   286
   ],
   "panel.lines": [
-   215,
-   245
+   252,
+   286
   ],
   "panel.rule_bearing": [
-   247,
-   250
+   285,
+   288
   ],
   "panel_count": [
-   85,
-   97
+   100,
+   112
   ],
   "panels.content": [
-   70,
-   97
+   79,
+   112
   ],
   "panels.order": [
-   70,
-   97
+   79,
+   112
   ],
   "parsed.arrow": [
-   28,
-   32
+   34,
+   38
   ],
   "parsed.duration_limit": [
-   16,
-   18
+   26,
+   28
   ],
   "parsed.eligibility": [
-   51,
-   58
+   58,
+   65
   ],
   "parsed.fee": [
-   49,
-   53
+   56,
+   60
   ],
   "parsed.payment_method": [
-   0,
-   4
+   1,
+   5
   ],
   "parsed.permit_required": [
-   10,
-   10
+   11,
+   11
   ],
   "parsed.permits_parking": [
    6,
@@ -67,15 +67,15 @@
   ],
   "parsed.place_count": [
    9,
-   9
+   10
   ],
   "parsed.placement": [
-   7,
-   8
+   9,
+   11
   ],
   "parsed.prohibition": [
-   29,
-   37
+   34,
+   43
   ],
   "parsed.scope_shift": [
    7,
@@ -86,12 +86,12 @@
    13
   ],
   "parsed.time_windows": [
-   59,
-   76
+   70,
+   89
   ],
   "parsed.vehicle_class": [
-   18,
-   22
+   20,
+   24
   ]
  },
  "mistakes": [
@@ -267,7 +267,28 @@
   "109-lastplats-vid-butik: panel 3 field time_windows = None instead of [{'from': '00:00', 'to': '06:00', 'day_class': 'named_weekday', 'named_weekday': 'thursday'}]",
   "109-lastplats-vid-butik: panel 3 read as ['0-15 m'] instead of ['Torsd', '0-6']",
   "109-lastplats-vid-butik: plate order ['last- plats', '7-19 (7-19) 7-19', '0-15 m', 'torsd 0-6'] instead of ['7-19 (7-19) 7-19', '0-15 m', 'torsd 0-6']",
-  "109-lastplats-vid-butik: the content of the plates disagrees"
+  "109-lastplats-vid-butik: the content of the plates disagrees",
+  "110-avgift-30min-smal-gata: panel 2 read as ['30 min', '8 - 22', '(8 - 22)'] instead of ['30 min', '8-22', '(8-22)']",
+  "110-avgift-30min-smal-gata: plate order ['avgift', '30 min 8 - 22 (8 - 22)', 'boende c4n'] instead of ['avgift', '30 min 8-22 (8-22)', 'boende c4n']",
+  "110-avgift-30min-smal-gata: the content of the plates disagrees",
+  "111-2tim-gul-skylt-vid-klippa: panel 2 read as ['Boende V5'] instead of ['Boende VS']",
+  "111-2tim-gul-skylt-vid-klippa: plate order ['2 tim', 'boende v5', 'fred 9-12 jämn vecka'] instead of ['2 tim', 'boende vs', 'fred 9-12 jämn vecka']",
+  "111-2tim-gul-skylt-vid-klippa: the content of the plates disagrees",
+  "114-avgift-taxa-boende-vid-vaggmalning: panel 3 read as ['Gäller', 'den 1:a', 'varje månad'] instead of ['8-12', 'Gäller', 'den 1:a', 'varje månad']",
+  "114-avgift-taxa-boende-vid-vaggmalning: plate order ['avgift taxa b', 'boende gk-j', 'gäller den 1:a varje månad'] instead of ['avgift taxa b', 'boende gk-j', '8-12 gäller den 1:a varje månad']",
+  "114-avgift-taxa-boende-vid-vaggmalning: the content of the plates disagrees",
+  "115-avgift-taxa-pil-ned: panel 3 field time_windows = [{'from': '08:00', 'to': '12:00', 'day_class': 'weekday', 'day_of_month': 1}] instead of [{'from': '08:00', 'to': '12:00', 'day_class': 'all_days', 'day_of_month': 1}]",
+  "116-p-gul-skylt-vid-restaurang: panel 3 field prohibition = None instead of True",
+  "120-p-7-dygn-plus-huvudled: panel 2 field time_windows = [{'from': '08:00', 'to': '12:00', 'day_class': 'weekday', 'nth_of_month': 3, 'named_weekday': 'tuesday'}] instead of [{'from': '08:00', 'to': '12:00', 'day_class': 'named_weekday', 'named_weekday': 'tuesday', 'nth_of_month': 3}]",
+  "121-p-med-pil-vid-vag: plate order ['arrow', 'electric_car', '12 tim', 'left'] instead of ['?', 'electric_car', '12 tim', 'left']",
+  "121-p-med-pil-vid-vag: the content of the plates disagrees",
+  "122-p-3tim-pil-hoger: plate order ['3 tim', 'other', 'right'] instead of ['3 tim', '?', 'right']",
+  "122-p-3tim-pil-hoger: the content of the plates disagrees",
+  "123-p-med-plattor-vid-torg: panel 2 field place_count = 4 instead of None",
+  "123-p-med-plattor-vid-torg: panel 2 field placement = None instead of 'as_shown'",
+  "123-p-med-plattor-vid-torg: panel 4 read as ['Avgift', '7 - 19', '(11 - 17)', 'Taxa 1'] instead of ['Avgift', '7-19', '(11-17)', 'Taxa 1']",
+  "123-p-med-plattor-vid-torg: plate order ['electric_car', 'other', '12 tim', 'avgift 7 - 19 (11 - 17) taxa 1', 'right'] instead of ['electric_car', '?', '12 tim', 'avgift 7-19 (11-17) taxa 1', 'right']",
+  "123-p-med-plattor-vid-torg: the content of the plates disagrees"
  ],
  "diverged": {
   "035-zon-c-pa-avstand": [
@@ -311,6 +332,9 @@
   ],
   "105-p-med-plattor-gathorn": [
    "who may park: ['pictogram-electric-car'] instead of ['boende', 'pictogram-electric-car']"
+  ],
+  "116-p-gul-skylt-vid-restaurang": [
+   "hours differing by state 168/168, of which wider 0"
   ]
  },
  "pixels": {
@@ -410,7 +434,22 @@
   "106-p-blaa-och-gul-skylt-vid-berg": 519851,
   "107-rorelsehindrad-med-plattor": 546742,
   "108-p-under-cykelskylt": 509388,
-  "109-lastplats-vid-butik": 507314
+  "109-lastplats-vid-butik": 507314,
+  "110-avgift-30min-smal-gata": 522376,
+  "111-2tim-gul-skylt-vid-klippa": 333906,
+  "112-p-1tim-parkeringsyta": 388592,
+  "113-avgift-alla-dagar-tillstand-forhyrda": 415308,
+  "114-avgift-taxa-boende-vid-vaggmalning": 454768,
+  "115-avgift-taxa-pil-ned": 463036,
+  "116-p-gul-skylt-vid-restaurang": 480200,
+  "117-p-18-8-plus-huvudled": 480240,
+  "118-p-plus-huvudled-pa-avstand": 337808,
+  "119-p-liten-skylt-vid-hack": 333072,
+  "120-p-7-dygn-plus-huvudled": 427614,
+  "121-p-med-pil-vid-vag": 554506,
+  "122-p-3tim-pil-hoger": 536832,
+  "123-p-med-plattor-vid-torg": 327660,
+  "124-p-gul-skylt-i-gronska": 498435
  },
  "fingerprint": "a1b96992540a",
  "excluded": [],
@@ -594,6 +633,24 @@
    "full",
    true,
    "105-p-med-plattor-gathorn"
+  ],
+  [
+   0.875,
+   "partial",
+   false,
+   "110-avgift-30min-smal-gata"
+  ],
+  [
+   0.875,
+   "partial",
+   false,
+   "113-avgift-alla-dagar-tillstand-forhyrda"
+  ],
+  [
+   0.875,
+   "full",
+   false,
+   "117-p-18-8-plus-huvudled"
   ],
   [
    0.895,
@@ -908,6 +965,72 @@
    "107-rorelsehindrad-med-plattor"
   ],
   [
+   0.975,
+   "full",
+   false,
+   "111-2tim-gul-skylt-vid-klippa"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "112-p-1tim-parkeringsyta"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "114-avgift-taxa-boende-vid-vaggmalning"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "115-avgift-taxa-pil-ned"
+  ],
+  [
+   0.975,
+   "full",
+   true,
+   "116-p-gul-skylt-vid-restaurang"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "118-p-plus-huvudled-pa-avstand"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "119-p-liten-skylt-vid-hack"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "120-p-7-dygn-plus-huvudled"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "121-p-med-pil-vid-vag"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "122-p-3tim-pil-hoger"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "124-p-gul-skylt-i-gronska"
+  ],
+  [
    0.998,
    "full",
    false,
@@ -942,6 +1065,12 @@
    "full",
    false,
    "104-2tim-avgift-fred-vid-blomsterbutik"
+  ],
+  [
+   0.998,
+   "full",
+   false,
+   "123-p-med-plattor-vid-torg"
   ],
   [
    0.999,
@@ -998,5 +1127,5 @@
    "071-taxi-3-platser"
   ]
  ],
- "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 21 | 4 | 76 | 8 |\n| 0.875 | 21 | 4 | 76 | 8 |\n| 0.900 | 37 | 10 | 60 | 2 |\n| 0.920 | 37 | 10 | 60 | 2 |\n| 0.950 | 38 | 10 | 59 | 2 |"
+ "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 23 | 4 | 89 | 9 |\n| 0.875 | 23 | 4 | 89 | 9 |\n| 0.900 | 40 | 10 | 72 | 3 |\n| 0.920 | 40 | 10 | 72 | 3 |\n| 0.950 | 41 | 10 | 71 | 3 |"
 }
