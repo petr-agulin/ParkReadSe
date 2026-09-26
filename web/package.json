@@ -14,6 +14,8 @@
     "test:build": "vitest run --dir build --reporter=verbose",
     "emit": "node tools/emit.ts --write",
     "emit:check": "node tools/emit.ts",
+    "photos": "node --import ./tools/ts-resolve.mjs tools/photo-index.ts --write",
+    "photos:check": "node --import ./tools/ts-resolve.mjs tools/photo-index.ts",
     "icons": "node tools/icons.ts",
     "ask": "node --env-file-if-exists=../.env --import ./tools/ts-resolve.mjs tools/ask.ts",
     "goldens": "node --import ./tools/ts-resolve.mjs tools/goldens.ts",

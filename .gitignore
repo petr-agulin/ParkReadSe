@@ -24,9 +24,12 @@ PARKREAD_PLAN.md
 Thumbs.db
 desktop.ini
 
-# NOTE: the test photographs and the model's saved answers (testset/) are NOT ignored.
-# They are part of the project: the accuracy measurement and the reference answers
-# stand on them.
+# The test set's photographs stay on the developer's disk (decision 185, 2026-09-27):
+# part of them are Street View captures that are not the developer's to publish, and
+# some show number plates. What the tests and the measurement need of them - the name
+# and the pixel count - lives in testset/photos.json, which IS in the repository, with
+# the reference readings and the model's saved answers.
+testset/photos/
 
 # A page of the «Körkortsboken» textbook was removed from the project: the publisher
 # allows short quotations with the source named, but not reproducing the page. The

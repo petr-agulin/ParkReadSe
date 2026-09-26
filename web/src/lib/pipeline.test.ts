@@ -7,6 +7,7 @@ import { describe, expect, it } from "vitest";
 
 import { Calendar } from "./calendar";
 import { parseNaive } from "./civil";
+import { jpegOf, pngOf } from "./image.testkit";
 import { analyze, answer, run } from "./pipeline";
 import type { Photo, Provider } from "./vision";
 
@@ -23,13 +24,12 @@ const provider: Provider = {
 const photo: Photo = { name: "sign.jpg",
                        data: new Blob([new Uint8Array([1])], { type: "image/jpeg" }) };
 
-/** A real photograph of the set: its size is read from its own bytes, as in the
- *  browser. */
-function realPhoto(file: string): Photo {
-  const bytes = new Uint8Array(readFileSync(`${ROOT}testset/photos/${file}`));
-  return { name: file,
-           data: new Blob([bytes],
-                          { type: file.endsWith(".png") ? "image/png" : "image/jpeg" }) };
+/** A photograph the size of one in the set: its size is read from its own bytes, as
+ *  in the browser. The header is built - the set's photographs are not published. */
+function sizedPhoto(file: string, width: number, height: number): Photo {
+  const png = file.endsWith(".png");
+  const bytes = png ? pngOf(width, height) : jpegOf(width, height);
+  return { name: file, data: new Blob([bytes], { type: png ? "image/png" : "image/jpeg" }) };
 }
 
 /** A real reading of a sign from the set - the same one the measurement reads. */
@@ -74,8 +74,8 @@ describe("the pipeline", () => {
     const assess = (p: Photo) => analyze(p, provider, moment, cal,
       deps(fakeProvider(reply(TRIAGE_OK), reply(sign))));
 
-    const onBig = await assess(realPhoto("003-p-2tim.jpg"));
-    const onTiny = await assess(realPhoto("061-lastplats-langt-avstand.png"));
+    const onBig = await assess(sizedPhoto("003-p-2tim.jpg", 576, 1280));
+    const onTiny = await assess(sizedPhoto("061-lastplats-langt-avstand.png", 82, 179));
 
     expect(onBig.assessment.signals.text_fits_the_pixels,
            "a large frame does hold this text").toBe(1);

@@ -17,7 +17,6 @@ import { Calendar } from "./calendar";
 import { parseNaive } from "./civil";
 import { FULL, PARTIAL, applyAsymmetry, grade } from "./completeness";
 import { ARROW_EXTENT, evaluateParkingRules, horizonEnd, type Period } from "./engine";
-import { pixels } from "./photo";
 import { CATEGORY_TEXT, CONTRACT, EXTENT_SHORT, EXTENT_TEXT, GOOD_ENOUGH, NOTE_TEXT,
          REASON_TEXT, STATE_TEXT, STAY_END_REASON, STAY_END_TEXT, TIMED_PROHIBITION_TEXT,
          UNCERTAINTY_TEXT, explain, headline, joinLines, merge, notInterpreted, panelFields,
@@ -55,10 +54,10 @@ function answerFor(label: string, moment = DEFAULT_MOMENT,
   if (rec.missingKeys.length) flags.push("reference_gap:" + rec.missingKeys.join(","));
   const un = Object.keys(rec.uninterpreted).map(Number).sort((a, b) => a - b);
   if (un.length) flags.push("uninterpreted_panels:" + un.join(","));
-  const photo = readdirSync(`${ROOT}testset/photos`)
-    .find((f) => f.startsWith(`${label}.`) && /\.(jpg|png)$/i.test(f));
-  const imagePixels = photo
-    ? pixels(new Uint8Array(readFileSync(`${ROOT}testset/photos/${photo}`))) : null;
+  // The pixels come from the index: the photographs stay on the developer's disk
+  // (decision 185).
+  const imagePixels: number | null = JSON.parse(
+    readFileSync(`${ROOT}testset/photos.json`, "utf-8")).photos[label]?.pixels ?? null;
   const m = parseNaive(moment);
   const ev = evaluateParkingRules(doc, m, CAL);
   const a = grade(doc, { flags, repairs: res.repairs, imagePixels, evaluation: ev });

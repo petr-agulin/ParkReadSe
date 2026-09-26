@@ -30,7 +30,6 @@ import { applyAsymmetry, grade } from "../src/lib/completeness";
 import { evaluateParkingRules, type Period, type Regime } from "../src/lib/engine";
 import { compare, emptyReport, fingerprint, thresholdTable, verdictDifferences,
          verdictSlice, type ThresholdRow } from "../src/lib/measure";
-import { pixels } from "../src/lib/photo";
 import { toJson } from "../src/lib/present";
 import { extractPrompt, triagePrompt } from "../src/lib/prompts";
 import { recognise } from "../src/lib/reference";
@@ -38,7 +37,7 @@ import { valid } from "../src/lib/schema";
 import { SIGN_SCHEMA } from "../src/lib/schema.data";
 import type { SignDoc } from "../src/lib/sign";
 import { ok as resultOk, sign as validateSign } from "../src/lib/validation";
-import { asShown } from "./testset";
+import { asShown, photoPixels } from "./testset";
 
 export const ROOT = fileURLToPath(new URL("../../", import.meta.url));
 export const DIR = `${ROOT}parity/`;
@@ -480,11 +479,7 @@ export async function probeMeasure(): Promise<Record<string, unknown>> {
     const uninterpreted = Object.keys(rec.uninterpreted).map(Number).sort((a, b) => a - b);
     if (uninterpreted.length) flags.push("uninterpreted_panels:" + uninterpreted.join(","));
 
-    const photo = readdirSync(`${ROOT}testset/photos`)
-      .find((f) => f.startsWith(`${label}.`) && /\.(jpg|png)$/i.test(f));
-    const imagePixels = photo
-      ? pixels(new Uint8Array(readFileSync(`${ROOT}testset/photos/${photo}`)))
-      : null;
+    const imagePixels = photoPixels(label);
     seenPixels[label] = imagePixels;
 
     const ev = evaluateParkingRules(doc, moment, cal);

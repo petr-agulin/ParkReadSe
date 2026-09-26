@@ -4,16 +4,22 @@
 // else is checked here — what is saved, what is skipped, and what the run does not
 // stumble on.
 
-import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterAll, afterEach, beforeEach, describe, expect, it } from "vitest";
 
+import { jpegOf } from "../src/lib/image.testkit";
 import { fingerprint } from "../src/lib/measure";
 import { extractPrompt, triagePrompt } from "../src/lib/prompts";
 import { ROOT, ask, expand, photoOf, providerFromEnv } from "./ask";
 
-const PHOTO = join(ROOT, "testset", "photos", "001-p-30min.jpg");
+// A built photograph under the name of `001`: the set's own stay on the developer's
+// disk (decision 185), and what `ask` does with a photograph is send its bytes.
+const PHOTO_DIR = mkdtempSync(join(tmpdir(), "parkread-photo-"));
+const PHOTO = join(PHOTO_DIR, "001-p-30min.jpg");
+writeFileSync(PHOTO, jpegOf(576, 1280));
+afterAll(() => { rmSync(PHOTO_DIR, { recursive: true, force: true }); });
 const SIGN = JSON.parse(readFileSync(
   join(ROOT, "testset", "answers", "001-p-30min.extract.json"), "utf-8")).response;
 const TRIAGE_OK = { category: "parking_sign", what_i_see: "a blue P",
@@ -111,7 +117,7 @@ describe("asking the model again", () => {
 
 describe("the command's arguments", () => {
   it("expands the asterisk itself: PowerShell does not", () => {
-    const found = expand(["testset/photos/001-*.jpg"]);
+    const found = expand([join(PHOTO_DIR, "001-*.jpg")]);
     expect(found).toHaveLength(1);
     expect(found[0].endsWith("001-p-30min.jpg")).toBe(true);
   });

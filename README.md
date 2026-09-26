@@ -140,9 +140,12 @@ the answer gives both readings rather than picking one.
 
 ## Accuracy
 
-The test set is **139 photos** taken by the author: 57 parking signs with reference
+The test set is **139 photos**: 57 parking signs with reference
 answers, 7 frames that are not parking signs, and 75 photos added but not yet marked
-up. Measurement runs on stored model responses,
+up. **The photos themselves are not published:** part of them are Street View captures,
+and some show number plates. The repository carries their index, `testset/photos.json`
+(name and pixel count), which is all the tests and the measurement need of them.
+Measurement runs on stored model responses,
 so it is deterministic and needs no key. Those responses live in `testset/answers/`, one
 file per stage per photo, each marked with the fingerprint of the prompt that produced
 it; only real model answers (`origin: model`) are measured. `npm run ask --
@@ -292,7 +295,7 @@ web/
 schema/            the contract between model and code
 reference/         the reference and the general-rules notes; also the whitelist
 prompts/           the prompt texts
-testset/           139 photos, their reference readings, and the model's saved answers
+testset/           the photo index (the photos stay local), the reference readings, and the model's saved answers
 parity/            stored answers the code is checked against
 ```
 

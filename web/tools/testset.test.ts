@@ -5,7 +5,7 @@
 // photograph has a named state, every answer a ground truth, the coverage shows as a
 // number, and the threshold still stands on what it was counted on.
 
-import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -16,9 +16,9 @@ import { FULL, INSUFFICIENT } from "../src/lib/completeness";
 import { fingerprint, verdictDifferences, verdictSlice } from "../src/lib/measure";
 import { GOOD_ENOUGH } from "../src/lib/present";
 import { extractPrompt } from "../src/lib/prompts";
-import { ANSWERS, EXPECTED, PENDING_GROUND_TRUTH, ROOT, assessAnswer, loadPairs,
-         answersFromAnotherPrompt, asShown, loadTriageExpectations, loadUnreadable,
-         marked, photos, triageAnswers } from "./testset";
+import { ANSWERS, EXPECTED, PENDING_GROUND_TRUTH, PHOTOS, ROOT, assessAnswer, loadPairs,
+         answersFromAnotherPrompt, asShown, buildPhotoIndex, loadTriageExpectations,
+         loadUnreadable, marked, photoIndex, photos, triageAnswers } from "./testset";
 
 const intersect = <T>(a: Set<T>, b: Set<T>) => [...a].filter((x) => b.has(x)).sort();
 
@@ -74,6 +74,21 @@ describe("the coverage of the measurement", () => {
   it("shows the coverage as a number no larger than the ground truths", () => {
     // The number itself is not pinned: it changes with every run.
     expect(loadPairs(EXPECTED, ANSWERS).length).toBeLessThanOrEqual(marked().size);
+  });
+});
+
+describe("the index of the photographs", () => {
+  // The photographs stay on the developer's disk (decision 185); the index is what
+  // the repository carries. On a clone without them there is nothing to compare, and
+  // the test says so by skipping rather than passing.
+  it.skipIf(!existsSync(PHOTOS))("matches the photographs, where they are", () => {
+    expect(photoIndex()).toEqual(buildPhotoIndex());
+  });
+
+  it("knows the pixels of every photograph", () => {
+    const unknown = Object.entries(photoIndex()).filter(([, e]) => !e.pixels).map(([k]) => k);
+    expect(unknown).toEqual([]);
+    expect(photos().size).toBeGreaterThan(0);
   });
 });
 

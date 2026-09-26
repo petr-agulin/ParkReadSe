@@ -1,0 +1,561 @@
+{
+  "_": "The set's photographs, by name, with their pixel count. The photographs themselves stay on the developer's disk and are not published (decision 185): part of them are Street View captures, and some show number plates. Rebuilt with `npm run photos`.",
+  "photos": {
+    "001-p-30min": {
+      "file": "001-p-30min.jpg",
+      "pixels": 737280
+    },
+    "002-avgift-forbud-utanfor-markerad-plats": {
+      "file": "002-avgift-forbud-utanfor-markerad-plats.jpg",
+      "pixels": 737280
+    },
+    "003-p-2tim": {
+      "file": "003-p-2tim.jpg",
+      "pixels": 737280
+    },
+    "004-endast-besokande-pingstkyrkan": {
+      "file": "004-endast-besokande-pingstkyrkan.jpg",
+      "pixels": 536320
+    },
+    "005-2tim-8-18-parentes-8-15-dubbelpil": {
+      "file": "005-2tim-8-18-parentes-8-15-dubbelpil.jpg",
+      "pixels": 737280
+    },
+    "006-tillstand-07-17-ovrig-tid-avgift": {
+      "file": "006-tillstand-07-17-ovrig-tid-avgift.jpg",
+      "pixels": 737280
+    },
+    "007-gul-forbud-forhyrda-platser": {
+      "file": "007-gul-forbud-forhyrda-platser.jpg",
+      "pixels": 737280
+    },
+    "008-rorelsehindrad-avgift": {
+      "file": "008-rorelsehindrad-avgift.jpg",
+      "pixels": 737280
+    },
+    "009-besokande-avgift": {
+      "file": "009-besokande-avgift.jpg",
+      "pixels": 737280
+    },
+    "010-forhyrda-platser-tva-pilar": {
+      "file": "010-forhyrda-platser-tva-pilar.jpg",
+      "pixels": 737280
+    },
+    "011-gul-p-avgift-klistermarken": {
+      "file": "011-gul-p-avgift-klistermarken.jpg",
+      "pixels": 737280
+    },
+    "012-tillstand-7-17-ovrig-tid-avgift": {
+      "file": "012-tillstand-7-17-ovrig-tid-avgift.jpg",
+      "pixels": 737280
+    },
+    "013-rorelsehindrad-2-platser": {
+      "file": "013-rorelsehindrad-2-platser.jpg",
+      "pixels": 634880
+    },
+    "014-motorcykel-pil-skymning": {
+      "file": "014-motorcykel-pil-skymning.jpg",
+      "pixels": 737280
+    },
+    "015-motorcykel": {
+      "file": "015-motorcykel.jpg",
+      "pixels": 737280
+    },
+    "016-tillstand-ovrig-tid-5-platser": {
+      "file": "016-tillstand-ovrig-tid-5-platser.jpg",
+      "pixels": 737280
+    },
+    "017-rorelsehindrad": {
+      "file": "017-rorelsehindrad.jpg",
+      "pixels": 737280
+    },
+    "018-tillstand-utan-tidsangivelse": {
+      "file": "018-tillstand-utan-tidsangivelse.jpg",
+      "pixels": 515840
+    },
+    "019-forbud-7-18-avgift-ovrig-tid": {
+      "file": "019-forbud-7-18-avgift-ovrig-tid.jpg",
+      "pixels": 737280
+    },
+    "020-forhyrda-platser-13-och-14-avstand": {
+      "file": "020-forhyrda-platser-13-och-14-avstand.jpg",
+      "pixels": 737280
+    },
+    "021-privat-parkering-brf": {
+      "file": "021-privat-parkering-brf.jpg",
+      "pixels": 737280
+    },
+    "022-avgift-4tim-laddande-elbilar-2-platser": {
+      "file": "022-avgift-4tim-laddande-elbilar-2-platser.jpg",
+      "pixels": 616960
+    },
+    "023-avgift-4tim-laddande-elbilar": {
+      "file": "023-avgift-4tim-laddande-elbilar.jpg",
+      "pixels": 737280
+    },
+    "024-avgift-erlaggs-med-mobil": {
+      "file": "024-avgift-erlaggs-med-mobil.jpg",
+      "pixels": 737280
+    },
+    "025-30min-endast-gaster-gatukok": {
+      "file": "025-30min-endast-gaster-gatukok.jpg",
+      "pixels": 737280
+    },
+    "026-gul-zon-avgift-plus-hastighetsskylt": {
+      "file": "026-gul-zon-avgift-plus-hastighetsskylt.jpg",
+      "pixels": 737280
+    },
+    "027-rorelsehindrad-0-6m-avgift-taxa-2": {
+      "file": "027-rorelsehindrad-0-6m-avgift-taxa-2.png",
+      "pixels": 196877
+    },
+    "028-avgift-taxa-2-fred-0-6-boende-ci": {
+      "file": "028-avgift-taxa-2-fred-0-6-boende-ci.png",
+      "pixels": 118104
+    },
+    "029-beskickningsfordon-0-12m": {
+      "file": "029-beskickningsfordon-0-12m.png",
+      "pixels": 151916
+    },
+    "030-avgift-8-21-fredag-0-6-galler-ej-juli-zon-a": {
+      "file": "030-avgift-8-21-fredag-0-6-galler-ej-juli-zon-a.png",
+      "pixels": 257304
+    },
+    "031-snedstallning-torsdag-jamna-veckor-boende-solna": {
+      "file": "031-snedstallning-torsdag-jamna-veckor-boende-solna.png",
+      "pixels": 218295
+    },
+    "032-rorelsehindrad-pil-hoger": {
+      "file": "032-rorelsehindrad-pil-hoger.png",
+      "pixels": 19364
+    },
+    "033-avgift-8-21-uppstallning-zon-e-boende-storskogen": {
+      "file": "033-avgift-8-21-uppstallning-zon-e-boende-storskogen.png",
+      "pixels": 398970
+    },
+    "034-avgift-tisdag-12-15-nov-maj-zon-c-boende": {
+      "file": "034-avgift-tisdag-12-15-nov-maj-zon-c-boende.png",
+      "pixels": 269844
+    },
+    "035-zon-c-pa-avstand": {
+      "file": "035-zon-c-pa-avstand.png",
+      "pixels": 120336
+    },
+    "036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so": {
+      "file": "036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so.png",
+      "pixels": 209064
+    },
+    "037-hanvisning-p-med-pil": {
+      "file": "037-hanvisning-p-med-pil.png",
+      "pixels": 211470
+    },
+    "038-scandic-buss-besokande-pil": {
+      "file": "038-scandic-buss-besokande-pil.png",
+      "pixels": 187600
+    },
+    "039-laddning-avgift-4-platser-pil": {
+      "file": "039-laddning-avgift-4-platser-pil.jpg",
+      "pixels": 66605
+    },
+    "040-servicefordon-vardagar-7-17-ovrig-tid-avgift": {
+      "file": "040-servicefordon-vardagar-7-17-ovrig-tid-avgift.jpg",
+      "pixels": 171250
+    },
+    "041-lastplats-forbud-7-17-ovrig-tid-avgift": {
+      "file": "041-lastplats-forbud-7-17-ovrig-tid-avgift.png",
+      "pixels": 291641
+    },
+    "042-cykel-moped-parkering": {
+      "file": "042-cykel-moped-parkering.png",
+      "pixels": 192738
+    },
+    "043-gangfartsomrade-motorfordon-forbjuden": {
+      "file": "043-gangfartsomrade-motorfordon-forbjuden.png",
+      "pixels": 310500
+    },
+    "044-motorcykel-avgift-taxa-12-fred-boende": {
+      "file": "044-motorcykel-avgift-taxa-12-fred-boende.png",
+      "pixels": 284850
+    },
+    "045-hotellskylt-inte-vagmarke": {
+      "file": "045-hotellskylt-inte-vagmarke.png",
+      "pixels": 151040
+    },
+    "046-overgangsstalle-pabjuden-korriktning": {
+      "file": "046-overgangsstalle-pabjuden-korriktning.png",
+      "pixels": 283101
+    },
+    "047-varning-motesplats": {
+      "file": "047-varning-motesplats.png",
+      "pixels": 388740
+    },
+    "048-forbud-infart-galler-ej-cykel": {
+      "file": "048-forbud-infart-galler-ej-cykel.png",
+      "pixels": 337295
+    },
+    "049-moped-sasong-avgift-tva-taxor": {
+      "file": "049-moped-sasong-avgift-tva-taxor.png",
+      "pixels": 265031
+    },
+    "050-aimo-park-privat-hanvisning": {
+      "file": "050-aimo-park-privat-hanvisning.png",
+      "pixels": 277656
+    },
+    "051-hastighet-40": {
+      "file": "051-hastighet-40.png",
+      "pixels": 189700
+    },
+    "052-avgift-taxa-2-tisd-boende-roda-siffror": {
+      "file": "052-avgift-taxa-2-tisd-boende-roda-siffror.png",
+      "pixels": 427700
+    },
+    "053-pabjuden-korriktning-hastighet-30": {
+      "file": "053-pabjuden-korriktning-hastighet-30.png",
+      "pixels": 201474
+    },
+    "054-buss-15min-avgift-torsd": {
+      "file": "054-buss-15min-avgift-torsd.png",
+      "pixels": 496264
+    },
+    "055-forbud-stannande-snotackt-pil": {
+      "file": "055-forbud-stannande-snotackt-pil.jpg",
+      "pixels": 261370
+    },
+    "056-natt-avgift-7-19-taxa-3-torsd-plus-forbud": {
+      "file": "056-natt-avgift-7-19-taxa-3-torsd-plus-forbud.png",
+      "pixels": 205800
+    },
+    "057-p-skiva-2tim-eller-gratis-biljett": {
+      "file": "057-p-skiva-2tim-eller-gratis-biljett.png",
+      "pixels": 136704
+    },
+    "058-natt-klass-i-22-06-roda-siffror-utanfor-markerad": {
+      "file": "058-natt-klass-i-22-06-roda-siffror-utanfor-markerad.png",
+      "pixels": 251236
+    },
+    "059-avstand-p-skiva-2tim-darefter-avgift": {
+      "file": "059-avstand-p-skiva-2tim-darefter-avgift.png",
+      "pixels": 40000
+    },
+    "060-natt-lastplats-ovrig-tid-avgift": {
+      "file": "060-natt-lastplats-ovrig-tid-avgift.png",
+      "pixels": 24030
+    },
+    "061-lastplats-langt-avstand": {
+      "file": "061-lastplats-langt-avstand.png",
+      "pixels": 14678
+    },
+    "062-klass-i-14-dygn-slapfordon-forbud": {
+      "file": "062-klass-i-14-dygn-slapfordon-forbud.png",
+      "pixels": 107387
+    },
+    "063-natt-p-tillstand-06-16-p-skiva-3tim": {
+      "file": "063-natt-p-tillstand-06-16-p-skiva-3tim.png",
+      "pixels": 150360
+    },
+    "064-motorcykel-tisd-9-17-beskuren": {
+      "file": "064-motorcykel-tisd-9-17-beskuren.png",
+      "pixels": 69540
+    },
+    "065-laddning-avgift-4-platser-med-automat": {
+      "file": "065-laddning-avgift-4-platser-med-automat.jpg",
+      "pixels": 737280
+    },
+    "066-reserverad-vaktmastare-tillstand-pil": {
+      "file": "066-reserverad-vaktmastare-tillstand-pil.jpg",
+      "pixels": 737280
+    },
+    "067-tillstand-reserverad-verksamhet-2-platser": {
+      "file": "067-tillstand-reserverad-verksamhet-2-platser.jpg",
+      "pixels": 737280
+    },
+    "068-parkering-forbjuden-privat-parkering": {
+      "file": "068-parkering-forbjuden-privat-parkering.jpg",
+      "pixels": 737280
+    },
+    "069-personal-giltigt-tillstand-securitas": {
+      "file": "069-personal-giltigt-tillstand-securitas.jpg",
+      "pixels": 737280
+    },
+    "070-regionservice-1-plats": {
+      "file": "070-regionservice-1-plats.jpg",
+      "pixels": 737280
+    },
+    "071-taxi-3-platser": {
+      "file": "071-taxi-3-platser.jpg",
+      "pixels": 737280
+    },
+    "072-blodbil-1-plats": {
+      "file": "072-blodbil-1-plats.jpg",
+      "pixels": 737280
+    },
+    "073-30min-00-24-buss-avgift-roda-siffror": {
+      "file": "073-30min-00-24-buss-avgift-roda-siffror.jpg",
+      "pixels": 737280
+    },
+    "074-skyltar-pa-langt-avstand": {
+      "file": "074-skyltar-pa-langt-avstand.jpg",
+      "pixels": 737280
+    },
+    "075-p-med-olasliga-plattor-pa-avstand": {
+      "file": "075-p-med-olasliga-plattor-pa-avstand.jpg",
+      "pixels": 737280
+    },
+    "076-flera-skyltar-pa-avstand-kontorshus": {
+      "file": "076-flera-skyltar-pa-avstand-kontorshus.jpg",
+      "pixels": 737280
+    },
+    "077-gul-forbud-forhyrda-platser-skymning": {
+      "file": "077-gul-forbud-forhyrda-platser-skymning.jpg",
+      "pixels": 737280
+    },
+    "078-p-skylt-overklistrad": {
+      "file": "078-p-skylt-overklistrad.jpg",
+      "pixels": 921600
+    },
+    "079-p-skylt-bakom-trad": {
+      "file": "079-p-skylt-bakom-trad.jpg",
+      "pixels": 921600
+    },
+    "080-p-skylt-pa-avstand-parkeringsyta": {
+      "file": "080-p-skylt-pa-avstand-parkeringsyta.jpg",
+      "pixels": 921600
+    },
+    "081-p-skylt-pa-avstand-genom-lov": {
+      "file": "081-p-skylt-pa-avstand-genom-lov.jpg",
+      "pixels": 921600
+    },
+    "082-p-skylt-pa-avstand-bostadsgata": {
+      "file": "082-p-skylt-pa-avstand-bostadsgata.jpg",
+      "pixels": 921600
+    },
+    "083-gul-forbud-forhyrda-platser-pa-avstand": {
+      "file": "083-gul-forbud-forhyrda-platser-pa-avstand.jpg",
+      "pixels": 921600
+    },
+    "084-gul-forbud-p-tjanst-vast-farthinder": {
+      "file": "084-gul-forbud-p-tjanst-vast-farthinder.jpg",
+      "pixels": 921600
+    },
+    "085-p-med-plattor-bakom-bom": {
+      "file": "085-p-med-plattor-bakom-bom.jpg",
+      "pixels": 737280
+    },
+    "086-p-1tim-pil-europark": {
+      "file": "086-p-1tim-pil-europark.jpg",
+      "pixels": 737280
+    },
+    "087-motljus-parkering-pa-avstand": {
+      "file": "087-motljus-parkering-pa-avstand.jpg",
+      "pixels": 737280
+    },
+    "088-avgift-8-20-rod-taxa-boende-c-nv-mandag-8-11": {
+      "file": "088-avgift-8-20-rod-taxa-boende-c-nv-mandag-8-11.jpg",
+      "pixels": 5760000
+    },
+    "089-lastplats-zon-c-boende-centrala": {
+      "file": "089-lastplats-zon-c-boende-centrala.png",
+      "pixels": 109212
+    },
+    "090-avgift-uppstallning-zon-e-pil": {
+      "file": "090-avgift-uppstallning-zon-e-pil.png",
+      "pixels": 392110
+    },
+    "091-avgift-7-19-torsd-boende": {
+      "file": "091-avgift-7-19-torsd-boende.png",
+      "pixels": 323606
+    },
+    "092-avgift-boende-mork-vagg": {
+      "file": "092-avgift-boende-mork-vagg.png",
+      "pixels": 536731
+    },
+    "093-forbud-onsdag-pilar": {
+      "file": "093-forbud-onsdag-pilar.png",
+      "pixels": 489144
+    },
+    "094-p-7-dygn-torsd-vintersasong": {
+      "file": "094-p-7-dygn-torsd-vintersasong.png",
+      "pixels": 464868
+    },
+    "095-30min-plus-avgift-taxa": {
+      "file": "095-30min-plus-avgift-taxa.png",
+      "pixels": 470880
+    },
+    "096-flera-stolpar-boende-solna": {
+      "file": "096-flera-stolpar-boende-solna.png",
+      "pixels": 507895
+    },
+    "097-avgift-taxa-a-boende-solna-onsdag": {
+      "file": "097-avgift-taxa-a-boende-solna-onsdag.png",
+      "pixels": 461671
+    },
+    "098-avgift-7-19-tors-boende-tr": {
+      "file": "098-avgift-7-19-tors-boende-tr.png",
+      "pixels": 355540
+    },
+    "099-p-med-gul-skylt-pa-avstand": {
+      "file": "099-p-med-gul-skylt-pa-avstand.png",
+      "pixels": 392448
+    },
+    "100-avgift-7-19-boende-so": {
+      "file": "100-avgift-7-19-boende-so.png",
+      "pixels": 385024
+    },
+    "101-motorcykel-0-10m-avgift-tisd": {
+      "file": "101-motorcykel-0-10m-avgift-tisd.png",
+      "pixels": 263172
+    },
+    "102-p-bredvid-vagvisare-centrum-e4": {
+      "file": "102-p-bredvid-vagvisare-centrum-e4.png",
+      "pixels": 653305
+    },
+    "103-forbud-plus-hastighet-10": {
+      "file": "103-forbud-plus-hastighet-10.png",
+      "pixels": 703404
+    },
+    "104-2tim-avgift-fred-vid-blomsterbutik": {
+      "file": "104-2tim-avgift-fred-vid-blomsterbutik.png",
+      "pixels": 446524
+    },
+    "105-p-med-plattor-gathorn": {
+      "file": "105-p-med-plattor-gathorn.png",
+      "pixels": 679936
+    },
+    "106-p-blaa-och-gul-skylt-vid-berg": {
+      "file": "106-p-blaa-och-gul-skylt-vid-berg.png",
+      "pixels": 519851
+    },
+    "107-rorelsehindrad-med-plattor": {
+      "file": "107-rorelsehindrad-med-plattor.png",
+      "pixels": 546742
+    },
+    "108-p-under-cykelskylt": {
+      "file": "108-p-under-cykelskylt.png",
+      "pixels": 509388
+    },
+    "109-lastplats-vid-butik": {
+      "file": "109-lastplats-vid-butik.png",
+      "pixels": 507314
+    },
+    "110-avgift-30min-smal-gata": {
+      "file": "110-avgift-30min-smal-gata.png",
+      "pixels": 522376
+    },
+    "111-2tim-gul-skylt-vid-klippa": {
+      "file": "111-2tim-gul-skylt-vid-klippa.png",
+      "pixels": 333906
+    },
+    "112-p-1tim-parkeringsyta": {
+      "file": "112-p-1tim-parkeringsyta.png",
+      "pixels": 388592
+    },
+    "113-avgift-alla-dagar-tillstand-forhyrda": {
+      "file": "113-avgift-alla-dagar-tillstand-forhyrda.png",
+      "pixels": 415308
+    },
+    "114-avgift-taxa-boende-vid-vaggmalning": {
+      "file": "114-avgift-taxa-boende-vid-vaggmalning.png",
+      "pixels": 454768
+    },
+    "115-avgift-taxa-pil-ned": {
+      "file": "115-avgift-taxa-pil-ned.png",
+      "pixels": 463036
+    },
+    "116-p-gul-skylt-vid-restaurang": {
+      "file": "116-p-gul-skylt-vid-restaurang.png",
+      "pixels": 480200
+    },
+    "117-p-18-8-plus-huvudled": {
+      "file": "117-p-18-8-plus-huvudled.png",
+      "pixels": 480240
+    },
+    "118-p-plus-huvudled-pa-avstand": {
+      "file": "118-p-plus-huvudled-pa-avstand.png",
+      "pixels": 337808
+    },
+    "119-p-liten-skylt-vid-hack": {
+      "file": "119-p-liten-skylt-vid-hack.png",
+      "pixels": 333072
+    },
+    "120-p-7-dygn-plus-huvudled": {
+      "file": "120-p-7-dygn-plus-huvudled.png",
+      "pixels": 427614
+    },
+    "121-p-med-pil-vid-vag": {
+      "file": "121-p-med-pil-vid-vag.png",
+      "pixels": 554506
+    },
+    "122-p-3tim-pil-hoger": {
+      "file": "122-p-3tim-pil-hoger.png",
+      "pixels": 536832
+    },
+    "123-p-med-plattor-vid-torg": {
+      "file": "123-p-med-plattor-vid-torg.png",
+      "pixels": 327660
+    },
+    "124-p-gul-skylt-i-gronska": {
+      "file": "124-p-gul-skylt-i-gronska.png",
+      "pixels": 498435
+    },
+    "125-p-gula-plattor-vid-port": {
+      "file": "125-p-gula-plattor-vid-port.png",
+      "pixels": 404235
+    },
+    "126-avgift-7-19-fred-0-6": {
+      "file": "126-avgift-7-19-fred-0-6.png",
+      "pixels": 323312
+    },
+    "127-cykel-0-12m": {
+      "file": "127-cykel-0-12m.png",
+      "pixels": 319081
+    },
+    "128-rorelsehindrad-0-6m-avgift": {
+      "file": "128-rorelsehindrad-0-6m-avgift.png",
+      "pixels": 362967
+    },
+    "129-laddning-plus-overgangsstalle-30": {
+      "file": "129-laddning-plus-overgangsstalle-30.png",
+      "pixels": 256376
+    },
+    "130-2tim-avgift-torsd-vid-butik": {
+      "file": "130-2tim-avgift-torsd-vid-butik.png",
+      "pixels": 456190
+    },
+    "131-p-uppstallning-pil-i-sno": {
+      "file": "131-p-uppstallning-pil-i-sno.png",
+      "pixels": 524267
+    },
+    "132-avgift-boende-i-sno": {
+      "file": "132-avgift-boende-i-sno.png",
+      "pixels": 466128
+    },
+    "133-24tim-besokande-tillstand-1-plats": {
+      "file": "133-24tim-besokande-tillstand-1-plats.png",
+      "pixels": 388596
+    },
+    "134-p-plattor-plus-forbud-stannande": {
+      "file": "134-p-plattor-plus-forbud-stannande.png",
+      "pixels": 464980
+    },
+    "135-avgift-boende-rott-tegelhus": {
+      "file": "135-avgift-boende-rott-tegelhus.png",
+      "pixels": 525707
+    },
+    "136-forhyrda-platser-pilar-1-plats": {
+      "file": "136-forhyrda-platser-pilar-1-plats.png",
+      "pixels": 385149
+    },
+    "137-forhyrda-platser-securitas": {
+      "file": "137-forhyrda-platser-securitas.png",
+      "pixels": 421192
+    },
+    "138-forhyrda-platser-2-platser": {
+      "file": "138-forhyrda-platser-2-platser.png",
+      "pixels": 353541
+    },
+    "139-p-1tim-alla-dagar-avgift-torsdag": {
+      "file": "139-p-1tim-alla-dagar-avgift-torsdag.png",
+      "pixels": 155992
+    }
+  }
+}

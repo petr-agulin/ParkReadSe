@@ -23,6 +23,11 @@ export const ROOT = fileURLToPath(new URL("../../", import.meta.url));
 export const EXPECTED = join(ROOT, "testset", "expected");
 export const ANSWERS = join(ROOT, "testset", "answers");
 export const PHOTOS = join(ROOT, "testset", "photos");
+// The photographs themselves stay on the developer's disk (decision 185): part of the
+// set are Street View captures that are not the developer's to publish, and some show
+// number plates. What the tests and the measurement need of them - the name and the
+// number of pixels - lives in this index, which does go into the repository.
+export const PHOTO_INDEX = join(ROOT, "testset", "photos.json");
 export const TRIAGE_EXPECTED = join(ROOT, "testset", "triage_expected.json");
 
 // Photographs added to the set but not yet marked. The list is temporary and must
@@ -51,10 +56,33 @@ export const PENDING_GROUND_TRUTH = new Set<string>([
 const readJson = (path: string) => JSON.parse(readFileSync(path, "utf-8"));
 const stem = (file: string) => file.replace(/\.[^.]+$/, "");
 
-/** Every photograph of the set. Both extensions are checked: part of the set came as
- *  png, and a `*.jpg` mask once simply failed to see fourteen photographs in forty. */
+export type PhotoEntry = { file: string; pixels: number | null };
+
+/** The index built from the photographs on disk. Both extensions are checked: part of
+ *  the set came as png, and a `*.jpg` mask once simply failed to see fourteen
+ *  photographs in forty. */
+export function buildPhotoIndex(dir = PHOTOS): Record<string, PhotoEntry> {
+  const out: Record<string, PhotoEntry> = {};
+  for (const file of readdirSync(dir).filter((f) => /\.(jpg|png)$/i.test(f)).sort()) {
+    out[stem(file)] = { file, pixels: pixels(new Uint8Array(readFileSync(join(dir, file)))) };
+  }
+  return out;
+}
+
+/** The index as it lies in the repository. */
+export function photoIndex(path = PHOTO_INDEX): Record<string, PhotoEntry> {
+  return readJson(path).photos ?? {};
+}
+
+/** Every photograph of the set - read from the index, so the check holds on a clone
+ *  that has no photographs at all. */
 export function photos(): Set<string> {
-  return new Set(readdirSync(PHOTOS).filter((f) => /\.(jpg|png)$/i.test(f)).map(stem));
+  return new Set(Object.keys(photoIndex()));
+}
+
+/** The pixel count of a photograph, or null when the set does not know it. */
+export function photoPixels(label: string): number | null {
+  return photoIndex()[label]?.pixels ?? null;
 }
 
 /** The marked photographs — those with a ground-truth reading. */
@@ -160,8 +188,7 @@ export function assessAnswer(label: string, actual: SignDoc, moment: Naive,
   if (rec.missingKeys.length) flags.push("reference_gap:" + rec.missingKeys.join(","));
   const uninterpreted = Object.keys(rec.uninterpreted).map(Number).sort((a, b) => a - b);
   if (uninterpreted.length) flags.push("uninterpreted_panels:" + uninterpreted.join(","));
-  const photo = readdirSync(PHOTOS).find((f) => f.startsWith(`${label}.`) && /\.(jpg|png)$/i.test(f));
-  const imagePixels = photo ? pixels(new Uint8Array(readFileSync(join(PHOTOS, photo)))) : null;
+  const imagePixels = photoPixels(label);
   const a = grade(doc, { flags, repairs: res.repairs, imagePixels,
                          evaluation: evaluateParkingRules(doc, moment, cal) });
   return { confidence: Number(a.confidence.toFixed(6)), category: a.category, signals: a.signals };
