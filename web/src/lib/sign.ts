@@ -63,6 +63,8 @@ export type Parsed = {
   permits_parking?: boolean;
   road_sign?: "priority_road" | "speed_limit" | "speed_bump" | "pedestrian_crossing"
             | "other";
+  // In the schema until the next full run, and dropped by validation (decision 192):
+  // no plate limits a rule to one side of the street by house number.
   street_side?: "even_numbers" | "odd_numbers";
   unrecognised_slot?: "who" | "when" | "how_long" | "how_much" | "where";
 };

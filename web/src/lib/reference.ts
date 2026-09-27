@@ -210,9 +210,6 @@ export function recognise(doc: SignDoc): Recognised {
         ? "utanfor-markerad-plats" : "main-prohibition-parking");
     }
     if (parsed.scope_shift === "remaining_time") keys.push("ovrig-tid");
-    if (parsed.street_side) {
-      keys.push(parsed.street_side === "even_numbers" ? "jamna-husnummer" : "udda-husnummer");
-    }
     // A legible plate the model could place only as WHO: its words are not
     // interpreted, but that it names a circle would be enough to narrow (decision
     // 162). Held back (decision 173) - see `WHO_SLOT_NARROWS`.

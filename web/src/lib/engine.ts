@@ -61,11 +61,6 @@ export const GENERAL_RULE_GAP = "general_rules_apply_outside_the_sign";
 // shut (the developer's word, photographs `118`, `120`).
 export const PRIORITY_ROAD_GAP = "priority_road_needs_a_permitting_sign";
 
-// A prohibition confined to one side of the street by house number. The product does
-// not know which side the car is on, so the prohibition is applied, and says so.
-export const EVEN_SIDE_ONLY = "prohibition_on_even_numbered_side_only";
-export const ODD_SIDE_ONLY = "prohibition_on_odd_numbered_side_only";
-
 // stretches
 export const HERE = "here";
 export const ARROW_EXTENT: Record<string, string> = {
@@ -620,20 +615,13 @@ function timeline(now: Naive, cal: Calendar, baseState: string,
     }
 
     // step 7: a prohibition overrides permission
-    let sides: (string | undefined)[] = [];
     for (const parsed of prohibitions) {
       const results = windowsOf(parsed).map((w) => windowApplies(w, t0, cal));
       if (results.some((r) => r === null)) unknown = true;
       if (results.some((r) => r === true)) {
         state = PROHIBITED;
         conds = [];
-        sides = [...sides, parsed.street_side];
       }
-    }
-    // The side is named only when EVERY prohibition in force is confined to it: one
-    // that holds on both sides leaves nothing for the note to qualify.
-    if (sides.length && sides.every((side) => side === sides[0]) && sides[0]) {
-      note = sides[0] === "even_numbers" ? EVEN_SIDE_ONLY : ODD_SIDE_ONLY;
     }
 
     // The gap a lapsed prohibition leaves. Filled only where the sign was READ: that

@@ -112,7 +112,7 @@ one input among them, and not the decisive one.
 | Source | What it is | How it is used |
 |---|---|---|
 | **JSON schema** | A closed list of fields the model must fill | The only thing that reaches the rules engine |
-| **Reference (Markdown)** | 58 sign entries: code to plain-language explanation | Supplies the explanation text and acts as a **whitelist** |
+| **Reference (Markdown)** | 56 sign entries: code to plain-language explanation | Supplies the explanation text and acts as a **whitelist** |
 | **General rules (Markdown)** | 12 short notes about rules that are *not* on the sign | Shown as marked reference only. The notes never enter a computation; the one rule the engine does apply, the 24 hours, is computed in code |
 
 Anything outside the reference is marked unrecognised: the plate's text is shown verbatim

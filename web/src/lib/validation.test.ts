@@ -144,7 +144,8 @@ describe("contradictions inside one reading", () => {
                    || r.includes("dygn") || r.includes("dropped obstruction")
                    || r.includes("parking-disc symbol") || r.includes("Privat parkering")
                    || r.includes("operator plate") || r.includes("yellow plate with hours")
-                   || r.includes("ticket machine") || r.includes("zone of the tariff"))
+                   || r.includes("ticket machine") || r.includes("zone of the tariff")
+                   || r.includes("street_side"))
         .map((r) => `${f}: ${r}`));
     expect(fired).toEqual([]);
   });
@@ -251,6 +252,19 @@ describe("a plate reading \"Privat parkering\"", () => {
     expect(res.data!.panels![0].kind).toBe("sign_plate");
     expect(res.data!.panels![0].parsed).toEqual({});
     expect(res.repairs.some((r) => r.includes("Privat parkering"))).toBe(true);
+  });
+});
+
+describe("a side of the street by house number", () => {
+  it("is dropped: no plate says it", () => {
+    // Decision 192. The field came in by misreading `132`/`134`, which are date
+    // parking; until the schema loses it, nothing may be made of it.
+    const doc = read("132-avgift-9-19-jamnt-datum-0-8-i-sno");
+    const i = doc.panels.findIndex((p: any) => p.lines.join(" ") === "0-8 (0-8) 0-8");
+    doc.panels[i].parsed.street_side = "even_numbers";
+    const res = validateSign(doc);
+    expect(res.data!.panels![i].parsed!.street_side).toBeUndefined();
+    expect(res.repairs.filter((r) => r.includes("street_side"))).toHaveLength(1);
   });
 });
 

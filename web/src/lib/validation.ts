@@ -263,6 +263,16 @@ function contradictions(doc: Record<string, any>): string[] {
     const parsed = panel?.parsed;
     if (!parsed || typeof parsed !== "object" || panel.kind !== "sign_plate") continue;
 
+    // No plate limits a rule to one side of the street by house number (decision 192).
+    // The field came in by a misreading of `132`/`134`, which are date parking; it
+    // leaves the schema at the next full run, and until then it is dropped here, so no
+    // rule is ever made of it.
+    if (parsed.street_side !== undefined) {
+      done.push(`panel ${panel.index}: dropped street_side - no plate limits a rule `
+              + "to one side of the street by house number");
+      delete parsed.street_side;
+    }
+
     // "Privat parkering" is a sign plate that only informs: the land is private, and
     // the sign above means what it always means (decision 53). It opens no exception.
     // On `068` the model read it as one - parking for a named group under a

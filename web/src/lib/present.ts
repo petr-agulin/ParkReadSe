@@ -17,8 +17,8 @@ import { Calendar, EVE, RED } from "./calendar";
 import { isoDate, isoNaive, type Civil, type Naive, addDays } from "./civil";
 import { realMinutes, switchBetween } from "./clock";
 import { FULL, PARTIAL, type Assessment } from "./completeness";
-import { ALLOWED, EVEN_SIDE_ONLY, FEE_PERIOD_ELSEWHERE, GENERAL_RULE_GAP, NOT_STATED,
-         ODD_SIDE_ONLY, OUTSIDE_PERMITTED_HOURS, PRIORITY_ROAD_GAP, PROHIBITED,
+import { ALLOWED, FEE_PERIOD_ELSEWHERE, GENERAL_RULE_GAP, NOT_STATED,
+         OUTSIDE_PERMITTED_HOURS, PRIORITY_ROAD_GAP, PROHIBITED,
          horizonEnd,
          type Evaluation, type Period, type Regime } from "./engine";
 import { carriesRule, countsTowardsRules, get as refGet, type Recognised } from "./reference";
@@ -560,14 +560,6 @@ export function regimeView(r: Regime, horizon: Naive, cal: Calendar,
         aside.push({ key: PRIORITY_ROAD_GAP, known: true,
                      text: "The sign says nothing about this time, and this is a "
                          + "priority road: parking there needs a sign that permits it." });
-      }
-      // The product cannot tell which side of the street the car is on, so the
-      // prohibition is applied - and the side it belongs to is named.
-      if (p.note === EVEN_SIDE_ONLY || p.note === ODD_SIDE_ONLY) {
-        const side = p.note === EVEN_SIDE_ONLY ? "even" : "odd";
-        aside.push({ key: p.note, known: true,
-                     text: `This prohibition holds only on the side of the street with `
-                         + `${side} house numbers.` });
       }
       return periodView(p, horizon, cal,
                         last ? STAY_END_TEXT[r.durationSource ?? ""] ?? "" : "",

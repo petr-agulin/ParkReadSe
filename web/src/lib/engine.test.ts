@@ -10,7 +10,7 @@ import { describe, expect, it } from "vitest";
 import { Calendar, EVE, RED, UNKNOWN, WEEKDAY } from "./calendar";
 import { addDays, isoNaive, parseDate, parseNaive, weekday,
          type Civil, type Naive } from "./civil";
-import { ALLOWED, EVEN_SIDE_ONLY, FEE_PERIOD_ELSEWHERE, GENERAL_RULE_GAP,
+import { ALLOWED, FEE_PERIOD_ELSEWHERE, GENERAL_RULE_GAP,
          PRIORITY_ROAD_GAP,
          PROHIBITED, UNCERTAIN,
          evaluateParkingRules, horizonEnd, isoWeek, twentyFourHourExpiry,
@@ -948,26 +948,6 @@ describe("a road sign on the same post", () => {
     const r = first(s, "2026-09-23T14:00");
     expect(state(r, "2026-09-23T14:00")[0]).toBe(ALLOWED);
     expect(r.periods[0].note).toBe(GENERAL_RULE_GAP);
-  });
-});
-
-describe("a prohibition confined to one side of the street", () => {
-  const sideBan = (street_side?: Parsed["street_side"]) =>
-    plate({ prohibition: true, street_side,
-            time_windows: [win("00:00", "08:00", WEEKDAY)] }, ["0-8"]);
-
-  it("is applied, and names its side", () => {
-    // `132`, `134`: the product cannot tell which side the car is on, so it applies
-    // the prohibition - the cautious side - and says which side it belongs to.
-    const r = first(sign([sideBan("even_numbers")]), "2026-09-23T03:00");
-    expect(state(r, "2026-09-23T03:00")[0]).toBe(PROHIBITED);
-    expect(r.periods[0].note).toBe(EVEN_SIDE_ONLY);
-  });
-
-  it("names no side when another prohibition in force holds on both", () => {
-    const r = first(sign([sideBan("odd_numbers"), sideBan()]), "2026-09-23T03:00");
-    expect(state(r, "2026-09-23T03:00")[0]).toBe(PROHIBITED);
-    expect(r.periods[0].note).toBeNull();
   });
 });
 
