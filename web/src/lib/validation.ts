@@ -17,7 +17,16 @@ import { validate } from "./schema";
 import { SIGN_SCHEMA, TRIAGE_SCHEMA } from "./schema.data";
 import type { Panel, SignDoc } from "./sign";
 
-export class InvalidModelResponse extends Error {}
+/** The model's reply could not be read. `raw` keeps the reply itself for the
+ *  developer's tools, which show where it breaks; it is not put in the message, so
+ *  the model's text never reaches the screen of the application. */
+export class InvalidModelResponse extends Error {
+  raw?: string;
+  constructor(message: string, raw?: string) {
+    super(message);
+    this.raw = raw;
+  }
+}
 
 export type Result = {
   data: SignDoc | null;
@@ -51,7 +60,7 @@ export function parseJson(raw: string): Record<string, any> {
     }
   }
   throw new InvalidModelResponse(
-    `the answer does not parse as JSON (length ${raw.length} characters)`);
+    `the answer does not parse as JSON (length ${raw.length} characters)`, raw);
 }
 
 /** Fixes made silently, because they are unambiguous. Each one is written down. */
@@ -84,6 +93,18 @@ function repairDoc(doc: Record<string, any>): string[] {
     if (lines.length !== p.lines.length) {
       done.push(`panel ${p.index}: empty lines removed`);
       p.lines = lines;
+    }
+  }
+
+  // A panel with nothing parsed sometimes comes back with no `parsed` at all - on
+  // `131`, twice, on the small payment board at the foot - and the schema then refused
+  // the whole reading. An absent `parsed` can only mean "nothing parsed": it is given
+  // an empty one, which claims nothing and so can widen nothing, and the repair is
+  // written down.
+  for (const p of list) {
+    if (p && typeof p === "object" && p.parsed === undefined) {
+      done.push(`panel ${p.index}: no 'parsed' given - an empty one put in`);
+      p.parsed = {};
     }
   }
 

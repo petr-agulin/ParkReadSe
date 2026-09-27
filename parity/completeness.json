@@ -4288,7 +4288,7 @@
  },
  "expected/035-zon-c-pa-avstand@base": {
   "category": "insufficient",
-  "confidence": 0.908,
+  "confidence": 0.842,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -4297,15 +4297,16 @@
    "model_confidence": 0.5,
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
-   "panels_read_share": 0.666667,
+   "panels_read_share": 0.333333,
    "plates_interpreted": 1.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
   "reasons": [
-   "unread_panels:3"
+   "unread_panels:2,3"
   ],
   "unread_panels": [
+   2,
    3
   ],
   "may_hide_prohibition": false,

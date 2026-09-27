@@ -115,6 +115,23 @@ describe("asking the model again", () => {
   });
 });
 
+describe("a reply that is not JSON", () => {
+  it("is shown where it begins and where it ends", async () => {
+    // `005`, twice: "the answer does not parse as JSON (length 1112 characters)", and
+    // nothing to see why (step 15h).
+    const lines: string[] = [];
+    const broken = (async () => new Response(JSON.stringify({
+      choices: [{ message: { content: '{"main_sign": {"type": "parking"' } }],
+    }), { status: 200 })) as unknown as typeof fetch;
+    const code = await ask([PHOTO], {}, { ...deps({ fetchImpl: broken }),
+                                         out: (line: string) => lines.push(line) });
+    expect(code).toBe(1);
+    expect(lines.some((l) => l.includes("the reply begins") && l.includes("main_sign")))
+      .toBe(true);
+    expect(lines.some((l) => l.includes("the reply ends"))).toBe(true);
+  });
+});
+
 describe("the command's arguments", () => {
   it("expands the asterisk itself: PowerShell does not", () => {
     const found = expand([join(PHOTO_DIR, "001-*.jpg")]);

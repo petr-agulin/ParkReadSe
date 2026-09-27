@@ -29,25 +29,23 @@
     },
     {
       "kind": "sign_plate",
-      "lines": [
-        "Zon C"
-      ],
+      "lines": [],
       "background_color": "white",
       "legibility": {
-        "readable": true,
+        "readable": false,
         "obstructions": [
           "blur",
           "distance"
         ]
       },
-      "parsed": {
-        "tariff_code": "Zon C"
-      },
+      "parsed": {},
       "index": 2
     },
     {
       "kind": "sign_plate",
-      "lines": [],
+      "lines": [
+        "Zon C"
+      ],
       "background_color": "white",
       "legibility": {
         "readable": false,

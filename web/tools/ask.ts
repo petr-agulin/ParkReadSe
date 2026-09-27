@@ -128,6 +128,13 @@ export async function ask(paths: string[], { refresh = false } = {},
     } catch (e) {
       // One failure must not bring the whole run down.
       out(`  CALL FAILED: ${(e as Error).name}: ${String((e as Error).message).slice(0, 200)}`);
+      // A reply that is not JSON: show where it starts and where it ends - that is
+      // where a reply goes wrong, cut short or wrapped in prose (photograph `005`).
+      const raw = (e as { raw?: unknown }).raw;
+      if (typeof raw === "string") {
+        out(`  the reply begins: ${JSON.stringify(raw.slice(0, 300))}`);
+        out(`  the reply ends:   ${JSON.stringify(raw.slice(-300))}`);
+      }
       bad += 1;
       continue;
     }

@@ -254,6 +254,20 @@ describe("a plate reading \"Privat parkering\"", () => {
   });
 });
 
+describe("a panel with no parsed field", () => {
+  it("gets an empty one, and the reading stays", () => {
+    // `131`, twice: the payment board at the foot came back with no `parsed`, and
+    // the schema refused the whole reading.
+    const doc = read("131-avgift-uppstallning-mand-boende-pil");
+    const board = doc.panels.length - 1;
+    delete doc.panels[board].parsed;
+    const res = validateSign(doc);
+    expect(ok(res), res.schemaErrors.join("; ")).toBe(true);
+    expect(res.data!.panels![board].parsed).toEqual({});
+    expect(res.repairs.filter((r) => r.includes("no 'parsed'"))).toHaveLength(1);
+  });
+});
+
 describe("the ticket machine and the tariff zone", () => {
   it("drops a ticket from a plate that names a ticket machine", () => {
     // `097` as the model read it (decision 187).

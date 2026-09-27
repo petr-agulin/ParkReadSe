@@ -70610,12 +70610,12 @@
    "category": "insufficient",
    "category_text": "Too little of the sign was read to say what it states",
    "tone": "bad",
-   "confidence": 0.908,
+   "confidence": 0.842,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
-    "panels_read_share": 0.6666666666666666,
+    "panels_read_share": 0.3333333333333333,
     "plates_interpreted": 1.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
@@ -70626,11 +70626,12 @@
    },
    "reasons": [
     {
-     "token": "unread_panels:3",
-     "text": "Plates 3 on the sign could not be read"
+     "token": "unread_panels:2,3",
+     "text": "Plates 2,3 on the sign could not be read"
     }
    ],
    "unread_panels": [
+    2,
     3
    ],
    "may_hide_prohibition": false
@@ -70732,15 +70733,11 @@
     {
      "index": 2,
      "kind": "sign_plate",
-     "lines": [
-      "Zon C"
-     ],
+     "lines": [],
      "background_color": "white",
-     "reference_keys": [
-      "taxa"
-     ],
+     "reference_keys": [],
      "uninterpreted": [],
-     "not_interpreted_text": null,
+     "not_interpreted_text": "This plate could not be read reliably, so its words are not shown.",
      "fields": [
       {
        "name": "index",
@@ -70756,35 +70753,18 @@
       },
       {
        "name": "lines",
-       "value": "Zon C"
-      },
-      {
-       "name": "parsed.tariff_code",
-       "value": "Zon C"
+       "value": "(no text)"
       },
       {
        "name": "legibility",
-       "value": "readable; blur, distance"
-      },
-      {
-       "name": "reference_keys",
-       "value": "taxa"
+       "value": "not readable; blur, distance"
       }
      ],
      "title": "Panel",
-     "text": "Zon C",
-     "meanings": [
-      {
-       "key": "taxa",
-       "label": "Fee",
-       "code": "T16",
-       "text": "The sign states a municipal tariff number",
-       "short": "Municipal tariff number",
-       "continues": false
-      }
-     ],
+     "text": "",
+     "meanings": [],
      "carries_rule": true,
-     "unreliable": false
+     "unreliable": true
     },
     {
      "index": 3,
@@ -70792,7 +70772,9 @@
      "lines": [],
      "background_color": "white",
      "reference_keys": [],
-     "uninterpreted": [],
+     "uninterpreted": [
+      "Zon C"
+     ],
      "not_interpreted_text": "This plate could not be read reliably, so its words are not shown.",
      "fields": [
       {
@@ -70809,7 +70791,7 @@
       },
       {
        "name": "lines",
-       "value": "(no text)"
+       "value": "Zon C"
       },
       {
        "name": "legibility",
