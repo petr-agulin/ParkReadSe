@@ -724,7 +724,9 @@
  "answers/041-lastplats-forbud-7-17-ovrig-tid-avgift": {
   "main_sign_key": "main-prohibition-stopping",
   "panel_keys": {
-   "1": [],
+   "1": [
+    "lastplats"
+   ],
    "2": [
     "window-weekday"
    ],
@@ -741,13 +743,7 @@
     "ovrig-tid"
    ]
   },
-  "uninterpreted": {
-   "1": [
-    "Lastplats",
-    "Last-",
-    "plats"
-   ]
-  },
+  "uninterpreted": {},
   "missing_keys": []
  },
  "answers/042-cykel-moped-parkering": {
@@ -979,7 +975,9 @@
  "answers/060-natt-lastplats-ovrig-tid-avgift": {
   "main_sign_key": "main-prohibition-stopping",
   "panel_keys": {
-   "1": [],
+   "1": [
+    "lastplats"
+   ],
    "2": [
     "window-weekday"
    ],
@@ -997,19 +995,14 @@
     "window-eve"
    ]
   },
-  "uninterpreted": {
-   "1": [
-    "Lastplats",
-    "Last-",
-    "plats"
-   ]
-  },
+  "uninterpreted": {},
   "missing_keys": []
  },
  "answers/061-lastplats-langt-avstand": {
   "main_sign_key": "main-prohibition-stopping",
   "panel_keys": {
    "1": [
+    "lastplats",
     "reserved-for-named-group"
    ],
    "2": [
@@ -1029,9 +1022,6 @@
    ]
   },
   "uninterpreted": {
-   "1": [
-    "lastplats"
-   ],
    "5": [
     "24h-vakt"
    ]
@@ -1381,7 +1371,9 @@
  "answers/089-lastplats-zon-c-boende-centrala": {
   "main_sign_key": "main-prohibition-stopping",
   "panel_keys": {
-   "1": [],
+   "1": [
+    "lastplats"
+   ],
    "2": [
     "window-weekday"
    ],
@@ -1399,13 +1391,7 @@
     "info-board"
    ]
   },
-  "uninterpreted": {
-   "1": [
-    "Lastplats",
-    "Last-",
-    "plats"
-   ]
-  },
+  "uninterpreted": {},
   "missing_keys": []
  },
  "answers/090-avgift-uppstallning-zon-e-pil": {
@@ -1567,6 +1553,7 @@
     "datumintervall"
    ],
    "4": [
+    "biljettautomat",
     "p-biljett"
    ],
    "5": [
@@ -1838,7 +1825,9 @@
  "answers/109-lastplats-vid-butik": {
   "main_sign_key": "main-prohibition-stopping",
   "panel_keys": {
-   "1": [],
+   "1": [
+    "lastplats"
+   ],
    "2": [
     "window-weekday",
     "window-eve",
@@ -1852,12 +1841,7 @@
     "named-weekday"
    ]
   },
-  "uninterpreted": {
-   "1": [
-    "Last-",
-    "plats"
-   ]
-  },
+  "uninterpreted": {},
   "missing_keys": []
  },
  "answers/110-avgift-30min-smal-gata": {
@@ -3775,7 +3759,9 @@
  "expected/089-lastplats-zon-c-boende-centrala": {
   "main_sign_key": "main-prohibition-stopping",
   "panel_keys": {
-   "1": [],
+   "1": [
+    "lastplats"
+   ],
    "2": [
     "window-weekday"
    ],
@@ -3793,13 +3779,7 @@
     "info-board"
    ]
   },
-  "uninterpreted": {
-   "1": [
-    "Lastplats",
-    "Last-",
-    "plats"
-   ]
-  },
+  "uninterpreted": {},
   "missing_keys": []
  },
  "expected/090-avgift-uppstallning-zon-e-pil": {
@@ -3967,18 +3947,14 @@
     "udda-veckor",
     "datumintervall"
    ],
-   "4": [],
+   "4": [
+    "biljettautomat"
+   ],
    "5": [
     "info-board"
    ]
   },
-  "uninterpreted": {
-   "4": [
-    "Biljettautomat",
-    "Biljett-",
-    "automat"
-   ]
-  },
+  "uninterpreted": {},
   "missing_keys": []
  },
  "expected/098-avgift-7-19-tors-boende-tr": {

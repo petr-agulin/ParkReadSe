@@ -360,9 +360,6 @@
   "096-flera-stolpar-boende-solna": [
    "who may park: ['boende', 'pictogram-motorcycle'] instead of ['boende']"
   ],
-  "097-avgift-taxa-a-boende-solna-onsdag": [
-   "hours differing by conditions 168/168: avgift, p-biljett instead of avgift"
-  ],
   "105-p-med-plattor-gathorn": [
    "who may park: ['pictogram-electric-car'] instead of ['boende', 'pictogram-electric-car']"
   ]
@@ -530,12 +527,6 @@
    "061-lastplats-langt-avstand"
   ],
   [
-   0.717,
-   "insufficient",
-   true,
-   "060-natt-lastplats-ovrig-tid-avgift"
-  ],
-  [
    0.75,
    "partial",
    false,
@@ -557,12 +548,6 @@
    0.775,
    "partial",
    false,
-   "041-lastplats-forbud-7-17-ovrig-tid-avgift"
-  ],
-  [
-   0.775,
-   "partial",
-   false,
    "084-gul-forbud-p-tjanst-vast-farthinder"
   ],
   [
@@ -572,10 +557,10 @@
    "055-forbud-stannande-snotackt-pil"
   ],
   [
-   0.798,
-   "partial",
-   false,
-   "109-lastplats-vid-butik"
+   0.817,
+   "insufficient",
+   true,
+   "060-natt-lastplats-ovrig-tid-avgift"
   ],
   [
    0.875,
@@ -600,6 +585,12 @@
    "partial",
    false,
    "037-hanvisning-p-med-pil"
+  ],
+  [
+   0.875,
+   "full",
+   false,
+   "041-lastplats-forbud-7-17-ovrig-tid-avgift"
   ],
   [
    0.875,
@@ -636,12 +627,6 @@
    "partial",
    false,
    "088-avgift-8-20-rod-taxa-boende-c-nv-mandag-8-11"
-  ],
-  [
-   0.875,
-   "partial",
-   false,
-   "089-lastplats-zon-c-boende-centrala"
   ],
   [
    0.875,
@@ -758,6 +743,12 @@
    "106-p-blaa-och-gul-skylt-vid-berg"
   ],
   [
+   0.898,
+   "full",
+   false,
+   "109-lastplats-vid-butik"
+  ],
+  [
    0.899,
    "full",
    false,
@@ -767,7 +758,25 @@
    0.925,
    "full",
    false,
+   "034-avgift-tisdag-12-15-nov-maj-zon-c-boende"
+  ],
+  [
+   0.925,
+   "full",
+   false,
    "063-natt-p-tillstand-06-16-p-skiva-3tim"
+  ],
+  [
+   0.925,
+   "full",
+   false,
+   "089-lastplats-zon-c-boende-centrala"
+  ],
+  [
+   0.925,
+   "full",
+   false,
+   "097-avgift-taxa-a-boende-solna-onsdag"
   ],
   [
    0.925,
@@ -923,12 +932,6 @@
    0.975,
    "full",
    false,
-   "034-avgift-tisdag-12-15-nov-maj-zon-c-boende"
-  ],
-  [
-   0.975,
-   "full",
-   false,
    "036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so"
   ],
   [
@@ -1008,12 +1011,6 @@
    "full",
    false,
    "094-p-7-dygn-torsd-vintersasong"
-  ],
-  [
-   0.975,
-   "full",
-   true,
-   "097-avgift-taxa-a-boende-solna-onsdag"
   ],
   [
    0.975,
@@ -1262,5 +1259,5 @@
    "135-p-ej-markerade-platser-securitas"
   ]
  ],
- "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 25 | 4 | 102 | 8 |\n| 0.875 | 25 | 4 | 102 | 8 |\n| 0.900 | 44 | 10 | 83 | 2 |\n| 0.920 | 44 | 10 | 83 | 2 |\n| 0.950 | 46 | 10 | 81 | 2 |"
+ "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 22 | 4 | 105 | 7 |\n| 0.875 | 22 | 4 | 105 | 7 |\n| 0.900 | 43 | 10 | 84 | 1 |\n| 0.920 | 43 | 10 | 84 | 1 |\n| 0.950 | 48 | 10 | 79 | 1 |"
 }

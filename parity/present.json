@@ -19938,13 +19938,11 @@
       "plats"
      ],
      "background_color": "yellow",
-     "reference_keys": [],
-     "uninterpreted": [
-      "Lastplats",
-      "Last-",
-      "plats"
+     "reference_keys": [
+      "lastplats"
      ],
-     "not_interpreted_text": "Not interpreted — shown above exactly as printed",
+     "uninterpreted": [],
+     "not_interpreted_text": null,
      "fields": [
       {
        "name": "index",
@@ -19973,11 +19971,24 @@
       {
        "name": "legibility",
        "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "lastplats"
       }
      ],
      "title": "Panel",
      "text": "Lastplats",
-     "meanings": [],
+     "meanings": [
+      {
+       "key": "lastplats",
+       "label": "Text panel",
+       "code": "T22",
+       "text": "The place is for loading and unloading goods",
+       "short": "A loading place",
+       "continues": false
+      }
+     ],
      "carries_rule": true,
      "unreliable": false
     },
@@ -26833,13 +26844,11 @@
       "plats"
      ],
      "background_color": "yellow",
-     "reference_keys": [],
-     "uninterpreted": [
-      "Lastplats",
-      "Last-",
-      "plats"
+     "reference_keys": [
+      "lastplats"
      ],
-     "not_interpreted_text": "Not interpreted — shown above exactly as printed",
+     "uninterpreted": [],
+     "not_interpreted_text": null,
      "fields": [
       {
        "name": "index",
@@ -26864,11 +26873,24 @@
       {
        "name": "legibility",
        "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "lastplats"
       }
      ],
      "title": "Panel",
      "text": "Lastplats",
-     "meanings": [],
+     "meanings": [
+      {
+       "key": "lastplats",
+       "label": "Text panel",
+       "code": "T22",
+       "text": "The place is for loading and unloading goods",
+       "short": "A loading place",
+       "continues": false
+      }
+     ],
      "carries_rule": true,
      "unreliable": false
     },
@@ -27284,12 +27306,11 @@
      ],
      "background_color": "yellow",
      "reference_keys": [
+      "lastplats",
       "reserved-for-named-group"
      ],
-     "uninterpreted": [
-      "lastplats"
-     ],
-     "not_interpreted_text": "Not interpreted: lastplats",
+     "uninterpreted": [],
+     "not_interpreted_text": null,
      "fields": [
       {
        "name": "index",
@@ -27325,18 +27346,18 @@
       },
       {
        "name": "reference_keys",
-       "value": "reserved-for-named-group"
+       "value": "lastplats, reserved-for-named-group"
       }
      ],
      "title": "Panel",
      "text": "lastplats",
      "meanings": [
       {
-       "key": "reserved-for-named-group",
+       "key": "lastplats",
        "label": "Text panel",
        "code": "T22",
-       "text": "The sign designates these spaces for a named group",
-       "short": "For a named group",
+       "text": "The place is for loading and unloading goods; The sign designates these spaces for a named group",
+       "short": "A loading place; For a named group",
        "continues": false
       }
      ],
@@ -36312,13 +36333,11 @@
       "plats"
      ],
      "background_color": "yellow",
-     "reference_keys": [],
-     "uninterpreted": [
-      "Lastplats",
-      "Last-",
-      "plats"
+     "reference_keys": [
+      "lastplats"
      ],
-     "not_interpreted_text": "Not interpreted — shown above exactly as printed",
+     "uninterpreted": [],
+     "not_interpreted_text": null,
      "fields": [
       {
        "name": "index",
@@ -36347,11 +36366,24 @@
       {
        "name": "legibility",
        "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "lastplats"
       }
      ],
      "title": "Panel",
      "text": "Lastplats",
-     "meanings": [],
+     "meanings": [
+      {
+       "key": "lastplats",
+       "label": "Text panel",
+       "code": "T22",
+       "text": "The place is for loading and unloading goods",
+       "short": "A loading place",
+       "continues": false
+      }
+     ],
      "carries_rule": true,
      "unreliable": false
     },
@@ -39645,6 +39677,7 @@
      ],
      "background_color": "blue",
      "reference_keys": [
+      "biljettautomat",
       "p-biljett"
      ],
      "uninterpreted": [],
@@ -39676,12 +39709,20 @@
       },
       {
        "name": "reference_keys",
-       "value": "p-biljett"
+       "value": "biljettautomat, p-biljett"
       }
      ],
      "title": "Panel",
      "text": "Biljett automat",
      "meanings": [
+      {
+       "key": "biljettautomat",
+       "label": "Text panel",
+       "code": "T22",
+       "text": "The sign says the fee is paid at a ticket machine",
+       "short": "Fee paid at a ticket machine",
+       "continues": false
+      },
       {
        "key": "p-biljett",
        "label": "Parking ticket",
@@ -44658,12 +44699,11 @@
       "plats"
      ],
      "background_color": "yellow",
-     "reference_keys": [],
-     "uninterpreted": [
-      "Last-",
-      "plats"
+     "reference_keys": [
+      "lastplats"
      ],
-     "not_interpreted_text": "Not interpreted — shown above exactly as printed",
+     "uninterpreted": [],
+     "not_interpreted_text": null,
      "fields": [
       {
        "name": "index",
@@ -44688,11 +44728,24 @@
       {
        "name": "legibility",
        "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "lastplats"
       }
      ],
      "title": "Panel",
      "text": "Lastplats",
-     "meanings": [],
+     "meanings": [
+      {
+       "key": "lastplats",
+       "label": "Text panel",
+       "code": "T22",
+       "text": "The place is for loading and unloading goods",
+       "short": "A loading place",
+       "continues": false
+      }
+     ],
      "carries_rule": true,
      "unreliable": false
     },
@@ -90558,13 +90611,11 @@
       "plats"
      ],
      "background_color": "yellow",
-     "reference_keys": [],
-     "uninterpreted": [
-      "Lastplats",
-      "Last-",
-      "plats"
+     "reference_keys": [
+      "lastplats"
      ],
-     "not_interpreted_text": "Not interpreted — shown above exactly as printed",
+     "uninterpreted": [],
+     "not_interpreted_text": null,
      "fields": [
       {
        "name": "index",
@@ -90583,17 +90634,26 @@
        "value": "Last-, plats"
       },
       {
-       "name": "parsed.uninterpreted",
-       "value": "Lastplats"
-      },
-      {
        "name": "legibility",
        "value": "readable; blur"
+      },
+      {
+       "name": "reference_keys",
+       "value": "lastplats"
       }
      ],
      "title": "Panel",
      "text": "Lastplats",
-     "meanings": [],
+     "meanings": [
+      {
+       "key": "lastplats",
+       "label": "Text panel",
+       "code": "T22",
+       "text": "The place is for loading and unloading goods",
+       "short": "A loading place",
+       "continues": false
+      }
+     ],
      "carries_rule": true,
      "unreliable": false
     },
@@ -93804,13 +93864,11 @@
       "automat"
      ],
      "background_color": "blue",
-     "reference_keys": [],
-     "uninterpreted": [
-      "Biljettautomat",
-      "Biljett-",
-      "automat"
+     "reference_keys": [
+      "biljettautomat"
      ],
-     "not_interpreted_text": "Not interpreted — shown above exactly as printed",
+     "uninterpreted": [],
+     "not_interpreted_text": null,
      "fields": [
       {
        "name": "index",
@@ -93829,17 +93887,26 @@
        "value": "Biljett-, automat"
       },
       {
-       "name": "parsed.uninterpreted",
-       "value": "Biljettautomat"
-      },
-      {
        "name": "legibility",
        "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "biljettautomat"
       }
      ],
      "title": "Panel",
      "text": "Biljettautomat",
-     "meanings": [],
+     "meanings": [
+      {
+       "key": "biljettautomat",
+       "label": "Text panel",
+       "code": "T22",
+       "text": "The sign says the fee is paid at a ticket machine",
+       "short": "Fee paid at a ticket machine",
+       "continues": false
+      }
+     ],
      "carries_rule": true,
      "unreliable": false
     },

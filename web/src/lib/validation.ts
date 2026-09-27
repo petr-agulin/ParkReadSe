@@ -281,6 +281,30 @@ function contradictions(doc: Record<string, any>): string[] {
       parsed.payment_method = "parking_disc";
     }
 
+    const text = (Array.isArray(panel.lines) ? panel.lines : [])
+      .join(" ").toLowerCase().replace(/-\s+/g, "");
+
+    // "Biljett-automat" names the machine where the fee is paid, not a ticket to
+    // display (decision 187). On `097` the model wrote `payment_method: ticket`, and
+    // the answer said a ticket was required where the sign only says the parking is
+    // paid - graded full, at 0.975.
+    if (text.includes("automat") && parsed.payment_method === "ticket") {
+      done.push(`panel ${panel.index}: dropped payment_method='ticket' - the plate names `
+              + "a ticket machine, not a ticket to display");
+      delete parsed.payment_method;
+    }
+
+    // "Zon C" is the zone of the tariff; the area code for the parking apps is the
+    // number on the payment board (decision 188). On `034` and `089` the model filed
+    // the zone as an area code, and the tariff plate was tagged "Not a parking rule".
+    if (/^zon\s+\S+$/.test(text.trim()) && parsed.area_code !== undefined
+        && parsed.tariff_code === undefined) {
+      done.push(`panel ${panel.index}: '${(panel.lines ?? []).join(" ")}' moved from `
+              + "area_code to tariff_code - it is the zone of the tariff");
+      parsed.tariff_code = (panel.lines ?? []).join(" ");
+      delete parsed.area_code;
+    }
+
     if (parsed.fee === true && parsed.payment_method === "ticket") {
       done.push(`panel ${panel.index}: dropped payment_method='ticket' - a ticket and `
               + "a fee on one plate contradict each other");

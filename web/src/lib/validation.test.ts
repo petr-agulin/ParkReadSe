@@ -143,7 +143,8 @@ describe("contradictions inside one reading", () => {
         .filter((r) => r.includes("contradict") || r.includes("printed on the plate")
                    || r.includes("dygn") || r.includes("dropped obstruction")
                    || r.includes("parking-disc symbol") || r.includes("Privat parkering")
-                   || r.includes("operator plate") || r.includes("yellow plate with hours"))
+                   || r.includes("operator plate") || r.includes("yellow plate with hours")
+                   || r.includes("ticket machine") || r.includes("zone of the tariff"))
         .map((r) => `${f}: ${r}`));
     expect(fired).toEqual([]);
   });
@@ -250,6 +251,34 @@ describe("a plate reading \"Privat parkering\"", () => {
     expect(res.data!.panels![0].kind).toBe("sign_plate");
     expect(res.data!.panels![0].parsed).toEqual({});
     expect(res.repairs.some((r) => r.includes("Privat parkering"))).toBe(true);
+  });
+});
+
+describe("the ticket machine and the tariff zone", () => {
+  it("drops a ticket from a plate that names a ticket machine", () => {
+    // `097` as the model read it (decision 187).
+    const doc = read("097-avgift-taxa-a-boende-solna-onsdag");
+    const i = doc.panels.findIndex((p: any) => p.lines[0] === "Biljett-");
+    doc.panels[i].parsed = { payment_method: "ticket" };
+    const res = validateSign(doc);
+    expect(res.data!.panels![i].parsed!.payment_method).toBeUndefined();
+    expect(res.repairs.filter((r) => r.includes("ticket machine"))).toHaveLength(1);
+  });
+
+  it("moves a tariff zone out of the area code", () => {
+    // `034` as the model read it (decision 188).
+    const doc = read("034-avgift-tisdag-12-15-nov-maj-zon-c-boende");
+    const i = doc.panels.findIndex((p: any) => p.lines[0] === "Zon C");
+    doc.panels[i].parsed = { area_code: "C" };
+    const res = validateSign(doc);
+    expect(res.data!.panels![i].parsed).toEqual({ tariff_code: "Zon C" });
+  });
+
+  it("leaves a real area code where it is", () => {
+    // The number on a payment board is the app's area code, and is left alone.
+    const doc = read("034-avgift-tisdag-12-15-nov-maj-zon-c-boende");
+    const board = doc.panels.findIndex((p: any) => p.kind === "info_board");
+    expect(validateSign(doc).data!.panels![board].parsed).toEqual({ area_code: "8401" });
   });
 });
 

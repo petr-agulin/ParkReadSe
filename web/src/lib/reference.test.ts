@@ -44,6 +44,18 @@ describe("the reference", () => {
     expect(Number(/(\d+) sign entries/.exec(source("README.md"))?.[1])).toBe(all().length);
   });
 
+  it("reads a word broken across two lines as one word", () => {
+    // `Last-` / `plats` on `089` and `109`; `Biljett-` / `automat` on `097`.
+    const keysOf = (lines: string[], kind: Panel["kind"] = "sign_plate") => recognise(doc([
+      { index: 1, kind, lines, background_color: "blue", legibility: { readable: true },
+        parsed: {} }])).panelKeys[1];
+    expect(keysOf(["Last-", "plats"])).toContain("lastplats");
+    expect(keysOf(["Biljett-", "automat"])).toContain("biljettautomat");
+    expect(keysOf(["Biljett", "automat"])).toContain("biljettautomat");
+    // A payment board's "P-automat" is the board, not the plate (decision 187).
+    expect(keysOf(["Betala P eller", "p-automat"], "info_board")).not.toContain("biljettautomat");
+  });
+
   it("gives every entry one of the four categories", () => {
     // The tag "Not a parking rule" is read off the category (decision 180): an entry
     // with a category nobody knows would neither count as a rule nor be tagged.

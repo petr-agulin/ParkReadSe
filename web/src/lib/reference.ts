@@ -145,6 +145,11 @@ export const BY_TEXT: [string, string[]][] = [
   ["boende", ["boende"]],
   ["reserved-for-named-group",
    ["vaktmästare", "verksamhet", "personal", "regionservice", "blodbil"]],
+  // The machine where the fee is paid, not a ticket to display (decision 187). Not the
+  // bare "automat": a payment board reads "P-automat" and is a board.
+  ["biljettautomat", ["biljettautomat", "biljett automat"]],
+  // Why the prohibition above stands: the place is for goods (`089`, `109`).
+  ["lastplats", ["lastplats"]],
 ];
 
 export const PRIVATE_LAND_PHRASE = BY_TEXT[0][1][0];
@@ -187,7 +192,9 @@ export function recognise(doc: SignDoc): Recognised {
     // The entries recognised BY TEXT rather than by a field (see `BY_TEXT`). The lines
     // are joined first: a phrase can be broken across two of them, as `Privat` and
     // `parkering` are on photograph `021`.
-    const joined = (p.lines ?? []).join(" ").toLowerCase();
+    // A word broken across two lines keeps its hyphen at the end of the first -
+    // `Last-` / `plats` - and is one word again once the break is taken out.
+    const joined = (p.lines ?? []).join(" ").toLowerCase().replace(/-\s+/g, "");
     const spokenFor: string[] = [];
     for (const [key, tokens] of BY_TEXT) {
       if (!tokens.some((token) => joined.includes(token))) continue;
