@@ -157,6 +157,17 @@ describe("triage", () => {
     expect(t.junkLetThrough).toBe(0);
   });
 
+  it("does not count a sign nobody can read as a false reject", () => {
+    // Decision 189: turning away a sign nobody can read is the right answer.
+    const t = triageReport({ a: true, far: true, c: false },
+                           { a: "parking_sign", far: "not_a_sign", c: "not_a_sign" },
+                           new Set(["far"]));
+    expect(t.realSigns).toBe(1);
+    expect(t.falseRejects).toBe(0);
+    expect(t.unreadableSigns).toBe(1);
+    expect(t.unreadableTurnedAway).toBe(1);
+  });
+
   it("counts rubbish let through separately", () => {
     const t = triageReport({ a: true, c: false }, { a: "parking_sign", c: "parking_sign" });
     expect(t.falseRejects).toBe(0);

@@ -2231,7 +2231,8 @@ Only paid parking. every day between 08:00 and 19:00 only 1 hour max of parking.
 lawn were removed from the frame. On `025` the developer covered the near car's plate.
 `019` is kept as it is: a plate is in the frame, but at full resolution it is about 20 px
 wide and unreadable, and no crop can remove it — the car stands at the same height as the
-sign. The exception is explained in the main `README.md`.
+sign. Since decision 185 the photographs are not published at all: they stay on the
+developer's disk, and the repository carries only their index.
 
 ## What the set covers
 

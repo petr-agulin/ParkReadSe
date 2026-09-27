@@ -224,6 +224,9 @@ export type TriageReport = {
   realSigns: number;
   falseRejects: number;
   falseRejectShare: number;
+  /** Parking signs nobody can read (decision 176): turning them away is right. */
+  unreadableSigns: number;
+  unreadableTurnedAway: number;
   junkFrames: number;
   junkLetThrough: number;
   junkLetThroughShare: number;
@@ -233,9 +236,14 @@ export type TriageReport = {
  *  stands at a sign and gets nothing. Rubbish let through is counted separately: it
  *  costs an extra call rather than an answer. */
 export function triageReport(expectedIsParking: Record<string, boolean>,
-                             triage: Record<string, string>): TriageReport {
+                             triage: Record<string, string>,
+                             unreadable: Set<string> = new Set()): TriageReport {
   const names = Object.keys(expectedIsParking).filter((k) => k in triage);
-  const real = names.filter((k) => expectedIsParking[k]);
+  // A sign nobody can read is a parking sign, but turning it away is the right answer,
+  // not a false reject: counted as one, the five far-off signs of the set read as five
+  // mistakes of the triage (decision 189, the same gap as in the readings).
+  const unreadableHere = names.filter((k) => expectedIsParking[k] && unreadable.has(k));
+  const real = names.filter((k) => expectedIsParking[k] && !unreadable.has(k));
   const junk = names.filter((k) => !expectedIsParking[k]);
   const falseRejects = real.filter((k) => triage[k] !== "parking_sign").length;
   const letThrough = junk.filter((k) => triage[k] === "parking_sign").length;
@@ -243,6 +251,8 @@ export function triageReport(expectedIsParking: Record<string, boolean>,
     realSigns: real.length,
     falseRejects,
     falseRejectShare: real.length ? falseRejects / real.length : 0,
+    unreadableSigns: unreadableHere.length,
+    unreadableTurnedAway: unreadableHere.filter((k) => triage[k] !== "parking_sign").length,
     junkFrames: junk.length,
     junkLetThrough: letThrough,
     junkLetThroughShare: junk.length ? letThrough / junk.length : 0,

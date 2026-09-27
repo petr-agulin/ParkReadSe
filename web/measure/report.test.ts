@@ -15,7 +15,7 @@ import { compare, deadSignals, divergence, emptyReport, fingerprint, table, thre
 import { GOOD_ENOUGH } from "../src/lib/present";
 import { extractPrompt } from "../src/lib/prompts";
 import { ANSWERS, EXPECTED, answersFromAnotherPrompt, assessAnswer, loadPairs,
-         asShown, loadTriageExpectations, marked, triageAnswers } from "../tools/testset";
+         asShown, loadTriageExpectations, loadUnreadable, marked, triageAnswers } from "../tools/testset";
 
 const MOMENT = "2026-03-02T00:00";      // an ordinary Monday, outside holidays
 const percent = (x: number) => `${Math.round(x * 100)}%`;
@@ -61,10 +61,11 @@ describe("the measurement", () => {
     const triage = triageAnswers(ANSWERS);
     if (Object.keys(triage).length) {
       const isParking = Object.fromEntries(Object.keys(triage).map((k) => [k, !(k in notParking)]));
-      const t = triageReport(isParking, triage);
+      const t = triageReport(isParking, triage, loadUnreadable());
       out.push("", `Triage: real signs ${t.realSigns}, wrongly rejected ${t.falseRejects} `
                  + `(${percent(t.falseRejectShare)}); frames not about parking ${t.junkFrames}, `
-                 + `let through ${t.junkLetThrough}`);
+                 + `let through ${t.junkLetThrough}; signs nobody can read ${t.unreadableSigns}, `
+                 + `turned away ${t.unreadableTurnedAway}`);
     }
 
     // --- calibrating the threshold -------------------------------------------

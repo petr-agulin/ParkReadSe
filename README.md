@@ -11,10 +11,10 @@ refusal, the wording of every line — is computed in the browser.
 
 | | |
 |---|---|
-| Answer matches the reference | **51 of 55** photos |
-| Real signs wrongly rejected | **0 of 57** |
+| Answer matches the reference | **116 of 127** photos |
+| Real signs wrongly rejected | **0 of 127** |
 | Non-parking frames let through | **0 of 7** |
-| Automated checks | **487** browser tests, **7** on the built page |
+| Automated checks | **639** browser tests, **8** on the built page |
 
 **ParkRead never says "you may park here."** It reports what the sign states, with a
 computed confidence, and refuses when the photo does not support an answer. The decision
@@ -140,9 +140,9 @@ the answer gives both readings rather than picking one.
 
 ## Accuracy
 
-The test set is **139 photos**: 57 parking signs with reference
-answers, 7 frames that are not parking signs, and 75 photos added but not yet marked
-up. **The photos themselves are not published:** part of them are Street View captures,
+The test set is **139 photos**: 127 parking signs with reference answers, 7 frames that
+are not parking signs, and 5 signs too far away for anyone to read, where the right
+answer is a refusal. **The photos themselves are not published:** part of them are Street View captures,
 and some show number plates. The repository carries their index, `testset/photos.json`
 (name and pixel count), which is all the tests and the measurement need of them.
 Measurement runs on stored model responses,
@@ -152,20 +152,22 @@ it; only real model answers (`origin: model`) are measured. `npm run ask --
 testset/photos/<photo>` refreshes them and spends your key.
 
 Each photo is named `NNN-short-slug.jpg`; the three-digit number is the key of its
-reference answer `testset/expected/NNN.json` and is never reused. No frame may show a
-readable number plate, a face or personal details — this is checked before a commit,
-since a photo in git history can only be removed by rewriting it. One exception is
-deliberate: photo `019` shows a car's front plate about 20 px wide, unreadable, that no
-crop can remove; it is kept because it is the only photo with `Övrig tid` under a
-prohibition sign and the only yellow time plate.
+reference answer `testset/expected/NNN.json` and is never reused. The photos stay on the
+author's disk and are not published. In the app, only the crop around the sign is sent
+to the model.
 
-- **51 of 55 answers match** the reference. Two diverging photos narrow the answer, two read
-  a parking disc as a ticket.
-- **Triage: 57 real signs, 0 wrongly rejected; 7 non-parking frames, 0 let through.**
-- **Coverage: 55 of 57** (96%). Two photos are excluded because their stored response came
-  from an older prompt — the measurement refuses to mix prompt versions in one number.
-- Field-level accuracy ranges from 100% (`panel.rule_bearing`, `parsed.duration_limit`) to
-  33% (`parsed.payment_method`); the full table is printed by `npm run measure`.
+- **116 of 127 answers match** the reference. Where the reference itself cannot read a
+  plate, the only right answer is a refusal, and a refusal counts as a match. Of the 11
+  that do not: seven answer where a refusal was due, one reads the other branch of a
+  two-branch pole, one loses a residents' plate, one misses a parking disc, and one
+  refuses a sign that can be read. Nine of the eleven fall below the confidence threshold
+  and are flagged; **two pass as full** — the escapes the threshold cannot catch.
+- **Triage: 127 real signs, 0 wrongly rejected; 7 non-parking frames, 0 let through;** the 5
+  signs nobody can read are turned away, as they should be.
+- **Coverage: 127 of 127.** An answer from an older prompt would be named and left out —
+  the measurement refuses to mix prompt versions in one number.
+- Field-level accuracy ranges from 99% (`panel.rule_bearing`) to 20%
+  (`parsed.payment_method`); the full table is printed by `npm run measure`.
 
 Fields diverge on far more photos than answers do: a plate's colour or the order of two
 panels shows up in the parse and never reaches the reader.
