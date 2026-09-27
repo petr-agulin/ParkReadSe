@@ -5508,24 +5508,26 @@
  },
  "expected/085-p-med-plattor-bakom-bom@base": {
   "category": "insufficient",
-  "confidence": 0.842,
+  "confidence": 0.675,
   "signals": {
    "day_class_known": 1.0,
-   "main_sign_corroborated": 1.0,
+   "main_sign_corroborated": 0.0,
    "main_sign_identified": 1.0,
    "main_sign_readable": 1.0,
    "model_confidence": 0.5,
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
-   "panels_read_share": 0.333333,
+   "panels_read_share": 0.0,
    "plates_interpreted": 1.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
   "reasons": [
-   "unread_panels:2,3"
+   "unread_panels:1,2,3",
+   "main_sign_uncorroborated"
   ],
   "unread_panels": [
+   1,
    2,
    3
   ],

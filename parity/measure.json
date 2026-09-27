@@ -18,12 +18,12 @@
    333
   ],
   "panel.lines": [
-   294,
+   293,
    333
   ],
   "panel.rule_bearing": [
-   333,
-   338
+   332,
+   337
   ],
   "panel_count": [
    112,
@@ -46,7 +46,7 @@
    32
   ],
   "parsed.eligibility": [
-   65,
+   64,
    73
   ],
   "parsed.fee": [
@@ -58,7 +58,7 @@
    5
   ],
   "parsed.permit_required": [
-   12,
+   11,
    12
   ],
   "parsed.permits_parking": [
@@ -205,9 +205,12 @@
   "079-p-skylt-bakom-trad: plate order [] instead of ['förhyrda platser', '?']",
   "079-p-skylt-bakom-trad: the content of the plates disagrees",
   "085-p-med-plattor-bakom-bom: 1 plates instead of 3",
+  "085-p-med-plattor-bakom-bom: panel 1 field eligibility = 'permit_holders' instead of None",
+  "085-p-med-plattor-bakom-bom: panel 1 field permit_required = True instead of None",
+  "085-p-med-plattor-bakom-bom: panel 1 read as ['Särskilt', 'P-tillstånd erfordras'] instead of []",
   "085-p-med-plattor-bakom-bom: panel 2 marked operator_plate instead of sign_plate - this changes which rules apply",
   "085-p-med-plattor-bakom-bom: panel 3 marked operator_plate instead of sign_plate - this changes which rules apply",
-  "085-p-med-plattor-bakom-bom: plate order ['särskilt p-tillstånd erfordras'] instead of ['särskilt p-tillstånd erfordras', '?', '?']",
+  "085-p-med-plattor-bakom-bom: plate order ['särskilt p-tillstånd erfordras'] instead of ['?', '?', '?']",
   "085-p-med-plattor-bakom-bom: the content of the plates disagrees",
   "087-motljus-parkering-pa-avstand: 0 plates instead of 3",
   "087-motljus-parkering-pa-avstand: main sign unknown instead of parking",
@@ -325,37 +328,33 @@
  ],
  "diverged": {
   "035-zon-c-pa-avstand": [
-   "who may park: ['boende'] instead of -",
-   "hours differing by state 117/168, of which wider 0"
+   "answered where the reference expects a refusal"
+  ],
+  "042-cykel-moped-parkering": [
+   "answered where the reference expects a refusal"
+  ],
+  "055-forbud-stannande-snotackt-pil": [
+   "answered where the reference expects a refusal"
   ],
   "057-p-skiva-2tim-eller-gratis-biljett": [
-   "hours differing by conditions 112/168: avgift, p-biljett instead of avgift, p-skiva"
+   "answered where the reference expects a refusal"
   ],
   "059-avstand-p-skiva-2tim-darefter-avgift": [
    "hours differing by conditions 81/168: avgift instead of avgift, p-skiva"
   ],
-  "060-natt-lastplats-ovrig-tid-avgift": [
-   "hours differing by state 6/168, of which wider 0",
-   "hours differing by conditions 95/168: - instead of avgift"
-  ],
-  "061-lastplats-langt-avstand": [
-   "who may park: ['reserved-for-named-group', 'reserved-for-named-group'] instead of -",
-   "hours differing by state 50/168, of which wider 0",
-   "hours differing by conditions 118/168: p-skiva instead of -"
-  ],
   "075-p-med-olasliga-plattor-pa-avstand": [
-   "who may park: ['forhyrda-platser'] instead of -"
+   "answered where the reference expects a refusal"
   ],
   "078-p-skylt-overklistrad": [
    "parking here: False instead of True",
    "who may park: - instead of ['forhyrda-platser']",
    "hours differing by state 168/168, of which wider 0"
   ],
-  "079-p-skylt-bakom-trad": [
-   "who may park: - instead of ['forhyrda-platser']"
+  "090-avgift-uppstallning-zon-e-pil": [
+   "answered where the reference expects a refusal"
   ],
   "095-30min-plus-avgift-taxa": [
-   "hours differing by state 14/168, of which wider 14"
+   "answered where the reference expects a refusal"
   ],
   "096-flera-stolpar-boende-solna": [
    "who may park: ['boende', 'pictogram-motorcycle'] instead of ['boende']"
@@ -517,13 +516,13 @@
   [
    0.675,
    "insufficient",
-   true,
+   false,
    "079-p-skylt-bakom-trad"
   ],
   [
    0.694,
    "insufficient",
-   true,
+   false,
    "061-lastplats-langt-avstand"
   ],
   [
@@ -553,13 +552,13 @@
   [
    0.795,
    "partial",
-   false,
+   true,
    "055-forbud-stannande-snotackt-pil"
   ],
   [
    0.817,
    "insufficient",
-   true,
+   false,
    "060-natt-lastplats-ovrig-tid-avgift"
   ],
   [
@@ -715,7 +714,7 @@
   [
    0.898,
    "partial",
-   false,
+   true,
    "042-cykel-moped-parkering"
   ],
   [
@@ -1003,7 +1002,7 @@
   [
    0.975,
    "full",
-   false,
+   true,
    "090-avgift-uppstallning-zon-e-pil"
   ],
   [
@@ -1259,5 +1258,5 @@
    "135-p-ej-markerade-platser-securitas"
   ]
  ],
- "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 22 | 4 | 105 | 7 |\n| 0.875 | 22 | 4 | 105 | 7 |\n| 0.900 | 43 | 10 | 84 | 1 |\n| 0.920 | 43 | 10 | 84 | 1 |\n| 0.950 | 48 | 10 | 79 | 1 |"
+ "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 22 | 3 | 105 | 8 |\n| 0.875 | 22 | 3 | 105 | 8 |\n| 0.900 | 43 | 9 | 84 | 2 |\n| 0.920 | 43 | 9 | 84 | 2 |\n| 0.950 | 48 | 9 | 79 | 2 |"
 }

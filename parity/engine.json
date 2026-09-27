@@ -19604,9 +19604,7 @@
     "extent": "here",
     "audience": null,
     "audience_excluded": [],
-    "eligibility": [
-     "sarskilt-p-tillstand"
-    ],
+    "eligibility": [],
     "place_notes": [],
     "duration_expires_at": "2026-03-03T00:00",
     "duration_source": "24h_default",
@@ -19615,9 +19613,7 @@
       "start": "2026-03-02T00:00",
       "end": "2026-03-10T00:00",
       "state": "allowed",
-      "conditions": [
-       "sarskilt-p-tillstand"
-      ],
+      "conditions": [],
       "max_duration_minutes": null,
       "note": null
      }

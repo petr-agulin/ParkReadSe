@@ -28,8 +28,8 @@ import { add, autumnBack, offset, realMinutes, springForward,
          switchBetween } from "../src/lib/clock";
 import { applyAsymmetry, grade } from "../src/lib/completeness";
 import { evaluateParkingRules, type Period, type Regime } from "../src/lib/engine";
-import { compare, emptyReport, fingerprint, thresholdTable, verdictDifferences,
-         verdictSlice, type ThresholdRow } from "../src/lib/measure";
+import { compare, divergence, emptyReport, fingerprint, thresholdTable,
+         type ThresholdRow } from "../src/lib/measure";
 import { toJson } from "../src/lib/present";
 import { extractPrompt, triagePrompt } from "../src/lib/prompts";
 import { recognise } from "../src/lib/reference";
@@ -452,18 +452,13 @@ export async function probeMeasure(): Promise<Record<string, unknown>> {
 
   const rep = emptyReport();
   const diverged: Record<string, string[]> = {};
-  for (const { label, expected, actual } of pairs) {
-    compare(expected, actual, label, rep);
-    const diff = verdictDifferences(verdictSlice(expected, moment, cal),
-                                    verdictSlice(asShown(actual), moment, cal));
-    if (diff.length) diverged[label] = diff;
-  }
+  for (const { label, expected, actual } of pairs) compare(expected, actual, label, rep);
 
   // Confidence is computed the way the pipeline computes it: with the extraction
   // flags, the validator's repairs, gaps in the reference and the area of the frame.
   const rows: ThresholdRow[] = [];
   const seenPixels: Record<string, number | null> = {};
-  for (const { label, actual } of pairs) {
+  for (const { label, expected, actual } of pairs) {
     const triageFile = `${ROOT}testset/answers/${label}.triage.json`;
     let panelsSeen: number | null = null;
     if (existsSync(triageFile)) {
@@ -484,8 +479,12 @@ export async function probeMeasure(): Promise<Record<string, unknown>> {
 
     const ev = evaluateParkingRules(doc, moment, cal);
     const a = grade(doc, { flags, repairs: res.repairs, evaluation: ev, imagePixels });
+    // Whether it agrees is decided in one place, with the answer's own grade: where the
+    // reference expects a refusal, a refusal agrees (decision 189).
+    const diff = divergence(expected, asShown(actual), a.category, moment, cal);
+    if (diff.length) diverged[label] = diff;
     rows.push({ confidence: Number(a.confidence.toFixed(6)), category: a.category,
-                diverged: label in diverged, label });
+                diverged: diff.length > 0, label });
   }
   rows.sort((x, y) => (x.confidence - y.confidence) || x.label.localeCompare(y.label));
 

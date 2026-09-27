@@ -13,7 +13,7 @@ import { describe, expect, it } from "vitest";
 import { Calendar } from "../src/lib/calendar";
 import { parseNaive } from "../src/lib/civil";
 import { FULL, INSUFFICIENT } from "../src/lib/completeness";
-import { fingerprint, verdictDifferences, verdictSlice } from "../src/lib/measure";
+import { divergence, fingerprint } from "../src/lib/measure";
 import { GOOD_ENOUGH } from "../src/lib/present";
 import { extractPrompt } from "../src/lib/prompts";
 import { ANSWERS, EXPECTED, PENDING_GROUND_TRUTH, PHOTOS, ROOT, assessAnswer, loadPairs,
@@ -177,10 +177,8 @@ describe("the threshold", () => {
 
     const escaped: string[] = [];
     for (const { label, expected, actual } of pairs) {
-      const diff = verdictDifferences(verdictSlice(expected, moment, cal),
-                                      verdictSlice(asShown(actual), moment, cal));
-      if (!diff.length) continue;
       const a = assessAnswer(label, actual, moment, cal);
+      if (!divergence(expected, asShown(actual), a.category, moment, cal).length) continue;
       if (a.category === FULL && a.confidence >= GOOD_ENOUGH) escaped.push(label);
     }
     // One escape is left: `059`. The model misses the parking disc beside `därefter
@@ -190,6 +188,10 @@ describe("the threshold", () => {
     // `097` and `116` escaped too, and repairs closed both: the model read
     // "Biljett-automat" as a ticket to display (step 15h, decision 187), and dropped
     // the no-parking symbol of a yellow plate with hours (step 15l).
-    expect(escaped).toEqual(["059-avstand-p-skiva-2tim-darefter-avgift"]);
+    // `090` counts since a refusal is due where the reference cannot read a plate
+    // (decision 189): the top of a plate shows behind a parked car, the model does not
+    // mention it, and the product answers in full where it should refuse.
+    expect(escaped).toEqual(["059-avstand-p-skiva-2tim-darefter-avgift",
+                             "090-avgift-uppstallning-zon-e-pil"]);
   });
 });

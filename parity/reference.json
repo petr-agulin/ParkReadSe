@@ -3692,13 +3692,12 @@
  "expected/085-p-med-plattor-bakom-bom": {
   "main_sign_key": "main-parking",
   "panel_keys": {
-   "1": [
-    "sarskilt-p-tillstand"
-   ],
+   "1": [],
    "2": [],
    "3": []
   },
   "uninterpreted": {
+   "1": [],
    "2": [],
    "3": []
   },

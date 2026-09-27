@@ -10,8 +10,11 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
-import { compare, coveredDays, deadSignals, emptyReport, triageReport, verdictDifferences,
-         type Report, type Verdict } from "./measure";
+import { Calendar } from "./calendar";
+import { parseNaive } from "./civil";
+import { FULL, INSUFFICIENT, PARTIAL } from "./completeness";
+import { REFUSAL_DUE, compare, coveredDays, deadSignals, divergence, emptyReport, triageReport,
+         verdictDifferences, type Report, type Verdict } from "./measure";
 import type { SignDoc } from "./sign";
 
 const ROOT = fileURLToPath(new URL("../../../", import.meta.url));
@@ -219,5 +222,30 @@ describe("disagreement of the ANSWER", () => {
   it("dead signals are the ones that never moved", () => {
     const seen = new Map([["a", new Set([1])], ["b", new Set([0, 1])], ["c", new Set<number>()]]);
     expect(deadSignals(seen)).toEqual(["a", "c"]);
+  });
+});
+
+describe("where the reference expects a refusal", () => {
+  // Decision 189: where the reference itself shows too little can be read, the only
+  // right answer is a refusal - it agrees, and any other answer differs.
+  const cal = new Calendar();
+  const moment = parseNaive("2026-03-02T00:00");
+  const unread = expected("085-p-med-plattor-bakom-bom");
+  const answer = expected("128-rorelsehindrad-0-6m-avgift");
+
+  it("counts a refusal as agreeing", () => {
+    expect(divergence(unread, answer, INSUFFICIENT, moment, cal)).toEqual([]);
+  });
+
+  it("counts any other answer as differing, whatever its hours", () => {
+    for (const category of [FULL, PARTIAL]) {
+      expect(divergence(unread, unread, category, moment, cal), category).toEqual([REFUSAL_DUE]);
+    }
+  });
+
+  it("compares the verdicts everywhere else, a refusal included", () => {
+    const read = expected(BASE);
+    expect(divergence(read, read, FULL, moment, cal)).toEqual([]);
+    expect(divergence(read, answer, FULL, moment, cal).length).toBeGreaterThan(0);
   });
 });

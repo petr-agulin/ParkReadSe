@@ -10,8 +10,8 @@ import { describe, it } from "vitest";
 import { Calendar } from "../src/lib/calendar";
 import { parseNaive } from "../src/lib/civil";
 import { WEIGHTS } from "../src/lib/completeness";
-import { compare, deadSignals, emptyReport, fingerprint, table, thresholdTable, triageReport,
-         verdictDifferences, verdictSlice, type ThresholdRow } from "../src/lib/measure";
+import { compare, deadSignals, divergence, emptyReport, fingerprint, table, thresholdTable,
+         triageReport, type ThresholdRow } from "../src/lib/measure";
 import { GOOD_ENOUGH } from "../src/lib/present";
 import { extractPrompt } from "../src/lib/prompts";
 import { ANSWERS, EXPECTED, answersFromAnotherPrompt, assessAnswer, loadPairs,
@@ -73,9 +73,8 @@ describe("the measurement", () => {
     const diverged = new Map<string, string[]>();
     const seen = new Map<string, Set<number>>();
     for (const { label, expected, actual } of pairs) {
-      const diff = verdictDifferences(verdictSlice(expected, moment, cal),
-                                      verdictSlice(asShown(actual), moment, cal));
       const a = assessAnswer(label, actual, moment, cal);
+      const diff = divergence(expected, asShown(actual), a.category, moment, cal);
       for (const [k, v] of Object.entries(a.signals)) {
         if (!seen.has(k)) seen.set(k, new Set());
         seen.get(k)!.add(Number(v.toFixed(3)));

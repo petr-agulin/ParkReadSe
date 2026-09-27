@@ -14,23 +14,16 @@
   "panels": [
     {
       "kind": "sign_plate",
-      "lines": [
-        "Särskilt",
-        "P-tillstånd",
-        "erfordras"
-      ],
+      "lines": [],
       "background_color": "blue",
       "legibility": {
-        "readable": true,
+        "readable": false,
         "obstructions": [
           "distance",
           "blur"
         ]
       },
-      "parsed": {
-        "eligibility": "permit_holders",
-        "permit_required": true
-      },
+      "parsed": {},
       "index": 1
     },
     {

@@ -17,6 +17,7 @@
 
 import { Calendar } from "./calendar";
 import { addMinutes, isoNaive, type Naive } from "./civil";
+import { INSUFFICIENT, tooLittle } from "./completeness";
 import { evaluateParkingRules, type Evaluation } from "./engine";
 import type { Panel, SignDoc, TimeWindow } from "./sign";
 
@@ -284,6 +285,24 @@ export function verdictSlice(doc: SignDoc, moment: Naive, cal: Calendar): Verdic
     eligibility: ev.regimes.flatMap((r) => r.eligibility).sort(),
     states,
   };
+}
+
+export const REFUSAL_DUE = "answered where the reference expects a refusal";
+
+/** Whether an answer agrees with its reference - the one place that decides it.
+ *
+ *  Where the reference itself shows too little can be read - a plate or the main
+ *  sign nobody can make out - the only right answer is a refusal (decision 183), and
+ *  a refusal agrees whatever hours either side would draw; any other answer differs
+ *  (decision 189). On `085` the product refused as it should and the comparison of
+ *  hours called it wrong; on `090` it answered in full over a plate hidden behind a
+ *  car and the comparison called it right. Everywhere else the verdicts are compared.
+ *  `category` is the answer's own grade; `actual` is the reading as shown. */
+export function divergence(expected: SignDoc, actual: SignDoc, category: string,
+                           moment: Naive, cal: Calendar): string[] {
+  if (tooLittle(expected)) return category === INSUFFICIENT ? [] : [REFUSAL_DUE];
+  return verdictDifferences(verdictSlice(expected, moment, cal),
+                            verdictSlice(actual, moment, cal));
 }
 
 /** How the answer from the reading differs from the answer from the reference.
