@@ -3,7 +3,7 @@
 **Take a photo of a Swedish parking sign and get a plain-English explanation of what it
 says:** who may park, when, for how long, and whether you pay.
 
-![The result screen: a timeline of the parking window from the chosen time, with free and paid periods and a special permit required; who can park here; and what was read, plate by plate, beside the photo of the sign](images/readme-main.png)
+![The result screen: a timeline of the parking window from the chosen time, with free and paid periods and a special permit required; who can park here; and what was read, plate by plate, beside the photo of the sign](images/readme-main.svg)
 
 ParkRead Sweden **never says "you may park here"**. It tells you what the sign states, shows how
 sure it is, and refuses to answer when the photo is not good enough. The decision stays

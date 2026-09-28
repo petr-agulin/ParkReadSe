@@ -20,6 +20,7 @@
     "ask": "node --env-file-if-exists=../.env --import ./tools/ts-resolve.mjs tools/ask.ts",
     "goldens": "node --import ./tools/ts-resolve.mjs tools/goldens.ts",
     "detect": "node --import ./tools/ts-resolve.mjs tools/detect.ts",
+    "readme:phone": "node --import ./tools/ts-resolve.mjs tools/readme-phone.ts",
     "goldens:write": "node --import ./tools/ts-resolve.mjs tools/goldens.ts --write"
   },
   "dependencies": {
