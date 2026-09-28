@@ -82,12 +82,21 @@ export class VisionCallFailed extends Error {
    *  the last attempt only, and the last alone misled: refusals and a cut-off read as
    *  "no answer". A line per attempt was tried and was too much for a phone. */
   readonly summary: string | null;
+  /** Which of the reading's calls failed: the check of the photo or the reading of
+   *  the sign (step 16d). The call does not know; the pipeline says. */
+  readonly stage: "check" | "read" | null;
   constructor(message: string, kind: Failure = "other", status: number | null = null,
-              summary: string | null = null) {
+              summary: string | null = null, stage: "check" | "read" | null = null) {
     super(message);
     this.kind = kind;
     this.status = status;
     this.summary = summary;
+    this.stage = stage;
+  }
+
+  /** The same failure, told which call it happened on. */
+  during(stage: "check" | "read"): VisionCallFailed {
+    return new VisionCallFailed(this.message, this.kind, this.status, this.summary, stage);
   }
 }
 

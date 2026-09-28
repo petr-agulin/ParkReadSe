@@ -39,6 +39,8 @@ const SAID: Record<Exclude<Failure, "settings" | "cancelled">, Omit<Trouble, "de
                     + "provider address and the model in Settings.", settings: true },
 };
 
+const DURING = { check: "While checking the photo", read: "While reading the sign" };
+
 /** A failure in words. `null` when there is nothing to say: the person stopped it. */
 export function explain(error: unknown): Trouble | null {
   if (error instanceof VisionCallFailed) {
@@ -48,8 +50,10 @@ export function explain(error: unknown): Trouble | null {
       return { message: error.message, settings: true, details: null };
     }
     // The whole story in a line where there is one: the last attempt alone can
-    // mislead (steps 16b, 16c).
-    return { ...SAID[error.kind], details: error.summary ?? error.message };
+    // mislead (steps 16b, 16c). And on which call it happened (step 16d).
+    const story = error.summary ?? error.message;
+    return { ...SAID[error.kind],
+             details: error.stage ? `${DURING[error.stage]}: ${story}` : story };
   }
   if (error instanceof InvalidModelResponse) {
     return { ...SAID.reply, details: error.message };

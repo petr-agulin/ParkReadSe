@@ -14,7 +14,7 @@ import { pixels } from "./photo";
 import { toJson } from "./present";
 import { recognise, type Recognised } from "./reference";
 import type { SignDoc } from "./sign";
-import { classifyImage, extractSignData, isParkingSign, sleep,
+import { VisionCallFailed, classifyImage, extractSignData, isParkingSign, sleep,
          type ExtractOutcome, type Failure, type Patience, type Pause, type Photo,
          type Provider, type TriageOutcome } from "./vision";
 
@@ -51,6 +51,17 @@ export type RunOptions = {
   onProgress?: (progress: Progress) => void;
 };
 
+/** A failure of the provider, told which of the reading's calls it happened on: "no
+ *  answer" alone does not say whether the photo was being checked or the sign read
+ *  (step 16d). */
+async function during<T>(stage: "check" | "read", work: Promise<T>): Promise<T> {
+  try {
+    return await work;
+  } catch (e) {
+    throw e instanceof VisionCallFailed ? e.during(stage) : e;
+  }
+}
+
 /** One photograph through both stages.
  *
  *  The triage returns a MARK; stopping the pipeline is this code's doing. */
@@ -71,7 +82,7 @@ export async function run(image: Photo, provider: Provider,
   };
 
   tell({ stage });
-  const tri = await classifyImage(image, provider, deps);
+  const tri = await during("check", classifyImage(image, provider, deps));
 
   if (!isParkingSign(tri) && triageEnforce) {
     return { image: image.name, stoppedAt: "triage",
@@ -81,7 +92,7 @@ export async function run(image: Photo, provider: Provider,
 
   stage = "read";
   tell({ stage });
-  let ext = await extractSignData(image, provider, tri.panelsBelowMainSign, deps);
+  let ext = await during("read", extractSignData(image, provider, tri.panelsBelowMainSign, deps));
 
   // Too little was read — ask AGAIN, but exactly once.
   //
@@ -94,7 +105,8 @@ export async function run(image: Photo, provider: Provider,
   if (ext.validation.data !== null && !ext.validation.schemaErrors.length
       && ext.data !== null && tooLittle(ext.data)) {
     tell({ stage });
-    const again = await extractSignData(image, provider, tri.panelsBelowMainSign, deps);
+    const again = await during("read",
+                               extractSignData(image, provider, tri.panelsBelowMainSign, deps));
     retried = true;
     // The second answer is taken only if it is the better one: there is no sense in
     // swapping two equally poor answers around.

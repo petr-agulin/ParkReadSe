@@ -128,3 +128,21 @@ describe("the wait before a retry counts down (step 16c)", () => {
     expect(progressLine(busy, base, 20_000)).toBe("The provider is busy. Trying again now (attempt 4).");
   });
 });
+
+describe("details name the call that failed (step 16d)", () => {
+  it("while checking the photo, or while reading the sign", () => {
+    const silent = new VisionCallFailed("no answer within 60 s (attempts: 1)", "timeout", null,
+                                        "no answer within 60 s (1 attempt in 60 s)");
+    expect(explain(silent.during("check"))!.details)
+      .toBe("While checking the photo: no answer within 60 s (1 attempt in 60 s)");
+    expect(explain(silent.during("read"))!.details)
+      .toBe("While reading the sign: no answer within 60 s (1 attempt in 60 s)");
+    // Told nothing of the call, it says nothing of it.
+    expect(explain(silent)!.details).toBe("no answer within 60 s (1 attempt in 60 s)");
+  });
+
+  it("the call is added, the kind and the words stay", () => {
+    const e = new VisionCallFailed("x", "busy", 503, "HTTP 503: busy").during("read");
+    expect([e.kind, e.status, e.summary, e.message]).toEqual(["busy", 503, "HTTP 503: busy", "x"]);
+  });
+});

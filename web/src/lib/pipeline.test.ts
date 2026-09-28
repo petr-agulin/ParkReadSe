@@ -202,3 +202,16 @@ describe("the pipeline tells the screen where it is (step 16)", () => {
     expect(f.calls()).toBe(4);
   });
 });
+
+describe("a failure says which call it happened on (step 16d)", () => {
+  it("the check of the photo, or the reading of the sign", async () => {
+    const refused = () => new Response("bad key", { status: 401 });
+    const onCheck = await run(photo, provider, deps(fakeProvider(refused))).catch((x) => x);
+    expect(onCheck.stage).toBe("check");
+    expect(onCheck.kind).toBe("key");
+
+    const onRead = await run(photo, provider, deps(fakeProvider(reply(TRIAGE_OK), refused)))
+      .catch((x) => x);
+    expect(onRead.stage).toBe("read");
+  });
+});
