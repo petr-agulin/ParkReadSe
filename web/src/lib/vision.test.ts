@@ -7,7 +7,8 @@
 import { describe, expect, it } from "vitest";
 
 import { APP_PATIENCE, RUN_PATIENCE, VisionCallFailed, call, classifyImage,
-         extractSignData, type Failure, type Photo, type Provider } from "./vision";
+         extractSignData, providerSays, type Failure, type Photo,
+         type Provider } from "./vision";
 
 const provider: Provider = {
   baseUrl: "https://example.invalid/v1/",
@@ -185,16 +186,17 @@ describe("patience: the person at the sign against the run over the set (step 16
     expect(APP_PATIENCE.timeoutMs).toBeLessThanOrEqual(APP_PATIENCE.budgetMs!);
   });
 
-  it("a provider that refuses at once gets five attempts in the minute (step 16a)", async () => {
+  it("a provider that refuses at once gets six attempts in the minute (steps 16a, 16c)", async () => {
     // The developer's case: `503` in about a second. Two attempts used to leave most
-    // of the minute unused.
+    // of the minute unused; five, with 3/6/10/15, ended at the fortieth second.
     const busy = timed(1_000, answer({ error: "high demand" }, 503));
     const e = await call(provider, "m", "q", photo, busy.pause, busy.fetchImpl,
                          { now: busy.now }).catch((x) => x);
     expect(e.kind).toBe("busy");
-    expect(busy.calls()).toBe(5);
-    expect(busy.paused).toEqual([3_000, 6_000, 10_000, 15_000]);
+    expect(busy.calls()).toBe(6);
+    expect(busy.paused).toEqual([2_000, 4_000, 8_000, 12_000, 16_000]);
     expect(busy.elapsed()).toBeLessThanOrEqual(60_000);
+    expect(busy.elapsed(), "the minute is used, not a third of it left").toBeGreaterThan(45_000);
   });
 
   it("a slow refusal gets fewer attempts, and the minute is never overrun", async () => {
@@ -204,13 +206,13 @@ describe("patience: the person at the sign against the run over the set (step 16
         .catch(() => null);
       expect(slow.elapsed(), `answers in ${answerMs} ms`).toBeLessThanOrEqual(60_000);
     }
-    // 12 s a refusal: 12, +3, 27, +6, 45 - and a pause of 10 would leave five seconds
-    // for an answer that takes twelve. It is not made.
+    // 12 s a refusal: 12, +2, 26, +4, 42, +8, 50 - ten seconds left, the fourth attempt
+    // is made and cut at the minute; a pause of 12 after it is not.
     const twelve = timed(12_000, answer({ error: "busy" }, 503));
     await call(provider, "m", "q", photo, twelve.pause, twelve.fetchImpl, { now: twelve.now })
       .catch(() => null);
-    expect(twelve.calls()).toBe(3);
-    expect(twelve.paused).toEqual([3_000, 6_000]);
+    expect(twelve.calls()).toBe(4);
+    expect(twelve.paused).toEqual([2_000, 4_000, 8_000]);
   });
 
   it("no retry is made that would have less than ten seconds left", async () => {
@@ -368,5 +370,101 @@ describe("the person can stop a reading (step 16)", () => {
     stop.abort();
     expect((await pending).kind).toBe("cancelled");
     expect(f.calls()).toBe(1);
+  });
+});
+
+describe("a failure tells of every attempt, not only the last (step 16b)", () => {
+  // Real time, short budgets: here it is our own timer that must fire, not a fake.
+  const hangs = (init: RequestInit) => new Promise<Response>((_, fail) =>
+    init.signal!.addEventListener("abort", () =>
+      fail(Object.assign(new Error("signal is aborted without reason"), { name: "AbortError" }))));
+
+  it("refusals, then a cut-off by the end of the budget: still the refusals' kind", async () => {
+    // The developer's phone: fast failures, then a fifth attempt with twenty seconds
+    // left and no answer in them. It read "did not answer within 60 seconds".
+    let calls = 0;
+    const fetchImpl = (async (_url: string, init: RequestInit) => {
+      calls += 1;
+      return calls === 1 ? answer({ error: "high demand" }, 503)() : hangs(init);
+    }) as unknown as typeof fetch;
+    const e = await call(provider, "m", "q", photo, async () => {}, fetchImpl,
+                         { patience: { timeoutMs: 5_000, budgetMs: 150, pausesMs: [10] } })
+      .catch((x) => x);
+    expect(e.kind).toBe("busy");
+    expect(e.status).toBe(503);
+    // One line: the refusal, the count, and what became of the last attempt. This body
+    // carries no sentence of its own, so it is shown as it came, shortened.
+    expect(e.summary).toMatch(
+      /^HTTP 503: \{"error":"high demand"\} \(2 attempts in \d+ s; the last had \d+ s and no answer\)$/);
+  });
+
+  it("one attempt that had its whole wait and heard nothing is still no answer", async () => {
+    const fetchImpl = (async (_url: string, init: RequestInit) => hangs(init)
+                      ) as unknown as typeof fetch;
+    const e = await call(provider, "m", "q", photo, async () => {}, fetchImpl,
+                         { patience: { timeoutMs: 50, budgetMs: 60_000, pausesMs: [] } })
+      .catch((x) => x);
+    expect(e.kind).toBe("timeout");
+    expect(e.summary).toMatch(/^no answer within 0 s \(1 attempt in \d+ s\)$/);
+  });
+
+  it("the browser's words for our own abort never reach the person", async () => {
+    let calls = 0;
+    const fetchImpl = (async (_url: string, init: RequestInit) => {
+      calls += 1;
+      return calls === 1 ? answer({}, 503)() : hangs(init);
+    }) as unknown as typeof fetch;
+    // First a request that hangs from the start and runs out its own wait; then a
+    // refusal followed by a cut-off at the end of the budget.
+    for (const [patience, from] of [[{ timeoutMs: 50, pausesMs: [] }, 1],
+                                    [{ timeoutMs: 5_000, budgetMs: 150, pausesMs: [10] }, 0],
+                                   ] as const) {
+      calls = from;
+      const e = await call(provider, "m", "q", photo, async () => {}, fetchImpl, { patience })
+        .catch((x) => x);
+      expect(JSON.stringify([e.message, e.summary])).not.toMatch(/abort/i);
+    }
+  });
+});
+
+describe("the provider's own sentence, for Details (step 16c)", () => {
+  const GOOGLE = "[{\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n]";
+
+  it("Google wraps it in a list; OpenAI-compatible providers do not", () => {
+    const said = "This model is currently experiencing high demand. Spikes in demand are "
+                 + "usually temporary. Please try again later.";
+    expect(providerSays(GOOGLE)).toBe(said);
+    expect(providerSays(JSON.stringify({ error: { message: "Rate limit reached" } })))
+      .toBe("Rate limit reached");
+  });
+
+  it("a whole body is read as JSON, so escapes come out as the provider meant them", () => {
+    // Only a parse turns `å` into "å"; the fallback for a body cut short would
+    // copy the escape as it stands.
+    const listed = '[{"error":{"code":503,"message":"F\\u00f6rs\\u00f6k igen p\\u00e5 en stund."}}]';
+    expect(providerSays(listed)).toBe("Försök igen på en stund.");
+  });
+
+  it("a body cut short still gives up its sentence; no sentence at all gives null", () => {
+    expect(providerSays(GOOGLE.slice(0, 120))).toMatch(/^This model is currently/);
+    expect(providerSays("<html>Bad gateway</html>")).toBeNull();
+    expect(providerSays("")).toBeNull();
+  });
+
+  it("the developer's screen: five raw bodies become one line", async () => {
+    const busy = fake(() => new Response(GOOGLE, { status: 503 }));
+    const e = await call(provider, "m", "q", photo, async () => {}, busy.fetchImpl)
+      .catch((x) => x);
+    expect(e.summary).toMatch(new RegExp(
+      "^HTTP 503: This model is currently experiencing high demand\\. .* Please try again "
+      + "later\\. \\(6 attempts in \\d+ s\\)$"));
+    expect(e.summary).not.toMatch(/[{}[\]]|UNAVAILABLE/);
+  });
+
+  it("a body with no sentence in it is shown shortened, as before", async () => {
+    const odd = fake(() => new Response("x".repeat(1000), { status: 502 }));
+    const e = await call(provider, "m", "q", photo, async () => {}, odd.fetchImpl)
+      .catch((x) => x);
+    expect(e.summary).toBe(`HTTP 502: ${"x".repeat(200)} (6 attempts in 0 s)`);
   });
 });

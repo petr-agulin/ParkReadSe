@@ -443,7 +443,11 @@ export default function SignPicker({
           way it cannot be touched, and after a failure the card is put away with one
           tap. */}
       {(progress || trouble) && (
-        <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3">
+        // No higher than the photograph's area, and scrolled inside when longer: a
+        // card growing upward without end pushed its own headline off the screen,
+        // where nothing could scroll to it (step 16c).
+        <div className="absolute inset-x-0 bottom-0 flex max-h-full flex-col gap-3
+                        overflow-y-auto">
           {busy && progress && (
             <div role="status" aria-live="polite"
                  className="flex items-center gap-4 rounded-card-sm bg-ground p-4
@@ -462,7 +466,7 @@ export default function SignPicker({
             <div role="alert" className="rounded-card-sm bg-ground p-4 shadow-raised">
               <p className="text-body font-semibold text-ink-strong">{trouble.message}</p>
               {details && trouble.details && (
-                <p className="mt-2 break-words font-mono text-mono text-ink-3">
+                <p className="mt-2 max-h-32 overflow-y-auto break-words font-mono text-mono text-ink-3">
                   {trouble.details}
                 </p>
               )}

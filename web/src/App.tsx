@@ -39,7 +39,16 @@ export default function App() {
   // A failed reading, in words (step 16). It is shown on the framing screen beside
   // the button, not below the screen: there it was missed.
   const [trouble, setTrouble] = useState<Trouble | null>(null);
-  const [progress, setProgress] = useState<Progress | null>(null);
+  // Where the reading is, and when that became so: the wait before a retry counts
+  // down from that moment.
+  const [progress, setProgressAt] = useState<{ p: Progress; at: number } | null>(null);
+  const setProgress = (p: Progress | null) => setProgressAt(p && { p, at: Date.now() });
+  const [, tick] = useState(0);
+  useEffect(() => {
+    if (!progress?.p.retry) return;
+    const timer = setInterval(() => tick((n) => n + 1), 250);
+    return () => clearInterval(timer);
+  }, [progress]);
   // The way to stop a reading under way: the Cancel link, and leaving the screen.
   const stopper = useRef<AbortController | null>(null);
   const [data, setData] = useState<Analysis | null>(null);
@@ -202,7 +211,8 @@ export default function App() {
             file={picked}
             initialBox={aimed}
             busy={busy}
-            progress={progress && progressLine(progress, settings.provider.baseUrl)}
+            progress={progress && progressLine(progress.p, settings.provider.baseUrl,
+                                               Date.now() - progress.at)}
             trouble={trouble}
             onSend={onSend}
             onStop={() => stopper.current?.abort()}

@@ -35,20 +35,21 @@ export type Patience = {
   limitPausesMs?: readonly number[];
 };
 
-/** The person standing at a sign (steps 16, 16a).
+/** The person standing at a sign (steps 16, 16a, 16c).
  *
- *  A minute for the whole call. A `503` comes back in a second, so short pauses fit
- *  five attempts into it; a provider that does not answer at all takes the minute with
- *  one. No retry is made that would be left less than ten seconds: a model reading a
- *  sign needs several, and an attempt cut off before its answer spends the quota for
- *  nothing - which is why the pauses are 3/6/10/15 rather than 5/10/15/20, where the
- *  fifth attempt would get six. A `429` gets one retry after a longer pause: with a
+ *  A minute for the whole call - a ceiling, not a target: when the pauses run out, the
+ *  call ends. A `503` comes back in a second, so short pauses fit six attempts into
+ *  the minute, the last near its fiftieth second; a provider that does not answer at
+ *  all takes the minute with one. No retry is made that would be left less than ten
+ *  seconds: a model reading a sign needs several, and an attempt cut off before its
+ *  answer spends the quota for nothing. (3/6/10/15 ended at the fortieth second with a
+ *  third of the minute unused.) A `429` gets one retry after a longer pause: with a
  *  per-minute limit, quick repeats hit the same wall and spend more requests. */
 export const APP_PATIENCE: Patience = {
   timeoutMs: 60_000,
   budgetMs: 60_000,
   minAttemptMs: 10_000,
-  pausesMs: [3_000, 6_000, 10_000, 15_000],
+  pausesMs: [2_000, 4_000, 8_000, 12_000, 16_000],
   limitPausesMs: [20_000],
 };
 
@@ -76,11 +77,36 @@ export type Failure =
 export class VisionCallFailed extends Error {
   readonly kind: Failure;
   readonly status: number | null;
-  constructor(message: string, kind: Failure = "other", status: number | null = null) {
+  /** What happened, in one line, for "Details" (steps 16b, 16c): the last real refusal
+   *  in the provider's own sentence, how many attempts and how long. The message keeps
+   *  the last attempt only, and the last alone misled: refusals and a cut-off read as
+   *  "no answer". A line per attempt was tried and was too much for a phone. */
+  readonly summary: string | null;
+  constructor(message: string, kind: Failure = "other", status: number | null = null,
+              summary: string | null = null) {
     super(message);
     this.kind = kind;
     this.status = status;
+    this.summary = summary;
   }
+}
+
+/** The provider's own sentence out of its error body, or `null`.
+ *
+ *  Only for "Details", and only as far as it goes: the words on screen are chosen by
+ *  the code of the answer, never by this. OpenAI-compatible providers put it in
+ *  `error.message`; Google wraps the same in a list. */
+export function providerSays(body: string): string | null {
+  try {
+    const doc = JSON.parse(body);
+    const first = Array.isArray(doc) ? doc[0] : doc;
+    const said = first?.error?.message ?? first?.message;
+    if (typeof said === "string" && said.trim()) return said.trim().slice(0, 300);
+  } catch {
+    /* below: a body cut short or not JSON at all */
+  }
+  const found = /"message"\s*:\s*"((?:[^"\\]|\\.)*)/.exec(body);
+  return found ? found[1].replace(/\\"/g, '"').trim().slice(0, 300) || null : null;
 }
 
 export function failureOf(status: number): Failure {
@@ -175,10 +201,19 @@ export async function call(provider: Provider, model: string, prompt: string,
   let status: number | null = null;
   let response: Response | null = null;
   let made = 0;
+  // The kind of the last failure that was the provider's doing rather than the end of
+  // the budget, and that failure in a line.
+  let earlier: Failure | null = null;
+  let decisive = "";
+  let cutAfter: number | null = null;   // seconds the cut-off attempt had
   for (let attempt = 0; ; attempt += 1) {
     const stop = new AbortController();
-    // The last attempt waits no longer than the budget has left.
-    const timer = setTimeout(() => stop.abort(), Math.min(timeoutMs, left()));
+    // The last attempt waits no longer than the budget has left. The timer marks its
+    // own abort: from inside `fetch` it cannot be told from any other.
+    const limit = Math.min(timeoutMs, left());
+    let expired = false;
+    let cut = false;
+    const timer = setTimeout(() => { expired = true; stop.abort(); }, limit);
     made += 1;
     // The person's stop ends the request in flight, not only the next one.
     const relay = () => stop.abort();
@@ -197,25 +232,48 @@ export async function call(provider: Provider, model: string, prompt: string,
     } catch (e) {
       response = null;
       if (signal?.aborted) throw cancelled();
-      why = `${(e as Error).name}: ${String((e as Error).message).slice(0, 200)}`;
-      // Our own timer ends a request with an abort; a network that fell over, with
-      // anything else. Both are retried - but the person is told different things.
       const name = (e as Error).name;
-      kind = name === "AbortError" || name === "TimeoutError" ? "timeout" : "network";
-      status = null;
+      if (expired && limit < timeoutMs && earlier) {
+        // Cut off by the end of the minute, not by its own wait. That says nothing new
+        // about the provider: the failure keeps the kind of the attempts before it.
+        // Four `503`s and a cut-off are an overloaded provider, not a silent one.
+        why = `no answer in the ${Math.round(limit / 1000)} s left`;
+        kind = earlier;
+        cut = true;
+      } else if (expired) {
+        // Our own words: the browser's for this are "signal is aborted without reason".
+        why = `no answer within ${Math.round(limit / 1000)} s`;
+        kind = "timeout";
+        status = null;
+      } else {
+        why = `${name}: ${String((e as Error).message).slice(0, 200)}`;
+        // A network that fell over, as a rule. A fake in the tests throws an abort of
+        // its own, and that is a wait that expired.
+        kind = name === "AbortError" || name === "TimeoutError" ? "timeout" : "network";
+        status = null;
+      }
     } finally {
       clearTimeout(timer);
       signal?.removeEventListener("abort", relay);
     }
 
     if (response && response.status === 200) break;
+    let line = why;
     if (response) {
       // The provider's error body carries no key; it is truncated all the same.
-      why = `HTTP ${response.status}: ${(await response.text()).slice(0, 400)}`;
+      const text = await response.text();
+      why = `HTTP ${response.status}: ${text.slice(0, 400)}`;
+      line = `HTTP ${response.status}: ${providerSays(text) ?? text.slice(0, 200)}`;
       status = response.status;
       kind = failureOf(response.status);
-      if (!RETRY_STATUS.has(response.status)) break;
     }
+    if (cut) {
+      cutAfter = Math.round(limit / 1000);
+    } else {
+      earlier = kind;
+      decisive = line;
+    }
+    if (response && !RETRY_STATUS.has(response.status)) break;
     // The pause is told WHY it waits. On a live run a busy provider, a quota wall and a
     // dropped connection looked the same - minutes of silence on one photograph - and
     // the command that prints nothing cannot be told from one that hangs.
@@ -230,7 +288,10 @@ export async function call(provider: Provider, model: string, prompt: string,
   }
 
   if (!response || response.status !== 200) {
-    throw new VisionCallFailed(`${why} (attempts: ${made})`, kind, status);
+    const spent = Math.round((now() - began) / 1000);
+    const summary = `${decisive} (${made} ${made === 1 ? "attempt" : "attempts"} in ${spent} s`
+      + (cutAfter !== null ? `; the last had ${cutAfter} s and no answer)` : ")");
+    throw new VisionCallFailed(`${why} (attempts: ${made})`, kind, status, summary);
   }
   let payload: any;
   try {

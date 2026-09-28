@@ -245,14 +245,16 @@ with a dark field around it; the frame has a mask and four corner handles. At th
 bottom edge a line about the share of the frame, and the send button.
 
 While a sign is being read, a card lies over the bottom of the photograph: which
-provider is being asked and what for, the reason and the wait when a retry is coming,
-and "Cancel". When the reading fails, a card in the same place says what went wrong in
-one sentence, chosen by the kind of failure rather than by the provider's wording; the
-provider's own text sits under "Details", and where the way out lies in the settings
-there is a link to them. The cards lie over the photograph, not in the column: in the
-column they would change the photograph's height and reset the zoom, or fall below the
-button, off the screen. Neither card is red — a provider's failure says nothing about
-the sign.
+provider is being asked and what for, the reason and a countdown in seconds when a
+retry is coming, and "Cancel". When the reading fails, a card in the same place says
+what went wrong in one sentence, chosen by the kind of failure rather than by the
+provider's wording; "Details" holds one line — the provider's own sentence, the number
+of attempts and how long they took — and where the way out lies in the settings there
+is a link to them. The cards lie over the photograph, not in the column: in the column
+they would change the photograph's height and reset the zoom, or fall below the button,
+off the screen. They are never taller than the photograph's area, and scroll inside it,
+so the first sentence stays in view. Neither card is red — a provider's failure says
+nothing about the sign.
 
 ### `3c` — reading
 

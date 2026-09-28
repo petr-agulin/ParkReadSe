@@ -47,7 +47,9 @@ export function explain(error: unknown): Trouble | null {
     if (error.kind === "settings") {
       return { message: error.message, settings: true, details: null };
     }
-    return { ...SAID[error.kind], details: error.message };
+    // The whole story in a line where there is one: the last attempt alone can
+    // mislead (steps 16b, 16c).
+    return { ...SAID[error.kind], details: error.summary ?? error.message };
   }
   if (error instanceof InvalidModelResponse) {
     return { ...SAID.reply, details: error.message };
@@ -80,12 +82,15 @@ const WHY_WAITING: Record<Failure, string> = {
   other: "The provider refused the request.",
 };
 
-/** The line under the button while the reading is under way. */
-export function progressLine(progress: Progress, baseUrl: string): string {
+/** The line on the card while the reading is under way. `elapsedMs` is how long ago
+ *  this progress arrived: the wait before a retry counts down by it (step 16c) - a
+ *  figure that stood still read as attempts flickering past rather than as waiting. */
+export function progressLine(progress: Progress, baseUrl: string, elapsedMs = 0): string {
   const { stage, retry } = progress;
   if (retry) {
-    return `${WHY_WAITING[retry.kind]} Trying again in ${Math.round(retry.inMs / 1000)} s `
-           + `(attempt ${retry.next}).`;
+    const left = Math.ceil((retry.inMs - elapsedMs) / 1000);
+    const when = left > 0 ? `in ${left} s` : "now";
+    return `${WHY_WAITING[retry.kind]} Trying again ${when} (attempt ${retry.next}).`;
   }
   const doing = stage === "check" ? "check the photo" : "read the sign";
   return `Asking the AI model at ${hostOf(baseUrl)} to ${doing}…`;

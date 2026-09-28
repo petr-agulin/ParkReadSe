@@ -100,3 +100,31 @@ describe("the line while reading", () => {
     expect(hostOf("not a url")).toBe("not a url");
   });
 });
+
+describe("details are one line (steps 16b, 16c)", () => {
+  it("the summary, when there is one, rather than the last attempt", () => {
+    const summary = "HTTP 503: high demand (6 attempts in 49 s; the last had 12 s and no answer)";
+    const e = new VisionCallFailed("no answer in the 12 s left (attempts: 6)", "busy", 503,
+                                   summary);
+    const t = explain(e)!;
+    expect(t.message).toBe("The provider is overloaded right now. Try again in a few minutes.");
+    expect(t.details).toBe(summary);
+  });
+});
+
+describe("the wait before a retry counts down (step 16c)", () => {
+  const busy = { stage: "read" as const, retry: { inMs: 8_000, next: 4, kind: "busy" as const } };
+  const base = "https://generativelanguage.googleapis.com/v1beta/openai";
+
+  it("by the time that has passed since the wait began", () => {
+    expect(progressLine(busy, base, 0)).toBe("The provider is busy. Trying again in 8 s (attempt 4).");
+    expect(progressLine(busy, base, 900)).toBe("The provider is busy. Trying again in 8 s (attempt 4).");
+    expect(progressLine(busy, base, 1_000)).toBe("The provider is busy. Trying again in 7 s (attempt 4).");
+    expect(progressLine(busy, base, 7_500)).toBe("The provider is busy. Trying again in 1 s (attempt 4).");
+  });
+
+  it("at the end of the wait it says now, never a negative number", () => {
+    expect(progressLine(busy, base, 8_000)).toBe("The provider is busy. Trying again now (attempt 4).");
+    expect(progressLine(busy, base, 20_000)).toBe("The provider is busy. Trying again now (attempt 4).");
+  });
+});

@@ -180,7 +180,7 @@ describe("the pipeline tells the screen where it is (step 16)", () => {
                                  onProgress: (p) => seen.push(p) });
     expect(seen).toEqual([
       { stage: "check" },
-      { stage: "check", retry: { inMs: 3_000, next: 2, kind: "busy" } },
+      { stage: "check", retry: { inMs: 2_000, next: 2, kind: "busy" } },
       { stage: "read" },
     ]);
   });
