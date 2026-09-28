@@ -11,17 +11,6 @@ with you.
 
 ---
 
-## Screenshots
-
-| | | |
-|---|---|---|
-| ![Taking a photo of a sign](images/screenshots/01-take-photo.png) | ![Picking the sign in the photo](images/screenshots/02-pick-sign.png) | ![A paid stretch with a time limit, on a timeline](images/screenshots/03-result-paid.png) |
-| **Take a photo** — of the whole street if you like | **Pick the sign** — only this part is sent | **Read the answer** — plate by plate, and when you pay |
-| ![A no-parking zone with rented spaces excepted](images/screenshots/04-exception.png) | ![A refusal with its reason](images/screenshots/05-refusal.png) | ![Settings with the provider and key](images/screenshots/06-settings.png) |
-| **Exceptions** — for whom the spaces are | **An honest refusal** — and what to do instead | **Your own key** — no account, no server |
-
----
-
 ## The problem
 
 In Sweden you may park on a street with no signs, for at most 24 hours in a row on
@@ -29,32 +18,42 @@ weekdays. Where there is a sign, it is rarely just a **P**. Under it hangs a sta
 small plates, and each one changes the rule: paid hours, a time limit, a parking disc, a
 cleaning day, residents only, a permit, an arrow saying which part of the kerb is meant.
 
-![Three stacks of Swedish parking signs with different plates under the same P sign](images/ParkingSignExample.png)
+<img src="images/parking-sign-stacks.svg" width="440" alt="Three stacks of Swedish parking signs with different plates under the same P sign">
 
 Reading such a stack correctly is hard, even for Swedes, and harder still for visitors
-who do not read Swedish. Three things make it tricky:
+who do not read Swedish. A mistake costs a parking fine or a towed car. ParkRead Sweden reads the whole stack, applies the rules, and shows the result as a timeline.
 
-- **How the text is split into plates changes the rule.** The same three words give two
-  different rules:
+---
 
-  ```
-  Two plates:                      One plate:
-    [ 2 tim ]                        [ 2 tim   ]
-    [ Avgift 8-18 ]                  [ Avgift  ]
-                                     [ 8-18    ]
+## The solution
 
-  - max 2 hours, at any time       - between 8 and 18: max 2 hours, and you pay
-  - pay between 8 and 18           - outside those hours: no limit from the sign
-  ```
+ParkRead Sweden splits the job in two and gives each half to what does it well: **an AI
+model reads the sign, and the app's own code decides what it means.** An AI alone can
+sound sure and be wrong; code alone cannot read a photo. Together, every step can be
+checked.
 
-- **The way digits are printed says which days.** `8-18` means weekdays, `(8-15)` in
-  brackets means Saturdays and days before a holiday, and red digits mean Sundays and
-  holidays.
-- **What the sign leaves out still matters.** When a ban's hours are over and the sign
-  says nothing more, the general traffic rules apply — for example the 24-hour limit.
+1. **A quick check.** One cheap AI call answers a single question: is this a Swedish
+   parking sign, another road sign, or not a sign at all? If it is not a parking sign, the
+   app stops there and says what it sees.
+2. **The AI reads the stack — and only reads.** A second call writes down what is on the
+   sign: the main sign, every plate from top to bottom, its exact words, its colour,
+   whether it could be read. It writes this in a fixed format and decides nothing.
+3. **The code works out the rules.** It combines the plates, applies the Swedish calendar
+   and public holidays, splits the sign by its arrows, and computes what applies at the
+   time you chose. Given the same reading, it always gives the same answer. It also decides
+   how sure that answer is — and whether to refuse rather than guess.
+4. **You get it in plain English.** A built-in dictionary of Swedish parking signs and
+   plates turns each plate into a plain explanation, shown next to your photo so you can
+   compare.
+   Wording the dictionary does not know is shown exactly as printed, marked "not
+   interpreted", and never guessed at.
 
-A mistake costs a parking fine or a towed car. ParkRead Sweden reads the whole stack, applies
-the rules, and shows the result as a timeline.
+**What the sign leaves out.** Some rules apply without being on the sign — the 24-hour
+limit, no parking near a junction or a crossing, and the like. ParkRead Sweden keeps
+short notes about rules like these, shown behind a "show" link and clearly marked
+"not on this sign". They never change the answer, with one exception: when a ban's hours
+end and the sign says nothing more, the timeline follows the 24-hour limit, and says that
+this part comes from the general rules, not from the sign.
 
 ---
 
@@ -98,28 +97,30 @@ looks right.
 
 ---
 
-## How it works
+## Screenshots
 
-1. **A quick check.** One cheap AI call answers a single question: is this a Swedish
-   parking sign, another road sign, or not a sign at all? If it is not a parking sign, the
-   app stops there and says what it sees.
-2. **The AI reads the sign.** A second call writes down what is on it — the main sign,
-   every plate from top to bottom, its exact words, its colour, whether it could be read —
-   in a fixed format. The AI only describes; it decides nothing.
-3. **The app's own code works out the rules.** It combines the plates, applies the
-   Swedish calendar and public holidays, splits the sign by its arrows, and computes what
-   applies at the time you chose. It also decides how sure the answer is, and whether to
-   refuse.
-4. **The app explains it** with a built-in dictionary of Swedish signs (56 sign entries).
-   Wording the dictionary does not know is shown exactly as printed, marked "not
-   interpreted", and never guessed at.
-
-**General rules.** Some rules apply without being on the sign — the 24-hour limit, no
-parking near a junction or a crossing, and the like. ParkRead Sweden keeps
-12 short notes about rules like these, shown behind a "show" link and clearly marked
-"not on this sign". They never change the answer, with one exception: when a ban's hours
-end and the sign says nothing more, the timeline follows the 24-hour limit, and says that
-this part comes from the general rules, not from the sign.
+<table>
+<tr>
+<td align="center" width="33%"><img src="images/screenshots/01-first-launch.svg" width="240" alt="The first launch: a parking sign, the promise to read it plate by plate, and one step of setup - add your vision model key"></td>
+<td align="center" width="33%"><img src="images/screenshots/02-settings.svg" width="240" alt="Settings: the API key hidden and remembered on this device, the provider address and the vision model"></td>
+<td align="center" width="33%"><img src="images/screenshots/03-home.svg" width="240" alt="The home screen with a key set: read for now or another time, scan a sign, or pick a photo"></td>
+</tr>
+<tr>
+<td align="center" width="33%"><b>First launch</b> — one step of setup</td>
+<td align="center" width="33%"><b>Your own key</b> — your provider, your model</td>
+<td align="center" width="33%"><b>Ready</b> — scan a sign, or pick a photo</td>
+</tr>
+<tr>
+<td align="center" width="33%"><img src="images/screenshots/04-scan-a-sign.svg" width="240" alt="The camera screen: a parking sign inside the aiming frame, the street around it dimmed, and the hint to aim at the whole sign"></td>
+<td align="center" width="33%"><img src="images/readme-main.svg" width="240" alt="The sign reading, scrolling from top to bottom and back: the parking window on a timeline, who can park here, and what was read, plate by plate, beside the photo of the sign"></td>
+<td align="center" width="33%"><img src="images/screenshots/05-no-parking-zone.svg" width="240" alt="The reading of a no-parking zone sign, scrolling: no parking from the selected time, the start of a no-parking area, and the plates under the sign marked as not parking rules"></td>
+</tr>
+<tr>
+<td align="center" width="33%"><b>Scan a sign</b> — aim at the whole sign</td>
+<td align="center" width="33%"><b>Sign reading</b> — your parking window, plate by plate</td>
+<td align="center" width="33%"><b>No parking</b> — a zone sign, and the plates that are not rules</td>
+</tr>
+</table>
 
 ---
 
@@ -147,7 +148,7 @@ on it.
 
 ---
 
-## How well it works
+## How well the app works
 
 We keep a set of 139 test photos, 127 of them real parking signs with answers checked by
 hand. On the latest run, **the app's answer matched the checked answer on 116 of the 127**.
@@ -157,6 +158,41 @@ something else.
 
 The photos themselves are not published — some are Street View images, and some show
 number plates. The checked answers and the AI's saved readings are in `testset/`.
+
+---
+
+## Under the hood
+
+The small things that took the most work:
+
+- **Any day, any time.** Choose when you will park — now, tonight, or a Saturday next month
+  — and the whole answer is worked out for that moment, not just for now.
+- **The Swedish calendar, built in.** Every public holiday is computed from the law itself,
+  Easter and Midsummer included, and so are the days before a holiday that bracketed hours
+  such as `(8-15)` refer to. The timeline names them: *Red day: Midsommardagen (Midsummer
+  Day)*, *Eve of Juldagen (Christmas Day)*.
+- **Clock changes counted.** On the night the clocks go forward or back, a stay is measured
+  in real hours, not in the numbers on the dial.
+- **Not a parking sign? It stops.** A separate first check looks at the photo before
+  anything is read. A shop front, a speed limit or a street name is turned away, with what
+  was seen instead.
+- **Rides out a busy AI.** When the provider is overloaded, the app tries again — up to six
+  attempts within a minute, counting down each wait — and can be cancelled. If it still
+  fails, you get one plain sentence saying why, not an error code.
+- **Asks twice when it read too little.** An AI sometimes skims. If too little came back,
+  the sign is read once more and the better reading is kept.
+- **Checks the AI's homework.** Every reading is checked against a fixed format, and known
+  slips are corrected in code — a yellow plate with hours under a **P** is a ban window,
+  even when the AI forgets to say so. A reading that needed fixing shows a lower
+  confidence.
+- **When unsure, it is strict.** If a plate it could not read might be a ban, no stretch of
+  time is shown as allowed.
+- **Too few pixels, no answer.** A photo too small to hold readable text is refused, even
+  when the AI returns fluent Swedish from it.
+- **Finds the sign for you.** On a photo from your gallery, the frame lands on the sign by
+  itself — found on your phone, and tuned against test photos marked by hand.
+- **Your location stays home.** The part that is sent is redrawn first, which drops the
+  photo's GPS position, time and phone model.
 
 ---
 
@@ -250,6 +286,22 @@ images/          the pictures in this README
 The rules never depend on the screen, and the screen never depends on the AI provider.
 `AGENT_SPEC.md` describes what the AI is allowed to do inside the app, and `design.md`
 how the screens are built.
+
+---
+
+## Disclaimer
+
+ParkRead Sweden is a personal, experimental project, built in spare time by one person — a
+product person, not a programmer — entirely with AI tools.
+
+It is not a professional product. There is no company, no team and no support behind it,
+and nothing is guaranteed: readings can be wrong, and the app can change or stop working
+at any time. It has no connection to any authority, municipality or parking company; the
+operator names in the pictures appear only because they are printed on the signs.
+
+**You use it at your own risk.** ParkRead Sweden is a reading aid, not permission and not
+advice: what it shows is all there is, and the decision to park is yours. Check the sign
+before relying on it.
 
 ---
 

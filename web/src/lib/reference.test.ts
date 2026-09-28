@@ -38,12 +38,6 @@ describe("the reference", () => {
     expect(has("no-such-key")).toBe(false);
   });
 
-  it("the README counts the entries right", () => {
-    // Step 15a added an entry and the README went on saying 50. Held here, next to the
-    // entries themselves, so the next one cannot slip past the same way.
-    expect(Number(/(\d+) sign entries/.exec(source("README.md"))?.[1])).toBe(all().length);
-  });
-
   it("reads a word broken across two lines as one word", () => {
     // `Last-` / `plats` on `089` and `109`; `Biljett-` / `automat` on `097`.
     const keysOf = (lines: string[], kind: Panel["kind"] = "sign_plate") => recognise(doc([
