@@ -209,6 +209,7 @@ the root of a domain or from a subfolder.
 | `npm run measure` | scores the app on the test photos | after changing how signs are read or judged |
 | `npm run ask` | asks the AI again about test photos, and saves its answers | when the AI instructions change — costs money, needs your key in `.env` and the photos |
 | `npm run photos` | updates the list of test photos | after adding or renaming a test photo |
+| `npm run detect` | scores where the app places the frame on the test photos, against the boxes marked on `/mark.html` (open it on `localhost` while `npm run dev` runs) | after changing how the app finds a sign in a photo — needs the photos |
 
 `npm run ask` is the only command that uses `.env` — see `.env.example` for its three
 fields. Any provider that speaks the OpenAI-compatible format works (Google, Mistral,

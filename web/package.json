@@ -19,6 +19,7 @@
     "icons": "node tools/icons.ts",
     "ask": "node --env-file-if-exists=../.env --import ./tools/ts-resolve.mjs tools/ask.ts",
     "goldens": "node --import ./tools/ts-resolve.mjs tools/goldens.ts",
+    "detect": "node --import ./tools/ts-resolve.mjs tools/detect.ts",
     "goldens:write": "node --import ./tools/ts-resolve.mjs tools/goldens.ts --write"
   },
   "dependencies": {
@@ -28,11 +29,14 @@
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.0",
     "@types/node": "^22.20.2",
+    "@types/pngjs": "^6.0.5",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-basic-ssl": "^2.3.0",
     "@vitejs/plugin-react": "^6.1.0",
     "ajv": "^8.20.0",
+    "jpeg-js": "^0.4.4",
+    "pngjs": "^7.0.0",
     "tailwindcss": "^4.3.0",
     "typescript": "~5.9.0",
     "vite": "^8.2.0",

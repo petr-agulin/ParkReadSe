@@ -83,6 +83,24 @@ describe("the built page", () => {
     }
   });
 
+  it("leaves the detector's marking page and its image readers out (step 17)", () => {
+    // `mark.html` and the dev server's `/__marks` exist for the developer's
+    // measurement. In the build they would be a page and a path that serve the set's
+    // photographs - which are not the developer's to publish (decision 185).
+    expect(existsSync(DIST + "mark.html")).toBe(false);
+    for (const file of built.filter((f) => /\.(js|html|css)$/.test(f))) {
+      const text = readFileSync(file, "utf-8");
+      expect(text, file).not.toContain("__marks");
+      expect(text, file).not.toContain("Mark the signs");
+    }
+    const pkg = JSON.parse(readFileSync(`${WEB}package.json`, "utf-8"));
+    for (const reader of ["jpeg-js", "pngjs"]) {
+      expect(pkg.devDependencies, `${reader} belongs to the tools`).toHaveProperty(reader);
+      expect(pkg.dependencies ?? {}, `${reader} would travel into the page`)
+        .not.toHaveProperty(reader);
+    }
+  });
+
   it("keeps the independent judge of the schema in the tests", () => {
     // `ajv` exists to judge our own schema check (decision 138), and nowhere else.
     // Had it travelled into the page, the person standing at a sign would pay in

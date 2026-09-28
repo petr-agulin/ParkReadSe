@@ -1,0 +1,1153 @@
+{
+ "_": "How the frame suggested on each marked photograph catches the sign (npm run detect, step 17). good: covers >= 95% of the sign, the sign fills >= 30% of the frame; tolerable: >= 80% and >= 10%; otherwise wrong. centred: no suggestion, the screen's centred frame was judged.",
+ "summary": {
+  "good": 37,
+  "tolerable": 21,
+  "wrong": 37,
+  "centred": 12,
+  "noSign": 1,
+  "unmarked": 43
+ },
+ "photos": {
+  "001-p-30min": {
+   "grade": "tolerable",
+   "covers": 1,
+   "fills": 0.157,
+   "suggested": true,
+   "frame": {
+    "x": 76,
+    "y": 348,
+    "w": 448,
+    "h": 932
+   }
+  },
+  "009-besokande-avgift": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.385,
+   "suggested": true,
+   "frame": {
+    "x": 175,
+    "y": 304,
+    "w": 318,
+    "h": 976
+   }
+  },
+  "010-forhyrda-platser-tva-pilar": {
+   "grade": "tolerable",
+   "covers": 1,
+   "fills": 0.183,
+   "suggested": false,
+   "frame": {
+    "x": 86,
+    "y": 192,
+    "w": 403,
+    "h": 896
+   }
+  },
+  "011-gul-p-avgift-klistermarken": {
+   "grade": "good",
+   "covers": 0.98,
+   "fills": 0.464,
+   "suggested": true,
+   "frame": {
+    "x": 32,
+    "y": 359,
+    "w": 484,
+    "h": 921
+   }
+  },
+  "012-tillstand-7-17-ovrig-tid-avgift": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.355,
+   "suggested": false,
+   "frame": {
+    "x": 86,
+    "y": 192,
+    "w": 403,
+    "h": 896
+   }
+  },
+  "013-rorelsehindrad-2-platser": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.317,
+   "suggested": false,
+   "frame": {
+    "x": 46,
+    "y": 192,
+    "w": 403,
+    "h": 896
+   }
+  },
+  "015-motorcykel": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.307,
+   "suggested": true,
+   "frame": {
+    "x": 170,
+    "y": 329,
+    "w": 406,
+    "h": 951
+   }
+  },
+  "016-tillstand-ovrig-tid-5-platser": {
+   "grade": "wrong",
+   "covers": 0.576,
+   "fills": 1,
+   "suggested": true,
+   "frame": {
+    "x": 257,
+    "y": 394,
+    "w": 130,
+    "h": 469
+   }
+  },
+  "017-rorelsehindrad": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.526,
+   "suggested": true,
+   "frame": {
+    "x": 104,
+    "y": 265,
+    "w": 374,
+    "h": 652
+   }
+  },
+  "018-tillstand-utan-tidsangivelse": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.331,
+   "suggested": true,
+   "frame": {
+    "x": 87,
+    "y": 248,
+    "w": 316,
+    "h": 1032
+   }
+  },
+  "019-forbud-7-18-avgift-ovrig-tid": {
+   "grade": "wrong",
+   "covers": 0.348,
+   "fills": 1,
+   "suggested": true,
+   "frame": {
+    "x": 195,
+    "y": 693,
+    "w": 174,
+    "h": 246
+   }
+  },
+  "020-forhyrda-platser-13-och-14-avstand": {
+   "grade": "wrong",
+   "covers": 0.773,
+   "fills": 0.744,
+   "suggested": true,
+   "frame": {
+    "x": 209,
+    "y": 503,
+    "w": 82,
+    "h": 157
+   }
+  },
+  "023-avgift-4tim-laddande-elbilar": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.515,
+   "suggested": false,
+   "frame": {
+    "x": 86,
+    "y": 192,
+    "w": 403,
+    "h": 896
+   }
+  },
+  "024-avgift-erlaggs-med-mobil": {
+   "grade": "wrong",
+   "covers": 0.771,
+   "fills": 0.723,
+   "suggested": true,
+   "frame": {
+    "x": 82,
+    "y": 160,
+    "w": 340,
+    "h": 697
+   }
+  },
+  "025-30min-endast-gaster-gatukok": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.583,
+   "suggested": true,
+   "frame": {
+    "x": 78,
+    "y": 261,
+    "w": 270,
+    "h": 926
+   }
+  },
+  "026-gul-zon-avgift-plus-hastighetsskylt": {
+   "grade": "good",
+   "covers": 0.997,
+   "fills": 0.608,
+   "suggested": true,
+   "frame": {
+    "x": 164,
+    "y": 0,
+    "w": 248,
+    "h": 1030
+   }
+  },
+  "027-rorelsehindrad-0-6m-avgift-taxa-2": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.675,
+   "suggested": true,
+   "frame": {
+    "x": 38,
+    "y": 0,
+    "w": 275,
+    "h": 629
+   }
+  },
+  "029-beskickningsfordon-0-12m": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.472,
+   "suggested": true,
+   "frame": {
+    "x": 96,
+    "y": 28,
+    "w": 181,
+    "h": 438
+   }
+  },
+  "030-avgift-8-21-fredag-0-6-galler-ej-juli-zon-a": {
+   "grade": "wrong",
+   "covers": 0.738,
+   "fills": 0.939,
+   "suggested": true,
+   "frame": {
+    "x": 48,
+    "y": 190,
+    "w": 222,
+    "h": 716
+   }
+  },
+  "032-rorelsehindrad-pil-hoger": {
+   "grade": "wrong",
+   "covers": 0.474,
+   "fills": 1,
+   "suggested": true,
+   "frame": {
+    "x": 33,
+    "y": 16,
+    "w": 45,
+    "h": 116
+   }
+  },
+  "033-avgift-8-21-uppstallning-zon-e-boende-storskogen": {
+   "grade": "wrong",
+   "covers": 0.696,
+   "fills": 0.959,
+   "suggested": true,
+   "frame": {
+    "x": 177,
+    "y": 54,
+    "w": 172,
+    "h": 400
+   }
+  },
+  "035-zon-c-pa-avstand": {
+   "grade": "tolerable",
+   "covers": 0.848,
+   "fills": 0.25,
+   "suggested": false,
+   "frame": {
+    "x": 69,
+    "y": 65,
+    "w": 137,
+    "h": 305
+   }
+  },
+  "036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so": {
+   "grade": "good",
+   "covers": 0.963,
+   "fills": 0.731,
+   "suggested": true,
+   "frame": {
+    "x": 38,
+    "y": 0,
+    "w": 243,
+    "h": 619
+   }
+  },
+  "037-hanvisning-p-med-pil": {
+   "grade": "wrong",
+   "covers": 0.799,
+   "fills": 0.642,
+   "suggested": true,
+   "frame": {
+    "x": 86,
+    "y": 92,
+    "w": 157,
+    "h": 485
+   }
+  },
+  "038-scandic-buss-besokande-pil": {
+   "grade": "wrong",
+   "covers": 0.583,
+   "fills": 0.313,
+   "suggested": true,
+   "frame": {
+    "x": 72,
+    "y": 267,
+    "w": 196,
+    "h": 387
+   }
+  },
+  "041-lastplats-forbud-7-17-ovrig-tid-avgift": {
+   "grade": "wrong",
+   "covers": 0.277,
+   "fills": 0.922,
+   "suggested": true,
+   "frame": {
+    "x": 152,
+    "y": 353,
+    "w": 141,
+    "h": 160
+   }
+  },
+  "046-overgangsstalle-pabjuden-korriktning": {
+   "grade": "wrong",
+   "covers": 0.459,
+   "fills": 0.399,
+   "suggested": true,
+   "frame": {
+    "x": 145,
+    "y": 205,
+    "w": 103,
+    "h": 427
+   }
+  },
+  "047-varning-motesplats": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.327,
+   "suggested": false,
+   "frame": {
+    "x": 101,
+    "y": 125,
+    "w": 263,
+    "h": 585
+   }
+  },
+  "048-forbud-infart-galler-ej-cykel": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.377,
+   "suggested": false,
+   "frame": {
+    "x": 83,
+    "y": 121,
+    "w": 254,
+    "h": 564
+   }
+  },
+  "051-hastighet-40": {
+   "grade": "tolerable",
+   "covers": 1,
+   "fills": 0.205,
+   "suggested": false,
+   "frame": {
+    "x": 25,
+    "y": 105,
+    "w": 220,
+    "h": 490
+   }
+  },
+  "052-avgift-taxa-2-tisd-boende-roda-siffror": {
+   "grade": "wrong",
+   "covers": 0.704,
+   "fills": 0.831,
+   "suggested": true,
+   "frame": {
+    "x": 453,
+    "y": 104,
+    "w": 95,
+    "h": 176
+   }
+  },
+  "053-pabjuden-korriktning-hastighet-30": {
+   "grade": "good",
+   "covers": 0.992,
+   "fills": 0.622,
+   "suggested": true,
+   "frame": {
+    "x": 54,
+    "y": 80,
+    "w": 128,
+    "h": 411
+   }
+  },
+  "054-buss-15min-avgift-torsd": {
+   "grade": "tolerable",
+   "covers": 1,
+   "fills": 0.299,
+   "suggested": true,
+   "frame": {
+    "x": 96,
+    "y": 46,
+    "w": 215,
+    "h": 666
+   }
+  },
+  "055-forbud-stannande-snotackt-pil": {
+   "grade": "tolerable",
+   "covers": 1,
+   "fills": 0.279,
+   "suggested": false,
+   "frame": {
+    "x": 129,
+    "y": 89,
+    "w": 186,
+    "h": 413
+   }
+  },
+  "056-natt-avgift-7-19-taxa-3-torsd-plus-forbud": {
+   "grade": "wrong",
+   "covers": 0.674,
+   "fills": 0.896,
+   "suggested": true,
+   "frame": {
+    "x": 142,
+    "y": 171,
+    "w": 140,
+    "h": 321
+   }
+  },
+  "057-p-skiva-2tim-eller-gratis-biljett": {
+   "grade": "tolerable",
+   "covers": 0.825,
+   "fills": 0.97,
+   "suggested": true,
+   "frame": {
+    "x": 34,
+    "y": 4,
+    "w": 233,
+    "h": 420
+   }
+  },
+  "058-natt-klass-i-22-06-roda-siffror-utanfor-markerad": {
+   "grade": "wrong",
+   "covers": 0.036,
+   "fills": 1,
+   "suggested": true,
+   "frame": {
+    "x": 203,
+    "y": 433,
+    "w": 36,
+    "h": 98
+   }
+  },
+  "059-avstand-p-skiva-2tim-darefter-avgift": {
+   "grade": "tolerable",
+   "covers": 0.909,
+   "fills": 0.969,
+   "suggested": true,
+   "frame": {
+    "x": 18,
+    "y": 11,
+    "w": 105,
+    "h": 261
+   }
+  },
+  "060-natt-lastplats-ovrig-tid-avgift": {
+   "grade": "wrong",
+   "covers": 0.294,
+   "fills": 0.34,
+   "suggested": true,
+   "frame": {
+    "x": 28,
+    "y": 90,
+    "w": 41,
+    "h": 180
+   }
+  },
+  "061-lastplats-langt-avstand": {
+   "grade": "wrong",
+   "covers": 0.542,
+   "fills": 0.821,
+   "suggested": true,
+   "frame": {
+    "x": 29,
+    "y": 0,
+    "w": 24,
+    "h": 118
+   }
+  },
+  "062-klass-i-14-dygn-slapfordon-forbud": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.509,
+   "suggested": true,
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 198,
+    "h": 529
+   }
+  },
+  "066-reserverad-vaktmastare-tillstand-pil": {
+   "grade": "wrong",
+   "covers": 0.789,
+   "fills": 0.958,
+   "suggested": true,
+   "frame": {
+    "x": 100,
+    "y": 290,
+    "w": 352,
+    "h": 554
+   }
+  },
+  "069-personal-giltigt-tillstand-securitas": {
+   "grade": "tolerable",
+   "covers": 0.906,
+   "fills": 0.363,
+   "suggested": true,
+   "frame": {
+    "x": 177,
+    "y": 400,
+    "w": 181,
+    "h": 582
+   }
+  },
+  "070-regionservice-1-plats": {
+   "grade": "wrong",
+   "covers": 1,
+   "fills": 0.078,
+   "suggested": false,
+   "frame": {
+    "x": 86,
+    "y": 192,
+    "w": 403,
+    "h": 896
+   }
+  },
+  "074-skyltar-pa-langt-avstand": {
+   "grade": "wrong",
+   "covers": 1,
+   "fills": 0.006,
+   "suggested": false,
+   "frame": {
+    "x": 86,
+    "y": 192,
+    "w": 403,
+    "h": 896
+   }
+  },
+  "075-p-med-olasliga-plattor-pa-avstand": {
+   "grade": "tolerable",
+   "covers": 0.994,
+   "fills": 0.283,
+   "suggested": true,
+   "frame": {
+    "x": 230,
+    "y": 450,
+    "w": 49,
+    "h": 301
+   }
+  },
+  "076-flera-skyltar-pa-avstand-kontorshus": {
+   "grade": "wrong",
+   "covers": 0,
+   "fills": 0,
+   "suggested": true,
+   "frame": {
+    "x": 288,
+    "y": 612,
+    "w": 29,
+    "h": 67
+   }
+  },
+  "077-gul-forbud-forhyrda-platser-skymning": {
+   "grade": "wrong",
+   "covers": 0.332,
+   "fills": 0.589,
+   "suggested": true,
+   "frame": {
+    "x": 207,
+    "y": 594,
+    "w": 174,
+    "h": 300
+   }
+  },
+  "078-p-skylt-overklistrad": {
+   "grade": "wrong",
+   "covers": 1,
+   "fills": 0.035,
+   "suggested": true,
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 720,
+    "h": 1280
+   }
+  },
+  "079-p-skylt-bakom-trad": {
+   "grade": "wrong",
+   "covers": 1,
+   "fills": 0.03,
+   "suggested": false,
+   "frame": {
+    "x": 158,
+    "y": 192,
+    "w": 403,
+    "h": 896
+   }
+  },
+  "080-p-skylt-pa-avstand-parkeringsyta": {
+   "grade": "wrong",
+   "covers": 0,
+   "fills": 0,
+   "suggested": true,
+   "frame": {
+    "x": 614,
+    "y": 0,
+    "w": 104,
+    "h": 606
+   }
+  },
+  "081-p-skylt-pa-avstand-genom-lov": {
+   "grade": "wrong",
+   "covers": 0,
+   "fills": 0,
+   "suggested": true,
+   "frame": {
+    "x": 468,
+    "y": 591,
+    "w": 182,
+    "h": 399
+   }
+  },
+  "082-p-skylt-pa-avstand-bostadsgata": {
+   "grade": "wrong",
+   "covers": 0,
+   "fills": 0,
+   "suggested": true,
+   "frame": {
+    "x": 0,
+    "y": 771,
+    "w": 525,
+    "h": 509
+   }
+  },
+  "083-gul-forbud-forhyrda-platser-pa-avstand": {
+   "grade": "wrong",
+   "covers": 0.612,
+   "fills": 0.626,
+   "suggested": true,
+   "frame": {
+    "x": 330,
+    "y": 500,
+    "w": 55,
+    "h": 198
+   }
+  },
+  "084-gul-forbud-p-tjanst-vast-farthinder": {
+   "grade": "tolerable",
+   "covers": 0.879,
+   "fills": 0.508,
+   "suggested": true,
+   "frame": {
+    "x": 209,
+    "y": 0,
+    "w": 250,
+    "h": 888
+   }
+  },
+  "085-p-med-plattor-bakom-bom": {
+   "grade": "wrong",
+   "covers": 0.378,
+   "fills": 1,
+   "suggested": true,
+   "frame": {
+    "x": 364,
+    "y": 527,
+    "w": 35,
+    "h": 90
+   }
+  },
+  "086-p-1tim-pil-europark": {
+   "grade": "wrong",
+   "covers": 1,
+   "fills": 0.095,
+   "suggested": true,
+   "frame": {
+    "x": 257,
+    "y": 478,
+    "w": 124,
+    "h": 782
+   }
+  },
+  "087-motljus-parkering-pa-avstand": {
+   "grade": "wrong",
+   "covers": 0.686,
+   "fills": 0.749,
+   "suggested": true,
+   "frame": {
+    "x": 229,
+    "y": 461,
+    "w": 51,
+    "h": 185
+   }
+  },
+  "091-avgift-7-19-torsd-boende": {
+   "grade": "tolerable",
+   "covers": 1,
+   "fills": 0.218,
+   "suggested": true,
+   "frame": {
+    "x": 125,
+    "y": 0,
+    "w": 152,
+    "h": 677
+   }
+  },
+  "092-avgift-boende-mork-vagg": {
+   "grade": "wrong",
+   "covers": 0.391,
+   "fills": 0.88,
+   "suggested": true,
+   "frame": {
+    "x": 280,
+    "y": 0,
+    "w": 73,
+    "h": 350
+   }
+  },
+  "093-forbud-onsdag-pilar": {
+   "grade": "tolerable",
+   "covers": 0.888,
+   "fills": 0.684,
+   "suggested": true,
+   "frame": {
+    "x": 321,
+    "y": 30,
+    "w": 151,
+    "h": 657
+   }
+  },
+  "095-30min-plus-avgift-taxa": {
+   "grade": "tolerable",
+   "covers": 1,
+   "fills": 0.268,
+   "suggested": true,
+   "frame": {
+    "x": 234,
+    "y": 0,
+    "w": 256,
+    "h": 651
+   }
+  },
+  "096-flera-stolpar-boende-solna": {
+   "grade": "wrong",
+   "covers": 0.17,
+   "fills": 0.097,
+   "suggested": true,
+   "frame": {
+    "x": 242,
+    "y": 204,
+    "w": 151,
+    "h": 393
+   }
+  },
+  "098-avgift-7-19-tors-boende-tr": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.58,
+   "suggested": true,
+   "frame": {
+    "x": 128,
+    "y": 52,
+    "w": 203,
+    "h": 561
+   }
+  },
+  "100-avgift-7-19-boende-so": {
+   "grade": "tolerable",
+   "covers": 0.801,
+   "fills": 0.885,
+   "suggested": true,
+   "frame": {
+    "x": 172,
+    "y": 73,
+    "w": 142,
+    "h": 318
+   }
+  },
+  "101-motorcykel-0-10m-avgift-tisd": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.463,
+   "suggested": true,
+   "frame": {
+    "x": 107,
+    "y": 34,
+    "w": 167,
+    "h": 497
+   }
+  },
+  "102-p-bredvid-vagvisare-centrum-e4": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.672,
+   "suggested": true,
+   "frame": {
+    "x": 315,
+    "y": 124,
+    "w": 160,
+    "h": 423
+   }
+  },
+  "104-2tim-avgift-fred-vid-blomsterbutik": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.546,
+   "suggested": true,
+   "frame": {
+    "x": 302,
+    "y": 5,
+    "w": 275,
+    "h": 549
+   }
+  },
+  "105-p-med-plattor-gathorn": {
+   "grade": "good",
+   "covers": 0.992,
+   "fills": 0.631,
+   "suggested": true,
+   "frame": {
+    "x": 410,
+    "y": 0,
+    "w": 204,
+    "h": 599
+   }
+  },
+  "106-p-blaa-och-gul-skylt-vid-berg": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.471,
+   "suggested": true,
+   "frame": {
+    "x": 309,
+    "y": 162,
+    "w": 102,
+    "h": 427
+   }
+  },
+  "107-rorelsehindrad-med-plattor": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.327,
+   "suggested": true,
+   "frame": {
+    "x": 172,
+    "y": 0,
+    "w": 226,
+    "h": 686
+   }
+  },
+  "108-p-under-cykelskylt": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.524,
+   "suggested": true,
+   "frame": {
+    "x": 319,
+    "y": 120,
+    "w": 135,
+    "h": 362
+   }
+  },
+  "109-lastplats-vid-butik": {
+   "grade": "wrong",
+   "covers": 0.308,
+   "fills": 1,
+   "suggested": true,
+   "frame": {
+    "x": 318,
+    "y": 51,
+    "w": 55,
+    "h": 384
+   }
+  },
+  "110-avgift-30min-smal-gata": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.325,
+   "suggested": true,
+   "frame": {
+    "x": 317,
+    "y": 44,
+    "w": 250,
+    "h": 624
+   }
+  },
+  "112-p-1tim-parkeringsyta": {
+   "grade": "tolerable",
+   "covers": 1,
+   "fills": 0.142,
+   "suggested": true,
+   "frame": {
+    "x": 194,
+    "y": 190,
+    "w": 190,
+    "h": 462
+   }
+  },
+  "115-avgift-taxa-pil-ned": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.461,
+   "suggested": true,
+   "frame": {
+    "x": 83,
+    "y": 93,
+    "w": 297,
+    "h": 551
+   }
+  },
+  "116-p-gul-skylt-vid-restaurang": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.392,
+   "suggested": true,
+   "frame": {
+    "x": 318,
+    "y": 51,
+    "w": 141,
+    "h": 635
+   }
+  },
+  "117-p-18-8-plus-huvudled": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.441,
+   "suggested": true,
+   "frame": {
+    "x": 270,
+    "y": 114,
+    "w": 171,
+    "h": 529
+   }
+  },
+  "119-p-liten-skylt-vid-hack": {
+   "grade": "tolerable",
+   "covers": 0.91,
+   "fills": 0.432,
+   "suggested": true,
+   "frame": {
+    "x": 208,
+    "y": 186,
+    "w": 70,
+    "h": 400
+   }
+  },
+  "120-p-7-dygn-plus-huvudled": {
+   "grade": "tolerable",
+   "covers": 0.892,
+   "fills": 0.496,
+   "suggested": true,
+   "frame": {
+    "x": 254,
+    "y": 101,
+    "w": 175,
+    "h": 581
+   }
+  },
+  "121-p-med-pil-vid-vag": {
+   "grade": "tolerable",
+   "covers": 0.929,
+   "fills": 0.612,
+   "suggested": true,
+   "frame": {
+    "x": 350,
+    "y": 141,
+    "w": 109,
+    "h": 553
+   }
+  },
+  "122-p-3tim-pil-hoger": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.519,
+   "suggested": true,
+   "frame": {
+    "x": 281,
+    "y": 89,
+    "w": 210,
+    "h": 610
+   }
+  },
+  "123-p-med-plattor-vid-torg": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.308,
+   "suggested": true,
+   "frame": {
+    "x": 90,
+    "y": 135,
+    "w": 152,
+    "h": 448
+   }
+  },
+  "124-p-gul-skylt-i-gronska": {
+   "grade": "wrong",
+   "covers": 0.751,
+   "fills": 0.352,
+   "suggested": true,
+   "frame": {
+    "x": 276,
+    "y": 213,
+    "w": 219,
+    "h": 492
+   }
+  },
+  "125-pa-och-avstigningsplats-ovrig-tid-avgift": {
+   "grade": "wrong",
+   "covers": 0.394,
+   "fills": 1,
+   "suggested": true,
+   "frame": {
+    "x": 210,
+    "y": 154,
+    "w": 55,
+    "h": 271
+   }
+  },
+  "126-avgift-7-19-tisd-0-6": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.414,
+   "suggested": true,
+   "frame": {
+    "x": 177,
+    "y": 92,
+    "w": 132,
+    "h": 576
+   }
+  },
+  "128-rorelsehindrad-0-6m-avgift": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.41,
+   "suggested": true,
+   "frame": {
+    "x": 189,
+    "y": 0,
+    "w": 195,
+    "h": 571
+   }
+  },
+  "129-laddning-plus-overgangsstalle-30": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.416,
+   "suggested": true,
+   "frame": {
+    "x": 63,
+    "y": 0,
+    "w": 227,
+    "h": 584
+   }
+  },
+  "130-2tim-avgift-torsd-vid-butik": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.339,
+   "suggested": true,
+   "frame": {
+    "x": 185,
+    "y": 19,
+    "w": 194,
+    "h": 613
+   }
+  },
+  "131-avgift-uppstallning-mand-boende-pil": {
+   "grade": "wrong",
+   "covers": 0.711,
+   "fills": 0.921,
+   "suggested": true,
+   "frame": {
+    "x": 316,
+    "y": 93,
+    "w": 127,
+    "h": 321
+   }
+  },
+  "134-avgift-jamnt-datum-pil-ned-rokforbud": {
+   "grade": "tolerable",
+   "covers": 0.825,
+   "fills": 0.988,
+   "suggested": true,
+   "frame": {
+    "x": 250,
+    "y": 124,
+    "w": 108,
+    "h": 317
+   }
+  },
+  "135-p-ej-markerade-platser-securitas": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.651,
+   "suggested": true,
+   "frame": {
+    "x": 221,
+    "y": 0,
+    "w": 317,
+    "h": 689
+   }
+  },
+  "136-forhyrda-platser-pilar-1-plats": {
+   "grade": "tolerable",
+   "covers": 0.93,
+   "fills": 0.628,
+   "suggested": true,
+   "frame": {
+    "x": 215,
+    "y": 8,
+    "w": 131,
+    "h": 691
+   }
+  },
+  "137-sms-avgift-pil-securitas": {
+   "grade": "good",
+   "covers": 1,
+   "fills": 0.535,
+   "suggested": true,
+   "frame": {
+    "x": 180,
+    "y": 65,
+    "w": 252,
+    "h": 548
+   }
+  },
+  "139-p-1tim-alla-dagar-avgift-torsdag": {
+   "grade": "wrong",
+   "covers": 0.622,
+   "fills": 0.939,
+   "suggested": true,
+   "frame": {
+    "x": 8,
+    "y": 200,
+    "w": 278,
+    "h": 327
+   }
+  }
+ }
+}

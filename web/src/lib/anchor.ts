@@ -22,6 +22,9 @@ export type Region = {
    *  inside; the blue strip of a number plate has almost nothing. That is what
    *  tells a sign from a car. */
   white: number;
+  /** The patch's mean saturation. A sign's blue is paint, and saturated; a shadow on
+   *  the pavement, asphalt at dusk and a car only lean towards blue (step 17, fix 2). */
+  saturation: number;
 };
 
 /** The width of the reduced copy the search runs on. Larger is slower and gains
@@ -38,6 +41,20 @@ export const MAX_AREA_SHARE = 0.25;
 export const MIN_ASPECT = 0.45;
 export const MAX_ASPECT = 2.2;
 
+/** A blue patch taller than that is a STACK: on a Swedish pole the blue `P` and the
+ *  blue plates under it touch, and the scan sees one tall column. Rejected as "not
+ *  square", the real sign lost to a shadow on the pavement on fifteen photographs of
+ *  the set (step 17, fix 1). Down to this it is still a column of plates, not a pole
+ *  or a drainpipe. */
+export const MIN_STACK_ASPECT = 0.12;
+
+/** How far a stack's frame reaches past its own bottom, in its widths: the yellow
+ *  plate under a blue stack is usually already a separate patch in the column. */
+export const STACK_DOWN = 0.3;
+
+/** Whether this patch is a stack of blue plates rather than one sign. */
+export const isStack = (r: Region) => r.w / r.h < MIN_ASPECT;
+
 /** The patch must fill its own box: on a sign the fill is close to one, on a random
  *  smear it is not. */
 export const MIN_FILL = 0.5;
@@ -50,6 +67,13 @@ export const WIDTH_FACTOR = 1.9;
  *  If they are found, the extent is taken from them rather than from this number. */
 export const DOWN_FACTOR = 4.5;
 
+/** The frame is never wider than this many widths of the sign. A speck of colour in
+ *  line with the sign stretched it across the whole photograph (step 17, fix 4).
+ *  Only the width is held: the specks below a sign are often pieces of its white
+ *  plates - coloured lettering - and they are what carries the frame down over them.
+ *  Dropping them as "not plate-sized" cut plates off on sixteen photographs. */
+export const FRAME_MAX_WIDTH = 3;
+
 /** How far below the anchor plates of the same column are still looked for. */
 export const COLUMN_REACH = 6;
 
@@ -58,6 +82,18 @@ export const COLUMN_REACH = 6;
  *  painted wall; too much happens on a window. */
 export const WHITE_MIN = 0.04;
 export const WHITE_MAX = 0.65;
+
+/** The least mean saturation of a main sign's patch (step 17, fix 2). Measured on the
+ *  set: signs 0.53-0.83, the shadows and asphalt that beat them 0.23-0.40. It is the
+ *  patch's MEAN that is judged: the same bar on every pixel broke real signs apart -
+ *  their shaded edges and the gaps between letters are greyish too - and the
+ *  measurement fell at every value tried. */
+export const SIGN_SATURATION = 0.45;
+
+/** How much size counts in the choice: the square root, the patch's linear size
+ *  (step 17, fix 3). By area itself a large wrong patch beat a small real sign - the
+ *  cars on `112`, a third of the width, against the sign beside them. */
+export const AREA_WEIGHT = 0.5;
 
 /** A little room above the sign, so it does not press against the edge of the frame. */
 export const UP_FACTOR = 0.25;
@@ -68,7 +104,7 @@ function plausible(r: Region, image: Size): boolean {
   const fill = r.area / (r.w * r.h);
   return (
     share >= MIN_AREA_SHARE && share <= MAX_AREA_SHARE &&
-    aspect >= MIN_ASPECT && aspect <= MAX_ASPECT &&
+    aspect >= MIN_STACK_ASPECT && aspect <= MAX_ASPECT &&
     fill >= MIN_FILL
   );
 }
@@ -128,6 +164,7 @@ export function pickAnchor(regions: Region[], image: Size): Region | null {
     // stack would not be gathered whole.
     if (r.kind !== "blue") continue;
     if (!plausible(r, image)) continue;
+    if (r.saturation < SIGN_SATURATION) continue;
     const hasWhite = r.white >= WHITE_MIN && r.white <= WHITE_MAX;
     const column = columnAround(r, regions);
     if (!hasWhite && column.length === 0) continue;   // no corroboration
@@ -135,7 +172,7 @@ export function pickAnchor(regions: Region[], image: Size): Region | null {
     // The higher in the frame, the likelier this is the top of the stack.
     const height = 1 + (1 - (r.y + r.h / 2) / image.h) * 0.5;
     const evidence = (hasWhite ? 1.5 : 1) * (1 + Math.min(column.length, 3) * 0.4);
-    const score = r.area * height * evidence;
+    const score = Math.pow(r.area, AREA_WEIGHT) * r.saturation * height * evidence;
     if (score > bestScore) { bestScore = score; best = r; }
   }
   return best;
@@ -162,7 +199,12 @@ export function frameFromAnchor(anchor: Region, image: Size, column: Region[] = 
     bottom = Math.max(bottom, r.y + r.h);
   }
 
-  if (column.length === 0) {
+  if (column.length === 0 && isStack(anchor)) {
+    // The stack is its own extent: nothing is guessed below it.
+    const pad = anchor.w * STACK_DOWN;
+    bottom += pad;
+    left -= pad; right += pad;
+  } else if (column.length === 0) {
     bottom = anchor.y + anchor.h * (1 + DOWN_FACTOR);
     const w = anchor.w * WIDTH_FACTOR;
     left = anchor.x + anchor.w / 2 - w / 2;
@@ -174,6 +216,10 @@ export function frameFromAnchor(anchor: Region, image: Size, column: Region[] = 
     left -= pad; right += pad; bottom += pad;
   }
   top -= anchor.h * UP_FACTOR;
+  const centre = anchor.x + anchor.w / 2;
+  const half = (anchor.w * FRAME_MAX_WIDTH) / 2;
+  left = Math.max(left, centre - half);
+  right = Math.min(right, centre + half);
 
   return clamp({ x: left, y: top, w: right - left, h: bottom - top }, image);
 }
@@ -190,46 +236,46 @@ function classify(r: number, g: number, b: number): 0 | 1 | 2 {
   return 0;
 }
 
-/**
- * Find the patches of colour on a reduced copy of the photograph.
- *
- * This is the only place that needs real pixels, which is why it is thin: the
- * decisions are made by the pure functions above, and the tests hold those. Here
- * there is only the labelling of connected areas.
- */
-export function scanRegions(source: CanvasImageSource, image: Size): Region[] {
+/** The size of the reduced copy the search runs on. */
+export function scanSize(image: Size): Size {
   const scale = Math.min(1, SCAN_WIDTH / image.w);
-  const W = Math.max(1, Math.round(image.w * scale));
-  const H = Math.max(1, Math.round(image.h * scale));
-  const canvas = document.createElement("canvas");
-  canvas.width = W;
-  canvas.height = H;
-  const ctx = canvas.getContext("2d", { willReadFrequently: true });
-  if (!ctx) return [];
-  ctx.drawImage(source, 0, 0, W, H);
-  const data = ctx.getImageData(0, 0, W, H).data;
+  return { w: Math.max(1, Math.round(image.w * scale)), h: Math.max(1, Math.round(image.h * scale)) };
+}
 
+/**
+ * The patches of colour in a reduced copy, given as RGBA bytes (`W` by `H`), in the
+ * pixels of the original photograph (`image`).
+ *
+ * Pure: no canvas, no page. The browser feeds it from a canvas, the measurement of
+ * the frame (`npm run detect`, step 17) from a decoded file - and both run this one
+ * code rather than two copies of it.
+ */
+export function regionsFromPixels(data: ArrayLike<number>, W: number, H: number,
+                                  image: Size): Region[] {
   const mask = new Uint8Array(W * H);
-  for (let i = 0, p = 0; i < data.length; i += 4, p++) {
+  for (let i = 0, p = 0; p < W * H; i += 4, p++) {
     mask[p] = classify(data[i], data[i + 1], data[i + 2]);
   }
 
   const seen = new Uint8Array(W * H);
   const stack: number[] = [];
   const regions: Region[] = [];
-  const k = 1 / scale;
+  const k = image.w / W;
   for (let p = 0; p < mask.length; p++) {
     if (!mask[p] || seen[p]) continue;
     const kind = mask[p];
     stack.length = 0;
     stack.push(p);
     seen[p] = 1;
-    let n = 0, x0 = W, y0 = H, x1 = 0, y1 = 0;
+    let n = 0, x0 = W, y0 = H, x1 = 0, y1 = 0, saturation = 0;
     while (stack.length) {
       const q = stack.pop()!;
       const qx = q % W;
       const qy = (q - qx) / W;
       n++;
+      const at = q * 4;
+      const top = Math.max(data[at], data[at + 1], data[at + 2]);
+      saturation += top ? (top - Math.min(data[at], data[at + 1], data[at + 2])) / top : 0;
       if (qx < x0) x0 = qx;
       if (qx > x1) x1 = qx;
       if (qy < y0) y0 = qy;
@@ -254,9 +300,36 @@ export function scanRegions(source: CanvasImageSource, image: Size): Region[] {
       area: n * k * k,
       kind: kind === 1 ? "blue" : "yellow",
       white: cells ? white / cells : 0,
+      saturation: saturation / n,
     });
   }
   return regions;
+}
+
+/**
+ * Find the patches of colour on a reduced copy of the photograph. The only place that
+ * needs a page: it draws, and hands the pixels on.
+ */
+export function scanRegions(source: CanvasImageSource, image: Size): Region[] {
+  const { w: W, h: H } = scanSize(image);
+  const canvas = document.createElement("canvas");
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return [];
+  // Averaging rather than picking every tenth pixel: the white letter of a `P` is
+  // thin, and a plain reduction steps over it. It is also what the measurement does,
+  // so the two see the same picture (step 17).
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
+  ctx.drawImage(source, 0, 0, W, H);
+  return regionsFromPixels(ctx.getImageData(0, 0, W, H).data, W, H, image);
+}
+
+/** The frame the patches point to, or `null` if none of them is a sign. */
+export function suggestFromRegions(regions: Region[], image: Size): Box | null {
+  const anchor = pickAnchor(regions, image);
+  return anchor ? frameFromAnchor(anchor, image, columnAround(anchor, regions)) : null;
 }
 
 /**
@@ -267,9 +340,7 @@ export function scanRegions(source: CanvasImageSource, image: Size): Region[] {
  */
 export function suggestFrame(source: CanvasImageSource, image: Size): Box | null {
   try {
-    const regions = scanRegions(source, image);
-    const anchor = pickAnchor(regions, image);
-    return anchor ? frameFromAnchor(anchor, image, columnAround(anchor, regions)) : null;
+    return suggestFromRegions(scanRegions(source, image), image);
   } catch {
     return null;
   }

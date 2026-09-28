@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import basicSsl from "@vitejs/plugin-basic-ssl";
+import { marks } from "./tools/marks-server";
 
 // The build is placed in web/dist and works WITHOUT a server: the application has no
 // backend of its own any more, and the reading is computed in the browser (step 6).
@@ -15,8 +16,11 @@ import basicSsl from "@vitejs/plugin-basic-ssl";
 // secure context, and at an address of the form `http://192.168.x.x` it is not there
 // at all. The certificate is self-signed — the browser will warn once, and that is
 // normal: it is for development only and does not go into the build.
+//
+// `marks` serves the marking page of the detector measurement (`/mark.html`, step 17)
+// in development only; the build knows nothing of it.
 export default defineConfig({
   base: "./",
-  plugins: [react(), tailwindcss(), basicSsl()],
+  plugins: [react(), tailwindcss(), basicSsl(), marks()],
   build: { outDir: "dist" },
 });
