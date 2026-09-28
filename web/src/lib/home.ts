@@ -10,6 +10,26 @@ import { when } from "./when";
 export const MOMENT_FROM = "2026-01-01T00:00";
 export const MOMENT_TO = "2030-12-31T23:59";
 
+/** A moment by the device's clock, in the shape the moment field gives:
+ *  `2026-09-28T14:05`. */
+export function localMinute(t: Date): string {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${t.getFullYear()}-${pad(t.getMonth() + 1)}-${pad(t.getDate())}`
+       + `T${pad(t.getHours())}:${pad(t.getMinutes())}`;
+}
+
+/** What the moment field holds on a desktop browser: the chosen moment, or - while
+ *  it is "now" - the current minute.
+ *
+ *  An empty date-and-time field is complete only once both halves are filled, and a
+ *  desktop calendar sets the date alone: a day picked in it left the field half
+ *  empty, the value stayed "", and the moment stayed "now" (developer's report,
+ *  2026-09-28). Started from the current minute, the field is whole from the first
+ *  click, and a picked day or a typed hour is a moment at once. */
+export function fieldMoment(moment: string, now: string): string {
+  return moment.trim().length > 0 ? moment : now;
+}
+
 /**
  * What is written on the plates of the drawn sign.
  *
@@ -67,7 +87,7 @@ export const HOME_LINES = [BENEFITS[0], BENEFITS[2]];
  */
 export const ASSURANCES = [
   "Key stays on your device",
-  "No ParkRead server",
+  "No ParkRead Sweden server",
   "Only the framed part is sent",
 ];
 

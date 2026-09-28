@@ -1,6 +1,6 @@
 {
-  "name": "ParkRead — Swedish parking signs",
-  "short_name": "ParkRead",
+  "name": "ParkRead Sweden — Swedish parking signs",
+  "short_name": "ParkRead Sweden",
   "description": "What a Swedish parking sign states — read plate by plate.",
   "lang": "en",
   "start_url": "./",

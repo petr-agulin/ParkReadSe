@@ -19,20 +19,17 @@ import FirstLaunch from "./components/FirstLaunch";
 import Home from "./components/Home";
 import SettingsScreen from "./components/SettingsScreen";
 import KeyHelp from "./components/KeyHelp";
+import About from "./components/About";
 import { GENERAL_RULES } from "./lib/rules.data";
 import type { Analysis, GeneralRule } from "./types";
 import SignPicker from "./components/SignPicker";
 import CameraCapture from "./components/CameraCapture";
 import type { Box } from "./lib/crop";
 import Reading from "./components/Reading";
+import { localMinute } from "./lib/home";
 
 /** Now by the device's clock, in the same shape the moment field gives. */
-function nowLocal(): string {
-  const t = new Date();
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${t.getFullYear()}-${pad(t.getMonth() + 1)}-${pad(t.getDate())}`
-       + `T${pad(t.getHours())}:${pad(t.getMinutes())}`;
-}
+const nowLocal = (): string => localMinute(new Date());
 
 
 export default function App() {
@@ -153,9 +150,12 @@ export default function App() {
             onForget={() => setSettings(forget(browserStore()))}
             onBack={() => move("back")}
             onHelp={() => move("open-help")}
+            onAbout={() => move("open-about")}
           />
         ) : screen === "help" ? (
           <KeyHelp onBack={() => move("back")} />
+        ) : screen === "about" ? (
+          <About onBack={() => move("back")} />
         ) : screen === "first-launch" ? (
           <FirstLaunch
             onAddKey={() => move("open-settings")}

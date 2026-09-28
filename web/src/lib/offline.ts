@@ -51,9 +51,9 @@ export const OFFLINE_NOTE =
 export const OFFLINE_PAGE =
   "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\">"
   + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
-  + "<title>ParkRead — offline</title></head>"
+  + "<title>ParkRead Sweden — offline</title></head>"
   + "<body style=\"font:16px system-ui,sans-serif;margin:2rem;color:#0f172a\">"
-  + "<h1 style=\"font-size:1.1rem\">ParkRead</h1><p>" + OFFLINE_NOTE + "</p></body></html>";
+  + "<h1 style=\"font-size:1.1rem\">ParkRead Sweden</h1><p>" + OFFLINE_NOTE + "</p></body></html>";
 
 export type Req = { method: string; url: string; navigate: boolean };
 

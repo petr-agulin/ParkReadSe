@@ -29,7 +29,7 @@ export default function FirstLaunch({ onAddKey, onSettings }: Props) {
                          text-nav font-extrabold text-on-dark">
           P
         </span>
-        <span className="flex-1 text-nav font-bold text-ink-strong">ParkRead</span>
+        <span className="flex-1 text-nav font-bold text-ink-strong">ParkRead Sweden</span>
         <button
           type="button"
           onClick={onSettings}

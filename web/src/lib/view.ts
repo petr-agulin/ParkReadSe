@@ -13,6 +13,7 @@ export type Screen =
   | "home"           // 3a - there is a key
   | "settings"       // 3e
   | "help"           // 2h - where to get a key
+  | "about"          // 2i - what the app is
   | "camera"         // 3d
   | "frame"          // 3b - framing
   | "reading";       // 3c - the reading
@@ -24,7 +25,7 @@ export type Screen =
  *  than an honest "the key first". What was rejected was the other thing - meeting a
  *  person with a DEMAND instead of an explanation; `2f` explains: it shows a sign,
  *  says what it reads, and asks last. */
-export const WITHOUT_KEY: readonly Screen[] = ["first-launch", "settings", "help"];
+export const WITHOUT_KEY: readonly Screen[] = ["first-launch", "settings", "help", "about"];
 
 /** The first screen: without a key the first launch, with one the home screen.
  *  These are two states of one place, not two different screens along a path. */
@@ -42,6 +43,7 @@ export function reachable(settings: Settings, screen: Screen): boolean {
 export type Action =
   | "open-settings"   // the settings control on the home screen, "Add your key" on 2f
   | "open-help"       // "How keys work, and where to get one"
+  | "open-about"      // "About the app"
   | "back"            // the arrow in the header
   | "scan"            // "Scan a sign" - into the viewfinder
   | "pick"            // "Pick a photo you already took" - straight to the frame
@@ -52,15 +54,15 @@ export type Action =
 
 /** Where we are now and where we came from.
  *
- *  `from` is needed by exactly two screens - the settings and the help: they are
- *  reached both from the first launch and from the home screen, and "back" must
- *  return where the person came from. A "Back to Settings" button, as drawn in the
+ *  `from` is needed by the settings, the help and the about page: they are reached
+ *  from more than one place, and "back" must return where the person came from. A "Back to Settings" button, as drawn in the
  *  mock-up, would be untrue half the time, which is why there will not be one. */
 export type View = { screen: Screen; from?: Screen };
 
 const TARGET: Record<Action, Screen | null> = {
   "open-settings": "settings",
   "open-help": "help",
+  "open-about": "about",
   back: null,           // decided by `from`
   scan: "camera",
   pick: "frame",
@@ -83,15 +85,15 @@ const TARGET: Record<Action, Screen | null> = {
  */
 export function go(view: View, action: Action, settings: Settings): View {
   if (action === "back") {
-    // The settings and the help return where they were entered from; everything else
-    // returns to the beginning.
+    // The settings, the help and the about page return where they were entered from;
+    // everything else returns to the beginning.
     const to = view.from ?? start(settings);
     return { screen: reachable(settings, to) ? to : start(settings) };
   }
   const to = TARGET[action];
   if (!to || !reachable(settings, to)) return view;
   // Only those obliged to travel back along it remember the way.
-  return to === "settings" || to === "help"
+  return to === "settings" || to === "help" || to === "about"
     ? { screen: to, from: view.screen }
     : { screen: to };
 }

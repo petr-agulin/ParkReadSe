@@ -16,7 +16,7 @@ export default class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    console.error("ParkRead: failed to draw the answer", error, info);
+    console.error("ParkRead Sweden: failed to draw the answer", error, info);
   }
 
   render() {

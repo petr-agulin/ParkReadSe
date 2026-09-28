@@ -18,7 +18,7 @@ const EMPTY: Settings = { ...EMPTY_SETTINGS };
 // Half the settings is still "nothing can be read": a key with no address is useless.
 const HALF: Settings = { ...EMPTY_SETTINGS, apiKey: "k" };
 
-const ALL: Screen[] = ["first-launch", "home", "settings", "help", "camera",
+const ALL: Screen[] = ["first-launch", "home", "settings", "help", "about", "camera",
                        "frame", "reading"];
 const at = (screen: Screen, from?: Screen): View => ({ screen, from });
 
@@ -31,20 +31,20 @@ describe("which screen comes first", () => {
 });
 
 describe("the gate on the key (decision 147)", () => {
-  it("without a key exactly three screens are reachable", () => {
+  it("without a key exactly four screens are reachable", () => {
     // No camera, no gallery, no frame: a path leading to "a key is needed" is worse
     // than an honest request for the key at the very beginning.
     expect(ALL.filter((s) => reachable(EMPTY, s))).toEqual([...WITHOUT_KEY]);
   });
 
-  it("incomplete settings give the same three", () => {
+  it("incomplete settings give the same four", () => {
     expect(ALL.filter((s) => reachable(HALF, s))).toEqual([...WITHOUT_KEY]);
   });
 
   it("with a key everything is reachable except the first launch", () => {
     // `2f` is the state "there is no key", not a screen one can return to.
     expect(ALL.filter((s) => reachable(READY, s)))
-      .toEqual(["home", "settings", "help", "camera", "frame", "reading"]);
+      .toEqual(["home", "settings", "help", "about", "camera", "frame", "reading"]);
   });
 
   it("taking and choosing a photograph do not open at all without a key", () => {
@@ -76,6 +76,16 @@ describe("the settings and the help return where they were entered from", () => 
     const fromSettings = go(at("settings", "home"), "open-help", READY);
     expect(fromSettings).toEqual({ screen: "help", from: "settings" });
     expect(go(fromSettings, "back", READY)).toEqual({ screen: "settings" });
+  });
+
+  it("the about page opens from the settings and returns there, with a key or without", () => {
+    // It explains the app before a key exists, so it is readable without one, like
+    // the help.
+    for (const settings of [READY, EMPTY]) {
+      const open = go(at("settings", "home"), "open-about", settings);
+      expect(open).toEqual({ screen: "about", from: "settings" });
+      expect(go(open, "back", settings)).toEqual({ screen: "settings" });
+    }
   });
 
   it("a way that has become unreachable does not lead back into a dead end", () => {
@@ -131,7 +141,7 @@ describe("the path from the home screen to the reading", () => {
     }
   });
 
-  it("only the settings and the help remember the way", () => {
+  it("only the settings, the help and the about page remember the way", () => {
     // Otherwise "back" from the frame would lead into the camera the person has
     // already left.
     expect(go(at("home"), "scan", READY).from).toBeUndefined();

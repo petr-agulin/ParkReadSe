@@ -1,4 +1,4 @@
-# design.md — how ParkRead looks and behaves
+# design.md — how ParkRead Sweden looks and behaves
 
 A document for building from: what is decided, not what inspires. Changes are made
 here, not along the way in the markup.
@@ -153,7 +153,7 @@ Touch targets from 44 px. The camera shutter 92, the switch 46×28, the round bu
 | Drawn sign | a blue `plate` shield with a white border, white text strips beneath it |
 | "Not a parking rule" tag | on a plate that is not about the parking rules at all (every reference entry it matched is `no_rule`, and no word was left not understood), under its meaning: `chip` background, `ink-2` text 12, radius 4, as wide as its words |
 | Home screen dark band | the full width of the column, no rounding; the sign, a heading and two quiet lines in a column |
-| Moment row | label on the left, never wrapping; value and chevron on the right; a hairline beneath. Day and month shortened ("Thu. 17 Sep. at 02:01"), the time never separated from "at". The system date picker opens from the value; the label is not pressable |
+| Moment row | label on the left, never wrapping; value and chevron on the right; a hairline beneath. Day and month shortened ("Thu. 17 Sep. at 02:01"), the time never separated from "at". On a phone the system date picker opens from the value; the label is not pressable. On a computer (a mouse, no touch) the date-and-time field is shown as it is, starting from the current minute, with "now" beside it — or a "Now" link once a moment is chosen: a desktop calendar sets the date alone, and an invisible field could not be finished |
 | Interface icons | drawn in-house (decision 152): six inline SVGs in `Icon.tsx`, taking their colour from the text via `currentColor` |
 
 **A compound value is a list, not a paragraph.** When a value has several lines, the
@@ -174,13 +174,13 @@ read", the fields in the settings.
 
 ## 4. Screens
 
-Seven. Each is a state, not an address: there is no router, and `lib/view` chooses the
+Eight. Each is a state, not an address: there is no router, and `lib/view` chooses the
 screen. The height of the window is measured by the shell alone, in `svh`; screens
 take it but do not count it.
 
 ### `2f` — first launch, no key yet
 
-The header: a `P` mark, "ParkRead", a settings icon on the right. In the middle of the
+The header: a `P` mark, "ParkRead Sweden", a settings icon on the right. In the middle of the
 screen the drawn sign, beneath it a large heading and three quiet lines. Lower down a
 section caption, a blue button with a key, and three small assurances with icons.
 
@@ -202,8 +202,9 @@ constants, and a test checks it.
 A header with "back", the title and a thin readiness mark. Three fields — the key, the
 provider address, the model: label, value box, `Add` or `Edit` on the right; while
 editing, `Save`, `Cancel`, `Clear`, and `Show` for the key. Under the key, the
-"remember" checkbox and two lines about where the key goes. At the bottom a quiet
-"Forget key" button with a line beside it, and a help link beneath.
+"remember" checkbox, two lines about where the key goes, and — only when there is a key —
+a quiet "Forget key" button with a line beside it. Then the provider address and the
+model. At the bottom two links: the help and "About the app".
 
 No section headings: each field's label says the same thing.
 
@@ -215,6 +216,16 @@ checked (decision 150): no price is promised, and no provider is called cheaper 
 better; the screen only names the size of a request so the person can weigh it
 against their provider's own terms. The one link out of the application is an example
 address of a key page.
+
+### `2i` — about the app
+
+The same build as `2h`: a header with "back" and the title, then cards — what the app
+is, how it works in four numbered steps, where the key and the photo go, where it
+stops, and who made it (one person, with AI tools; no company, no team, no support) —
+and a yellow note at the bottom: the reader uses it at their own risk, and the decision
+to park is theirs. It
+opens from the settings, with or without a key, and "back" returns there. Text only:
+no state, no promise of accuracy or of a price.
 
 ### `3d` — camera
 

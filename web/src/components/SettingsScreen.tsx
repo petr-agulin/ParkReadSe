@@ -18,6 +18,7 @@ type Props = {
   onForget: () => void;
   onBack: () => void;
   onHelp: () => void;
+  onAbout: () => void;
 };
 
 type Field = "key" | "address" | "model";
@@ -28,7 +29,7 @@ const FIELD = "min-w-0 flex-1 rounded-field bg-inset px-4 py-3 text-body text-in
 const QUIET = "rounded-button-sm px-4 py-2.5 text-label font-semibold text-ink-2";
 
 export default function SettingsScreen(
-  { settings, onChange, onForget, onBack, onHelp }: Props,
+  { settings, onChange, onForget, onBack, onHelp, onAbout }: Props,
 ) {
   // Editing is explicit: an open field, with Save and Cancel beside it. Saving
   // silently as the person types is not allowed - half a key is as useless as no key,
@@ -240,25 +241,11 @@ export default function SettingsScreen(
           Sent only to the provider you name — this app has no server. Unticked, the
           key is forgotten when the tab closes.
         </p>
-      </div>
 
-      <div className="flex flex-col gap-3">
-        {field("address", "Provider address", { mono: true })}
-        {field("model", "Vision model")}
-      </div>
-
-      {/* A note rather than a grey line: this is the one place that says why the
-          application is not reading signs yet, and people walked straight past it. */}
-      {!state.ready && (
-        <p className="rounded-card-sm bg-note px-4 py-3 text-label text-note-ink">
-          To read a sign the app still needs {state.missing.join(", ")}.
-        </p>
-      )}
-
-      {/* At the foot: the dangerous action as a quiet button the size of its text -
-          no key, no button - and beneath it the help, as the last line of the screen.
-          There is no fill: the danger is spoken by the words. */}
-      <div className="mt-auto flex flex-col items-start gap-4 pt-2">
+        {/* Forgetting the key stands with the key, not at the foot of the screen: it
+            is an action on that one field, and it appears only when there is a key to
+            forget. A quiet button the size of its text - the danger is spoken by the
+            words, not by a fill. */}
         {canForget(settings) && (
           <div className="flex w-full items-center gap-3">
             <button
@@ -282,12 +269,37 @@ export default function SettingsScreen(
             </span>
           </div>
         )}
+      </div>
+
+      <div className="flex flex-col gap-3">
+        {field("address", "Provider address", { mono: true })}
+        {field("model", "Vision model")}
+      </div>
+
+      {/* A note rather than a grey line: this is the one place that says why the
+          application is not reading signs yet, and people walked straight past it. */}
+      {!state.ready && (
+        <p className="rounded-card-sm bg-note px-4 py-3 text-label text-note-ink">
+          To read a sign the app still needs {state.missing.join(", ")}.
+        </p>
+      )}
+
+      {/* At the foot: the help and the page about the app, as the last lines of the
+          screen. */}
+      <div className="mt-auto flex flex-col items-start gap-4 pt-2">
         <button
           type="button"
           onClick={onHelp}
           className="text-left text-label font-semibold text-link"
         >
           How keys work, and where to get one
+        </button>
+        <button
+          type="button"
+          onClick={onAbout}
+          className="text-left text-label font-semibold text-link"
+        >
+          About the app
         </button>
       </div>
     </section>

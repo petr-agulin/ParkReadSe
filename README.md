@@ -1,11 +1,11 @@
-# ParkRead
+# ParkRead Sweden
 
 **Take a photo of a Swedish parking sign and get a plain-English explanation of what it
 says:** who may park, when, for how long, and whether you pay.
 
-![The result screen: the photo beside a reconstruction of the sign, each plate with its Swedish text and a plain explanation; who can park here; and a timeline of the parking window](images/ResultScreenExample.png)
+![The result screen: a timeline of the parking window from the chosen time, with free and paid periods and a special permit required; who can park here; and what was read, plate by plate, beside the photo of the sign](images/readme-main.png)
 
-ParkRead **never says "you may park here"**. It tells you what the sign states, shows how
+ParkRead Sweden **never says "you may park here"**. It tells you what the sign states, shows how
 sure it is, and refuses to answer when the photo is not good enough. The decision stays
 with you.
 
@@ -53,14 +53,14 @@ who do not read Swedish. Three things make it tricky:
 - **What the sign leaves out still matters.** When a ban's hours are over and the sign
   says nothing more, the general traffic rules apply — for example the 24-hour limit.
 
-A mistake costs a parking fine or a towed car. ParkRead reads the whole stack, applies
+A mistake costs a parking fine or a towed car. ParkRead Sweden reads the whole stack, applies
 the rules, and shows the result as a timeline.
 
 ---
 
 ## How to use it
 
-ParkRead is a web page — no app store, no account. *(It is not published yet; the plan
+ParkRead Sweden is a web page — no app store, no account. *(It is not published yet; the plan
 is to host it on Cloudflare Pages.)*
 
 1. **Open the page** in your phone's browser. You can add it to your home screen to use it
@@ -74,23 +74,23 @@ is to host it on Cloudflare Pages.)*
 
 ## What you see
 
+- **Your parking window** — a timeline from the time you chose: when parking is free,
+  paid or forbidden, and when your stay ends. A solid line means open to everyone and read
+  in full; a dashed one means forbidden, not certain, or for some people only. Where
+  arrows split the sign, each side gets its own timeline.
+- **Who can park here** — everyone, residents, permit holders, rented spaces, and so on.
 - **What we read** — your photo next to a copy of the sign, plate by plate, each with its
   Swedish text and a plain explanation. Plates that are not parking rules — an operator's
   name, a payment board — are labelled so, and nothing is silently left out.
 - **How sure** — green: the whole sign was read; amber: an answer with a caveat; red: no
   answer.
-- **Who can park here** — everyone, residents, permit holders, rented spaces, and so on.
-- **Your parking window** — a timeline from the time you chose: when parking is free,
-  paid or forbidden, and when your stay ends. A solid line means open to everyone and read
-  in full; a dashed one means forbidden, not certain, or for some people only. Where
-  arrows split the sign, each side gets its own timeline.
 
 Every sentence describes **the sign**, never you: "the sign allows 2 hours", not "you may
 stay 2 hours".
 
 ### It refuses on purpose
 
-When the photo does not support an answer, ParkRead says so instead of guessing: a plate
+When the photo does not support an answer, ParkRead Sweden says so instead of guessing: a plate
 it cannot read, a main sign it cannot make out, a photo too small for the text on it, or
 something that is not a parking sign at all. It still shows what it could read, says
 what went wrong, and asks for another photo. A refusal is safer than a wrong answer that
@@ -115,7 +115,7 @@ looks right.
    interpreted", and never guessed at.
 
 **General rules.** Some rules apply without being on the sign — the 24-hour limit, no
-parking near a junction or a crossing, and the like. ParkRead keeps
+parking near a junction or a crossing, and the like. ParkRead Sweden keeps
 12 short notes about rules like these, shown behind a "show" link and clearly marked
 "not on this sign". They never change the answer, with one exception: when a ban's hours
 end and the sign says nothing more, the timeline follows the 24-hour limit, and says that
@@ -125,7 +125,7 @@ this part comes from the general rules, not from the sign.
 
 ## Your key and your photo
 
-**You bring your own key.** ParkRead has no server and no account. In **Settings** you
+**You bring your own key.** ParkRead Sweden has no server and no account. In **Settings** you
 enter your AI provider's address, the model name and your key. Without them the app opens
 and explains itself, but cannot read a sign. Each sign costs two AI calls, billed to you
 by your provider. The key is kept only while the tab is open, unless you tick **Remember
@@ -141,7 +141,7 @@ than failing quietly. Updates arrive the next time you open it online.
 **Uninstalling:** remove the icon *and* clear the site data for the address — on Android
 in the browser's site settings, on iPhone with **Remove App**, which takes its data with it.
 
-**The parking decision is yours.** ParkRead reads a sign and tells you what it states. It
+**The parking decision is yours.** ParkRead Sweden reads a sign and tells you what it states. It
 is a reading aid, not permission and not advice. Check the sign yourself before relying
 on it.
 
@@ -212,7 +212,7 @@ the root of a domain or from a subfolder.
 
 `npm run ask` is the only command that uses `.env` — see `.env.example` for its three
 fields. Any provider that speaks the OpenAI-compatible format works (Google, Mistral,
-OpenRouter); ParkRead was developed with Google's `gemini-3.5-flash-lite`.
+OpenRouter); ParkRead Sweden was developed with Google's `gemini-3.5-flash-lite`.
 
 ---
 

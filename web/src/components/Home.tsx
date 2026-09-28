@@ -10,11 +10,11 @@
 // one is primary is decided by `lib/home`: with no camera it is picking a photograph,
 // and the reason is said aloud.
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import {
   HOME_HEADLINE, HOME_LINES, MOMENT_FROM, MOMENT_TO, SIGN_PLATES, entryActions,
-  momentChip,
+  fieldMoment, localMinute, momentChip,
 } from "../lib/home";
 import { Camera, Sliders } from "./Icon";
 import SignPlate from "./SignPlate";
@@ -36,6 +36,11 @@ export default function Home({
   const file = useRef<HTMLInputElement>(null);
   const entry = entryActions(cameraAvailable);
   const chip = momentChip(moment);
+  // A computer with a mouse: its date-and-time field is typed into and picked from a
+  // calendar that sets the date alone, so it cannot lie invisible over the value as
+  // it does on a phone, where the system dialog asks for date and time together.
+  const [desktop] = useState(() => typeof window !== "undefined"
+    && window.matchMedia?.("(hover: hover) and (pointer: fine)").matches === true);
 
   const primary = () => (entry.primary === "scan" ? onScan() : file.current?.click());
 
@@ -48,7 +53,7 @@ export default function Home({
                          text-nav font-extrabold text-on-dark">
           P
         </span>
-        <span className="flex-1 text-nav font-bold text-ink-strong">ParkRead</span>
+        <span className="flex-1 text-nav font-bold text-ink-strong">ParkRead Sweden</span>
         {/* An icon rather than a word: the same way into the same screen as on the
             first launch, and it must look the same. */}
         <button
@@ -89,6 +94,39 @@ export default function Home({
           sending. The picker lies as a transparent layer over the VALUE rather than
           over the whole row: what is pressed is "Now" or the chosen time, while the
           caption on the left promises nothing and opens nothing. */}
+      {desktop ? (
+        <div className="flex items-center justify-between gap-4 border-b border-line py-4">
+          <span className="shrink-0 whitespace-nowrap text-body text-ink-2">Reading for</span>
+          {/* On a computer the field is shown as it is: the calendar picks the date,
+              and the hour and minute are typed or scrolled in the field itself. It
+              starts from the current minute (`fieldMoment`), so a picked day is a
+              whole moment at once; "Now" returns to reading at the minute of
+              sending. */}
+          <span className="flex items-center gap-3">
+            {chip.canReset ? (
+              <button
+                type="button"
+                onClick={() => onMoment("")}
+                className="text-label font-semibold text-link"
+              >
+                Now
+              </button>
+            ) : (
+              <span className="text-caption text-ink-3">now</span>
+            )}
+            <input
+              type="datetime-local"
+              value={fieldMoment(moment, localMinute(new Date()))}
+              min={MOMENT_FROM}
+              max={MOMENT_TO}
+              aria-label="Moment to read the sign at"
+              onChange={(e) => onMoment(e.target.value)}
+              className="min-w-0 rounded-field bg-inset px-3 py-2 text-body text-ink
+                         shadow-[inset_0_0_0_1.5px_var(--color-field)] outline-none"
+            />
+          </span>
+        </div>
+      ) : (
       <div className="flex items-center justify-between gap-4 border-b border-line py-4">
         {/* The caption never wraps: "Reading for" on two lines reads as a fragment
             rather than as a row of a list. */}
@@ -125,6 +163,7 @@ export default function Home({
           />
         </span>
       </div>
+      )}
 
       <div className="mt-auto flex flex-col gap-3.5">
         {/* A network is needed by exactly one action - reading a sign. It is said

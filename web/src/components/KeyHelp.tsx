@@ -24,7 +24,7 @@ const PROVIDERS: { name: string; note: string }[] = [
   { name: "OpenRouter", note: "One key, many models from several vendors." },
   {
     name: "A model you host yourself",
-    note: "If it answers at your address in the same dialect, point ParkRead at it.",
+    note: "If it answers at your address in the same dialect, point ParkRead Sweden at it.",
   },
 ];
 
@@ -34,7 +34,7 @@ const STEPS = [
   "Open your provider's API keys page.",
   "Create a key there. Copy it once — most providers show it only that one time.",
   "Pick a vision model from the provider's list and note its exact name.",
-  "In ParkRead's settings, paste the key, set the provider address and the model name.",
+  "In ParkRead Sweden's settings, paste the key, set the provider address and the model name.",
 ];
 
 export default function KeyHelp({ onBack }: Props) {
@@ -61,7 +61,7 @@ export default function KeyHelp({ onBack }: Props) {
           Any vision model will do.
         </h2>
         <p className="mt-3 text-body text-ink-2">
-          ParkRead is not tied to one provider: you bring the key and pick the model.
+          ParkRead Sweden is not tied to one provider: you bring the key and pick the model.
         </p>
         {/* The requirement on a provider is named outright: "can look at a photograph"
             is not enough. A model behind another interface will not work, and the
@@ -127,7 +127,7 @@ export default function KeyHelp({ onBack }: Props) {
             nothing. The danger is no smaller for that — the one spending it is
             whoever holds it. */}
         <p className="text-label text-note-ink">
-          The key is yours, and whoever holds it spends your allowance. ParkRead keeps
+          The key is yours, and whoever holds it spends your allowance. ParkRead Sweden keeps
           it on this device unless you switch that off — on a phone that is not yours,
           use “Forget key” in Settings.
         </p>

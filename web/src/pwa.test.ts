@@ -30,8 +30,8 @@ const BLUE = "#2a6099";
 
 describe("the manifest", () => {
   it("is named as a person will find it on their phone", () => {
-    expect(manifest.name).toContain("ParkRead");
-    expect(manifest.short_name).toBe("ParkRead");
+    expect(manifest.name).toContain("ParkRead Sweden");
+    expect(manifest.short_name).toBe("ParkRead Sweden");
     expect(manifest.description.length).toBeGreaterThan(0);
   });
 

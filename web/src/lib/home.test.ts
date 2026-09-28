@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import {
+import { fieldMoment, localMinute,
   BENEFITS, HOME_HEADLINE, HOME_LINES, MOMENT_FROM, MOMENT_TO, entryActions, momentChip,
 } from "./home";
 import { when } from "./when";
@@ -71,6 +71,22 @@ describe("the moment chip", () => {
     // For years the calendar does not compute, the product does not answer.
     expect(MOMENT_FROM.startsWith("2026")).toBe(true);
     expect(MOMENT_TO.startsWith("2030")).toBe(true);
+  });
+});
+
+describe("the moment field on a computer", () => {
+  // A desktop calendar sets the date alone. From an empty field a picked day left
+  // the value incomplete, and the moment stayed "now" (2026-09-28).
+  it("starts from the current minute while the moment is now", () => {
+    expect(fieldMoment("", "2026-09-28T14:05")).toBe("2026-09-28T14:05");
+  });
+
+  it("holds a chosen moment", () => {
+    expect(fieldMoment("2026-10-01T08:30", "2026-09-28T14:05")).toBe("2026-10-01T08:30");
+  });
+
+  it("writes the minute in the field's own shape", () => {
+    expect(localMinute(new Date(2026, 8, 3, 7, 4))).toBe("2026-09-03T07:04");
   });
 });
 
