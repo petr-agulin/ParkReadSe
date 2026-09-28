@@ -74,6 +74,11 @@ export const DOWN_FACTOR = 4.5;
  *  Dropping them as "not plate-sized" cut plates off on sixteen photographs. */
 export const FRAME_MAX_WIDTH = 3;
 
+/** The largest a shield around a sign can be, in the sign's areas. On the set: the
+ *  shield of `068` is 13-16 times its circle, the facades around `091` and `128` 51-80
+ *  times. Anything from 20 to 40 measured the same. */
+export const SHIELD_MAX_AREA = 25;
+
 /** How far below the anchor plates of the same column are still looked for. */
 export const COLUMN_REACH = 6;
 
@@ -216,8 +221,15 @@ export function frameFromAnchor(anchor: Region, image: Size, column: Region[] = 
     left -= pad; right += pad; bottom += pad;
   }
   top -= anchor.h * UP_FACTOR;
+  // A sign inside a shield - the prohibition circle in its yellow square, E20 - is as
+  // wide as the shield: measured by the circle, the cap cut the wide plates off `068`.
+  // A facade the sign hangs on encloses it too, and would lift the cap altogether
+  // (`091`, `128`); a shield is told from it by size.
+  const shields = column.filter((r) => encloses(r, anchor)
+                                      && r.w * r.h <= anchor.w * anchor.h * SHIELD_MAX_AREA);
+  const signWidth = Math.max(anchor.w, ...shields.map((r) => r.w));
   const centre = anchor.x + anchor.w / 2;
-  const half = (anchor.w * FRAME_MAX_WIDTH) / 2;
+  const half = (signWidth * FRAME_MAX_WIDTH) / 2;
   left = Math.max(left, centre - half);
   right = Math.min(right, centre + half);
 

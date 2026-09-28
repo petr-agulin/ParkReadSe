@@ -6,6 +6,7 @@ import { describe, expect, it } from "vitest";
 import {
   DOWN_FACTOR,
   FRAME_MAX_WIDTH,
+  SHIELD_MAX_AREA,
   MIN_STACK_ASPECT,
   regionsFromPixels,
   SIGN_SATURATION,
@@ -251,6 +252,27 @@ describe("what the measurement over the set taught (step 17)", () => {
     const f = frameFromAnchor(theSign, phone, [wide]);
     expect(f.w).toBeLessThanOrEqual(theSign.w * FRAME_MAX_WIDTH + 1);
     expect(f.x + f.w / 2).toBeCloseTo(theSign.x + theSign.w / 2, 0);
+  });
+
+  it("a sign inside a shield is as wide as the shield: its wide plates are not cut", () => {
+    // `068`: a prohibition circle in a yellow shield six times its width, with an
+    // equally wide plate under it. Measured by the circle, the cap cut them.
+    const circle = sign({ x: 1400, y: 700, w: 200, h: 200 });
+    const shield = sign({ kind: "yellow", x: 900, y: 600, w: 1200, h: 450, area: 1200 * 450 * 0.7 });
+    const plate = sign({ x: 900, y: 1100, w: 1200, h: 400 });
+    expect(shield.w * shield.h / (circle.w * circle.h)).toBeLessThan(SHIELD_MAX_AREA);
+    const f = frameFromAnchor(circle, phone, [shield, plate]);
+    expect(f.x).toBeLessThanOrEqual(plate.x);
+    expect(f.x + f.w).toBeGreaterThanOrEqual(plate.x + plate.w);
+  });
+
+  it("but a facade around the sign is not its shield: the cap still holds", () => {
+    // `091`, `128`: a yellow house front enclosing the sign, 50-80 times its area.
+    const theSign = sign({ x: 1400, y: 700, w: 200, h: 200 });
+    const facade = sign({ kind: "yellow", x: 0, y: 0, w: 3000, h: 1600 });
+    expect(facade.w * facade.h / (theSign.w * theSign.h)).toBeGreaterThan(SHIELD_MAX_AREA);
+    const f = frameFromAnchor(theSign, phone, [facade]);
+    expect(f.w).toBeLessThanOrEqual(theSign.w * FRAME_MAX_WIDTH + 1);
   });
 });
 

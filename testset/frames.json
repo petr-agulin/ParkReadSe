@@ -44,6 +44,7 @@
     "061-lastplats-langt-avstand": {"x":22,"y":21,"w":40,"h":107},
     "062-klass-i-14-dygn-slapfordon-forbud": {"x":12,"y":28,"w":143,"h":373},
     "066-reserverad-vaktmastare-tillstand-pil": {"x":110,"y":297,"w":341,"h":694},
+    "068-parkering-forbjuden-privat-parkering": {"x":99,"y":316,"w":440,"h":418},
     "069-personal-giltigt-tillstand-securitas": {"x":167,"y":393,"w":141,"h":299},
     "070-regionservice-1-plats": {"x":211,"y":519,"w":141,"h":200},
     "074-skyltar-pa-langt-avstand": {"x":296,"y":634,"w":39,"h":55},

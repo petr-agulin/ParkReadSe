@@ -1,12 +1,12 @@
 {
  "_": "How the frame suggested on each marked photograph catches the sign (npm run detect, step 17). good: covers >= 95% of the sign, the sign fills >= 30% of the frame; tolerable: >= 80% and >= 10%; otherwise wrong. centred: no suggestion, the screen's centred frame was judged.",
  "summary": {
-  "good": 37,
-  "tolerable": 21,
-  "wrong": 37,
+  "good": 38,
+  "tolerable": 22,
+  "wrong": 36,
   "centred": 12,
   "noSign": 1,
-  "unmarked": 43
+  "unmarked": 42
  },
  "photos": {
   "001-p-30min": {
@@ -47,13 +47,13 @@
   },
   "011-gul-p-avgift-klistermarken": {
    "grade": "good",
-   "covers": 0.98,
-   "fills": 0.464,
+   "covers": 0.995,
+   "fills": 0.416,
    "suggested": true,
    "frame": {
-    "x": 32,
+    "x": 0,
     "y": 359,
-    "w": 484,
+    "w": 549,
     "h": 921
    }
   },
@@ -191,13 +191,13 @@
   },
   "026-gul-zon-avgift-plus-hastighetsskylt": {
    "grade": "good",
-   "covers": 0.997,
-   "fills": 0.608,
+   "covers": 1,
+   "fills": 0.361,
    "suggested": true,
    "frame": {
-    "x": 164,
+    "x": 10,
     "y": 0,
-    "w": 248,
+    "w": 420,
     "h": 1030
    }
   },
@@ -478,26 +478,26 @@
    }
   },
   "061-lastplats-langt-avstand": {
-   "grade": "wrong",
-   "covers": 0.542,
-   "fills": 0.821,
+   "grade": "tolerable",
+   "covers": 0.903,
+   "fills": 0.608,
    "suggested": true,
    "frame": {
-    "x": 29,
+    "x": 14,
     "y": 0,
-    "w": 24,
+    "w": 54,
     "h": 118
    }
   },
   "062-klass-i-14-dygn-slapfordon-forbud": {
    "grade": "good",
    "covers": 1,
-   "fills": 0.509,
+   "fills": 0.497,
    "suggested": true,
    "frame": {
     "x": 0,
     "y": 0,
-    "w": 198,
+    "w": 203,
     "h": 529
    }
   },
@@ -511,6 +511,18 @@
     "y": 290,
     "w": 352,
     "h": 554
+   }
+  },
+  "068-parkering-forbjuden-privat-parkering": {
+   "grade": "good",
+   "covers": 0.964,
+   "fills": 0.982,
+   "suggested": true,
+   "frame": {
+    "x": 102,
+    "y": 311,
+    "w": 440,
+    "h": 411
    }
   },
   "069-personal-giltigt-tillstand-securitas": {
@@ -623,13 +635,13 @@
   },
   "081-p-skylt-pa-avstand-genom-lov": {
    "grade": "wrong",
-   "covers": 0,
-   "fills": 0,
+   "covers": 0.728,
+   "fills": 0.012,
    "suggested": true,
    "frame": {
-    "x": 468,
+    "x": 168,
     "y": 591,
-    "w": 182,
+    "w": 552,
     "h": 399
    }
   },
@@ -659,13 +671,13 @@
   },
   "084-gul-forbud-p-tjanst-vast-farthinder": {
    "grade": "tolerable",
-   "covers": 0.879,
-   "fills": 0.508,
+   "covers": 1,
+   "fills": 0.227,
    "suggested": true,
    "frame": {
-    "x": 209,
+    "x": 17,
     "y": 0,
-    "w": 250,
+    "w": 635,
     "h": 888
    }
   },
@@ -1019,13 +1031,13 @@
   },
   "125-pa-och-avstigningsplats-ovrig-tid-avgift": {
    "grade": "wrong",
-   "covers": 0.394,
+   "covers": 0.509,
    "fills": 1,
    "suggested": true,
    "frame": {
-    "x": 210,
+    "x": 200,
     "y": 154,
-    "w": 55,
+    "w": 71,
     "h": 271
    }
   },
