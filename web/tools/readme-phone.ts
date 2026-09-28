@@ -4,6 +4,11 @@
 //     npm run readme:phone -- <screenshot>... [--time 14:16] [--trim-top N] [--trim-bottom N]
 //     npm run readme:phone -- --time 21:52     (again, from images/readme-screen.jpg)
 //
+// A picture for the gallery's rows: `--out images/screenshots/NN-name.svg`, with
+// `--width 720` - a phone in a row is small, and a full-size screen would only make
+// the README heavy - and `--title` / `--desc` saying what it shows. A screen that
+// fits the phone stands still.
+//
 // One long capture of the reading screen, or several ordinary screenshots taken while
 // scrolling, each overlapping the one before: they are joined where they repeat each
 // other. `--trim-top` and `--trim-bottom` cut the phone's own status bar, the
@@ -15,11 +20,11 @@
 // through 256 colours. The screenshot travels inside the file.
 
 import { readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, relative, resolve } from "node:path";
 
 import jpeg from "jpeg-js";
 
-import { decode, type Rgba } from "./pixels";
+import { decode, reduce, type Rgba } from "./pixels";
 import { ROOT } from "./testset";
 
 export const OUT = join(ROOT, "images", "readme-main.svg");
@@ -37,7 +42,22 @@ const NAV = 46;      // the system buttons' height
 const SPEED = 85;
 const REST = 1.8;
 
-export type Options = { time?: string; trimTop?: number; trimBottom?: number };
+export type Options = {
+  time?: string;
+  trimTop?: number;
+  trimBottom?: number;
+  /** What the picture shows, for those who cannot see it. */
+  title?: string;
+  desc?: string;
+};
+
+const TITLE = "ParkRead Sweden on a phone";
+const DESC = "The sign reading screen scrolls slowly from top to bottom and back: the parking "
+  + "window on a timeline, who can park here, and what was read, plate by plate, beside "
+  + "the photo of the sign.";
+
+/** Text made safe to stand inside the picture's markup. */
+const escape = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 /** A pixel's colour as `#rrggbb`. */
 const hex = (d: Uint8Array, i: number) =>
@@ -74,8 +94,8 @@ export function phoneSvg(bytes: Uint8Array, mime: string, opts: Options = {}): s
   const cx = SCREEN.x + SCREEN.w / 2;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${CANVAS.w} ${CANVAS.h}" width="${CANVAS.w / 1.25}" height="${CANVAS.h / 1.25}" role="img" aria-labelledby="t d">
-  <title id="t">ParkRead Sweden on a phone</title>
-  <desc id="d">The sign reading screen scrolls slowly from top to bottom and back: the parking window on a timeline, who can park here, and what was read, plate by plate, beside the photo of the sign.</desc>
+  <title id="t">${escape(opts.title ?? TITLE)}</title>
+  <desc id="d">${escape(opts.desc ?? DESC)}</desc>
   <defs>
     <linearGradient id="case" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#3a3f48"/>
@@ -105,7 +125,7 @@ export function phoneSvg(bytes: Uint8Array, mime: string, opts: Options = {}): s
     <!-- The screen itself, scrolling. -->
     <g clip-path="url(#view)">
       <g>
-        <animateTransform attributeName="transform" type="translate" dur="${dur}s" repeatCount="indefinite" calcMode="spline" keyTimes="${keyTimes}" values="${values}" keySplines="${splines}"/>
+        ${scroll ? `<animateTransform attributeName="transform" type="translate" dur="${dur}s" repeatCount="indefinite" calcMode="spline" keyTimes="${keyTimes}" values="${values}" keySplines="${splines}"/>` : "<!-- The screen fits: it stands still. -->"}
         <image x="${SCREEN.x}" y="${imgY.toFixed(2)}" width="${SCREEN.w}" height="${(img.h * k).toFixed(2)}" preserveAspectRatio="none" href="data:${mime};base64,${Buffer.from(bytes).toString("base64")}"/>
       </g>
     </g>
@@ -192,6 +212,10 @@ export function stitch(shots: Rgba[], trimTop = 0, trimBottom = 0): Rgba {
   return whole;
 }
 
+/** A picture as JPEG bytes. */
+const asJpeg = (img: Rgba) =>
+  new Uint8Array(jpeg.encode({ data: Buffer.from(img.data), width: img.w, height: img.h }, 92).data);
+
 function main() {
   const args = process.argv.slice(2);
   const flag = (name: string) => {
@@ -201,25 +225,38 @@ function main() {
   const time = flag("--time");
   const trimTop = Number(flag("--trim-top") ?? 0);
   const trimBottom = Number(flag("--trim-bottom") ?? 0);
+  const out = flag("--out");
+  const width = flag("--width");
+  const title = flag("--title");
+  const desc = flag("--desc");
   const sources = args.length ? args : [SCREEN_OUT];
+  const target = out ? resolve(ROOT, out) : OUT;
+
   let bytes = new Uint8Array(readFileSync(sources[0]));
   let mime = bytes[0] === 0x89 ? "image/png" : "image/jpeg";
   let trims = { trimTop, trimBottom };
-  if (sources.length > 1) {
-    // Several screenshots: joined into one, kept beside the picture so it can be made
-    // again from it alone.
-    const long = stitch(sources.map((s) => decode(new Uint8Array(readFileSync(s)))),
+  if (sources.length > 1 || width) {
+    // The screen, made once: joined from several screenshots, cut free of the phone's
+    // bars, and - for a small picture in a row - stored no wider than it will be seen.
+    let screen = stitch(sources.map((f) => decode(new Uint8Array(readFileSync(f)))),
                         trimTop, trimBottom);
-    bytes = new Uint8Array(jpeg.encode({ data: Buffer.from(long.data), width: long.w,
-                                         height: long.h }, 92).data);
+    if (width && Number(width) < screen.w) {
+      const w = Number(width);
+      screen = reduce(screen, { w, h: Math.round(screen.h * w / screen.w) });
+    }
+    bytes = asJpeg(screen);
     mime = "image/jpeg";
     trims = { trimTop: 0, trimBottom: 0 };
-    writeFileSync(SCREEN_OUT, bytes);
-    console.log(`written: images/readme-screen.jpg (${long.w}x${long.h})`);
+    // The long screen of the README's own picture is kept, so it can be made again
+    // from it alone.
+    if (sources.length > 1 && target === OUT) {
+      writeFileSync(SCREEN_OUT, bytes);
+      console.log(`written: images/readme-screen.jpg (${screen.w}x${screen.h})`);
+    }
   }
-  const svg = phoneSvg(bytes, mime, { time, ...trims });
-  writeFileSync(OUT, svg);
-  console.log(`written: images/readme-main.svg (${Math.round(svg.length / 1024)} KB)`);
+  const svg = phoneSvg(bytes, mime, { time, title, desc, ...trims });
+  writeFileSync(target, svg);
+  console.log(`written: ${relative(ROOT, target).replace(/\\/g, "/")} (${Math.round(svg.length / 1024)} KB)`);
 }
 
 if (process.argv[1]?.replace(/\\/g, "/").endsWith("tools/readme-phone.ts")) main();

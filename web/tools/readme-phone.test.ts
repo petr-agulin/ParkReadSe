@@ -24,8 +24,17 @@ describe("the phone picture", () => {
     expect(svg).toContain('repeatCount="indefinite"');
   });
 
-  it("does not scroll a screen that fits", () => {
-    expect(travel(phoneSvg(shot(1080, 1500), "image/png"))).toBe(0);
+  it("a screen that fits stands still: no animation in it at all", () => {
+    const svg = phoneSvg(shot(1080, 1500), "image/png");
+    expect(svg).not.toContain("<animateTransform");
+    expect(svg).toContain("stands still");
+  });
+
+  it("says what each picture shows, safely", () => {
+    const svg = phoneSvg(shot(40, 80), "image/png",
+                         { title: "Settings <key hidden>", desc: "Provider & model" });
+    expect(svg).toContain("<title id=\"t\">Settings &lt;key hidden&gt;</title>");
+    expect(svg).toContain("<desc id=\"d\">Provider &amp; model</desc>");
   });
 
   it("trimming the phone's own bars shortens the scroll by exactly their height", () => {
