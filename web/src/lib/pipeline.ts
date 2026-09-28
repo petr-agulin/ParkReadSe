@@ -14,9 +14,9 @@ import { pixels } from "./photo";
 import { toJson } from "./present";
 import { recognise, type Recognised } from "./reference";
 import type { SignDoc } from "./sign";
-import { classifyImage, extractSignData, isParkingSign,
-         type ExtractOutcome, type Photo, type Provider,
-         type TriageOutcome } from "./vision";
+import { classifyImage, extractSignData, isParkingSign, sleep,
+         type ExtractOutcome, type Failure, type Patience, type Pause, type Photo,
+         type Provider, type TriageOutcome } from "./vision";
 
 export type Outcome = {
   image: string;
@@ -34,10 +34,21 @@ export type Analysis = {
   evaluation: Evaluation | null;
 };
 
+/** Where the reading is, for the screen: which call is under way, and - when the
+ *  provider refused and a retry waits - why, how long, and which attempt comes next. */
+export type Progress = {
+  stage: "check" | "read";
+  // No "of how many": a budget of time, not a count, decides when the retries end.
+  retry?: { inMs: number; next: number; kind: Failure };
+};
+
 export type RunOptions = {
   triageEnforce?: boolean;
-  pause?: (ms: number) => Promise<unknown>;
+  pause?: Pause;
   fetchImpl?: typeof fetch;
+  patience?: Patience;
+  signal?: AbortSignal;
+  onProgress?: (progress: Progress) => void;
 };
 
 /** One photograph through both stages.
@@ -45,9 +56,21 @@ export type RunOptions = {
  *  The triage returns a MARK; stopping the pipeline is this code's doing. */
 export async function run(image: Photo, provider: Provider,
                           options: RunOptions = {}): Promise<Outcome> {
-  const { triageEnforce = true, pause, fetchImpl } = options;
-  const deps = { pause, fetchImpl };
+  const { triageEnforce = true, fetchImpl, patience, signal, onProgress } = options;
+  const pause = options.pause ?? sleep;
+  let stage: Progress["stage"] = "check";
+  const tell = onProgress ?? (() => {});
+  const deps = {
+    fetchImpl, patience, signal,
+    // A retry is waited out in the open: the screen learns why and for how long.
+    pause: ((ms, why, attempt, info) => {
+      tell({ stage, retry: { inMs: ms, next: (attempt ?? 0) + 1,
+                             kind: info?.kind ?? "other" } });
+      return pause(ms, why, attempt, info);
+    }) as Pause,
+  };
 
+  tell({ stage });
   const tri = await classifyImage(image, provider, deps);
 
   if (!isParkingSign(tri) && triageEnforce) {
@@ -56,6 +79,8 @@ export async function run(image: Photo, provider: Provider,
              triage: tri, extraction: null, recognised: null, flags: [] };
   }
 
+  stage = "read";
+  tell({ stage });
   let ext = await extractSignData(image, provider, tri.panelsBelowMainSign, deps);
 
   // Too little was read — ask AGAIN, but exactly once.
@@ -68,6 +93,7 @@ export async function run(image: Photo, provider: Provider,
   let retried = false;
   if (ext.validation.data !== null && !ext.validation.schemaErrors.length
       && ext.data !== null && tooLittle(ext.data)) {
+    tell({ stage });
     const again = await extractSignData(image, provider, tri.panelsBelowMainSign, deps);
     retried = true;
     // The second answer is taken only if it is the better one: there is no sense in

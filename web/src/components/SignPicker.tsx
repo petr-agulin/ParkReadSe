@@ -14,13 +14,24 @@ import {
 import { cut, load, release, type Loaded } from "../lib/image";
 import { suggestFrame } from "../lib/anchor";
 import { roomBelow } from "../lib/layout";
+import type { Trouble } from "../lib/trouble";
 
 type Props = {
   file: File;
   /** The frame the person already aimed in the viewfinder. Empty - we centre it. */
   initialBox?: Box;
   busy: boolean;
+  /** What the reading is doing now, in words; `null` when nothing is under way. */
+  progress: string | null;
+  /** Why the last reading failed, in words; `null` when it did not. */
+  trouble: Trouble | null;
   onSend: (cropped: File) => void;
+  /** Stop the reading under way. The photograph and the frame stay. */
+  onStop: () => void;
+  /** Put the failure away. */
+  onDismiss: () => void;
+  /** The way out of a failure that lies in the settings: the key, the address. */
+  onSettings: () => void;
   /** Another photograph from the gallery - we stay here, with the new picture. */
   onReplace: (file: File) => void;
   /** Take another - back to our own viewfinder, not to the system camera. */
@@ -39,8 +50,11 @@ type Pinch = { dist: number; mid: Point; placed: Box };
 const CORNERS = ["nw", "ne", "sw", "se"] as const;
 
 export default function SignPicker({
-  file, initialBox, busy, onSend, onReplace, onRetake, onCancel,
+  file, initialBox, busy, progress, trouble, onSend, onStop, onDismiss, onSettings,
+  onReplace, onRetake, onCancel,
 }: Props) {
+  const [details, setDetails] = useState(false);
+  useEffect(() => setDetails(false), [trouble]);
   const [loaded, setLoaded] = useState<Loaded | null>(null);
   const [failed, setFailed] = useState<string | null>(null);
   const [box, setBox] = useState<Box | null>(null);
@@ -342,7 +356,8 @@ export default function SignPicker({
           card sits on the photograph. Were the dark ground on the wrapper, it would
           stretch across the whole remainder, and the band under the frame would grow
           wider rather than narrower. */}
-      <div ref={room} className="flex w-full flex-1 items-start justify-center">
+      {/* `relative`: the cards about the reading lie over the bottom of this area. */}
+      <div ref={room} className="relative flex w-full flex-1 items-start justify-center">
       <div
         ref={stage}
         onPointerDown={onPointerDown}
@@ -418,6 +433,61 @@ export default function SignPicker({
         )}
 
       </div>
+
+      {/* What the reading is doing, and why it failed (step 16). They lie OVER the
+          bottom of the photograph rather than in the column. In the column they would
+          either change the photograph's height - the measuring pass refits it and the
+          zoom resets under the person's fingers - or stand below the button, where
+          the failure used to stand and where it was missed: nobody scrolls a screen
+          that fits. The photograph is not needed meanwhile: while a reading is under
+          way it cannot be touched, and after a failure the card is put away with one
+          tap. */}
+      {(progress || trouble) && (
+        <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3">
+          {busy && progress && (
+            <div role="status" aria-live="polite"
+                 className="flex items-center gap-4 rounded-card-sm bg-ground p-4
+                            shadow-raised">
+              <p className="flex-1 text-label text-ink-2">{progress}</p>
+              <button type="button" onClick={onStop}
+                      className="text-label font-semibold text-link">
+                Cancel
+              </button>
+            </div>
+          )}
+          {/* Not red: red on these screens means "you may not stand", and a failure
+              of the provider says nothing about the sign (design.md, colours of
+              meaning). */}
+          {!busy && trouble && (
+            <div role="alert" className="rounded-card-sm bg-ground p-4 shadow-raised">
+              <p className="text-body font-semibold text-ink-strong">{trouble.message}</p>
+              {details && trouble.details && (
+                <p className="mt-2 break-words font-mono text-mono text-ink-3">
+                  {trouble.details}
+                </p>
+              )}
+              <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+                {trouble.settings && (
+                  <button type="button" onClick={onSettings}
+                          className="text-label font-semibold text-link">
+                    Open Settings
+                  </button>
+                )}
+                {trouble.details && (
+                  <button type="button" onClick={() => setDetails((d) => !d)}
+                          className="text-label font-semibold text-link">
+                    {details ? "Hide details" : "Details"}
+                  </button>
+                )}
+                <button type="button" onClick={onDismiss}
+                        className="text-label font-semibold text-link">
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
       </div>
 
       {/* The button and the line about size sit at the bottom of the screen rather

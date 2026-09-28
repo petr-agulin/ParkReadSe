@@ -244,6 +244,16 @@ otherwise a wrap would re-lay the stage and reset the zoom. The photograph fits 
 with a dark field around it; the frame has a mask and four corner handles. At the
 bottom edge a line about the share of the frame, and the send button.
 
+While a sign is being read, a card lies over the bottom of the photograph: which
+provider is being asked and what for, the reason and the wait when a retry is coming,
+and "Cancel". When the reading fails, a card in the same place says what went wrong in
+one sentence, chosen by the kind of failure rather than by the provider's wording; the
+provider's own text sits under "Details", and where the way out lies in the settings
+there is a link to them. The cards lie over the photograph, not in the column: in the
+column they would change the photograph's height and reset the zoom, or fall below the
+button, off the screen. Neither card is red — a provider's failure says nothing about
+the sign.
+
 ### `3c` — reading
 
 A header with "back": it leads to the camera, as the button at the bottom does — from

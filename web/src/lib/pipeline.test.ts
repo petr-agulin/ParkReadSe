@@ -8,8 +8,8 @@ import { describe, expect, it } from "vitest";
 import { Calendar } from "./calendar";
 import { parseNaive } from "./civil";
 import { jpegOf, pngOf } from "./image.testkit";
-import { analyze, answer, run } from "./pipeline";
-import type { Photo, Provider } from "./vision";
+import { analyze, answer, run, type Progress } from "./pipeline";
+import { RUN_PATIENCE, type Photo, type Provider } from "./vision";
 
 const ROOT = fileURLToPath(new URL("../../../", import.meta.url));
 const cal = new Calendar();
@@ -165,5 +165,40 @@ describe("the pipeline", () => {
     // reading in it.
     expect(body).toHaveProperty("what_we_saw");
     expect(body).toHaveProperty("uncertainties");
+  });
+});
+
+describe("the pipeline tells the screen where it is (step 16)", () => {
+  it("the check, then the reading; a retry says why and which attempt comes", async () => {
+    let i = 0;
+    const replies = [() => new Response("high demand", { status: 503 }),
+                     reply(TRIAGE_OK), reply(realSign("061-lastplats-langt-avstand"))];
+    const fetchImpl = (async () => replies[Math.min(i++, replies.length - 1)]()
+                      ) as unknown as typeof fetch;
+    const seen: Progress[] = [];
+    await run(photo, provider, { pause: async () => {}, fetchImpl,
+                                 onProgress: (p) => seen.push(p) });
+    expect(seen).toEqual([
+      { stage: "check" },
+      { stage: "check", retry: { inMs: 3_000, next: 2, kind: "busy" } },
+      { stage: "read" },
+    ]);
+  });
+
+  it("the person's stop reaches the call", async () => {
+    const f = fakeProvider(reply(TRIAGE_OK));
+    const stop = new AbortController();
+    stop.abort();
+    const e = await run(photo, provider, { ...deps(f), signal: stop.signal }).catch((x) => x);
+    expect(e.kind).toBe("cancelled");
+    expect(f.calls()).toBe(0);
+  });
+
+  it("the patience asked for is the patience used", async () => {
+    const f = fakeProvider(() => new Response("busy", { status: 503 }));
+    const e = await run(photo, provider, { ...deps(f), patience: RUN_PATIENCE })
+      .catch((x) => x);
+    expect(e.message).toMatch(/attempts: 4/);
+    expect(f.calls()).toBe(4);
   });
 });

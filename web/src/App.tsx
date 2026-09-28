@@ -6,12 +6,14 @@
 // (`picked`, `aimed`, `data`) rather than a choice of screen: the screen is chosen by
 // the view-model, and the same model keeps the gate on the key (decision 147).
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Calendar } from "./lib/calendar";
 import { cameraSupported } from "./lib/camera";
 import { parseNaive } from "./lib/civil";
 import { OFFLINE_NOTE } from "./lib/offline";
-import { analyze as readHere, answer } from "./lib/pipeline";
+import { analyze as readHere, answer, type Progress } from "./lib/pipeline";
+import { explain, progressLine, type Trouble } from "./lib/trouble";
+import { VisionCallFailed } from "./lib/vision";
 import { browserStore, canAnswerHere, forget, load, missing, save,
          type Settings } from "./lib/settings";
 import { go, start, type Action, type View } from "./lib/view";
@@ -34,7 +36,12 @@ const nowLocal = (): string => localMinute(new Date());
 
 export default function App() {
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  // A failed reading, in words (step 16). It is shown on the framing screen beside
+  // the button, not below the screen: there it was missed.
+  const [trouble, setTrouble] = useState<Trouble | null>(null);
+  const [progress, setProgress] = useState<Progress | null>(null);
+  // The way to stop a reading under way: the Cancel link, and leaving the screen.
+  const stopper = useRef<AbortController | null>(null);
   const [data, setData] = useState<Analysis | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [moment, setMoment] = useState("");
@@ -85,7 +92,7 @@ export default function App() {
 
   /** A photograph was chosen in the gallery: nothing is sent, we go and crop it. */
   function onPickFile(file: File) {
-    setError(null);
+    setTrouble(null);
     setData(null);
     setAimed(undefined);
     setPicked(file);
@@ -96,8 +103,12 @@ export default function App() {
   // otherwise a person would be checking the answer against a picture the model never
   // saw.
   async function onSend(cropped: File) {
+    stopper.current?.abort();
+    const stop = new AbortController();
+    stopper.current = stop;
     setBusy(true);
-    setError(null);
+    setProgress(null);
+    setTrouble(null);
     setData(null);
     setPreview((old) => { if (old) URL.revokeObjectURL(old); return URL.createObjectURL(cropped); });
     try {
@@ -107,27 +118,40 @@ export default function App() {
         const analysis = await readHere(
           { name: cropped.name, data: cropped },
           { ...settings.provider, apiKey: settings.apiKey },
-          at, cal);
+          at, cal, { signal: stop.signal, onProgress: setProgress });
+        // Left behind while its last step was being counted: it opens nothing.
+        if (stopper.current !== stop) return;
         setData(answer(analysis, at, cal) as unknown as Analysis);
         setPicked(null);
         move("sent");
       } else {
         // There is no getting here: with no key neither camera nor gallery is
         // offered. But if we did get here — say it in the same words as the settings.
-        throw new Error(`To read a sign the app needs ${missing(settings).join(", ")}.`);
+        throw new VisionCallFailed(
+          `To read a sign the app needs ${missing(settings).join(", ")}.`, "settings");
       }
     } catch (e) {
-      setError(e instanceof Error ? e.message : String(e));
+      // A reading the person already walked away from says nothing.
+      if (stopper.current === stop) setTrouble(explain(e));
     } finally {
-      setBusy(false);
+      if (stopper.current === stop) {
+        stopper.current = null;
+        setBusy(false);
+        setProgress(null);
+      }
     }
   }
 
-  /** Leave the path, and leave nothing behind. */
+  /** Leave the path, and leave nothing behind - a reading under way included: left
+   *  running, it would open its answer on whatever screen the person had moved to. */
   function reset() {
+    stopper.current?.abort();
+    stopper.current = null;
+    setBusy(false);
+    setProgress(null);
     setPicked(null);
     setAimed(undefined);
-    setError(null);
+    setTrouble(null);
     setData(null);
     setPreview((old) => { if (old) URL.revokeObjectURL(old); return null; });
   }
@@ -164,7 +188,7 @@ export default function App() {
         ) : screen === "camera" ? (
           <CameraCapture
             onCaptured={(file, box) => {
-              setError(null);
+              setTrouble(null);
               setData(null);
               setAimed(box);
               setPicked(file);
@@ -178,7 +202,12 @@ export default function App() {
             file={picked}
             initialBox={aimed}
             busy={busy}
+            progress={progress && progressLine(progress, settings.provider.baseUrl)}
+            trouble={trouble}
             onSend={onSend}
+            onStop={() => stopper.current?.abort()}
+            onDismiss={() => setTrouble(null)}
+            onSettings={() => move("open-settings")}
             onReplace={(file) => { setPicked(file); setAimed(undefined); }}
             onRetake={() => move("replace")}
             onCancel={() => { reset(); move("back"); }}
@@ -198,15 +227,12 @@ export default function App() {
             cameraAvailable={canShoot}
             offline={!online}
             offlineNote={OFFLINE_NOTE}
-            onScan={() => { setError(null); setData(null); move("scan"); }}
+            onScan={() => { setTrouble(null); setData(null); move("scan"); }}
             onPick={onPickFile}
             onSettings={() => move("open-settings")}
           />
         )}
 
-        {error && (
-          <p className="rounded-card-sm bg-danger-bg p-4 text-label text-deny">{error}</p>
-        )}
       </main>
     </div>
   );

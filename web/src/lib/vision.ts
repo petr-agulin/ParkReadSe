@@ -19,21 +19,100 @@ import { InvalidModelResponse, parseJson, sign as validateSign,
          triage as validateTriage, type Result } from "./validation";
 import type { SignDoc } from "./sign";
 
-export const TIMEOUT_MS = 120_000;
-
 // The codes on which a retry makes sense: the provider is busy or asks us to wait.
 const RETRY_STATUS = new Set([429, 500, 502, 503, 504]);
 
-// The pauses between attempts. Their number is what sets the number of retries.
-//
-// Found by a run: of fourteen photographs eleven failed on a `503` "high demand",
-// and a retry would have carried them through. A `429` is our own haste and is cured
-// by seconds; a `503` is somebody else's overload and does not clear at once, which
-// is why the pause grows. A `400` or a `401` must not be retried: there the request
-// or the key is wrong, and a second attempt is simply a second spend of the quota.
-export const RETRY_PAUSE_MS = [20_000, 45_000, 90_000];
+/** How long to wait for one answer, and the pauses between attempts. The number of
+ *  pauses is what sets the most retries; a budget can end them sooner. */
+export type Patience = {
+  timeoutMs: number;
+  pausesMs: readonly number[];
+  /** The whole call, retries included. None - no limit. */
+  budgetMs?: number;
+  /** A retry is not made unless at least this much of the budget is left for it. */
+  minAttemptMs?: number;
+  /** The pauses a `429` gets instead. None - the same as any other. */
+  limitPausesMs?: readonly number[];
+};
 
-export class VisionCallFailed extends Error {}
+/** The person standing at a sign (steps 16, 16a).
+ *
+ *  A minute for the whole call. A `503` comes back in a second, so short pauses fit
+ *  five attempts into it; a provider that does not answer at all takes the minute with
+ *  one. No retry is made that would be left less than ten seconds: a model reading a
+ *  sign needs several, and an attempt cut off before its answer spends the quota for
+ *  nothing - which is why the pauses are 3/6/10/15 rather than 5/10/15/20, where the
+ *  fifth attempt would get six. A `429` gets one retry after a longer pause: with a
+ *  per-minute limit, quick repeats hit the same wall and spend more requests. */
+export const APP_PATIENCE: Patience = {
+  timeoutMs: 60_000,
+  budgetMs: 60_000,
+  minAttemptMs: 10_000,
+  pausesMs: [3_000, 6_000, 10_000, 15_000],
+  limitPausesMs: [20_000],
+};
+
+/** The run over the test set, where waiting costs nothing.
+ *
+ *  Found by a run: of fourteen photographs eleven failed on a `503` "high demand",
+ *  and a retry would have carried them through. A `429` is our own haste and is cured
+ *  by seconds; a `503` is somebody else's overload and does not clear at once, which
+ *  is why the pause grows. */
+export const RUN_PATIENCE: Patience = { timeoutMs: 120_000, pausesMs: [20_000, 45_000, 90_000] };
+
+/** What kind of failure it was. The screen chooses its words by this, never by the
+ *  provider's text: the text differs from provider to provider, the codes do not. */
+export type Failure =
+  | "key"         // 401, 403
+  | "limit"       // 429
+  | "busy"        // 5xx
+  | "timeout"     // no answer in time
+  | "network"     // the provider could not be reached at all
+  | "reply"       // an answer came, but not in a shape we can read
+  | "settings"    // nothing was sent: something the settings name is missing
+  | "cancelled"   // the person stopped it
+  | "other";      // any other refusal: 400, 404 and the like
+
+export class VisionCallFailed extends Error {
+  readonly kind: Failure;
+  readonly status: number | null;
+  constructor(message: string, kind: Failure = "other", status: number | null = null) {
+    super(message);
+    this.kind = kind;
+    this.status = status;
+  }
+}
+
+export function failureOf(status: number): Failure {
+  if (status === 401 || status === 403) return "key";
+  if (status === 429) return "limit";
+  if (status >= 500) return "busy";
+  return "other";
+}
+
+/** A pause is told why it waits, which attempt failed and how many there are. */
+export type Pause = (ms: number, why?: string, attempt?: number,
+                     info?: { kind: Failure; of: number }) => Promise<unknown>;
+
+export type CallOptions = {
+  patience?: Patience;
+  signal?: AbortSignal;
+  /** The clock the budget is kept by. Tests pass their own. */
+  now?: () => number;
+};
+
+const cancelled = () => new VisionCallFailed("Stopped by the person.", "cancelled");
+
+/** The same promise, except that it gives up the moment the person stops. */
+function unlessStopped<T>(work: Promise<T>, signal?: AbortSignal): Promise<T> {
+  if (!signal) return work;
+  if (signal.aborted) return Promise.reject(cancelled());
+  return new Promise<T>((done, fail) => {
+    const stop = () => fail(cancelled());
+    signal.addEventListener("abort", stop, { once: true });
+    work.then(done, fail).finally(() => signal.removeEventListener("abort", stop));
+  });
+}
 
 /** One model serves both stages (decision 134). That does not stop triage being an
  *  independent look: a different call, a different prompt, no shared context. */
@@ -56,21 +135,29 @@ async function dataUrl(photo: Photo): Promise<string> {
   return `data:${mime};base64,${btoa(binary)}`;
 }
 
-const sleep = (ms: number) => new Promise((done) => setTimeout(done, ms));
+export const sleep = (ms: number) => new Promise((done) => setTimeout(done, ms));
 
 export type CallResult = { text: string; usage: Record<string, unknown> };
 
-/** One call to the provider, with retries where a retry makes sense. */
+/** One call to the provider, with retries where a retry makes sense. Without a word
+ *  about patience it is the application's: the tools that can wait say so. */
 export async function call(provider: Provider, model: string, prompt: string,
-                           image: Photo,
-                           pause: (ms: number, why?: string, attempt?: number)
-                             => Promise<unknown> = sleep,
-                           fetchImpl: typeof fetch = fetch): Promise<CallResult> {
+                           image: Photo, pause: Pause = sleep,
+                           fetchImpl: typeof fetch = fetch,
+                           { patience = APP_PATIENCE, signal, now = Date.now }: CallOptions = {},
+                          ): Promise<CallResult> {
   // These reach the person on screen, so they say what is missing in the same words
   // the settings use.
-  if (!model) throw new VisionCallFailed("The model name is not set.");
-  if (!provider.baseUrl) throw new VisionCallFailed("The provider address is not set.");
-  if (!provider.apiKey) throw new VisionCallFailed("Your API key is not set.");
+  if (!model) throw new VisionCallFailed("The model name is not set.", "settings");
+  if (!provider.baseUrl) {
+    throw new VisionCallFailed("The provider address is not set.", "settings");
+  }
+  if (!provider.apiKey) throw new VisionCallFailed("Your API key is not set.", "settings");
+  if (signal?.aborted) throw cancelled();
+  const { timeoutMs, pausesMs, budgetMs = Infinity, minAttemptMs = 0,
+          limitPausesMs = pausesMs } = patience;
+  const began = now();
+  const left = () => budgetMs - (now() - began);
 
   const body = {
     model,
@@ -84,11 +171,18 @@ export async function call(provider: Provider, model: string, prompt: string,
   const endpoint = provider.baseUrl.replace(/\/+$/, "") + "/chat/completions";
 
   let why = "";
+  let kind: Failure = "other";
+  let status: number | null = null;
   let response: Response | null = null;
-  let attempt = 0;
-  for (; attempt <= RETRY_PAUSE_MS.length; attempt += 1) {
+  let made = 0;
+  for (let attempt = 0; ; attempt += 1) {
     const stop = new AbortController();
-    const timer = setTimeout(() => stop.abort(), TIMEOUT_MS);
+    // The last attempt waits no longer than the budget has left.
+    const timer = setTimeout(() => stop.abort(), Math.min(timeoutMs, left()));
+    made += 1;
+    // The person's stop ends the request in flight, not only the next one.
+    const relay = () => stop.abort();
+    signal?.addEventListener("abort", relay, { once: true });
     try {
       response = await fetchImpl(endpoint, {
         method: "POST",
@@ -102,33 +196,52 @@ export async function call(provider: Provider, model: string, prompt: string,
       });
     } catch (e) {
       response = null;
+      if (signal?.aborted) throw cancelled();
       why = `${(e as Error).name}: ${String((e as Error).message).slice(0, 200)}`;
+      // Our own timer ends a request with an abort; a network that fell over, with
+      // anything else. Both are retried - but the person is told different things.
+      const name = (e as Error).name;
+      kind = name === "AbortError" || name === "TimeoutError" ? "timeout" : "network";
+      status = null;
     } finally {
       clearTimeout(timer);
+      signal?.removeEventListener("abort", relay);
     }
 
     if (response && response.status === 200) break;
     if (response) {
       // The provider's error body carries no key; it is truncated all the same.
       why = `HTTP ${response.status}: ${(await response.text()).slice(0, 400)}`;
+      status = response.status;
+      kind = failureOf(response.status);
       if (!RETRY_STATUS.has(response.status)) break;
     }
     // The pause is told WHY it waits. On a live run a busy provider, a quota wall and a
     // dropped connection looked the same - minutes of silence on one photograph - and
     // the command that prints nothing cannot be told from one that hangs.
-    if (attempt < RETRY_PAUSE_MS.length) {
-      await pause(RETRY_PAUSE_MS[attempt], why, attempt + 1);
-    }
+    const pauses = kind === "limit" ? limitPausesMs : pausesMs;
+    const wait = pauses[attempt];
+    // Out of pauses, or out of time: a retry left too little to be answered in is not
+    // made at all.
+    if (wait === undefined || left() - wait < Math.max(minAttemptMs, 1)) break;
+    await unlessStopped(
+      Promise.resolve(pause(wait, why, attempt + 1, { kind, of: pauses.length + 1 })),
+      signal);
   }
 
   if (!response || response.status !== 200) {
-    throw new VisionCallFailed(`${why} (attempts: ${Math.min(attempt + 1, RETRY_PAUSE_MS.length + 1)})`);
+    throw new VisionCallFailed(`${why} (attempts: ${made})`, kind, status);
   }
-  const payload = await response.json();
+  let payload: any;
+  try {
+    payload = await response.json();
+  } catch {
+    throw new VisionCallFailed("the answer is not JSON", "reply");
+  }
   const text = payload?.choices?.[0]?.message?.content;
   if (typeof text !== "string") {
     throw new VisionCallFailed(
-      `unexpected shape of answer: ${JSON.stringify(payload).slice(0, 400)}`);
+      `unexpected shape of answer: ${JSON.stringify(payload).slice(0, 400)}`, "reply");
   }
   return { text, usage: payload.usage ?? {} };
 }
@@ -149,14 +262,16 @@ export type ExtractOutcome = {
   usage: Record<string, unknown>;
 };
 
+/** What the stages pass on to `call`. */
+export type Deps = Partial<{ pause: Pause; fetchImpl: typeof fetch } & CallOptions>;
+
 /** Stage 0: is this a parking sign. It answers with a LABEL, not a decision:
  *  whether to stop the pipeline is decided by the calling code. */
 export async function classifyImage(image: Photo, provider: Provider,
-                                    deps: Partial<{ pause: (ms: number) => Promise<unknown>;
-                                                    fetchImpl: typeof fetch }> = {},
+                                    deps: Deps = {},
                                    ): Promise<TriageOutcome> {
   const { text, usage } = await call(provider, provider.visionModel, triagePrompt(),
-                                     image, deps.pause, deps.fetchImpl);
+                                     image, deps.pause, deps.fetchImpl, deps);
   const doc = parseJson(text);
   const res = validateTriage(doc);
   const data: any = res.data ?? {};
@@ -174,11 +289,10 @@ export async function classifyImage(image: Photo, provider: Provider,
  *  an independent look at the same photograph. */
 export async function extractSignData(image: Photo, provider: Provider,
                                       panelsSeen: number | null = null,
-                                      deps: Partial<{ pause: (ms: number) => Promise<unknown>;
-                                                      fetchImpl: typeof fetch }> = {},
+                                      deps: Deps = {},
                                      ): Promise<ExtractOutcome> {
   const { text, usage } = await call(provider, provider.visionModel, extractPrompt(),
-                                     image, deps.pause, deps.fetchImpl);
+                                     image, deps.pause, deps.fetchImpl, deps);
   const doc = parseJson(text);
   const res = validateSign(doc, panelsSeen);
   return { data: res.data, validation: res, usage };
