@@ -37,6 +37,10 @@ testset/photos/
 # reference/sources/RULES_SOURCE.md.
 rules.png
 
+# Working notes on the official material (the regulator's texts and catalogues): kept on
+# the developer's disk as the record of where the rules come from, not published.
+reference/sources/
+
 # Screenshots of the official sign catalogues were removed in the clean-up: they are
 # other people's images, while the sign descriptions in reference/sources/*.md are
 # textual and self-contained. The rule stays so the pictures do not come back by

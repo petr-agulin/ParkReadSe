@@ -1,312 +1,275 @@
 # ParkRead
 
-**Photograph a Swedish parking sign — get a plain-language breakdown of what it says.**
-The main sign, every supplementary plate under it, what applies right now, and what
-changes next.
+**Take a photo of a Swedish parking sign and get a plain-English explanation of what it
+says:** who may park, when, for how long, and whether you pay.
 
-The vision model extracts, the code decides. The model turns the photo into structured
-JSON and does nothing else: no tools, no judgements, no clock. Everything with a
-consequence — how plates compose, what applies at this hour, the confidence, the
-refusal, the wording of every line — is computed in the browser.
+![The result screen: the photo beside a reconstruction of the sign, each plate with its Swedish text and a plain explanation; who can park here; and a timeline of the parking window](images/ResultScreenExample.png)
 
-| | |
-|---|---|
-| Answer matches the reference | **116 of 127** photos |
-| Real signs wrongly rejected | **0 of 127** |
-| Non-parking frames let through | **0 of 7** |
-| Automated checks | **639** browser tests, **8** on the built page |
+ParkRead **never says "you may park here"**. It tells you what the sign states, shows how
+sure it is, and refuses to answer when the photo is not good enough. The decision stays
+with you.
 
-**ParkRead never says "you may park here."** It reports what the sign states, with a
-computed confidence, and refuses when the photo does not support an answer. The decision
-is the driver's.
+---
+
+## Screenshots
+
+| | | |
+|---|---|---|
+| ![Taking a photo of a sign](images/screenshots/01-take-photo.png) | ![Picking the sign in the photo](images/screenshots/02-pick-sign.png) | ![A paid stretch with a time limit, on a timeline](images/screenshots/03-result-paid.png) |
+| **Take a photo** — of the whole street if you like | **Pick the sign** — only this part is sent | **Read the answer** — plate by plate, and when you pay |
+| ![A no-parking zone with rented spaces excepted](images/screenshots/04-exception.png) | ![A refusal with its reason](images/screenshots/05-refusal.png) | ![Settings with the provider and key](images/screenshots/06-settings.png) |
+| **Exceptions** — for whom the spaces are | **An honest refusal** — and what to do instead | **Your own key** — no account, no server |
 
 ---
 
 ## The problem
 
-In Sweden a street with no signs is open for parking under the general traffic rules — on
-weekdays for at most 24 hours in a row. Where there is a sign, it is rarely just a **P**.
-Under it hangs a stack of supplementary plates (*tilläggstavlor*): fee windows, time windows, a
-maximum duration, permit or parking-disc requirements, residents-only parking, cleaning
-days, arrows for which stretch of kerb is meant.
+In Sweden you may park on a street with no signs, for at most 24 hours in a row on
+weekdays. Where there is a sign, it is rarely just a **P**. Under it hangs a stack of
+small plates, and each one changes the rule: paid hours, a time limit, a parking disc, a
+cleaning day, residents only, a permit, an arrow saying which part of the kerb is meant.
 
-![Three stacks of Swedish parking signs: under the same P sign hang different sets of supplementary plates — fee windows with bracketed day classes and tariff numbers, the stretch of validity in metres, yellow cleaning-day prohibition plates, a parking-disc requirement and a residents-only plate](images/ParkingSignExample.png)
+![Three stacks of Swedish parking signs with different plates under the same P sign](images/ParkingSignExample.png)
 
-The grouping is itself data. Several plates apply *each on its own* (*var för sig*);
-several lines on one plate apply *jointly* (*gemensamt*). The same three words reach
-different results depending only on how they are split:
+Reading such a stack correctly is hard, even for Swedes, and harder still for visitors
+who do not read Swedish. Three things make it tricky:
 
-```
-Two plates:                      One plate:
-  [ 2 tim ]                        [ 2 tim   ]
-  [ Avgift 8-18 ]                  [ Avgift  ]
-                                   [ 8-18    ]
+- **How the text is split into plates changes the rule.** The same three words give two
+  different rules:
 
-- max 2 h, around the clock,     - between 8 and 18: max 2 h and a fee
-  every day                      - outside that window: no restriction
-- a fee between 8 and 18           from the sign
-```
+  ```
+  Two plates:                      One plate:
+    [ 2 tim ]                        [ 2 tim   ]
+    [ Avgift 8-18 ]                  [ Avgift  ]
+                                     [ 8-18    ]
 
-A missed boundary does not give an approximate answer, it gives a different one. When
-ParkRead cannot tell one plate from two, it says so instead of guessing.
+  - max 2 hours, at any time       - between 8 and 18: max 2 hours, and you pay
+  - pay between 8 and 18           - outside those hours: no limit from the sign
+  ```
+
+- **The way digits are printed says which days.** `8-18` means weekdays, `(8-15)` in
+  brackets means Saturdays and days before a holiday, and red digits mean Sundays and
+  holidays.
+- **What the sign leaves out still matters.** When a ban's hours are over and the sign
+  says nothing more, the general traffic rules apply — for example the 24-hour limit.
+
+A mistake costs a parking fine or a towed car. ParkRead reads the whole stack, applies
+the rules, and shows the result as a timeline.
 
 ---
 
-## What you get back
+## How to use it
 
-![The result screen: a "What we read" block with the photo beside a reconstruction of the sign, each plate carrying its verbatim Swedish text and a plain-language explanation; a "Who can park here" block; and a "Your parking window" timeline running from the selected start time through a paid period, a free period and the end of the window](images/ResultScreenExample.png)
+ParkRead is a web page — no app store, no account. *(It is not published yet; the plan
+is to host it on Cloudflare Pages.)*
 
-**What we read.** Your photo beside a reconstruction of the sign: the main sign, then the
-panels in reading order, each with its verbatim Swedish text and a plain explanation.
-Panels that carry no rule are labelled as such, so an operator's payment board is neither
-dropped nor mistaken for a condition. General rules that are *not* on this sign sit behind
-a "show" link, outside the reading.
+1. **Open the page** in your phone's browser. You can add it to your home screen to use it
+   like an app.
+2. **Enter your AI key once** in **Settings** — see [Your key and your photo](#your-key-and-your-photo).
+3. **Take a photo** of the sign, or choose one from your gallery.
+4. **Pick the sign** in the photo. Only that part is sent to be read.
+5. **Choose when you want to park** — now, or another day and time — and read the answer.
 
-Under the heading, colour-coded in one line: how complete the reading is and the computed
-confidence. Green means every panel was read, amber means an answer with a caveat, red
-means no answer. A plate that could not be read is named but not quoted, and no window is
-drawn: nothing on an unread plate says it does not matter, and a guess would look like an
-answer. The plates that were read are still shown. A panel that came back empty gives an
-answer with a caveat, and no period below is then presented as permitted.
+---
 
-**Who can park here.** Whom the sign designates the spaces for. It names the category and
-stops there.
+## What you see
 
-**Your parking window.** A timeline from the moment you chose: when each period starts,
-what the sign says about it, how long the limit leaves you. Arrows splitting the sign into
-stretches give one timeline each, labelled with the side. A line is solid where the stretch
-is open to anyone and fully read, and broken where it is a prohibition, was not read in
-full, or is meant for a named group only — taxis, rented spaces, visitors. Hours named on a
-plate are the only hours that plate permits. Where a prohibition's hours are over and the
-sign says nothing more, the general 24-hour rule applies, and the window says it is not
-from the sign.
+- **What we read** — your photo next to a copy of the sign, plate by plate, each with its
+  Swedish text and a plain explanation. Plates that are not parking rules — an operator's
+  name, a payment board — are labelled so, and nothing is silently left out.
+- **How sure** — green: the whole sign was read; amber: an answer with a caveat; red: no
+  answer.
+- **Who can park here** — everyone, residents, permit holders, rented spaces, and so on.
+- **Your parking window** — a timeline from the time you chose: when parking is free,
+  paid or forbidden, and when your stay ends. A solid line means open to everyone and read
+  in full; a dashed one means forbidden, not certain, or for some people only. Where
+  arrows split the sign, each side gets its own timeline.
 
-Every line is an assertion about the **sign**, never about you. That vocabulary is enforced
-by tests over the strings the product can display.
+Every sentence describes **the sign**, never you: "the sign allows 2 hours", not "you may
+stay 2 hours".
 
-**It refuses on purpose:** too dark, a plate cut off by the frame, an uncertain boundary,
-an unrecognised token, contradictory windows — it shows what it could read and asks for
-another photo.
+### It refuses on purpose
+
+When the photo does not support an answer, ParkRead says so instead of guessing: a plate
+it cannot read, a main sign it cannot make out, a photo too small for the text on it, or
+something that is not a parking sign at all. It still shows what it could read, says
+what went wrong, and asks for another photo. A refusal is safer than a wrong answer that
+looks right.
 
 ---
 
 ## How it works
 
-Four stages, fixed order, no branch the model controls.
+1. **A quick check.** One cheap AI call answers a single question: is this a Swedish
+   parking sign, another road sign, or not a sign at all? If it is not a parking sign, the
+   app stops there and says what it sees.
+2. **The AI reads the sign.** A second call writes down what is on it — the main sign,
+   every plate from top to bottom, its exact words, its colour, whether it could be read —
+   in a fixed format. The AI only describes; it decides nothing.
+3. **The app's own code works out the rules.** It combines the plates, applies the
+   Swedish calendar and public holidays, splits the sign by its arrows, and computes what
+   applies at the time you chose. It also decides how sure the answer is, and whether to
+   refuse.
+4. **The app explains it** with a built-in dictionary of Swedish signs (56 sign entries).
+   Wording the dictionary does not know is shown exactly as printed, marked "not
+   interpreted", and never guessed at.
 
-| Stage | What happens | Who does it |
-|---|---|---|
-| **0. Triage** | One cheap call answers one question: Swedish parking sign, other road sign, or not a sign. It returns a label; an `if` in the code decides whether to continue | Model, no tools |
-| **1. Extraction** | One vision call turns the photo into JSON: the main sign, and the panels below it top to bottom with the boundaries between them — kind, verbatim lines, readability, parsed fields | Model, no tools |
-| **2. Evaluation** | Validates against the schema, composes by the *var för sig / gemensamt* rule, splits stretches by arrows, computes the complement over the weekly calendar with day classes and holidays, applies prohibition priority | Code |
-| **3. Rendering** | Judges completeness, computes the confidence, builds the explanation from the reference — or builds the refusal | Code |
-
-The confidence is computed, not asked for. It is assembled from signals the code owns:
-did the response validate, was the main sign found, what share of panels went unread or
-uninterpreted, was the order recovered, do windows contradict each other, is the day class
-known, does the image carry enough pixels for the text claimed. The model's own estimate is
-one input among them, and not the decisive one.
-
-### Where the interpretation comes from
-
-| Source | What it is | How it is used |
-|---|---|---|
-| **JSON schema** | A closed list of fields the model must fill | The only thing that reaches the rules engine |
-| **Reference (Markdown)** | 56 sign entries: code to plain-language explanation | Supplies the explanation text and acts as a **whitelist** |
-| **General rules (Markdown)** | 12 short notes about rules that are *not* on the sign | Shown as marked reference only. The notes never enter a computation; the one rule the engine does apply, the 24 hours, is computed in code |
-
-Anything outside the reference is marked unrecognised: the plate's text is shown verbatim
-with an honest "this service does not interpret this wording", and the confidence drops,
-possibly to a refusal. Free text never reaches the rule arithmetic.
-
-The reference lives in `reference/`. `signs/` holds one Markdown file per entry, named by
-its key; `general_rules/` holds the notes, each marked "this is not on the sign";
-`sources/` holds working notes on the official material (where the Transportstyrelsen
-catalogue and the textbook disagree, the catalogue wins). An entry's header is plain
-`key: value` lines: `key`, `tokens` (what is written on the sign), `category` (`main_sign`,
-`rule`, `info` — part of what the sign says about parking, though the engine sets no rule
-by it, or `no_rule` — not about the parking rules at all, and the plate is tagged "Not a
-parking rule"), `label`, `code`, `schema` (the schema field it maps to), `en` (the interface text
-itself), `short` and `source`. The body below the header is a note for the developer and
-never reaches the screen. The answer is assembled from the `en` strings, which is why a
-forbidden phrasing cannot arrive from the model. After editing, `npm run emit` regenerates
-the browser's copy.
-
-Day classes (*vardag* / *vardag före sön- och helgdag* / *sön- och helgdag*) are computed
-from Swedish holiday law for 2026–2030. Outside that window the day class is unknown, and
-the answer gives both readings rather than picking one.
+**General rules.** Some rules apply without being on the sign — the 24-hour limit, no
+parking near a junction or a crossing, and the like. ParkRead keeps
+12 short notes about rules like these, shown behind a "show" link and clearly marked
+"not on this sign". They never change the answer, with one exception: when a ban's hours
+end and the sign says nothing more, the timeline follows the 24-hour limit, and says that
+this part comes from the general rules, not from the sign.
 
 ---
 
-## Accuracy
+## Your key and your photo
 
-The test set is **139 photos**: 127 parking signs with reference answers, 7 frames that
-are not parking signs, and 5 signs too far away for anyone to read, where the right
-answer is a refusal. **The photos themselves are not published:** part of them are Street View captures,
-and some show number plates. The repository carries their index, `testset/photos.json`
-(name and pixel count), which is all the tests and the measurement need of them.
-Measurement runs on stored model responses,
-so it is deterministic and needs no key. Those responses live in `testset/answers/`, one
-file per stage per photo, each marked with the fingerprint of the prompt that produced
-it; only real model answers (`origin: model`) are measured. `npm run ask --
-testset/photos/<photo>` refreshes them and spends your key.
+**You bring your own key.** ParkRead has no server and no account. In **Settings** you
+enter your AI provider's address, the model name and your key. Without them the app opens
+and explains itself, but cannot read a sign. Each sign costs two AI calls, billed to you
+by your provider. The key is kept only while the tab is open, unless you tick **Remember
+on this device**; **Forget key** erases it at once.
 
-Each photo is named `NNN-short-slug.jpg`; the three-digit number is the key of its
-reference answer `testset/expected/NNN.json` and is never reused. The photos stay on the
-author's disk and are not published. In the app, only the crop around the sign is sent
-to the model.
+**Your photo goes to your provider and nowhere else.** Only the part around the sign is
+sent. There is no server of ours and no history: nothing is stored except the app itself
+and your saved key.
 
-- **116 of 127 answers match** the reference. Where the reference itself cannot read a
-  plate, the only right answer is a refusal, and a refusal counts as a match. Of the 11
-  that do not: seven answer where a refusal was due, one reads the other branch of a
-  two-branch pole, one loses a residents' plate, one misses a parking disc, and one
-  refuses a sign that can be read. Nine of the eleven fall below the confidence threshold
-  and are flagged; **two pass as full** — the escapes the threshold cannot catch.
-- **Triage: 127 real signs, 0 wrongly rejected; 7 non-parking frames, 0 let through;** the 5
-  signs nobody can read are turned away, as they should be.
-- **Coverage: 127 of 127.** An answer from an older prompt would be named and left out —
-  the measurement refuses to mix prompt versions in one number.
-- Field-level accuracy ranges from 99% (`panel.rule_bearing`) to 20%
-  (`parsed.payment_method`); the full table is printed by `npm run measure`.
+**Offline**, the app opens, but reading a sign needs the internet — and it says so rather
+than failing quietly. Updates arrive the next time you open it online.
 
-Fields diverge on far more photos than answers do: a plate's colour or the order of two
-panels shows up in the parse and never reaches the reader.
+**Uninstalling:** remove the icon *and* clear the site data for the address — on Android
+in the browser's site settings, on iPhone with **Remove App**, which takes its data with it.
+
+**The parking decision is yours.** ParkRead reads a sign and tells you what it states. It
+is a reading aid, not permission and not advice. Check the sign yourself before relying
+on it.
 
 ---
 
-## Running it
+## How well it works
 
-Node 20 or newer. There is no server and no backend.
+We keep a set of 139 test photos, 127 of them real parking signs with answers checked by
+hand. On the latest run, **the app's answer matched the checked answer on 116 of the 127**.
+Of the 11 it got wrong, 9 were marked as uncertain, so the reader was warned. Signs that
+nobody could read were refused, as they should be, and no real sign was mistaken for
+something else.
 
-```powershell
-cd web
-npm ci
-npm run dev                  # development, https for the camera
-npm run dev:lan              # the same, reachable from a phone on your Wi-Fi
-npm run build                # output in web/dist
-npm run preview              # the built page, as a host would serve it
-```
-
-To try it on a phone, run `npm run dev:lan` and open the "Network" address it prints on a
-phone on the same Wi-Fi. The development certificate is self-signed, so the browser warns
-once; the camera needs https. The page is visible to the whole network while it runs, so
-avoid this on public Wi-Fi.
-
-The output is self-contained and uses relative paths, so it works from the root of a domain
-or from a subfolder — copy `web/dist` to any static host. It installs from the browser as an
-app and opens offline; reading a sign needs the network, and the page says so.
-
-| Command | What it checks |
-|---|---|
-| `npm test` | the browser suite |
-| `npm run test:build` | builds the page and checks what ended up in it |
-| `npm run measure` | extraction accuracy and the confidence threshold |
-| `npm run goldens` | whether the stored reference answers still match what the code computes |
-| `npm run emit` | regenerates the browser's data from the Markdown sources and schemas |
-| `npm run ask` | re-queries the model for test-set photos (spends your key) |
-
-`npm run ask` and nothing else reads `.env` — see `.env.example` for the three fields.
-The provider is not hardcoded: requests speak the OpenAI-compatible dialect, which Google,
-Mistral and OpenRouter all understand. Developed against Google AI Studio's
-`gemini-3.5-flash-lite`, about 1700 tokens per photo.
-
----
-
-## Using it
-
-**It is a web page, not an app from a store.** Adding it to a home screen gives it an icon
-and a window without an address bar; underneath it stays a page with a page's limits. It can
-use the camera while open and with permission, and can reach nothing else on the phone.
-Nobody reviewed it — no store saw it.
-
-**You bring your own key.** The provider's address, the model name and your key go in
-**Settings**. Without them the app opens and explains itself but cannot read a sign, and the
-camera and the gallery stay shut until it can. Each reading costs two model calls, billed to
-you by your provider. The key is held in the tab and forgotten when you close it, unless you
-tick **Remember on this device**; **Forget key** erases it immediately.
-
-**Your photo goes to your provider and nowhere else.** There is no account, no server of
-ours and no history: nothing is stored beyond the app's own files and your saved key —
-under half a megabyte in total, inside the browser's storage for the app's address.
-
-**Offline:** the app opens; reading a sign does not, and it says so rather than failing
-quietly. Updates arrive the next time you open it with a
-signal.
-
-**Uninstalling:** remove the icon *and* clear the site data for the address — on Android via
-App info then the browser's site settings, on iPhone via Remove App, which takes its data
-with it.
-
-**The parking decision is yours.** ParkRead reads a sign and tells you what it states. It is
-a reading, not a permission and not advice. Check the sign yourself before relying on it.
+The photos themselves are not published — some are Street View images, and some show
+number plates. The checked answers and the AI's saved readings are in `testset/`.
 
 ---
 
 ## Known limits
 
-- **The calendar runs 2026 to 2030.** A moment outside it cannot be chosen, and nothing is
-  guessed beyond it.
-- **Not published anywhere yet.** There is no address to open from the street.
-- **iOS is untested.** Installing and the camera should work in Safari; that is not a claim
-  that they do.
-- **Sweden only, and it does not detect otherwise.** A foreign parking sign passes triage and
-  is then read by Swedish rules.
-- **No claim of domain completeness.** Municipalities write their own plate text. Unknown
-  plates are shown verbatim and lower the confidence.
-- **One sign per photo.** Multiple signs in one frame are out of scope.
-- **Recognised but not computed:** date parking (`C36`–`C38` — the side of the street cannot
-  be established from a photo of the sign), zone extent, and "special rules" plates carrying
-  a miniature of another sign.
-- **`Boende` (residents) is informational.** Residents' terms are agreed with the housing
-  organisation and differ building to building.
-- **No dialogue.** One photo, one answer. No chat, no clarifying questions, no text input.
+- **Sweden only.** A foreign sign would still be read by Swedish rules.
+- **One sign per photo.** If two sign posts are in the photo, only one is read.
+- **Dates 2026–2030.** The holiday calendar covers these years; other dates cannot be
+  chosen.
+- **Date parking** (no parking on odd or even dates) — the app cannot yet tell which dates,
+  so it treats the ban as applying every day: stricter than the sign.
+- **Residents' parking** is shown but not computed: residents' terms are agreed locally
+  and differ from building to building.
+- **Local wording.** Municipalities write their own plate texts. Unknown wording is shown
+  as printed and lowers how sure the app is.
+- **No conversation.** One photo, one answer — no chat, no follow-up questions.
+- **iPhone is untested.** Installing and the camera should work in Safari; that is not a
+  claim that they do.
+
+---
+
+## Running it yourself
+
+You need Node 20 or newer. There is no server: the whole app runs in the browser.
+
+```powershell
+cd web
+npm ci                 # install
+npm run dev            # start it locally (https, so the camera works)
+npm run dev:lan        # the same, reachable from a phone on your Wi-Fi
+npm run build          # build it into web/dist
+npm run preview        # see the built version
+```
+
+With `npm run dev:lan`, open the "Network" address it prints on a phone on the same
+Wi-Fi. The browser warns once about the certificate; the camera needs https. Avoid this
+on public Wi-Fi: the page is visible to the whole network while it runs.
+
+To publish, copy `web/dist` to any static host, such as Cloudflare Pages. It works from
+the root of a domain or from a subfolder.
+
+### Commands for development
+
+| Command | What it does | When to use it |
+|---|---|---|
+| `npm test` | runs all the automated tests | after any change |
+| `npm run test:build` | builds the app and checks the result | before publishing |
+| `npm run emit` | copies the sign dictionary, the data format and the AI instructions into the app | after editing anything in `reference/`, `schema/` or `prompts/` |
+| `npm run goldens` | checks the saved snapshots of the app's output (in `parity/`) | after a code change; `npm run goldens:write` updates them when a change is intended — then review the difference |
+| `npm run measure` | scores the app on the test photos | after changing how signs are read or judged |
+| `npm run ask` | asks the AI again about test photos, and saves its answers | when the AI instructions change — costs money, needs your key in `.env` and the photos |
+| `npm run photos` | updates the list of test photos | after adding or renaming a test photo |
+
+`npm run ask` is the only command that uses `.env` — see `.env.example` for its three
+fields. Any provider that speaks the OpenAI-compatible format works (Google, Mistral,
+OpenRouter); ParkRead was developed with Google's `gemini-3.5-flash-lite`.
 
 ---
 
 ## Stack and layout
 
-TypeScript · React 19 · Vite · Tailwind · Vitest · JSON Schema · Markdown as the reference
-format · an external vision API, addressed by the reader's own key. No backend, no database,
-no build-time secrets. `ajv` is a development dependency only, used to cross-check the
-project's own schema validator.
-
-One job per module, no file that everything is dumped into.
+TypeScript · React 19 · Vite · Tailwind · Vitest · JSON Schema · an external AI model
+reached with the reader's own key. No backend, no database, no secrets in the build.
 
 ```
 web/
   src/
-    App.tsx          the screen; state lives here
-    components/      one component per block of the screen
+    App.tsx          the screen and its state
+    components/      one component per part of the screen
     lib/
-      pipeline.ts      the stages, together
-      vision.ts        the two model calls
-      prompts.ts       prompts; the response skeleton comes from the schema
-      validation.ts    schema, plus the rules a schema cannot express
-      engine.ts        the rules engine: a pure function, no model, no clock
-      calendar.ts      day classes; clock.ts: daylight saving
-      completeness.ts  how complete the reading is, and the confidence
+      pipeline.ts      the steps above, in order
+      vision.ts        the two AI calls
+      validation.ts    checks and fixes the AI's answer
+      engine.ts        the rules: works out what applies when — no AI, no clock
+      calendar.ts      weekdays, Saturdays, Sundays and public holidays
+      completeness.ts  how complete the reading is, and how sure the answer
       present.ts       the answer in the words the reader sees
-      reference.ts     the reference, and what counts as recognised
-      settings.ts      the key and provider, held by the browser
-      offline.ts       what the service worker caches, and what it never caches
-      measure.ts       accuracy and threshold arithmetic
-    sw.ts            the service worker
-  tools/             developer commands: goldens, emit, icons, ask
-  measure/           the measurement report
-  build/             tests over the built page
-schema/            the contract between model and code
-reference/         the reference and the general-rules notes; also the whitelist
-prompts/           the prompt texts
-testset/           the photo index (the photos stay local), the reference readings, and the model's saved answers
-parity/            stored answers the code is checked against
+      reference.ts     the sign dictionary
+      settings.ts      your key and provider, kept in the browser
+    sw.ts            works offline
+  tools/           the development commands above
+reference/       the sign dictionary and the general-rules notes, one plain-text file each
+schema/          the exact format the AI must answer in
+prompts/         the instructions given to the AI
+testset/         the test photos' checked answers and the AI's saved readings
+parity/          saved snapshots of the app's output, for the tests
+images/          the pictures in this README
 ```
 
-Layers do not jump over each other: the engine knows nothing about the screen, the screen
-knows nothing about the model provider, and `engine.ts` imports nothing but the calendar, the clock, date arithmetic and the
-reference tables.
+The rules never depend on the screen, and the screen never depends on the AI provider.
+`AGENT_SPEC.md` describes what the AI is allowed to do inside the app, and `design.md`
+how the screens are built.
 
-The interface language is English. Technical values — JSON keys, sign codes — stay English
-everywhere.
+---
 
-`AGENT_SPEC.md` holds the contract of the model inside the product: role, tools (none),
-prohibitions, refusal policy, and the schema its answers must follow.
+## License
+
+MIT License
+
+Copyright (c) 2026 Petr Agulin
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this
+software and associated documentation files (the "Software"), to deal in the Software
+without restriction, including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
