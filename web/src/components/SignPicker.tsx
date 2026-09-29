@@ -9,7 +9,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { Box, Point, Size } from "../lib/crop";
 import {
   BOX_ASPECT, DEFAULT_HEIGHT, clampPan, defaultBox, fit, fractionIn, frameForView,
-  moveBy, resizeCorner, shareOfFrame, toImagePoint, visibleRect, zoomAt, zoomLevel,
+  frameHint, frameLocked, moveBy, resizeCorner, shareOfFrame, toImagePoint, visibleRect,
+  zoomAt, zoomLevel,
 } from "../lib/crop";
 import { cut, load, release, type Loaded } from "../lib/image";
 import { suggestFrame } from "../lib/anchor";
@@ -63,6 +64,8 @@ export default function SignPicker({
   // same and stays wholly in view.
   const frac = useRef<Size>({ w: DEFAULT_HEIGHT * BOX_ASPECT, h: DEFAULT_HEIGHT });
   const [sending, setSending] = useState(false);
+  // From "Send" until the answer the picture is frozen as it was sent (step 19).
+  const locked = frameLocked(busy, sending);
   const room = useRef<HTMLDivElement>(null);
   const footer = useRef<HTMLDivElement>(null);
   const stage = useRef<HTMLDivElement>(null);
@@ -156,8 +159,16 @@ export default function SignPicker({
     setBox(frameForView(frac.current, visibleRect(next, loaded.size, stageDims), loaded.size));
   }
 
+  // A gesture under way when the frame locks is dropped, not finished.
+  useEffect(() => {
+    if (!locked) return;
+    drag.current = null;
+    pinch.current = null;
+    pointers.current.clear();
+  }, [locked]);
+
   function onPointerDown(e: React.PointerEvent) {
-    if (!loaded || !box || !placed || busy) return;
+    if (!loaded || !box || !placed || locked) return;
     (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
     pointers.current.set(e.pointerId, toStage(e));
 
@@ -191,7 +202,7 @@ export default function SignPicker({
   }
 
   function onPointerMove(e: React.PointerEvent) {
-    if (!loaded || !placed) return;
+    if (!loaded || !placed || locked) return;
     if (pointers.current.has(e.pointerId)) pointers.current.set(e.pointerId, toStage(e));
 
     if (pinch.current && pointers.current.size >= 2 && base) {
@@ -250,7 +261,7 @@ export default function SignPicker({
   // A laptop has no fingers, and the zoom still has to be testable: the wheel does
   // the same thing.
   function onWheel(e: React.WheelEvent) {
-    if (!base || !placed) return;
+    if (!base || !placed || locked) return;
     const factor = e.deltaY < 0 ? 1.15 : 1 / 1.15;
     const next = clampPan(zoomAt(placed, factor, toStage(e), base), stageSize());
     setPlaced(next);
@@ -298,7 +309,7 @@ export default function SignPicker({
       {/* One control instead of a pair of "take another / choose a photo": it leads
           to the camera screen, and there are both a shutter and a gallery tile
           there - both sources in one tap. */}
-      <button type="button" onClick={onRetake} disabled={busy || sending}
+      <button type="button" onClick={onRetake} disabled={locked}
               className="text-label font-semibold text-link disabled:opacity-50">
         Replace
       </button>
@@ -345,9 +356,7 @@ export default function SignPicker({
           While the box is one height at both one line and two, the wrapper has
           nothing to change. */}
       <p className="min-h-11 text-center text-label text-ink-2">
-        {zoom > 1.01
-          ? "Zoom in, then fine-tune with the corners"
-          : "Drag the frame onto the sign"}
+        {frameHint(zoom, locked)}
       </p>
 
       {/* The photograph is neither stretched nor cropped: what is seen is what is
@@ -402,7 +411,9 @@ export default function SignPicker({
                 height: pct(box.h / size.h),
               }}
             >
-              {CORNERS.map((c) => (
+              {/* No handles while the frame is being read: it cannot be changed, and
+                  should not look as if it could. */}
+              {!locked && CORNERS.map((c) => (
                 <span
                   key={c}
                   data-corner={c}
@@ -422,7 +433,7 @@ export default function SignPicker({
           </div>
         )}
 
-        {zoom > 1.01 && (
+        {zoom > 1.01 && !locked && (
           <button
             type="button"
             onClick={() => base && setPlaced(base)}
@@ -506,10 +517,10 @@ export default function SignPicker({
             ? `sending about ${Math.round(share * 100)}% of ${loaded.size.w}×${loaded.size.h}`
             : "opening the photo…"}
         </span>
-        <button type="button" onClick={send} disabled={!loaded || busy || sending}
+        <button type="button" onClick={send} disabled={!loaded || locked}
                 className="rounded-button-sm bg-accent py-5 text-row font-bold
                            text-on-dark disabled:opacity-50">
-          {busy || sending ? "Reading…" : "Send this to be read"}
+          {locked ? "Reading…" : "Send this to be read"}
         </button>
       </div>
 

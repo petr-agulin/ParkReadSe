@@ -244,6 +244,10 @@ otherwise a wrap would re-lay the stage and reset the zoom. The photograph fits 
 with a dark field around it; the frame has a mask and four corner handles. At the
 bottom edge a line about the share of the frame, and the send button.
 
+From the tap on the send button until the answer, the photograph and the frame stand still
+exactly as they were sent: no handles, no zoom, no dragging, and the hint above says the
+frame is being read. After a failure or Cancel they can be changed again.
+
 While a sign is being read, a card lies over the bottom of the photograph: which
 provider is being asked and what for, the reason and a countdown in seconds when a
 retry is coming, and "Cancel". When the reading fails, a card in the same place says

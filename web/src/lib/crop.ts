@@ -246,3 +246,14 @@ export function frameForView(frac: Size, visible: Box, image: Size): Box {
 export function shareOfFrame(crop: Box, image: Size): number {
   return (crop.w * crop.h) / (image.w * image.h);
 }
+
+/** Whether the frame may still be changed. From "Send this to be read" until the
+ *  answer - the frame being cut out, then the reading - the picture stays exactly as it
+ *  was sent (step 19): moving it then showed a frame that was not the one being read. */
+export const frameLocked = (busy: boolean, sending: boolean): boolean => busy || sending;
+
+/** The line above the photograph. */
+export function frameHint(zoom: number, locked: boolean): string {
+  if (locked) return "Reading what is inside the frame…";
+  return zoom > 1.01 ? "Zoom in, then fine-tune with the corners" : "Drag the frame onto the sign";
+}

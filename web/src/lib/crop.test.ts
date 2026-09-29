@@ -3,6 +3,8 @@
 // The tests are named after properties rather than functions: when one breaks, it
 // should be clear what exactly broke.
 
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import {
   BOX_ASPECT,
@@ -26,6 +28,8 @@ import {
   withMargin,
   zoomAt,
   zoomLevel,
+  frameHint,
+  frameLocked,
 } from "./crop";
 
 const phone = { w: 3000, h: 4000 };
@@ -378,5 +382,41 @@ describe("holding the frame within limits", () => {
     const out = clamp({ x: 10, y: 10, w: 1, h: 1 }, phone);
     expect(out.w).toBeGreaterThanOrEqual(MIN_SIDE);
     expect(out.h).toBeGreaterThanOrEqual(MIN_SIDE);
+  });
+});
+
+describe("the frame freezes while it is being read (step 19)", () => {
+  it("locked from the tap on Send - the cut, then the reading - until the answer", () => {
+    expect(frameLocked(false, false)).toBe(false);
+    expect(frameLocked(false, true)).toBe(true);    // the frame being cut out
+    expect(frameLocked(true, false)).toBe(true);    // the reading
+    expect(frameLocked(true, true)).toBe(true);
+  });
+
+  it("the hint says what is happening, and nothing about corners", () => {
+    expect(frameHint(2, true)).toBe("Reading what is inside the frame…");
+    expect(frameHint(2, true)).not.toMatch(/corner|drag|zoom/i);
+    expect(frameHint(1, false)).toBe("Drag the frame onto the sign");
+    expect(frameHint(2, false)).toBe("Zoom in, then fine-tune with the corners");
+  });
+
+  it("every way of changing the frame on the screen goes through the lock", () => {
+    // There is no DOM in the suite (decision 151), so the screen is held to the rule
+    // by its source: each input that moves, resizes or zooms asks \`locked\` first.
+    const screen = readFileSync(
+      fileURLToPath(new URL("../components/SignPicker.tsx", import.meta.url)), "utf-8");
+    const body = (name: string) => {
+      const at = screen.indexOf(`function ${name}(`);
+      return screen.slice(at, screen.indexOf("\n  }\n", at));
+    };
+    for (const handler of ["onPointerDown", "onPointerMove", "onWheel"]) {
+      expect(body(handler).split("\n")[1], handler).toContain("locked");
+    }
+    expect(screen, "the corner handles are hidden").toContain("{!locked && CORNERS.map(");
+    expect(screen, "the Fit button is hidden").toContain("zoom > 1.01 && !locked &&");
+    expect(screen, "the hint follows the lock").toContain("frameHint(zoom, locked)");
+    expect(screen, "a gesture under way is dropped").toMatch(/if \(!locked\) return;\s+drag\.current = null;/);
+    // The old half-lock must not creep back: \`busy\` alone let the cut and the wheel through.
+    expect(screen).not.toMatch(/busy \|\| sending|\|\| busy\) return/);
   });
 });
