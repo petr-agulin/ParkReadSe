@@ -216,7 +216,8 @@ The small things that took the most work:
 
 ## Running it yourself
 
-You need Node 20 or newer. There is no server: the whole app runs in the browser.
+You need Node 22 (20.19 or newer works too). There is no server: the whole app runs in
+the browser.
 
 ```powershell
 cd web
@@ -231,8 +232,21 @@ With `npm run dev:lan`, open the "Network" address it prints on a phone on the s
 Wi-Fi. The browser warns once about the certificate; the camera needs https. Avoid this
 on public Wi-Fi: the page is visible to the whole network while it runs.
 
-To publish, copy `web/dist` to any static host, such as Cloudflare Pages. It works from
-the root of a domain or from a subfolder.
+### Publishing on Cloudflare Pages
+
+1. In the Cloudflare dashboard, open **Workers & Pages**, create a **Pages** project and
+   connect it to this repository on GitHub.
+2. Set **Root directory** `web`, **Build command** `npm run build`, **Build output
+   directory** `dist`, **Production branch** `main`. No framework preset is needed.
+3. Deploy. From then on, every push to `main` updates the site.
+
+Node 22 is taken from `web/.node-version`. The page's security headers — which scripts
+may run, where it may connect, the camera for this site only — come from
+`web/public/_headers`, and Cloudflare applies them automatically.
+
+Any other static host works too: copy `web/dist`, to the root of a domain or a
+subfolder. Netlify reads the same `_headers` file; elsewhere, set those headers the
+host's own way.
 
 ### Commands for development
 

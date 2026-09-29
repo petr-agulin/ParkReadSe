@@ -101,6 +101,43 @@ describe("the built page", () => {
     }
   });
 
+  it("carries the hosted page's security headers (step 20a)", () => {
+    // A person's key lives in this page's storage: the one thing that must never
+    // happen is a script other than the page's own running here.
+    const headers = readFileSync(DIST + "_headers", "utf-8");
+    const csp = /Content-Security-Policy: (.+)/.exec(headers)?.[1] ?? "";
+    for (const rule of ["default-src 'self'", "script-src 'self'", "style-src 'self'",
+                        "connect-src 'self' https:", "object-src 'none'", "base-uri 'none'",
+                        "form-action 'none'", "frame-ancestors 'none'",
+                        "upgrade-insecure-requests"]) {
+      expect(csp, rule).toContain(rule);
+    }
+    expect(csp, "no inline scripts or eval may be allowed").not.toMatch(/unsafe-inline|unsafe-eval/);
+    for (const header of ["Strict-Transport-Security", "X-Content-Type-Options: nosniff",
+                          "Permissions-Policy: camera=(self), microphone=()",
+                          "Cross-Origin-Opener-Policy: same-origin"]) {
+      expect(headers, header).toContain(header);
+    }
+    // Not no-referrer: a Google key locked to this site needs to see the site (20d).
+    expect(headers).toContain("Referrer-Policy: strict-origin\n");
+    // A new version must reach a phone on its next visit.
+    expect(headers).toMatch(/\/sw\.js\s+Cache-Control: no-cache/);
+    expect(headers).toMatch(/\/assets\/\*\s+Cache-Control: public, max-age=31536000, immutable/);
+  });
+
+  it("keeps to what that policy allows: no inline script, no eval", () => {
+    const html = readFileSync(DIST + "index.html", "utf-8");
+    for (const tag of html.match(/<script[^>]*>/g) ?? []) {
+      expect(tag, "every script is a file of the page's own").toMatch(/ src="\.\//);
+    }
+    // Nothing written between the tags: an inline script is text there.
+    expect(html).not.toMatch(/<script[^>]*>\s*[^<\s]/);
+    for (const file of built.filter((f) => f.endsWith(".js"))) {
+      const text = readFileSync(file, "utf-8");
+      expect(text, file).not.toMatch(/\beval\(|new Function\(/);
+    }
+  });
+
   it("keeps the independent judge of the schema in the tests", () => {
     // `ajv` exists to judge our own schema check (decision 138), and nowhere else.
     // Had it travelled into the page, the person standing at a sign would pay in

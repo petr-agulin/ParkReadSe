@@ -1,0 +1,32 @@
+# HTTP headers for the hosted page (step 20a). Cloudflare Pages reads this file from the
+# build's root; locally nothing reads it. Everything here is checked by
+# build/static.test.ts.
+#
+# A person's API key lives in this page's storage. The main defence is that no script
+# but the page's own can ever run here: script-src 'self', no inline scripts, no eval.
+# Requests may go to any https address - each person names their own provider - and
+# to nothing else.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' blob: data:; font-src 'self'; connect-src 'self' https:; media-src 'self' blob:; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin
+  Permissions-Policy: camera=(self), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), serial=(), hid=(), accelerometer=(), gyroscope=(), magnetometer=(), browsing-topics=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+
+# The page, the offline worker and the manifest are asked for afresh every time, so a
+# new version reaches a phone on its next visit. Files with a hash in their name never
+# change under that name, and are kept for good.
+/
+  Cache-Control: no-cache
+/index.html
+  Cache-Control: no-cache
+/sw.js
+  Cache-Control: no-cache
+/manifest.webmanifest
+  Cache-Control: no-cache
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
