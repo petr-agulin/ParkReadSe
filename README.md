@@ -214,6 +214,33 @@ The small things that took the most work:
 
 ---
 
+## Privacy and data protection
+
+A street photo can hold personal data: a face, a number plate, a place. In the EU the
+GDPR protects that data, and we kept it in mind from the start. The app is built to
+touch as little of it as possible:
+
+- **No backend.** Opening the app downloads its files — the page, its code, its icons —
+  and that is all. There is no server of ours, no account, no analytics, no history. Like
+  any website, the host sees the ordinary data of a visit, such as an IP address.
+- **Nothing is stored** but your settings and, if you tick **Remember on this device**,
+  your key — in your own browser.
+- **Only the frame leaves your phone,** and only when you press send. You crop the photo
+  to the sign; on a photo from your gallery the frame is placed on the sign for you. The
+  rest of the photo is never sent.
+- **What is sent is redrawn first,** which drops the photo's GPS position, time and phone
+  model.
+
+What the frame contains still goes to the AI provider you chose, under its terms: if it
+holds a face or a number plate, so does what is sent. That choice, and the
+responsibility for it, stays with you.
+
+We see this much like a dashcam, which may be used in Sweden: images of other people
+taken for a practical road purpose, used briefly, not kept and not published. This is
+our reading, not legal advice.
+
+---
+
 ## Running it yourself
 
 You need Node 22 (20.19 or newer works too). There is no server: the whole app runs in
