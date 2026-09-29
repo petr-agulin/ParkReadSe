@@ -28,10 +28,11 @@ import SignPicker from "./components/SignPicker";
 import CameraCapture from "./components/CameraCapture";
 import type { Box } from "./lib/crop";
 import Reading from "./components/Reading";
-import { localMinute } from "./lib/home";
+import { swedishMinute } from "./lib/home";
 
-/** Now by the device's clock, in the same shape the moment field gives. */
-const nowLocal = (): string => localMinute(new Date());
+/** Now in Sweden, in the same shape the moment field gives: a sign's hours are
+ *  Swedish hours, whatever zone the device keeps (step 20e). */
+const nowLocal = (): string => swedishMinute(new Date());
 
 
 export default function App() {

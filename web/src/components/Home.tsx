@@ -10,11 +10,11 @@
 // one is primary is decided by `lib/home`: with no camera it is picking a photograph,
 // and the reason is said aloud.
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
   HOME_HEADLINE, HOME_LINES, MOMENT_FROM, MOMENT_TO, SIGN_PLATES, entryActions,
-  fieldMoment, localMinute, momentChip,
+  fieldMoment, momentChip, swedishMinute, swedishTimeNote,
 } from "../lib/home";
 import { Camera, Sliders } from "./Icon";
 import SignPlate from "./SignPlate";
@@ -36,6 +36,15 @@ export default function Home({
   const file = useRef<HTMLInputElement>(null);
   const entry = entryActions(cameraAvailable);
   const chip = momentChip(moment);
+  // Said only while the reading is for "now" and the device keeps another zone than
+  // Sweden's (step 20e). It names the Swedish minute, so it is kept current.
+  const [clock, setClock] = useState(() => new Date());
+  const timeNote = moment.trim() ? null : swedishTimeNote(clock);
+  useEffect(() => {
+    if (!timeNote) return;
+    const timer = setInterval(() => setClock(new Date()), 20_000);
+    return () => clearInterval(timer);
+  }, [timeNote]);
   // A computer with a mouse: its date-and-time field is typed into and picked from a
   // calendar that sets the date alone, so it cannot lie invisible over the value as
   // it does on a phone, where the system dialog asks for date and time together.
@@ -116,7 +125,7 @@ export default function Home({
             )}
             <input
               type="datetime-local"
-              value={fieldMoment(moment, localMinute(new Date()))}
+              value={fieldMoment(moment, swedishMinute(new Date()))}
               min={MOMENT_FROM}
               max={MOMENT_TO}
               aria-label="Moment to read the sign at"
@@ -164,6 +173,8 @@ export default function Home({
         </span>
       </div>
       )}
+
+      {timeNote && <p className="-mt-2 text-caption text-ink-3">{timeNote}</p>}
 
       <div className="mt-auto flex flex-col gap-3.5">
         {/* A network is needed by exactly one action - reading a sign. It is said

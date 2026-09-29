@@ -18,6 +18,41 @@ export function localMinute(t: Date): string {
        + `T${pad(t.getHours())}:${pad(t.getMinutes())}`;
 }
 
+/** Where the signs are. */
+export const SWEDEN = "Europe/Stockholm";
+
+/** The minute in Sweden, in the same shape, whatever time zone the device keeps
+ *  (step 20e).
+ *
+ *  A sign's hours are Swedish hours. A phone that sets its zone by itself shows
+ *  Swedish time in Sweden, and then this is the device's own minute. But one with the
+ *  automatic zone switched off, or a laptop planning a trip from abroad, would read
+ *  "now" an hour or more off - and nothing on the screen would say so. */
+export function swedishMinute(t: Date): string {
+  return minuteIn(t, SWEDEN);
+}
+
+/** The minute in a given time zone - the device's own zone plays no part. */
+export function minuteIn(t: Date, zone: string): string {
+  const parts = Object.fromEntries(new Intl.DateTimeFormat("en-GB", {
+    timeZone: zone, year: "numeric", month: "2-digit", day: "2-digit",
+    hour: "2-digit", minute: "2-digit", hourCycle: "h23",
+  }).formatToParts(t).map((p) => [p.type, p.value]));
+  return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
+}
+
+/** A line for the home screen when the device is not on Swedish time; `null` when it
+ *  is - and then nothing is said, because nothing differs. */
+export function swedishTimeNote(t: Date): string | null {
+  return timeNote(swedishMinute(t), localMinute(t));
+}
+
+/** The same, from the two minutes already read: the Swedish one and the device's. */
+export function timeNote(sweden: string, device: string): string | null {
+  if (sweden === device) return null;
+  return `Your device is not on Swedish time — readings use Swedish time, now ${sweden.slice(11)}.`;
+}
+
 /** What the moment field holds on a desktop browser: the chosen moment, or - while
  *  it is "now" - the current minute.
  *

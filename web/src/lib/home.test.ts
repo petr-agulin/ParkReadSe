@@ -1,9 +1,11 @@
 // The decisions of the home screen. Requirements 9 and 10 of step 11.
 
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
-import { fieldMoment, localMinute,
-  BENEFITS, HOME_HEADLINE, HOME_LINES, MOMENT_FROM, MOMENT_TO, entryActions, momentChip,
+import {
+  BENEFITS, HOME_HEADLINE, HOME_LINES, MOMENT_FROM, MOMENT_TO, entryActions, fieldMoment,
+  localMinute, minuteIn, momentChip, SWEDEN, swedishMinute, timeNote,
 } from "./home";
 import { when } from "./when";
 
@@ -135,5 +137,42 @@ describe("the two states of one screen say the same thing", () => {
     // condition holds on both, not on one.
     expect(HOME_HEADLINE).not.toMatch(/\b(?:scan|snap)\b/i);
     expect(entryActions(true).primaryLabel).toMatch(/Scan/);
+  });
+});
+
+describe("now is Swedish time (step 20e)", () => {
+  it("reads the minute in Sweden whatever zone the device keeps, summer and winter", () => {
+    expect(swedishMinute(new Date("2026-07-15T12:00:00Z"))).toBe("2026-07-15T14:00");
+    expect(swedishMinute(new Date("2026-01-15T12:00:00Z"))).toBe("2026-01-15T13:00");
+  });
+
+  it("follows the zone it is given, not the device's", () => {
+    // This machine is on Swedish time itself, and a TZ override is ignored on Windows,
+    // so the device cannot be moved abroad for the test. What can be checked: another
+    // zone gives another minute, and the Swedish one asks for Sweden by name.
+    expect(minuteIn(new Date("2026-07-15T12:00:00Z"), "America/New_York")).toBe("2026-07-15T08:00");
+    expect(readFileSync(new URL("./home.ts", import.meta.url), "utf-8"))
+      .toContain("export function swedishMinute(t: Date): string {\n  return minuteIn(t, SWEDEN);");
+    expect(SWEDEN).toBe("Europe/Stockholm");
+  });
+
+  it("follows the change of the clocks and the turn of the year", () => {
+    // Spring forward at 01:00 UTC on the last Sunday of March: 02:00 becomes 03:00.
+    expect(swedishMinute(new Date("2026-03-29T00:59:00Z"))).toBe("2026-03-29T01:59");
+    expect(swedishMinute(new Date("2026-03-29T01:00:00Z"))).toBe("2026-03-29T03:00");
+    expect(swedishMinute(new Date("2026-12-31T23:30:00Z"))).toBe("2027-01-01T00:30");
+  });
+
+  it("says nothing when the device is on Swedish time, and names the Swedish time when not", () => {
+    expect(timeNote("2026-07-15T14:00", "2026-07-15T14:00")).toBeNull();
+    expect(timeNote("2026-07-15T14:00", "2026-07-15T13:00"))
+      .toBe("Your device is not on Swedish time — readings use Swedish time, now 14:00.");
+  });
+
+  it("the reading and the desktop field both start from Swedish time", () => {
+    const root = (f: string) => readFileSync(new URL(f, import.meta.url), "utf-8");
+    expect(root("../App.tsx")).toContain("swedishMinute(new Date())");
+    expect(root("../App.tsx")).not.toContain("localMinute(");
+    expect(root("../components/Home.tsx")).toContain("fieldMoment(moment, swedishMinute(new Date()))");
   });
 });
