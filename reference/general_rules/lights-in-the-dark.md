@@ -5,9 +5,9 @@ en: Show parking and tail lights when parked at the roadside in the dark
 source: Körkortsboken på Engelska 2026
 ---
 
-# Огни в темноте
+# Lights in the dark
 
-> Общее правило дорожного движения. **На знаке этого нет** — проверьте сами. В вычисления движка не входит никогда.
+> A general traffic rule. **It is not on the sign** — check it yourself. It never enters the engine's computation.
 
-При стоянке у дороги в темноте должны быть включены габаритные и задние огни, чтобы
-машину видели другие участники движения.
+When parked by the road in the dark, the parking lights and the tail lights must be on,
+so that other road users can see the vehicle.

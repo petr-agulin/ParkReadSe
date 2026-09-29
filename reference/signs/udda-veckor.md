@@ -10,8 +10,8 @@ short: Odd weeks only — every second week
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-# Нечётные недели
+# Odd weeks
 
-`Udda veckor` — то же, что `Jämna veckor`, но в недели с нечётным номером ISO.
-Часто висит на противоположной стороне улицы: одну сторону убирают по чётным,
-другую по нечётным.
+`Udda veckor` — the same as `Jämna veckor`, but in weeks with an odd ISO number.
+It often hangs on the opposite side of the street: one side is cleaned in even weeks, the
+other in odd ones.

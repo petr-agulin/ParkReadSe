@@ -1,6 +1,6 @@
 ---
 key: window-red
-tokens: красные цифры
+tokens: red digits
 category: rule
 label: Time indication
 code: T6
@@ -10,7 +10,7 @@ short: Hours apply Sundays and public holidays
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Класс *sön- och helgdag*. Воскресенье красное само по себе, праздником быть не обязано.
+The *sön- och helgdag* class. A Sunday is red in its own right; it need not be a holiday.
 
-Праздник, выпавший на субботу, остаётся **красным**, а не скобками: канун — это
-*рабочий* день перед красным, а праздник рабочим днём не является.
+A holiday that falls on a Saturday stays **red**, not brackets: an eve is a *working* day
+before a red day, and a holiday is not a working day.

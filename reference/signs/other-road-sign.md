@@ -1,6 +1,6 @@
 ---
 key: other-road-sign
-tokens: Farthinder, ограничение скорости, пешеходный переход
+tokens: Farthinder, a speed limit, a pedestrian crossing
 category: no_rule
 label: Road sign
 schema: panel.kind=other_sign
@@ -9,9 +9,10 @@ short: Another road sign, not about parking
 source: the developer's own reading of the test photographs
 ---
 
-Дорожный знак на той же опоре, но не из парковочного стека: `Farthinder` (`084`), круг
-`30` (`026`, `129`), `10` (`103`), пешеходный переход (`129`). Показывается, чтобы его
-не приняли за пропуск, и не толкуется: к стоянке он отношения не имеет.
+A road sign on the same post that is not part of the parking stack: `Farthinder` (`084`),
+a `30` circle (`026`, `129`), `10` (`103`), a pedestrian crossing (`129`). It is shown so
+that it is not taken for something missed, and it is not interpreted: it has nothing to
+do with parking.
 
-Отдельно от него — главная дорога (`priority-road`): она тоже не парковочный знак, но
-стоянку меняет, поэтому у неё своя запись.
+Apart from it stands the priority road (`priority-road`): it is not a parking sign
+either, but it changes parking, so it has an entry of its own.

@@ -10,14 +10,16 @@ short: Even weeks only — every second week
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-# Чётные недели
+# Even weeks
 
-`Jämna veckor` — окно действует только в недели с чётным номером ISO. Так в Швеции
-размечают уборку улиц: запрет висит круглый год, но приходит через неделю.
+`Jämna veckor` — the window applies only in weeks with an even ISO number. This is how
+Sweden marks street cleaning: the prohibition stands all year round, but comes round
+every other week.
 
-**Почему это нельзя пропустить.** Без чётности продукт считает запрет действующим
-каждую неделю. На запрете такая ошибка делает ответ строже настоящего — неприятно,
-но безопасно. На разрешающем окне та же потеря работает наоборот и обещает стоянку
-там, где её нет.
+**Why it must not be missed.** Without the parity the product counts the prohibition as
+in force every week. On a prohibition that mistake makes the answer stricter than the
+real one — unpleasant, but safe. On a permitting window the same loss works the other
+way and promises parking where there is none.
 
-Номер недели считается по ISO (`date.isocalendar()`), а не «первая неделя января».
+The week number is the ISO one (`isoWeek` in the engine, the same number as Python's
+`date.isocalendar()`), not "the first week of January".

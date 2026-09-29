@@ -10,5 +10,5 @@ short: Parking is not free
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Стоянка платная. Если окна на панели нет, плата относится ко всему действию знака;
-если окно есть, читается совместно с ним по правилу «gemensamt».
+Parking is paid. If the panel has no window, the fee applies to the whole of the sign's
+effect; if it has a window, the two are read together, by the "gemensamt" rule.

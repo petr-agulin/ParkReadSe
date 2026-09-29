@@ -5,12 +5,12 @@ en: Keep ten metres clear of junctions and pedestrian crossings
 source: Körkortsboken på Engelska 2026
 ---
 
-# Перекрёстки и переходы
+# Junctions and crossings
 
-> Общее правило дорожного движения. **На знаке этого нет** — проверьте сами. В вычисления движка не входит никогда.
+> A general traffic rule. **It is not on the sign** — check it yourself. It never enters the engine's computation.
 
-Ни остановки, ни стоянки:
+Neither stopping nor parking:
 
-- на перекрёстке и в пределах **10 метров** до и после него;
-- в пределах **10 метров перед** пешеходным переходом, велопереходом, велопроездом,
-  пересекающей велодорожкой или тротуаром. Только перед: сразу после — можно.
+- at a junction, or within **10 metres** before or after it;
+- within **10 metres before** a pedestrian crossing, a cycle crossing, a cycle passage,
+  a crossing cycle path or a pavement. Only before it: straight after it is allowed.

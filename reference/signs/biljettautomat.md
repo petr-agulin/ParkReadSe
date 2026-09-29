@@ -10,11 +10,13 @@ short: Fee paid at a ticket machine
 source: the developer's own reading of the test photographs
 ---
 
-**Табличка называет автомат, а не требование.** «Biljett-automat» говорит, где платить, —
-у автомата, который выдаёт билет. Это не табличка «P-biljett» (T20), требующая выложить
-билет под стекло: на `097` модель прочла её именно так, и ответ сказал «нужен билет»
-там, где знак говорит лишь «платно» (решение 187).
+**The plate names a machine, not a requirement.** "Biljett-automat" says where to pay — at
+the machine that issues a ticket. It is not the "P-biljett" plate (T20), which requires a
+ticket to be displayed behind the windscreen: on `097` the model read it exactly that way,
+and the answer said "a ticket is required" where the sign says only "there is a fee"
+(decision 187).
 
-Категория `info`: как платить — часть платы, и читатель принимает эту табличку за часть
-правил (решение 181), поэтому метки «Not a parking rule» у неё нет. Узнаётся по тексту:
-поля в схеме нет. Табличка «P-automat» на доске оплаты сюда не относится — это доска.
+Category `info`: how to pay is part of the fee, and a reader takes this plate for part of
+the rules (decision 181), so it carries no "Not a parking rule" label. It is recognised by
+its text: the schema has no field for it. A "P-automat" plate on a payment board does not
+belong here — that is a board.

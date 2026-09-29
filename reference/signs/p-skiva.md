@@ -1,6 +1,6 @@
 ---
 key: p-skiva
-tokens: P-skiva, пиктограмма диска
+tokens: P-skiva, a disc pictogram
 category: rule
 label: Parking disc
 code: T17
@@ -10,7 +10,7 @@ short: Parking disc required
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Нужен парковочный диск с отметкой времени постановки.
+A parking disc set to the time of arrival is needed.
 
-Конкретное время, которое надо выставить, продукт **не рассчитывает** — это осознанная
-граница MVP: выдача числа была бы шагом к вердикту, а не к описанию знака.
+The product **does not compute** the exact time to set — a deliberate limit of the MVP:
+giving a number would be a step towards a verdict, not towards describing the sign.

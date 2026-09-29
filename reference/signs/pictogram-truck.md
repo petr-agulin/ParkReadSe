@@ -1,6 +1,6 @@
 ---
 key: pictogram-truck
-tokens: пиктограмма грузовика
+tokens: a lorry pictogram
 category: rule
 label: Symbol panel
 code: T8
@@ -10,8 +10,8 @@ short: Heavy goods vehicles only
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Символ `S1` на символьной табличке `T8`: места отведены тяжёлым грузовым автомобилям
-полной массой свыше 3,5 тонны.
+Symbol `S1` on the `T8` symbol plate: the spaces are set aside for heavy lorries with a
+gross weight over 3.5 tonnes.
 
-Ответ по такому знаку даёт **полный режим для грузовиков**, а не фразу «здесь нельзя»:
-продукт не знает, на чём приехал читатель.
+The answer for such a sign gives **the full regime for lorries**, not the phrase "you may
+not park here": the product does not know what the reader arrived in.

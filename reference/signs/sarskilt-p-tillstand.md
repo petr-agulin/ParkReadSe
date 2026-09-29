@@ -10,5 +10,5 @@ short: A special parking permit is required
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Нужно особое разрешение. С временным окном требование действует внутри окна, вне окна
-возвращается базовый режим; без окна — действует всегда.
+A special permit is needed. With a time window the requirement applies inside the window,
+and outside it the base regime returns; with no window it always applies.

@@ -1,6 +1,6 @@
 ---
 key: operator-plate
-tokens: название оператора и телефон
+tokens: the operator's name and phone number
 category: no_rule
 label: Operator plate
 schema: parsed.operator
@@ -9,11 +9,10 @@ short: Names the parking operator
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-**В ответ пользователю не попадает вовсе.** По форме это законная дополнительная
-табличка, но правил она не задаёт: название оператора и телефон не отвечают ни на один
-вопрос, ради которого человек фотографирует знак — можно ли здесь стоять, платно ли,
-как долго, кому.
+**It never reaches the answer the user sees.** In form it is a proper additional plate,
+but it sets no rules: an operator's name and phone number answer none of the questions a
+person photographs a sign for — may I park here, is there a fee, for how long, for whom.
 
-Извлекается и помечается видом панели (`operator_plate`), чтобы не пропасть молча
-из счёта панелей. Дальше отбрасывается: в движок не входит, уверенность не снижает,
-на экране не показывается.
+It is extracted and marked by its panel kind (`operator_plate`), so that it does not
+silently drop out of the panel count. After that it is discarded: it does not enter the
+engine, does not lower the confidence and is not shown on screen.

@@ -10,40 +10,41 @@ short: Private land — the owner's terms are not stated here
 source: the developer's own reading; lagen om kontrollavgift vid olovlig parkering (LKOP)
 ---
 
-**Регламентом эта табличка не предусмотрена.** Это свободный текст на дополнительной
-табличке, и твёрдого определения у неё нет — в отличие от `Avgift` или таблички класса.
-Делает она две вещи.
+**The regulations do not provide for this plate.** It is free text on an additional
+plate, and it has no firm definition — unlike `Avgift` or a class plate. It does two
+things.
 
-**Первое: сообщает, что земля частная** (*tomtmark*). Стоянка здесь — договор
-с владельцем, а не правило дорожного движения, и цена ошибки — *kontrollavgift*
-по закону о контрольной плате, а не административный штраф.
+**First, it says the land is private** (*tomtmark*). Parking here is a contract with the
+owner, not a traffic rule, and the price of a mistake is a *kontrollavgift* under the
+law on control fees, not a parking fine.
 
-**Второе: вместе с названием владельца** (`Brf Ängslyckan`) сообщает, чья это
-площадка, и тем самым — что она не общедоступна. Значит **не для всех**.
+**Second, together with the owner's name** (`Brf Ängslyckan`), it says whose site this
+is, and so that it is not open to the public. That means **not for everyone**.
 
-С `Förhyrda platser` это не одно и то же, и разница в том, что именно утверждается.
-`Förhyrda platser` говорит, что каждое место сдано поимённо: нужен договор аренды
-на конкретное место, обычно с разрешением под стеклом, и жилец товарищества,
-места не арендовавший, стоять всё равно не может.
+It is not the same as `Förhyrda platser`, and the difference is in what exactly is
+claimed. `Förhyrda platser` says that each space is let by name: a lease for a particular
+space is needed, usually with a permit behind the windscreen, and a member of the housing
+association who has not rented a space still may not park.
 
-`Privat parkering, Brf …` говорит лишь, что площадка принадлежит товариществу
-и не является общедоступной. **Сдаются ли места поимённо, пускают ли гостей, нужно
-ли разрешение или оплата в приложении, на сколько можно встать — не сказано ничего.**
-Эти условия живут во внутренних правилах товарищества, а не на столбе. На деле такие
-площадки обычно смешанные: часть мест за жильцами, для гостей свой порядок, — но
-из знака этого не следует.
+`Privat parkering, Brf …` says only that the site belongs to the association and is not
+open to the public. **Whether the spaces are let by name, whether guests are let in,
+whether a permit or payment in an app is needed, how long one may stay — nothing is
+said.** These terms live in the association's own rules, not on the post. In practice
+such sites are usually mixed: some spaces belong to residents, guests have their own
+arrangement — but none of this follows from the sign.
 
-Практически: **нет отношения к товариществу — считать площадку закрытой.** В гости
-к жильцу — спрашивать у него: гостевой порядок в его власти, а не в нашей.
+In practice: **no connection to the association — treat the site as closed.** Visiting a
+resident — ask them: the guest arrangement is theirs to decide, not ours.
 
-**Слабое место, о котором стоит знать.** Закон (LKOP, §3) требует, чтобы запреты
-и условия владельца были ясно объявлены знаками. Этот столб не объявляет почти
-ничего: ни разрешения, ни ограничения времени, ни платы, ни оператора, ни контактов,
-ни размера контрольной платы. При оспаривании штрафа скудость знака — довод по
-существу, а знак `P` наверху к тому же говорит, что стоянка разрешена. Но это довод
-ПОСЛЕ штрафа, а не основание вставать: на частной земле нужно разрешение владельца
-уже на то, чтобы там находиться.
+**A weak point worth knowing.** The law (LKOP, §3) requires the owner's prohibitions and
+conditions to be clearly announced by signs. This post announces almost nothing: no
+permit, no time limit, no fee, no operator, no contact details, no amount of the control
+fee. When contesting a fine, the bareness of the sign is an argument on the merits, and
+the `P` sign at the top says, besides, that parking is allowed. But that is an argument
+AFTER the fine, not a reason to park: on private land you need the owner's permission
+merely to be there.
 
-**Если отношение к товариществу есть,** действует умолчание, которое приходит вместе
-с `E19` на частной земле по LKOP: не более 24 часов подряд, в будни, кроме кануна
-воскресенья и праздника, — пока табличка не скажет иного. Здесь иного не сказано.
+**If you do have a connection to the association,** the default that comes with an
+`E19` on private land under LKOP applies: at most 24 hours in a row, on weekdays, except
+the day before a Sunday or a public holiday — until a plate says otherwise. Here nothing
+else is said.

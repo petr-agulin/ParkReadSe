@@ -10,10 +10,10 @@ short: Residents may have separate terms
 source: the developer's own reading of the test photographs
 ---
 
-**Не сужает круг тех, кому можно стоять.** Сообщает, что у живущих в районе могут быть
-особые условия.
+**It does not narrow who may park.** It says that people living in the area may have
+special terms.
 
-Отсюда правило разбора: кто не житель — читает знак так, будто этой таблички нет вовсе;
-это основной сценарий продукта. Житель района вне области продукта: его условия
-согласуются с управляющей организацией, различаются от дома к дому и на знаке
-не написаны.
+Hence the reading rule: someone who is not a resident reads the sign as if this plate
+were not there at all; that is the product's main scenario. A resident of the area is
+outside the product's scope: their terms are agreed with the property manager, differ
+from building to building and are not written on the sign.

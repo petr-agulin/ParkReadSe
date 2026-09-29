@@ -1,21 +1,22 @@
 ---
 key: avgift-erlaggs-med-mobil
-tokens: Avgift erläggs med + пиктограмма телефона
+tokens: Avgift erläggs med + a phone pictogram
 category: info
 label: Text panel
 code: T22
-schema: — (в вычисления не входит)
+schema: — (does not enter the computation)
 en: The sign states that the fee is paid by phone
 short: Fee paid by phone
 source: the developer's own reading of the test photographs
 ---
 
-Плата вносится телефоном: приложением вроде EasyPark или отправкой SMS.
+The fee is paid by phone: through an app such as EasyPark, or by sending a text message.
 
-**В вычисления не входит и в MVP не показывается.** Продукт отвечает на вопросы
-«можно ли стоять», «платно ли», «как долго», «кому» и «где». Канал оплаты ни на один
-из них не отвечает: платно здесь и так сказано словом `Avgift`, а чем именно платить —
-человек разберётся у автомата или в приложении.
+**It does not enter the computation and is not shown in the MVP.** The product answers
+"may one park here", "is there a fee", "for how long", "for whom" and "where". The payment
+channel answers none of them: that there is a fee is already said by the word `Avgift`,
+and how exactly to pay a person will work out at the machine or in the app.
 
-Не путать с `p-skiva` и `p-biljett`: те требуют **предъявить** что-то в машине, то есть
-задают условие законной стоянки. Способ оплаты условием не является.
+Not to be confused with `p-skiva` and `p-biljett`: those require something to be
+**displayed** in the car, that is, they set a condition of lawful parking. A payment method
+is not a condition.

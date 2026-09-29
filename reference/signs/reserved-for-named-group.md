@@ -10,28 +10,29 @@ short: For a named group
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Места отведены названному кругу: дворнику (`Vaktmästare`, снимок `066`), арендатору
-помещения (`Verksamhet`, `067`), сотрудникам (`Personal`, `069`), службе региона
-(`Regionservice`, `070`), машине перевозки крови (`Blodbil`, `072`).
+The spaces are set aside for a named group: the caretaker (`Vaktmästare`, photograph
+`066`), the tenant of the premises (`Verksamhet`, `067`), staff (`Personal`, `069`), a
+regional service (`Regionservice`, `070`), a blood transport vehicle (`Blodbil`, `072`).
 
-**Одна запись на весь образец, а не файл на слово.** Правило у всех одно: круг сужен,
-разрешение — по написанному слову, в остальном действуют обычные правила знака. Новое
-слово стоит строки в `tokens`, а не нового файла и нового правила. `AGENTS.md` §8
-обещает, что исчерпывающий каталог шведских табличек не собирается, и файл на слово
-был бы ровно им (решение 159).
+**One entry for the whole pattern, not a file per word.** The rule is the same for all:
+the group is narrowed, the permission follows the written word, and otherwise the sign's
+ordinary rules apply. A new word costs a line in `tokens`, not a new file and a new rule.
+§8 of `AGENTS.md` promises that no exhaustive catalogue of Swedish plates is being
+collected, and a file per word would be exactly that (decision 159).
 
-**Это подпись к режиму, а не проверка** — как `besokande`. Продукт называет круг и
-показывает режим целиком; относится ли к кругу читатель, решает сам читатель. Само
-слово при этом остаётся на экране дословно: продукт не переводит `Blodbil` и не
-утверждает, что знает, кто такие `Verksamhet` в этом доме.
+**It is a caption to the regime, not a check** — like `besokande`. The product names the
+group and shows the regime in full; whether the reader belongs to it is for the reader to
+decide. The word itself stays on screen verbatim: the product does not translate
+`Blodbil` and does not claim to know who `Verksamhet` are in this building.
 
-**Схемного поля нет** — отсюда `schema: —`. В схеме такая табличка приходит как
-`eligibility: custom`, то есть «ничего из списка не подошло», и по значению поля
-её не отличить от любой другой неподошедшей. Поэтому запись узнаётся **по тексту**,
-как `privat-parkering`: список слов живёт в `BY_TEXT` в `web/src/lib/reference.ts`,
-и тест держит его в согласии с заголовком `tokens:` этой статьи.
+**There is no schema field** — hence `schema: —`. In the schema such a plate arrives as
+`eligibility: custom`, that is, "nothing on the list fitted", and by the value of the
+field it cannot be told from any other plate that did not fit. So the entry is
+recognised **by its text**, like `privat-parkering`: the list of words lives in `BY_TEXT`
+in `web/src/lib/reference.ts`, and a test keeps it in agreement with the `tokens:` header
+of this entry.
 
-Разрешение (`Tillstånd erfordras`, `Giltigt P-tillstånd erfordras`) — отдельная
-табличка со своим полем `permit_required`; на `066`, `067` и `069` она стоит рядом,
-но к кругу отношения не имеет: круг называет эта табличка, а та говорит, чем он
-подтверждается.
+The permit (`Tillstånd erfordras`, `Giltigt P-tillstånd erfordras`) is a separate plate
+with its own field, `permit_required`; on `066`, `067` and `069` it stands alongside, but
+it has nothing to do with the group: this plate names the group, and that one says how
+membership is proved.

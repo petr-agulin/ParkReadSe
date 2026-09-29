@@ -10,7 +10,8 @@ short: Number of spaces
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Количество мест, **а не длительность**. Ближайший сосед по написанию — `2 tim`, и ошибка
-здесь даёт правдоподобный неверный ответ, внешне неотличимый от верного.
+The number of spaces, **not a duration**. Its nearest neighbour in writing is `2 tim`,
+and a mistake here gives a plausible wrong answer that looks no different from the right
+one.
 
-Во временную арифметику не входит: это постоянная пометка при режиме.
+It does not enter the time arithmetic: it is a standing note on the regime.

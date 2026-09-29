@@ -10,14 +10,16 @@ short: Rented spaces
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Арендованные места: у каждого есть конкретный арендатор. Под запрещающим основным знаком
-такая табличка вводит исключение из запрета.
+Rented spaces: each has a particular tenant. Under a prohibition main sign, such a plate
+makes an exception to the prohibition.
 
-**Условия аренды на знаке не написаны и продукту не видны** — они согласуются между
-арендатором и оператором или домовладельцем. Отличие от `Boende` при этом принципиальное:
-`Boende` круг не сужает и читается как заметка, а `Förhyrda platser` сужает — тот,
-кто места не арендовал, места здесь не имеет.
+**The terms of the lease are not on the sign and the product cannot see them** — they are
+agreed between the tenant and the operator or the property owner. The difference from
+`Boende` is a matter of principle: `Boende` does not narrow the group and is read as a
+note, while `Förhyrda platser` does narrow it — someone who has not rented a space has no
+place here.
 
-Табличка может называть **номера** конкретных мест (`Gäller plats 13 och 14`).
-О том, есть ли рядом другие места и какие они, знак не говорит ничего, и продукт
-тоже не говорит: сказать «других мест нет» значило бы утверждать то, чего на знаке нет.
+The plate may name the **numbers** of particular spaces (`Gäller plats 13 och 14`).
+The sign says nothing about whether there are other spaces nearby or what they are, and
+neither does the product: saying "there are no other spaces" would claim what is not on
+the sign.

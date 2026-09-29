@@ -10,8 +10,8 @@ short: Applies outside the hours above
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Токен сдвига охвата: дальнейшее относится к **дополнению** объявленного окна.
+A scope-shift token: what follows applies to the **complement** of the stated window.
 
-Без него вне окна возвращается базовый режим; с ним вне окна действует то, что названо
-при токене. Неопознанный токен сдвига — причина отказа: неизвестно, к какому времени
-относятся следующие строки.
+Without it, outside the window the base regime returns; with it, outside the window what
+is named with the token applies. An unrecognised shift token is a reason to refuse: it is
+not known which time the lines that follow belong to.

@@ -1,6 +1,6 @@
 ---
 key: main-zone-parking
-tokens: жёлтый квадрат с P внутри
+tokens: a yellow square with a P inside
 category: main_sign
 label: Zone sign
 code: E20
@@ -10,7 +10,8 @@ short: Start of a parking area
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Зональный знак: правило начинается здесь и относится к участку, а не к точке у столба.
+A zone sign: the rule starts here and covers an area, not a point by the pole.
 
-Правило читается **так же**, как у обычного знака. Протяжённость зоны продукт
-не вычисляет: где зона кончается, по фотографии знака не видно.
+The rule is read **the same way** as on an ordinary sign. The product does not compute
+the extent of the zone: where the zone ends cannot be seen from a photograph of the
+sign.

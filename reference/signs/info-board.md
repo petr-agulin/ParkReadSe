@@ -1,6 +1,6 @@
 ---
 key: info-board
-tokens: Områdeskod, реклама парковочных приложений, QR-коды
+tokens: Områdeskod, adverts for parking apps, QR codes
 category: no_rule
 label: Info board
 schema: panel.kind=info_board
@@ -9,11 +9,13 @@ short: Operator's payment board, not a road sign
 source: the developer's own reading of the test photographs
 ---
 
-Платёжное табло оператора — **не дорожный знак**. Код зоны, логотипы приложений,
-QR-коды, реклама EasyPark и Parkster.
+An operator's payment board — **not a road sign**. An area code, app logos, QR codes,
+adverts for EasyPark and Parkster.
 
-**В ответ пользователю не попадает вовсе.** Такие табло никогда не меняют смысл знака
-и его табличек; фраза «здесь можно заплатить через EasyPark» продукту не нужна.
+**It never reaches the answer the user sees.** Such boards never change the meaning of the
+sign and its plates; the phrase "you can pay with EasyPark here" is of no use to the
+product.
 
-Помечается видом панели, а не выбрасывается: на фотографии его видно, и молчаливый
-пропуск выглядит как потеря в счёте панелей. Дальше отбрасывается.
+It is marked by its panel kind rather than thrown away: it is visible in the photograph,
+and dropping it silently would look like a miscount of the panels. After that it is
+discarded.

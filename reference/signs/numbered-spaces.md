@@ -4,15 +4,15 @@ tokens: Gäller plats 13 och 14
 category: rule
 label: Text panel
 code: T22
-schema: parsed.uninterpreted / место как пометка
+schema: parsed.uninterpreted / the space as a note
 en: The sign applies to the numbered spaces stated
 short: Applies to the numbered spaces
 source: the developer's own reading of the test photographs
 ---
 
-Номера конкретных мест, а не их количество. Сосед по смыслу — `N platser`, но там
-сказано «сколько», а здесь «какие именно».
+The numbers of particular spaces, not how many there are. Its neighbour in meaning is
+`N platser`, but that one says "how many", and this one "which ones".
 
-Условие о **месте**: действует всё время, показывается пометкой при режиме,
-во временную арифметику не входит. Какое место занял пользователь, продукт не знает
-и не выясняет — он называет номера, указанные на знаке.
+A condition about **the place**: it applies all the time, is shown as a note on the
+regime and does not enter the time arithmetic. Which space the user took, the product
+does not know and does not ask — it names the numbers written on the sign.

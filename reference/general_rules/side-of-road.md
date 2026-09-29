@@ -5,13 +5,13 @@ en: Park on the right-hand side, in the direction of travel
 source: Körkortsboken på Engelska 2026
 ---
 
-# Сторона дороги
+# Side of the road
 
-> Общее правило дорожного движения. **На знаке этого нет** — проверьте сами. В вычисления движка не входит никогда.
+> A general traffic rule. **It is not on the sign** — check it yourself. It never enters the engine's computation.
 
-Стоянка и остановка — только по правой стороне по ходу движения.
+Park and stop only on the right-hand side, in the direction of travel.
 
-*Исключение:* улица с односторонним движением либо трамвайные или железнодорожные пути
-справа — тогда можно слева.
+*Exception:* a one-way street, or tram or railway tracks on the right — then the left
+side is allowed.
 
-Стоять как можно дальше от середины проезжей части.
+Stand as far as possible from the middle of the carriageway.

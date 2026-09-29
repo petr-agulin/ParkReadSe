@@ -5,13 +5,13 @@ en: Do not block entrances, other vehicles, or access to them
 source: Körkortsboken på Engelska 2026
 ---
 
-# Помехи другим
+# Getting in others' way
 
-> Общее правило дорожного движения. **На знаке этого нет** — проверьте сами. В вычисления движка не входит никогда.
+> A general traffic rule. **It is not on the sign** — check it yourself. It never enters the engine's computation.
 
-Стоянка запрещена: там, где перекрываешь въезд и выезд с участка; рядом с уже стоящей
-машиной (двойная парковка — не относится к велосипедам, мопедам и мотоциклам);
-так близко к другой машине, что она не может выехать; если перекрываешь человеку доступ
-к его машине; на разъездной площадке; на главных дорогах.
+Parking is prohibited: where you block the way in or out of a property; next to a vehicle
+that is already parked (double parking — this does not apply to bicycles, mopeds and
+motorcycles); so close to another vehicle that it cannot get out; where you block
+someone's access to their vehicle; in a passing place; on main roads.
 
-И общее: нельзя стоять там, где создаёшь помеху или опасность.
+And in general: you may not stand where you cause an obstruction or a danger.

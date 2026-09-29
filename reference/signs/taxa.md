@@ -10,5 +10,6 @@ short: Municipal tariff number
 source: the developer's own reading of the test photographs
 ---
 
-Номер тарифа. Задаётся муниципалитетом и в разных городах означает разное, поэтому
-продукт его **не интерпретирует**: показывает дословно и уверенность не снижает.
+The tariff number. It is set by the municipality and means different things in different
+towns, so the product **does not interpret** it: it shows it verbatim and does not lower
+the confidence.

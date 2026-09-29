@@ -9,4 +9,5 @@ short: Area code for parking apps
 source: the developer's own reading of the test photographs
 ---
 
-Код зоны для оплаты через приложение. Нужен человеку, не движку: показывается дословно.
+The area code for paying through an app. It is for the person, not the engine: shown
+verbatim.

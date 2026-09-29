@@ -10,6 +10,6 @@ short: Hours apply every day
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Явный токен «все дни». Хранится **отдельно** от «дни не указаны»: первое — прямое
-указание, второе — умолчание. Схлопывать одно в другое нельзя, на их различии стоит
-вычисление дополнения.
+An explicit "all days" token. It is kept **separate** from "no days given": the first is a
+direct statement, the second a default. The two must not be collapsed into one: the
+computation of the remaining time rests on the difference between them.

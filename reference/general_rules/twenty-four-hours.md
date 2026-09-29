@@ -5,27 +5,27 @@ en: On weekdays, park for at most 24 hours in a row in the same place
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-# Правило 24 часов
+# The 24-hour rule
 
-> Общее правило дорожного движения. **На знаке этого нет.** В отличие от прочих заметок, само правило движок считает — в коде, а не по этой записи: здесь лишь объяснение, откуда на экране берётся конец стоянки.
+> A general traffic rule. **It is not on the sign.** Unlike the other notes, the engine does compute this rule itself — in code, not from this note: this is only an explanation of where the end of a stay on the screen comes from.
 
-«På vardagar (utom vardag före sön- och helgdag) får du parkera högst 24 timmar i en
-följd» — по будням, кроме дня перед воскресеньем и праздником, на одном месте можно
-стоять не дольше 24 часов подряд. Выходные и праздники в счёт не идут, и счётчик
-начинается заново с ближайшего рабочего дня (решение 82):
+"På vardagar (utom vardag före sön- och helgdag) får du parkera högst 24 timmar i en
+följd" — on weekdays, except the day before a Sunday or a public holiday, you may park in
+one place for at most 24 hours in a row. Weekends and holidays do not count, and the
+counter starts afresh on the nearest working day (decision 82):
 
-| Поставил | Забрать не позже |
+| Parked | Collect by |
 |---|---|
-| понедельник 13:00 | вторник 13:00 |
-| пятница 13:00 | вторник 00:00 — до субботы оставалось 11 часов, не 24 |
-| суббота или воскресенье, любое время | вторник 00:00 |
+| Monday 13:00 | Tuesday 13:00 |
+| Friday 13:00 | Tuesday 00:00 — only 11 hours were left before Saturday, not 24 |
+| Saturday or Sunday, any time | Tuesday 00:00 |
 
-**Где оно действует.** Правило общее, поэтому действует везде, где знак не говорит
-своего, — в том числе на улице вовсе без знаков и без разметки (слово разработчика,
-2026-09-23). Опора без `E19` не означает запрета.
+**Where it applies.** The rule is a general one, so it applies wherever the sign says
+nothing of its own — including a street with no signs and no markings at all (the
+developer's word, 2026-09-23). A post without an `E19` does not mean a prohibition.
 
-**Как его применяет движок.** Ограничивает любую стоянку, разрешённую в этот момент,
-а не только стоянку под синим `P` (решение 166). Время, о котором знак-запрет молчит,
-отдаётся общим правилам, и окно на экране говорит, что оно не со знака (решение 155).
-Своё ограничение на знаке (`2 tim`, `30 min`) важнее: правило 24 часов — это то, что
-остаётся, когда знак не сказал ничего.
+**How the engine applies it.** It limits any parking that is allowed at that moment, not
+only parking under a blue `P` (decision 166). Time a prohibition sign says nothing about
+is handed over to the general rules, and the window on screen says it does not come
+from the sign (decision 155). A limit on the sign itself (`2 tim`, `30 min`) takes
+precedence: the 24-hour rule is what remains when the sign has said nothing.

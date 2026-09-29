@@ -1,6 +1,6 @@
 ---
 key: priority-road
-tokens: Huvudled, жёлтый ромб в белой рамке
+tokens: Huvudled, a yellow diamond in a white frame
 category: info
 label: Priority road
 schema: parsed.road_sign=priority_road
@@ -9,14 +9,15 @@ short: Priority road — parking only where a sign permits it
 source: the developer's word, 2026-09-23 (photographs `118`, `120`)
 ---
 
-Главная дорога (`Huvudled`) — не парковочный знак и в стек табличек не входит. Но стоянку
-он меняет: на главной дороге стоять нельзя, если знак этого не разрешает (слово
-разработчика на `118` и `120`).
+A priority road (`Huvudled`) is not a parking sign and is not part of the stack of
+plates. But it changes parking: you may not park on a priority road unless a sign permits
+it (the developer's word on `118` and `120`).
 
-**Что из этого делает движок.** Синий `P` разрешение даёт сам, поэтому под ним ничего
-не меняется. Меняется одно место: время, о котором знак-запрет молчит. На обычной улице
-его забирает общее правило 24 часов (решение 155); на главной дороге общего разрешения
-нет, и там остаётся «нельзя».
+**What the engine makes of it.** A blue `P` gives the permission by itself, so under it
+nothing changes. One thing changes: the time a prohibition sign says nothing about. On an
+ordinary street that time is taken by the general 24-hour rule (decision 155); on a
+priority road there is no general permission, and "not allowed" stays.
 
-Раньше такой знак приходил табличкой, которую не удавалось истолковать, и ронял
-уверенность целого чтения — на `118` «где должна быть уверенность, стоит неуверенность».
+Such a sign used to arrive as a plate that could not be interpreted, and it dragged down
+the confidence of the whole reading — on `118`, "uncertainty stands where there should be
+certainty".

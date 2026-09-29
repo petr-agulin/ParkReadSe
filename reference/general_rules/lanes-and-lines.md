@@ -5,14 +5,14 @@ en: Do not park in reserved lanes, on cycle paths, or close to a solid line
 source: Körkortsboken på Engelska 2026
 ---
 
-# Полосы и разметка
+# Lanes and markings
 
-> Общее правило дорожного движения. **На знаке этого нет** — проверьте сами. В вычисления движка не входит никогда.
+> A general traffic rule. **It is not on the sign** — check it yourself. It never enters the engine's computation.
 
-Ни остановки, ни стоянки: на полосах для маршрутного транспорта, на велодорожке,
-в зоне запрета, у сплошной жёлтой линии на дороге или бордюре.
+Neither stopping nor parking: in lanes for scheduled public transport, on a cycle path,
+in a no-stopping area, or by a solid yellow line on the road or the kerb.
 
-Ближе **3 метров** от сплошной линии стоять нельзя. *Исключение:* между машиной
-и сплошной есть прерывистая.
+You may not stand closer than **3 metres** to a solid line. *Exception:* there is a
+broken line between the vehicle and the solid one.
 
-Стоянка отдельно запрещена у прерывистой жёлтой линии.
+Parking alone is prohibited by a broken yellow line.

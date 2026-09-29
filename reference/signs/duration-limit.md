@@ -10,8 +10,8 @@ short: Maximum continuous stay
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Максимальная длительность стоянки подряд. **Перекрывает** умолчание в 24 часа,
-а не складывается с ним.
+The longest stay in a row. It **replaces** the 24-hour default rather than adding to it.
 
-Без окна действует всегда — любой день, любое время, включая выходные и праздники.
-С окном на той же табличке — только внутри окна: вне окна возвращается базовый режим.
+With no window it always applies — any day, any time, weekends and holidays included.
+With a window on the same plate, only inside the window: outside it the base regime
+returns.

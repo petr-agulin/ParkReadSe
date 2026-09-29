@@ -10,14 +10,15 @@ short: Visitors only
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Места отведены посетителям. Это **подпись к режиму, а не проверка**: продукт называет
-категорию и показывает режим целиком, а решает, относится ли к ней читатель, сам читатель.
+The spaces are set aside for visitors. This is **a caption to the regime, not a check**:
+the product names the category and shows the regime in full, and whether the reader
+belongs to it is for the reader to decide.
 
-Табличка часто называет **конкретное заведение**: `Endast gäster till Franks Gatukök`
-(`025`), `Endast för besökande till Pingstkyrkan` (`004`). Само правило от этого
-не меняется — меняется только название, а оно муниципальное и в белый список не входит:
-показывается дословно рядом с условием.
+The plate often names **a particular place**: `Endast gäster till Franks Gatukök`
+(`025`), `Endast för besökande till Pingstkyrkan` (`004`). The rule itself does not change
+because of that — only the name does, and the name is local and not in the whitelist: it
+is shown verbatim next to the condition.
 
-Условие может стоять **на одной табличке с длительностью** — `30 min / Endast gäster
-till …` (`025`). По правилу «gemensamt» это одно совместное указание: тридцать минут
-относятся именно к гостям заведения, а не ко всем подряд.
+The condition can stand **on one plate with a duration** — `30 min / Endast gäster
+till …` (`025`). By the "gemensamt" rule this is one joint instruction: the thirty
+minutes apply to the guests of that place, not to everyone.

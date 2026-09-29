@@ -10,8 +10,8 @@ short: Passenger cars only
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Сужает круг до легковых автомобилей. Используется, чтобы не пускать дома на колёсах,
-грузовики и прицепы.
+Narrows the group to passenger cars. It is used to keep out caravans, lorries and
+trailers.
 
-Существует именно потому, что одинокий `P` круг не сужает: чтобы оставить места только
-автомобилям, это надо написать.
+It exists precisely because a lone `P` does not narrow the group: to keep the spaces for
+cars only, that has to be written.

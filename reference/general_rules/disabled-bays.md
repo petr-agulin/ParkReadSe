@@ -5,9 +5,9 @@ en: Disabled bays require a permit; others may only stop to set down or pick up
 source: Körkortsboken på Engelska 2026
 ---
 
-# Места для лиц с ограниченной подвижностью
+# Spaces for people with reduced mobility
 
-> Общее правило дорожного движения. **На знаке этого нет** — проверьте сами. В вычисления движка не входит никогда.
+> A general traffic rule. **It is not on the sign** — check it yourself. It never enters the engine's computation.
 
-Парковаться могут только лица с ограниченной подвижностью и специальным разрешением.
-Остальным разрешена лишь остановка для посадки и высадки.
+Only people with reduced mobility who hold a special permit may park here. Everyone else
+may only stop to let passengers on or off.

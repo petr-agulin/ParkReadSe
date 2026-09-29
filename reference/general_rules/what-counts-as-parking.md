@@ -5,14 +5,14 @@ en: Any stop counts as parking, with four exceptions
 source: Körkortsboken på Engelska 2026
 ---
 
-# Что считается стоянкой
+# What counts as parking
 
-> Общее правило дорожного движения. **На знаке этого нет** — проверьте сами. В вычисления движка не входит никогда.
+> A general traffic rule. **It is not on the sign** — check it yourself. It never enters the engine's computation.
 
-Остановка считается стоянкой независимо от того, сидите вы в машине или нет.
-Исключения — остановка ради:
+A stop counts as parking whether or not you stay in the vehicle. The exceptions are
+stopping in order to:
 
-- требования дорожной обстановки;
-- избежания опасности;
-- посадки и высадки пассажира;
-- погрузки и разгрузки.
+- meet the demands of the traffic situation;
+- avoid danger;
+- let a passenger on or off;
+- load or unload goods.

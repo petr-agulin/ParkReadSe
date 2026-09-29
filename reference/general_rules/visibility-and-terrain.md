@@ -5,9 +5,9 @@ en: Do not park where you block the view or sit over a crest
 source: Körkortsboken på Engelska 2026
 ---
 
-# Видимость и рельеф
+# Visibility and terrain
 
-> Общее правило дорожного движения. **На знаке этого нет** — проверьте сами. В вычисления движка не входит никогда.
+> A general traffic rule. **It is not on the sign** — check it yourself. It never enters the engine's computation.
 
-Ни остановки, ни стоянки: на вершине подъёма и рядом с ней; в повороте с ограниченной
-видимостью; там, где машина перекрывает обзор знаков или светофора.
+Neither stopping nor parking: on or near the crest of a hill; on a bend with limited
+visibility; where the vehicle blocks the view of signs or traffic lights.

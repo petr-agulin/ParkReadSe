@@ -1,22 +1,22 @@
 ---
 key: wayfinding-direction
-tokens: → под указателем
+tokens: → under a direction sign
 category: rule
 label: Direction
 code: F28
-schema: parsed.arrow при main_sign.type=wayfinding_*
+schema: parsed.arrow when main_sign.type=wayfinding_*
 en: The parking facility lies in this direction; this is not the extent of a parking place
 short: Points which way to the parking facility
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Стрелка под УКАЗАТЕЛЕМ и стрелка под знаком стоянки — разные вещи, и путать их
-нельзя: у первой смысл «туда», у второй «дотуда».
+An arrow under a DIRECTION SIGN and an arrow under a parking sign are different things,
+and they must not be confused: the first means "that way", the second "up to there".
 
-Стрелка протяжённости (`T11`) говорит, какой участок улицы охвачен разрешением.
-Под указателем разрешения нет вовсе, охватывать нечего, и та же стрелка означает
-направление к стоянке — она может быть и частью самого указателя, и отдельным
-знаком предписанного направления (`D1`), стоящим на том же столбе.
+An extent arrow (`T11`) says which stretch of the street the permission covers. Under a
+direction sign there is no permission at all, nothing to cover, and the same arrow means
+the direction to the car park — it may be part of the direction sign itself, or a separate
+mandatory-direction sign (`D1`) on the same post.
 
-Различить эти два случая по фотографии продукт не берётся, и не нужно: последствие
-у них одно и то же — «стоянка не здесь, а там».
+The product does not try to tell these two cases apart from a photograph, and it need
+not: their consequence is the same — "the parking is not here, but there".

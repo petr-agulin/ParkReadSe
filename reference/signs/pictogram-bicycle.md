@@ -1,6 +1,6 @@
 ---
 key: pictogram-bicycle
-tokens: пиктограмма велосипеда
+tokens: a bicycle pictogram
 category: rule
 label: Symbol panel
 code: T8
@@ -10,14 +10,14 @@ short: Bicycles and class II mopeds only
 source: Transportstyrelsen, «Stanna och parkera»; T8-8
 ---
 
-Велосипеды и мопеды **класса II**. Мопед класса I сюда не входит — он идёт вместе
-с мотоциклами (`pictogram-motorcycle`), и это единственное место, где две пиктограммы
-делят между собой один вид транспорта.
+Bicycles and **class II** mopeds. A class I moped does not belong here — it goes with
+motorcycles (`pictogram-motorcycle`), and this is the only place where two pictograms
+share one kind of vehicle between them.
 
-Запись заведена по указанию разработчика: `T8-8` — знак регламента, такая же
-разновидность символьной таблички, как мотоцикл, автобус, грузовик и легковой
-автомобиль, давно бывшие в справочнике.
+The entry was added on the developer's instruction: `T8-8` is a regulation sign, the same
+kind of symbol plate as the motorcycle, the bus, the lorry and the passenger car, which
+had long been in the reference.
 
-До неё пиктограмма велосипеда приезжала как `pictogram: other` и не давала ни одного
-ключа: ограничение исчезало, и знак читался как стоянка для всех (снимок `042`,
-запись 55 журнала обкатки).
+Before it, the bicycle pictogram arrived as `pictogram: other` and gave no key at all: the
+restriction vanished, and the sign was read as parking for everyone (photograph `042`,
+entry 55 of the trial log).

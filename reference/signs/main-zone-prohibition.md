@@ -1,6 +1,6 @@
 ---
 key: main-zone-prohibition
-tokens: жёлтый квадрат с запрещающим кругом внутри
+tokens: a yellow square with a prohibition circle inside
 category: main_sign
 label: Zone sign
 code: E20
@@ -10,5 +10,5 @@ short: Start of a no-parking area
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Начало зоны запрета. Как и у зоны стоянки, правило читается обычным образом,
-а границы зоны не вычисляются.
+The start of a prohibition zone. As with a parking zone, the rule is read the ordinary
+way, and the bounds of the zone are not computed.

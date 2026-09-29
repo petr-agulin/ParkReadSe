@@ -10,28 +10,29 @@ short: Only on the dates stated
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-# Промежутки дат
+# Date ranges
 
-Даты, ограничивающие окно. На табличках это пишут двумя способами, и оба означают
-одно и то же ограничение с разных сторон:
+Dates that limit a window. Plates write them in two ways, and both mean the same limit,
+seen from opposite sides:
 
-- **сезон** — `1 nov-15 maj`, `Augusti-Juni`: окно действует только в эти дни;
-- **исключение** — `Gäller ej 1 juli - 31 juli`, `Gäller ej 15/6 15/8`: окно действует
-  всегда, кроме этих дней.
+- **a season** — `1 nov-15 maj`, `Augusti-Juni`: the window applies only on those days;
+- **an exception** — `Gäller ej 1 juli - 31 juli`, `Gäller ej 15/6 15/8`: the window
+  applies always, except on those days.
 
-**Промежуток задаётся днём и месяцем, без года.** Табличка вешается один раз
-и действует каждый год, поэтому года в записи нет и быть не должно.
+**A range is given as a day and a month, with no year.** A plate is put up once and
+applies every year, so there is no year in the record, and there must not be.
 
-**Промежуток умеет перехлёстывать конец года.** `1 nov-15 maj` — это зима, и первый
-номер больше второго не по ошибке. Зимний сезон иначе не выразить.
+**A range can run over the end of the year.** `1 nov-15 maj` is winter, and the first
+number being larger than the second is no mistake. There is no other way to express a
+winter season.
 
-**Один день — это промежуток, у которого начало равно концу.** На снимке `036`
-написано `Gäller ej 15/6 15/8` без тире, и разработчик прочёл это как два отдельных
-дня, а не как лето. Форма записи одна и та же, читается и то и другое.
+**A single day is a range whose start equals its end.** Photograph `036` reads
+`Gäller ej 15/6 15/8` with no dash, and the developer read it as two separate days, not as
+the summer. The form of the record is the same, and it can hold either reading.
 
-## Почему не номера месяцев
+## Why not month numbers
 
-Первая версия хранила номера целых месяцев. Снимок `034` показал предел этой формы:
-`1 nov-15 maj` округлялся до ноября и мая целиком и добавлял **две недели запрета,
-которых на знаке нет**. Ошибка в сторону строгости, но всё равно ошибка: продукт
-сообщал бы о запрете там, где стоянка разрешена.
+The first version kept the numbers of whole months. Photograph `034` showed the limit of
+that form: `1 nov-15 maj` was rounded out to the whole of November and May, and added
+**two weeks of prohibition that are not on the sign**. A mistake on the strict side, but a
+mistake all the same: the product would report a prohibition where parking is allowed.

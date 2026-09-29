@@ -1,6 +1,6 @@
 ---
 key: window-weekday
-tokens: цифры без скобок: 8-18
+tokens: digits without brackets: 8-18
 category: rule
 label: Time indication
 code: T6
@@ -10,7 +10,8 @@ short: Hours apply on ordinary weekdays
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Чёрные или белые цифры **без скобок** — класс *vardag*. Цвет цифры зависит от фона
-панели: на синей белая, на белой чёрная; класс дня при этом один и тот же.
+Black or white digits **without brackets** — the *vardag* class. The colour of the digits
+depends on the panel's background: white on blue, black on white; the day class is the
+same either way.
 
-Это не «понедельник-пятница»: класс определяется отношением к красным дням.
+This is not "Monday to Friday": the class is defined by its relation to the red days.

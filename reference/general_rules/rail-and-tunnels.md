@@ -5,12 +5,12 @@ en: Do not stop at level crossings, in tunnels or on motorways
 source: Körkortsboken på Engelska 2026
 ---
 
-# Пути, туннели, магистрали
+# Tracks, tunnels, motorways
 
-> Общее правило дорожного движения. **На знаке этого нет** — проверьте сами. В вычисления движка не входит никогда.
+> A general traffic rule. **It is not on the sign** — check it yourself. It never enters the engine's computation.
 
-Ни остановки, ни стоянки: на железнодорожных и трамвайных переездах, в туннеле
-и под путепроводом, на круговом перекрёстке, на автомагистрали и дороге для автомобилей.
+Neither stopping nor parking: on railway and tram level crossings, in a tunnel or under
+a flyover, on a roundabout, on a motorway or an expressway.
 
-Стоянка дополнительно запрещена в пределах **30 метров** до и после железнодорожного
-переезда.
+Parking is also prohibited within **30 metres** before or after a railway level
+crossing.

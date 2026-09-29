@@ -1,6 +1,6 @@
 ---
 key: main-wayfinding-parking-house
-tokens: P под «крышей»
+tokens: P under a "roof"
 category: main_sign
 label: Wayfinding to a parking garage
 code: F28
@@ -10,7 +10,7 @@ short: Points the way to a parking garage
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-**Стоянки не разрешает вовсе.** Это указатель направления к парковочному дому.
+**It permits no parking at all.** It is a direction sign to a multi-storey car park.
 
-Категорию нужно различать обязательно: знак похож на `P`, и принять его за разрешающий
-значит выдать режим там, где места нет.
+Telling this category apart is a must: the sign looks like a `P`, and taking it for a
+permitting one means giving a regime where there is no place.

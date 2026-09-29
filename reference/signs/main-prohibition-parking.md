@@ -1,6 +1,6 @@
 ---
 key: main-prohibition-parking
-tokens: круг с красной чертой
+tokens: a circle with a red bar
 category: main_sign
 label: No parking
 code: C35
@@ -10,8 +10,8 @@ short: Parking prohibited
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Базовый режим — стоянка запрещена. Таблички под таким знаком не уточняют разрешение,
-а **вводят исключения из запрета** или ограничивают его во времени.
+The base regime is: parking prohibited. The plates under such a sign do not refine a
+permission; they **make exceptions to the prohibition** or limit it in time.
 
-Логика обратная синим стопкам, и путать нельзя: под `P` табличка сужает разрешение,
-под запретом — сужает запрет.
+The logic is the reverse of the blue stacks, and the two must not be confused: under a
+`P` a plate narrows the permission, under a prohibition it narrows the prohibition.

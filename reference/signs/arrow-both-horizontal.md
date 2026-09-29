@@ -10,8 +10,8 @@ short: Applies to the left and to the right, along the street
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Стрелка протяжённости (*utsträckningspil*): участок — по обе стороны от знака.
+An extent arrow (*utsträckningspil*): the stretch runs on both sides of the sign.
 
-Стрелка **закрывает указание над собой**. Если стрелок в стопке несколько, каждая
-закрывает своё указание, и один знак задаёт несколько режимов — по одному на участок.
-Отсутствие стрелки означает, что место здесь же, у знака.
+The arrow **closes the instruction above it**. If a stack has several arrows, each closes
+its own instruction, and one sign sets several regimes — one per stretch. No arrow means
+the place is right here, at the sign.

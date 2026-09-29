@@ -1,6 +1,6 @@
 ---
 key: main-prohibition-stopping
-tokens: круг с двумя красными чертами
+tokens: a circle with two red bars
 category: main_sign
 label: No stopping or parking
 code: C39
@@ -10,5 +10,5 @@ short: Stopping and parking prohibited
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Строже предыдущего: запрещена и остановка, и стоянка. Исключения из общих правил
-(высадка пассажира, погрузка) под этот знак не попадают.
+Stricter than the previous one: both stopping and parking are prohibited. The exceptions
+of the general rules (letting a passenger off, loading) do not apply under this sign.

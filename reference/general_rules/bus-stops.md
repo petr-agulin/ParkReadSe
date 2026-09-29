@@ -5,11 +5,11 @@ en: Keep clear of bus and tram stops
 source: Körkortsboken på Engelska 2026
 ---
 
-# Остановки общественного транспорта
+# Public transport stops
 
-> Общее правило дорожного движения. **На знаке этого нет** — проверьте сами. В вычисления движка не входит никогда.
+> A general traffic rule. **It is not on the sign** — check it yourself. It never enters the engine's computation.
 
-Нельзя парковаться за **20 метров до** и **5 метров после** остановки автобуса
-или трамвая.
+You may not park within **20 metres before** or **5 metres after** a bus or tram
+stop.
 
-Остановиться для посадки и высадки можно, если это не мешает общественному транспорту.
+You may stop to let passengers on or off, if it does not hinder public transport.

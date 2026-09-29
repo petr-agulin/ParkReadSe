@@ -1,6 +1,6 @@
 ---
 key: pictogram-bus
-tokens: пиктограмма автобуса
+tokens: a bus pictogram
 category: rule
 label: Symbol panel
 code: T8
@@ -10,11 +10,11 @@ short: Buses only
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Символ `S5` на символьной табличке `T8`: места отведены автобусам.
+Symbol `S5` on the `T8` symbol plate: the spaces are set aside for buses.
 
-Встречается у гостиниц, вокзалов и достопримечательностей — там, где туристический
-автобус ждёт группу. На снимке `038` табличка стоит вместе с `Besökande`: круг сужен
-дважды, и оба сужения надо удержать.
+It is found at hotels, stations and sights — where a coach waits for its group. On
+photograph `038` the plate stands together with `Besökande`: the group is narrowed twice,
+and both narrowings must be kept.
 
-Ответ по такому знаку даёт **полный режим для автобусов**, а не фразу «здесь нельзя»:
-продукт не знает, на чём приехал читатель.
+The answer for such a sign gives **the full regime for buses**, not the phrase "you may
+not park here": the product does not know what the reader arrived in.

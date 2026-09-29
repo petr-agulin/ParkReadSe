@@ -10,10 +10,12 @@ short: A loading place
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-**Место для погрузки и разгрузки.** «Lastplats» стоит над знаком запрета стоянки или
-остановки (`089`, `109`, `041`, `060`, `061`) и называет его причину: в эти часы место
-занято грузами. Сам запрет задаёт знак и таблички с часами; эта табличка правила не
-добавляет, но меняет то, что читатель понимает о месте, — отсюда категория `info`.
+**A place for loading and unloading.** "Lastplats" stands above a no-parking or no-stopping
+sign (`089`, `109`, `041`, `060`, `061`) and names its reason: in those hours the place is
+taken by goods. The prohibition itself is set by the sign and by the plates with hours;
+this plate adds no rule, but it changes what the reader understands about the place —
+hence the `info` category.
 
-Узнаётся по тексту, и слово на знаке обычно переносится — «Last-» / «plats». Поэтому
-сверка по тексту склеивает строки и убирает перенос в конце строки.
+It is recognised by its text, and the word on the sign is usually hyphenated —
+"Last-" / "plats". So the text match joins the lines and removes a hyphen at the end of a
+line.

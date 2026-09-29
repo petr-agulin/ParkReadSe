@@ -10,7 +10,8 @@ short: Only within a marked bay
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Запрет стоянки вне размеченного места. Условие о **месте**, а не о времени: действует
-всё время и показывается пометкой при режиме.
+Parking is prohibited outside a marked bay. A condition about **the place**, not about
+time: it applies all the time and is shown as a note on the regime.
 
-Панель жёлтая с символом запрета — цвет здесь несёт то же, что и текст.
+The panel is yellow with a prohibition symbol — here the colour carries the same as the
+text.

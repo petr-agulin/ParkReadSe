@@ -10,7 +10,7 @@ short: Taxis only
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Места для такси (`071`). Это вид транспорта, а не круг людей, поэтому поле —
-`vehicle_class`, а не `eligibility`, как у названных групп (`reserved-for-named-group`).
-Табличка сужает круг: всем, кроме такси, здесь не стоять, и линия на шкале прерывистая
-(шаг 15c).
+Spaces for taxis (`071`). This is a kind of vehicle, not a group of people, so the field
+is `vehicle_class`, not `eligibility` as for named groups (`reserved-for-named-group`).
+The plate narrows the group: no one but a taxi may park here, and the line on the time
+scale is dashed (step 15c).

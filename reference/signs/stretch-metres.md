@@ -10,5 +10,5 @@ short: The stretch the sign covers
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Отрезок, на котором действует знак, в метрах от него. Пометка при режиме,
-во временную арифметику не входит.
+The stretch the sign covers, in metres from it. A note on the regime; it does not enter
+the time arithmetic.

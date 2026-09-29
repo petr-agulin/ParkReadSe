@@ -1,5 +1,5 @@
 {
-  "_": "Ожидаемый ответ стадии отсева для снимков, которые парковочными знаками НЕ являются. У них нет и не может быть эталона разбора: разбирать нечего. Файл нужен, чтобы отличить «эталон ещё не написан» от «эталона не будет», и чтобы замер мог посчитать долю ложных пропусков — до этих снимков отсев отвечал `parking_sign` сорок раз из сорока, и его способность отказывать не была измерена ни разу.",
+  "_": "The expected answer of the triage stage for photographs that are NOT parking signs. They have no reading reference and cannot have one: there is nothing to read. The file is needed to tell \"the reference is not written yet\" from \"there will be no reference\", and so that the measurement can count the share of false passes — before these photographs, triage answered `parking_sign` forty times out of forty, and its ability to refuse had never once been measured.",
   "photos": {
     "043-gangfartsomrade-motorfordon-forbjuden": "other_road_sign",
     "045-hotellskylt-inte-vagmarke": "not_a_sign",

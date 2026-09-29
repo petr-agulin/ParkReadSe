@@ -10,14 +10,13 @@ short: Parking permitted, general rules still apply
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Разрешает стоянку **всем зарегистрированным дорожным моторным транспортным средствам**:
-легковым автомобилям, мотоциклам, мопедам класса I, фургонам, грузовикам, автобусам,
-прицепу в составе автопоезда.
+Permits parking for **all registered road motor vehicles**: cars, motorcycles, class I
+mopeds, vans, lorries, buses, and a trailer as part of a combination.
 
-Круг сужается только табличкой. Отсутствие таблички транспорта — не «значит, автомобиль»:
-пиктограмма ставится тогда, когда круг надо **сузить**, поэтому пиктограммы автомобиля
-обычно и нет.
+The group is narrowed only by a plate. The absence of a vehicle plate does not mean
+"so, a car": a pictogram is put up when the group has to be **narrowed**, which is why
+there is usually no car pictogram at all.
 
-Сам по себе знак означает **24 часа** в будни; в субботу, воскресенье, праздник и день
-перед праздником ограничения длительности нет. Табличка длительности это умолчание
-перекрывает.
+On its own the sign means **24 hours** on weekdays; on Saturday, Sunday, a public holiday
+and the day before a holiday there is no limit on the stay. A duration plate overrides
+this default.

@@ -1,6 +1,6 @@
 ---
 key: pictogram-wheelchair
-tokens: пиктограмма кресла-коляски
+tokens: a wheelchair pictogram
 category: rule
 label: Disabled
 code: T7
@@ -10,8 +10,8 @@ short: A disabled parking permit is required
 source: Transportstyrelsen, «Stanna och parkera»
 ---
 
-Места для лиц с ограниченной подвижностью и специальным разрешением. Остальным
-разрешена только остановка для посадки и высадки — это общее правило, не содержание
-знака, поэтому оно идёт справкой.
+Spaces for people with reduced mobility who hold a special permit. Everyone else may only
+stop to let passengers on or off — that is a general rule, not the content of the sign,
+so it comes as a reference note.
 
-Табличка часто не содержит ни одного слова: указание несёт пиктограмма.
+The plate often has no words at all: the pictogram carries the instruction.
