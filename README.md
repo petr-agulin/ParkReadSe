@@ -3,6 +3,9 @@
 **Take a photo of a Swedish parking sign and get a plain-English explanation of what it
 says:** who may park, when, for how long, and whether you pay.
 
+▶ **Try it: [parkread-sweden.pages.dev](https://parkread-sweden.pages.dev)** — on your
+phone, with your own AI key.
+
 ![The result screen: a timeline of the parking window from the chosen time, with free and paid periods and a special permit required; who can park here; and what was read, plate by plate, beside the photo of the sign](images/readme-main.svg)
 
 ParkRead Sweden **never says "you may park here"**. It tells you what the sign states, shows how
@@ -27,10 +30,11 @@ who do not read Swedish. A mistake costs a parking fine or a towed car. ParkRead
 
 ## The solution
 
-ParkRead Sweden splits the job in two and gives each half to what does it well: **an AI
-model reads the sign, and the app's own code decides what it means.** An AI alone can
-sound sure and be wrong; code alone cannot read a photo. Together, every step can be
-checked.
+ParkRead Sweden is a parking helper for drivers in Sweden — locals and visitors alike —
+who want to know what a sign says before they leave the car. It splits the job in two and
+gives each half to what does it well: **an AI model reads the sign, and the app's own
+code decides what it means.** An AI alone can sound sure and be wrong; code alone cannot
+read a photo. Together, every step can be checked.
 
 1. **A quick check.** One cheap AI call answers a single question: is this a Swedish
    parking sign, another road sign, or not a sign at all? If it is not a parking sign, the
@@ -59,8 +63,8 @@ this part comes from the general rules, not from the sign.
 
 ## How to use it
 
-ParkRead Sweden is a web page — no app store, no account. *(It is not published yet; the plan
-is to host it on Cloudflare Pages.)*
+ParkRead Sweden is a web page — no app store, no account. Open it at
+**[parkread-sweden.pages.dev](https://parkread-sweden.pages.dev)**.
 
 1. **Open the page** in your phone's browser. You can add it to your home screen to use it
    like an app.
@@ -161,9 +165,9 @@ number plates. The checked answers and the AI's saved readings are in `testset/`
 
 ---
 
-## Under the hood
+## The details we got right
 
-The small things that took the most work:
+Small things, each of which took real work:
 
 - **Any day, any time.** Choose when you will park — now, tonight, or a Saturday next month
   — and the whole answer is worked out for that moment, not just for now.
@@ -330,6 +334,69 @@ how the screens are built.
 
 ---
 
+## How it was built
+
+ParkRead Sweden was led by a person with a plan, and built with an AI coding assistant.
+It did not start with code. It started with a problem — a stack of plates that even
+Swedes misread — and with questions before answers: who is it for, what is the smallest
+version that helps, what could go wrong? Options were weighed side by side: a server or
+the browser alone, one call to the AI or two. Then the scope was drawn: what the first
+version does, what waits, and what it will never do — no accounts, no history, and never
+the words "you may park here". The main risk was named early: a wrong answer costs a
+fine or a towed car, so the app must refuse rather than guess.
+
+Only then did building begin. The thinking was written down, and from there on it steered
+every step.
+
+### Documents steer the work
+
+| Document | Its job |
+|---|---|
+| **PROJECT_BRIEF.md** | the product: who it is for, the scenarios, what goes in and comes out, where the MVP stops |
+| **AGENTS.md** | rules for the AI that **builds** the app — the coding assistant: how to work in this repository, how to handle secrets, which checks to run, what not to touch |
+| [**AGENT_SPEC.md**](AGENT_SPEC.md) | rules for the AI that **runs inside** the app — the model that reads a sign: its role, what it may and may never do, when it must refuse |
+| **PLAN.md** | the plan everything followed: each step written as requirements before any code, ticked off only when checked, with a journal of over 200 numbered decisions and the reason for each |
+| [**DESIGN.md**](design.md) | how the screens are built: tokens, layout, and the rules behind them |
+
+*The brief, the agreement and the plan are private working files; `AGENT_SPEC.md` and
+`design.md` are here in the repository.*
+
+### Every change follows the same loop
+
+1. **Plan first.** The step is written into the plan — what, why, and how it will be
+   checked — before any code. The developer reads it and corrects it where needed.
+2. **Go.** Work starts only on the developer's explicit go, once the step reads right.
+3. **One step at a time.** The work follows the plan's current step, in small changes,
+   each reviewable on its own.
+4. **Proof, not claims.** Over 700 automated tests, plus checks of the built site. Every
+   new safeguard is broken on purpose to prove its test catches it, then restored.
+5. **Measured against the truth.** 127 test photos with hand-checked answers score every
+   change to how signs are read; the automatic frame is scored against boxes marked by
+   hand. A change stays only if the numbers improve — otherwise it is reverted.
+6. **Back into the plan.** The step is ticked off with its results, which the developer
+   reads before the next step begins; each decision is logged with its reason — the ones
+   that worked and the ones that did not.
+7. **Commit on command.** Nothing is committed or pushed without the developer's word,
+   and files are staged one by one, never "add everything".
+
+### Principles that held throughout
+
+- **Product decisions stay human.** The AI brings options with their trade-offs — three
+  icon designs, two hosts, several retry strategies — and the developer chooses.
+- **Secrets never reach the AI.** It never opens the key file; commands that need a key
+  are run by the developer.
+- **An honest record.** Failed experiments, regressions and wrong assumptions go into the
+  plan with their reasons, instead of being quietly fixed.
+- **Checked in the real world.** Screens were tried on a real phone, and this README was
+  checked against the code.
+
+**The payoff:** an app that went from an idea to a live product quickly, without ever
+slipping out of its developer's hands — it does what was planned, the way it was planned.
+It is free for anyone to use and asks little of them: a photo, a tap, and a key of their
+own. And every behaviour in it traces back to a requirement, a decision and a test.
+
+---
+
 ## Disclaimer
 
 ParkRead Sweden is a personal, experimental project, built in spare time by one person — a
@@ -337,7 +404,8 @@ product person, not a programmer — entirely with AI tools.
 
 It is not a professional product. There is no company, no team and no support behind it,
 and nothing is guaranteed: readings can be wrong, and the app can change or stop working
-at any time. It has no connection to any authority, municipality or parking company; the
+at any time. The owner may keep improving it here, but there is no roadmap and no
+promise of updates. It has no connection to any authority, municipality or parking company; the
 operator names in the pictures appear only because they are printed on the signs.
 
 **You use it at your own risk.** ParkRead Sweden is a reading aid, not permission and not
@@ -347,6 +415,8 @@ before relying on it.
 ---
 
 ## License
+
+The same text is in [LICENSE](LICENSE).
 
 MIT License
 
