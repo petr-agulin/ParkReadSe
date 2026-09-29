@@ -12,7 +12,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
-import { BLUE, ICONS, ROOT, decode, row } from "./icons";
+import { FOOT, ICONS, ROOT, TOP, decode, row } from "./icons";
 
 const PUBLIC = join(ROOT, "web", "public");
 const decoded = (file: string) => decode(readFileSync(join(PUBLIC, file)));
@@ -60,8 +60,13 @@ describe("the icons", () => {
     }
   });
 
-  it("wears the blue of the Swedish sign", () => {
-    // The icon keeps the blue of the sign itself, whatever the interface's accent.
-    expect(decoded("icon-512.png").rows[256][8].slice(0, 3)).toEqual(BLUE);
+  it("wears the interface's blue, lighter at the top and deeper at the foot", () => {
+    // Step 20c: the accent in the middle, `#316ca5` - the theme colour with it.
+    const { rows } = decoded("icon-maskable-512.png");
+    const near = (px: number[], rgb: number[]) =>
+      px.slice(0, 3).every((v, i) => Math.abs(v - rgb[i]) <= 2);
+    expect(near(rows[0][8], TOP), `top ${rows[0][8]}`).toBe(true);
+    expect(near(rows[511][8], FOOT), `foot ${rows[511][8]}`).toBe(true);
+    expect(near(rows[256][8], [0x31, 0x6c, 0xa5]), `middle ${rows[256][8]}`).toBe(true);
   });
 });

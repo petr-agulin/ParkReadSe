@@ -155,6 +155,7 @@ Touch targets from 44 px. The camera shutter 92, the switch 46×28, the round bu
 | Home screen dark band | the full width of the column, no rounding; the sign, a heading and two quiet lines in a column |
 | Moment row | label on the left, never wrapping; value and chevron on the right; a hairline beneath. Day and month shortened ("Thu. 17 Sep. at 02:01"), the time never separated from "at". On a phone the system date picker opens from the value; the label is not pressable. On a computer (a mouse, no touch) the date-and-time field is shown as it is, starting from the current minute, with "now" beside it — or a "Now" link once a moment is chosen: a desktop calendar sets the date alone, and an invisible field could not be finished |
 | Interface icons | drawn in-house (decision 152): six inline SVGs in `Icon.tsx`, taking their colour from the text via `currentColor` |
+| App icon | a white `P` with road-sign proportions (stem a fifth of the height, a round bowl over the top 58%) inside the four corners of the aiming frame, on the accent blue - lighter at the top, deeper at the foot, `#316ca5` in the middle and as the theme colour. Full-bleed: phones cut their own shape; the frame stays inside the circle no mask cuts. Drawn by `npm run icons` |
 
 **A compound value is a list, not a paragraph.** When a value has several lines, the
 label moves onto its own line and the lines follow with a 2 px left border and a 12
@@ -304,5 +305,4 @@ to 0.98 — and none at all under `prefers-reduced-motion`.
 | Question | Recommendation |
 |---|---|
 | Dark theme | Later. The tokens are set up so it can be added by changing values |
-| App icon | Still in the previous blue: a job of its own, not a recolouring |
 | A typeface of our own | The system one is enough. It could come back, but only as a self-hosted file, with no outside server |

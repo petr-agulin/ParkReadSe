@@ -26,7 +26,7 @@ const manifest = JSON.parse(read("public/manifest.webmanifest"));
 // hexadecimal twin of the `accent` token from `design.md` - the manifest and the
 // `<meta>` are read by the system rather than by our CSS, and not every phone parses
 // the colour notation used there. The two change together.
-const BLUE = "#2a6099";
+const BLUE = "#316ca5";
 
 describe("the manifest", () => {
   it("is named as a person will find it on their phone", () => {
@@ -88,7 +88,9 @@ describe("the page", () => {
 
 describe("the shell and the public folder", () => {
   it("caches exactly what lies beside the page", () => {
-    const onDisk = readdirSync(`${WEB}public`).sort();
+    // A name starting with `_` is the host's configuration (`_headers`, step 20a): the
+    // host reads it and serves nothing under that name, so there is nothing to cache.
+    const onDisk = readdirSync(`${WEB}public`).filter((f) => !f.startsWith("_")).sort();
     const listed = SHELL.filter((p) => p !== "./" && p !== "./index.html")
                         .map((p) => p.replace("./", "")).sort();
     // Add an icon and forget the shell, and you are without it offline - which can
