@@ -29,6 +29,10 @@ back saying too little — the main sign unknown or unreadable, a plate unreadab
 than half the plates read — the same question is asked **once more**, and never in a loop. The second answer is
 kept only if it is better. So a single photograph costs two calls, or three at most.
 
+Those are questions, not attempts. When the provider is busy or does not answer, the same
+request is repeated by code within a budget of one minute per call; a call that still fails
+ends the reading with a plain message about what went wrong — never with a guessed answer.
+
 **Two calls do not create a branch the model controls.** Triage returns the **value of a
 field**, not a decision; whether the pipeline continues is decided by an `if` written by the
 developer.
@@ -36,9 +40,11 @@ developer.
 | Stage | What happens | Who does it |
 |---|---|---|
 | 0. `classifyImage` | One cheap model call. Returns a label: Swedish parking sign / another road sign / not a sign. It also reports how many panels it sees below the main sign, which is used later as an independent check. The threshold leans towards letting things through: discarding a real sign costs more than admitting rubbish | Model, no tools |
-| 1. `extractSignData` | One vision call. Returns JSON: the main sign — with its background colour and kind — and an ordered top-to-bottom list of **the panels below it, which never includes the main sign itself**, with the boundaries between them. For each panel: its kind (`sign_plate`, or `info_board` for an operator's payment board, which is not a road sign), its text line by line, its legibility, and the parsed fields — time windows, fee windows, maximum duration, permit requirements, day class, arrows | Model, no tools |
-| 2. `evaluateParkingRules` | A pure function. Validates the JSON against the schema, checks the parsed fields against the reference whitelist, and assembles the result: the base regime from the main sign, composition by "var för sig / gemensamt", division into stretches by arrows, conditions of eligibility and place, completion by the weekly calendar, day class. Returns a **list of regimes**, each with its own periods | Code |
-| 3. `grade` → `applyAsymmetry` → `toJson` | Decides how complete the reading is (full / partial / insufficient / not a parking sign), computes the final confidence, applies the asymmetry rule, and assembles the explanation from the reference by key — or a refusal | Code |
+| 1. `extractSignData` | One vision call. Returns JSON: the main sign — with its background colour and kind — and an ordered top-to-bottom list of **the panels below it, which never includes the main sign itself**, with the boundaries between them. For each panel: its kind — `sign_plate` (a plate that states a rule; only these reach the engine), `operator_plate` (an operator's name and telephone), `info_board` (a payment board, not a road sign at all) or `other_sign` (another road sign on the same post) — its text line by line, its legibility, and the parsed fields: time windows, fee windows, maximum duration, permit requirements, day class, arrows | Model, no tools |
+| 2. `validation.ts` | Checks the JSON against the schema and corrects the model's known slips, recording each correction (see below). A reading that still fails the schema goes no further | Code |
+| 3. `recognise` | Checks every plate against the reference whitelist. What the reference does not know stays verbatim, marked uninterpreted, and does not enter the computation | Code |
+| 4. `evaluateParkingRules` | A pure function. Assembles the result: the base regime from the main sign, composition by "var för sig / gemensamt", division into stretches by arrows, conditions of eligibility and place, completion by the weekly calendar, day class. Returns a **list of regimes**, each with its own periods | Code |
+| 5. `grade` → `applyAsymmetry` → `toJson` | Decides how complete the reading is (full / partial / insufficient / not a parking sign), computes the final confidence, applies the asymmetry rule, and assembles the explanation from the reference by key — or a refusal | Code |
 
 **Why no tool-calling.** A tool the model may invoke at its own discretion is a branch the
 model controls. Here there are no branches at all: the pipeline is the same on every
@@ -81,8 +87,10 @@ knew these things and wrote them into prose because no field existed:
 
 **Fields the code does not trust.** `boundaries.certain` and `model_confidence` are the
 model's own estimate: kept for the measurement, grounds for no decision (see the refusal
-policy below). `panel_count` deliberately duplicates the length of `panels`: a
-disagreement between them is an independent sign that a boundary was lost.
+policy below). `panel_count` is the model's own count of its panels, and code brings it
+into line with the list it wrote. The independent count comes from the other call:
+triage reports how many panels it sees below the main sign, and a disagreement with the
+extraction is a sign that a boundary was lost.
 
 **Deliberately left out:** the type of land (an owner cannot set a rule against the law, so
 the sign means the same either way); a default vehicle class (a lone `P` narrows nothing,
@@ -93,6 +101,21 @@ spaces are for, never whether the reader is one of them).
 not measured against itself, the tests judge it with an independent validator, `ajv`, on
 deliberately broken readings; `ajv` is a development dependency and never reaches the
 built page.
+
+### Code corrects the model's known slips
+
+A model repeats some mistakes. Where the right answer is unambiguous, code corrects it
+before anything else sees the reading. Every correction is recorded, and a reading that
+needed one scores lower (`no_repairs_needed`). Each was found on a real photograph:
+
+- a panel that only repeats the main sign is removed (`010`);
+- a plate nobody could read cannot be known to be an operator's plate: it goes back to
+  being an unread sign plate, which withholds the answer (`085`);
+- a yellow plate with hours under a blue `P` is a ban window, even when the model does
+  not say so (`116`);
+- a limit printed in days that arrived as the same number of hours is converted (`094`);
+- a colour outside the schema's list becomes `other`, and a field the schema does not
+  know is dropped rather than trusted.
 
 ## Forbidden actions
 
@@ -115,7 +138,7 @@ built page.
 - Answering from one plate alone: the result derives from **all** plates, read top to
   bottom. Neither the first nor the last gives the answer by itself
 - Presenting Sweden's general traffic rules as part of the sign's reading: they are shown
-  in a separate block marked "this is not on the sign — check it yourself"
+  in a separate block, marked "not on this sign"
 - Claiming completeness of the subject: the list of Swedish plates is not exhaustive
 - Storing the user's photographs
 - Answering anything other than the sign in the photograph sent
@@ -143,8 +166,8 @@ built page.
 
 **The assistant has no memory between requests:** every photograph is read from scratch.
 The product keeps no history of readings — not on the device, not anywhere. Nothing is
-written to disk at all; the key and provider live in browser storage, and only if the
-person allows it.
+written to disk at all. The browser keeps the provider's address and the model's name,
+and the key only if the person ticks "Remember on this device".
 
 Everything else is out of bounds. The model's general knowledge of parking in Sweden does
 not count as a source and does not reach the answer: the text of the explanation is
@@ -179,23 +202,21 @@ reading at or above it reads as settled, and anything else carries a note of cau
 does not gate whether an answer appears. The number works inside the category, not instead
 of it.
 
-A reading is also held back where the data contradicts itself or cannot be ordered:
+**The category is the only gate.** Three things that could look like reasons to withhold
+an answer are handled otherwise, by measurement and by design:
 
-- the order of plates in the stack could not be established — an unknown order means an
-  unknown rule;
-- what was recognised contradicts itself (two incompatible time windows, say);
-- **the boundary between plates is undetermined** — it is unclear whether this is one plate
-  or two. Whether instructions apply jointly or separately depends on it, and so does the
-  whole reading: the same words yield different rules. A missed boundary gives not an
-  approximate answer but a different one.
-
-  **An undetermined boundary is not established by the model saying so.** On photograph
-  `013` two plates were merged into one while the
-  model reported the boundaries as certain. The signal is taken from an independent
-  source — the panel count asked for separately from the panel contents — and the
-  disagreement is the uncertainty;
-- **a scope-shift token was not recognised** (`Övrig tid` and the like). Without it there
-  is no telling what time the following lines refer to.
+- **The boundary between plates.** Whether this is one plate or two decides whether
+  instructions apply jointly or separately — the same words yield different rules — so the
+  boundary is checked. It is not taken from the model's say-so: on photograph `013` two
+  plates were merged into one while the model reported the boundaries as certain. The
+  independent signal is the panel count from the triage call. A disagreement lowers the
+  confidence and is named among the reasons, but does not withhold the answer: measured
+  over 22 answers it fired five times, and all five were false alarms.
+- **A plate read but not understood** — an unrecognised scope-shift token like `Övrig tid`,
+  say. The plate is shown verbatim as uninterpreted, the reading is partial, and the
+  asymmetry rule narrows the rest.
+- **A reading that contradicts itself in a known way.** Code corrects it (see "Code
+  corrects the model's known slips" above) and records the correction.
 
 Where an answer is withheld, the assistant returns what it did recognise, says what is
 missing, and makes a specific request — come closer, photograph the whole stack, try better
@@ -250,9 +271,9 @@ since prohibition signs in Sweden are yellow — then no period is presented as 
 Otherwise a period with no conditions is marked, because "at other times there are no
 restrictions" would be a claim founded on absent data.
 
-A separate case is an **unknown day class** (a date outside the holiday calendar). The
-answer then gives both readings, weekdays and Sundays/holidays, and asks the user to check
-the status of the day. It grants permission in neither branch.
+A separate case is an **unknown day class** (a date outside the holiday calendar, which
+covers 2026–2030). A stretch that would otherwise be allowed is marked uncertain, and the
+reason is named; it is never presented as allowed. A prohibition stays a prohibition.
 
 Dialogue is deliberately outside the MVP: it adds session state and a second turn without
 improving the reading.
@@ -264,19 +285,21 @@ improving the reading.
 | Boundary | How it is secured |
 |---|---|
 | Actions by the model | The model has no tools at all; an image goes in, a label or JSON comes out. Checked in the code, not in an instruction |
-| Branching | The pipeline is fixed: four stages in an unchanging order, and the model does not affect the order. The one repeat of extraction is triggered by code, capped at one, and recorded in the flags |
+| Branching | The pipeline is fixed: its stages run in an unchanging order, and the model does not affect the order. The one repeat of extraction is triggered by code, capped at one, and recorded in the flags |
 | Arithmetic over time | Moved into `evaluateParkingRules`, a pure function; the result is reproducible and covered by tests |
 | Composition | Transportstyrelsen's own rule is implemented: several plates are each a separate instruction to the sign, several lines on one plate are a single joint instruction. Covered by tests on both official examples — identical words, different grouping |
-| Plate boundaries | Extracted as data alongside the text; an undetermined boundary leads to a refusal, not an assumption. Redrawing the sign on screen makes the grouping visible to the user |
-| Checking the boundary itself | Not taken from the model's own claim: on `013` two merged plates came with `boundaries_certain: true`. The signal is gathered by an independent request and compared, and disagreement counts as uncertainty |
-| The main sign inside the panel list | The model once duplicated it as a first, textless panel. The prompt forbids it, but validation enforces it: a panel whose entire content is the main sign's pictogram is rejected as a schema violation |
-| The 24-hour rule | The default for a sign with no duration plate is computed by code: the counter advances only on working days, and weekends and holidays do not spend it. A duration plate overrides the default — a separate conflict rule with its own test |
+| Plate boundaries | Extracted as data alongside the text; a doubtful boundary lowers the confidence and is named, never assumed away. Redrawing the sign on screen makes the grouping visible to the user |
+| Checking the boundary itself | Not taken from the model's own claim: on `013` two merged plates came with `boundaries.certain: true`. The panel count is asked for in the other call and compared; a disagreement lowers the confidence and is named |
+| The main sign inside the panel list | The model once duplicated it as a first, textless panel. The prompt forbids it, and code enforces it: such a panel is removed, and the correction recorded |
+| Known slips of the model | Corrected in code where the right answer is unambiguous, each correction recorded; a corrected reading scores lower. Each rule was found on a real photograph |
+| A failing provider | Repeats are decided by code, within a minute per call; a call that still fails ends in a plain message, never a guessed answer |
+| The 24-hour rule | The default for a sign with no duration plate is computed by code: the driver is owed 24 hours in a row on working days, and if a weekend or holiday cuts them short, the 24 hours start afresh on the next working day. A duration plate overrides the default — a separate conflict rule with its own test |
 | Computing `Övrig tid` | Completion by the weekly calendar, accounting for day classes and holidays, is done in code: subtracting a set of intervals from a week is not something the model can do reliably |
 | Priority of prohibition | A prohibition plate (a street-cleaning day, say) overrides permitting instructions on its window. The conflict rule is code and has its own test: suggesting parking on a cleaning day is the product's most expensive mistake |
 | The source of facts | The explanation is assembled by code from the reference; the model's free text never reaches the answer |
 | The boundary of knowledge | The whitelist: what is not in the reference is shown verbatim as uninterpreted and does not enter the computation |
 | The wording of the answer | Text is assembled by code from the reference, so a caption such as "parking allowed" cannot physically arrive from the model. The vocabulary is checked by a test for forbidden patterns |
-| Ambiguity | "Uncertain" is a state of the result, not a reason to pick a variant. It arises for reasons code can check: unknown day class, unrecognised scope-shift token, unrecoverable order, internal contradiction |
+| Ambiguity | "Uncertain" is a state of the result, not a reason to pick a variant. It arises for reasons code can check: an unknown day class or a date outside the calendar, an unknown main sign, a 24-hour limit that runs past the calendar |
 | General rules | Kept separately, marked in the answer, and never part of the computation |
 | Withholding an answer | Decided by category before the answer is formed; the confidence number sets the tone, not the gate |
 | Bad photographs | A set of test scenarios with deliberately unusable photographs: darkness, cropping, no sign, glare |
