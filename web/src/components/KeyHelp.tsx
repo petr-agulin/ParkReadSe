@@ -85,6 +85,14 @@ export default function KeyHelp({ onBack }: Props) {
             </div>
           ))}
         </div>
+        {/* Where the photo goes is the person's choice, and for some it matters - GDPR
+            above all. The host of this page sees no photo and no key; the provider sees
+            both. Only the checkable is said: who the company is and where it is based. */}
+        <p className="mt-4 text-label text-ink-3">
+          Your photo goes to the provider you choose, and it is handled under that
+          provider's terms. If it matters to you where: Google is a US company and may
+          process data outside the EU; Mistral is a European company, based in France.
+        </p>
       </div>
 
       <div className="rounded-card bg-ground p-6 shadow-raised">
