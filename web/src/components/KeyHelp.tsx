@@ -131,10 +131,12 @@ export default function KeyHelp({ onBack }: Props) {
       </div>
 
       {/* Step 20d. What a person can do so a leaked key costs little. Checked per
-          provider (2026-09-29): Google can lock a key to a website; Mistral names no
-          such lock; OpenRouter caps spending per key. So the advice is general, with
-          the one provider-specific lock named. The address is this page's own, not
-          a constant: the tip stays true wherever the app is hosted. */}
+          provider (2026-09-29): OpenRouter caps spending per key; Mistral names no
+          such cap. Google no longer lets a Gemini key be locked to a website: it must
+          be bound to a service account, and a bound key has no website restriction
+          (step 23, 2026-09-30). What is left with Google is to keep paid use off, so a
+          leak costs nothing but the free allowance. Worded for someone who has never
+          seen the Google Cloud console. */}
       <div className="rounded-card bg-ground p-6 shadow-raised">
         <h2 className="text-card-sm font-bold text-ink-strong">Keep your key safe</h2>
         <ul className="mt-4 flex flex-col gap-3">
@@ -146,11 +148,10 @@ export default function KeyHelp({ onBack }: Props) {
             Cap its spending, if your provider lets you set a limit on a key.
           </li>
           <li className="border-l-2 border-line pl-3.5 text-label text-ink-2">
-            With Google, restrict the key to this website, so it does not work anywhere
-            else: in the key&apos;s settings in Google Cloud, allow only{" "}
-            <code className="break-all font-mono text-label text-ink">
-              {typeof window === "undefined" ? "this site" : `${window.location.origin}/*`}
-            </code>.
+            With Google, don&apos;t switch on paid use (Google calls it
+            &ldquo;billing&rdquo;) for the key. Then, even if it
+            leaks, it can&apos;t cost you money — at worst someone uses up your free
+            allowance.
           </li>
           <li className="border-l-2 border-line pl-3.5 text-label text-ink-2">
             If you think it has leaked, delete it and make a new one.
