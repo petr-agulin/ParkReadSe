@@ -926,8 +926,8 @@
   "uninterpreted_plates": []
  },
  "answers/033-avgift-8-21-uppstallning-zon-e-boende-storskogen@base": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -937,14 +937,18 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:4"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   4
+  ]
  },
  "answers/034-avgift-tisdag-12-15-nov-maj-zon-c-boende@base": {
   "category": "full",
@@ -1033,8 +1037,8 @@
   "uninterpreted_plates": []
  },
  "answers/038-scandic-buss-besokande-pil@base": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -1044,18 +1048,22 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:1"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1
+  ]
  },
  "answers/038-scandic-buss-besokande-pil@dst-back": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -1065,18 +1073,22 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:1"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1
+  ]
  },
  "answers/038-scandic-buss-besokande-pil@dst-forward": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -1086,18 +1098,22 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:1"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1
+  ]
  },
  "answers/038-scandic-buss-besokande-pil@eve": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -1107,18 +1123,22 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:1"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1
+  ]
  },
  "answers/038-scandic-buss-besokande-pil@midnight": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -1128,18 +1148,22 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:1"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1
+  ]
  },
  "answers/038-scandic-buss-besokande-pil@red": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -1149,18 +1173,22 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:1"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1
+  ]
  },
  "answers/038-scandic-buss-besokande-pil@season-edge": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -1170,14 +1198,18 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:1"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1
+  ]
  },
  "answers/039-laddning-avgift-4-platser-pil@base": {
   "category": "full",
@@ -1243,8 +1275,8 @@
   "uninterpreted_plates": []
  },
  "answers/042-cykel-moped-parkering@base": {
-  "category": "full",
-  "confidence": 0.998,
+  "category": "partial",
+  "confidence": 0.898,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -1254,14 +1286,18 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:2"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   2
+  ]
  },
  "answers/044-motorcykel-avgift-taxa-12-fred-boende@base": {
   "category": "full",
@@ -1498,7 +1534,7 @@
  },
  "answers/055-forbud-stannande-snotackt-pil@base": {
   "category": "partial",
-  "confidence": 0.895,
+  "confidence": 0.795,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 0.0,
@@ -1508,16 +1544,19 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
   "reasons": [
+   "uninterpreted_plates:1",
    "main_sign_uncorroborated"
   ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1
+  ]
  },
  "answers/056-natt-avgift-7-19-taxa-3-torsd-plus-forbud@base": {
   "category": "full",
@@ -1625,8 +1664,8 @@
   "uninterpreted_plates": []
  },
  "answers/061-lastplats-langt-avstand@base": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -1636,18 +1675,22 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:5"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   5
+  ]
  },
  "answers/062-klass-i-14-dygn-slapfordon-forbud@base": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -1657,14 +1700,19 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:3,4"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   3,
+   4
+  ]
  },
  "answers/063-natt-p-tillstand-06-16-p-skiva-3tim@base": {
   "category": "full",
@@ -2067,7 +2115,7 @@
  },
  "answers/078-p-skylt-overklistrad@base": {
   "category": "insufficient",
-  "confidence": 0.675,
+  "confidence": 0.575,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 0.0,
@@ -2077,19 +2125,22 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 0.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
   "reasons": [
    "unread_panels:1",
+   "uninterpreted_plates:1",
    "main_sign_uncorroborated"
   ],
   "unread_panels": [
    1
   ],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1
+  ]
  },
  "answers/079-p-skylt-bakom-trad@base": {
   "category": "insufficient",
@@ -2752,8 +2803,8 @@
   "uninterpreted_plates": []
  },
  "answers/113-avgift-alla-dagar-tillstand-forhyrda@base": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -2763,14 +2814,18 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:2"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   2
+  ]
  },
  "answers/114-avgift-taxa-boende-vid-vaggmalning@base": {
   "category": "full",
@@ -3004,8 +3059,8 @@
   "uninterpreted_plates": []
  },
  "answers/125-pa-och-avstigningsplats-ovrig-tid-avgift@base": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -3015,14 +3070,18 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:1"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1
+  ]
  },
  "answers/126-avgift-7-19-tisd-0-6@base": {
   "category": "full",
@@ -3235,8 +3294,8 @@
   "uninterpreted_plates": []
  },
  "answers/136-forhyrda-platser-pilar-1-plats@base": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -3246,14 +3305,18 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:4"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   4
+  ]
  },
  "answers/137-sms-avgift-pil-securitas@base": {
   "category": "full",
@@ -4288,7 +4351,7 @@
  },
  "expected/035-zon-c-pa-avstand@base": {
   "category": "insufficient",
-  "confidence": 0.842,
+  "confidence": 0.742,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -4298,19 +4361,23 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 0.333333,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
   "reasons": [
-   "unread_panels:2,3"
+   "unread_panels:2,3",
+   "uninterpreted_plates:2,3"
   ],
   "unread_panels": [
    2,
    3
   ],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   2,
+   3
+  ]
  },
  "expected/036-avgift-7-19-taxa-3-fred-0-6-galler-ej-sommar-boende-so@base": {
   "category": "full",
@@ -4357,8 +4424,8 @@
   "uninterpreted_plates": []
  },
  "expected/038-scandic-buss-besokande-pil@base": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -4368,18 +4435,22 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:1"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1
+  ]
  },
  "expected/038-scandic-buss-besokande-pil@dst-back": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -4389,18 +4460,22 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:1"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1
+  ]
  },
  "expected/038-scandic-buss-besokande-pil@dst-forward": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -4410,18 +4485,22 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:1"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1
+  ]
  },
  "expected/038-scandic-buss-besokande-pil@eve": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -4431,18 +4510,22 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:1"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1
+  ]
  },
  "expected/038-scandic-buss-besokande-pil@midnight": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -4452,18 +4535,22 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:1"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1
+  ]
  },
  "expected/038-scandic-buss-besokande-pil@red": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -4473,18 +4560,22 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:1"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1
+  ]
  },
  "expected/038-scandic-buss-besokande-pil@season-edge": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -4494,14 +4585,18 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:1"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1
+  ]
  },
  "expected/039-laddning-avgift-4-platser-pil@base": {
   "category": "full",
@@ -4568,7 +4663,7 @@
  },
  "expected/042-cykel-moped-parkering@base": {
   "category": "insufficient",
-  "confidence": 0.875,
+  "confidence": 0.775,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -4578,18 +4673,21 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 0.5,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
   "reasons": [
-   "unread_panels:2"
+   "unread_panels:2",
+   "uninterpreted_plates:2"
   ],
   "unread_panels": [
    2
   ],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   2
+  ]
  },
  "expected/044-motorcykel-avgift-taxa-12-fred-boende@base": {
   "category": "full",
@@ -4826,7 +4924,7 @@
  },
  "expected/055-forbud-stannande-snotackt-pil@base": {
   "category": "insufficient",
-  "confidence": 0.775,
+  "confidence": 0.675,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 0.0,
@@ -4836,19 +4934,22 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 0.5,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
   "reasons": [
    "unread_panels:1",
+   "uninterpreted_plates:1",
    "main_sign_uncorroborated"
   ],
   "unread_panels": [
    1
   ],
   "may_hide_prohibition": true,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1
+  ]
  },
  "expected/056-natt-avgift-7-19-taxa-3-torsd-plus-forbud@base": {
   "category": "full",
@@ -4939,7 +5040,7 @@
  },
  "expected/060-natt-lastplats-ovrig-tid-avgift@base": {
   "category": "insufficient",
-  "confidence": 0.875,
+  "confidence": 0.775,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -4949,19 +5050,23 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 0.5,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
   "reasons": [
-   "unread_panels:2,3"
+   "unread_panels:2,3",
+   "uninterpreted_plates:2,3"
   ],
   "unread_panels": [
    2,
    3
   ],
   "may_hide_prohibition": true,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   2,
+   3
+  ]
  },
  "expected/061-lastplats-langt-avstand@base": {
   "category": "insufficient",
@@ -4989,8 +5094,8 @@
   "uninterpreted_plates": []
  },
  "expected/062-klass-i-14-dygn-slapfordon-forbud@base": {
-  "category": "full",
-  "confidence": 0.975,
+  "category": "partial",
+  "confidence": 0.875,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -5000,14 +5105,19 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 1.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
-  "reasons": [],
+  "reasons": [
+   "uninterpreted_plates:3,4"
+  ],
   "unread_panels": [],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   3,
+   4
+  ]
  },
  "expected/063-natt-p-tillstand-06-16-p-skiva-3tim@base": {
   "category": "full",
@@ -5370,7 +5480,7 @@
  },
  "expected/075-p-med-olasliga-plattor-pa-avstand@base": {
   "category": "insufficient",
-  "confidence": 0.675,
+  "confidence": 0.575,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 0.0,
@@ -5380,12 +5490,13 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 0.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
   "reasons": [
    "unread_panels:1,2",
+   "uninterpreted_plates:1,2",
    "main_sign_uncorroborated"
   ],
   "unread_panels": [
@@ -5393,7 +5504,10 @@
    2
   ],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1,
+   2
+  ]
  },
  "expected/077-gul-forbud-forhyrda-platser-skymning@base": {
   "category": "full",
@@ -5439,7 +5553,7 @@
  },
  "expected/079-p-skylt-bakom-trad@base": {
   "category": "insufficient",
-  "confidence": 0.875,
+  "confidence": 0.775,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -5449,18 +5563,21 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 0.5,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
   "reasons": [
-   "unread_panels:2"
+   "unread_panels:2",
+   "uninterpreted_plates:2"
   ],
   "unread_panels": [
    2
   ],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   2
+  ]
  },
  "expected/083-gul-forbud-forhyrda-platser-pa-avstand@base": {
   "category": "full",
@@ -5508,7 +5625,7 @@
  },
  "expected/085-p-med-plattor-bakom-bom@base": {
   "category": "insufficient",
-  "confidence": 0.675,
+  "confidence": 0.575,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 0.0,
@@ -5518,12 +5635,13 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 0.0,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
   "reasons": [
    "unread_panels:1,2,3",
+   "uninterpreted_plates:1,2,3",
    "main_sign_uncorroborated"
   ],
   "unread_panels": [
@@ -5532,7 +5650,11 @@
    3
   ],
   "may_hide_prohibition": true,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1,
+   2,
+   3
+  ]
  },
  "expected/086-p-1tim-pil-europark@base": {
   "category": "full",
@@ -5557,7 +5679,7 @@
  },
  "expected/087-motljus-parkering-pa-avstand@base": {
   "category": "insufficient",
-  "confidence": 0.742,
+  "confidence": 0.642,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 0.0,
@@ -5567,12 +5689,13 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 0.333333,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
   "reasons": [
    "unread_panels:1,2",
+   "uninterpreted_plates:1,2",
    "main_sign_uncorroborated"
   ],
   "unread_panels": [
@@ -5580,7 +5703,10 @@
    2
   ],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1,
+   2
+  ]
  },
  "expected/088-avgift-8-20-rod-taxa-boende-c-nv-mandag-8-11@base": {
   "category": "full",
@@ -5626,7 +5752,7 @@
  },
  "expected/090-avgift-uppstallning-zon-e-pil@base": {
   "category": "insufficient",
-  "confidence": 0.935,
+  "confidence": 0.835,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -5636,18 +5762,21 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 0.8,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
   "reasons": [
-   "unread_panels:5"
+   "unread_panels:5",
+   "uninterpreted_plates:5"
   ],
   "unread_panels": [
    5
   ],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   5
+  ]
  },
  "expected/091-avgift-7-19-torsd-boende@base": {
   "category": "full",
@@ -5735,7 +5864,7 @@
  },
  "expected/095-30min-plus-avgift-taxa@base": {
   "category": "insufficient",
-  "confidence": 0.908,
+  "confidence": 0.808,
   "signals": {
    "day_class_known": 1.0,
    "main_sign_corroborated": 1.0,
@@ -5745,18 +5874,21 @@
    "no_repairs_needed": 1.0,
    "panel_count_agreement": 1.0,
    "panels_read_share": 0.666667,
-   "plates_interpreted": 1.0,
+   "plates_interpreted": 0.0,
    "schema_valid": 1.0,
    "text_fits_the_pixels": 1.0
   },
   "reasons": [
-   "unread_panels:1"
+   "unread_panels:1",
+   "uninterpreted_plates:1"
   ],
   "unread_panels": [
    1
   ],
   "may_hide_prohibition": false,
-  "uninterpreted_plates": []
+  "uninterpreted_plates": [
+   1
+  ]
  },
  "expected/096-flera-stolpar-boende-solna@base": {
   "category": "full",

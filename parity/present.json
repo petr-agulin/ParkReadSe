@@ -14315,16 +14315,16 @@
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -14332,7 +14332,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:4",
+     "text": "Confidence is lower: plate 4 states something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -14662,6 +14667,11 @@
       "key": "boende",
       "text": "The sign notes that residents may have separate parking terms",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [
@@ -14700,8 +14710,8 @@
       "stay_end_reason": "",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": false,
       "aside": [
        {
@@ -14734,7 +14744,7 @@
       ],
       "max_duration_minutes": null,
       "note": null,
-      "certain": true,
+      "certain": false,
       "restricted": false,
       "aside": [
        {
@@ -14760,8 +14770,8 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": false,
       "aside": [
        {
@@ -16308,16 +16318,16 @@
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -16325,7 +16335,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:1",
+     "text": "Confidence is lower: plate 1 states something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -16625,6 +16640,11 @@
       "key": "besokande",
       "text": "The sign designates these spaces for visitors",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -16662,8 +16682,8 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": true,
       "aside": [
        {
@@ -16689,16 +16709,16 @@
   "moment": "2026-10-24T20:00",
   "day_class": "eve",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -16706,7 +16726,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:1",
+     "text": "Confidence is lower: plate 1 states something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -17006,6 +17031,11 @@
       "key": "besokande",
       "text": "The sign designates these spaces for visitors",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -17043,8 +17073,8 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": true,
       "aside": [
        {
@@ -17070,16 +17100,16 @@
   "moment": "2027-03-27T20:00",
   "day_class": "eve",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -17087,7 +17117,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:1",
+     "text": "Confidence is lower: plate 1 states something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -17387,6 +17422,11 @@
       "key": "besokande",
       "text": "The sign designates these spaces for visitors",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -17427,8 +17467,8 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": true,
       "aside": [
        {
@@ -17454,16 +17494,16 @@
   "moment": "2026-10-30T14:00",
   "day_class": "eve",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -17471,7 +17511,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:1",
+     "text": "Confidence is lower: plate 1 states something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -17771,6 +17816,11 @@
       "key": "besokande",
       "text": "The sign designates these spaces for visitors",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -17811,8 +17861,8 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": true,
       "aside": [
        {
@@ -17838,16 +17888,16 @@
   "moment": "2026-06-10T00:00",
   "day_class": "weekday",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -17855,7 +17905,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:1",
+     "text": "Confidence is lower: plate 1 states something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -18155,6 +18210,11 @@
       "key": "besokande",
       "text": "The sign designates these spaces for visitors",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -18192,8 +18252,8 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": true,
       "aside": [
        {
@@ -18219,16 +18279,16 @@
   "moment": "2026-12-25T10:00",
   "day_class": "red",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -18236,7 +18296,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:1",
+     "text": "Confidence is lower: plate 1 states something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -18536,6 +18601,11 @@
       "key": "besokande",
       "text": "The sign designates these spaces for visitors",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -18576,8 +18646,8 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": true,
       "aside": [
        {
@@ -18603,16 +18673,16 @@
   "moment": "2026-09-30T23:30",
   "day_class": "weekday",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -18620,7 +18690,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:1",
+     "text": "Confidence is lower: plate 1 states something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -18920,6 +18995,11 @@
       "key": "besokande",
       "text": "The sign designates these spaces for visitors",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -18957,8 +19037,8 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": true,
       "aside": [
        {
@@ -20331,16 +20411,16 @@
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.998,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.898,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -20348,7 +20428,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.95
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:2",
+     "text": "Confidence is lower: plate 2 states something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -20544,6 +20629,11 @@
       "key": "pictogram-bicycle",
       "text": "The sign designates these spaces for bicycles and class II mopeds",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -20582,8 +20672,8 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": true,
       "aside": [
        {
@@ -25016,15 +25106,15 @@
   "day_class": "weekday",
   "completeness": {
    "category": "partial",
-   "category_text": "The sign carries no plate stating a parking rule, so what follows rests on the symbol at the top of the pole alone",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
    "tone": "caution",
-   "confidence": 0.895,
+   "confidence": 0.795,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 0.0,
     "text_fits_the_pixels": 1.0,
@@ -25033,6 +25123,10 @@
     "model_confidence": 0.9
    },
    "reasons": [
+    {
+     "token": "uninterpreted_plates:1",
+     "text": "Confidence is lower: plate 1 states something the service does not know"
+    },
     {
      "token": "main_sign_uncorroborated",
      "text": "No plate on this sign states a parking rule, so the reading rests on the symbol at the top of the pole alone — a sign pointing the way to a car park elsewhere looks much the same"
@@ -25216,6 +25310,11 @@
       "key": "main-prohibition-stopping",
       "text": "The sign prohibits stopping and parking",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -27239,16 +27338,16 @@
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -27256,7 +27355,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:5",
+     "text": "Confidence is lower: plate 5 states something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -27675,6 +27779,11 @@
       "key": "reserved-for-named-group",
       "text": "The sign designates these spaces for a named group",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -27726,7 +27835,7 @@
       ],
       "max_duration_minutes": 180,
       "note": null,
-      "certain": true,
+      "certain": false,
       "restricted": false,
       "aside": []
      }
@@ -27741,16 +27850,16 @@
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -27758,7 +27867,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:3,4",
+     "text": "Confidence is lower: plates 3,4 state something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -28098,6 +28212,11 @@
       "key": "bil-personbil",
       "text": "The sign designates these spaces for passenger cars only",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -28130,8 +28249,8 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": 20160,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": true,
       "aside": [
        {
@@ -34397,13 +34516,13 @@
    "category": "insufficient",
    "category_text": "Too little of the sign was read to say what it states",
    "tone": "bad",
-   "confidence": 0.675,
+   "confidence": 0.575,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 0.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 0.0,
     "text_fits_the_pixels": 1.0,
@@ -34415,6 +34534,10 @@
     {
      "token": "unread_panels:1",
      "text": "Plates 1 on the sign could not be read"
+    },
+    {
+     "token": "uninterpreted_plates:1",
+     "text": "Confidence is lower: plate 1 states something the service does not know"
     },
     {
      "token": "main_sign_uncorroborated",
@@ -45903,16 +46026,16 @@
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -45920,7 +46043,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:2",
+     "text": "Confidence is lower: plate 2 states something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -46249,6 +46377,11 @@
       "key": "forhyrda-platser",
       "text": "The sign designates these spaces as rented",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -46299,7 +46432,7 @@
       ],
       "max_duration_minutes": null,
       "note": null,
-      "certain": true,
+      "certain": false,
       "restricted": true,
       "aside": [
        {
@@ -49904,16 +50037,16 @@
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -49921,7 +50054,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:1",
+     "text": "Confidence is lower: plate 1 states something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -50295,6 +50433,11 @@
       "key": "main-prohibition-stopping",
       "text": "The sign prohibits stopping and parking only during the hours it names — outside them the general parking rules apply",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -50327,16 +50470,10 @@
       "stay_end_reason": "the sign prohibits parking from this moment",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": "general_rules_apply_outside_the_sign",
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": false,
-      "aside": [
-       {
-        "key": "general_rules_apply_outside_the_sign",
-        "known": true,
-        "text": "The sign says nothing about this time, so the general road rules apply - among them the 24-hour limit. That rule is not written on this sign."
-       }
-      ]
+      "aside": []
      }
     ]
    }
@@ -54381,16 +54518,16 @@
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -54398,7 +54535,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:4",
+     "text": "Confidence is lower: plate 4 states something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -54806,6 +54948,11 @@
       "key": "forhyrda-platser",
       "text": "The sign designates these spaces as rented",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -54838,8 +54985,8 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": true,
       "aside": [
        {
@@ -54869,6 +55016,11 @@
       "key": "besokande",
       "text": "The sign designates these spaces for visitors",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -54907,8 +55059,8 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": true,
       "aside": [
        {
@@ -70618,13 +70770,13 @@
    "category": "insufficient",
    "category_text": "Too little of the sign was read to say what it states",
    "tone": "bad",
-   "confidence": 0.842,
+   "confidence": 0.742,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 0.3333333333333333,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -70636,6 +70788,10 @@
     {
      "token": "unread_panels:2,3",
      "text": "Plates 2,3 on the sign could not be read"
+    },
+    {
+     "token": "uninterpreted_plates:2,3",
+     "text": "Confidence is lower: plates 2,3 state something the service does not know"
     }
    ],
    "unread_panels": [
@@ -70831,6 +70987,11 @@
       "key": "main-parking",
       "text": "The sign permits parking for all vehicles, subject to the general parking rules",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -71503,16 +71664,16 @@
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -71520,7 +71681,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:1",
+     "text": "Confidence is lower: plate 1 states something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -71811,6 +71977,11 @@
       "key": "besokande",
       "text": "The sign designates these spaces for visitors",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -71848,8 +72019,8 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": true,
       "aside": [
        {
@@ -71875,16 +72046,16 @@
   "moment": "2026-10-24T20:00",
   "day_class": "eve",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -71892,7 +72063,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:1",
+     "text": "Confidence is lower: plate 1 states something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -72183,6 +72359,11 @@
       "key": "besokande",
       "text": "The sign designates these spaces for visitors",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -72220,8 +72401,8 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": true,
       "aside": [
        {
@@ -72247,16 +72428,16 @@
   "moment": "2027-03-27T20:00",
   "day_class": "eve",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -72264,7 +72445,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:1",
+     "text": "Confidence is lower: plate 1 states something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -72555,6 +72741,11 @@
       "key": "besokande",
       "text": "The sign designates these spaces for visitors",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -72595,8 +72786,8 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": true,
       "aside": [
        {
@@ -72622,16 +72813,16 @@
   "moment": "2026-10-30T14:00",
   "day_class": "eve",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -72639,7 +72830,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:1",
+     "text": "Confidence is lower: plate 1 states something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -72930,6 +73126,11 @@
       "key": "besokande",
       "text": "The sign designates these spaces for visitors",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -72970,8 +73171,8 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": true,
       "aside": [
        {
@@ -72997,16 +73198,16 @@
   "moment": "2026-06-10T00:00",
   "day_class": "weekday",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -73014,7 +73215,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:1",
+     "text": "Confidence is lower: plate 1 states something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -73305,6 +73511,11 @@
       "key": "besokande",
       "text": "The sign designates these spaces for visitors",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -73342,8 +73553,8 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": true,
       "aside": [
        {
@@ -73369,16 +73580,16 @@
   "moment": "2026-12-25T10:00",
   "day_class": "red",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -73386,7 +73597,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:1",
+     "text": "Confidence is lower: plate 1 states something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -73677,6 +73893,11 @@
       "key": "besokande",
       "text": "The sign designates these spaces for visitors",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -73717,8 +73938,8 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": true,
       "aside": [
        {
@@ -73744,16 +73965,16 @@
   "moment": "2026-09-30T23:30",
   "day_class": "weekday",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -73761,7 +73982,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:1",
+     "text": "Confidence is lower: plate 1 states something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -74052,6 +74278,11 @@
       "key": "besokande",
       "text": "The sign designates these spaces for visitors",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -74089,8 +74320,8 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": null,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": true,
       "aside": [
        {
@@ -75400,13 +75631,13 @@
    "category": "insufficient",
    "category_text": "Too little of the sign was read to say what it states",
    "tone": "bad",
-   "confidence": 0.875,
+   "confidence": 0.775,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 0.5,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -75418,6 +75649,10 @@
     {
      "token": "unread_panels:2",
      "text": "Plates 2 on the sign could not be read"
+    },
+    {
+     "token": "uninterpreted_plates:2",
+     "text": "Confidence is lower: plate 2 states something the service does not know"
     }
    ],
    "unread_panels": [
@@ -75586,6 +75821,11 @@
       "key": "pictogram-bicycle",
       "text": "The sign designates these spaces for bicycles and class II mopeds",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -79952,13 +80192,13 @@
    "category": "insufficient",
    "category_text": "Too little of the sign was read to say what it states",
    "tone": "bad",
-   "confidence": 0.775,
+   "confidence": 0.675,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 0.5,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 0.0,
     "text_fits_the_pixels": 1.0,
@@ -79970,6 +80210,10 @@
     {
      "token": "unread_panels:1",
      "text": "Plates 1 on the sign could not be read"
+    },
+    {
+     "token": "uninterpreted_plates:1",
+     "text": "Confidence is lower: plate 1 states something the service does not know"
     },
     {
      "token": "main_sign_uncorroborated",
@@ -80132,6 +80376,11 @@
       "key": "main-prohibition-stopping",
       "text": "The sign prohibits stopping and parking",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -81597,13 +81846,13 @@
    "category": "insufficient",
    "category_text": "Too little of the sign was read to say what it states",
    "tone": "bad",
-   "confidence": 0.875,
+   "confidence": 0.775,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 0.5,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -81615,6 +81864,10 @@
     {
      "token": "unread_panels:2,3",
      "text": "Plates 2,3 on the sign could not be read"
+    },
+    {
+     "token": "uninterpreted_plates:2,3",
+     "text": "Confidence is lower: plates 2,3 state something the service does not know"
     }
    ],
    "unread_panels": [
@@ -81887,6 +82140,11 @@
       "key": "main-prohibition-stopping",
       "text": "The sign prohibits stopping and parking",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -82012,16 +82270,16 @@
   "moment": "2026-03-02T00:00",
   "day_class": "weekday",
   "completeness": {
-   "category": "full",
-   "category_text": "Every plate on the sign was read",
-   "tone": "good",
-   "confidence": 0.975,
+   "category": "partial",
+   "category_text": "Part of the sign was not read; what follows is incomplete",
+   "tone": "caution",
+   "confidence": 0.875,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 1.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -82029,7 +82287,12 @@
     "day_class_known": 1.0,
     "model_confidence": 0.5
    },
-   "reasons": [],
+   "reasons": [
+    {
+     "token": "uninterpreted_plates:3,4",
+     "text": "Confidence is lower: plates 3,4 state something the service does not know"
+    }
+   ],
    "unread_panels": [],
    "may_hide_prohibition": false
   },
@@ -82301,6 +82564,11 @@
       "key": "bil-personbil",
       "text": "The sign designates these spaces for passenger cars only",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -82333,8 +82601,8 @@
       "stay_end_reason": "general 24-hour rule, not written on the sign",
       "conditions": [],
       "max_duration_minutes": 20160,
-      "note": null,
-      "certain": true,
+      "note": "conditions_may_be_incomplete",
+      "certain": false,
       "restricted": true,
       "aside": [
        {
@@ -88001,13 +88269,13 @@
    "category": "insufficient",
    "category_text": "Too little of the sign was read to say what it states",
    "tone": "bad",
-   "confidence": 0.675,
+   "confidence": 0.575,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 0.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 0.0,
     "text_fits_the_pixels": 1.0,
@@ -88019,6 +88287,10 @@
     {
      "token": "unread_panels:1,2",
      "text": "Plates 1,2 on the sign could not be read"
+    },
+    {
+     "token": "uninterpreted_plates:1,2",
+     "text": "Confidence is lower: plates 1,2 state something the service does not know"
     },
     {
      "token": "main_sign_uncorroborated",
@@ -88159,6 +88431,11 @@
       "key": "main-parking",
       "text": "The sign permits parking for all vehicles, subject to the general parking rules",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -88642,13 +88919,13 @@
    "category": "insufficient",
    "category_text": "Too little of the sign was read to say what it states",
    "tone": "bad",
-   "confidence": 0.875,
+   "confidence": 0.775,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 0.5,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -88660,6 +88937,10 @@
     {
      "token": "unread_panels:2",
      "text": "Plates 2 on the sign could not be read"
+    },
+    {
+     "token": "uninterpreted_plates:2",
+     "text": "Confidence is lower: plate 2 states something the service does not know"
     }
    ],
    "unread_panels": [
@@ -88825,6 +89106,11 @@
       "key": "forhyrda-platser",
       "text": "The sign designates these spaces as rented",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -89356,13 +89642,13 @@
    "category": "insufficient",
    "category_text": "Too little of the sign was read to say what it states",
    "tone": "bad",
-   "confidence": 0.675,
+   "confidence": 0.575,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 0.0,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 0.0,
     "text_fits_the_pixels": 1.0,
@@ -89374,6 +89660,10 @@
     {
      "token": "unread_panels:1,2,3",
      "text": "Plates 1,2,3 on the sign could not be read"
+    },
+    {
+     "token": "uninterpreted_plates:1,2,3",
+     "text": "Confidence is lower: plates 1,2,3 state something the service does not know"
     },
     {
      "token": "main_sign_uncorroborated",
@@ -89554,6 +89844,11 @@
       "key": "main-parking",
       "text": "The sign permits parking for all vehicles, subject to the general parking rules",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -89872,13 +90167,13 @@
    "category": "insufficient",
    "category_text": "Too little of the sign was read to say what it states",
    "tone": "bad",
-   "confidence": 0.742,
+   "confidence": 0.642,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 0.3333333333333333,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 0.0,
     "text_fits_the_pixels": 1.0,
@@ -89890,6 +90185,10 @@
     {
      "token": "unread_panels:1,2",
      "text": "Plates 1,2 on the sign could not be read"
+    },
+    {
+     "token": "uninterpreted_plates:1,2",
+     "text": "Confidence is lower: plates 1,2 state something the service does not know"
     },
     {
      "token": "main_sign_uncorroborated",
@@ -90093,6 +90392,11 @@
       "key": "main-parking",
       "text": "The sign permits parking for all vehicles, subject to the general parking rules",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -90999,13 +91303,13 @@
    "category": "insufficient",
    "category_text": "Too little of the sign was read to say what it states",
    "tone": "bad",
-   "confidence": 0.935,
+   "confidence": 0.835,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 0.8,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -91017,6 +91321,10 @@
     {
      "token": "unread_panels:5",
      "text": "Plates 5 on the sign could not be read"
+    },
+    {
+     "token": "uninterpreted_plates:5",
+     "text": "Confidence is lower: plate 5 states something the service does not know"
     }
    ],
    "unread_panels": [
@@ -91350,6 +91658,11 @@
       "key": "main-parking",
       "text": "The sign permits parking for all vehicles, subject to the general parking rules",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],
@@ -92790,13 +93103,13 @@
    "category": "insufficient",
    "category_text": "Too little of the sign was read to say what it states",
    "tone": "bad",
-   "confidence": 0.908,
+   "confidence": 0.808,
    "signals": {
     "schema_valid": 1.0,
     "main_sign_identified": 1.0,
     "main_sign_readable": 1.0,
     "panels_read_share": 0.6666666666666666,
-    "plates_interpreted": 1.0,
+    "plates_interpreted": 0.0,
     "panel_count_agreement": 1.0,
     "main_sign_corroborated": 1.0,
     "text_fits_the_pixels": 1.0,
@@ -92808,6 +93121,10 @@
     {
      "token": "unread_panels:1",
      "text": "Plates 1 on the sign could not be read"
+    },
+    {
+     "token": "uninterpreted_plates:1",
+     "text": "Confidence is lower: plate 1 states something the service does not know"
     }
    ],
    "unread_panels": [
@@ -93100,6 +93417,11 @@
       "key": "main-parking",
       "text": "The sign permits parking for all vehicles, subject to the general parking rules",
       "known": true
+     },
+     {
+      "key": "unknown-plate",
+      "known": false,
+      "text": "One plate could not be interpreted; it may narrow who these spaces are for"
      }
     ],
     "notes": [],

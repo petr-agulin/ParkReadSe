@@ -12,7 +12,7 @@ import { applyAsymmetry, grade, tooLittle, type Assessment } from "./completenes
 import { evaluateParkingRules, type Evaluation } from "./engine";
 import { pixels } from "./photo";
 import { toJson } from "./present";
-import { recognise, type Recognised } from "./reference";
+import { recognise, recognitionFlags, type Recognised } from "./reference";
 import type { SignDoc } from "./sign";
 import { VisionCallFailed, classifyImage, extractSignData, isParkingSign, sleep,
          type ExtractOutcome, type Failure, type Patience, type Pause, type Photo,
@@ -127,11 +127,7 @@ export async function run(image: Photo, provider: Provider,
   if (retried) flags.push("extraction_retried");
   // We did not stop, and only because the triage is not obligatory.
   if (!isParkingSign(tri)) flags.push(`triage_said:${tri.category}`);
-  if (rec.missingKeys.length) flags.push("reference_gap:" + rec.missingKeys.join(","));
-  const uninterpreted = Object.keys(rec.uninterpreted).map(Number).sort((a, b) => a - b);
-  if (uninterpreted.length) {
-    flags.push("uninterpreted_panels:" + uninterpreted.join(","));
-  }
+  flags.push(...recognitionFlags(rec));
 
   return { image: image.name, stoppedAt: null, reason: null,
            triage: tri, extraction: ext, recognised: rec, flags };

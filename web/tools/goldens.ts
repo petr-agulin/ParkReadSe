@@ -32,7 +32,7 @@ import { compare, divergence, emptyReport, fingerprint, thresholdTable,
          type ThresholdRow } from "../src/lib/measure";
 import { toJson } from "../src/lib/present";
 import { extractPrompt, triagePrompt } from "../src/lib/prompts";
-import { recognise } from "../src/lib/reference";
+import { recognise, recognitionFlags } from "../src/lib/reference";
 import { valid } from "../src/lib/schema";
 import { SIGN_SCHEMA } from "../src/lib/schema.data";
 import type { SignDoc } from "../src/lib/sign";
@@ -338,8 +338,11 @@ export function probePresent(cases: Case[], docs: Record<string, SignDoc>): Reco
     const doc = docs[c.doc];
     const moment = parseNaive(c.moment);
     const ev = evaluateParkingRules(doc, moment, cal);
-    const a = grade(doc, { evaluation: ev });
-    out[c.id] = toJson({ doc, recognised: recognise(doc), assessment: a,
+    // Graded with the flags the live pipeline raises (step 27): without them the
+    // snapshot called "full" a reading the phone shows as partial.
+    const rec = recognise(doc);
+    const a = grade(doc, { flags: recognitionFlags(rec), evaluation: ev });
+    out[c.id] = toJson({ doc, recognised: rec, assessment: a,
                          evaluation: applyAsymmetry(ev, a) }, moment, cal);
   }
   return out;
@@ -368,7 +371,7 @@ export function probeCompleteness(cases: Case[], docs: Record<string, SignDoc>):
   for (const c of cases) {
     const doc = docs[c.doc];
     const ev = evaluateParkingRules(doc, parseNaive(c.moment), cal);
-    const a = grade(doc, { evaluation: ev });
+    const a = grade(doc, { flags: recognitionFlags(recognise(doc)), evaluation: ev });
     out[c.id] = {
       category: a.category,
       confidence: round6(a.confidence),
@@ -468,11 +471,7 @@ export async function probeMeasure(): Promise<Record<string, unknown>> {
 
     const res = validateSign(JSON.parse(JSON.stringify(actual)), panelsSeen);
     const doc = resultOk(res) && res.data ? res.data : actual;
-    const rec = recognise(doc);
-    const flags = [...res.flags];
-    if (rec.missingKeys.length) flags.push("reference_gap:" + rec.missingKeys.join(","));
-    const uninterpreted = Object.keys(rec.uninterpreted).map(Number).sort((a, b) => a - b);
-    if (uninterpreted.length) flags.push("uninterpreted_panels:" + uninterpreted.join(","));
+    const flags = [...res.flags, ...recognitionFlags(recognise(doc))];
 
     const imagePixels = photoPixels(label);
     seenPixels[label] = imagePixels;

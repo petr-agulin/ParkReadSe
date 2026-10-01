@@ -195,6 +195,18 @@ function isAreaCode(s: string): boolean {
  *  again once step 15h gives those kinds a place and the tag is measured reliable. */
 export const WHO_SLOT_NARROWS = false;
 
+/** The flags a recognition raises for the grade: entries missing from the reference,
+ *  and plates that were read but not understood. ONE place: the live pipeline, the
+ *  measurement and the snapshots all take them from here. When the snapshots raised
+ *  none, they called "full" what the phone showed as partial (step 27). */
+export function recognitionFlags(rec: Recognised): string[] {
+  const flags: string[] = [];
+  if (rec.missingKeys.length) flags.push("reference_gap:" + rec.missingKeys.join(","));
+  const uninterpreted = Object.keys(rec.uninterpreted).map(Number).sort((a, b) => a - b);
+  if (uninterpreted.length) flags.push("uninterpreted_panels:" + uninterpreted.join(","));
+  return flags;
+}
+
 export function recognise(doc: SignDoc): Recognised {
   const main = doc.main_sign;
   const wayfinding = main.type.startsWith("wayfinding");

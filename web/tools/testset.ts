@@ -15,7 +15,7 @@ import type { Naive } from "../src/lib/civil";
 import { grade } from "../src/lib/completeness";
 import { evaluateParkingRules } from "../src/lib/engine";
 import { pixels } from "../src/lib/photo";
-import { recognise } from "../src/lib/reference";
+import { recognise, recognitionFlags } from "../src/lib/reference";
 import type { SignDoc } from "../src/lib/sign";
 import { ok, sign as validateSign } from "../src/lib/validation";
 
@@ -168,11 +168,7 @@ export function assessAnswer(label: string, actual: SignDoc, moment: Naive,
     ? readJson(triageFile)?.response?.panels_below_main_sign : null;
   const res = validateSign(structuredClone(actual), typeof seen === "number" ? seen : null);
   const doc = ok(res) && res.data ? res.data : actual;
-  const rec = recognise(doc);
-  const flags = [...res.flags];
-  if (rec.missingKeys.length) flags.push("reference_gap:" + rec.missingKeys.join(","));
-  const uninterpreted = Object.keys(rec.uninterpreted).map(Number).sort((a, b) => a - b);
-  if (uninterpreted.length) flags.push("uninterpreted_panels:" + uninterpreted.join(","));
+  const flags = [...res.flags, ...recognitionFlags(recognise(doc))];
   const imagePixels = photoPixels(label);
   const a = grade(doc, { flags, repairs: res.repairs, imagePixels,
                          evaluation: evaluateParkingRules(doc, moment, cal) });

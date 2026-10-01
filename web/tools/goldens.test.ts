@@ -11,8 +11,14 @@ import { extname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
+import { Calendar } from "../src/lib/calendar";
+import { parseNaive } from "../src/lib/civil";
+import { grade } from "../src/lib/completeness";
+import { evaluateParkingRules } from "../src/lib/engine";
 import { CONTRACT } from "../src/lib/present";
-import { LAYERS, PROBES, SPECIAL, buildCases, pyDump, stale } from "./goldens";
+import { recognise, recognitionFlags } from "../src/lib/reference";
+import { LAYERS, PROBES, SPECIAL, buildCases, documents, probeCompleteness, probePresent, pyDump,
+         stale } from "./goldens";
 
 const ROOT = fileURLToPath(new URL("../../", import.meta.url));
 const read = (p: string) => readFileSync(join(ROOT, p), "utf-8");
@@ -24,6 +30,15 @@ function appSources(dir = join(ROOT, "web", "src")): string[] {
   return readdirSync(dir).flatMap((name) => {
     const full = join(dir, name);
     if (statSync(full).isDirectory()) return appSources(full);
+    return /\.tsx?$/.test(name) && !name.endsWith(".test.ts") ? [full] : [];
+  });
+}
+
+/** Every file of `web/tools` that is not a test. */
+function toolSources(dir = join(ROOT, "web", "tools")): string[] {
+  return readdirSync(dir).flatMap((name) => {
+    const full = join(dir, name);
+    if (statSync(full).isDirectory()) return toolSources(full);
     return /\.tsx?$/.test(name) && !name.endsWith(".test.ts") ? [full] : [];
   });
 }
@@ -272,5 +287,44 @@ describe("TypeScript writes the reference answers", () => {
     expect(text.split("\n").some((l) => l.trim() === "1.0,"),
            "the first column of a measurement row is a float").toBe(true);
     expect(text.endsWith("\n")).toBe(true);
+  });
+});
+
+describe("the screen snapshots grade a reading as the live app does", () => {
+  // Step 27. The two screen snapshots graded without the flag the live pipeline raises
+  // for a plate read but not understood: they called "full" what the phone showed as
+  // partial, and a replay of `088` was believed on the strength of it. What the live
+  // app also knows and the snapshots are never given - the photograph's size, the
+  // repairs to the model's answer - is the measurement's business, not theirs.
+  it("both raise the live recognition flags, on every reading of the set", () => {
+    const docs = documents();
+    const cases = buildCases(docs);
+    const cal = new Calendar();
+    const completeness = probeCompleteness(cases, docs) as Record<string, any>;
+    const present = probePresent(cases, docs) as Record<string, any>;
+    let unread = 0;
+    for (const c of cases) {
+      const doc = docs[c.doc];
+      const live = grade(doc, { flags: recognitionFlags(recognise(doc)),
+                                evaluation: evaluateParkingRules(doc, parseNaive(c.moment), cal) });
+      expect(completeness[c.id].category, c.id).toBe(live.category);
+      expect(present[c.id].completeness.category, c.id).toBe(live.category);
+      if (live.uninterpretedPlates.length) {
+        unread += 1;
+        expect(completeness[c.id].category, `${c.id}: a plate not understood`).not.toBe("full");
+      }
+    }
+    // The set does hold such readings; without them this test would prove nothing.
+    expect(unread).toBeGreaterThan(0);
+  }, 120_000);
+
+  it("builds the recognition flags in one place", () => {
+    // Three copies once stood side by side, and the snapshots had none. The marker is
+    // split so that this file does not count as a place that builds the flag.
+    const marker = `"${["uninterpreted", "panels"].join("_")}:" +`;
+    const builders = [...appSources(), ...toolSources()]
+      .filter((f) => readFileSync(f, "utf-8").includes(marker))
+      .map((f) => f.slice(ROOT.length).replace(/\\/g, "/"));
+    expect(builders).toEqual(["web/src/lib/reference.ts"]);
   });
 });
