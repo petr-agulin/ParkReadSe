@@ -150,9 +150,40 @@ export const BY_TEXT: [string, string[]][] = [
   ["biljettautomat", ["biljettautomat", "biljett automat"]],
   // Why the prohibition above stands: the place is for goods (`089`, `109`).
   ["lastplats", ["lastplats"]],
+  // A tariff named by its colour rather than its number: `Röd taxa` on `088`. Numbered
+  // ones arrive in `tariff_code`; this one the model left as text (decision 211).
+  ["taxa", ["taxa"]],
 ];
 
 export const PRIVATE_LAND_PHRASE = BY_TEXT[0][1][0];
+const RESIDENTS = BY_TEXT.find(([key]) => key === "boende")![1][0];
+
+/** Entries of `BY_TEXT` that the schema also has a field for: the text stands in for
+ *  the field, and only when the field is empty. */
+const TEXT_STANDS_IN_FOR: Record<string, keyof Parsed> = { taxa: "tariff_code" };
+
+// Hours actually PRINTED on the plate, as opposed to hours the model worked out for
+// itself. `7-18`, `(22-10)`, `07:00-19:00`.
+export const PRINTED_HOURS = /\d{1,2}([:.]\d{2})?\s*[-–]\s*\d{1,2}([:.]\d{2})?/;
+
+// Words by which a plate says more than WHO: "only", "not", "except", the rest of the
+// time, a ban, a fee, a length of stay.
+const MORE_THAN_WHO = new Set(["endast", "ej", "utom", "övrig", "övriga", "förbjuden",
+                               "förbjudet", "avgift", "tim", "min", "dygn"]);
+
+/** Whether a plate carries anything besides the name of a circle: a word from the
+ *  list above, printed hours, or a length of stay (`2h`). */
+function saysMore(joined: string): boolean {
+  return PRINTED_HOURS.test(joined) || /\d\s*(h|tim|min)\b/.test(joined)
+    || joined.split(/[^\p{L}\d]+/u).some((word) => MORE_THAN_WHO.has(word));
+}
+
+/** A residents' area as plates write it: one code, no spaces, at least one letter -
+ *  `C-NV`, `Tr`, `GK-J`, `C4n`, `51E`. A length of stay (`24h`) is not an area. */
+function isAreaCode(s: string): boolean {
+  return /^[\p{L}\d]+(-[\p{L}\d]+)*$/u.test(s) && /\p{L}/u.test(s)
+    && !/^\d+(h|tim|min)$/.test(s);
+}
 
 /** Whether the model's "who" tag on an unrecognised plate narrows the circle.
  *
@@ -195,13 +226,18 @@ export function recognise(doc: SignDoc): Recognised {
     // A word broken across two lines keeps its hyphen at the end of the first -
     // `Last-` / `plats` - and is one word again once the break is taken out.
     const joined = (p.lines ?? []).join(" ").toLowerCase().replace(/-\s+/g, "");
+    const parsed: Parsed = p.parsed ?? {};
     const spokenFor: string[] = [];
     for (const [key, tokens] of BY_TEXT) {
       if (!tokens.some((token) => joined.includes(token))) continue;
-      keys.push(key);
       spokenFor.push(...tokens.filter((token) => joined.includes(token)));
+      // Where the schema has a field for the entry and the field is filled, the field
+      // names it, in its usual place among the plate's meanings; the text stands in
+      // only when the field is missing (`Röd taxa` on `088`, no `tariff_code`).
+      const field = TEXT_STANDS_IN_FOR[key];
+      if (field && parsed[field]) continue;
+      keys.push(key);
     }
-    const parsed: Parsed = p.parsed ?? {};
 
     for (const [field, key] of SIMPLE) if (parsed[field]) keys.push(key);
     if (parsed.fee) keys.push("avgift");
@@ -265,8 +301,16 @@ export function recognise(doc: SignDoc): Recognised {
     // the hour, and what that means is an open question in the plan; a line with
     // figures on it keeps its place in plain sight rather than disappearing into a
     // word we did recognise.
+    //
+    // The area itself may carry figures, and may come on a line of its own: `C4n`
+    // (`110`), `Tr` (`098`), `C-NV` (a live reading of `088`). On a plate that names the
+    // residents and nothing else, such a code is the area's name, not a rule (decision
+    // 210). A plate that says more - `Endast`, `Ej`, hours, a fee - keeps every leftover
+    // in sight: there a code may belong to a rule for everyone.
+    const residentsOnly = spokenFor.includes(RESIDENTS) && !saysMore(joined);
     const leftovers = [...(parsed.uninterpreted ?? [])].filter((line) => {
-      const low = line.toLowerCase();
+      const low = line.toLowerCase().trim();
+      if (residentsOnly && isAreaCode(low.replace(RESIDENTS, "").trim())) return false;
       return /[0-9]/.test(low) || !spokenFor.some((token) => low.includes(token));
     });
     if (notUnderstood) leftovers.push(...(p.lines ?? []));

@@ -11,7 +11,7 @@
 // the second source of errors, so each one joins the list, and the list feeds the
 // `no_repairs_needed` confidence signal.
 
-import { PRINTED_HOURS } from "./engine";
+import { PRINTED_HOURS } from "./reference";
 import { PRIVATE_LAND_PHRASE } from "./reference";
 import { validate } from "./schema";
 import { SIGN_SCHEMA, TRIAGE_SCHEMA } from "./schema.data";

@@ -232,6 +232,58 @@ describe("the reference entries are fit to be shown", () => {
     expect(rec.uninterpreted[1]).toEqual(["Boende 8-18"]);
   });
 
+  it("reads a residents' area code as the area's name, however it arrives", () => {
+    // `098` (`Tr` on a line of its own), `110` (`C4n`, a figure inside) and a live
+    // reading of `088` (`C-NV`): each left its plate "not interpreted", and the whole
+    // reading partial (decision 210).
+    for (const code of ["C-NV", "Tr", "C4n", "51E", "GK-J"]) {
+      const shapes: [string[], string[]][] = [
+        [["Boende", code], [code]],
+        [[`Boende ${code}`], [code]],
+        [[`Boende ${code}`], [`Boende ${code}`]],
+      ];
+      for (const [lines, left] of shapes) {
+        const rec = recognise(doc([plate({ eligibility: "residents", uninterpreted: left }, lines)]));
+        expect(rec.panelKeys[1], `${lines.join(" / ")}`).toContain("boende");
+        expect(rec.uninterpreted[1] ?? [], `${lines.join(" / ")} <- ${left}`).toEqual([]);
+      }
+    }
+  });
+
+  it("keeps in sight whatever on a residents' plate is more than the area", () => {
+    // Hours, a phrase, a length of stay, and every plate that says more than who: there
+    // a leftover may belong to a rule for everyone. `Endast boende` is residents ONLY.
+    const cases: [string[], string[]][] = [
+      [["Boende", "8-18"], ["8-18"]],
+      [["Zon E", "Boende Storskogen", "Kod: 8415", "Betala digitalt"], ["Kod: 8415", "Betala digitalt"]],
+      [["Boende", "24h"], ["24h"]],
+      [["Endast", "boende", "C-NV"], ["C-NV"]],
+      [["Boende", "Ej", "Tr"], ["Tr"]],
+      [["Boende C-NV", "Övriga 2 tim"], ["Övriga 2 tim"]],
+    ];
+    for (const [lines, left] of cases) {
+      const rec = recognise(doc([plate({ eligibility: "residents", uninterpreted: left }, lines)]));
+      expect(rec.uninterpreted[1], lines.join(" / ")).toEqual(left);
+    }
+  });
+
+  it("reads a tariff named by its colour", () => {
+    // `088`: `Röd taxa` came as text rather than in `tariff_code` (decision 211).
+    const rec = recognise(doc([plate({ uninterpreted: ["Röd taxa"] }, ["Röd taxa"])]));
+    expect(rec.panelKeys[1]).toContain("taxa");
+    expect(rec.uninterpreted[1] ?? []).toEqual([]);
+  });
+
+  it("lets the text stand in for the tariff field only when the field is empty", () => {
+    // `054`, `104`, `105`, `124`: matched by text as well, the tariff jumped ahead of
+    // the length of stay and the card explained the plate out of its own order.
+    const parsed = { duration_limit: { amount: 2, unit: "hours" as const }, fee: true,
+                     tariff_code: "2" };
+    const withText = recognise(doc([plate(parsed, ["2 tim", "Avgift", "Taxa 2"])]));
+    const withoutText = recognise(doc([plate(parsed, [])]));
+    expect(withText.panelKeys[1]).toEqual(withoutText.panelKeys[1]);
+  });
+
   it("reads a plate that names a group as one rule, whatever the word", () => {
     // `066`, `067`, `069`, `070`, `072`. In the schema they all arrive as
     // `eligibility: custom` - "nothing listed fitted" - so the field cannot tell them

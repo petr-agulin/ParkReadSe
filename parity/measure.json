@@ -623,12 +623,6 @@
   ],
   [
    0.875,
-   "partial",
-   false,
-   "088-avgift-8-20-rod-taxa-boende-c-nv-mandag-8-11"
-  ],
-  [
-   0.875,
    "full",
    false,
    "091-avgift-7-19-torsd-boende"
@@ -647,12 +641,6 @@
   ],
   [
    0.875,
-   "partial",
-   false,
-   "098-avgift-7-19-tors-boende-tr"
-  ],
-  [
-   0.875,
    "full",
    false,
    "103-forbud-plus-hastighet-10"
@@ -662,12 +650,6 @@
    "full",
    true,
    "105-p-med-plattor-gathorn"
-  ],
-  [
-   0.875,
-   "partial",
-   false,
-   "110-avgift-30min-smal-gata"
   ],
   [
    0.875,
@@ -1002,6 +984,12 @@
   [
    0.975,
    "full",
+   false,
+   "088-avgift-8-20-rod-taxa-boende-c-nv-mandag-8-11"
+  ],
+  [
+   0.975,
+   "full",
    true,
    "090-avgift-uppstallning-zon-e-pil"
   ],
@@ -1010,6 +998,12 @@
    "full",
    false,
    "094-p-7-dygn-torsd-vintersasong"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "098-avgift-7-19-tors-boende-tr"
   ],
   [
    0.975,
@@ -1034,6 +1028,12 @@
    "full",
    false,
    "107-rorelsehindrad-med-plattor"
+  ],
+  [
+   0.975,
+   "full",
+   false,
+   "110-avgift-30min-smal-gata"
   ],
   [
    0.975,
@@ -1258,5 +1258,5 @@
    "135-p-ej-markerade-platser-securitas"
   ]
  ],
- "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 22 | 3 | 105 | 8 |\n| 0.875 | 22 | 3 | 105 | 8 |\n| 0.900 | 43 | 9 | 84 | 2 |\n| 0.920 | 43 | 9 | 84 | 2 |\n| 0.950 | 48 | 9 | 79 | 2 |"
+ "threshold_table": "| Threshold | Flagged | Of those diverged | Passed as full | Of those diverged |\n|---|---|---|---|---|\n| 0.850 | 19 | 3 | 108 | 8 |\n| 0.875 | 19 | 3 | 108 | 8 |\n| 0.900 | 40 | 9 | 87 | 2 |\n| 0.920 | 40 | 9 | 87 | 2 |\n| 0.950 | 45 | 9 | 82 | 2 |"
 }

@@ -36016,12 +36016,11 @@
       "Röd taxa"
      ],
      "background_color": "blue",
-     "reference_keys": [],
-     "uninterpreted": [
-      "Röd taxa",
-      "Röd taxa"
+     "reference_keys": [
+      "taxa"
      ],
-     "not_interpreted_text": "Not interpreted — shown above exactly as printed",
+     "uninterpreted": [],
+     "not_interpreted_text": null,
      "fields": [
       {
        "name": "index",
@@ -36050,11 +36049,24 @@
       {
        "name": "legibility",
        "value": "readable"
+      },
+      {
+       "name": "reference_keys",
+       "value": "taxa"
       }
      ],
      "title": "Panel",
      "text": "Röd taxa",
-     "meanings": [],
+     "meanings": [
+      {
+       "key": "taxa",
+       "label": "Fee",
+       "code": "T16",
+       "text": "The sign states a municipal tariff number",
+       "short": "Municipal tariff number",
+       "continues": false
+      }
+     ],
      "carries_rule": true,
      "unreliable": false
     },
@@ -40096,10 +40108,8 @@
      "reference_keys": [
       "boende"
      ],
-     "uninterpreted": [
-      "Tr"
-     ],
-     "not_interpreted_text": "Not interpreted: Tr",
+     "uninterpreted": [],
+     "not_interpreted_text": null,
      "fields": [
       {
        "name": "index",
@@ -45197,10 +45207,8 @@
      "reference_keys": [
       "boende"
      ],
-     "uninterpreted": [
-      "C4n"
-     ],
-     "not_interpreted_text": "Not interpreted: C4n",
+     "uninterpreted": [],
+     "not_interpreted_text": null,
      "fields": [
       {
        "name": "index",

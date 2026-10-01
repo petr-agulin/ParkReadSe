@@ -26,7 +26,7 @@ import { Calendar, RED, UNKNOWN, WEEKDAY } from "./calendar";
 import { add as clockAdd } from "./clock";
 import { addDays, addMinutes, compare, minutes, weekday,
          type Civil, type Naive } from "./civil";
-import { ELIGIBILITY_KEYS, VEHICLE_KEYS, WHO_SLOT_NARROWS } from "./reference";
+import { ELIGIBILITY_KEYS, VEHICLE_KEYS, WHO_SLOT_NARROWS, PRINTED_HOURS } from "./reference";
 import type { Panel, Parsed, SignDoc, TimeWindow } from "./sign";
 
 export const HORIZON_DAYS = 8;        // how far ahead the timeline of periods runs
@@ -331,10 +331,6 @@ function splitByVehicle(panels: Panel[]): [string | null, string[], Panel[]][] {
   }
   return out;
 }
-
-// Hours actually PRINTED on the plate, as opposed to hours the model worked out for
-// itself. `7-18`, `(22-10)`, `07:00-19:00`.
-export const PRINTED_HOURS = /\d{1,2}([:.]\d{2})?\s*[-–]\s*\d{1,2}([:.]\d{2})?/;
 
 /** The reference keys an instruction adds to a period. */
 function conditionsOf(parsed: Parsed): string[] {

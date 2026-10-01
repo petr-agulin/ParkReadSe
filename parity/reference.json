@@ -1351,7 +1351,9 @@
     "window-weekday",
     "window-eve"
    ],
-   "2": [],
+   "2": [
+    "taxa"
+   ],
    "3": [
     "boende"
    ],
@@ -1360,12 +1362,7 @@
     "named-weekday"
    ]
   },
-  "uninterpreted": {
-   "2": [
-    "Röd taxa",
-    "Röd taxa"
-   ]
-  },
+  "uninterpreted": {},
   "missing_keys": []
  },
  "answers/089-lastplats-zon-c-boende-centrala": {
@@ -1584,11 +1581,7 @@
     "info-board"
    ]
   },
-  "uninterpreted": {
-   "3": [
-    "Tr"
-   ]
-  },
+  "uninterpreted": {},
   "missing_keys": []
  },
  "answers/099-p-med-gul-skylt-pa-avstand": {
@@ -1859,11 +1852,7 @@
     "boende"
    ]
   },
-  "uninterpreted": {
-   "3": [
-    "C4n"
-   ]
-  },
+  "uninterpreted": {},
   "missing_keys": []
  },
  "answers/111-2tim-gul-skylt-vid-klippa": {
