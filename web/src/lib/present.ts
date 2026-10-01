@@ -513,8 +513,9 @@ export function regimeView(r: Regime, horizon: Naive, cal: Calendar,
   // it has already been said, and said more precisely - with the hours it applies to
   // (photograph `012`).
   const spelledByHour = new Set(r.periods.flatMap((p) => p.conditions));
-  let windowFor = narrowing(r).filter((k) => !spelledByHour.has(k))
-                              .map((k) => shortTerm(k, prohibiting));
+  const narrow = narrowing(r);
+  let windowFor = narrow.filter((k) => !spelledByHour.has(k))
+                        .map((k) => shortTerm(k, prohibiting));
   // Private land is not who may park but a caveat to the whole window.
   if (privateLand) windowFor = [...windowFor, shortTerm(PRIVATE_LAND)];
   const plainNotes = r.eligibility
@@ -561,11 +562,16 @@ export function regimeView(r: Regime, horizon: Naive, cal: Calendar,
                      text: "The sign says nothing about this time, and this is a "
                          + "priority road: parking there needs a sign that permits it." });
       }
+      // A circle spelled out by the hour narrows those hours all the same. It left
+      // `windowFor` so that its line is not repeated (`012`), not because the window
+      // became open to everyone: the line breaks in those hours, and only in those
+      // (photograph `006`; a permit with no hours, `018`, breaks it throughout).
+      const narrowedHere = p.conditions.some((k) => narrow.includes(k));
       return periodView(p, horizon, cal,
                         last ? STAY_END_TEXT[r.durationSource ?? ""] ?? "" : "",
                         last ? STAY_END_REASON[r.durationSource ?? ""] ?? "" : "",
                         certain && !privateLand, aside,
-                        p.state === wantedState && windowFor.length > 0);
+                        p.state === wantedState && (windowFor.length > 0 || narrowedHere));
     }),
   };
 }

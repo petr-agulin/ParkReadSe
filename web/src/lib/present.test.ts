@@ -167,13 +167,13 @@ describe("a window addressed to a named circle", () => {
   const cal = new Calendar();
   const moment = parseNaive("2026-03-02T12:00");
 
-  const periods = (parsed: Record<string, unknown>) => {
+  const periods = (parsed: Record<string, unknown>, lines: string[] = ["TAXI"]) => {
     const doc = {
       schema_version: 1,
       main_sign: { type: "parking", background_color: "blue", form: "regular",
                    legibility: { readable: true } },
       panels: [{ index: 1, kind: "sign_plate", background_color: "blue",
-                 legibility: { readable: true }, lines: ["TAXI"], parsed }],
+                 legibility: { readable: true }, lines, parsed }],
       panel_count: 1,
     } as unknown as SignDoc;
     const ev = evaluateParkingRules(doc, moment, cal);
@@ -195,6 +195,32 @@ describe("a window addressed to a named circle", () => {
     // that merely ADDS - `Boende` - narrows no circle and must not break the line.
     expect(periods({ fee: true })[0].restricted).toBe(false);
     expect(periods({ eligibility: "residents" })[0].restricted).toBe(false);
+  });
+
+  const permitted = (p: any) => p.conditions.some((t: any) => t.key === "sarskilt-p-tillstand");
+
+  it("is drawn broken in the hours a permit is spelled for, and only in them", () => {
+    // Photograph `006`: the permit's 07-17 stretch was drawn solid. A circle spelled
+    // out by the hour leaves the window's audience so its line is not repeated
+    // (`012`), but it narrows those hours all the same (developer, 2026-10-01).
+    const allowed = periods({ permit_required: true,
+                              time_windows: [{ from: "07:00", to: "17:00", day_class: "weekday" }] },
+                            ["Särskilt P-tillstånd", "erfordras 7-17"])
+      .filter((p: any) => p.state === "allowed");
+    const inHours = allowed.filter(permitted);
+    const outside = allowed.filter((p: any) => !permitted(p));
+    expect(inHours.length).toBeGreaterThan(0);
+    expect(outside.length).toBeGreaterThan(0);
+    expect(inHours.every((p: any) => p.restricted)).toBe(true);
+    expect(outside.some((p: any) => p.restricted)).toBe(false);
+  });
+
+  it("is drawn broken throughout where the permit names no hours", () => {
+    // `018`: a permit with no hours narrows the whole window.
+    const allowed = periods({ permit_required: true }, ["Särskilt P-tillstånd", "erfordras"])
+      .filter((p: any) => p.state === "allowed");
+    expect(allowed.length).toBeGreaterThan(0);
+    expect(allowed.every((p: any) => p.restricted)).toBe(true);
   });
 });
 
